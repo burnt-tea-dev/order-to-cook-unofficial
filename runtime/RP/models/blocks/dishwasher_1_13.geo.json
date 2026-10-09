@@ -3,7 +3,7 @@
   "minecraft:geometry": [
     {
       "description": {
-        "identifier": "geometry.ordertocook.dishwasher_0",
+        "identifier": "geometry.ordertocook.dishwasher_1_13",
         "texture_width": 64,
         "texture_height": 64,
         "visible_bounds_width": 2,
@@ -20,14 +20,14 @@
           "pivot": [
             0.0,
             8.0,
-            0.0
+            0.533253
           ],
           "cubes": [
             {
               "origin": [
                 -8.0,
                 0.0,
-                -5.0
+                -4.466747
               ],
               "size": [
                 16.0,
@@ -101,7 +101,7 @@
               "origin": [
                 -6.0,
                 2.0,
-                -5.0
+                -4.466747
               ],
               "size": [
                 12.0,
@@ -175,7 +175,7 @@
               "origin": [
                 -8.0,
                 12.0,
-                -8.0
+                -7.466747
               ],
               "size": [
                 16.0,
@@ -235,6 +235,11 @@
                 }
               }
             }
+          ],
+          "rotation": [
+            0,
+            0,
+            0
           ]
         },
         {
@@ -242,7 +247,7 @@
           "pivot": [
             0.0,
             2.0,
-            -5.0
+            -4.466747
           ],
           "parent": "group2",
           "cubes": [
@@ -250,7 +255,7 @@
               "origin": [
                 -6.0,
                 2.0,
-                -6.03
+                -5.496747
               ],
               "size": [
                 12.0,
@@ -320,6 +325,11 @@
                 }
               }
             }
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
           ]
         },
         {
@@ -327,7 +337,7 @@
           "pivot": [
             0.0,
             1.0,
-            0.0
+            0.533253
           ],
           "parent": "group2",
           "cubes": [
@@ -335,7 +345,7 @@
               "origin": [
                 -5.75,
                 2.25,
-                -5.03
+                -4.496747
               ],
               "size": [
                 11.5,
@@ -409,7 +419,7 @@
               "origin": [
                 -5.25,
                 2.25,
-                -4.03
+                -3.496747
               ],
               "size": [
                 10.5,
@@ -479,6 +489,11 @@
                 }
               }
             }
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
           ]
         },
         {
@@ -486,20 +501,30 @@
           "pivot": [
             0.0,
             12.0,
-            0.0
+            0.533253
           ],
           "parent": "group3",
-          "cubes": []
+          "cubes": [],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
         },
         {
           "name": "clear_dish",
           "pivot": [
             0.0,
             12.0,
-            0.0
+            0.533253
           ],
           "parent": "group3",
-          "cubes": []
+          "cubes": [],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
         }
       ]
     }

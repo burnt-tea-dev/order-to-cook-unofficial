@@ -1,0 +1,60 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "ordertocook:dining_plate",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/ordertocook/entity/dining_plate_atlas"
+      },
+      "geometry": {
+        "stage0": "geometry.ordertocook.dining_plate_0",
+        "stage1": "geometry.ordertocook.dining_plate_1",
+        "stage2": "geometry.ordertocook.dining_plate_2",
+        "stage3": "geometry.ordertocook.dining_plate_3",
+        "stage4": "geometry.ordertocook.dining_plate_4",
+        "stage5": "geometry.ordertocook.dining_plate_5",
+        "stage6": "geometry.ordertocook.dining_plate_6",
+        "stage7": "geometry.ordertocook.dining_plate_7",
+        "stage8": "geometry.ordertocook.dining_plate_8",
+        "stage9": "geometry.ordertocook.dining_plate_9",
+        "stage10": "geometry.ordertocook.dining_plate_10",
+        "stage11": "geometry.ordertocook.dining_plate_11",
+        "stage12": "geometry.ordertocook.dining_plate_12",
+        "stage13": "geometry.ordertocook.dining_plate_13",
+        "stage14": "geometry.ordertocook.dining_plate_14",
+        "stage15": "geometry.ordertocook.dining_plate_15",
+        "stage16": "geometry.ordertocook.dining_plate_16",
+        "stage17": "geometry.ordertocook.dining_plate_17",
+        "stage18": "geometry.ordertocook.dining_plate_18",
+        "stage19": "geometry.ordertocook.dining_plate_19",
+        "stage20": "geometry.ordertocook.dining_plate_20",
+        "stage21": "geometry.ordertocook.dining_plate_21",
+        "stage22": "geometry.ordertocook.dining_plate_22",
+        "stage23": "geometry.ordertocook.dining_plate_23",
+        "stage24": "geometry.ordertocook.dining_plate_24",
+        "stage25": "geometry.ordertocook.dining_plate_25",
+        "stage26": "geometry.ordertocook.dining_plate_26",
+        "stage27": "geometry.ordertocook.dining_plate_27",
+        "stage28": "geometry.ordertocook.dining_plate_28",
+        "stage29": "geometry.ordertocook.dining_plate_29",
+        "stage30": "geometry.ordertocook.dining_plate_30",
+        "stage31": "geometry.ordertocook.dining_plate_31",
+        "stage32": "geometry.ordertocook.dining_plate_32",
+        "stage33": "geometry.ordertocook.dining_plate_33",
+        "stage34": "geometry.ordertocook.dining_plate_34",
+        "stage35": "geometry.ordertocook.dining_plate_35",
+        "stage36": "geometry.ordertocook.dining_plate_36",
+        "stage37": "geometry.ordertocook.dining_plate_37",
+        "stage38": "geometry.ordertocook.dining_plate_38",
+        "stage39": "geometry.ordertocook.dining_plate_39",
+        "stage40": "geometry.ordertocook.dining_plate_40"
+      },
+      "render_controllers": [
+        "controller.render.ordertocook.dining_plate"
+      ]
+    }
+  }
+}

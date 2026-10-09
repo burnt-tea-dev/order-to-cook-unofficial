@@ -155,7 +155,7 @@ test('staff permission revoked during washing leaves the dirty plate in the sink
 test('init called after worldLoad starts ticking without waiting for another worldLoad', () => {
   const env = makeEnvironment(), service = appliances.createApplianceService(env.ctx); service.init();
   assert.equal(env.world.afterEvents.worldLoad.subscriptions.length, 0);
-  for (const callback of env.system.callbacks) callback(); assert.equal(env.system.intervals.length, 1); assert.equal(env.system.intervals[0].ticks, 5);
+  for (const callback of env.system.callbacks) callback(); assert.equal(env.system.intervals.length, 1); assert.equal(env.system.intervals[0].ticks, 2);
 });
 
 test('orphan recovery runs when five-tick intervals are offset from tick zero', () => {

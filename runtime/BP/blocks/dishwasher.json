@@ -44,11 +44,29 @@
         "ordertocook:plates_high": [
           false,
           true
+        ],
+        "ordertocook:frame": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
         ]
       }
     },
     "components": {
-      "minecraft:geometry": "geometry.ordertocook.dishwasher_0",
+      "minecraft:geometry": "geometry.ordertocook.dishwasher_0_0",
       "minecraft:material_instances": {
         "*": {
           "texture": "ordertocook_block_dishwasher",
@@ -128,37 +146,397 @@
       {
         "condition": "q.block_state('ordertocook:phase') == 0",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_0"
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_0_0"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:phase') == 1",
+        "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 0",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_1"
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_0"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:phase') == 2",
+        "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 1",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_2"
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_1"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:phase') == 3",
+        "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 2",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_3"
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_2"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:phase') == 4",
+        "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 3",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_4"
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 4",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_4"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 5",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_5"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 6",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_6"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 7",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_7"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 8",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_8"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 9",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_9"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 10",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_10"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 11",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_11"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 12",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_12"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 13",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_13"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 14",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_14"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 15",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_15"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 0",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_0"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 4",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_4"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 5",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_5"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 6",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_6"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 7",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_7"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 8",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_8"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 9",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_9"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 10",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_10"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 11",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_11"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 12",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_12"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 13",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_13"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 14",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_14"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 15",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_15"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 0",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_0"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 4",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_4"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 5",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_5"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 6",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_6"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 7",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_7"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 8",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_8"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 9",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_9"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 10",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_10"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 11",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_11"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 12",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_12"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 13",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_13"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 14",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_14"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 15",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_15"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 0",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_0"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 4",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_4"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 5",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_5"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 6",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_6"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 7",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_7"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 8",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_8"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 9",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_9"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 10",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_10"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 11",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_11"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 12",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_12"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 13",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_13"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 14",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_14"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 15",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_15"
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 5",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_5"
+          "minecraft:geometry": "geometry.ordertocook.dishwasher_5_0"
         }
       }
     ]

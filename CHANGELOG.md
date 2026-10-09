@@ -1,5 +1,44 @@
 # Changelog
 
+## 0.1.1-alpha.2 — 2026-10-09
+
+### Dining and customers
+
+- Drive the original ten meal variants through the 15/60/80/100-tick plate
+  stages, keeping a cosmetic dirty plate until the owner or staff collects it.
+- Persist meal identity and timing separately from trimmed order history;
+  recover missing loaded visuals and remove duplicates without minting items.
+- Support early pickup with the original half-second interruption action.
+  Require clearing a previous plate before handing over a new meal at that spot.
+- Add the original seated customer's 10% boom reaction and one-time bonus
+  (1–4 plus restaurant level). The bonus is paid at handoff in this adaptation.
+- Restore all four idle variants and seven customer actions. Ordinary dine-in
+  customers may stand nearby without a chair; walk-ins still require a chair.
+  The pinned Java source also spawns customers directly with zero movement.
+- Preserve completion deadlines on reentry/reload and reject corrupt seat links
+  without removing unrelated vehicles or their cargo.
+
+### Appliances and assets
+
+- Animate refrigerator compartments independently with eleven poses per door,
+  multi-viewer tracking, and reversible one-second open/close motion.
+- Sample 66 dishwasher poses from the original keyframes and resume animation
+  from persisted processing state. Easing is linear; body squash is omitted.
+- Add a dining entity atlas assembled from exact original pixels, retaining all
+  original textures and sounds and reproducible asset provenance.
+
+### Persistence and verification
+
+- Harden physical parcel handoff, display placement, and dirty-plate claims
+  against duplicate callbacks and known synchronous native-write failures.
+- Block reopening a restaurant while removed-machine cleanup is waiting for
+  unloaded meal anchors, preserving the existing data until cleanup completes.
+- Keep pack UUIDs stable, increase numeric pack versions to 0.1.1, and migrate
+  alpha.1 pending plates without inferring plates from already-paid history.
+- Expand deterministic regression, source-pose and native server probes;
+  preserve versioned evidence in `docs/validation/`. See `docs/VALIDATION.md`
+  for exact results and `docs/PLAYTEST.md` for client work still outstanding.
+
 ## 0.1.0-alpha.1 — 2026-10-09
 
 First unofficial Bedrock adaptation. Implements restaurant menus, orders,

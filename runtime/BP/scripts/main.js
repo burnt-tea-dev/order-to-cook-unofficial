@@ -20,6 +20,7 @@ import {
 import { notify, choose, textInput, safely } from './ui.js';
 import { createEntityService } from './entities.js';
 import { createApplianceService } from './appliances.js';
+import { createDiningService, DINING_ENTITY } from './dining.js';
 
 const PREFIX = 'ordertocook:';
 const ITEM_RESTAURANT = 'ordertocook:restaurant';
@@ -33,6 +34,7 @@ let settings = { currencyItem: '', refreshMs: Number(DEFAULT_CONFIG.refreshMs), 
 let ready = false;
 /** @type {any} */ let entities;
 /** @type {any} */ let appliances;
+/** @type {any} */ let dining;
 const interactionTicks = new Map();
 const blockNames = {
   order_machine: '打單機', board: '菜單立牌', countertop: '操作台', shelf: '包裝架',
@@ -47,7 +49,7 @@ const SHOP = [
 
 function isAdmin(player) { return player?.hasTag('otc_admin') || player?.getGameMode() === GameMode.Creative; }
 function canManage(player, restaurant) {
-  return !!restaurant && (restaurant.ownerId === player.id || restaurant.staff?.includes(player.id) || isAdmin(player));
+  return !!restaurant && !restaurant.removing && (restaurant.ownerId === player.id || restaurant.staff?.includes(player.id) || isAdmin(player));
 }
 function nearBlock(player, block, radius = 8) {
   return player?.isValid && block?.isValid && player.dimension.id === block.dimension.id && distanceSquared(player.location, block.location) <= radius * radius;
@@ -95,6 +97,7 @@ function syncMenu(restaurant) {
 function getMachine(player, block) {
   const id = locationId(block.dimension.id, block.location);
   let restaurant = getRestaurant(id);
+  if (restaurant?.removing) return restaurant;
   if (!restaurant) {
     restaurant = createRestaurant({ id, name: `${player.name} 的餐廳`, ownerId: player.id, ownerName: player.name, dimensionId: block.dimension.id, location: block.location, menu: [], config: { refreshMs: settings.refreshMs, orderMachineUpgradeBoardHunger: settings.orderMachineUpgradeBoardHunger } });
     restaurant.staff = [];
@@ -150,6 +153,7 @@ function removeTickets(player, orderId) {
 
 async function machineForm(player, block) {
   const restaurant = getMachine(player, block);
+  if (restaurant.removing) { notify(player, '原餐廳正在收回餐盤；請讓原桌面所在區塊載入，清理完成後再開店。'); return; }
   if (!canManage(player, restaurant)) { notify(player, `這間餐廳由 ${restaurant.ownerName} 經營；店主可在「設定」加入員工。`); return; }
   expireOrders(restaurant);
   saveRestaurant(restaurant);
@@ -210,8 +214,10 @@ function acceptWithTicket(player, restaurant, order) {
     notify(player, '餐廳狀態或權限已改變，請重新開啟打單機。'); return;
   }
   if (freeSlot(containerOf(player)) < 0) { notify(player, '請空出一格背包收取訂單。'); return; }
-  if (order.type === 'dine_in' && !nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:chair').length) {
-    notify(player, '堂食需要餐廳 24 格內有椅子。'); return;
+  // Ordinary machine diners can use the upstream standing fallback. Only
+  // independently arriving walk-ins require a restaurant chair to accept.
+  if (order.walkIn && order.type === 'dine_in' && !nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:chair').length) {
+    notify(player, '到店顧客需要餐廳 24 格內有椅子。'); return;
   }
   const result = acceptOrder(restaurant, order.id);
   saveRestaurant(restaurant);
@@ -426,23 +432,35 @@ function placeParcel(player, clickedBlock, face) {
   }
   const stack = heldItem(player);
   const linked = itemOrder(stack);
-  if (!linked || linked.order.status !== 'packed' || linked.order.proof !== linked.proof) { notify(player, '這份餐點已失效。'); return; }
+  if (!linked || linked.order.status !== 'packed' || linked.order.proof !== linked.proof ||
+      stack.typeId !== (linked.order.type === 'delivery' ? 'ordertocook:takeout_bag' : 'ordertocook:food_plate')) { notify(player, '這份餐點已失效。'); return; }
   const output = clickedBlock.above();
   if (!output?.isAir) { notify(player, '上方沒有空間。'); return; }
-  output.setPermutation(BlockPermutation.resolve(linked.order.type === 'delivery' ? 'ordertocook:takeout_bag' : 'ordertocook:food_plate_display'));
-  const station = getStation(output);
-  Object.assign(station, { restaurantId: linked.restaurant.id, orderId: linked.order.id, proof: linked.proof, ownerId: player.id });
+  let station;
+  const slot = player.selectedSlotIndex;
+  const inventory = containerOf(player);
   try {
+    output.setPermutation(BlockPermutation.resolve(linked.order.type === 'delivery' ? 'ordertocook:takeout_bag' : 'ordertocook:food_plate_display'));
+    station = getStation(output);
+    Object.assign(station, { restaurantId: linked.restaurant.id, orderId: linked.order.id, proof: linked.proof, ownerId: player.id });
     saveStation(station);
     if (linked.order.type === 'dine_in') setBlockState(output, 'ordertocook:stage', (linked.order.platedVariant || 0) * 4 + 1);
-    consumeHeld(player, stack.typeId, 1);
-  } catch (error) { output.setType('minecraft:air'); deleteStation(station); throw error; }
+    if (!consumeHeld(player, stack.typeId, 1)) throw new Error('餐點已被移動，未完成擺放');
+  } catch (error) {
+    // A native write may throw after consuming the item; keep exactly one
+    // carrier by removing the failed display before restoring its source slot.
+    output.setType('minecraft:air');
+    const failed = station || findStation(output);
+    if (failed) deleteStation(failed);
+    if (!inventory.getItem(slot)) inventory.setItem(slot, stack);
+    throw error;
+  }
 }
 
-function customerInteract(player, entity, linkage) {
+function customerInteract(player, entity, linkage, options = {}) {
   const restaurant = getRestaurant(linkage.restaurantId);
   const order = restaurant?.orders.find(entry => entry.id === linkage.orderId);
-  if (!restaurant || !order) { notify(player, '這位顧客的訂單已結束。'); return; }
+  if (!restaurant || restaurant.removing || !order || !entity?.isValid || entity.typeId !== 'ordertocook:customer') { notify(player, '這位顧客的訂單已結束。'); return; }
   if (order.walkIn && order.status === 'offered') {
     if (!canManage(player, restaurant)) { notify(player, '請餐廳店主或員工接取到店訂單。'); return; }
     safely(player, async () => {
@@ -453,7 +471,9 @@ function customerInteract(player, entity, linkage) {
   }
   const stack = heldItem(player);
   const linked = itemOrder(stack);
-  if (!linked || stack.typeId === 'ordertocook:order' || linked.order.id !== order.id || linked.proof !== order.proof || order.status !== 'packed') {
+  if (!linked || linked.restaurant !== restaurant || linked.order !== order ||
+      stack.typeId !== (order.type === 'delivery' ? 'ordertocook:takeout_bag' : 'ordertocook:food_plate') ||
+      linked.proof !== order.proof || order.status !== 'packed') {
     notify(player, orderBody(order) + '\n請拿對應的已裝盤餐點／外送包裹交付。'); return;
   }
   if (player.dimension.id !== entity.dimension.id || distanceSquared(player.location, entity.location) > 36) return;
@@ -461,19 +481,54 @@ function customerInteract(player, entity, linkage) {
     (player.location.x - order.destination.x) ** 2 + (player.location.z - order.destination.z) ** 2 > 12 ** 2)) {
     notify(player, '尚未抵達這張外送單的目的地。'); return;
   }
-  const weather = weatherByDimension.get(restaurant.dimensionId.replace('minecraft:', ''));
-  const result = completeOrder(restaurant, order.id, Date.now(), { raining: weather === 'Rain' || weather === 'Thunder', easterEgg: !!order.easterEgg });
-  if (!result.ok) { saveRestaurant(restaurant); notify(player, reasonText(result.reason)); return; }
-  if (order.type === 'dine_in') {
-    restaurant.pendingDishes ||= [];
-    restaurant.pendingDishes.push({ id: order.id, dimensionId: entity.dimension.id, location: { ...entity.location }, dueAt: Date.now() + 10000 });
+  if (order.type === 'dine_in' && !dining.hasVacancy(restaurant, entity)) {
+    notify(player, '先收走顧客桌前剩下的餐盤，再交付新餐。'); return;
   }
-  saveRestaurant(restaurant);
-  consumeHeld(player, stack.typeId, 1);
+  const weather = weatherByDimension.get(restaurant.dimensionId.replace('minecraft:', ''));
+  const now = Date.now();
+  const before = JSON.stringify(restaurant);
+  const inventory = containerOf(player);
+  const slot = player.selectedSlotIndex;
+  let result;
+  try {
+    // Consume the already-verified physical carrier before committing payment.
+    // No await or form callback may interleave this synchronous transaction.
+    if (!consumeHeld(player, stack.typeId, 1)) { notify(player, '餐點已被移動，請重新交付。'); return; }
+    result = completeOrder(restaurant, order.id, now, {
+      raining: weather === 'Rain' || weather === 'Thunder', easterEgg: !!order.easterEgg,
+      customerSeated: !!entity.getComponent('minecraft:riding')?.entityRidingOn,
+      rng: typeof options.rng === 'function' ? options.rng : Math.random
+    });
+    if (!result.ok) {
+      inventory.setItem(slot, stack);
+      saveRestaurant(restaurant);
+      notify(player, reasonText(result.reason)); return;
+    }
+    if (order.type === 'dine_in') dining.queueMeal(restaurant, order, entity, now);
+    saveRestaurant(restaurant);
+  } catch (error) {
+    // Persisted order state and the exact unstackable parcel are restored before
+    // a retry. The canonical store rejects stale restaurant objects afterwards.
+    try { saveRestaurant(JSON.parse(before)); } catch (restoreError) { console.warn(`[OrderToCook] Submission state rollback failed: ${restoreError}`); }
+    try { if (!inventory.getItem(slot)) inventory.setItem(slot, stack); } catch (restoreError) { console.warn(`[OrderToCook] Submission parcel rollback failed: ${restoreError}`); }
+    throw error;
+  }
   removeTickets(player, order.id);
   reward(player, result.reward);
-  entities.finishCustomer(order.id);
-  notify(player, `交付成功！獲得 ${result.reward} ${currencyLabel()}${result.tip ? `（含小費 ${result.tip}）` : ''}。${order.type === 'dine_in' ? '顧客用餐後會留下髒餐盤。' : ''}`);
+  entities.finishCustomer(order.id, result.completion);
+  dining.tick(now);
+  notify(player, `交付成功！獲得 ${result.reward} ${currencyLabel()}${result.tip ? `（含小費 ${result.tip}）` : ''}${result.boomBonus ? `（驚喜加賞 ${result.boomBonus}）` : ''}。${order.type === 'dine_in' ? '顧客用餐後會留下髒餐盤；點擊餐盤或下方桌面收回。' : ''}`);
+}
+
+function collectDiningPlate(player, value) {
+  const linked = value?.meal ? value : dining?.resolveEntity(value);
+  if (!linked) return false;
+  const result = dining.claim(player, linked.restaurant, linked.meal);
+  if (result.ok) {
+    notify(player, result.early ? '顧客還沒吃完就被收盤了；已收回髒餐盤，顧客提前離開。' : '已收回一個髒餐盤，可送去清洗。');
+  } else if (result.reason === 'inventory_full') notify(player, '請空出一格背包，或留出髒餐盤的堆疊空間。');
+  else if (result.reason === 'permission') notify(player, '只有餐廳店主或員工可收取餐盤。');
+  return true;
 }
 
 function upgradeAppliance(player, block) {
@@ -600,7 +655,12 @@ function onBreak(event) {
   entities?.onBlockBreak(block, station, event.brokenBlockPermutation);
   if (typeId === 'ordertocook:order_machine') {
     const restaurant = getRestaurant(locationId(block.dimension.id, block.location));
-    if (restaurant) { for (const order of restaurant.orders) entities.cleanupOrder(order.id); deleteRestaurant(restaurant.id); }
+    if (restaurant) {
+      restaurant.removing = true;
+      saveRestaurant(restaurant);
+      for (const order of restaurant.orders) entities.cleanupOrder(order.id);
+      if (dining.cleanupRestaurant(restaurant)) deleteRestaurant(restaurant.id);
+    }
   }
   if (station) {
     if (['ordertocook:shelf', 'ordertocook:plate_shelf'].includes(typeId) && station.supplies > 0) {
@@ -619,6 +679,11 @@ function tickRestaurants() {
   const now = Date.now();
   for (const restaurant of restaurants()) {
     try {
+      if (restaurant.removing) {
+        for (const order of restaurant.orders) entities.cleanupOrder(order.id);
+        if (dining.cleanupRestaurant(restaurant, now)) deleteRestaurant(restaurant.id);
+        continue;
+      }
       const expired = expireOrders(restaurant, now);
       for (const order of expired.orders) entities.cleanupOrder(order.id);
       let changed = expired.expired > 0;
@@ -642,15 +707,6 @@ function tickRestaurants() {
         const hasOrders = restaurant.orders.some(order => order.status === 'offered');
         setBlockState(machine, 'ordertocook:mode', restaurant.active && hasOrders ? 'waiting' : 'idle');
         setBlockState(machine, 'ordertocook:frame', Math.floor(system.currentTick / 20) % 3);
-      }
-      const pending = restaurant.pendingDishes || [];
-      for (const dish of [...pending]) {
-        if (now < dish.dueAt) continue;
-        let dimension;
-        try { dimension = world.getDimension(dish.dimensionId); if (!dimension.getBlock(dish.location)) continue; } catch { continue; }
-        dimension.spawnItem(new ItemStack('ordertocook:dirty_plate'), dish.location);
-        restaurant.pendingDishes = restaurant.pendingDishes.filter(value => value.id !== dish.id);
-        changed = true;
       }
       if (changed) saveRestaurant(restaurant);
     } catch (error) { console.warn(`[OrderToCook] Restaurant ${restaurant.id}: ${error}`); }
@@ -738,6 +794,12 @@ system.beforeEvents.startup.subscribe(event => {
 world.beforeEvents.playerInteractWithBlock.subscribe(event => {
   if (!ready) return;
   const item = event.itemStack;
+  const meal = dining?.atBlock(event.block);
+  if (meal) {
+    event.cancel = true;
+    if (event.isFirstEvent) system.run(() => safely(event.player, () => collectDiningPlate(event.player, meal)));
+    return;
+  }
   const parcel = ['ordertocook:takeout_bag', 'ordertocook:food_plate'].includes(item?.typeId);
   if (parcel) {
     event.cancel = true;
@@ -748,6 +810,11 @@ world.beforeEvents.playerInteractWithBlock.subscribe(event => {
     event.cancel = true;
     if (event.isFirstEvent) system.run(() => safely(event.player, () => interactBlock(event.player, event.block)));
   }
+});
+world.beforeEvents.playerInteractWithEntity.subscribe(event => {
+  if (!ready || event.target?.typeId !== DINING_ENTITY) return;
+  event.cancel = true;
+  system.run(() => safely(event.player, () => collectDiningPlate(event.player, event.target)));
 });
 world.beforeEvents.playerBreakBlock.subscribe(event => {
   if (!ready || !event.block.typeId.startsWith(PREFIX)) return;
@@ -804,10 +871,16 @@ world.afterEvents.worldLoad.subscribe(() => {
     const context = { world, system, getStation, saveStation, deleteStation, stations, getRestaurant, restaurants, saveRestaurant, notify, canUseStation, food: { isFood: stack => !!foodFromStack(stack) }, onCustomerInteract: customerInteract };
     appliances = createApplianceService(context);
     entities = createEntityService(context);
+    dining = createDiningService({ ...context, ItemStack, canManage,
+      getCustomerSeat: entity => entities.getCustomerSeat?.(entity),
+      resumeCustomerMeal: (...args) => entities.resumeCustomerMeal?.(...args),
+      interruptCustomerMeal: (...args) => entities.interruptCustomerMeal?.(...args)
+    });
     ready = true;
     appliances.init?.();
     entities.init?.();
     system.runInterval(tickRestaurants, 20);
+    system.runInterval(() => { if (ready) dining.tick(); }, 5);
     system.runInterval(updateNavigation, 10);
     registerConfiguration();
     console.warn('[OrderToCook] Bedrock alpha loaded. Stable API 2.0; no experimental toggles required.');
@@ -817,5 +890,5 @@ world.afterEvents.worldLoad.subscribe(() => {
 // Headless native-engine tests import these same adapters. No test hooks are
 // exposed through chat, commands, script events or a separately installable pack.
 export function getQaHooks() {
-  return { ready, entities, appliances, getMachine, acceptWithTicket, prepareOrderAtCountertop, pickupDisplay, placeParcel, customerInteract, itemOrder, onPlace, onBreak, shelfInteract, upgradeAppliance, canUseStation };
+  return { ready, entities, appliances, dining, getMachine, acceptWithTicket, prepareOrderAtCountertop, pickupDisplay, placeParcel, customerInteract, collectDiningPlate, tickRestaurants, itemOrder, onPlace, onBreak, shelfInteract, upgradeAppliance, canUseStation };
 }

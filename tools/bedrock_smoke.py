@@ -18,7 +18,7 @@ import time
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser()
 parser.add_argument('--server-dir', type=Path, required=True)
-parser.add_argument('--mode', choices=['initial', 'reload'], default='initial')
+parser.add_argument('--mode', choices=['initial', 'reload', 'upgrade'], default='initial')
 parser.add_argument('--timeout', type=int, default=75)
 args = parser.parse_args()
 runtime = args.server_dir.resolve()
@@ -29,6 +29,8 @@ if any(path.name != 'otc-qa' for path in existing):
     raise SystemExit('Refusing to use a directory containing a non-QA world.')
 world = runtime / 'worlds' / 'otc-qa'
 marker = runtime / '.ordertocook-qa-runtime'
+if args.mode != 'initial' and not (world / 'level.dat').is_file():
+    raise SystemExit('Reload/upgrade requires an existing QA world from a successful initial run.')
 if args.mode == 'initial' and world.exists():
     if not marker.exists():
         raise SystemExit('Refusing to reset an unmarked existing QA world; use a fresh extracted server directory.')
@@ -42,7 +44,8 @@ for short, kind in [('BP', 'behavior_packs'), ('RP', 'resource_packs')]:
     shutil.copytree(ROOT / 'runtime' / short, destination)
     manifest = json.loads((destination / 'manifest.json').read_text())
     if short == 'BP':
-        shutil.copyfile(ROOT / 'tests/bedrock-smoke.js', destination / 'scripts/bedrock-smoke.js')
+        for probe in ['bedrock-smoke.js', 'bedrock-customer-checks.js']:
+            shutil.copyfile(ROOT / 'tests' / probe, destination / 'scripts' / probe)
         (destination / 'scripts/qa-entry.js').write_text("import './main.js';\nimport './bedrock-smoke.js';\n")
         next(module for module in manifest['modules'] if module['type'] == 'script')['entry'] = 'scripts/qa-entry.js'
         (destination / 'manifest.json').write_text(json.dumps(manifest, indent=2))
@@ -137,10 +140,11 @@ finally:
 if report is None:
     print('\n'.join(lines[-35:]))
     raise SystemExit('Native probe did not produce its completion report; see disposable server log.')
-report.update({'serverVersion': version, 'runtimeTreeSha256': source_hash.hexdigest(), 'addonErrors': addon_errors,
+pack_version = json.loads((ROOT / 'package.json').read_text())['version']
+report.update({'addonVersion': pack_version, 'serverVersion': version, 'runtimeTreeSha256': source_hash.hexdigest(), 'addonErrors': addon_errors,
                'scope': 'Native server blocks, entities, inventory and script adapters. No real Player, client rendering, forms, touch/keyboard, or multiplayer latency is exercised.'})
 report['passed'] = report['passed'] and not addon_errors
-output = ROOT / 'docs/validation'
+output = ROOT / 'docs/validation' / pack_version
 output.mkdir(exist_ok=True, parents=True)
 (output / f'native-{args.mode}.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 if not report['passed']:

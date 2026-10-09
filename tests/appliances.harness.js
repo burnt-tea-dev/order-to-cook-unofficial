@@ -130,7 +130,20 @@ export function makeEnvironment() {
       if (!this.blocks.has(key)) this.blocks.set(key, new FakeBlock(this, { x: Math.floor(location.x), y: Math.floor(location.y), z: Math.floor(location.z) }));
       return this.blocks.get(key);
     },
-    getBlockFromRay() { return undefined; },
+    getBlockFromRay(origin, direction, options = {}) {
+      // Model only the downward, full-floor collision queries used by customer
+      // spawning. Slabs/plants/fixtures are deliberately not full ground here.
+      if (direction.x !== 0 || direction.z !== 0 || direction.y >= 0) return undefined;
+      const fullFloor = new Set(['minecraft:stone', 'minecraft:dirt', 'minecraft:grass_block', 'minecraft:oak_planks']);
+      const bottom = origin.y - (options.maxDistance ?? 250);
+      for (let y = Math.floor(origin.y); y >= Math.floor(bottom) - 1; y--) {
+        const top = y + 1;
+        if (top > origin.y + 1e-7 || top < bottom - 1e-7) continue;
+        const block = this.getBlock({ x: origin.x, y, z: origin.z });
+        if (fullFloor.has(block.typeId)) return { block, face: 'Up', faceLocation: { x: origin.x - Math.floor(origin.x), y: 1, z: origin.z - Math.floor(origin.z) } };
+      }
+      return undefined;
+    },
     getEntities(options = {}) {
       return [...this.entities.values()].filter(entity => entity.isValid && (!options.type || entity.typeId === options.type) &&
         (!options.tags || options.tags.every(tag => entity.tags.has(tag))) &&
@@ -175,16 +188,26 @@ export class FakeForm {
 }
 
 globalThis.__otcApplianceMocks = { ItemStack: FakeItem, EquipmentSlot: { Offhand: 'Offhand' }, BlockPermutation: FakePermutation, system: {}, world: {}, ActionFormData: FakeForm };
-let applianceSource = await readFile(new URL('../runtime/BP/scripts/appliances.js', import.meta.url), 'utf8');
+// Only Minecraft dependencies are replaced. Pure relative helpers keep their
+// actual shipped implementation when the service is loaded from a data URL.
+function resolveLocalImports(source, moduleUrl) {
+  return source.replace(/(\bfrom\s+|\bimport\s*)(['"])(\.{1,2}\/[^'"]+)\2/g,
+    (_match, prefix, _quote, specifier) => prefix + JSON.stringify(new URL(specifier, moduleUrl).href));
+}
+const applianceUrl = new URL('../runtime/BP/scripts/appliances.js', import.meta.url);
+let applianceSource = await readFile(applianceUrl, 'utf8');
 applianceSource = applianceSource.replace(/import \{[^}]+\} from "@minecraft\/server";/, 'const {BlockPermutation, EquipmentSlot, ItemStack, system, world} = globalThis.__otcApplianceMocks;');
 applianceSource = applianceSource.replace(/import \{[^}]+\} from "@minecraft\/server-ui";/, 'const {ActionFormData} = globalThis.__otcApplianceMocks;');
+applianceSource = resolveLocalImports(applianceSource, applianceUrl);
 export const appliances = await import(`data:text/javascript;base64,${Buffer.from(applianceSource).toString('base64')}`);
 
 globalThis.__otcEntityMocks = { ...appliances, ...globalThis.__otcApplianceMocks, ButtonState: { Pressed: 'Pressed' }, InputButton: { Jump: 'Jump' } };
-let entitySource = await readFile(new URL('../runtime/BP/scripts/entities.js', import.meta.url), 'utf8');
+const entityUrl = new URL('../runtime/BP/scripts/entities.js', import.meta.url);
+let entitySource = await readFile(entityUrl, 'utf8');
 entitySource = entitySource.replace(/import \{[^}]+\} from "@minecraft\/server";/, 'const {ButtonState, InputButton, ItemStack, system, world} = globalThis.__otcEntityMocks;');
 entitySource = entitySource.replace(/import \{[^}]+\} from "@minecraft\/server-ui";/, 'const {ActionFormData} = globalThis.__otcEntityMocks;');
 entitySource = entitySource.replace(/import \{[^}]+\} from "\.\/appliances.js";/, 'const {containerCapacity, dropContainerContents, itemLabel, openContainerForm, playerInventory} = globalThis.__otcEntityMocks;');
+entitySource = resolveLocalImports(entitySource, entityUrl);
 export const entityServices = await import(`data:text/javascript;base64,${Buffer.from(entitySource).toString('base64')}`);
 
 export function place(env, typeId, location = { x: 0, y: 0, z: 0 }, states = {}) {

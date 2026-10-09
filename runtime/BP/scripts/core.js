@@ -440,10 +440,30 @@ export function rollTip(order, options = {}, config = DEFAULT_CONFIG) {
   return min + Math.floor(unit(rng) * (max - min + 1));
 }
 
+/** Original seated plate completion: 10% boom (60% for a known easter egg).
+ * The adapter supplies actual seating; delivery/takeaway never rolls a boom.
+ * Pick once during the canonical completion transition, never on NPC retries.
+ */
+export function rollCustomerCompletion(restaurant, order, now, options = {}) {
+  const seated = options.customerSeated === true;
+  const rng = typeof options.rng === "function" ? options.rng : Math.random;
+  let action = seated ? 3 : 4;
+  let boomBonus = 0;
+  if (seated && order.type === "dine_in") {
+    action = unit(rng) < (options.easterEgg ? 0.6 : 0.1) ? 5 : 6;
+    if (action === 5) boomBonus = 1 + Math.floor(unit(rng) * 4) + levelOf(restaurant);
+  }
+  const duration = { 3: 2000, 4: 3000, 5: 6000, 6: 5500 }[action];
+  return { startedAt: clock(now), finishAt: clock(now) + duration, action, boomBonus };
+}
+
 /**
  * The adapter first proves ownership, carrier identity and NPC/proximity.
  * A successful transition can occur once; it returns the exact coins to pay.
- * Options: {rng, raining, easterEgg}. Omitting options uses normal-weather tips.
+ * Options: {rng, raining, easterEgg, customerSeated}. Without customerSeated,
+ * callers retain the alpha.1 pure-core contract (no customer animation roll).
+ * Bedrock pays a recorded boom bonus with the main payment, instead of a second
+ * physical-inventory payment after the animation; see RUNTIME_ADAPTATIONS.md.
  */
 export function completeOrder(restaurant, orderId, now = Date.now(), options = {}) {
   const at = clock(now);
@@ -453,10 +473,18 @@ export function completeOrder(restaurant, orderId, now = Date.now(), options = {
   if (order.status !== "packed") return { ok: false, reason: "not_packed", order };
   const baseReward = integer(order.reward);
   const tip = rollTip(order, options, configFor(restaurant));
-  const reward = baseReward + tip;
+  const completion = typeof options.customerSeated === "boolean"
+    ? rollCustomerCompletion(restaurant, order, at, options) : undefined;
+  const boomBonus = completion?.boomBonus || 0;
+  const reward = baseReward + tip + boomBonus;
   order.status = "completed";
   order.completedAt = at;
   order.tip = tip;
+  if (completion) {
+    order.completion = completion;
+    if (order.type === "dine_in") order.meal = completion;
+    order.boomBonus = boomBonus;
+  }
   order.paidReward = reward;
   const stats = getStats(restaurant);
   stats.completed++;
@@ -469,7 +497,7 @@ export function completeOrder(restaurant, orderId, now = Date.now(), options = {
   }
   if (order.walkIn) stats.walkIn++;
   restaurant.updatedAt = at;
-  return { ok: true, order, reward, baseReward, tip };
+  return { ok: true, order, reward, baseReward, tip, boomBonus, completion };
 }
 
 export function cancelOrder(restaurant, orderId, now = Date.now()) {

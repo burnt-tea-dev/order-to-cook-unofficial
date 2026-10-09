@@ -1,0 +1,63 @@
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.ordertocook.dining_plate": {
+      "arrays": {
+        "geometries": {
+          "Array.stages": [
+            "Geometry.stage0",
+            "Geometry.stage1",
+            "Geometry.stage2",
+            "Geometry.stage3",
+            "Geometry.stage4",
+            "Geometry.stage5",
+            "Geometry.stage6",
+            "Geometry.stage7",
+            "Geometry.stage8",
+            "Geometry.stage9",
+            "Geometry.stage10",
+            "Geometry.stage11",
+            "Geometry.stage12",
+            "Geometry.stage13",
+            "Geometry.stage14",
+            "Geometry.stage15",
+            "Geometry.stage16",
+            "Geometry.stage17",
+            "Geometry.stage18",
+            "Geometry.stage19",
+            "Geometry.stage20",
+            "Geometry.stage21",
+            "Geometry.stage22",
+            "Geometry.stage23",
+            "Geometry.stage24",
+            "Geometry.stage25",
+            "Geometry.stage26",
+            "Geometry.stage27",
+            "Geometry.stage28",
+            "Geometry.stage29",
+            "Geometry.stage30",
+            "Geometry.stage31",
+            "Geometry.stage32",
+            "Geometry.stage33",
+            "Geometry.stage34",
+            "Geometry.stage35",
+            "Geometry.stage36",
+            "Geometry.stage37",
+            "Geometry.stage38",
+            "Geometry.stage39",
+            "Geometry.stage40"
+          ]
+        }
+      },
+      "geometry": "Array.stages[q.property('ordertocook:stage')]",
+      "materials": [
+        {
+          "*": "Material.default"
+        }
+      ],
+      "textures": [
+        "Texture.default"
+      ]
+    }
+  }
+}

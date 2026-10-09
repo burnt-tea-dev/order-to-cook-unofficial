@@ -13,12 +13,63 @@ const CHAIR = `${NS}chair`;
 const LIVE_ORDER = new Set(["accepted", "packed"]);
 const COLORS = ["白色", "紅色", "藍色", "黃色"];
 const DYES = Object.freeze({ "minecraft:white_dye": 0, "minecraft:red_dye": 1, "minecraft:blue_dye": 2, "minecraft:yellow_dye": 3 });
+// Pinned CustomerEntity.java: special actions are separate from the four idle
+// variants. These durations must match the converted original animation clips.
+const ACTION_TICKS = Object.freeze({ 1: 12, 2: 12, 3: 40, 4: 60, 5: 120, 6: 110, 7: 10 });
+const COMPLETION_ACTIONS = new Set([3, 4, 5, 6, 7]);
+const EATING_ACTIONS = new Set([5, 6, 7]);
+const IDLE_MILLISECONDS = Object.freeze({ 1: 4500, 2: 4500, 3: 4500, 4: 4695 });
 function needsCustomer(order) { return !!order && (LIVE_ORDER.has(order.status) || (order.status === "offered" && !!order.walkIn)); }
 
 function dist2(a, b) { return (a.x - b.x) ** 2 + (a.y - b.y) ** 2 + (a.z - b.z) ** 2; }
 function horizontalDist2(a, b) { return (a.x - b.x) ** 2 + (a.z - b.z) ** 2; }
 function center(location, height = 0.5) { return { x: Math.floor(location.x) + 0.5, y: Math.floor(location.y) + height, z: Math.floor(location.z) + 0.5 }; }
 function sameBlock(a, b) { return a.x === b.x && a.y === b.y && a.z === b.z; }
+
+/** The Java idle-animation weights are 55%, 15%, 15%, 15%. */
+export function rollCustomerAnimationVariant(roll = Math.random()) {
+  return roll < 0.55 ? 1 : roll < 0.70 ? 2 : roll < 0.85 ? 3 : 4;
+}
+
+/** Stable loaded-block support check for the 0.6-wide customer footprint. */
+export function hasFullStandingSupport(dimension, location) {
+  try {
+    const feet = dimension.getBlock(location);
+    const head = dimension.getBlock({ ...location, y: location.y + 1 });
+    const floor = dimension.getBlock({ ...location, y: location.y - 1 });
+    if (!feet?.isAir || !head?.isAir || !floor || floor.isAir || floor.isLiquid || floor.isWaterlogged) return false;
+    // A top slab can have a hit at y=1 despite not being a full floor block.
+    // Exclude thin fixtures explicitly; the footprint rays also reject narrow
+    // modded support shapes without relying on beta Block.isSolid.
+    if (/(?:_slab[0-4]?|_stairs|_carpet|_trapdoor|_fence|_wall|_rail|_pressure_plate|_button|_door|_pane)$/.test(floor.typeId) ||
+        ['minecraft:end_rod', 'minecraft:lightning_rod', 'minecraft:chain', 'minecraft:iron_bars', 'minecraft:scaffolding'].includes(floor.typeId)) return false;
+    for (const [dx, dz] of [[0.2, 0.2], [0.2, 0.8], [0.8, 0.2], [0.8, 0.8]]) {
+      // BDS 1.26.52.3 returned no hit with maxDistance=0.1 even just above a
+      // stone floor. Use an integer-length ray and validate the actual hit
+      // height instead of depending on sub-block distance handling.
+      const hit = dimension.getBlockFromRay(
+        { x: location.x + dx, y: location.y + 1.5, z: location.z + dz },
+        { x: 0, y: -1, z: 0 },
+        { maxDistance: 3, includeLiquidBlocks: true, includePassableBlocks: false }
+      );
+      // Actual BDS 1.26.52.3 normalizes an exact top boundary to y=0;
+      // other versions/adapters report y=1. Both represent the same Up face.
+      const hitY = hit?.faceLocation?.y;
+      if (!hit || !sameBlock(hit.block.location, floor.location) || hit.face !== 'Up' ||
+          !Number.isFinite(hitY) || (Math.abs(hitY) > 0.01 && Math.abs(hitY - 1) > 0.01)) return false;
+    }
+    return true;
+  } catch { return false; }
+}
+
+function readAnchor(value) {
+  if (typeof value !== "string") return undefined;
+  try {
+    const anchor = JSON.parse(value);
+    return typeof anchor.dimensionId === "string" && [anchor.location?.x, anchor.location?.y, anchor.location?.z].every(Number.isFinite)
+      ? anchor : undefined;
+  } catch { return undefined; }
+}
 
 function property(entity, name, value) {
   try { entity.setProperty(`${NS}${name}`, value); } catch { /* Missing cosmetic property must not consume orders. */ }
@@ -45,11 +96,20 @@ export function createEntityService(ctx) {
   const hornTimes = new Map();
   const retryTimes = new Map();
   const entityInteractions = new Map();
+  const chairClaims = new Set();
   let lastTick = -1;
   let readyTick = Infinity;
   let scanTick = -100;
   let seatCleanupTick = -100;
   let entities = [];
+
+  function clock() { return ctx.now?.() ?? Date.now(); }
+
+  function nextIdle(entity, at = clock()) {
+    const variant = rollCustomerAnimationVariant(ctx.random?.() ?? Math.random());
+    property(entity, "animation_variant", variant);
+    entity.setDynamicProperty(`${NS}idle_until`, at + IDLE_MILLISECONDS[variant]);
+  }
 
   function notify(player, text) {
     if (ctx.notify) ctx.notify(player, text);
@@ -76,17 +136,52 @@ export function createEntityService(ctx) {
     };
   }
 
-  function loadedCustomers(orderId) {
-    return queryAll(CUSTOMER).filter(entity => entity.getDynamicProperty(`${NS}order_id`) === orderId);
+  function loadedCustomers(orderId, restaurantId) {
+    return queryAll(CUSTOMER).filter(entity => entity.getDynamicProperty(`${NS}order_id`) === orderId &&
+      (!restaurantId || entity.getDynamicProperty(`${NS}restaurant_id`) === restaurantId));
+  }
+
+  function chairKey(block) {
+    return `${block.dimension.id}:${block.location.x}:${block.location.y}:${block.location.z}`;
   }
 
   function seatAt(block) {
     return block.dimension.getEntities({ type: SEAT, location: center(block.location, 0.5625), maxDistance: 0.8 })
       .find(entity => {
-        const value = entity.getDynamicProperty(`${NS}chair_anchor`);
-        if (typeof value !== "string") return false;
-        try { return sameBlock(JSON.parse(value).location, block.location); } catch { return false; }
+        const anchor = readAnchor(entity.getDynamicProperty(`${NS}chair_anchor`));
+        return anchor?.dimensionId === block.dimension.id && sameBlock(anchor.location, block.location);
       });
+  }
+
+  /** Actual loaded chair, also usable by the independent dining-plate service. */
+  function getCustomerSeat(entity) {
+    if (!entity?.isValid || entity.typeId !== CUSTOMER) return undefined;
+    try {
+      const seat = entity.getComponent("minecraft:riding")?.entityRidingOn ?? findEntity(entity.getDynamicProperty(`${NS}seat_id`));
+      if (!seat || seat.typeId !== SEAT) return undefined;
+      if (!seat.getComponent("minecraft:rideable")?.getRiders().some(rider => rider.id === entity.id)) return undefined;
+      const anchor = readAnchor(seat.getDynamicProperty(`${NS}chair_anchor`));
+      if (!anchor || anchor.dimensionId !== entity.dimension.id) return undefined;
+      const block = entity.dimension.getBlock(anchor.location);
+      return block?.typeId === CHAIR ? block : undefined;
+    } catch { return undefined; }
+  }
+
+  function chairOccupied(block, except) {
+    const candidates = block.dimension.getEntities({ location: center(block.location, 1), maxDistance: 2 });
+    for (const entity of candidates) {
+      if (entity.id === except?.id || !entity.isValid) continue;
+      if (entity.typeId === SEAT) {
+        const anchor = readAnchor(entity.getDynamicProperty(`${NS}chair_anchor`));
+        if (anchor?.dimensionId === block.dimension.id && sameBlock(anchor.location, block.location) &&
+          entity.getComponent("minecraft:rideable")?.getRiders().some(rider => rider.id !== except?.id)) return true;
+      }
+      if (![CUSTOMER, "minecraft:player"].includes(entity.typeId)) continue;
+      if (Math.abs(entity.location.x - (block.location.x + 0.5)) < 0.65 &&
+        Math.abs(entity.location.z - (block.location.z + 0.5)) < 0.65 &&
+        entity.location.y >= block.location.y && entity.location.y < block.location.y + 2.8) return true;
+    }
+    return false;
   }
 
   function clearSeat(entity) {
@@ -101,24 +196,33 @@ export function createEntityService(ctx) {
   }
 
   function sitOnChair(rider, block) {
+    if (!rider?.isValid || block.typeId !== CHAIR || rider.dimension.id !== block.dimension.id) return false;
     if (rider.getComponent("minecraft:riding")?.entityRidingOn) return false;
+    // Restore only the actor's nearby chair after unloading. Never snap a
+    // standing customer across the dining room to a newly available chair.
+    if (rider.typeId === CUSTOMER && (horizontalDist2(rider.location, center(block.location, 0)) > 1.5 ** 2 ||
+      Math.abs(rider.location.y - block.location.y) > 3)) return false;
     const above = block.dimension.getBlock({ ...block.location, y: block.location.y + 1 });
     const head = block.dimension.getBlock({ ...block.location, y: block.location.y + 2 });
     if (!above?.isAir || !head?.isAir) return false;
+    if (chairOccupied(block, rider)) return false;
     let seat = seatAt(block);
     if (seat?.getComponent("minecraft:rideable")?.getRiders().length) return false;
     if (!seat) {
       seat = block.dimension.spawnEntity(SEAT, center(block.location, 0.5625));
-      seat.setDynamicProperty(`${NS}chair_anchor`, JSON.stringify({ dimensionId: block.dimension.id, location: block.location }));
-      seat.addTag(`${NS}chair_seat`);
-      seat.setRotation({ x: 0, y: chairYaw(block) });
+      try {
+        seat.setDynamicProperty(`${NS}chair_anchor`, JSON.stringify({ dimensionId: block.dimension.id, location: block.location }));
+        seat.addTag(`${NS}chair_seat`);
+        seat.setRotation({ x: 0, y: chairYaw(block) });
+      } catch (error) { clearSeat(seat); throw error; }
     }
     const mounted = seat.getComponent("minecraft:rideable")?.addRider(rider) ?? false;
     if (!mounted) { clearSeat(seat); return false; }
     rider.setRotation({ x: 0, y: chairYaw(block) });
     if (rider.typeId === CUSTOMER) {
       rider.setDynamicProperty(`${NS}seat_id`, seat.id);
-      property(rider, "stage", "seated");
+      rider.setDynamicProperty(`${NS}chair_anchor`, JSON.stringify({ dimensionId: block.dimension.id, location: block.location }));
+      if (!rider.getDynamicProperty(`${NS}depart_at`)) property(rider, "stage", "seated");
     }
     return true;
   }
@@ -126,33 +230,30 @@ export function createEntityService(ctx) {
   function findChair(restaurant) {
     const choices = (ctx.stations?.() ?? []).filter(station =>
       station.typeId === CHAIR && station.dimensionId === restaurant.dimensionId &&
-      Math.abs(station.location.x - restaurant.location.x) <= 24 &&
-      Math.abs(station.location.z - restaurant.location.z) <= 24 &&
+      horizontalDist2(station.location, restaurant.location) <= 24 ** 2 &&
       Math.abs(station.location.y - restaurant.location.y) <= 8);
     choices.sort((a, b) => dist2(a.location, restaurant.location) - dist2(b.location, restaurant.location));
     for (const candidate of choices) {
-      let block;
-      try { block = gameWorld.getDimension(candidate.dimensionId).getBlock(candidate.location); } catch { continue; }
-      if (block?.typeId !== CHAIR) continue;
-      if (seatAt(block)?.getComponent("minecraft:rideable")?.getRiders().length) continue;
-      const above = block.dimension.getBlock({ ...block.location, y: block.location.y + 1 });
-      const head = block.dimension.getBlock({ ...block.location, y: block.location.y + 2 });
-      if (above?.isAir && head?.isAir) return block;
+      try {
+        const block = gameWorld.getDimension(candidate.dimensionId).getBlock(candidate.location);
+        if (block?.typeId !== CHAIR || chairClaims.has(chairKey(block))) continue;
+        if (chairOccupied(block)) continue;
+        const above = block.dimension.getBlock({ ...block.location, y: block.location.y + 1 });
+        const head = block.dimension.getBlock({ ...block.location, y: block.location.y + 2 });
+        if (above?.isAir && head?.isAir) return block;
+      } catch { /* A candidate can unload between the lookup and head checks. */ }
     }
     return undefined;
   }
 
   /** Ground checks read loaded blocks only, never tickingarea/structure commands. */
-  function standPosition(dimension, requested) {
-    const offsets = [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, -1], [2, 0], [0, 2]];
-    const clearAt = location => {
-      try {
-        const feet = dimension.getBlock(location);
-        const head = dimension.getBlock({ ...location, y: location.y + 1 });
-        const floor = dimension.getBlock({ ...location, y: location.y - 1 });
-        return feet?.isAir && head?.isAir && floor && !floor.isAir && !floor.isLiquid;
-      } catch { return false; }
-    };
+  function standPosition(dimension, requested, radius = 2) {
+    const offsets = [];
+    for (let dx = -radius; dx <= radius; dx++) for (let dz = -radius; dz <= radius; dz++) {
+      if (dx * dx + dz * dz <= radius * radius) offsets.push([dx, dz]);
+    }
+    offsets.sort((a, b) => a[0] ** 2 + a[1] ** 2 - b[0] ** 2 - b[1] ** 2);
+    const clearAt = location => hasFullStandingSupport(dimension, location);
     for (const [dx, dz] of offsets) {
       for (const dy of [0, 1, -1, 2, -2, 3, -3, 4, -4]) {
         const location = { x: Math.floor(requested.x) + dx, y: Math.floor(requested.y) + dy, z: Math.floor(requested.z) + dz };
@@ -161,7 +262,7 @@ export function createEntityService(ctx) {
     }
     // A generated delivery address can use the restaurant's original Y. Find a
     // nearby surface once that column is actually loaded; persist the resolved Y.
-    for (const [dx, dz] of offsets.slice(0, 5)) {
+    for (const [dx, dz] of offsets.slice(0, radius === 5 ? 24 : 5)) {
       try {
         const range = dimension.heightRange;
         const originY = dimension.id === "minecraft:overworld" ? range.max - 2 : Math.min(range.max - 2, requested.y + 24);
@@ -180,12 +281,18 @@ export function createEntityService(ctx) {
 
   function spawnCustomer(restaurant, order) {
     if (!restaurant || !needsCustomer(order)) return undefined;
-    const existing = loadedCustomers(order.id);
+    const existing = loadedCustomers(order.id, restaurant.id);
     if (existing.length) {
-      // An interrupted reload may have left redundant visual actors; one order
-      // remains one service target. The core validates every submission again.
-      for (const duplicate of existing.slice(1)) removeCustomer(duplicate);
-      return existing[0];
+      const canonical = existing.find(entity => entity.id === order.customerEntityId) ?? existing[0];
+      for (const duplicate of existing) if (duplicate.id !== canonical.id) removeCustomer(duplicate);
+      if (order.customerEntityId !== canonical.id) {
+        const previous = { customerEntityId: order.customerEntityId, customerAnchor: order.customerAnchor };
+        order.customerEntityId = canonical.id;
+        order.customerAnchor = { dimensionId: canonical.dimension.id, location: { ...canonical.location } };
+        try { ctx.saveRestaurant?.(restaurant); }
+        catch (error) { Object.assign(order, previous); console.warn(`[OrderToCook] Customer association save deferred: ${String(error)}`); }
+      }
+      return canonical;
     }
     const destination = order.type === "delivery" ? order.destination : restaurant.location;
     if (!destination) return undefined;
@@ -194,10 +301,23 @@ export function createEntityService(ctx) {
     try { dimension = gameWorld.getDimension(dimensionId); } catch { return undefined; }
     const playerNear = gameWorld.getAllPlayers().some(player => player.dimension.id === dimension.id && horizontalDist2(player.location, destination) <= 64 ** 2);
     if (!playerNear) return undefined;
+    if (order.customerEntityId && order.customerAnchor?.location) {
+      // A persisted actor may be outside the currently loaded entity set. Do
+      // not spawn a replacement while its last known chunk is unavailable.
+      try {
+        const oldDimension = gameWorld.getDimension(order.customerAnchor.dimensionId ?? dimension.id);
+        if (!oldDimension.getBlock(order.customerAnchor.location)) return undefined;
+      } catch { return undefined; }
+    }
     const chair = order.type === "dine_in" ? findChair(restaurant) : undefined;
-    if (order.type === "dine_in" && !chair) return undefined;
-    const location = chair ? center(chair.location, 1) : standPosition(dimension, destination);
+    // Java walk-ins require a free chair. An accepted machine order instead
+    // permits a nearby standing customer when every chair is missing/occupied.
+    if (order.type === "dine_in" && order.walkIn && !chair) return undefined;
+    const location = chair ? center(chair.location, 1) : standPosition(dimension, destination, order.type === "dine_in" ? 5 : 2);
     if (!location) return undefined;
+    const claim = chair ? chairKey(chair) : undefined;
+    if (claim) chairClaims.add(claim);
+    const previous = { customerEntityId: order.customerEntityId, customerAnchor: order.customerAnchor, destination: order.destination };
     let entity;
     try {
       entity = dimension.spawnEntity(CUSTOMER, location);
@@ -208,9 +328,9 @@ export function createEntityService(ctx) {
       property(entity, "stage", "waiting");
       entity.nameTag = `${order.customerName || (order.type === "delivery" ? "外送顧客" : "堂食顧客")}\n§e${restaurant.name || "餐廳"} · ${String(order.id).slice(-6)}`;
       if (chair && !sitOnChair(entity, chair)) { entity.remove(); return undefined; }
-      property(entity, "action", chair ? 1 : 2);
-      gameSystem.runTimeout(() => { if (entity?.isValid && !entity.getDynamicProperty(`${NS}depart_at`)) property(entity, "action", 0); }, 12);
+      startSpawnAction(entity, !!chair);
       order.customerEntityId = entity.id;
+      order.customerAnchor = { dimensionId: dimension.id, location: { ...location } };
       if (order.type === "delivery") {
         order.destination = { ...order.destination, x: Math.floor(location.x), y: Math.floor(location.y), z: Math.floor(location.z), dimensionId: dimension.id };
       }
@@ -219,9 +339,10 @@ export function createEntityService(ctx) {
       return entity;
     } catch (error) {
       if (entity?.isValid) removeCustomer(entity);
+      Object.assign(order, previous);
       console.warn(`[OrderToCook] Customer spawn delayed: ${String(error)}`);
       return undefined;
-    }
+    } finally { if (claim) chairClaims.delete(claim); }
   }
 
   function stableVariant(id) {
@@ -232,24 +353,110 @@ export function createEntityService(ctx) {
 
   function removeCustomer(entity) {
     if (!entity?.isValid) return;
-    const seat = findEntity(entity.getDynamicProperty(`${NS}seat_id`));
+    const riding = entity.getComponent("minecraft:riding")?.entityRidingOn;
+    const candidate = riding?.typeId === SEAT ? riding : findEntity(entity.getDynamicProperty(`${NS}seat_id`));
+    const seat = candidate?.typeId === SEAT ? candidate : undefined;
     if (seat) seat.getComponent("minecraft:rideable")?.ejectRider(entity);
     entity.remove();
     if (seat) clearSeat(seat);
+    for (const key of entityInteractions.keys()) if (key.endsWith(`:${entity.id}`)) entityInteractions.delete(key);
   }
 
-  function finishCustomer(orderId) {
-    retryTimes.delete(orderId);
-    for (const entity of loadedCustomers(orderId)) {
-      if (entity.getDynamicProperty(`${NS}depart_at`)) continue;
-      const seated = !!entity.getComponent("minecraft:riding")?.entityRidingOn;
-      property(entity, "stage", "eating");
-      property(entity, "action", seated ? 3 : 4);
-      // Only the core pays or creates dirty dishes. This is a visual lifecycle.
-      // The imported npc_eat&scale animation is 5.5 seconds long.
-      entity.setDynamicProperty(`${NS}depart_at`, Date.now() + 5500);
-      playSound(entity, "random.eat", 0.5);
+  function startSpawnAction(entity, seated) {
+    const at = clock();
+    const action = seated ? 1 : 2;
+    property(entity, "action", action);
+    entity.setDynamicProperty(`${NS}action_started_at`, at);
+    entity.setDynamicProperty(`${NS}spawn_until`, at + ACTION_TICKS[action] * 50);
+    nextIdle(entity, at + ACTION_TICKS[action] * 50);
+    gameSystem.runTimeout(() => {
+      if (!entity?.isValid || entity.getDynamicProperty(`${NS}depart_at`)) return;
+      if (Number(currentProperty(entity, "action", 0)) !== action) return;
+      property(entity, "action", 0);
+      entity.setDynamicProperty(`${NS}spawn_until`, undefined);
+    }, ACTION_TICKS[action]);
+  }
+
+  function defaultCompletionAction(entity) {
+    const seated = !!getCustomerSeat(entity);
+    const association = customerOrder(entity);
+    const restaurant = ctx.getRestaurant?.(association.restaurantId);
+    const order = restaurant?.orders?.find(entry => entry.id === association.orderId);
+    return seated && order?.type === "dine_in" ? 6 : seated ? 3 : 4;
+  }
+
+  /**
+   * @param {{startedAt?: number, finishAt?: number, action?: number}} options
+   */
+  function applyCompletion(entity, options, replace = false, resumed = false) {
+    const priorFinish = entity.getDynamicProperty(`${NS}depart_at`);
+    if (!replace && typeof priorFinish === "number") return false;
+    const requested = Number(options.action);
+    const action = COMPLETION_ACTIONS.has(requested) ? requested : defaultCompletionAction(entity);
+    const at = Number.isFinite(options.startedAt) ? Number(options.startedAt) : clock();
+    const finishAt = Number.isFinite(options.finishAt) && Number(options.finishAt) >= at
+      ? Number(options.finishAt) : at + ACTION_TICKS[action] * 50;
+    const previousAction = Number(currentProperty(entity, "action", 0));
+    const unchanged = priorFinish === finishAt && entity.getDynamicProperty(`${NS}action_started_at`) === at && previousAction === action;
+    if (clock() >= finishAt) {
+      // The boom cue is at tick 118 and the service runs every five ticks.
+      // Emit that final crossed cue before removal, but never replay old cues
+      // when a world is reopened long after its completion deadline.
+      if (unchanged && clock() - finishAt <= 250) completionEffects(entity, clock());
+      removeCustomer(entity); return true;
     }
+    if (unchanged) return false;
+    entity.setDynamicProperty(`${NS}action_started_at`, at);
+    entity.setDynamicProperty(`${NS}depart_at`, finishAt);
+    entity.setDynamicProperty(`${NS}spawn_until`, undefined);
+    entity.setDynamicProperty(`${NS}action_signal`, false);
+    entity.setDynamicProperty(`${NS}action_finish_signal`, false);
+    entity.setDynamicProperty(`${NS}last_eat_beat`, -1);
+    property(entity, "stage", EATING_ACTIONS.has(action) ? "eating" : "leaving");
+    property(entity, "action", action);
+    // The order core owns every coin and dirty plate. These are visual effects,
+    // including the boom: no explosion command, damage, or block destruction.
+    if (!resumed) {
+      sparkle(entity, "minecraft:villager_happy");
+      playSound(entity, "mob.villager.yes", 0.7);
+    }
+    return true;
+  }
+
+  /** Starts one original completion action; repeats cannot extend its lifetime.
+   * @param {{startedAt?: number, finishAt?: number, action?: number}} [options]
+   */
+  function finishCustomer(orderId, options = {}) {
+    retryTimes.delete(orderId);
+    let changed = 0;
+    for (const entity of loadedCustomers(orderId)) {
+      if (applyCompletion(entity, options)) changed++;
+    }
+    return changed;
+  }
+
+  /** Reconciles canonical timing after reload; never spawns a completed actor.
+   * @param {{startedAt?: number, finishAt?: number, action?: number}} [options]
+   */
+  function resumeCustomerMeal(restaurant, order, options = order?.meal ?? order?.completion) {
+    if (!restaurant || !order || !options) return 0;
+    let changed = 0;
+    for (const entity of loadedCustomers(order.id, restaurant.id)) {
+      if (applyCompletion(entity, options, true, true)) changed++;
+    }
+    return changed;
+  }
+
+  /** Early plate pickup changes only the visual action, never payment state.
+   * @param {{startedAt?: number, finishAt?: number, action?: number}} [options]
+   */
+  function interruptCustomerMeal(orderId, options = {}) {
+    let changed = 0;
+    for (const entity of loadedCustomers(orderId)) {
+      if (![5, 6].includes(Number(currentProperty(entity, "action", 0)))) continue;
+      if (applyCompletion(entity, { ...options, action: 7 }, true)) changed++;
+    }
+    return changed;
   }
 
   function cleanupOrder(orderId) {
@@ -385,11 +592,21 @@ export function createEntityService(ctx) {
   function onEntityInteract(player, entity) {
     if (!entity?.isValid || !player.isValid) return false;
     if (entity.typeId === CUSTOMER) {
+      if (player.dimension.id !== entity.dimension.id || dist2(player.location, entity.location) > 36) return true;
       const association = customerOrder(entity);
       if (typeof association.restaurantId !== "string" || typeof association.orderId !== "string") {
         notify(player, "這位顧客沒有關聯訂單。"); return true;
       }
-      if (currentProperty(entity, "stage", "waiting") === "eating") { notify(player, "顧客正在享用餐點。"); return true; }
+      const restaurant = ctx.getRestaurant?.(association.restaurantId);
+      const order = restaurant?.orders?.find(entry => entry.id === association.orderId);
+      const canonical = order?.customerEntityId ? findEntity(order.customerEntityId) : undefined;
+      if (canonical && canonical.id !== entity.id) {
+        removeCustomer(entity);
+        notify(player, "已清理重複顧客，請與同一訂單的原顧客互動。"); return true;
+      }
+      if (typeof entity.getDynamicProperty(`${NS}depart_at`) === "number" || COMPLETION_ACTIONS.has(Number(currentProperty(entity, "action", 0)))) {
+        notify(player, EATING_ACTIONS.has(Number(currentProperty(entity, "action", 0))) ? "顧客正在享用餐點。" : "顧客已收取餐點，正在離開。"); return true;
+      }
       const result = ctx.onCustomerInteract?.(player, entity, association);
       if (result?.catch) result.catch(error => { if (player.isValid) notify(player, `交付未完成：${String(error)}`); });
       return true;
@@ -422,20 +639,26 @@ export function createEntityService(ctx) {
     if ((permutation?.type?.id ?? station?.typeId) !== CHAIR) return false;
     const candidates = block.dimension.getEntities({ type: SEAT, location: center(block.location, 0.5625), maxDistance: 0.8 });
     for (const seat of candidates) {
-      const anchor = seat.getDynamicProperty(`${NS}chair_anchor`);
-      if (typeof anchor !== "string") continue;
-      try { if (!sameBlock(JSON.parse(anchor).location, block.location)) continue; } catch { continue; }
+      const anchor = readAnchor(seat.getDynamicProperty(`${NS}chair_anchor`));
+      if (!anchor || anchor.dimensionId !== block.dimension.id || !sameBlock(anchor.location, block.location)) continue;
       const rideable = seat.getComponent("minecraft:rideable");
       const riders = rideable?.getRiders() ?? [];
       rideable?.ejectRiders();
-      for (const rider of riders) if (rider.typeId === CUSTOMER) {
-        rider.setDynamicProperty(`${NS}seat_id`, undefined);
-        property(rider, "stage", "waiting");
-        property(rider, "action", 0);
-      }
+      for (const rider of riders) if (rider.typeId === CUSTOMER) releaseCustomerChair(rider);
       seat.remove();
     }
     return true;
+  }
+
+  function releaseCustomerChair(entity) {
+    entity.setDynamicProperty(`${NS}seat_id`, undefined);
+    entity.setDynamicProperty(`${NS}chair_anchor`, undefined);
+    if (typeof entity.getDynamicProperty(`${NS}depart_at`) !== "number") {
+      property(entity, "stage", "waiting");
+      property(entity, "action", 0);
+      entity.setDynamicProperty(`${NS}spawn_until`, undefined);
+      nextIdle(entity);
+    }
   }
 
   function onMotorcycleHit(event) {
@@ -459,10 +682,8 @@ export function createEntityService(ctx) {
 
   function cleanSeats() {
     for (const seat of queryAll(SEAT)) {
-      const value = seat.getDynamicProperty(`${NS}chair_anchor`);
-      if (typeof value !== "string") continue;
-      let anchor;
-      try { anchor = JSON.parse(value); } catch { continue; }
+      const anchor = readAnchor(seat.getDynamicProperty(`${NS}chair_anchor`));
+      if (!anchor || anchor.dimensionId !== seat.dimension.id) continue;
       let block;
       try { block = seat.dimension.getBlock(anchor.location); } catch { continue; }
       if (!block) continue;
@@ -470,12 +691,79 @@ export function createEntityService(ctx) {
         const rideable = seat.getComponent("minecraft:rideable");
         const riders = rideable?.getRiders() ?? [];
         rideable?.ejectRiders();
-        for (const rider of riders) if (rider.typeId === CUSTOMER) {
-          property(rider, "stage", "waiting");
-          rider.setDynamicProperty(`${NS}seat_id`, undefined);
-        }
+        for (const rider of riders) if (rider.typeId === CUSTOMER) releaseCustomerChair(rider);
         seat.remove();
       } else clearSeat(seat);
+    }
+  }
+
+  function restoreCustomerChair(entity) {
+    if (entity.getComponent("minecraft:riding")?.entityRidingOn) return;
+    const anchor = readAnchor(entity.getDynamicProperty(`${NS}chair_anchor`));
+    if (!anchor || anchor.dimensionId !== entity.dimension.id) return;
+    try {
+      const chair = entity.dimension.getBlock(anchor.location);
+      if (!chair) return;
+      if (chair.typeId !== CHAIR) { releaseCustomerChair(entity); return; }
+      sitOnChair(entity, chair);
+    } catch { /* Preserve the association until the original chair loads. */ }
+  }
+
+  function canonicalMeal(restaurant, order, orderId) {
+    const source = order?.meal ?? order?.completion ?? restaurant?.pendingDishes?.find(entry => (entry.orderId ?? entry.id) === orderId);
+    if (!source || !Number.isFinite(source.startedAt) || !Number.isFinite(source.finishAt) || !COMPLETION_ACTIONS.has(source.action)) return undefined;
+    return source;
+  }
+
+  function completionEffects(entity, currentTime) {
+    let action = Number(currentProperty(entity, "action", 0));
+    const finishAt = Number(entity.getDynamicProperty(`${NS}depart_at`));
+    let at = entity.getDynamicProperty(`${NS}action_started_at`);
+    if (typeof at !== "number") {
+      // alpha.1 persisted only depart_at and used the generic eating clip.
+      property(entity, "action", 6);
+      action = 6;
+      at = finishAt - ACTION_TICKS[6] * 50;
+      entity.setDynamicProperty(`${NS}action_started_at`, at);
+    }
+    const elapsed = currentTime - Number(at);
+    if ([5, 6].includes(action) && elapsed >= 2450 && elapsed < 4750) {
+      const beat = Math.floor((elapsed - 2450) / 350);
+      if (Number(entity.getDynamicProperty(`${NS}last_eat_beat`) ?? -1) < beat) {
+        entity.setDynamicProperty(`${NS}last_eat_beat`, beat);
+        playSound(entity, "random.eat", 0.7);
+      }
+    }
+    const signalAt = ({ 3: 1750, 4: 2750, 5: 4850, 6: 5250, 7: 250 })[action];
+    if (signalAt !== undefined && elapsed >= signalAt && !entity.getDynamicProperty(`${NS}action_signal`)) {
+      entity.setDynamicProperty(`${NS}action_signal`, true);
+      if (action === 5) playSound(entity, "random.fuse", 0.9);
+      else { playSound(entity, "mob.endermen.portal", 0.8); sparkle(entity, "minecraft:mob_portal"); }
+    }
+    if (action === 5 && elapsed >= 5900 && !entity.getDynamicProperty(`${NS}action_finish_signal`)) {
+      entity.setDynamicProperty(`${NS}action_finish_signal`, true);
+      playSound(entity, "random.explode", 0.7);
+      sparkle(entity, "minecraft:huge_explosion_emitter");
+    }
+  }
+
+  function deduplicateCustomers() {
+    const groups = new Map();
+    for (const entity of entities) {
+      if (!entity.isValid) continue;
+      const association = customerOrder(entity);
+      if (typeof association.restaurantId !== "string" || typeof association.orderId !== "string") continue;
+      const key = `${association.restaurantId}\n${association.orderId}`;
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(entity);
+    }
+    for (const group of groups.values()) {
+      if (group.length < 2) continue;
+      const association = customerOrder(group[0]);
+      const restaurant = ctx.getRestaurant?.(association.restaurantId);
+      const order = restaurant?.orders?.find(entry => entry.id === association.orderId);
+      const canonical = group.find(entity => entity.id === order?.customerEntityId) ?? group[0];
+      for (const duplicate of group) if (duplicate.id !== canonical.id) removeCustomer(duplicate);
     }
   }
 
@@ -484,42 +772,57 @@ export function createEntityService(ctx) {
     if (now === lastTick || now < readyTick) return;
     lastTick = now;
     const refresh = now - scanTick >= 20;
-    if (refresh) { entities = queryAll(CUSTOMER); scanTick = now; }
-    const currentTime = Date.now();
+    if (refresh) {
+      entities = queryAll(CUSTOMER);
+      deduplicateCustomers();
+      scanTick = now;
+    }
+    const currentTime = clock();
     for (const entity of entities) {
       if (!entity.isValid) continue;
       try {
         const association = customerOrder(entity);
         if (!association.orderId || !association.restaurantId) continue;
-        const departure = entity.getDynamicProperty(`${NS}depart_at`);
-        if (typeof departure === "number") {
-          if (currentTime >= departure + 500) removeCustomer(entity);
-          else if (currentTime >= departure) {
-            property(entity, "stage", "leaving");
-            property(entity, "action", 0);
-            sparkle(entity);
-          }
-          continue;
-        }
         const restaurant = ctx.getRestaurant?.(association.restaurantId);
         const order = restaurant?.orders?.find(entry => entry.id === association.orderId);
-        if (!needsCustomer(order) || currentTime >= order.expiresAt) { removeCustomer(entity); continue; }
-        const riding = entity.getComponent("minecraft:riding")?.entityRidingOn;
-        if (order.type === "dine_in" && !riding) {
-          const chair = findChair(restaurant);
-          if (chair) sitOnChair(entity, chair);
+        const meal = canonicalMeal(restaurant, order, association.orderId);
+        if (meal) {
+          applyCompletion(entity, meal, true, true);
+          if (!entity.isValid) continue;
         }
+        const departure = entity.getDynamicProperty(`${NS}depart_at`);
+        if (typeof departure === "number") {
+          completionEffects(entity, currentTime);
+          if (currentTime >= departure) removeCustomer(entity);
+          else restoreCustomerChair(entity);
+          continue;
+        }
+        if (!needsCustomer(order) || currentTime >= order.expiresAt) { removeCustomer(entity); continue; }
+        restoreCustomerChair(entity);
+        const spawnUntil = entity.getDynamicProperty(`${NS}spawn_until`);
+        if (typeof spawnUntil === "number" && currentTime >= spawnUntil) {
+          entity.setDynamicProperty(`${NS}spawn_until`, undefined);
+          property(entity, "action", 0);
+        }
+        if (!entity.getDynamicProperty(`${NS}spawn_until`) && currentTime >= Number(entity.getDynamicProperty(`${NS}idle_until`) ?? 0)) nextIdle(entity, currentTime);
       } catch { /* An actor can unload between the dimension query and this tick. */ }
     }
     if (refresh) {
+      const candidates = [];
       for (const restaurant of ctx.restaurants?.() ?? []) {
         for (const order of restaurant.orders ?? []) {
           if (!needsCustomer(order) || currentTime >= order.expiresAt) continue;
           if ((retryTimes.get(order.id) ?? -100) + 40 > now) continue;
           if (entities.some(entity => entity.isValid && entity.getDynamicProperty(`${NS}order_id`) === order.id)) continue;
-          retryTimes.set(order.id, now);
-          spawnCustomer(restaurant, order);
+          candidates.push({ restaurant, order });
         }
+      }
+      // Four attempts per scan bound worst-case floor/chunk checks; oldest
+      // attempts go first so several blocked restaurants cannot starve others.
+      candidates.sort((a, b) => (retryTimes.get(a.order.id) ?? -100) - (retryTimes.get(b.order.id) ?? -100));
+      for (const { restaurant, order } of candidates.slice(0, 4)) {
+        retryTimes.set(order.id, now);
+        spawnCustomer(restaurant, order);
       }
     }
     if (now - seatCleanupTick >= 100) { seatCleanupTick = now; cleanSeats(); }
@@ -554,7 +857,7 @@ export function createEntityService(ctx) {
   }
 
   return {
-    init, tick, spawnCustomer, finishCustomer, cleanupOrder, spawnMotorcycle, openMotorcycle,
+    init, tick, spawnCustomer, finishCustomer, resumeCustomerMeal, interruptCustomerMeal, cleanupOrder, getCustomerSeat, spawnMotorcycle, openMotorcycle,
     onItemUse, onEntityInteract, onBlockInteract, onBlockBreak, sitOnChair,
   };
 }

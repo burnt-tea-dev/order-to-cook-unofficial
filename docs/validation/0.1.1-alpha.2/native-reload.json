@@ -1,0 +1,86 @@
+{
+  "mode": "reload",
+  "passed": true,
+  "checks": [
+    {
+      "name": "production entry initialized",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restaurant restored across server restart",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native storage entity restored",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "non-stackable parcel proof restored",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native ItemStack name and lore restored",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "custom block restored across server restart",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "refrigerator native contents and name survive restart or upgrade",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "refrigerator persisted state accepts independent frame encoding",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "finished dishwasher retains all plates across restart or upgrade",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "finished dishwasher loads new final frame permutation",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "unfinished meal restores canonical token and original clock",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restart reconciles exactly one dirty visual",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restart does not respawn the finished meal customer",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restored dirty plate can be collected exactly once",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "stale restored meal reference cannot mint a second plate",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "addonVersion": "0.1.1-alpha.2",
+  "serverVersion": "1.26.52.3",
+  "runtimeTreeSha256": "a281a8285266923de1a99ad51c163e1c9fabbd8e1adb6034969affe4843d6cc4",
+  "addonErrors": [],
+  "scope": "Native server blocks, entities, inventory and script adapters. No real Player, client rendering, forms, touch/keyboard, or multiplayer latency is exercised."
+}

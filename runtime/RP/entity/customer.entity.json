@@ -15,8 +15,13 @@
         "slim": "geometry.ordertocook.customer_slim"
       },
       "animations": {
-        "eating": "animation.ordertocook.npc_transition.npc_eat_scale",
-        "walk": "animation.ordertocook.customer.walk",
+        "action1": "animation.ordertocook.npc_transition.npc_sitspawn",
+        "action2": "animation.ordertocook.npc_transition.npc_standspawn",
+        "action3": "animation.ordertocook.npc_transition.npc_sittake",
+        "action4": "animation.ordertocook.npc_transition.npc_standtake",
+        "action5": "animation.ordertocook.npc_transition.npc_eat_boom",
+        "action6": "animation.ordertocook.npc_transition.npc_eat_scale",
+        "action7": "animation.ordertocook.npc_transition.npc_eat_scale_interrupt",
         "waiting1": "animation.ordertocook.npc.customer_wait_1",
         "seated1": "animation.ordertocook.npc.customer_sit_1",
         "waiting2": "animation.ordertocook.npc.customer_wait_2",

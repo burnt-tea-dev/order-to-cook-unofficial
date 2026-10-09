@@ -1435,61 +1435,1057 @@
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_lower_0.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Y=16 split with cropped original UVs and synchronized door pose"
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_0.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_lower_1.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Y=16 split with cropped original UVs and synchronized door pose"
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_1.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_2.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_2.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_3.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_3.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_4.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_4.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_5.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_5.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_6.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_6.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_7.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_7.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_8.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_8.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_9.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_9.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_10.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_10.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_upper_0.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Y=16 split with cropped original UVs and synchronized door pose"
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_0.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_upper_1.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Y=16 split with cropped original UVs and synchronized door pose"
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_1.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_2.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_2.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_3.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_3.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_4.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_4.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_5.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_5.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_6.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_6.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_7.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_7.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_8.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_8.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_9.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_9.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_10.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_10.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
-      "output": "RP/models/blocks/dishwasher_0.geo.json",
+      "output": "RP/models/blocks/dishwasher_0_0.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Original bones with static dishwasher phase 0 pose"
+      "operation": "Bounded original rigid keyframe pose for phase 0, frame 0; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_0_0.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 0, frame 0; uniform plate scale preserved, cabinet squash omitted"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
-      "output": "RP/models/blocks/dishwasher_1.geo.json",
+      "output": "RP/models/blocks/dishwasher_1_0.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Original bones with static dishwasher phase 1 pose"
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 0; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_1_0.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 0; uniform plate scale preserved, cabinet squash omitted"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
-      "output": "RP/models/blocks/dishwasher_2.geo.json",
+      "output": "RP/models/blocks/dishwasher_1_1.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Original bones with static dishwasher phase 2 pose"
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 1; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_1_1.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 1; uniform plate scale preserved, cabinet squash omitted"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
-      "output": "RP/models/blocks/dishwasher_3.geo.json",
+      "output": "RP/models/blocks/dishwasher_1_2.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Original bones with static dishwasher phase 3 pose"
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 2; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_1_2.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 2; uniform plate scale preserved, cabinet squash omitted"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
-      "output": "RP/models/blocks/dishwasher_4.geo.json",
+      "output": "RP/models/blocks/dishwasher_1_3.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Original bones with static dishwasher phase 4 pose"
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 3; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_1_3.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 3; uniform plate scale preserved, cabinet squash omitted"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
-      "output": "RP/models/blocks/dishwasher_5.geo.json",
+      "output": "RP/models/blocks/dishwasher_1_4.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Original bones with static dishwasher phase 5 pose"
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 4; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_1_4.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 4; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_1_5.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 5; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_1_5.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 5; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_1_6.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 6; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_1_6.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 6; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_1_7.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 7; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_1_7.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 7; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_1_8.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 8; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_1_8.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 8; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_1_9.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 9; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_1_9.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 9; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_1_10.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 10; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_1_10.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 10; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_1_11.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 11; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_1_11.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 11; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_1_12.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 12; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_1_12.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 12; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_1_13.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 13; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_1_13.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 13; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_1_14.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 14; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_1_14.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 14; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_1_15.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 15; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_1_15.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 1, frame 15; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_2_0.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 0; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_2_0.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 0; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_2_1.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 1; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_2_1.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 1; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_2_2.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 2; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_2_2.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 2; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_2_3.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 3; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_2_3.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 3; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_2_4.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 4; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_2_4.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 4; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_2_5.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 5; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_2_5.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 5; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_2_6.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 6; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_2_6.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 6; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_2_7.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 7; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_2_7.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 7; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_2_8.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 8; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_2_8.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 8; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_2_9.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 9; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_2_9.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 9; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_2_10.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 10; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_2_10.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 10; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_2_11.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 11; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_2_11.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 11; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_2_12.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 12; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_2_12.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 12; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_2_13.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 13; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_2_13.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 13; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_2_14.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 14; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_2_14.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 14; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_2_15.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 15; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_2_15.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 2, frame 15; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_3_0.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 0; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_3_0.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 0; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_3_1.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 1; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_3_1.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 1; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_3_2.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 2; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_3_2.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 2; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_3_3.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 3; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_3_3.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 3; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_3_4.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 4; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_3_4.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 4; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_3_5.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 5; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_3_5.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 5; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_3_6.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 6; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_3_6.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 6; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_3_7.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 7; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_3_7.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 7; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_3_8.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 8; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_3_8.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 8; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_3_9.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 9; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_3_9.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 9; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_3_10.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 10; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_3_10.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 10; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_3_11.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 11; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_3_11.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 11; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_3_12.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 12; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_3_12.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 12; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_3_13.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 13; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_3_13.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 13; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_3_14.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 14; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_3_14.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 14; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_3_15.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 15; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_3_15.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 3, frame 15; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_4_0.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 0; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_4_0.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 0; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_4_1.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 1; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_4_1.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 1; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_4_2.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 2; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_4_2.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 2; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_4_3.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 3; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_4_3.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 3; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_4_4.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 4; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_4_4.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 4; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_4_5.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 5; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_4_5.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 5; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_4_6.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 6; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_4_6.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 6; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_4_7.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 7; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_4_7.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 7; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_4_8.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 8; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_4_8.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 8; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_4_9.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 9; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_4_9.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 9; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_4_10.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 10; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_4_10.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 10; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_4_11.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 11; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_4_11.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 11; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_4_12.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 12; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_4_12.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 12; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_4_13.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 13; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_4_13.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 13; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_4_14.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 14; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_4_14.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 14; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_4_15.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 15; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_4_15.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 4, frame 15; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_5_0.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Bounded original rigid keyframe pose for phase 5, frame 0; uniform plate scale preserved, cabinet squash omitted"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_5_0.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Bounded original rigid keyframe pose for phase 5, frame 0; uniform plate scale preserved, cabinet squash omitted"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/models/block/stove.json",
@@ -1562,6 +2558,270 @@
       "output": "RP/models/entity/customer_slim.geo.json",
       "sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
       "operation": "Geometry identifier and version normalization"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/item/clean_plate.png",
+      "output": "RP/textures/ordertocook/entity/dining_plate_atlas.png",
+      "sha256": "2a7727c8f62e5b9ed7eacbc08ff0e778210e8f89189136d5d6ac9d5b0ecb94d5",
+      "operation": "Exact source pixels placed in a single entity atlas; x,y,UV scales=(166, 2, 4.0, 4.0)"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/food_plate_variants.png",
+      "output": "RP/textures/ordertocook/entity/dining_plate_atlas.png",
+      "sha256": "b233e3750f620834648f08386244ddeceeb6d0ce2f439315e02d424ed79eb2e1",
+      "operation": "Exact source pixels placed in a single entity atlas; x,y,UV scales=(2, 2, 10.0, 10.0)"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/blockstates/food_plate_display.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "3a36a70531958dd2eaa803588f43a9bf1cdf4e33a5e542c97914607b7cae8b8d",
+      "operation": "Original stage0..40 mapping; stage0 is an empty clean plate as in the display adaptation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/clean_plate.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "6d4d5c4ad1189c7502c42e3225d66c752348342434821e47e10ac0cd9b3c89df",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/10_1.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "574b4269b842c76d392bd962ff6a27d7f5b52afa7b3de37edb1fff4e1f5fd06d",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/10_2.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "cdbab42b0b248e4da27ac5127620dfa04f081d01d871a844cc302570a55781e0",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/10_3.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "d7335677c6395f55e5cb0956384f2c6503f8747d6ea3244f8b4ec6640571c538",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/10_4.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "9407dfc32cbca291df2d23eabb8ae48d8a71c3e498526b1f2cc8117eff3cbf05",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/1_1.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "652f44f6f11a644b21da8b966d249e201baad5a9ca9c0602428a5591f3326eee",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/1_2.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "8664eac0442af13a838004e6d03c89378aea675b0f485d9b983994dd5e9258e1",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/1_3.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "43a1d79862a005549ac26354c3bd17c219b6f97adbd482400597640abd40a1ef",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/1_4.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "d45c82a78cdd648e139b233affd7d471d1a468ca8c2ceb725a8323b99530977c",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_1.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "e63950cb5b497bb060c4da16b2b2772346831c4087d0dc529366421bac99703c",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_2.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "62b5a756fca8fc36ceccf6227cd16b2a4518cf43f19d5e38e0b4d311e628f9e8",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_3.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "e49ae1bf574a82524a09fa6b04a3272b97f01c2cd53a8093a7a97d148ad62a3d",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_4.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "6e67154e23d127e326f79a43c1e551100930e8d0785bf3797ea1943c6092d3af",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/3_1.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "a1dfae13a9f9060f8a9e65fe85276c1d004800bbfac25642d6dabc133de06ef3",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/3_2.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "7b1011cd076b0ef64e077da8f00445297036a6e128def81f19dfa90ee3d5b10d",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/3_3.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "b7e11c21c14c60e3adad6156d88151bf7a626cf51451426475b87a1192e989b4",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/3_4.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "d45c82a78cdd648e139b233affd7d471d1a468ca8c2ceb725a8323b99530977c",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/4_1.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "6119636764c8c392f001e8828f26a378756634e0a20deb4820872256c142fb9c",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/4_2.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "c27fa608805cc4352cbe24f3cf795aa47eb9157eee6bc222a0d15d8bf4676532",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/4_3.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "38699ee2b96525afeb8314197fca06bd80065baa10860d2c4b47a2d7b2bbbcb6",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/4_4.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "2574b22e41a99d18986cd14fefb68e7e164fdbec20b78b3a8018f9c18a9458b4",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/5_1.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "024beef092689d5b0cc1108a5a9ff115b0400fd7f54a6b8f134237068b51d431",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/5_2.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "562b467781f60a3e5f4fabf63b15f7e5683f59b5c36580eb9fa2ed9f92652c4f",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/5_3.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "f71ad3f60f01f850ef1c30ba88e808774bd4f4dcf9c416e14e072b1ba5527cb6",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/5_4.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "3ebe2f3562984ee9baa778bb2ebcacf2a326d9c938d69327894ed3d52db4352a",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/6_1.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "2edfec870d63ae35ba7269722064cf96d3fb100cc2050e92c8103ac670f9fece",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/6_2.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "5992fa77bdc0546cb362f104d94c0d60c9e7a87e04d5ab0fea1020f4d9fcb909",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/6_3.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "7f66a7603a59190c287c9b163f32cfaa0518c5528d085dd05c0832a2d8396a0a",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/6_4.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "d45c82a78cdd648e139b233affd7d471d1a468ca8c2ceb725a8323b99530977c",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/7_1.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "cd4e81960221d5c3f6ad25614c3d0ba5f9a232717774a24ed244379814c89c98",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/7_2.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "e5125489fdd1712652bbe6e28f0f7567642d913ce5da93a431536d634645e275",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/7_3.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "1053fc55540f9ccb33ec2194803aedc282c0b37c35990ae59f826b400519ab30",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/7_4.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "d45c82a78cdd648e139b233affd7d471d1a468ca8c2ceb725a8323b99530977c",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/8_1.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "1ed221e24b778edeb11c6963f96e6990b6c05e5203c169b64f2ac8623c2c024d",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/8_2.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "f403966bcbcbf2692bbe701af33476ca634913712050fe79026851aabc524d34",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/8_3.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "5cc5de4c7ffd32ea199678480c977be09bcf907beca24037ae0f537f77526722",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/8_4.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "6cf8cdf9be5b1a6428c720b3b9e489b131174312d45496e9931c178fea80ae60",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/9_1.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "d4782bbf520c0356504eb6211048a34822a8191a83012c6b10c24f762a2c5526",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/9_2.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "74a510ee392b294faba363102507f6b8b6dd1e4a8a61e5b415f0c599c50bf2ec",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/9_3.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "f7429b895a78b210793b12656b09aceb71b56e3af12d4f7e0f5042dd55f6151a",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/9_4.json",
+      "output": "RP/models/entity/dining_plate.geo.json",
+      "sha256": "8a33cfe464fc27a0e907f2b242e7a71ad5392bebc9cfcedec532e87d688f160e",
+      "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
@@ -1643,9 +2903,11 @@
     }
   ],
   "adaptations": [
-    "Two-part refrigerator with clipped UVs and synchronous door poses",
-    "GeckoLib easing replaced by native Bedrock interpolation",
-    "Static dishwasher phase poses; original animation clips retained",
+    "Two-part cabinet with each complete refrigerator door assigned to its own compartment and 11 reversible baked poses; at most 0.125px intermediate hinge translation keeps the sweep within 30px",
+    "GeckoLib easing replaced by linear interpolation; nonuniform appliance cabinet squash omitted",
+    "Dishwasher drawer, door, uniform dish scale and wash vibration sampled into at most 16 bounded poses per original phase",
+    "Dining plate entity uses all 41 original stage shapes and a single exact-pixel atlas; no inventory or automatic loot",
+    "Seven original customer actions and separate four-way weighted idle variation; action clip restarts on client reload while server finish time remains authoritative",
     "Default customer skins prebundled; runtime web skin lookup not available",
     "Source-model inventory thumbnails",
     "Early-game furniture recipes added for survival access"

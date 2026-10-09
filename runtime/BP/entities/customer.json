@@ -35,6 +35,15 @@
           ],
           "default": 0,
           "client_sync": true
+        },
+        "ordertocook:animation_variant": {
+          "type": "int",
+          "range": [
+            1,
+            4
+          ],
+          "default": 1,
+          "client_sync": true
         }
       }
     },
@@ -70,7 +79,7 @@
         "height": 1.8
       },
       "minecraft:movement": {
-        "value": 0.22
+        "value": 0
       },
       "minecraft:movement.basic": {},
       "minecraft:navigation.walk": {

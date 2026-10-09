@@ -1,0 +1,646 @@
+{
+  "mode": "initial",
+  "passed": true,
+  "checks": [
+    {
+      "name": "production entry initialized",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "block registered: order_machine",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "block registered: board",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "block registered: countertop",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "block registered: shelf",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "block registered: plate_shelf",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "block registered: washingtable",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "block registered: chair",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "block registered: dishwasher",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "block registered: refrigerator",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "block registered: stove",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "block registered: takeout_bag",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "block registered: food_plate_display",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "custom items registered",
+      "passed": true,
+      "detail": "28"
+    },
+    {
+      "name": "vanilla food identifier: minecraft:apple",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:enchanted_golden_apple",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:baked_potato",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:beef",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:beetroot",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:beetroot_soup",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:bread",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:carrot",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:chicken",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:chorus_fruit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:tropical_fish",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:cooked_beef",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:cooked_chicken",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:cooked_cod",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:cooked_porkchop",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:cooked_rabbit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:cooked_salmon",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:cookie",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:dried_kelp",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:cod",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:glow_berries",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:golden_apple",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:golden_carrot",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:honey_bottle",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:melon_slice",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:mushroom_stew",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:cooked_mutton",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:mutton",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:poisonous_potato",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:porkchop",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:potato",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:pufferfish",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:pumpkin_pie",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:rabbit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:rabbit_stew",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:rotten_flesh",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:salmon",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:spider_eye",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:suspicious_stew",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vanilla food identifier: minecraft:sweet_berries",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "two-block refrigerator placed without double-placement deletion",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "18-plate state encoded through native permutations",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "40-stage plate visuals have native state encoding",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native inventory helper has 81 slots",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "production acceptance allows an ordinary dine-in before any chair is placed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native order ticket carries canonical server ID",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "actual countertop adapter transitions to packed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "actual countertop adapter consumes exact food",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "actual countertop adapter consumes one plate",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "actual countertop places visible native output",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native duplicate packing has no second debit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "pickup preserves unstackable delivery proof",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "customer entity registered with native properties",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "chair mounts a real native customer",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native mounted customer resolves its actual chair block",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native submission completes order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native submission pays exact recorded reward",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "handoff starts native scale action with canonical deadline",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native dining helper starts at shared stage zero",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native dining helper carries no recoverable inventory",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "copied native parcel cannot earn a second payout",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native motorcycle has 54 cargo slots",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native motorcycle exposes rideable input vehicle",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "unstackable parcel transfers into native cargo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native cargo returns exact name/lore/proof",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native refrigerator exposes 81 storage slots",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "refrigerator supplies can be counted through production adapter",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native dishwasher accepts 16 dirty plates",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native dining reaches source phase 1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native dining reaches source phase 2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native dining reaches source phase 3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native dining reaches source phase 4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native completed customer leaves at the saved deadline",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native dirty plate persists after customer departure",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native meal completion does not auto-drop an extra plate",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "name": "native duplicate dining helpers reconcile to one",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "explicit native plate pickup returns exactly one dirty plate",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "stale native plate pickup cannot return another plate",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native stove cooks three lanes",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native dishwasher completes all 16 plates",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native dishwasher selects the final source pose",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native customer fixture is canonical and isolated",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native integer-length ray resolves the exact full floor top",
+      "passed": true,
+      "detail": "{\"production\":{\"block\":\"minecraft:stone\",\"location\":{\"z\":-10,\"y\":3,\"x\":-10},\"face\":\"Up\",\"faceLocation\":{\"z\":0.5,\"y\":0,\"x\":0.5}},\"diagnostics\":[{\"y\":4.05,\"maxDistance\":0.1,\"hit\":null},{\"y\":4.05,\"maxDistance\":0.5,\"hit\":null},{\"y\":4.05,\"maxDistance\":1,\"hit\":{\"block\":\"minecraft:stone\",\"location\":{\"z\":-10,\"y\":3,\"x\":-10},\"face\":\"Up\",\"faceLocation\":{\"z\":0.5,\"y\":0,\"x\":0.5}}},{\"y\":4.05,\"maxDistance\":2,\"hit\":{\"block\":\"minecraft:stone\",\"location\":{\"z\":-10,\"y\":3,\"x\":-10},\"face\":\"Up\",\"faceLocation\":{\"z\":0.5,\"y\":0,\"x\":0.5}}},{\"y\":4.5,\"maxDistance\":0.1,\"hit\":null},{\"y\":4.5,\"maxDistance\":0.5,\"hit\":null},{\"y\":4.5,\"maxDistance\":1,\"hit\":{\"block\":\"minecraft:stone\",\"location\":{\"z\":-10,\"y\":3,\"x\":-10},\"face\":\"Up\",\"faceLocation\":{\"z\":0.5,\"y\":0,\"x\":0.5}}},{\"y\":4.5,\"maxDistance\":2,\"hit\":{\"block\":\"minecraft:stone\",\"location\":{\"z\":-10,\"y\":3,\"x\":-10},\"face\":\"Up\",\"faceLocation\":{\"z\":0.5,\"y\":0,\"x\":0.5}}},{\"y\":5.05,\"maxDistance\":0.1,\"hit\":null},{\"y\":5.05,\"maxDistance\":0.5,\"hit\":null},{\"y\":5.05,\"maxDistance\":1,\"hit\":null},{\"y\":5.05,\"maxDistance\":2,\"hit\":{\"block\":\"minecraft:stone\",\"location\":{\"z\":-10,\"y\":3,\"x\":-10},\"face\":\"Up\",\"faceLocation\":{\"z\":0.5,\"y\":0,\"x\":0.5}}}]}"
+    },
+    {
+      "name": "native complete footprint validates standing support",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native thin-support slab fixture identifier is registered",
+      "passed": true,
+      "detail": "minecraft:oak_slab"
+    },
+    {
+      "name": "native lower slab is rejected as full standing support",
+      "passed": true,
+      "detail": "{\"floor\":\"minecraft:oak_slab\",\"hit\":{\"block\":\"minecraft:oak_slab\",\"location\":{\"z\":-13,\"y\":3,\"x\":-13},\"face\":\"Up\",\"faceLocation\":{\"z\":0.5,\"y\":0.5,\"x\":0.5}}}"
+    },
+    {
+      "name": "native upper slab fixture exposes its placement state",
+      "passed": true,
+      "detail": "{\"minecraft:vertical_half\":\"bottom\",\"top_slot_bit\":false,\"wood_type\":\"oak\"}"
+    },
+    {
+      "name": "native upper slab is rejected despite its full-height top face",
+      "passed": true,
+      "detail": "{\"floor\":\"minecraft:oak_slab\",\"hit\":{\"block\":\"minecraft:oak_slab\",\"location\":{\"z\":-13,\"y\":3,\"x\":-13},\"face\":\"Up\",\"faceLocation\":{\"z\":0.5,\"y\":0,\"x\":0.5}}}"
+    },
+    {
+      "name": "native plant-support fixture identifier is registered",
+      "passed": true,
+      "detail": "minecraft:short_grass"
+    },
+    {
+      "name": "native plant over solid dirt is rejected as standing support",
+      "passed": true,
+      "detail": "{\"floor\":\"minecraft:short_grass\",\"hit\":{\"block\":\"minecraft:dirt\",\"location\":{\"z\":-13,\"y\":2,\"x\":-13},\"face\":\"Up\",\"faceLocation\":{\"z\":0.5,\"y\":0,\"x\":0.5}}}"
+    },
+    {
+      "name": "native water is rejected as standing support",
+      "passed": true,
+      "detail": "{\"floor\":\"minecraft:water\",\"hit\":{\"block\":\"minecraft:dirt\",\"location\":{\"z\":-13,\"y\":2,\"x\":-13},\"face\":\"Up\",\"faceLocation\":{\"z\":0.5,\"y\":0,\"x\":0.5}}}"
+    },
+    {
+      "name": "native ordinary dine-in spawns standing when its chair list is empty",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native customer action 4 property and duration",
+      "passed": true,
+      "detail": "4"
+    },
+    {
+      "name": "native departure blocks another customer submission",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native standing-take deadline removes the actor",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native walk-in refuses a standing fallback without a chair",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native walk-in excludes a chair in the old square corner",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native circular boundary chair is eligible and mounted",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native customer exposes separate original idle variant",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native customer action 3 property and duration",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "name": "native repeated completion cannot extend the departure",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native seated-take cleanup removes actor and its empty helper",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native eating 5 starts with a real seat",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native customer action 5 property and duration",
+      "passed": true,
+      "detail": "5"
+    },
+    {
+      "name": "native boom branch is still present at the dirty-plate time",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native boom branch ends without destroying the chair",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native eating 6 starts with a real seat",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native customer action 6 property and duration",
+      "passed": true,
+      "detail": "6"
+    },
+    {
+      "name": "native early-plate interruption selects original action 7",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native interrupted customer is removed after half a second",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native corrupt customer seat reference preserves motorcycle cargo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native customer fixture cleanup preserves the main restaurant",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "second native meal is saved before shutdown",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "addonVersion": "0.1.1-alpha.2",
+  "serverVersion": "1.26.52.3",
+  "runtimeTreeSha256": "a281a8285266923de1a99ad51c163e1c9fabbd8e1adb6034969affe4843d6cc4",
+  "addonErrors": [],
+  "scope": "Native server blocks, entities, inventory and script adapters. No real Player, client rendering, forms, touch/keyboard, or multiplayer latency is exercised."
+}

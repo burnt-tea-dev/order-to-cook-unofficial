@@ -6,7 +6,7 @@ import {
   addMenuFood, removeMenuFood, getUnlockedSlots, getUpgradeQuote, upgradeRestaurant,
   getEffectiveBenefitLevel, getTierWeights, calculateReward, generateOrder,
   generateWalkInOrder, refreshOrders, synchronizeOfferRewards,
-  acceptOrder, packOrder, completeOrder, cancelOrder, expireOrders, rollTip, splitCoins
+  acceptOrder, packOrder, completeOrder, cancelOrder, expireOrders, rollTip, splitCoins, rollCustomerCompletion
 } from "../runtime/BP/scripts/core.js";
 import { DEFAULT_CONFIG, VANILLA_FOODS, DEFAULT_MENU } from "../runtime/BP/scripts/config.js";
 
@@ -215,6 +215,51 @@ test("one packed order pays exactly once; replay does not even roll another tip"
   assert.equal(r.stats.completed, 1);
   assert.equal(r.stats.earnings, completed.reward);
   assert.equal(cancelOrder(r, order.id, NOW + 4).reason, "already_completed");
+});
+
+test("seated dining preserves the original 10 percent boom boundary and 110/120-tick durations", () => {
+  const r = restaurant({ level: 3 }), order = { type: 'dine_in' };
+  const boom = rollCustomerCompletion(r, order, NOW, { customerSeated: true, rng: rolls(0.099999, 0) });
+  const ordinary = rollCustomerCompletion(r, order, NOW, { customerSeated: true, rng: rolls(0.1) });
+  assert.deepEqual(boom, { startedAt: NOW, finishAt: NOW + 6000, action: 5, boomBonus: 4 });
+  assert.deepEqual(ordinary, { startedAt: NOW, finishAt: NOW + 5500, action: 6, boomBonus: 0 });
+});
+
+test("boom award uses actual restaurant level plus an inclusive one-to-four random bonus", () => {
+  for (let level = 0; level <= 8; level++) {
+    const r = restaurant({ level });
+    assert.equal(rollCustomerCompletion(r, { type: 'dine_in' }, NOW, { customerSeated: true, rng: rolls(0, 0) }).boomBonus, level + 1);
+    assert.equal(rollCustomerCompletion(r, { type: 'dine_in' }, NOW, { customerSeated: true, rng: rolls(0, 0.999999) }).boomBonus, level + 4);
+  }
+});
+
+test("only an explicitly seated plated meal rolls a boom; takeaway timings remain original", () => {
+  const r = restaurant(), fail = () => { throw Error('takeaway must not roll a boom'); };
+  const seatedBag = rollCustomerCompletion(r, { type: 'delivery' }, NOW, { customerSeated: true, rng: fail });
+  const standing = rollCustomerCompletion(r, { type: 'dine_in' }, NOW, { customerSeated: false, rng: fail });
+  assert.equal(seatedBag.action, 3); assert.equal(seatedBag.finishAt, NOW + 2000);
+  assert.equal(standing.action, 4); assert.equal(standing.finishAt, NOW + 3000);
+  assert.equal(seatedBag.boomBonus + standing.boomBonus, 0);
+});
+
+test("known easter-egg customers use the original 60 percent boom branch", () => {
+  const r = restaurant(), order = { type: 'dine_in' };
+  assert.equal(rollCustomerCompletion(r, order, NOW, { customerSeated: true, easterEgg: true, rng: rolls(0.59999, 0) }).action, 5);
+  assert.equal(rollCustomerCompletion(r, order, NOW, { customerSeated: true, easterEgg: true, rng: rolls(0.6) }).action, 6);
+});
+
+test("one canonical completion records its bonus and animation and cannot reroll after save/reload", () => {
+  const r = restaurant({ level: 4, config: { deliveryRate: 0 } });
+  const order = packed(r); let calls = 0;
+  const sequence = [0.99999, 0.05, 0.99999];
+  const result = completeOrder(r, order.id, NOW + 3, { customerSeated: true, rng: () => sequence[calls++] });
+  assert.equal(result.boomBonus, 8); assert.equal(result.completion.action, 5);
+  assert.equal(result.reward, order.reward + 8); assert.equal(order.paidReward, result.reward);
+  assert.equal(r.stats.completed, 1); assert.equal(r.stats.earnings, result.reward);
+  const restored = JSON.parse(JSON.stringify(r));
+  assert.equal(completeOrder(restored, order.id, NOW + 4, { customerSeated: true, rng: () => { throw Error('replay rolled'); } }).reason, 'already_completed');
+  assert.equal(restored.orders[0].meal.boomBonus, 8);
+  assert.equal(calls, 3);
 });
 
 test("packing just before expiry is permitted; delivery at the exact deadline is refused", () => {

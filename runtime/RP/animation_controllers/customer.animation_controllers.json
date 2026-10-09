@@ -4,123 +4,381 @@
     "controller.animation.ordertocook.customer": {
       "initial_state": "waiting",
       "states": {
-        "waiting_reset": {
-          "transitions": [
-            {
-              "waiting": "1.0"
-            }
-          ]
-        },
         "waiting": {
           "animations": [
             {
-              "waiting1": "math.mod(q.property('ordertocook:action'), 4) == 0"
+              "waiting1": "q.property('ordertocook:animation_variant') == 1"
             },
             {
-              "waiting2": "math.mod(q.property('ordertocook:action'), 4) == 1"
+              "waiting2": "q.property('ordertocook:animation_variant') == 2"
             },
             {
-              "waiting3": "math.mod(q.property('ordertocook:action'), 4) == 2"
+              "waiting3": "q.property('ordertocook:animation_variant') == 3"
             },
             {
-              "waiting4": "math.mod(q.property('ordertocook:action'), 4) == 3"
+              "waiting4": "q.property('ordertocook:animation_variant') == 4"
             }
           ],
-          "blend_transition": 0.15,
+          "blend_transition": 0,
           "transitions": [
             {
+              "action_1": "q.property('ordertocook:action') == 1"
+            },
+            {
+              "action_2": "q.property('ordertocook:action') == 2"
+            },
+            {
+              "action_3": "q.property('ordertocook:action') == 3"
+            },
+            {
+              "action_4": "q.property('ordertocook:action') == 4"
+            },
+            {
+              "action_5": "q.property('ordertocook:action') == 5"
+            },
+            {
+              "action_6": "q.property('ordertocook:action') == 6"
+            },
+            {
+              "action_7": "q.property('ordertocook:action') == 7"
+            },
+            {
               "seated": "q.property('ordertocook:stage') == 'seated'"
-            },
-            {
-              "eating": "q.property('ordertocook:stage') == 'eating'"
-            },
-            {
-              "leaving": "q.property('ordertocook:stage') == 'leaving'"
             },
             {
               "waiting_reset": "q.all_animations_finished"
             }
           ]
         },
-        "seated_reset": {
+        "waiting_reset": {
           "transitions": [
             {
-              "seated": "1.0"
+              "action_1": "q.property('ordertocook:action') == 1"
+            },
+            {
+              "action_2": "q.property('ordertocook:action') == 2"
+            },
+            {
+              "action_3": "q.property('ordertocook:action') == 3"
+            },
+            {
+              "action_4": "q.property('ordertocook:action') == 4"
+            },
+            {
+              "action_5": "q.property('ordertocook:action') == 5"
+            },
+            {
+              "action_6": "q.property('ordertocook:action') == 6"
+            },
+            {
+              "action_7": "q.property('ordertocook:action') == 7"
+            },
+            {
+              "seated": "q.property('ordertocook:stage') == 'seated'"
+            },
+            {
+              "waiting": "1.0"
             }
           ]
         },
         "seated": {
           "animations": [
             {
-              "seated1": "math.mod(q.property('ordertocook:action'), 4) == 0"
+              "seated1": "q.property('ordertocook:animation_variant') == 1"
             },
             {
-              "seated2": "math.mod(q.property('ordertocook:action'), 4) == 1"
+              "seated2": "q.property('ordertocook:animation_variant') == 2"
             },
             {
-              "seated3": "math.mod(q.property('ordertocook:action'), 4) == 2"
+              "seated3": "q.property('ordertocook:animation_variant') == 3"
             },
             {
-              "seated4": "math.mod(q.property('ordertocook:action'), 4) == 3"
+              "seated4": "q.property('ordertocook:animation_variant') == 4"
             }
           ],
-          "blend_transition": 0.15,
+          "blend_transition": 0,
           "transitions": [
             {
-              "waiting": "q.property('ordertocook:stage') == 'waiting'"
+              "action_1": "q.property('ordertocook:action') == 1"
             },
             {
-              "eating": "q.property('ordertocook:stage') == 'eating'"
+              "action_2": "q.property('ordertocook:action') == 2"
             },
             {
-              "leaving": "q.property('ordertocook:stage') == 'leaving'"
+              "action_3": "q.property('ordertocook:action') == 3"
+            },
+            {
+              "action_4": "q.property('ordertocook:action') == 4"
+            },
+            {
+              "action_5": "q.property('ordertocook:action') == 5"
+            },
+            {
+              "action_6": "q.property('ordertocook:action') == 6"
+            },
+            {
+              "action_7": "q.property('ordertocook:action') == 7"
+            },
+            {
+              "waiting": "q.property('ordertocook:stage') != 'seated'"
             },
             {
               "seated_reset": "q.all_animations_finished"
             }
           ]
         },
-        "eating_reset": {
+        "seated_reset": {
           "transitions": [
             {
-              "eating": "1.0"
+              "action_1": "q.property('ordertocook:action') == 1"
+            },
+            {
+              "action_2": "q.property('ordertocook:action') == 2"
+            },
+            {
+              "action_3": "q.property('ordertocook:action') == 3"
+            },
+            {
+              "action_4": "q.property('ordertocook:action') == 4"
+            },
+            {
+              "action_5": "q.property('ordertocook:action') == 5"
+            },
+            {
+              "action_6": "q.property('ordertocook:action') == 6"
+            },
+            {
+              "action_7": "q.property('ordertocook:action') == 7"
+            },
+            {
+              "waiting": "q.property('ordertocook:stage') != 'seated'"
+            },
+            {
+              "seated": "1.0"
             }
           ]
         },
-        "eating": {
+        "action_1": {
           "animations": [
-            "eating"
+            "action1"
           ],
-          "blend_transition": 0.15,
+          "blend_transition": 0,
           "transitions": [
             {
-              "waiting": "q.property('ordertocook:stage') == 'waiting'"
+              "action_2": "q.property('ordertocook:action') == 2"
             },
             {
-              "seated": "q.property('ordertocook:stage') == 'seated'"
+              "action_3": "q.property('ordertocook:action') == 3"
             },
             {
-              "leaving": "q.property('ordertocook:stage') == 'leaving'"
+              "action_4": "q.property('ordertocook:action') == 4"
             },
             {
-              "eating_reset": "q.all_animations_finished"
+              "action_5": "q.property('ordertocook:action') == 5"
+            },
+            {
+              "action_6": "q.property('ordertocook:action') == 6"
+            },
+            {
+              "action_7": "q.property('ordertocook:action') == 7"
+            },
+            {
+              "seated": "q.property('ordertocook:action') == 0 && q.property('ordertocook:stage') == 'seated'"
+            },
+            {
+              "waiting": "q.property('ordertocook:action') == 0 && q.property('ordertocook:stage') != 'seated'"
             }
           ]
         },
-        "leaving": {
+        "action_2": {
           "animations": [
-            "walk"
+            "action2"
           ],
-          "blend_transition": 0.15,
+          "blend_transition": 0,
           "transitions": [
             {
-              "waiting": "q.property('ordertocook:stage') == 'waiting'"
+              "action_1": "q.property('ordertocook:action') == 1"
             },
             {
-              "seated": "q.property('ordertocook:stage') == 'seated'"
+              "action_3": "q.property('ordertocook:action') == 3"
             },
             {
-              "eating": "q.property('ordertocook:stage') == 'eating'"
+              "action_4": "q.property('ordertocook:action') == 4"
+            },
+            {
+              "action_5": "q.property('ordertocook:action') == 5"
+            },
+            {
+              "action_6": "q.property('ordertocook:action') == 6"
+            },
+            {
+              "action_7": "q.property('ordertocook:action') == 7"
+            },
+            {
+              "seated": "q.property('ordertocook:action') == 0 && q.property('ordertocook:stage') == 'seated'"
+            },
+            {
+              "waiting": "q.property('ordertocook:action') == 0 && q.property('ordertocook:stage') != 'seated'"
+            }
+          ]
+        },
+        "action_3": {
+          "animations": [
+            "action3"
+          ],
+          "blend_transition": 0,
+          "transitions": [
+            {
+              "action_1": "q.property('ordertocook:action') == 1"
+            },
+            {
+              "action_2": "q.property('ordertocook:action') == 2"
+            },
+            {
+              "action_4": "q.property('ordertocook:action') == 4"
+            },
+            {
+              "action_5": "q.property('ordertocook:action') == 5"
+            },
+            {
+              "action_6": "q.property('ordertocook:action') == 6"
+            },
+            {
+              "action_7": "q.property('ordertocook:action') == 7"
+            },
+            {
+              "seated": "q.property('ordertocook:action') == 0 && q.property('ordertocook:stage') == 'seated'"
+            },
+            {
+              "waiting": "q.property('ordertocook:action') == 0 && q.property('ordertocook:stage') != 'seated'"
+            }
+          ]
+        },
+        "action_4": {
+          "animations": [
+            "action4"
+          ],
+          "blend_transition": 0,
+          "transitions": [
+            {
+              "action_1": "q.property('ordertocook:action') == 1"
+            },
+            {
+              "action_2": "q.property('ordertocook:action') == 2"
+            },
+            {
+              "action_3": "q.property('ordertocook:action') == 3"
+            },
+            {
+              "action_5": "q.property('ordertocook:action') == 5"
+            },
+            {
+              "action_6": "q.property('ordertocook:action') == 6"
+            },
+            {
+              "action_7": "q.property('ordertocook:action') == 7"
+            },
+            {
+              "seated": "q.property('ordertocook:action') == 0 && q.property('ordertocook:stage') == 'seated'"
+            },
+            {
+              "waiting": "q.property('ordertocook:action') == 0 && q.property('ordertocook:stage') != 'seated'"
+            }
+          ]
+        },
+        "action_5": {
+          "animations": [
+            "action5"
+          ],
+          "blend_transition": 0,
+          "transitions": [
+            {
+              "action_1": "q.property('ordertocook:action') == 1"
+            },
+            {
+              "action_2": "q.property('ordertocook:action') == 2"
+            },
+            {
+              "action_3": "q.property('ordertocook:action') == 3"
+            },
+            {
+              "action_4": "q.property('ordertocook:action') == 4"
+            },
+            {
+              "action_6": "q.property('ordertocook:action') == 6"
+            },
+            {
+              "action_7": "q.property('ordertocook:action') == 7"
+            },
+            {
+              "seated": "q.property('ordertocook:action') == 0 && q.property('ordertocook:stage') == 'seated'"
+            },
+            {
+              "waiting": "q.property('ordertocook:action') == 0 && q.property('ordertocook:stage') != 'seated'"
+            }
+          ]
+        },
+        "action_6": {
+          "animations": [
+            "action6"
+          ],
+          "blend_transition": 0,
+          "transitions": [
+            {
+              "action_1": "q.property('ordertocook:action') == 1"
+            },
+            {
+              "action_2": "q.property('ordertocook:action') == 2"
+            },
+            {
+              "action_3": "q.property('ordertocook:action') == 3"
+            },
+            {
+              "action_4": "q.property('ordertocook:action') == 4"
+            },
+            {
+              "action_5": "q.property('ordertocook:action') == 5"
+            },
+            {
+              "action_7": "q.property('ordertocook:action') == 7"
+            },
+            {
+              "seated": "q.property('ordertocook:action') == 0 && q.property('ordertocook:stage') == 'seated'"
+            },
+            {
+              "waiting": "q.property('ordertocook:action') == 0 && q.property('ordertocook:stage') != 'seated'"
+            }
+          ]
+        },
+        "action_7": {
+          "animations": [
+            "action7"
+          ],
+          "blend_transition": 0,
+          "transitions": [
+            {
+              "action_1": "q.property('ordertocook:action') == 1"
+            },
+            {
+              "action_2": "q.property('ordertocook:action') == 2"
+            },
+            {
+              "action_3": "q.property('ordertocook:action') == 3"
+            },
+            {
+              "action_4": "q.property('ordertocook:action') == 4"
+            },
+            {
+              "action_5": "q.property('ordertocook:action') == 5"
+            },
+            {
+              "action_6": "q.property('ordertocook:action') == 6"
+            },
+            {
+              "seated": "q.property('ordertocook:action') == 0 && q.property('ordertocook:stage') == 'seated'"
+            },
+            {
+              "waiting": "q.property('ordertocook:action') == 0 && q.property('ordertocook:stage') != 'seated'"
             }
           ]
         }

@@ -3,7 +3,7 @@
   "minecraft:geometry": [
     {
       "description": {
-        "identifier": "geometry.ordertocook.dishwasher_1",
+        "identifier": "geometry.ordertocook.dishwasher_3_9",
         "texture_width": 64,
         "texture_height": 64,
         "visible_bounds_width": 2,
@@ -235,6 +235,11 @@
                 }
               }
             }
+          ],
+          "rotation": [
+            0,
+            0,
+            0
           ]
         },
         {
@@ -320,6 +325,11 @@
                 }
               }
             }
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            -2.0
           ]
         },
         {
@@ -479,6 +489,11 @@
                 }
               }
             }
+          ],
+          "rotation": [
+            0,
+            0,
+            0
           ]
         },
         {
@@ -489,7 +504,12 @@
             0.0
           ],
           "parent": "group3",
-          "cubes": []
+          "cubes": [],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
         },
         {
           "name": "clear_dish",
@@ -499,7 +519,12 @@
             0.0
           ],
           "parent": "group3",
-          "cubes": []
+          "cubes": [],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
         }
       ]
     }

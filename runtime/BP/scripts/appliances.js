@@ -2,6 +2,7 @@
 // Bedrock adaptation of Order To Cook by breezeth-CN; see THIRD_PARTY_NOTICES.md.
 import { BlockPermutation, EquipmentSlot, ItemStack, system, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
+import { advanceDoorMotion, dishwasherFrame, APPLIANCE_TICK_INTERVAL, FRIDGE_MOTION_TICKS, FRIDGE_LAST_FRAME } from "./appliance_motion.js";
 
 const NS = "ordertocook:";
 const FRIDGE = `${NS}refrigerator`;
@@ -267,6 +268,7 @@ export function createApplianceService(ctx) {
   const clocks = new Map();
   const washing = new Map();
   const viewers = new Map();
+  const doorPositions = new Map();
   let lastTick = -1;
   let lastRecoveryTick = -100;
   const recipes = { ...SMOKING_RECIPES, ...(ctx.smokingRecipes ?? {}) };
@@ -352,6 +354,7 @@ export function createApplianceService(ctx) {
     if (station.typeId === SINK) setState(block, `${NS}plates`, d.plates);
     if (station.typeId === DISHWASHER) {
       setState(block, `${NS}phase`, d.phase);
+      setState(block, `${NS}frame`, dishwasherFrame(d));
       setState(block, `${NS}plates`, d.plates % 16);
       setState(block, `${NS}plates_high`, d.plates === 16);
     }
@@ -364,28 +367,69 @@ export function createApplianceService(ctx) {
       (!ctx.canUseStation || !!ctx.canUseStation(player, station));
   }
 
-  function fridgeDoors(station, open) {
+  function fridgeBlock(station, half) {
     const lower = loadedStation(station);
-    if (!lower) return;
-    setState(lower, `${NS}open`, open);
-    const upper = lower.dimension.getBlock({ ...lower.location, y: lower.location.y + 1 });
-    if (upper?.typeId === FRIDGE && upper.permutation.getState(`${NS}half`) === "upper") setState(upper, `${NS}open`, open);
-    safeSound(lower.dimension, `${NS}${open ? "dishwasher_out" : "dishwasher_in"}`, center(lower.location), 0.35, 1.5);
+    if (!lower || half === "lower") return lower;
+    try {
+      const upper = lower.dimension.getBlock({ ...lower.location, y: lower.location.y + 1 });
+      return upper?.typeId === FRIDGE && upper.permutation.getState(`${NS}half`) === "upper" ? upper : undefined;
+    } catch { return undefined; }
+  }
+
+  function fridgeDoors(station, half, open) {
+    const block = fridgeBlock(station, half);
+    if (!block) return;
+    const changed = block.permutation.getState(`${NS}open`) !== open;
+    setState(block, `${NS}open`, open);
+    if (changed) safeSound(block.dimension, `${NS}${open ? "dishwasher_out" : "dishwasher_in"}`, center(block.location), 0.35, 1.5);
+  }
+
+  function resetFridgeSessions(station) {
+    // A stale async form must never regain access merely by reloading a chunk.
+    viewers.delete(station.id);
+    for (const half of ["lower", "upper"]) doorPositions.delete(`${station.id}:${half}`);
+  }
+
+  function tickFridge(station, ticks) {
+    const compartments = viewers.get(station.id);
+    for (const half of ["lower", "upper"]) {
+      const block = fridgeBlock(station, half);
+      const key = `${station.id}:${half}`;
+      const sessions = compartments?.[half];
+      if (!block) { sessions?.clear(); doorPositions.delete(key); continue; }
+      for (const [id, session] of sessions ?? []) {
+        if (!accessible(session.player, station)) sessions.delete(id);
+      }
+      const open = (sessions?.size ?? 0) > 0;
+      const storedFrame = block.permutation.getState(`${NS}frame`);
+      const previous = doorPositions.get(key) ?? (Number.isFinite(storedFrame) ? Number(storedFrame) / FRIDGE_LAST_FRAME * FRIDGE_MOTION_TICKS : 0);
+      const motion = advanceDoorMotion(previous, open, ticks);
+      doorPositions.set(key, motion.position);
+      fridgeDoors(station, half, open);
+      setState(block, `${NS}frame`, motion.frame);
+    }
+    if (compartments && !compartments.lower.size && !compartments.upper.size) viewers.delete(station.id);
   }
 
   async function openFridge(player, station, upper) {
-    const count = viewers.get(station.id) ?? 0;
-    viewers.set(station.id, count + 1);
-    if (count === 0) fridgeDoors(station, true);
+    if (storageForms.has(player.id) || !accessible(player, station)) return;
+    const half = upper ? "upper" : "lower";
+    let compartments = viewers.get(station.id);
+    if (!compartments) { compartments = { lower: new Map(), upper: new Map() }; viewers.set(station.id, compartments); }
+    const session = { player };
+    compartments[half].set(player.id, session);
+    fridgeDoors(station, half, true);
     const range = Array.from({ length: upper ? 27 : 54 }, (_, i) => i + (upper ? 0 : 27));
     try {
       await openContainerForm(ctx, player, () => getStorage(station), upper ? "冰箱 · 上層 27 格" : "冰箱 · 下層 54 格", {
-        slots: range, accept: isFood, isAccessible: () => accessible(player, station),
+        slots: range, accept: isFood,
+        isAccessible: () => accessible(player, station) && viewers.get(station.id)?.[half].get(player.id) === session,
       });
     } finally {
-      const remaining = Math.max(0, (viewers.get(station.id) ?? 1) - 1);
-      if (remaining) viewers.set(station.id, remaining);
-      else { viewers.delete(station.id); fridgeDoors(station, false); }
+      const active = viewers.get(station.id);
+      if (active?.[half].get(player.id) === session) active[half].delete(player.id);
+      if (!active?.[half].size) fridgeDoors(station, half, false);
+      if (active && !active.lower.size && !active.upper.size) viewers.delete(station.id);
     }
   }
 
@@ -618,7 +662,7 @@ export function createApplianceService(ctx) {
         if (d.plates <= 0) { washing.delete(id); continue; }
         const elapsed = gameSystem.currentTick - start;
         player.onScreenDisplay.setActionBar(`§b洗碗中 ${Math.min(100, Math.floor(elapsed / 80 * 100))}%`);
-        if (elapsed % 20 < 5) {
+        if (elapsed % 20 < APPLIANCE_TICK_INTERVAL) {
           safeParticle(player.dimension, "minecraft:water_splash_particle", center(station.location, 0.94));
           safeSound(player.dimension, "random.splash", center(station.location, 0.94), 0.2);
         }
@@ -712,7 +756,7 @@ export function createApplianceService(ctx) {
       }
       ctx.deleteStation(station.id);
       clocks.delete(station.id);
-      viewers.delete(station.id);
+      resetFridgeSessions(station);
       for (const [id, session] of washing) if (session.station.id === station.id) washing.delete(id);
     }
     return true;
@@ -751,13 +795,14 @@ export function createApplianceService(ctx) {
     for (const station of ctx.stations?.() ?? []) {
       if (!KINDS.has(station.typeId)) continue;
       const block = loadedStation(station);
-      if (!block) { clocks.delete(station.id); continue; }
+      if (!block) { clocks.delete(station.id); if (station.typeId === FRIDGE) resetFridgeSessions(station); continue; }
       const delta = Math.max(0, Math.min(20, now - (clocks.get(station.id) ?? now)));
       clocks.set(station.id, now);
       try {
         if (station.typeId === STOVE && delta) tickStove(station, delta);
         else if (station.typeId === DISHWASHER && delta) tickDishwasher(station, delta);
-        if (station.typeId === FRIDGE && !viewers.has(station.id) && block.permutation.getState(`${NS}open`)) fridgeDoors(station, false);
+        if (station.typeId === FRIDGE) tickFridge(station, delta);
+        else if (!delta) updateVisual(station);
       } catch (error) {
         // Do not reset invalid state or erase missing inventories on recovery.
         console.warn(`[OrderToCook] ${station.id}: ${String(error)}`);
@@ -813,11 +858,15 @@ export function createApplianceService(ctx) {
     // main calls init from worldLoad. Scheduling also stays safe if init is moved
     // to early execution; do not wait for a second worldLoad event that never fires.
     gameSystem.run(() => {
-      gameSystem.runInterval(tick, 5);
+      gameSystem.runInterval(tick, APPLIANCE_TICK_INTERVAL);
     });
     gameWorld.afterEvents.playerLeave.subscribe(event => {
       washing.delete(event.playerId);
       storageForms.delete(event.playerId);
+      for (const compartments of viewers.values()) {
+        compartments.lower.delete(event.playerId);
+        compartments.upper.delete(event.playerId);
+      }
     });
   }
 

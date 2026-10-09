@@ -8,6 +8,7 @@ import uuid
 
 ROOT = Path(__file__).resolve().parents[1]
 BP, RP = ROOT / 'runtime/BP', ROOT / 'runtime/RP'
+PACK_VERSION = [int(part) for part in json.loads((ROOT / 'package.json').read_text())['version'].split('-')[0].split('.')]
 errors = []
 def check(condition, message):
     if not condition:
@@ -33,8 +34,9 @@ uuids = []
 for manifest in manifests:
     header = manifest.get('header', {})
     check(header.get('min_engine_version') == [1, 21, 100], 'Unexpected minimum engine version')
-    check(header.get('version') == [0, 1, 0], 'Unexpected alpha manifest version')
+    check(header.get('version') == PACK_VERSION, 'Pack version must match package.json numeric version')
     for entry in [header, *manifest.get('modules', [])]:
+        check(entry.get('version') == PACK_VERSION, 'Pack/module version mismatch')
         try:
             uuid.UUID(entry['uuid'])
             uuids.append(entry['uuid'])
@@ -44,7 +46,7 @@ check(len(uuids) == len(set(uuids)), 'Pack/module UUID collision')
 dependencies = manifests[0].get('dependencies', [])
 for module in ['@minecraft/server', '@minecraft/server-ui']:
     check(any(d.get('module_name') == module and d.get('version') == '2.0.0' for d in dependencies), module + ' must be stable 2.0.0')
-check(any(d.get('uuid') == manifests[1].get('header', {}).get('uuid') for d in dependencies), 'BP must depend on its RP')
+check(any(d.get('uuid') == manifests[1].get('header', {}).get('uuid') and d.get('version') == PACK_VERSION for d in dependencies), 'BP must depend on the matching RP version')
 check((BP / 'scripts/main.js').is_file(), 'Missing script entry')
 
 geometries, animations, controllers = {}, set(), set()
@@ -116,7 +118,8 @@ for path, obj in documents.items():
                 check(material.get('texture') in terrain, f'{ident}: unknown material texture {material.get("texture")}')
             loot = components.get('minecraft:loot')
             if loot:
-                check((BP / loot).is_file(), f'{ident}: missing loot {loot}')
+                loot_path = loot.get('table') if isinstance(loot, dict) else loot
+                check(isinstance(loot_path, str) and (BP / loot_path).is_file(), f'{ident}: missing loot {loot_path}')
             icon = components.get('minecraft:icon')
             if icon:
                 icon_id = icon if isinstance(icon, str) else icon.get('texture', icon.get('textures', {}).get('default'))
@@ -155,7 +158,8 @@ for path in (BP / 'scripts').rglob('*.js'):
     for target in re.findall(r"(?:from\s*|import\s*)['\"]([^'\"]+)['\"]", text):
         check(target in ['@minecraft/server', '@minecraft/server-ui'] or (target.startswith('.') and (path.parent / target).is_file()), f'{path.name}: unresolved import {target}')
 check(len(blocks) == 12, f'Expected 12 blocks, got {len(blocks)}')
-check(len(entities) == 4, f'Expected customer/motorcycle/storage/seat, got {len(entities)}')
+expected_entities = {'ordertocook:' + name for name in ['customer', 'motorcycle', 'storage', 'seat', 'dining_plate']}
+check(set(entities) == expected_entities, f'Entity set mismatch: missing {sorted(expected_entities - set(entities))}, extra {sorted(set(entities) - expected_entities)}')
 check(len(recipes) >= 10, 'Survival bootstrap recipes are incomplete')
 summary = {'jsonFiles': len(documents), 'blocks': len(blocks), 'items': len(items), 'entities': len(entities), 'recipes': len(recipes), 'geometries': len(geometries), 'animations': len(animations), 'permutations': permutation_count, 'errors': errors}
 if errors:

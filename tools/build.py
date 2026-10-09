@@ -4,7 +4,6 @@ from pathlib import Path
 from io import BytesIO
 import hashlib
 import json
-import subprocess
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -34,9 +33,9 @@ for short in ['BP', 'RP']:
 addon_name = f'OrderToCook-Bedrock-{VERSION}.mcaddon'
 (OUT / addon_name).write_bytes(zip_bytes(packs))
 checksums = []
-for path in sorted(OUT.iterdir()):
-    if path.suffix in ['.mcpack', '.mcaddon']:
-        checksums.append(hashlib.sha256(path.read_bytes()).hexdigest() + '  ' + path.name)
+for name in sorted([*packs, addon_name]):
+    path = OUT / name
+    checksums.append(hashlib.sha256(path.read_bytes()).hexdigest() + '  ' + path.name)
 (OUT / 'SHA256SUMS.txt').write_text('\n'.join(checksums) + '\n')
 source_hash = hashlib.sha256()
 for path in sorted((ROOT / 'runtime').rglob('*')):

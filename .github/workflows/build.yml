@@ -24,6 +24,11 @@ jobs:
           python-version: '3.12'
       - run: npm ci --ignore-scripts
       - run: npm run verify
+      - name: Match committed downloads to the source build
+        run: |
+          diff -u artifacts/build-info.json dist/build-info.json
+          cd artifacts
+          sha256sum --check SHA256SUMS.txt
       - uses: actions/upload-artifact@v4
         with:
           name: OrderToCook-Bedrock-alpha

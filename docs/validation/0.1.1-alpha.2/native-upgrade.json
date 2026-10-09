@@ -1,0 +1,71 @@
+{
+  "mode": "upgrade",
+  "passed": true,
+  "checks": [
+    {
+      "name": "production entry initialized",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restaurant restored across server restart",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native storage entity restored",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "non-stackable parcel proof restored",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native ItemStack name and lore restored",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "custom block restored across server restart",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "refrigerator native contents and name survive restart or upgrade",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "refrigerator persisted state accepts independent frame encoding",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "finished dishwasher retains all plates across restart or upgrade",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "finished dishwasher loads new final frame permutation",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "saved baseline is alpha.1 QA schema",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "completed alpha.1 history does not mint a new dirty plate",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "addonVersion": "0.1.1-alpha.2",
+  "serverVersion": "1.26.52.3",
+  "runtimeTreeSha256": "a281a8285266923de1a99ad51c163e1c9fabbd8e1adb6034969affe4843d6cc4",
+  "addonErrors": [],
+  "scope": "Native server blocks, entities, inventory and script adapters. No real Player, client rendering, forms, touch/keyboard, or multiplayer latency is exercised."
+}
