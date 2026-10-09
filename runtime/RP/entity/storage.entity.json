@@ -1,0 +1,20 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "ordertocook:storage",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/ordertocook/entity/otc_zombie_custom"
+      },
+      "geometry": {
+        "default": "geometry.ordertocook.invisible"
+      },
+      "render_controllers": [
+        "controller.render.ordertocook.helper"
+      ]
+    }
+  }
+}

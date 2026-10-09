@@ -1,0 +1,531 @@
+{
+  "format_version": "1.21.100",
+  "minecraft:block": {
+    "description": {
+      "identifier": "ordertocook:plate_shelf",
+      "menu_category": {
+        "category": "construction"
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:cardinal_direction"
+          ],
+          "y_rotation_offset": 180
+        }
+      },
+      "states": {
+        "ordertocook:plates": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "ordertocook:plates_high": [
+          false,
+          true
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.ordertocook.plate_shelf_0",
+      "minecraft:material_instances": {
+        "ordertocook_block_plate_shelf": {
+          "texture": "ordertocook_block_plate_shelf",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "*": {
+          "texture": "ordertocook_block_plate_shelf",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -8,
+          0,
+          0
+        ],
+        "size": [
+          16,
+          16,
+          8
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -8,
+          0,
+          0
+        ],
+        "size": [
+          16,
+          16,
+          8
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:loot": "loot_tables/blocks/plate_shelf.json",
+      "minecraft:destruction_particles": {
+        "texture": "ordertocook_block_plate_shelf",
+        "particle_count": 50
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#9b9286",
+      "minecraft:movable": {
+        "movement_type": "immovable"
+      },
+      "ordertocook:interact": {}
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              -90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) == 0",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.plate_shelf_0",
+          "minecraft:material_instances": {
+            "ordertocook_block_plate_shelf": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.plate_shelf_1",
+          "minecraft:material_instances": {
+            "ordertocook_block_plate_shelf": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.plate_shelf_2",
+          "minecraft:material_instances": {
+            "ordertocook_block_plate_shelf": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.plate_shelf_3",
+          "minecraft:material_instances": {
+            "ordertocook_block_plate_shelf": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) == 4",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.plate_shelf_4",
+          "minecraft:material_instances": {
+            "ordertocook_block_plate_shelf": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) == 5",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.plate_shelf_5",
+          "minecraft:material_instances": {
+            "ordertocook_block_plate_shelf": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) == 6",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.plate_shelf_6",
+          "minecraft:material_instances": {
+            "ordertocook_block_plate_shelf": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) == 7",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.plate_shelf_7",
+          "minecraft:material_instances": {
+            "ordertocook_block_plate_shelf": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) == 8",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.plate_shelf_8",
+          "minecraft:material_instances": {
+            "ordertocook_block_plate_shelf": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) == 9",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.plate_shelf_9",
+          "minecraft:material_instances": {
+            "ordertocook_block_plate_shelf": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) == 10",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.plate_shelf_10",
+          "minecraft:material_instances": {
+            "ordertocook_block_plate_shelf": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) == 11",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.plate_shelf_11",
+          "minecraft:material_instances": {
+            "ordertocook_block_plate_shelf": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) == 12",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.plate_shelf_12",
+          "minecraft:material_instances": {
+            "ordertocook_block_plate_shelf": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) == 13",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.plate_shelf_13",
+          "minecraft:material_instances": {
+            "ordertocook_block_plate_shelf": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) == 14",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.plate_shelf_14",
+          "minecraft:material_instances": {
+            "ordertocook_block_plate_shelf": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) == 15",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.plate_shelf_15",
+          "minecraft:material_instances": {
+            "ordertocook_block_plate_shelf": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) == 16",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.plate_shelf_16",
+          "minecraft:material_instances": {
+            "ordertocook_block_plate_shelf": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) == 17",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.plate_shelf_17",
+          "minecraft:material_instances": {
+            "ordertocook_block_plate_shelf": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) == 18",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.plate_shelf_18",
+          "minecraft:material_instances": {
+            "ordertocook_block_plate_shelf": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_plate_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,1653 @@
+{
+  "upstream": "https://github.com/breezeth-CN/OrdertoCook",
+  "revision": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+  "license": "GPL-3.0",
+  "assets": [
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/board.png",
+      "output": "RP/textures/ordertocook/block/board.png",
+      "sha256": "e0026c3137b79f43bf7d27ae27d3456e63d979ea50d1ae49283109f67ae61f01",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/chair.png",
+      "output": "RP/textures/ordertocook/block/chair.png",
+      "sha256": "ba7b3c247b3a13677e493d64cc7f04a1115d7a1bc077cdc8e6ca1178af56404b",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/countertop.png",
+      "output": "RP/textures/ordertocook/block/countertop.png",
+      "sha256": "ba902d6f1edbc81d1a616f597a5379a046fdd1b61af5aadb2a82b4ea30001317",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/countertop64.png",
+      "output": "RP/textures/ordertocook/block/countertop64.png",
+      "sha256": "049e3bf33dc16d14598dded46cf970c4c66c789fbb064d2fbfb425bc1493727a",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/dishwasher.png",
+      "output": "RP/textures/ordertocook/block/dishwasher.png",
+      "sha256": "7c85e91a5fb2a8baff87528cec4512cf63dc4004ee209aad8ba169755eb97c90",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/electric_motorcyclelight.png",
+      "output": "RP/textures/ordertocook/block/electric_motorcyclelight.png",
+      "sha256": "cd5f9a053d840e8e08919395209ed0ebf6f04b1e3789139ec27633ad2d69869c",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/food_plate_base.png",
+      "output": "RP/textures/ordertocook/block/food_plate_base.png",
+      "sha256": "d7e566f83d24676b6b047018f6dd4302dba16ea0d1ea326fd5d2755946a0d27a",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/food_plate_placed.png",
+      "output": "RP/textures/ordertocook/block/food_plate_placed.png",
+      "sha256": "d7e566f83d24676b6b047018f6dd4302dba16ea0d1ea326fd5d2755946a0d27a",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/food_plate_variants.png",
+      "output": "RP/textures/ordertocook/block/food_plate_variants.png",
+      "sha256": "b233e3750f620834648f08386244ddeceeb6d0ce2f439315e02d424ed79eb2e1",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/motorcycle.png",
+      "output": "RP/textures/ordertocook/block/motorcycle.png",
+      "sha256": "4b1c40f4d803fb0c94db2ba6cb4526be10dbecaded42fb55f1ae364db90aa687",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/order_machine.png",
+      "output": "RP/textures/ordertocook/block/order_machine.png",
+      "sha256": "8be71ae5e469cdc48c4d664598ab6c45d2ac20a195466aab6517e6b1832e07f7",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/order_machine_geo.png",
+      "output": "RP/textures/ordertocook/block/order_machine_geo.png",
+      "sha256": "52cd75a693d199455a6de9155c06a600557a99466c215d673145644b8c09cc68",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/plate_shelf.png",
+      "output": "RP/textures/ordertocook/block/plate_shelf.png",
+      "sha256": "e38825e0ca7117dbb74494e418c787822500ea40cdff7b6dfe1db326e728ed1d",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/refrigerator.png",
+      "output": "RP/textures/ordertocook/block/refrigerator.png",
+      "sha256": "a545ea6a2c2ef3c25d48fd65051bf00e01382b01a97ef4f295b6d3b171e02039",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/shelf.png",
+      "output": "RP/textures/ordertocook/block/shelf.png",
+      "sha256": "17ef0ff2479aa2c4e104b59110019be83b611b1c58b0184ae083b4a32df5ed5c",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/stove.png",
+      "output": "RP/textures/ordertocook/block/stove.png",
+      "sha256": "e0d4fed8d6140b32708c6a75b6f0aeb380191e06c3bcb3122c084d0ff8400f2b",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/stove_fire.png",
+      "output": "RP/textures/ordertocook/block/stove_fire.png",
+      "sha256": "f96e48fed36190dd24c10ebd28961b89e1a189cebfd084a3ed5fcc42df4ecb5e",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/stove_fire_0.png",
+      "output": "RP/textures/ordertocook/block/stove_fire_0.png",
+      "sha256": "1e5daa50715f13ba739b52b7258a73e24884666c899da25069ab3adfbcc4a1be",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/stove_fire_1.png",
+      "output": "RP/textures/ordertocook/block/stove_fire_1.png",
+      "sha256": "618ae232ba2f83b7be272fe4a8c72475546940c6d7acb4bd8847d8b54b47eb72",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/stove_fire_2.png",
+      "output": "RP/textures/ordertocook/block/stove_fire_2.png",
+      "sha256": "2e7fd6c963f7312aed1dfd2b57fb583a5d78d4aa4568daf576a27ba5e7ce4954",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/stove_fire_3.png",
+      "output": "RP/textures/ordertocook/block/stove_fire_3.png",
+      "sha256": "18fedd4de5bd5823369e76430b8d876a1f8eefd826b66831f611c8268f5f08f0",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/takeout_bag.png",
+      "output": "RP/textures/ordertocook/block/takeout_bag.png",
+      "sha256": "5fed5b1272981d6b63587c30d66f903cb235e90e8ad85d1ef3a59fd527dd2952",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/takeout_bag_placed.png",
+      "output": "RP/textures/ordertocook/block/takeout_bag_placed.png",
+      "sha256": "de229103fba45284a4a9a30b08ce1e8d6b10929c697217b5693a3b42688ab167",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/washingtable.png",
+      "output": "RP/textures/ordertocook/block/washingtable.png",
+      "sha256": "a989f3aa1efa69dcaa2128ffd7793943afb3336ac9304bd84288839237c4384d",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/water.png",
+      "output": "RP/textures/ordertocook/block/water.png",
+      "sha256": "f22fa4929726cd53ea4fa1d593425438c1634b1e34afd55cc0df43631c7a0485",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/entity/delivery_helmet.png",
+      "output": "RP/textures/ordertocook/entity/delivery_helmet.png",
+      "sha256": "0fa0f426368f255c945f74ed9a603aa7523c611282bea4affbdf4a3e96854bba",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/entity/delivery_helmet_glass.png",
+      "output": "RP/textures/ordertocook/entity/delivery_helmet_glass.png",
+      "sha256": "ecbe469b6e4b6c0ad3c9acffb2a5a2ff85ee79b85630b6ae475e52938bbb42f8",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/entity/electric_motorcycle_blue.png",
+      "output": "RP/textures/ordertocook/entity/electric_motorcycle_blue.png",
+      "sha256": "95c848da09ee3ac2573ccbba50520302141d555e5b66ae7646897a957742ba14",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/entity/electric_motorcycle_light.png",
+      "output": "RP/textures/ordertocook/entity/electric_motorcycle_light.png",
+      "sha256": "c848729f23059425f69c3829958ba778b775be51547c081ca6184a0e3bd7a266",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/entity/electric_motorcycle_red.png",
+      "output": "RP/textures/ordertocook/entity/electric_motorcycle_red.png",
+      "sha256": "c4d910313d97857dd5e933ce3b09ea1280bdc18b9ad0d4d83126b22878c55b7b",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/entity/electric_motorcycle_yellow.png",
+      "output": "RP/textures/ordertocook/entity/electric_motorcycle_yellow.png",
+      "sha256": "cd3cf73890ab0ed758bf659c2660b2d9991cb619eb5753e104191ceea4b66162",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/entity/motorcycle.png",
+      "output": "RP/textures/ordertocook/entity/motorcycle.png",
+      "sha256": "cda5eb327ee9b64783fb818572805799f74e5641f29cc9d161bf88d42edfb416",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+      "output": "RP/textures/ordertocook/entity/otc_zombie_custom.png",
+      "sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+      "output": "RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+      "sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/gui/board_delete.png",
+      "output": "RP/textures/ordertocook/gui/board_delete.png",
+      "sha256": "43fdd4112092db432b147cb9747097d2a10256283a3d7bc170fba54b18db27f0",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/gui/board_highlight.png",
+      "output": "RP/textures/ordertocook/gui/board_highlight.png",
+      "sha256": "037c799405acb13864fd5cd181b0c15d115855753ef8e8560b300283f0c8b9bf",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/gui/board_item_bg.png",
+      "output": "RP/textures/ordertocook/gui/board_item_bg.png",
+      "sha256": "884b5e8b1bb2bc08157565e7eb614ca6b27058678d25497101607365cebf3060",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/gui/board_tab.png",
+      "output": "RP/textures/ordertocook/gui/board_tab.png",
+      "sha256": "f6a2e5c3719004e186f4eb46d1a5448adb86ebe2b6d8a07121592d46faa58918",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/gui/board_ui.png",
+      "output": "RP/textures/ordertocook/gui/board_ui.png",
+      "sha256": "4f8d2f7e47f16e42d1400208837dd26e5988892c2ab745fd8ef6f9a375456a8b",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/gui/icons.png",
+      "output": "RP/textures/ordertocook/gui/icons.png",
+      "sha256": "d1ec87509939e43080efaede474d2a06b7a3c5d9a987beda42f668b77fd4f448",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/gui/medal_1st.png",
+      "output": "RP/textures/ordertocook/gui/medal_1st.png",
+      "sha256": "4522c53a55e24024e92baf40b48a0a97d2a9b82aff94009836286a538c5709b6",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/gui/medal_2nd.png",
+      "output": "RP/textures/ordertocook/gui/medal_2nd.png",
+      "sha256": "471491a7b5a06bb417a5f247fff03ed2999d616976ea818342a669066e93914e",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/gui/medal_3rd.png",
+      "output": "RP/textures/ordertocook/gui/medal_3rd.png",
+      "sha256": "bfd4a44c2b4b572c12ad2443f9200e63523f062ea9f8c501b6889e3e7f9ed516",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/gui/order_machine.png",
+      "output": "RP/textures/ordertocook/gui/order_machine.png",
+      "sha256": "9a56b01a9899cd4d78c547abf285551158c603accdf8de851838afd254b86711",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/gui/refrigerator_sort.png",
+      "output": "RP/textures/ordertocook/gui/refrigerator_sort.png",
+      "sha256": "c58bfd8c931d746635b0ed334b3348528bdb50ca10d40d21509fd09727c8dc37",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/gui/refrigerator_sort_hover.png",
+      "output": "RP/textures/ordertocook/gui/refrigerator_sort_hover.png",
+      "sha256": "43a71bbb3ada31e3a6ed178f78c1a67f0781812ac1fd7819c25206a2def21b43",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/gui/stove.png",
+      "output": "RP/textures/ordertocook/gui/stove.png",
+      "sha256": "001ad49f25328092e06fd1fe7ca73ff4b62e704cbc304e358f040eb954cf7d42",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/gui/takeout_box.png",
+      "output": "RP/textures/ordertocook/gui/takeout_box.png",
+      "sha256": "a26380296d7935db376b92ad9c859819a49fdf10924a17f8d9f6c945156f098b",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/gui/takeout_query_hover.png",
+      "output": "RP/textures/ordertocook/gui/takeout_query_hover.png",
+      "sha256": "8511593f86e0e1b48e08ddd4626ef11e7d6fe76bff025d88fa7a12187bff55d3",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/gui/takeout_query_missing.png",
+      "output": "RP/textures/ordertocook/gui/takeout_query_missing.png",
+      "sha256": "1641805165569dfd5eea1e70b9ed08b9537b7c417a4a13b9d2408953aa649b65",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/gui/takeout_query_none.png",
+      "output": "RP/textures/ordertocook/gui/takeout_query_none.png",
+      "sha256": "f6cc7e55a82ed4f40021af4ed05c0da6d573f7c52b14dbc5a8376c5d231df39d",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/gui/takeout_query_ready.png",
+      "output": "RP/textures/ordertocook/gui/takeout_query_ready.png",
+      "sha256": "bea5fa49ccab772ceddd81918057e7ee00b595b1a995927616e8e42bf159bb94",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/item/chef_coin_1.png",
+      "output": "RP/textures/ordertocook/item/chef_coin_1.png",
+      "sha256": "d94eccb63f421c596b9af7fa69ba26df0953f909a65b1508dd7ddecaba247b62",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/item/chef_coin_100.png",
+      "output": "RP/textures/ordertocook/item/chef_coin_100.png",
+      "sha256": "e8cf5b39c0046c21f87ad560b2615df438ff6c5103bff1c83dddf7008ba7fe7e",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/item/chef_coin_10000.png",
+      "output": "RP/textures/ordertocook/item/chef_coin_10000.png",
+      "sha256": "32a29a47f8c679c9c0908b361ba51fa8c281b0e5f80efa0d644251796423b39f",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/item/chef_coin_20.png",
+      "output": "RP/textures/ordertocook/item/chef_coin_20.png",
+      "sha256": "b3c3a79eff2f1c9f35865b62e540f4eab2d433c75ecf01b520fb7a7172715f13",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/item/chef_coin_5.png",
+      "output": "RP/textures/ordertocook/item/chef_coin_5.png",
+      "sha256": "9bef9f59793fcab1cc4b0708a48a83e868e037ff0a7782a82423ae5fcb419eec",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/item/clean_plate.png",
+      "output": "RP/textures/ordertocook/item/clean_plate.png",
+      "sha256": "2a7727c8f62e5b9ed7eacbc08ff0e778210e8f89189136d5d6ac9d5b0ecb94d5",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/item/delivery_helmet.png",
+      "output": "RP/textures/ordertocook/item/delivery_helmet.png",
+      "sha256": "0fa0f426368f255c945f74ed9a603aa7523c611282bea4affbdf4a3e96854bba",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/item/delivery_helmet_blue.png",
+      "output": "RP/textures/ordertocook/item/delivery_helmet_blue.png",
+      "sha256": "0103bc7cc7fb53859a83baa3b442240fc39d40a169a424dfc093161eddf765b7",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/item/delivery_helmet_glass.png",
+      "output": "RP/textures/ordertocook/item/delivery_helmet_glass.png",
+      "sha256": "ecbe469b6e4b6c0ad3c9acffb2a5a2ff85ee79b85630b6ae475e52938bbb42f8",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/item/delivery_helmet_red.png",
+      "output": "RP/textures/ordertocook/item/delivery_helmet_red.png",
+      "sha256": "655d1c30353d9b294c1f019356f3d3d5b7370d4e329466544343c2ac47397344",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/item/delivery_helmet_yellow.png",
+      "output": "RP/textures/ordertocook/item/delivery_helmet_yellow.png",
+      "sha256": "632267827579912a779f7bc3c7d865eba6545f950dd19d4be7a3835017a231f6",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/item/food_plate.png",
+      "output": "RP/textures/ordertocook/item/food_plate.png",
+      "sha256": "eb689974f263a5162b2accb153a676779b6f1ab10fa0d32aaa2bc4e135786313",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/item/food_plate2.png",
+      "output": "RP/textures/ordertocook/item/food_plate2.png",
+      "sha256": "cc407bf3e292969c20f2f5e9c0d6f23f501ef7d01ca036fb1ab7bf5d896932e0",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/item/order.png",
+      "output": "RP/textures/ordertocook/item/order.png",
+      "sha256": "c8408bf0ada422f159bf1200a84caaa040c2afab145d325173c59fdc3160350d",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/item/otc_upgrade_box.png",
+      "output": "RP/textures/ordertocook/item/otc_upgrade_box.png",
+      "sha256": "d662451498ade7349095c02de37243e5118cd0799716323b29631dd3e5c4a8f8",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/entity/electric_motorcycle_light.png",
+      "output": "RP/textures/ordertocook/entity/electric_motorcycle_light_emissive.tga",
+      "sha256": "c848729f23059425f69c3829958ba778b775be51547c081ca6184a0e3bd7a266",
+      "operation": "Original lamp RGB and transparency mask; nonzero alpha encoded as 64 for Bedrock emissiveness"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/stove_fire_0.png",
+      "output": "RP/textures/ordertocook/block/stove_fire_flipbook.png",
+      "sha256": "1e5daa50715f13ba739b52b7258a73e24884666c899da25069ab3adfbcc4a1be",
+      "operation": "Four original frames vertically concatenated; no pixel repainting"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/stove_fire_1.png",
+      "output": "RP/textures/ordertocook/block/stove_fire_flipbook.png",
+      "sha256": "618ae232ba2f83b7be272fe4a8c72475546940c6d7acb4bd8847d8b54b47eb72",
+      "operation": "Four original frames vertically concatenated; no pixel repainting"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/stove_fire_2.png",
+      "output": "RP/textures/ordertocook/block/stove_fire_flipbook.png",
+      "sha256": "2e7fd6c963f7312aed1dfd2b57fb583a5d78d4aa4568daf576a27ba5e7ce4954",
+      "operation": "Four original frames vertically concatenated; no pixel repainting"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/stove_fire_3.png",
+      "output": "RP/textures/ordertocook/block/stove_fire_flipbook.png",
+      "sha256": "18fedd4de5bd5823369e76430b8d876a1f8eefd826b66831f611c8268f5f08f0",
+      "operation": "Four original frames vertically concatenated; no pixel repainting"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/sounds/bag_interact.ogg",
+      "output": "RP/sounds/ordertocook/bag_interact.ogg",
+      "sha256": "f48919e1e8e0800fd5c5c48d663b7ecaebe33fc3a3b45ff34f78f2c0e9b144f7",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/sounds/dishwasher/clear_out.ogg",
+      "output": "RP/sounds/ordertocook/dishwasher/clear_out.ogg",
+      "sha256": "75c72c026be955be19ec6466e88bfc9d4e2090ad3eec9ed46fccf8cc66820dfe",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/sounds/dishwasher/in.ogg",
+      "output": "RP/sounds/ordertocook/dishwasher/in.ogg",
+      "sha256": "433c9d4b2201a90caeb7aa98bbe0306be7d19f127822825747fec7d5fb6ec1fb",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/sounds/dishwasher/out.ogg",
+      "output": "RP/sounds/ordertocook/dishwasher/out.ogg",
+      "sha256": "df8bc7ce0ee647c6306a86b79a80b2225d74775d4a41773873915c12bc27d739",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/sounds/dishwasher/washing.ogg",
+      "output": "RP/sounds/ordertocook/dishwasher/washing.ogg",
+      "sha256": "5149784e943ad67f1161cb3bcc88861e3dfe7e556af4c9bd5a5607e1f8af4787",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/sounds/food_plate_place.ogg",
+      "output": "RP/sounds/ordertocook/food_plate_place.ogg",
+      "sha256": "ecdb65d1e4a68561f4090e6a6689f681527213c89bb3265d61b9269c86b90c47",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/sounds/horn.ogg",
+      "output": "RP/sounds/ordertocook/horn.ogg",
+      "sha256": "10247a4fa1b9cc4ef6625a77dbbe7ccdcb58585698f4482159a31f0b14a430dd",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/sounds/order_refresh.ogg",
+      "output": "RP/sounds/ordertocook/order_refresh.ogg",
+      "sha256": "9647f7391720db61b9efcdbeef5de9d782d37fa699840353091738a772701b39",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/sounds/plate_place_1.ogg",
+      "output": "RP/sounds/ordertocook/plate_place_1.ogg",
+      "sha256": "34426f6c47617d7c95e54b87bbe4a86958ed72644495b240cd1db16b795beda0",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/sounds/plate_place_2.ogg",
+      "output": "RP/sounds/ordertocook/plate_place_2.ogg",
+      "sha256": "5e4a486a9b02273f6c54a9b134973910c42ee3950901f8ac5e5f85af8f0f51cd",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/sounds/plate_place_3.ogg",
+      "output": "RP/sounds/ordertocook/plate_place_3.ogg",
+      "sha256": "09b7550b15db285cace947b83282840cbe3945e0afa244b86c696cf784232451",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/sounds/prestige_get.ogg",
+      "output": "RP/sounds/ordertocook/prestige_get.ogg",
+      "sha256": "e1e82bf2e428290f2d449d0618ff781b7263fa617eefdbaaafab7e6f67633943",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/sounds.json",
+      "output": "RP/sounds/sound_definitions.json",
+      "sha256": "3c5335ce2b1bfa05d491cf2ddf6608a7e44713a75aa9db41374d2a135a836f88",
+      "operation": "Original sound event aliases registered in the Bedrock sound schema"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/icon.png",
+      "output": "RP/pack_icon.png",
+      "sha256": "602d3f7efab16cfa795db0b305ace5be4b48af2f2c957d6c2c26e431be7d33ca",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/icon.png",
+      "output": "BP/pack_icon.png",
+      "sha256": "602d3f7efab16cfa795db0b305ace5be4b48af2f2c957d6c2c26e431be7d33ca",
+      "operation": "copy"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/animations/dishwasher.animation.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "GeckoLib vector wrapper/identifier normalization; native interpolation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/drive.animation.json",
+      "output": "RP/animations/drive.animation.json",
+      "sha256": "4b1d97058b3164bf9027c90ea6a6cd221e4bd06ff5fcde51a2e159e3812a092c",
+      "operation": "GeckoLib vector wrapper/identifier normalization; native interpolation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/food_plate_placed.animation.json",
+      "output": "RP/animations/food_plate_placed.animation.json",
+      "sha256": "44339024ec51373f4e9e27663d33e2d2eba573248ceb23e1c97fc781c720ba63",
+      "operation": "GeckoLib vector wrapper/identifier normalization; native interpolation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/npc.animation.json",
+      "output": "RP/animations/npc.animation.json",
+      "sha256": "19691dda1b484ca6a256a1dc5e306304a8e6b0e0cad6c9d60f7d0daf88588734",
+      "operation": "GeckoLib vector wrapper/identifier normalization; native interpolation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/npc.transition.animation.json",
+      "output": "RP/animations/npc.transition.animation.json",
+      "sha256": "723940ed47a56c9050c08334951c05dedcfc69727388802454693faceea64417",
+      "operation": "GeckoLib vector wrapper/identifier normalization; native interpolation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/order_machine.animation.json",
+      "output": "RP/animations/order_machine.animation.json",
+      "sha256": "a315908ff0c2b16df728d8e2fe0413072a4ee1cbf31d71751a75781a6eb6e71f",
+      "operation": "GeckoLib vector wrapper/identifier normalization; native interpolation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/player.animation.json",
+      "output": "RP/animations/player.animation.json",
+      "sha256": "4689f815ec15e8c2903486a465d81318094d62050c6a7e24a3064cae7dd59de5",
+      "operation": "GeckoLib vector wrapper/identifier normalization; native interpolation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/player_wash.animation.json",
+      "output": "RP/animations/player_wash.animation.json",
+      "sha256": "9d6dc7d3a50ed156d51e63123f9aa8425cbcabaa6b9a54a75f259384b3adc0d8",
+      "operation": "GeckoLib vector wrapper/identifier normalization; native interpolation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/animations/refrigerator.animation.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "GeckoLib vector wrapper/identifier normalization; native interpolation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/stove.animation.json",
+      "output": "RP/animations/stove.animation.json",
+      "sha256": "723bfbce05d84a272acbf47aa8ccc0ce6bcb998f6313122ef6a4e9c548e81c75",
+      "operation": "GeckoLib vector wrapper/identifier normalization; native interpolation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/animations/takeout_bag_placed.animation.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "GeckoLib vector wrapper/identifier normalization; native interpolation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/board.json",
+      "output": "RP/models/blocks/board.geo.json",
+      "sha256": "b927193fb20ba40a5e72f6630520a7a25988ab642215c165fe9a96d980669754",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/countertop.json",
+      "output": "RP/models/blocks/countertop.geo.json",
+      "sha256": "c148471a22732e3760ac915b59b262492552a568dd2c7e58d62918e0524acd71",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/chair.json",
+      "output": "RP/models/blocks/chair.geo.json",
+      "sha256": "3411e8d52ff1eb9663aacdfe72ebe2ca879d43cdcc8608516feb4c9727d68c87",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/takeout_bag.json",
+      "output": "RP/models/blocks/takeout_bag.geo.json",
+      "sha256": "6c7903ff3f7560439aa74e4461b598cc0b42e144538549eefe4b0d0d36bba210",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_idle.json",
+      "output": "RP/models/blocks/shelf_0.geo.json",
+      "sha256": "268c0d0175f43cff56da5430fbc7906422c2c1c2b60c6dec5036c80f1c540442",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_idle.json",
+      "output": "RP/models/blocks/shelf_1.geo.json",
+      "sha256": "268c0d0175f43cff56da5430fbc7906422c2c1c2b60c6dec5036c80f1c540442",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_1.json",
+      "output": "RP/models/blocks/shelf_1.geo.json",
+      "sha256": "519a6ff9814e205eded7be4cb62456305f309f955c6e216ebe818e92087ee3e2",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_idle.json",
+      "output": "RP/models/blocks/shelf_2.geo.json",
+      "sha256": "268c0d0175f43cff56da5430fbc7906422c2c1c2b60c6dec5036c80f1c540442",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_2.json",
+      "output": "RP/models/blocks/shelf_2.geo.json",
+      "sha256": "eefdb215f26f0d7f73d2e2b62cd6ecc703f475ddd7096c5c77c77c441a615035",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_idle.json",
+      "output": "RP/models/blocks/shelf_3.geo.json",
+      "sha256": "268c0d0175f43cff56da5430fbc7906422c2c1c2b60c6dec5036c80f1c540442",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_3.json",
+      "output": "RP/models/blocks/shelf_3.geo.json",
+      "sha256": "f27c7a4c32c920b1cc2c211e43cad243103818e6212e4a4ea5fc667a2b9866f6",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_idle.json",
+      "output": "RP/models/blocks/shelf_4.geo.json",
+      "sha256": "268c0d0175f43cff56da5430fbc7906422c2c1c2b60c6dec5036c80f1c540442",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_4.json",
+      "output": "RP/models/blocks/shelf_4.geo.json",
+      "sha256": "eb1accf8a96edb5990220dd24409229b20887b60a8ffe9065e16f414c74a24b7",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_idle.json",
+      "output": "RP/models/blocks/shelf_5.geo.json",
+      "sha256": "268c0d0175f43cff56da5430fbc7906422c2c1c2b60c6dec5036c80f1c540442",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_5.json",
+      "output": "RP/models/blocks/shelf_5.geo.json",
+      "sha256": "6596470c805a912934e45344ee4101273625a77d8abe503b30fd91385ecde2b0",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_idle.json",
+      "output": "RP/models/blocks/shelf_6.geo.json",
+      "sha256": "268c0d0175f43cff56da5430fbc7906422c2c1c2b60c6dec5036c80f1c540442",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_6.json",
+      "output": "RP/models/blocks/shelf_6.geo.json",
+      "sha256": "69145b0d4c79023b0242e8965095a3cf792cdd3c23f98140cd65b9a5345cf2e5",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_idle.json",
+      "output": "RP/models/blocks/shelf_7.geo.json",
+      "sha256": "268c0d0175f43cff56da5430fbc7906422c2c1c2b60c6dec5036c80f1c540442",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_7.json",
+      "output": "RP/models/blocks/shelf_7.geo.json",
+      "sha256": "cd8921377de6ce866a7424bb579631c4de36f67921ddc8a2eb143108b793ad85",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_idle.json",
+      "output": "RP/models/blocks/shelf_8.geo.json",
+      "sha256": "268c0d0175f43cff56da5430fbc7906422c2c1c2b60c6dec5036c80f1c540442",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_8.json",
+      "output": "RP/models/blocks/shelf_8.geo.json",
+      "sha256": "b59da009e946ea039142d328a15213932a073b3f90777243db147217ff0f2269",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_idle.json",
+      "output": "RP/models/blocks/shelf_9.geo.json",
+      "sha256": "268c0d0175f43cff56da5430fbc7906422c2c1c2b60c6dec5036c80f1c540442",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_9.json",
+      "output": "RP/models/blocks/shelf_9.geo.json",
+      "sha256": "d72bc408b7f85e2fe1cf1696b7b7d2e7a43beaf3c335e3c33601452be5d1c0dd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_idle.json",
+      "output": "RP/models/blocks/shelf_10.geo.json",
+      "sha256": "268c0d0175f43cff56da5430fbc7906422c2c1c2b60c6dec5036c80f1c540442",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_10.json",
+      "output": "RP/models/blocks/shelf_10.geo.json",
+      "sha256": "8a39288afa3edae96e939f1bf779f9e39bab12a5dc4634c945402faa1557c05e",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_idle.json",
+      "output": "RP/models/blocks/plate_shelf_0.geo.json",
+      "sha256": "96c3f07c84c4932e077746c4a7577e5180952e030a3f4e6740973f46f84d3edd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_idle.json",
+      "output": "RP/models/blocks/plate_shelf_1.geo.json",
+      "sha256": "96c3f07c84c4932e077746c4a7577e5180952e030a3f4e6740973f46f84d3edd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_1.json",
+      "output": "RP/models/blocks/plate_shelf_1.geo.json",
+      "sha256": "fefa78e924ab807fe75c5433a25eebfc73f697c0e12bf06f9f8adb7e572f76e3",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_idle.json",
+      "output": "RP/models/blocks/plate_shelf_2.geo.json",
+      "sha256": "96c3f07c84c4932e077746c4a7577e5180952e030a3f4e6740973f46f84d3edd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_2.json",
+      "output": "RP/models/blocks/plate_shelf_2.geo.json",
+      "sha256": "ff7a8ac6765624502c2474d514fad59a90363d7c91aa3f4301eaf7172ff011fb",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_idle.json",
+      "output": "RP/models/blocks/plate_shelf_3.geo.json",
+      "sha256": "96c3f07c84c4932e077746c4a7577e5180952e030a3f4e6740973f46f84d3edd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_3.json",
+      "output": "RP/models/blocks/plate_shelf_3.geo.json",
+      "sha256": "f64803c29e58f67bc3f57d6b5e3dfc1bf28f1037c2d0dffdae4623b445428722",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_idle.json",
+      "output": "RP/models/blocks/plate_shelf_4.geo.json",
+      "sha256": "96c3f07c84c4932e077746c4a7577e5180952e030a3f4e6740973f46f84d3edd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_4.json",
+      "output": "RP/models/blocks/plate_shelf_4.geo.json",
+      "sha256": "1bd9c87d69ebac5af93d4d7b49383f8ddaf8590690d284cfc221f32c223f602c",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_idle.json",
+      "output": "RP/models/blocks/plate_shelf_5.geo.json",
+      "sha256": "96c3f07c84c4932e077746c4a7577e5180952e030a3f4e6740973f46f84d3edd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_5.json",
+      "output": "RP/models/blocks/plate_shelf_5.geo.json",
+      "sha256": "e7b1fd10a92940a3f7f3d9437d072788970426712033819fb041498cef7228cd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_idle.json",
+      "output": "RP/models/blocks/plate_shelf_6.geo.json",
+      "sha256": "96c3f07c84c4932e077746c4a7577e5180952e030a3f4e6740973f46f84d3edd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_6.json",
+      "output": "RP/models/blocks/plate_shelf_6.geo.json",
+      "sha256": "90c1013ef3a20db7727abe4e2a0b0d3037f1d44b0cbd6ddc28fade7afe3591d2",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_idle.json",
+      "output": "RP/models/blocks/plate_shelf_7.geo.json",
+      "sha256": "96c3f07c84c4932e077746c4a7577e5180952e030a3f4e6740973f46f84d3edd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_7.json",
+      "output": "RP/models/blocks/plate_shelf_7.geo.json",
+      "sha256": "dc6b8cb3ba94fc8c0a11959a8ddfb08627988b61c2ed3dc476ea960d86ead24c",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_idle.json",
+      "output": "RP/models/blocks/plate_shelf_8.geo.json",
+      "sha256": "96c3f07c84c4932e077746c4a7577e5180952e030a3f4e6740973f46f84d3edd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_8.json",
+      "output": "RP/models/blocks/plate_shelf_8.geo.json",
+      "sha256": "f6bfc580d8fef4a7d9e5d3512761395003ab8aa0ad10bf16e6f555aa324356a4",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_idle.json",
+      "output": "RP/models/blocks/plate_shelf_9.geo.json",
+      "sha256": "96c3f07c84c4932e077746c4a7577e5180952e030a3f4e6740973f46f84d3edd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_9.json",
+      "output": "RP/models/blocks/plate_shelf_9.geo.json",
+      "sha256": "6a51172e8f1847c334fdd56d35bd66943e53e3909ceabc5c76f045807f357a7d",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_idle.json",
+      "output": "RP/models/blocks/plate_shelf_10.geo.json",
+      "sha256": "96c3f07c84c4932e077746c4a7577e5180952e030a3f4e6740973f46f84d3edd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_10.json",
+      "output": "RP/models/blocks/plate_shelf_10.geo.json",
+      "sha256": "20138912c9430153d446297e9545d028a779a0fb60ee2d52adf4f2c2cb4aaab0",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_idle.json",
+      "output": "RP/models/blocks/plate_shelf_11.geo.json",
+      "sha256": "96c3f07c84c4932e077746c4a7577e5180952e030a3f4e6740973f46f84d3edd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_11.json",
+      "output": "RP/models/blocks/plate_shelf_11.geo.json",
+      "sha256": "53bfcaf12053b5ad00417a4a5881476c8daf42044d9c811af2d8eaa44055809f",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_idle.json",
+      "output": "RP/models/blocks/plate_shelf_12.geo.json",
+      "sha256": "96c3f07c84c4932e077746c4a7577e5180952e030a3f4e6740973f46f84d3edd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_12.json",
+      "output": "RP/models/blocks/plate_shelf_12.geo.json",
+      "sha256": "46a4a6c350f006950a61d901a8d2cc9a305de1f7707a26089539773054d166cd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_idle.json",
+      "output": "RP/models/blocks/plate_shelf_13.geo.json",
+      "sha256": "96c3f07c84c4932e077746c4a7577e5180952e030a3f4e6740973f46f84d3edd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_13.json",
+      "output": "RP/models/blocks/plate_shelf_13.geo.json",
+      "sha256": "8a619bb543c2562dad890a4084c3f660d11a0d1c7e9ec22b27091158bb85f069",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_idle.json",
+      "output": "RP/models/blocks/plate_shelf_14.geo.json",
+      "sha256": "96c3f07c84c4932e077746c4a7577e5180952e030a3f4e6740973f46f84d3edd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_14.json",
+      "output": "RP/models/blocks/plate_shelf_14.geo.json",
+      "sha256": "7822e9dbbed21512de7f52a97e6113cac884a2550630e62eecf14126643030f3",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_idle.json",
+      "output": "RP/models/blocks/plate_shelf_15.geo.json",
+      "sha256": "96c3f07c84c4932e077746c4a7577e5180952e030a3f4e6740973f46f84d3edd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_15.json",
+      "output": "RP/models/blocks/plate_shelf_15.geo.json",
+      "sha256": "8993a223e1a4c7c27aa84fac3276435b97253926c7ccba400c2a994b65dd9dd3",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_idle.json",
+      "output": "RP/models/blocks/plate_shelf_16.geo.json",
+      "sha256": "96c3f07c84c4932e077746c4a7577e5180952e030a3f4e6740973f46f84d3edd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_16.json",
+      "output": "RP/models/blocks/plate_shelf_16.geo.json",
+      "sha256": "fee9f002d7f8431bb1919f2f24a4955e24380573f79e2fde015b22200dcdd39e",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_idle.json",
+      "output": "RP/models/blocks/plate_shelf_17.geo.json",
+      "sha256": "96c3f07c84c4932e077746c4a7577e5180952e030a3f4e6740973f46f84d3edd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_17.json",
+      "output": "RP/models/blocks/plate_shelf_17.geo.json",
+      "sha256": "462a7d7caa1b2caf18aa4ee7ebfcfd9dbdcf3931e948fe2ad96dee27245915a8",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_idle.json",
+      "output": "RP/models/blocks/plate_shelf_18.geo.json",
+      "sha256": "96c3f07c84c4932e077746c4a7577e5180952e030a3f4e6740973f46f84d3edd",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/plate_shelf_18.json",
+      "output": "RP/models/blocks/plate_shelf_18.geo.json",
+      "sha256": "6ad7e490e9af502c53c377f689119bc2470c370422f0ff1641442434a85fd7e1",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
+      "output": "RP/models/blocks/washingtable_0.geo.json",
+      "sha256": "573d98e4c77c21e751d1f41c8368eda41ea8fd1545b51e9d04b738d0103c3d97",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
+      "output": "RP/models/blocks/washingtable_1.geo.json",
+      "sha256": "573d98e4c77c21e751d1f41c8368eda41ea8fd1545b51e9d04b738d0103c3d97",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_1.json",
+      "output": "RP/models/blocks/washingtable_1.geo.json",
+      "sha256": "9dc62e21dc44858ae70f5e21610197003ddf0b8ddf325c98dc424a943067f75b",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
+      "output": "RP/models/blocks/washingtable_2.geo.json",
+      "sha256": "573d98e4c77c21e751d1f41c8368eda41ea8fd1545b51e9d04b738d0103c3d97",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_2.json",
+      "output": "RP/models/blocks/washingtable_2.geo.json",
+      "sha256": "cb23d6239498846b66281f39706d8c8c59e148c3898dfe96c8359028b246949d",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
+      "output": "RP/models/blocks/washingtable_3.geo.json",
+      "sha256": "573d98e4c77c21e751d1f41c8368eda41ea8fd1545b51e9d04b738d0103c3d97",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_3.json",
+      "output": "RP/models/blocks/washingtable_3.geo.json",
+      "sha256": "267ab947d34de447889ab12fe68c27e3e52c1f7724d11c882499e90b9058ec8f",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
+      "output": "RP/models/blocks/washingtable_4.geo.json",
+      "sha256": "573d98e4c77c21e751d1f41c8368eda41ea8fd1545b51e9d04b738d0103c3d97",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_4.json",
+      "output": "RP/models/blocks/washingtable_4.geo.json",
+      "sha256": "61d9f1073df55223cd7033d7bd28979f97b609ab119589c907796fc22c6b38b4",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
+      "output": "RP/models/blocks/washingtable_5.geo.json",
+      "sha256": "573d98e4c77c21e751d1f41c8368eda41ea8fd1545b51e9d04b738d0103c3d97",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_5.json",
+      "output": "RP/models/blocks/washingtable_5.geo.json",
+      "sha256": "f75b3788d04b6e473fcc9ac3184180a18679d5a992de888c593944305eb1a053",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
+      "output": "RP/models/blocks/washingtable_6.geo.json",
+      "sha256": "573d98e4c77c21e751d1f41c8368eda41ea8fd1545b51e9d04b738d0103c3d97",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_6.json",
+      "output": "RP/models/blocks/washingtable_6.geo.json",
+      "sha256": "11260d651013cda2bcf754c4be8b18a64923d1c9d391211bb7fddead0fce87e9",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
+      "output": "RP/models/blocks/washingtable_7.geo.json",
+      "sha256": "573d98e4c77c21e751d1f41c8368eda41ea8fd1545b51e9d04b738d0103c3d97",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_7.json",
+      "output": "RP/models/blocks/washingtable_7.geo.json",
+      "sha256": "f3724c9be871d42a8eda00db66f68a0743aee5d04507b9a06b6b23f0fda9399e",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
+      "output": "RP/models/blocks/washingtable_8.geo.json",
+      "sha256": "573d98e4c77c21e751d1f41c8368eda41ea8fd1545b51e9d04b738d0103c3d97",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_8.json",
+      "output": "RP/models/blocks/washingtable_8.geo.json",
+      "sha256": "4c48ae2c3297f78b894e7cf13357875581888b0109307e828bcfcd97ef8d88df",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
+      "output": "RP/models/blocks/washingtable_9.geo.json",
+      "sha256": "573d98e4c77c21e751d1f41c8368eda41ea8fd1545b51e9d04b738d0103c3d97",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_9.json",
+      "output": "RP/models/blocks/washingtable_9.geo.json",
+      "sha256": "cc39cd7c417aba38fca447bd71125079af3f35ae198e10aa149eb90bf7ff2adf",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
+      "output": "RP/models/blocks/washingtable_10.geo.json",
+      "sha256": "573d98e4c77c21e751d1f41c8368eda41ea8fd1545b51e9d04b738d0103c3d97",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_10.json",
+      "output": "RP/models/blocks/washingtable_10.geo.json",
+      "sha256": "6e9cf660c8f977ee3b75e41e2a6cffdb791fbd85c5fbcf555b7436e3a5393ab8",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/clean_plate.json",
+      "output": "RP/models/blocks/food_plate_display_0.geo.json",
+      "sha256": "6d4d5c4ad1189c7502c42e3225d66c752348342434821e47e10ac0cd9b3c89df",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/1_1.json",
+      "output": "RP/models/blocks/food_plate_display_1.geo.json",
+      "sha256": "652f44f6f11a644b21da8b966d249e201baad5a9ca9c0602428a5591f3326eee",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/1_2.json",
+      "output": "RP/models/blocks/food_plate_display_2.geo.json",
+      "sha256": "8664eac0442af13a838004e6d03c89378aea675b0f485d9b983994dd5e9258e1",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/1_3.json",
+      "output": "RP/models/blocks/food_plate_display_3.geo.json",
+      "sha256": "43a1d79862a005549ac26354c3bd17c219b6f97adbd482400597640abd40a1ef",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/1_4.json",
+      "output": "RP/models/blocks/food_plate_display_4.geo.json",
+      "sha256": "d45c82a78cdd648e139b233affd7d471d1a468ca8c2ceb725a8323b99530977c",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_1.json",
+      "output": "RP/models/blocks/food_plate_display_5.geo.json",
+      "sha256": "e63950cb5b497bb060c4da16b2b2772346831c4087d0dc529366421bac99703c",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_2.json",
+      "output": "RP/models/blocks/food_plate_display_6.geo.json",
+      "sha256": "62b5a756fca8fc36ceccf6227cd16b2a4518cf43f19d5e38e0b4d311e628f9e8",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_3.json",
+      "output": "RP/models/blocks/food_plate_display_7.geo.json",
+      "sha256": "e49ae1bf574a82524a09fa6b04a3272b97f01c2cd53a8093a7a97d148ad62a3d",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_4.json",
+      "output": "RP/models/blocks/food_plate_display_8.geo.json",
+      "sha256": "6e67154e23d127e326f79a43c1e551100930e8d0785bf3797ea1943c6092d3af",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/3_1.json",
+      "output": "RP/models/blocks/food_plate_display_9.geo.json",
+      "sha256": "a1dfae13a9f9060f8a9e65fe85276c1d004800bbfac25642d6dabc133de06ef3",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/3_2.json",
+      "output": "RP/models/blocks/food_plate_display_10.geo.json",
+      "sha256": "7b1011cd076b0ef64e077da8f00445297036a6e128def81f19dfa90ee3d5b10d",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/3_3.json",
+      "output": "RP/models/blocks/food_plate_display_11.geo.json",
+      "sha256": "b7e11c21c14c60e3adad6156d88151bf7a626cf51451426475b87a1192e989b4",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/3_4.json",
+      "output": "RP/models/blocks/food_plate_display_12.geo.json",
+      "sha256": "d45c82a78cdd648e139b233affd7d471d1a468ca8c2ceb725a8323b99530977c",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/4_1.json",
+      "output": "RP/models/blocks/food_plate_display_13.geo.json",
+      "sha256": "6119636764c8c392f001e8828f26a378756634e0a20deb4820872256c142fb9c",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/4_2.json",
+      "output": "RP/models/blocks/food_plate_display_14.geo.json",
+      "sha256": "c27fa608805cc4352cbe24f3cf795aa47eb9157eee6bc222a0d15d8bf4676532",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/4_3.json",
+      "output": "RP/models/blocks/food_plate_display_15.geo.json",
+      "sha256": "38699ee2b96525afeb8314197fca06bd80065baa10860d2c4b47a2d7b2bbbcb6",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/4_4.json",
+      "output": "RP/models/blocks/food_plate_display_16.geo.json",
+      "sha256": "2574b22e41a99d18986cd14fefb68e7e164fdbec20b78b3a8018f9c18a9458b4",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/5_1.json",
+      "output": "RP/models/blocks/food_plate_display_17.geo.json",
+      "sha256": "024beef092689d5b0cc1108a5a9ff115b0400fd7f54a6b8f134237068b51d431",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/5_2.json",
+      "output": "RP/models/blocks/food_plate_display_18.geo.json",
+      "sha256": "562b467781f60a3e5f4fabf63b15f7e5683f59b5c36580eb9fa2ed9f92652c4f",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/5_3.json",
+      "output": "RP/models/blocks/food_plate_display_19.geo.json",
+      "sha256": "f71ad3f60f01f850ef1c30ba88e808774bd4f4dcf9c416e14e072b1ba5527cb6",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/5_4.json",
+      "output": "RP/models/blocks/food_plate_display_20.geo.json",
+      "sha256": "3ebe2f3562984ee9baa778bb2ebcacf2a326d9c938d69327894ed3d52db4352a",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/6_1.json",
+      "output": "RP/models/blocks/food_plate_display_21.geo.json",
+      "sha256": "2edfec870d63ae35ba7269722064cf96d3fb100cc2050e92c8103ac670f9fece",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/6_2.json",
+      "output": "RP/models/blocks/food_plate_display_22.geo.json",
+      "sha256": "5992fa77bdc0546cb362f104d94c0d60c9e7a87e04d5ab0fea1020f4d9fcb909",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/6_3.json",
+      "output": "RP/models/blocks/food_plate_display_23.geo.json",
+      "sha256": "7f66a7603a59190c287c9b163f32cfaa0518c5528d085dd05c0832a2d8396a0a",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/6_4.json",
+      "output": "RP/models/blocks/food_plate_display_24.geo.json",
+      "sha256": "d45c82a78cdd648e139b233affd7d471d1a468ca8c2ceb725a8323b99530977c",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/7_1.json",
+      "output": "RP/models/blocks/food_plate_display_25.geo.json",
+      "sha256": "cd4e81960221d5c3f6ad25614c3d0ba5f9a232717774a24ed244379814c89c98",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/7_2.json",
+      "output": "RP/models/blocks/food_plate_display_26.geo.json",
+      "sha256": "e5125489fdd1712652bbe6e28f0f7567642d913ce5da93a431536d634645e275",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/7_3.json",
+      "output": "RP/models/blocks/food_plate_display_27.geo.json",
+      "sha256": "1053fc55540f9ccb33ec2194803aedc282c0b37c35990ae59f826b400519ab30",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/7_4.json",
+      "output": "RP/models/blocks/food_plate_display_28.geo.json",
+      "sha256": "d45c82a78cdd648e139b233affd7d471d1a468ca8c2ceb725a8323b99530977c",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/8_1.json",
+      "output": "RP/models/blocks/food_plate_display_29.geo.json",
+      "sha256": "1ed221e24b778edeb11c6963f96e6990b6c05e5203c169b64f2ac8623c2c024d",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/8_2.json",
+      "output": "RP/models/blocks/food_plate_display_30.geo.json",
+      "sha256": "f403966bcbcbf2692bbe701af33476ca634913712050fe79026851aabc524d34",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/8_3.json",
+      "output": "RP/models/blocks/food_plate_display_31.geo.json",
+      "sha256": "5cc5de4c7ffd32ea199678480c977be09bcf907beca24037ae0f537f77526722",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/8_4.json",
+      "output": "RP/models/blocks/food_plate_display_32.geo.json",
+      "sha256": "6cf8cdf9be5b1a6428c720b3b9e489b131174312d45496e9931c178fea80ae60",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/9_1.json",
+      "output": "RP/models/blocks/food_plate_display_33.geo.json",
+      "sha256": "d4782bbf520c0356504eb6211048a34822a8191a83012c6b10c24f762a2c5526",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/9_2.json",
+      "output": "RP/models/blocks/food_plate_display_34.geo.json",
+      "sha256": "74a510ee392b294faba363102507f6b8b6dd1e4a8a61e5b415f0c599c50bf2ec",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/9_3.json",
+      "output": "RP/models/blocks/food_plate_display_35.geo.json",
+      "sha256": "f7429b895a78b210793b12656b09aceb71b56e3af12d4f7e0f5042dd55f6151a",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/9_4.json",
+      "output": "RP/models/blocks/food_plate_display_36.geo.json",
+      "sha256": "8a33cfe464fc27a0e907f2b242e7a71ad5392bebc9cfcedec532e87d688f160e",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/10_1.json",
+      "output": "RP/models/blocks/food_plate_display_37.geo.json",
+      "sha256": "574b4269b842c76d392bd962ff6a27d7f5b52afa7b3de37edb1fff4e1f5fd06d",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/10_2.json",
+      "output": "RP/models/blocks/food_plate_display_38.geo.json",
+      "sha256": "cdbab42b0b248e4da27ac5127620dfa04f081d01d871a844cc302570a55781e0",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/10_3.json",
+      "output": "RP/models/blocks/food_plate_display_39.geo.json",
+      "sha256": "d7335677c6395f55e5cb0956384f2c6503f8747d6ea3244f8b4ec6640571c538",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/10_4.json",
+      "output": "RP/models/blocks/food_plate_display_40.geo.json",
+      "sha256": "9407dfc32cbca291df2d23eabb8ae48d8a71c3e498526b1f2cc8117eff3cbf05",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/blockstates/food_plate_display.json",
+      "output": "BP/blocks/food_plate_display.json",
+      "sha256": "3a36a70531958dd2eaa803588f43a9bf1cdf4e33a5e542c97914607b7cae8b8d",
+      "operation": "Original stage-to-model mapping with clean-plate stage zero adaptation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_idle.json",
+      "output": "RP/models/blocks/order_machine_idle_0.geo.json",
+      "sha256": "ca71f250815fffaa3febefdcadb5b2ebfea9c027ac851f352398e780a5f6cbfc",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_idle.json",
+      "output": "RP/models/blocks/order_machine_idle_1.geo.json",
+      "sha256": "ca71f250815fffaa3febefdcadb5b2ebfea9c027ac851f352398e780a5f6cbfc",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_idle.json",
+      "output": "RP/models/blocks/order_machine_idle_2.geo.json",
+      "sha256": "ca71f250815fffaa3febefdcadb5b2ebfea9c027ac851f352398e780a5f6cbfc",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_idle.json",
+      "output": "RP/models/blocks/order_machine_printing_0.geo.json",
+      "sha256": "ca71f250815fffaa3febefdcadb5b2ebfea9c027ac851f352398e780a5f6cbfc",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_paper0.json",
+      "output": "RP/models/blocks/order_machine_printing_0.geo.json",
+      "sha256": "bf5a0fe0c53e885956f3cfc3e3ca16c0ddf293ca8201c329d243b0965b63134d",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_idle.json",
+      "output": "RP/models/blocks/order_machine_printing_1.geo.json",
+      "sha256": "ca71f250815fffaa3febefdcadb5b2ebfea9c027ac851f352398e780a5f6cbfc",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_paper1.json",
+      "output": "RP/models/blocks/order_machine_printing_1.geo.json",
+      "sha256": "07e158402f428a49fe07af8930bd144a8fa933b2e5904f51faf3aac367590b39",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_idle.json",
+      "output": "RP/models/blocks/order_machine_printing_2.geo.json",
+      "sha256": "ca71f250815fffaa3febefdcadb5b2ebfea9c027ac851f352398e780a5f6cbfc",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_paper2.json",
+      "output": "RP/models/blocks/order_machine_printing_2.geo.json",
+      "sha256": "b469f5f40a4a6dc47e3ffddcb2706a4d0fdda03bc84fc8693b358a9bd4661d56",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_idle.json",
+      "output": "RP/models/blocks/order_machine_waiting_0.geo.json",
+      "sha256": "ca71f250815fffaa3febefdcadb5b2ebfea9c027ac851f352398e780a5f6cbfc",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_paper2.json",
+      "output": "RP/models/blocks/order_machine_waiting_0.geo.json",
+      "sha256": "b469f5f40a4a6dc47e3ffddcb2706a4d0fdda03bc84fc8693b358a9bd4661d56",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_idle.json",
+      "output": "RP/models/blocks/order_machine_waiting_1.geo.json",
+      "sha256": "ca71f250815fffaa3febefdcadb5b2ebfea9c027ac851f352398e780a5f6cbfc",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_paper2.json",
+      "output": "RP/models/blocks/order_machine_waiting_1.geo.json",
+      "sha256": "b469f5f40a4a6dc47e3ffddcb2706a4d0fdda03bc84fc8693b358a9bd4661d56",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_idle.json",
+      "output": "RP/models/blocks/order_machine_waiting_2.geo.json",
+      "sha256": "ca71f250815fffaa3febefdcadb5b2ebfea9c027ac851f352398e780a5f6cbfc",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_paper2.json",
+      "output": "RP/models/blocks/order_machine_waiting_2.geo.json",
+      "sha256": "b469f5f40a4a6dc47e3ffddcb2706a4d0fdda03bc84fc8693b358a9bd4661d56",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_0.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Y=16 split with cropped original UVs and synchronized door pose"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_1.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Y=16 split with cropped original UVs and synchronized door pose"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_0.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Y=16 split with cropped original UVs and synchronized door pose"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_1.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Y=16 split with cropped original UVs and synchronized door pose"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_0.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Original bones with static dishwasher phase 0 pose"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_1.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Original bones with static dishwasher phase 1 pose"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_2.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Original bones with static dishwasher phase 2 pose"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_3.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Original bones with static dishwasher phase 3 pose"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_4.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Original bones with static dishwasher phase 4 pose"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_5.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Original bones with static dishwasher phase 5 pose"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/stove.json",
+      "output": "RP/models/blocks/stove.geo.json",
+      "sha256": "a447396bc78980d8f2581f5c9a33ecd142168ee7cf63dd03450358ec5eda9dd2",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/clean_plate.json",
+      "output": "RP/textures/items/clean_plate.png",
+      "sha256": "6d4d5c4ad1189c7502c42e3225d66c752348342434821e47e10ac0cd9b3c89df",
+      "operation": "Orthographic thumbnail rendered from original model and texture pixels"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/dirty_plate_item.json",
+      "output": "RP/textures/items/dirty_plate.png",
+      "sha256": "2715bc92bc2dfe5e96d017b7cdde3c16801bdf1e08a9a568dfd06969a2557178",
+      "operation": "Orthographic thumbnail rendered from original model and texture pixels"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate.json",
+      "output": "RP/textures/items/food_plate.png",
+      "sha256": "063c55b61f646bcb6b1dc9ce4b1f53ee8d279e9a5f76d3470fbc6a1aef3fe0dc",
+      "operation": "Orthographic thumbnail rendered from original model and texture pixels"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/takeout_bag.json",
+      "output": "RP/textures/items/takeout_bag.png",
+      "sha256": "6c7903ff3f7560439aa74e4461b598cc0b42e144538549eefe4b0d0d36bba210",
+      "operation": "Orthographic thumbnail rendered from original model and texture pixels"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/motorcycle.json",
+      "output": "RP/textures/items/motorcycle.png",
+      "sha256": "db9fcadd009a54e4b64ff6d96978b52b7f7e37b3b69722124750c4c5941346e4",
+      "operation": "Orthographic thumbnail rendered from original model and texture pixels"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/item/helmet.json",
+      "output": "RP/textures/items/helmet.png",
+      "sha256": "d4971693a996e0e1fdb19fee27f809bc2f4dfc7a8b666a0caeed91e5f227ef7f",
+      "operation": "Orthographic thumbnail rendered from original model and texture pixels"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/item/helmet.json",
+      "output": "RP/models/entity/helmet_shell.geo.json",
+      "sha256": "d4971693a996e0e1fdb19fee27f809bc2f4dfc7a8b666a0caeed91e5f227ef7f",
+      "operation": "Head armor attachment; source shell/visor materials retained"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/item/helmet.json",
+      "output": "RP/models/entity/helmet_visor.geo.json",
+      "sha256": "d4971693a996e0e1fdb19fee27f809bc2f4dfc7a8b666a0caeed91e5f227ef7f",
+      "operation": "Head armor attachment; source shell/visor materials retained"
+    },
+    {
+      "source": "forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/render/model/MotorcycleModel.java",
+      "output": "RP/models/entity/motorcycle.geo.json",
+      "sha256": "073119a7a31b8ac7d04e3d98fa41053eb0f80f853a680c036572055b7424ac32",
+      "operation": "CubeListBuilder hierarchy, PartPose and box-UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+      "output": "RP/models/entity/customer.geo.json",
+      "sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+      "operation": "Geometry identifier and version normalization"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+      "output": "RP/models/entity/customer_slim.geo.json",
+      "sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+      "operation": "Geometry identifier and version normalization"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/entity/imported/block_dishwasher.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Full upstream bone/UV archive; unique identifier, valid version, nonnegative dimensions"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/food_plate_placed.geo.json",
+      "output": "RP/models/entity/imported/block_food_plate_placed.geo.json",
+      "sha256": "067b2b8dc2ca9ed0a708dcc2d048236e27fd6efcbfef6f3221b60854d3338f12",
+      "operation": "Full upstream bone/UV archive; unique identifier, valid version, nonnegative dimensions"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json",
+      "output": "RP/models/entity/imported/block_order_machine.geo.json",
+      "sha256": "8b6de1609098ebf4cf8a04a5e6041fe4969bc70311537c6fec9d4bc5622696cc",
+      "operation": "Full upstream bone/UV archive; unique identifier, valid version, nonnegative dimensions"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/entity/imported/block_refrigerator.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Full upstream bone/UV archive; unique identifier, valid version, nonnegative dimensions"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/stove.geo.json",
+      "output": "RP/models/entity/imported/block_stove.geo.json",
+      "sha256": "f81d5b7999426f87db667eadb168cbda8914a3690b7cb65a5295cada3facb99f",
+      "operation": "Full upstream bone/UV archive; unique identifier, valid version, nonnegative dimensions"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/entity/imported/block_takeout_bag_placed.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Full upstream bone/UV archive; unique identifier, valid version, nonnegative dimensions"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+      "output": "RP/models/entity/imported/drive_idle.geo.json",
+      "sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+      "operation": "Full upstream bone/UV archive; unique identifier, valid version, nonnegative dimensions"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+      "output": "RP/models/entity/imported/drive_idle_alex.geo.json",
+      "sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+      "operation": "Full upstream bone/UV archive; unique identifier, valid version, nonnegative dimensions"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/player.geo.json",
+      "output": "RP/models/entity/imported/player.geo.json",
+      "sha256": "44ab1f99b5f4e566503792f2ae54306cb06aa057a16fa249fc179b0895a5882b",
+      "operation": "Full upstream bone/UV archive; unique identifier, valid version, nonnegative dimensions"
+    },
+    {
+      "source": "common/src/main/resources/data/ordertocook/recipes/otc_upgrade_box.json",
+      "output": "BP/recipes/otc_upgrade_box.json",
+      "sha256": "45de073f6cd378269a69dc7872e261ca43140ed700f61be43b11817e9674c4ae",
+      "operation": "Java shaped recipe converted to Bedrock; original ingredients and result retained"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/lang/en_us.json",
+      "output": "RP/texts/en_US.lang",
+      "sha256": "efabd99df1515ef3096ef59d3b4542c8d84d1abcc0c6cb63d8280aa72b7774a8",
+      "operation": "Bedrock localization keys; additional port labels and Traditional Chinese translations"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/lang/zh_cn.json",
+      "output": "RP/texts/zh_CN.lang",
+      "sha256": "2a234126eb36b4878a982882e1474370288223ed654734d9c317a7baed8d88bf",
+      "operation": "Bedrock localization keys; additional port labels and Traditional Chinese translations"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/lang/zh_cn.json",
+      "output": "RP/texts/zh_TW.lang",
+      "sha256": "2a234126eb36b4878a982882e1474370288223ed654734d9c317a7baed8d88bf",
+      "operation": "Bedrock localization keys; additional port labels and Traditional Chinese translations"
+    }
+  ],
+  "adaptations": [
+    "Two-part refrigerator with clipped UVs and synchronous door poses",
+    "GeckoLib easing replaced by native Bedrock interpolation",
+    "Static dishwasher phase poses; original animation clips retained",
+    "Default customer skins prebundled; runtime web skin lookup not available",
+    "Source-model inventory thumbnails",
+    "Early-game furniture recipes added for survival access"
+  ]
+}

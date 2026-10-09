@@ -1,0 +1,27 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "ordertocook:helmet",
+      "materials": {
+        "shell": "armor",
+        "visor": "entity_alphablend"
+      },
+      "textures": {
+        "shell": "textures/ordertocook/item/delivery_helmet",
+        "visor": "textures/ordertocook/item/delivery_helmet_glass"
+      },
+      "geometry": {
+        "shell": "geometry.ordertocook.helmet_shell",
+        "visor": "geometry.ordertocook.helmet_visor"
+      },
+      "scripts": {
+        "parent_setup": "variable.helmet_layer_visible = 0.0;"
+      },
+      "render_controllers": [
+        "controller.render.ordertocook.helmet_shell",
+        "controller.render.ordertocook.helmet_visor"
+      ]
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "ordertocook:otc_upgrade_box"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " D ",
+      "BCB",
+      "BAB"
+    ],
+    "key": {
+      "A": {
+        "item": "ordertocook:chef_coin_100"
+      },
+      "B": {
+        "item": "minecraft:gold_ingot"
+      },
+      "C": {
+        "item": "minecraft:redstone_block"
+      },
+      "D": {
+        "item": "minecraft:chain"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "ordertocook:otc_upgrade_box",
+      "count": 1
+    }
+  }
+}

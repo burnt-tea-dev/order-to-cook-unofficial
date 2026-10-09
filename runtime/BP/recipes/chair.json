@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "ordertocook:chair"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "P  ",
+      "PPP",
+      "S S"
+    ],
+    "key": {
+      "P": {
+        "item": "minecraft:oak_planks"
+      },
+      "S": {
+        "item": "minecraft:stick"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "ordertocook:chair",
+      "count": 2
+    }
+  }
+}

@@ -1,0 +1,247 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.ordertocook.order_machine_waiting_1",
+        "texture_width": 16,
+        "texture_height": 16,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -7,
+                0,
+                -7
+              ],
+              "size": [
+                14,
+                7,
+                14
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    3.75,
+                    0
+                  ],
+                  "uv_size": [
+                    3.5,
+                    2.5
+                  ],
+                  "material_instance": "ordertocook_block_order_machine"
+                },
+                "east": {
+                  "uv": [
+                    3.75,
+                    2.75
+                  ],
+                  "uv_size": [
+                    3.5,
+                    2.5
+                  ],
+                  "material_instance": "ordertocook_block_order_machine"
+                },
+                "south": {
+                  "uv": [
+                    3.75,
+                    5.5
+                  ],
+                  "uv_size": [
+                    3.5,
+                    2.5
+                  ],
+                  "material_instance": "ordertocook_block_order_machine"
+                },
+                "west": {
+                  "uv": [
+                    0,
+                    7.5
+                  ],
+                  "uv_size": [
+                    3.5,
+                    2.5
+                  ],
+                  "material_instance": "ordertocook_block_order_machine"
+                },
+                "up": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    3.5,
+                    3.5
+                  ],
+                  "material_instance": "ordertocook_block_order_machine"
+                },
+                "down": {
+                  "uv": [
+                    0,
+                    7.25
+                  ],
+                  "uv_size": [
+                    3.5,
+                    -3.5
+                  ],
+                  "material_instance": "ordertocook_block_order_machine"
+                }
+              }
+            },
+            {
+              "origin": [
+                -6,
+                7,
+                1
+              ],
+              "size": [
+                12,
+                7,
+                2
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    10.25
+                  ],
+                  "uv_size": [
+                    3,
+                    1.75
+                  ],
+                  "material_instance": "ordertocook_block_order_machine"
+                },
+                "east": {
+                  "uv": [
+                    10.25,
+                    3.5
+                  ],
+                  "uv_size": [
+                    0.5,
+                    1.75
+                  ],
+                  "material_instance": "ordertocook_block_order_machine"
+                },
+                "south": {
+                  "uv": [
+                    10.25,
+                    0
+                  ],
+                  "uv_size": [
+                    3.0,
+                    1.75
+                  ],
+                  "material_instance": "ordertocook_block_order_machine"
+                },
+                "west": {
+                  "uv": [
+                    10.25,
+                    5.5
+                  ],
+                  "uv_size": [
+                    0.5,
+                    1.75
+                  ],
+                  "material_instance": "ordertocook_block_order_machine"
+                },
+                "up": {
+                  "uv": [
+                    10.25,
+                    2
+                  ],
+                  "uv_size": [
+                    3.0,
+                    0.5
+                  ],
+                  "material_instance": "ordertocook_block_order_machine"
+                },
+                "down": {
+                  "uv": [
+                    10.25,
+                    3.25
+                  ],
+                  "uv_size": [
+                    3.0,
+                    -0.5
+                  ],
+                  "material_instance": "ordertocook_block_order_machine"
+                }
+              },
+              "pivot": [
+                0,
+                3,
+                -1
+              ],
+              "rotation": [
+                -22.5,
+                0,
+                0
+              ]
+            },
+            {
+              "origin": [
+                -5,
+                6,
+                0.34375
+              ],
+              "size": [
+                10,
+                11,
+                0.0625
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    7.5,
+                    0
+                  ],
+                  "uv_size": [
+                    2.5,
+                    2.75
+                  ],
+                  "material_instance": "ordertocook_block_order_machine"
+                },
+                "south": {
+                  "uv": [
+                    7.5,
+                    3
+                  ],
+                  "uv_size": [
+                    2.5,
+                    2.75
+                  ],
+                  "material_instance": "ordertocook_block_order_machine"
+                }
+              },
+              "pivot": [
+                0,
+                2,
+                -1.5
+              ],
+              "rotation": [
+                -22.5,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

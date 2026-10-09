@@ -1,0 +1,306 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.ordertocook.food_plate_display_31",
+        "texture_width": 16,
+        "texture_height": 16,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -6,
+                0,
+                -6
+              ],
+              "size": [
+                12,
+                1,
+                12
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    1.2,
+                    0
+                  ],
+                  "uv_size": [
+                    1.2,
+                    0.1
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                },
+                "east": {
+                  "uv": [
+                    1.2,
+                    0.1
+                  ],
+                  "uv_size": [
+                    1.2,
+                    0.1
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                },
+                "south": {
+                  "uv": [
+                    1.2,
+                    0.2
+                  ],
+                  "uv_size": [
+                    1.2,
+                    0.1
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                },
+                "west": {
+                  "uv": [
+                    1.2,
+                    0.3
+                  ],
+                  "uv_size": [
+                    1.2,
+                    0.1
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                },
+                "up": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    1.2,
+                    1.2
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                },
+                "down": {
+                  "uv": [
+                    0,
+                    2.4
+                  ],
+                  "uv_size": [
+                    1.2,
+                    -1.2
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                }
+              }
+            },
+            {
+              "origin": [
+                -6,
+                1.01563,
+                -6
+              ],
+              "size": [
+                12,
+                0.0,
+                12
+              ],
+              "uv": {
+                "up": {
+                  "uv": [
+                    3.9,
+                    4.9
+                  ],
+                  "uv_size": [
+                    1.2,
+                    -1.2
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                }
+              }
+            },
+            {
+              "origin": [
+                -0.91761,
+                1,
+                -4.61313
+              ],
+              "size": [
+                4.0,
+                2,
+                4.0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    4.9,
+                    1
+                  ],
+                  "uv_size": [
+                    -0.4,
+                    0.2
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                },
+                "east": {
+                  "uv": [
+                    4.9,
+                    0.8
+                  ],
+                  "uv_size": [
+                    -0.4,
+                    0.2
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                },
+                "south": {
+                  "uv": [
+                    4.8,
+                    3.4
+                  ],
+                  "uv_size": [
+                    -0.4,
+                    0.2
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                },
+                "west": {
+                  "uv": [
+                    1.6,
+                    4.5
+                  ],
+                  "uv_size": [
+                    -0.4,
+                    0.2
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                },
+                "up": {
+                  "uv": [
+                    1.6,
+                    4.5
+                  ],
+                  "uv_size": [
+                    0.4,
+                    -0.4
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                },
+                "down": {
+                  "uv": [
+                    4.1,
+                    1.6
+                  ],
+                  "uv_size": [
+                    0.4,
+                    0.4
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                }
+              }
+            },
+            {
+              "origin": [
+                -2.109,
+                0.875,
+                12.41854
+              ],
+              "size": [
+                4.0,
+                2.0,
+                4.0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    2,
+                    4.5
+                  ],
+                  "uv_size": [
+                    -0.4,
+                    0.2
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                },
+                "east": {
+                  "uv": [
+                    4.9,
+                    1.4
+                  ],
+                  "uv_size": [
+                    -0.4,
+                    0.2
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                },
+                "south": {
+                  "uv": [
+                    4.9,
+                    1.2
+                  ],
+                  "uv_size": [
+                    -0.4,
+                    0.2
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                },
+                "west": {
+                  "uv": [
+                    4.9,
+                    1.6
+                  ],
+                  "uv_size": [
+                    -0.4,
+                    0.2
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                },
+                "up": {
+                  "uv": [
+                    2,
+                    4.5
+                  ],
+                  "uv_size": [
+                    0.4,
+                    -0.4
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                },
+                "down": {
+                  "uv": [
+                    4.1,
+                    2.2
+                  ],
+                  "uv_size": [
+                    0.4,
+                    0.4
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                }
+              },
+              "pivot": [
+                -32.2706,
+                4.00782,
+                0.90793
+              ],
+              "rotation": [
+                0,
+                22.5,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

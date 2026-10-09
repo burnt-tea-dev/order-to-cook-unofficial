@@ -1,0 +1,32 @@
+{
+  "format_version": "1.21.100",
+  "minecraft:item": {
+    "description": {
+      "identifier": "ordertocook:takeout_bag",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "item.ordertocook:takeout_bag.name"
+      },
+      "minecraft:icon": {
+        "textures": {
+          "default": "ordertocook_takeout_bag"
+        }
+      },
+      "minecraft:max_stack_size": 1,
+      "ordertocook:use": {},
+      "minecraft:interact_button": true,
+      "minecraft:use_modifiers": {
+        "use_duration": 0.1,
+        "movement_modifier": 1
+      },
+      "minecraft:block_placer": {
+        "block": "ordertocook:takeout_bag",
+        "replace_block_item": true
+      }
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.ordertocook.customer": {
+      "arrays": {
+        "textures": {
+          "Array.skins": [
+            "Texture.wide",
+            "Texture.slim"
+          ]
+        },
+        "geometries": {
+          "Array.models": [
+            "Geometry.wide",
+            "Geometry.slim"
+          ]
+        }
+      },
+      "geometry": "Array.models[q.property('ordertocook:variant')]",
+      "materials": [
+        {
+          "*": "Material.default"
+        }
+      ],
+      "textures": [
+        "Array.skins[q.property('ordertocook:variant')]"
+      ]
+    },
+    "controller.render.ordertocook.helper": {
+      "geometry": "Geometry.default",
+      "materials": [
+        {
+          "*": "Material.default"
+        }
+      ],
+      "textures": [
+        "Texture.default"
+      ]
+    },
+    "controller.render.ordertocook.motorcycle": {
+      "arrays": {
+        "textures": {
+          "Array.colors": [
+            "Texture.white",
+            "Texture.red",
+            "Texture.blue",
+            "Texture.yellow"
+          ]
+        }
+      },
+      "geometry": "Geometry.default",
+      "materials": [
+        {
+          "*": "Material.default"
+        }
+      ],
+      "textures": [
+        "Array.colors[q.property('ordertocook:color')]"
+      ]
+    },
+    "controller.render.ordertocook.motorcycle_light": {
+      "geometry": "Geometry.default",
+      "materials": [
+        {
+          "*": "Material.light"
+        }
+      ],
+      "textures": [
+        "Texture.light"
+      ]
+    }
+  }
+}

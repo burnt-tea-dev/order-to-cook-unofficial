@@ -1,0 +1,28 @@
+{
+  "format_version": "1.21.100",
+  "minecraft:item": {
+    "description": {
+      "identifier": "ordertocook:otc_upgrade_box",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "item.ordertocook:otc_upgrade_box.name"
+      },
+      "minecraft:icon": {
+        "textures": {
+          "default": "ordertocook_otc_upgrade_box"
+        }
+      },
+      "minecraft:max_stack_size": 64,
+      "ordertocook:use": {},
+      "minecraft:interact_button": true,
+      "minecraft:use_modifiers": {
+        "use_duration": 0.1,
+        "movement_modifier": 1
+      }
+    }
+  }
+}

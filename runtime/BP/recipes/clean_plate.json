@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "ordertocook:clean_plate"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "Q Q",
+      " Q "
+    ],
+    "key": {
+      "Q": {
+        "item": "minecraft:quartz"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "ordertocook:clean_plate",
+      "count": 4
+    }
+  }
+}

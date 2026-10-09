@@ -1,0 +1,362 @@
+{
+  "format_version": "1.21.100",
+  "minecraft:block": {
+    "description": {
+      "identifier": "ordertocook:shelf",
+      "menu_category": {
+        "category": "construction"
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:cardinal_direction"
+          ],
+          "y_rotation_offset": 180
+        }
+      },
+      "states": {
+        "ordertocook:papers": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.ordertocook.shelf_0",
+      "minecraft:material_instances": {
+        "ordertocook_block_shelf": {
+          "texture": "ordertocook_block_shelf",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "*": {
+          "texture": "ordertocook_block_shelf",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -8,
+          0,
+          0
+        ],
+        "size": [
+          16,
+          16,
+          8
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -8,
+          0,
+          0
+        ],
+        "size": [
+          16,
+          16,
+          8
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:loot": "loot_tables/blocks/shelf.json",
+      "minecraft:destruction_particles": {
+        "texture": "ordertocook_block_shelf",
+        "particle_count": 50
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#9b9286",
+      "minecraft:movable": {
+        "movement_type": "immovable"
+      },
+      "ordertocook:interact": {}
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              -90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:papers') == 0",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.shelf_0",
+          "minecraft:material_instances": {
+            "ordertocook_block_shelf": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:papers') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.shelf_1",
+          "minecraft:material_instances": {
+            "ordertocook_block_shelf": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:papers') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.shelf_2",
+          "minecraft:material_instances": {
+            "ordertocook_block_shelf": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:papers') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.shelf_3",
+          "minecraft:material_instances": {
+            "ordertocook_block_shelf": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:papers') == 4",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.shelf_4",
+          "minecraft:material_instances": {
+            "ordertocook_block_shelf": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:papers') == 5",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.shelf_5",
+          "minecraft:material_instances": {
+            "ordertocook_block_shelf": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:papers') == 6",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.shelf_6",
+          "minecraft:material_instances": {
+            "ordertocook_block_shelf": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:papers') == 7",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.shelf_7",
+          "minecraft:material_instances": {
+            "ordertocook_block_shelf": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:papers') == 8",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.shelf_8",
+          "minecraft:material_instances": {
+            "ordertocook_block_shelf": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:papers') == 9",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.shelf_9",
+          "minecraft:material_instances": {
+            "ordertocook_block_shelf": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:papers') == 10",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.shelf_10",
+          "minecraft:material_instances": {
+            "ordertocook_block_shelf": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_shelf",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      }
+    ]
+  }
+}

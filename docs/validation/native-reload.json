@@ -1,0 +1,40 @@
+{
+  "mode": "reload",
+  "passed": true,
+  "checks": [
+    {
+      "name": "production entry initialized",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restaurant restored across server restart",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native storage entity restored",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "non-stackable parcel proof restored",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native ItemStack name and lore restored",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "custom block restored across server restart",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "serverVersion": "1.26.52.3",
+  "runtimeTreeSha256": "1a2a9b55ed611889ff2270b9cd83a3d1951e07dd014e0382ef84ec0a81588aeb",
+  "addonErrors": [],
+  "scope": "Native server blocks, entities, inventory and script adapters. No real Player, client rendering, forms, touch/keyboard, or multiplayer latency is exercised."
+}

@@ -1,0 +1,101 @@
+{
+  "format_version": "1.21.100",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "ordertocook:customer",
+      "is_spawnable": true,
+      "is_summonable": true,
+      "is_experimental": false,
+      "properties": {
+        "ordertocook:stage": {
+          "type": "enum",
+          "values": [
+            "waiting",
+            "seated",
+            "eating",
+            "leaving"
+          ],
+          "default": "waiting",
+          "client_sync": true
+        },
+        "ordertocook:variant": {
+          "type": "int",
+          "range": [
+            0,
+            1
+          ],
+          "default": 0,
+          "client_sync": true
+        },
+        "ordertocook:action": {
+          "type": "int",
+          "range": [
+            0,
+            7
+          ],
+          "default": 0,
+          "client_sync": true
+        }
+      }
+    },
+    "components": {
+      "minecraft:type_family": {
+        "family": [
+          "ordertocook_customer",
+          "ordertocook"
+        ]
+      },
+      "minecraft:persistent": {},
+      "minecraft:health": {
+        "value": 20,
+        "max": 20
+      },
+      "minecraft:physics": {
+        "has_gravity": true,
+        "has_collision": true
+      },
+      "minecraft:damage_sensor": {
+        "triggers": [
+          {
+            "deals_damage": "no"
+          }
+        ]
+      },
+      "minecraft:pushable": {
+        "is_pushable": false,
+        "is_pushable_by_piston": false
+      },
+      "minecraft:collision_box": {
+        "width": 0.6,
+        "height": 1.8
+      },
+      "minecraft:movement": {
+        "value": 0.22
+      },
+      "minecraft:movement.basic": {},
+      "minecraft:navigation.walk": {
+        "can_walk": true,
+        "can_open_doors": true
+      },
+      "minecraft:jump.static": {},
+      "minecraft:nameable": {
+        "always_show": true,
+        "allow_name_tag_renaming": false
+      }
+    },
+    "component_groups": {
+      "ordertocook:despawn": {
+        "minecraft:instant_despawn": {}
+      }
+    },
+    "events": {
+      "ordertocook:despawn": {
+        "add": {
+          "component_groups": [
+            "ordertocook:despawn"
+          ]
+        }
+      }
+    }
+  }
+}

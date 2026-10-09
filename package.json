@@ -1,0 +1,18 @@
+{
+  "name": "order-to-cook-bedrock-unofficial",
+  "version": "0.1.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "license": "GPL-3.0-only",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "check": "tsc --noEmit && python tools/validate_pack.py",
+    "build": "python tools/build.py",
+    "verify": "npm test && npm run check && npm run build"
+  },
+  "devDependencies": {
+    "@minecraft/server": "2.0.0",
+    "@minecraft/server-ui": "2.0.0",
+    "typescript": "5.8.3"
+  }
+}

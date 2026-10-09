@@ -1,0 +1,116 @@
+{
+  "format_version": "1.21.100",
+  "minecraft:block": {
+    "description": {
+      "identifier": "ordertocook:takeout_bag",
+      "menu_category": {
+        "category": "construction"
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:cardinal_direction"
+          ],
+          "y_rotation_offset": 180
+        }
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.ordertocook.takeout_bag",
+      "minecraft:material_instances": {
+        "ordertocook_block_takeout_bag": {
+          "texture": "ordertocook_block_takeout_bag",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "*": {
+          "texture": "ordertocook_block_takeout_bag",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        }
+      },
+      "minecraft:collision_box": false,
+      "minecraft:selection_box": {
+        "origin": [
+          -5,
+          0,
+          -5
+        ],
+        "size": [
+          10,
+          10,
+          10
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:loot": "loot_tables/blocks/takeout_bag.json",
+      "minecraft:destruction_particles": {
+        "texture": "ordertocook_block_takeout_bag",
+        "particle_count": 50
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#9b9286",
+      "minecraft:movable": {
+        "movement_type": "immovable"
+      },
+      "ordertocook:interact": {}
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              -90,
+              0
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

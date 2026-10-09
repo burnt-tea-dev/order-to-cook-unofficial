@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "ordertocook:countertop"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "III",
+      "PPP"
+    ],
+    "key": {
+      "I": {
+        "item": "minecraft:iron_ingot"
+      },
+      "P": {
+        "item": "minecraft:oak_planks"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "ordertocook:countertop",
+      "count": 2
+    }
+  }
+}

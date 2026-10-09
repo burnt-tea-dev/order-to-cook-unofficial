@@ -1,0 +1,76 @@
+{
+  "format_version": "1.21.100",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "ordertocook:seat",
+      "is_spawnable": false,
+      "is_summonable": true,
+      "is_experimental": false
+    },
+    "components": {
+      "minecraft:type_family": {
+        "family": [
+          "ordertocook_seat",
+          "ordertocook"
+        ]
+      },
+      "minecraft:persistent": {},
+      "minecraft:health": {
+        "value": 20,
+        "max": 20
+      },
+      "minecraft:physics": {
+        "has_gravity": false,
+        "has_collision": false
+      },
+      "minecraft:damage_sensor": {
+        "triggers": [
+          {
+            "deals_damage": "no"
+          }
+        ]
+      },
+      "minecraft:pushable": {
+        "is_pushable": false,
+        "is_pushable_by_piston": false
+      },
+      "minecraft:collision_box": {
+        "width": 0.01,
+        "height": 0.01
+      },
+      "minecraft:rideable": {
+        "seat_count": 1,
+        "family_types": [
+          "player",
+          "ordertocook_customer"
+        ],
+        "interact_text": "action.interact.sit",
+        "pull_in_entities": false,
+        "seats": [
+          {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "lock_rider_rotation": 45
+          }
+        ]
+      }
+    },
+    "component_groups": {
+      "ordertocook:despawn": {
+        "minecraft:instant_despawn": {}
+      }
+    },
+    "events": {
+      "ordertocook:despawn": {
+        "add": {
+          "component_groups": [
+            "ordertocook:despawn"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.ordertocook.food_plate_display_12",
+        "texture_width": 16,
+        "texture_height": 16,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -6,
+                0,
+                -6
+              ],
+              "size": [
+                12,
+                1,
+                12
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    1.2,
+                    0
+                  ],
+                  "uv_size": [
+                    1.2,
+                    0.1
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                },
+                "east": {
+                  "uv": [
+                    1.2,
+                    0.1
+                  ],
+                  "uv_size": [
+                    1.2,
+                    0.1
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                },
+                "south": {
+                  "uv": [
+                    1.2,
+                    0.2
+                  ],
+                  "uv_size": [
+                    1.2,
+                    0.1
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                },
+                "west": {
+                  "uv": [
+                    1.2,
+                    0.3
+                  ],
+                  "uv_size": [
+                    1.2,
+                    0.1
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                },
+                "up": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    1.2,
+                    1.2
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                },
+                "down": {
+                  "uv": [
+                    0,
+                    2.4
+                  ],
+                  "uv_size": [
+                    1.2,
+                    -1.2
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                }
+              }
+            },
+            {
+              "origin": [
+                -6,
+                1.01563,
+                -6
+              ],
+              "size": [
+                12,
+                0.0,
+                12
+              ],
+              "uv": {
+                "up": {
+                  "uv": [
+                    0,
+                    2.6
+                  ],
+                  "uv_size": [
+                    1.2,
+                    1.2
+                  ],
+                  "material_instance": "ordertocook_block_food_plate_variants"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

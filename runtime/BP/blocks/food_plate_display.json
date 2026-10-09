@@ -1,0 +1,961 @@
+{
+  "format_version": "1.21.100",
+  "minecraft:block": {
+    "description": {
+      "identifier": "ordertocook:food_plate_display",
+      "menu_category": {
+        "category": "construction"
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:cardinal_direction"
+          ],
+          "y_rotation_offset": 180
+        }
+      },
+      "states": {
+        "ordertocook:stage": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "ordertocook:stage_high": [
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.ordertocook.food_plate_display_0",
+      "minecraft:material_instances": {
+        "ordertocook_block_food_plate_variants": {
+          "texture": "ordertocook_block_food_plate_variants",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "*": {
+          "texture": "ordertocook_block_food_plate_variants",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        }
+      },
+      "minecraft:collision_box": false,
+      "minecraft:selection_box": {
+        "origin": [
+          -6,
+          0,
+          -6
+        ],
+        "size": [
+          12,
+          5,
+          12
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:loot": "loot_tables/blocks/food_plate_display.json",
+      "minecraft:destruction_particles": {
+        "texture": "ordertocook_block_food_plate_variants",
+        "particle_count": 50
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#9b9286",
+      "minecraft:movable": {
+        "movement_type": "immovable"
+      },
+      "ordertocook:interact": {}
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              -90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 0",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_0",
+          "minecraft:material_instances": {
+            "ordertocook_item_clean_plate": {
+              "texture": "ordertocook_item_clean_plate",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_item_clean_plate",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_1",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_2",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_3",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 4",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_4",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 5",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_5",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 6",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_6",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 7",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_7",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 8",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_8",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 9",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_9",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 10",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_10",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 11",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_11",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 12",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_12",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 13",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_13",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 14",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_14",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 15",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_15",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 16",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_16",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 17",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_17",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 18",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_18",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 19",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_19",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 20",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_20",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 21",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_21",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 22",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_22",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 23",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_23",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 24",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_24",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 25",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_25",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 26",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_26",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 27",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_27",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 28",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_28",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 29",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_29",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 30",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_30",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 31",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_31",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 32",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_32",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 33",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_33",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 34",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_34",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 35",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_35",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 36",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_36",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 37",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_37",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 38",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_38",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 39",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_39",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 40",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.food_plate_display_40",
+          "minecraft:material_instances": {
+            "ordertocook_block_food_plate_variants": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_food_plate_variants",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      }
+    ]
+  }
+}

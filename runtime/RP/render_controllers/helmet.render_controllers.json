@@ -1,0 +1,27 @@
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.ordertocook.helmet_shell": {
+      "geometry": "Geometry.shell",
+      "materials": [
+        {
+          "*": "Material.shell"
+        }
+      ],
+      "textures": [
+        "Texture.shell"
+      ]
+    },
+    "controller.render.ordertocook.helmet_visor": {
+      "geometry": "Geometry.visor",
+      "materials": [
+        {
+          "*": "Material.visor"
+        }
+      ],
+      "textures": [
+        "Texture.visor"
+      ]
+    }
+  }
+}

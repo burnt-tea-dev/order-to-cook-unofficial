@@ -1,0 +1,44 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "ordertocook:customer",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "wide": "textures/ordertocook/entity/otc_zombie_custom",
+        "slim": "textures/ordertocook/entity/otc_zombie_custom2"
+      },
+      "geometry": {
+        "wide": "geometry.ordertocook.customer",
+        "slim": "geometry.ordertocook.customer_slim"
+      },
+      "animations": {
+        "eating": "animation.ordertocook.npc_transition.npc_eat_scale",
+        "walk": "animation.ordertocook.customer.walk",
+        "waiting1": "animation.ordertocook.npc.customer_wait_1",
+        "seated1": "animation.ordertocook.npc.customer_sit_1",
+        "waiting2": "animation.ordertocook.npc.customer_wait_2",
+        "seated2": "animation.ordertocook.npc.customer_sit_2",
+        "waiting3": "animation.ordertocook.npc.customer_wait_3",
+        "seated3": "animation.ordertocook.npc.customer_sit_3",
+        "waiting4": "animation.ordertocook.npc.customer_wait_4",
+        "seated4": "animation.ordertocook.npc.customer_sit_4",
+        "controller": "controller.animation.ordertocook.customer"
+      },
+      "scripts": {
+        "animate": [
+          "controller"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.ordertocook.customer"
+      ],
+      "spawn_egg": {
+        "base_color": "c89d5a",
+        "overlay_color": "f3e3ca"
+      }
+    }
+  }
+}

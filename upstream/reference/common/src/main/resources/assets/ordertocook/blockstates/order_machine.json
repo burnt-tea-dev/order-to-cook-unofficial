@@ -1,0 +1,48 @@
+{
+  "variants": {
+    "facing=north,mode=idle,frame=0": { "model": "ordertocook:block/empty_order_machine_geo" },
+    "facing=east,mode=idle,frame=0": { "model": "ordertocook:block/empty_order_machine_geo", "y": 90 },
+    "facing=south,mode=idle,frame=0": { "model": "ordertocook:block/empty_order_machine_geo", "y": 180 },
+    "facing=west,mode=idle,frame=0": { "model": "ordertocook:block/empty_order_machine_geo", "y": 270 },
+
+    "facing=north,mode=idle,frame=1": { "model": "ordertocook:block/empty_order_machine_geo" },
+    "facing=east,mode=idle,frame=1": { "model": "ordertocook:block/empty_order_machine_geo", "y": 90 },
+    "facing=south,mode=idle,frame=1": { "model": "ordertocook:block/empty_order_machine_geo", "y": 180 },
+    "facing=west,mode=idle,frame=1": { "model": "ordertocook:block/empty_order_machine_geo", "y": 270 },
+
+    "facing=north,mode=idle,frame=2": { "model": "ordertocook:block/empty_order_machine_geo" },
+    "facing=east,mode=idle,frame=2": { "model": "ordertocook:block/empty_order_machine_geo", "y": 90 },
+    "facing=south,mode=idle,frame=2": { "model": "ordertocook:block/empty_order_machine_geo", "y": 180 },
+    "facing=west,mode=idle,frame=2": { "model": "ordertocook:block/empty_order_machine_geo", "y": 270 },
+
+    "facing=north,mode=printing,frame=0": { "model": "ordertocook:block/empty_order_machine_geo" },
+    "facing=east,mode=printing,frame=0": { "model": "ordertocook:block/empty_order_machine_geo", "y": 90 },
+    "facing=south,mode=printing,frame=0": { "model": "ordertocook:block/empty_order_machine_geo", "y": 180 },
+    "facing=west,mode=printing,frame=0": { "model": "ordertocook:block/empty_order_machine_geo", "y": 270 },
+
+    "facing=north,mode=printing,frame=1": { "model": "ordertocook:block/empty_order_machine_geo" },
+    "facing=east,mode=printing,frame=1": { "model": "ordertocook:block/empty_order_machine_geo", "y": 90 },
+    "facing=south,mode=printing,frame=1": { "model": "ordertocook:block/empty_order_machine_geo", "y": 180 },
+    "facing=west,mode=printing,frame=1": { "model": "ordertocook:block/empty_order_machine_geo", "y": 270 },
+
+    "facing=north,mode=printing,frame=2": { "model": "ordertocook:block/empty_order_machine_geo" },
+    "facing=east,mode=printing,frame=2": { "model": "ordertocook:block/empty_order_machine_geo", "y": 90 },
+    "facing=south,mode=printing,frame=2": { "model": "ordertocook:block/empty_order_machine_geo", "y": 180 },
+    "facing=west,mode=printing,frame=2": { "model": "ordertocook:block/empty_order_machine_geo", "y": 270 },
+
+    "facing=north,mode=waiting,frame=0": { "model": "ordertocook:block/empty_order_machine_geo" },
+    "facing=east,mode=waiting,frame=0": { "model": "ordertocook:block/empty_order_machine_geo", "y": 90 },
+    "facing=south,mode=waiting,frame=0": { "model": "ordertocook:block/empty_order_machine_geo", "y": 180 },
+    "facing=west,mode=waiting,frame=0": { "model": "ordertocook:block/empty_order_machine_geo", "y": 270 },
+
+    "facing=north,mode=waiting,frame=1": { "model": "ordertocook:block/empty_order_machine_geo" },
+    "facing=east,mode=waiting,frame=1": { "model": "ordertocook:block/empty_order_machine_geo", "y": 90 },
+    "facing=south,mode=waiting,frame=1": { "model": "ordertocook:block/empty_order_machine_geo", "y": 180 },
+    "facing=west,mode=waiting,frame=1": { "model": "ordertocook:block/empty_order_machine_geo", "y": 270 },
+
+    "facing=north,mode=waiting,frame=2": { "model": "ordertocook:block/empty_order_machine_geo" },
+    "facing=east,mode=waiting,frame=2": { "model": "ordertocook:block/empty_order_machine_geo", "y": 90 },
+    "facing=south,mode=waiting,frame=2": { "model": "ordertocook:block/empty_order_machine_geo", "y": 180 },
+    "facing=west,mode=waiting,frame=2": { "model": "ordertocook:block/empty_order_machine_geo", "y": 270 }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.ordertocook.order_machine.neworder": {
+      "loop": "hold_on_last_frame",
+      "animation_length": 1,
+      "bones": {
+        "group": {
+          "position": {
+            "0.0": [
+              0,
+              -2,
+              -0.75
+            ],
+            "1.0": [
+              0,
+              7,
+              3
+            ]
+          }
+        },
+        "order": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              "math.sin(query.anim_time * 1000) * 5"
+            ],
+            "0.4167": [
+              0,
+              0,
+              0
+            ]
+          },
+          "scale": {
+            "0.0": [
+              0.95,
+              0.95,
+              0.95
+            ],
+            "0.125": [
+              1.05,
+              1.05,
+              1.05
+            ],
+            "0.25": [
+              0.95,
+              0.95,
+              0.95
+            ],
+            "0.375": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      }
+    }
+  }
+}

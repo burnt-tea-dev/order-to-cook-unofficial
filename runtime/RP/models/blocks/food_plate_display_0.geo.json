@@ -1,0 +1,111 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.ordertocook.food_plate_display_0",
+        "texture_width": 16,
+        "texture_height": 16,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -7,
+                0,
+                -7
+              ],
+              "size": [
+                14,
+                2,
+                14
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    7,
+                    1.5
+                  ],
+                  "uv_size": [
+                    3.5,
+                    0.5
+                  ],
+                  "material_instance": "ordertocook_item_clean_plate"
+                },
+                "east": {
+                  "uv": [
+                    7,
+                    2
+                  ],
+                  "uv_size": [
+                    3.5,
+                    0.5
+                  ],
+                  "material_instance": "ordertocook_item_clean_plate"
+                },
+                "south": {
+                  "uv": [
+                    7,
+                    2.5
+                  ],
+                  "uv_size": [
+                    3.5,
+                    0.5
+                  ],
+                  "material_instance": "ordertocook_item_clean_plate"
+                },
+                "west": {
+                  "uv": [
+                    7,
+                    3
+                  ],
+                  "uv_size": [
+                    3.5,
+                    0.5
+                  ],
+                  "material_instance": "ordertocook_item_clean_plate"
+                },
+                "up": {
+                  "uv": [
+                    3.5,
+                    2
+                  ],
+                  "uv_size": [
+                    3.5,
+                    3.5
+                  ],
+                  "material_instance": "ordertocook_item_clean_plate"
+                },
+                "down": {
+                  "uv": [
+                    3.5,
+                    9
+                  ],
+                  "uv_size": [
+                    3.5,
+                    -3.5
+                  ],
+                  "material_instance": "ordertocook_item_clean_plate"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

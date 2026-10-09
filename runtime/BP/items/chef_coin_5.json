@@ -1,0 +1,22 @@
+{
+  "format_version": "1.21.100",
+  "minecraft:item": {
+    "description": {
+      "identifier": "ordertocook:chef_coin_5",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "item.ordertocook:chef_coin_5.name"
+      },
+      "minecraft:icon": {
+        "textures": {
+          "default": "ordertocook_chef_coin_5"
+        }
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

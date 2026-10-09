@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "ordertocook:guide"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "BP"
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:book"
+      },
+      "P": {
+        "item": "minecraft:paper"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "ordertocook:guide",
+      "count": 1
+    }
+  }
+}

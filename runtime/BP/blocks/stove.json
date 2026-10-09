@@ -1,0 +1,131 @@
+{
+  "format_version": "1.21.100",
+  "minecraft:block": {
+    "description": {
+      "identifier": "ordertocook:stove",
+      "menu_category": {
+        "category": "construction"
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:cardinal_direction"
+          ],
+          "y_rotation_offset": 180
+        }
+      },
+      "states": {
+        "ordertocook:lit": [
+          false,
+          true
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.ordertocook.stove",
+      "minecraft:material_instances": {
+        "ordertocook_block_stove": {
+          "texture": "ordertocook_block_stove",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "*": {
+          "texture": "ordertocook_block_stove",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        }
+      },
+      "minecraft:collision_box": true,
+      "minecraft:selection_box": true,
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:loot": "loot_tables/blocks/stove.json",
+      "minecraft:destruction_particles": {
+        "texture": "ordertocook_block_stove",
+        "particle_count": 50
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#9b9286",
+      "minecraft:movable": {
+        "movement_type": "immovable"
+      },
+      "ordertocook:interact": {}
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              -90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:lit') == true",
+        "components": {
+          "minecraft:material_instances": {
+            "ordertocook_block_stove": {
+              "texture": "ordertocook_stove_lit",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_stove_lit",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          },
+          "minecraft:light_emission": 7
+        }
+      }
+    ]
+  }
+}

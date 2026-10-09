@@ -1,0 +1,40 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "ordertocook:motorcycle",
+      "materials": {
+        "default": "entity_alphatest",
+        "light": "entity_emissive_alpha"
+      },
+      "textures": {
+        "white": "textures/ordertocook/entity/motorcycle",
+        "red": "textures/ordertocook/entity/electric_motorcycle_red",
+        "blue": "textures/ordertocook/entity/electric_motorcycle_blue",
+        "yellow": "textures/ordertocook/entity/electric_motorcycle_yellow",
+        "light": "textures/ordertocook/entity/electric_motorcycle_light_emissive"
+      },
+      "geometry": {
+        "default": "geometry.ordertocook.motorcycle"
+      },
+      "animations": {
+        "drive": "animation.ordertocook.motorcycle.drive"
+      },
+      "scripts": {
+        "animate": [
+          "drive"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.ordertocook.motorcycle",
+        {
+          "controller.render.ordertocook.motorcycle_light": "q.property('ordertocook:light')"
+        }
+      ],
+      "spawn_egg": {
+        "base_color": "efe3d2",
+        "overlay_color": "bd4c37"
+      }
+    }
+  }
+}
