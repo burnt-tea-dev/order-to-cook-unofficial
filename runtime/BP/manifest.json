@@ -4,20 +4,62 @@
     "name": "Order To Cook — Bedrock (Unofficial Alpha)",
     "description": "Restaurant orders, dine-in, deliveries and kitchen appliances. Unofficial GPLv3 adaptation of Order To Cook by breezeth.",
     "uuid": "a450467d-0fe2-4c21-a278-2e607639b3ce",
-    "version": [0, 1, 1],
-    "min_engine_version": [1, 21, 100]
+    "version": [
+      0,
+      1,
+      2
+    ],
+    "min_engine_version": [
+      1,
+      21,
+      100
+    ]
   },
   "modules": [
-    {"type": "data", "uuid": "8c906d71-65a9-492b-881f-82c7b49c756d", "version": [0, 1, 1]},
-    {"type": "script", "language": "javascript", "entry": "scripts/main.js", "uuid": "a350e594-4e56-4f47-8722-eaacd34eaa4d", "version": [0, 1, 1]}
+    {
+      "type": "data",
+      "uuid": "8c906d71-65a9-492b-881f-82c7b49c756d",
+      "version": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "type": "script",
+      "language": "javascript",
+      "entry": "scripts/main.js",
+      "uuid": "a350e594-4e56-4f47-8722-eaacd34eaa4d",
+      "version": [
+        0,
+        1,
+        2
+      ]
+    }
   ],
   "dependencies": [
-    {"uuid": "b3d9a3bc-5e3d-42e9-8bb1-55f4b47ddeec", "version": [0, 1, 1]},
-    {"module_name": "@minecraft/server", "version": "2.0.0"},
-    {"module_name": "@minecraft/server-ui", "version": "2.0.0"}
+    {
+      "uuid": "b3d9a3bc-5e3d-42e9-8bb1-55f4b47ddeec",
+      "version": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "module_name": "@minecraft/server",
+      "version": "2.0.0"
+    },
+    {
+      "module_name": "@minecraft/server-ui",
+      "version": "2.0.0"
+    }
   ],
   "metadata": {
-    "authors": ["breezeth (original Java mod)", "casama233 (unofficial Bedrock port)"],
+    "authors": [
+      "breezeth (original Java mod)",
+      "casama233 (unofficial Bedrock port)"
+    ],
     "license": "GPL-3.0-only",
     "url": "https://github.com/casama233/order-to-cook-unofficial"
   }

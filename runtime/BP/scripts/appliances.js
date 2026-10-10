@@ -3,6 +3,7 @@
 import { BlockPermutation, EquipmentSlot, ItemStack, system, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { advanceDoorMotion, dishwasherFrame, APPLIANCE_TICK_INTERVAL, FRIDGE_MOTION_TICKS, FRIDGE_LAST_FRAME } from "./appliance_motion.js";
+import { formatEquipmentInspection, INSPECTION_TYPES } from "./equipment_inspection.js";
 
 const NS = "ordertocook:";
 const FRIDGE = `${NS}refrigerator`;
@@ -267,6 +268,7 @@ export function createApplianceService(ctx) {
   const gameSystem = ctx.system ?? system;
   const clocks = new Map();
   const washing = new Map();
+  const washingFeedback = new Map();
   const viewers = new Map();
   const doorPositions = new Map();
   let lastTick = -1;
@@ -365,6 +367,65 @@ export function createApplianceService(ctx) {
     return player.isValid && player.dimension.id === station.dimensionId &&
       squaredDistance(player.location, center(station.location)) <= 36 && !!loadedStation(station) &&
       (!ctx.canUseStation || !!ctx.canUseStation(player, station));
+  }
+
+  /**
+   * Resolve an existing station and its existing helper only. Merely looking at
+   * equipment must not call getStation/data/ensureStorage or write saved state.
+   */
+  function getInspection(player, block) {
+    try {
+      if (!block?.isValid || !INSPECTION_TYPES.includes(block.typeId)) return undefined;
+      const upper = block.typeId === FRIDGE && block.permutation.getState(`${NS}half`) === "upper";
+      const normalized = normalizeApplianceBlock(block);
+      const station = (ctx.stations?.() ?? []).find(entry =>
+        entry.dimensionId === normalized.dimension.id && entry.typeId === normalized.typeId &&
+        sameLocation(entry.location, normalized.location));
+      if (!station || !accessible(player, station)) return undefined;
+      const snapshot = { typeId: station.typeId, supplies: station.supplies, upper,
+        appliance: station.appliance ? { ...station.appliance } : undefined,
+        occupied: undefined, storageLoaded: false };
+      if (station.typeId === FRIDGE || station.typeId === STOVE) {
+        const helper = findEntity(station.storageId);
+        const inventory = helper?.typeId === STORAGE && helper.getDynamicProperty(`${NS}station_id`) === station.id &&
+          helper.dimension.id === station.dimensionId && squaredDistance(helper.location, center(station.location, 0.1)) <= 1.5 ** 2
+          ? helper.getComponent("minecraft:inventory")?.container : undefined;
+        snapshot.storageLoaded = !!inventory?.isValid && inventory.size >= (station.typeId === FRIDGE ? 81 : 7);
+        if (snapshot.storageLoaded && station.typeId === FRIDGE) {
+          const first = upper ? 0 : 27, length = upper ? 27 : 54;
+          let occupied = 0;
+          for (let slot = first; slot < first + length; slot++) if (inventory.getItem(slot)) occupied++;
+          snapshot.occupied = occupied;
+        }
+      }
+      return formatEquipmentInspection(snapshot);
+    } catch {
+      // A ray target, helper or permission can disappear between reads.
+      return undefined;
+    }
+  }
+
+  /** The main HUD is the only action-bar writer; this method has no side effects. */
+  function getWashingProgress(player) {
+    if (!player?.isValid) return undefined;
+    const session = washing.get(player.id);
+    if (session) {
+      try {
+        const hit = player.getBlockFromViewDirection({ maxDistance: 4, includeLiquidBlocks: false });
+        if (!accessible(player, session.station) || !handEmpty(player) ||
+            !hit || !sameLocation(hit.block.location, session.station.location) ||
+            !(session.station.appliance?.plates > 0)) return undefined;
+        const elapsed = Math.max(0, gameSystem.currentTick - session.start);
+        return `§b洗碗中 ${Math.min(100, Math.floor(elapsed / 80 * 100))}%`;
+      } catch { return undefined; }
+    }
+    const feedback = washingFeedback.get(player.id);
+    return feedback && gameSystem.currentTick < feedback.until ? feedback.text : undefined;
+  }
+
+  function stopWashing(id, feedback = true) {
+    washing.delete(id);
+    if (feedback) washingFeedback.set(id, { until: gameSystem.currentTick + 20, text: "§7洗碗已中止" });
   }
 
   function fridgeBlock(station, half) {
@@ -471,12 +532,13 @@ export function createApplianceService(ctx) {
       }
       return;
     }
-    if (washing.has(player.id)) { washing.delete(player.id); say(ctx, player, "已停止洗碗。"); return; }
+    if (washing.has(player.id)) { stopWashing(player.id); say(ctx, player, "已停止洗碗。"); return; }
     if (d.plates <= 0) { say(ctx, player, "手持髒盤子放入洗碗池；空手點擊後持續望著池子 4 秒清洗一個。"); return; }
     if (!handEmpty(player)) { say(ctx, player, "請騰空雙手後再洗碗。"); return; }
     if ([...washing.values()].some(session => session.station.id === station.id)) {
       say(ctx, player, "已有玩家正在使用這個洗碗池。"); return;
     }
+    washingFeedback.delete(player.id);
     washing.set(player.id, { player, station, start: gameSystem.currentTick });
     say(ctx, player, "清洗中：保持空手並望著洗碗池 4 秒；再次點擊可停止。");
   }
@@ -654,14 +716,12 @@ export function createApplianceService(ctx) {
       try {
         const hit = player.isValid && player.getBlockFromViewDirection({ maxDistance: 4, includeLiquidBlocks: false });
         if (!accessible(player, station) || !handEmpty(player) || !hit || !sameLocation(hit.block.location, station.location)) {
-          washing.delete(id);
-          if (player.isValid) player.onScreenDisplay.setActionBar("§7洗碗已中止");
+          stopWashing(id, player.isValid);
           continue;
         }
         const d = data(station);
         if (d.plates <= 0) { washing.delete(id); continue; }
         const elapsed = gameSystem.currentTick - start;
-        player.onScreenDisplay.setActionBar(`§b洗碗中 ${Math.min(100, Math.floor(elapsed / 80 * 100))}%`);
         if (elapsed % 20 < APPLIANCE_TICK_INTERVAL) {
           safeParticle(player.dimension, "minecraft:water_splash_particle", center(station.location, 0.94));
           safeSound(player.dimension, "random.splash", center(station.location, 0.94), 0.2);
@@ -791,6 +851,7 @@ export function createApplianceService(ctx) {
     const now = gameSystem.currentTick;
     if (now === lastTick) return;
     lastTick = now;
+    for (const [id, feedback] of washingFeedback) if (now >= feedback.until) washingFeedback.delete(id);
     tickWashing();
     for (const station of ctx.stations?.() ?? []) {
       if (!KINDS.has(station.typeId)) continue;
@@ -862,6 +923,7 @@ export function createApplianceService(ctx) {
     });
     gameWorld.afterEvents.playerLeave.subscribe(event => {
       washing.delete(event.playerId);
+      washingFeedback.delete(event.playerId);
       storageForms.delete(event.playerId);
       for (const compartments of viewers.values()) {
         compartments.lower.delete(event.playerId);
@@ -870,5 +932,5 @@ export function createApplianceService(ctx) {
     });
   }
 
-  return { init, tick, onPlace, onInteract, onBreak, getStorage, countFood, consumeFood, normalizeBlock: normalizeApplianceBlock };
+  return { init, tick, onPlace, onInteract, onBreak, getStorage, countFood, consumeFood, getInspection, getWashingProgress, normalizeBlock: normalizeApplianceBlock };
 }

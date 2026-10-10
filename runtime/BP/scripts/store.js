@@ -4,11 +4,13 @@ import { world } from '@minecraft/server';
 
 const REST = 'ordertocook:r:';
 const STATION = 'ordertocook:s:';
+const PROFILE = 'ordertocook:p:';
 // Bedrock strings allow 32,767 UTF-8 bytes. Leave room below that ceiling and
 // split on Unicode code points, never between an emoji's surrogate pair.
 const CHUNK_BYTES = 30000;
 const restaurantsById = new Map();
 const stationsById = new Map();
+const profilesById = new Map();
 const unreadableKeys = new Set();
 const savedSnapshots = new Map();
 const savedManifests = new Map();
@@ -22,7 +24,7 @@ export function initStore() {
   if (ready) return;
   const keys = new Set(world.getDynamicPropertyIds());
   for (const key of keys) {
-    if (!key.startsWith(REST) && !key.startsWith(STATION)) continue;
+    if (!key.startsWith(REST) && !key.startsWith(STATION) && !key.startsWith(PROFILE)) continue;
     // Incomplete writes can leave unreferenced chunks. Only root manifests are
     // authoritative, so fragments must never be mistaken for saved records.
     if (key.includes(':part:')) continue;
@@ -50,9 +52,9 @@ export function initStore() {
         value = JSON.parse(json);
         if (value?.id !== manifest.id) throw new Error('Saved record manifest ID does not match');
       }
-      const prefix = key.startsWith(REST) ? REST : STATION;
+      const prefix = key.startsWith(REST) ? REST : key.startsWith(STATION) ? STATION : PROFILE;
       validateRecord(prefix, key, value);
-      (key.startsWith(REST) ? restaurantsById : stationsById).set(value.id, value);
+      (prefix === REST ? restaurantsById : prefix === STATION ? stationsById : profilesById).set(value.id, value);
       savedSnapshots.set(key, json);
       if (manifest) savedManifests.set(key, manifest);
     } catch (error) {
@@ -66,7 +68,7 @@ export function initStore() {
 function chunkKey(root, buffer, index) { return `${root}:part:${buffer}:${index}`; }
 
 function validateRecord(prefix, key, value) {
-  if (!value || typeof value.id !== 'string' || !value.id || !value.location ||
+  if (!value || typeof value.id !== 'string' || !value.id || (prefix !== PROFILE && !value.location) ||
       key !== prefix + value.id || value.id.includes(':part:')) throw new Error('Invalid saved record');
 }
 
@@ -164,6 +166,12 @@ function remove(prefix, records, id) {
   savedManifests.delete(key);
   clearBuffer(key, previous);
 }
+
+export function getProfile(id) {
+  if (unreadableKeys.has(PROFILE + id)) throw new Error('This personal progress record needs recovery; saved data was preserved');
+  return profilesById.get(id);
+}
+export function saveProfile(value) { return persist(PROFILE, profilesById, value); }
 
 export function getRestaurant(id) { return restaurantsById.get(id); }
 export function restaurants() { return [...restaurantsById.values()]; }

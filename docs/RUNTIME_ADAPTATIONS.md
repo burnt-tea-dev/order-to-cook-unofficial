@@ -1,6 +1,6 @@
 # 顧客、載具與廚房設備：基岩版實作及差異
 
-本文件對應 **0.1.1-alpha.2** 的 `runtime/BP/scripts/entities.js`、`dining.js`、`appliances.js` 與 `appliance_motion.js`。這是基岩版改編；Java 的介面、實體物理和 GeckoLib 方塊動畫不能原樣載入基岩版。**型別檢查、模擬測試及原生服務端探針，均不能代替 Minecraft 客戶端畫面、表單及觸控驗收。**
+本文件對應 **0.1.2-alpha.3** 的 `runtime/BP/scripts/entities.js`、`dining.js`、`appliances.js` 與 `appliance_motion.js`。這是基岩版改編；Java 的介面、實體物理和 GeckoLib 方塊動畫不能原樣載入基岩版。**型別檢查、模擬測試及原生服務端探針，均不能代替 Minecraft 客戶端畫面、表單及觸控驗收。**
 
 上游基準為 [breezeth-CN/OrdertoCook，提交 e59e3dbcabe19b783d9adb933db5fcb8bc1e4642](https://github.com/breezeth-CN/OrdertoCook/tree/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642)。下列 Java 規則以 `forge-1.20.1/src/main/java/cn/breezeth/ordertocook/` 為依據，共用模型與動畫位於 `common/src/main/resources/assets/ordertocook/`。
 
@@ -136,6 +136,16 @@
 
 車燈切換控制發光材質和燈面顯示；**沒有地形上的動態投射光**，沒有臨時放置光源方塊。頭盔物品已有 attachable，但原作騎車自動頭盔屬 `client/render/feature/HelmetFeatureRenderer.java` 的純渲染層，不是替玩家換掉背包裝備。本版未重建該玩家渲染層及專用鳴笛手勢，也不透過改玩家盔甲欄或覆寫玩家定義模擬它。
 
+## 設備準星資訊與個人進度
+
+alpha.3 用 `equipment_inspection.js` 與設備服務提供唯讀快照，再由 main 的單一 action bar 更新器每 10 ticks 合併顯示。6 格射線命中後，仍需同維度、設備中心 6 格內、已載入且有使用權限。架子容量為包材 10／盤架 18；洗碗池 10、洗碗機 16；冰箱顯示上 27／下 54 的已用槽位。儲物 helper 必須與設備 ID、維度及原搜尋 anchor 相符，缺失時顯示尚未載入；檢視不建立 station、替代庫存或修復坏資料。
+
+第一行優先手洗百分比／20 tick 中止訊息，否則顯示設備資訊；若主手票據／包裹有進行中的外送，第二行顯示方向、座標及時間。手洗仍要求空手，完成後重新手持外送物品才能恢復導航。無任何本包提示時只清除上一次 HUD 一次，不持續清空閒置玩家 action bar。兩行排版與不同裝置可讀性待 dot 實測。
+
+Jade 來源是固定提交的 [OrderToCookJadePlugin.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/compat/jade/OrderToCookJadePlugin.java)。爐灶讀数是現有 Bedrock 表單的 HUD 適配。洗碗機持髒盤看向時的 `empty_out` 是 Java 客戶端本地預覽，現有 66 姿態不包含它，本輪仍未還原。
+
+個人進度的 11 個原作定義、10 個可觸發條件，以及玩家歸屬／同維度金牌判定見 [PROGRESSION.md](PROGRESSION.md)。訂單累積帳簿與餐廳同時保存；profile 以來源 checkpoint 取差值，分玩家重試，保留壞資料。操作型事件也在餐廳／設備上保留至個人進度保存成功，不能以重做升級代替重試通知。
+
 ## 食物辨識及持久化邊界
 
 Microsoft 的 [ItemFoodComponent 文件](https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/itemfoodcomponent?view=minecraft-bedrock-stable) 明確限定其適用於 data-driven items。本版以已核對的原版食品清單為基礎，再加可讀 component 及管理員登記規則；不能據此宣稱任意已安裝附加包食品都會自動被正確識別。
@@ -146,6 +156,6 @@ Microsoft 的 [ItemFoodComponent 文件](https://learn.microsoft.com/en-us/minec
 
 ## 驗證範圍與記錄
 
-回歸測試直接匯入正式腳本，把 Minecraft／表單依賴換成可控配接器。設備測試涵蓋原生堆疊保留、分區容量、存取回退、舊表單失效、多人觀看、動畫反轉、卸載恢復及洗碗機原 phase 時序；餐盤與顧客測試涵蓋各階段邊界、動作選擇、持續髒盤、提前收盤、舊記錄拒絕、重複領取與存檔失敗。資源檢查另核對原檔雜湊、atlas 像素、幾何邊界及離線重產。當次版本、實際執行結果與數量統一記於 [VALIDATION.md](VALIDATION.md)，不能把舊 alpha 的結果直接沿用為 alpha.2 通過。
+回歸測試直接匯入正式腳本，把 Minecraft／表單依賴換成可控配接器。設備測試涵蓋原生堆疊保留、分區容量、存取回退、舊表單失效、多人觀看、動畫反轉、卸載恢復及洗碗機原 phase 時序；餐盤與顧客測試涵蓋各階段邊界、動作選擇、持續髒盤、提前收盤、舊記錄拒絕、重複領取與存檔失敗。資源檢查另核對原檔雜湊、atlas 像素、幾何邊界及離線重產。當次版本、實際執行結果與數量統一記於 [VALIDATION.md](VALIDATION.md)，不能把 alpha.2 的原生結果直接沿用為 alpha.3 通過。
 
-原生服務端探針使用真實方塊、實體及 ItemStack；需要玩家介面的部分仍可能由持有原生容器的測試物件代替 Player。**真實玩家連線、鍵鼠／手機／控制器輸入、GUI 表單、雙人競爭與 RP 渲染尚未完成驗收。** 最低宣告版本 **1.21.100 客戶端亦未實測**；較新服務端通過不能證明最低版本完整相容。後續驗收依 [PLAYTEST.md](PLAYTEST.md) 記錄。
+原生服務端探針使用真實方塊、實體及 ItemStack；需要玩家介面的部分仍可能由持有原生容器的測試物件代替 Player。**真實玩家連線、鍵鼠／手機／控制器輸入、GUI 表單、雙人競爭與 RP 渲染尚未完成驗收。** 最低宣告版本 **1.21.100 客戶端亦未實測**；較新服務端通過不能證明最低版本完整相容。alpha.3 本輪沒有重跑原生服務端；dot 依 [DOT_HANDOFF.md](DOT_HANDOFF.md) 與 [PLAYTEST.md](PLAYTEST.md) 執行並記錄客戶端驗收。

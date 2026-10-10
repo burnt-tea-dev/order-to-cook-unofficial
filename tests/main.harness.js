@@ -33,13 +33,15 @@ export async function mainFixture() {
   const native = { world: env.world, system: env.system, ItemStack: FakeItem, BlockPermutation: FakePermutation, GameMode: { Creative: 'Creative', Survival: 'Survival' } };
   const key = `__otcMainTests${++sequence}`;
   const endings = [], interruptions = [];
+  const formResponses = [], forms = [];
   const stubs = {
     createEntityService: () => ({ init() {}, spawnCustomer() {}, cleanupOrder() {}, onBlockBreak() {},
       finishCustomer: (...args) => endings.push(args), resumeCustomerMeal() {},
       interruptCustomerMeal: (...args) => interruptions.push(args),
       getCustomerSeat: () => chair }),
-    createApplianceService: () => ({ init() {}, onPlace() {}, onBreak() {}, getStorage() {} }),
-    notify: (who, text) => who.sendMessage(text), choose: async () => undefined, textInput: async () => undefined,
+    createApplianceService: () => ({ init() {}, onPlace() {}, onBreak() {}, getStorage() {}, normalizeBlock: block => block }),
+    notify: (who, text) => who.sendMessage(text),
+    choose: async (...args) => { forms.push(args); const response = formResponses.shift(); return typeof response === 'function' ? response(...args) : response; }, textInput: async () => undefined,
     safely: (who, fn) => Promise.resolve().then(fn),
   };
   globalThis[key] = { native, stubs };
@@ -85,7 +87,7 @@ export async function mainFixture() {
   customer.setDynamicProperty('ordertocook:restaurant_id', restaurant.id);
   customer.setDynamicProperty('ordertocook:order_id', order.id);
   return { ...env, hooks, store, core, player, customer, chair, machine, restaurant, order, parcel, properties,
-    endings, interruptions, failWrite: predicate => { failProperty = predicate; },
+    endings, interruptions, forms, formResponses, failWrite: predicate => { failProperty = predicate; },
     linkage: { restaurantId: restaurant.id, orderId: order.id } };
 }
 

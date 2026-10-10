@@ -1,109 +1,94 @@
-# 0.1.1-alpha.2 驗證紀錄
+# 0.1.2-alpha.3 驗證紀錄
 
-驗證日期：2026-10-09。此頁記錄 alpha.2 實際執行的自動化及原生引擎檢查；[alpha.1 的原紀錄](VALIDATION_ALPHA1.md) 另行保留。[客戶端驗收表](PLAYTEST.md) 仍標示未執行，不能以伺服器測試代替。
+驗證日期：2026-10-10。**本輪 254／254 項回歸、stable API 型別、靜態資源檢查及可重現建置通過；原生 BDS 與真實客戶端未執行。** 客戶端測試交接文件已為 dot 準備，尚無其實機回報。
 
-## 結果
+[本輪 CI 工作](https://github.com/casama233/order-to-cook-unofficial/actions/runs/38016889591) · [機器可讀紀錄](validation/0.1.2-alpha.3/ci.json) · [dot 交接](DOT_HANDOFF.md) · [客戶端回報模板](validation/DOT_REPORT_TEMPLATE.md)
 
-| 檢查 | 實際結果 | 證據與範圍 |
-| --- | --- | --- |
-| JavaScript 回歸測試 | **180／180 通過** | `npm test`；直接載入發布用訂單、庫存、存檔、廚電、顧客、餐盤及 main adapters，含錯誤注入 |
-| 官方穩定 API 型別 | **通過** | TypeScript 5.8.3、`@minecraft/server 2.0.0`、`@minecraft/server-ui 2.0.0`；`checkJs` 與 `tsc --noEmit` |
-| 資源靜態驗證 | **通過，0 errors** | 285 JSON、12 方塊、15 顯式物品、5 實體、10 配方、240 geometry、38 動畫、228 permutations；另核對版本相依性 |
-| 新世界原生操作 | **127／127 通過，無本包錯誤** | 官方 BDS **1.26.52.3**；[native-initial.json](validation/0.1.1-alpha.2/native-initial.json) |
-| 同一世界正常重啟 | **15／15 通過，無本包錯誤** | 保留餐廳、庫存與尚在進食的第二份餐點；[native-reload.json](validation/0.1.1-alpha.2/native-reload.json) |
-| alpha.1 世界升級 | **12／12 通過，無本包錯誤** | 使用 alpha.1 原生測試留下的世界；[native-upgrade.json](validation/0.1.1-alpha.2/native-upgrade.json) |
-| 原素材離線重產 | **377 個產物完全相同；483 筆來源雜湊有效** | 隨倉庫的固定上游輸入、Pillow 12.3.0；[asset-rebuild.json](validation/0.1.1-alpha.2/asset-rebuild.json) |
-| 可重現安裝包 | **通過** | BP、RP、mcaddon、[SHA-256](../artifacts/SHA256SUMS.txt) 及 [build-info.json](../artifacts/build-info.json)；CI 另比對已提交下載檔 |
-| 真實玩家、客戶端、多人 | **未執行** | 表單、滑鼠／觸控、顯示、聲音、騎乘及網路條件仍須人工驗收 |
+## 已執行的檢查
 
-測試數是套件中的案例或斷言數，不是獨立功能數或程式碼覆蓋率。`npm run verify` 執行 JavaScript 測試、型別、靜態驗證及建置；原生 BDS 需另外執行。所有原生斷言使用真正的引擎方塊、實體、ItemStack 及容器，玩家介面由程式化替身提供；部分顧客動作測試注入時鐘以越過固定動畫期限。
+| 檢查 | 結果 | 證據及適用範圍 |
+|---|---|---|
+| JavaScript 回歸 | **254／254 通過** | Node.js 22 `node:test`，直接匯入發布腳本；Minecraft 世界、Player 與表單採可控替身。 |
+| Stable Script API 型別 | **通過** | TypeScript 5.8.3、`@minecraft/server 2.0.0`、`@minecraft/server-ui 2.0.0`；無 Beta API。 |
+| 靜態包／資源驗證 | **通過** | 285 JSON、12 方塊、15 顯式物品、5 實體、10 配方、240 geometry、38 動畫、228 permutations；errors 為空。 |
+| 安裝包建置 | **通過** | BP、RP、mcaddon 都由同一份來源建置，附 GPL、原作署名及對應來源。 |
+| 已提交下載檔核對 | **通過** | CI 比對 `artifacts/build-info.json` 與 `dist/build-info.json`，再逐一檢查三包 checksum。 |
+| alpha.3 原生 BDS | **未執行** | 本輪本機環境離線，沒有新的引擎載入、重啟或世界升級報告。 |
+| 真玩家／客戶端／多人 | **未執行** | dot 的 29 個增補與既有 73 個完整案例皆待實際填報，不能用 CI 代替。 |
+| 完整素材轉換器重產 | **未重跑** | 本輪未變更模型、PNG、OGG 或動畫資產；沿用原始來源與生成物，靜態／來源姿態測試仍有執行。 |
 
-## 發布內容與測試內容一致
+`npm run verify` 的測試、型別、靜態檢查與建置全部完成後，候選工作才把產物保存到分支。此工作只對指定候選分支寫入 `artifacts/`，不直接改 main、不跳過既有 PR／main 建置檢查。測試數不是獨立功能數或程式碼覆蓋率。
 
-三份原生報告和建置資訊記錄相同的 `runtimeTreeSha256`：
+首輪工作 [38016237209](https://github.com/casama233/order-to-cook-unofficial/actions/runs/38016237209) 為 243／244 通過，新放置案例的測試替身缺少既有 `normalizeBlock` 方法。已補完整替身；之後也加入對審查發現問題的回歸，最終 254 項全過。沒有將首輪失敗隱藏為通過。
 
-```text
-a281a8285266923de1a99ad51c163e1c9fabbd8e1adb6034969affe4843d6cc4
-```
+## 來源、產物與指紋
 
-指紋按路徑排序，對 `runtime/` 每個檔案的相對路徑、NUL 分隔符及原始內容計算 SHA-256。原生工具在独立副本注入探針，正式包仍以 `scripts/main.js` 啟動；不分發 QA 指令入口、測試世界、BDS 二進位檔或 Java JAR。
-
-整合安裝包 `OrderToCook-Bedrock-0.1.1-alpha.2.mcaddon` 的 SHA-256：
+執行驗證的來源 commit：
 
 ```text
-a43bff9efcfd49589db6bbdc3a4912d4587e498f641e5c0ff5be175281cb5c7b
+91d4a0f0c44fdc6a34f8c9b4f234c11c616602c5
 ```
 
-每個 mcpack 附有 GPL 授權、原作署名、修改說明及完整對應來源網址。CI 從提交的來源重建，對照 `build-info.json`，並驗證已提交下載檔的 checksum。
+CI 保存安裝包的 commit：
 
-## 原生測試涵蓋範圍
+```text
+66768e0a64b80a4226924cbe580e3144793796f9
+```
 
-### 訂單、餐盤及廚電
+後續文件／整合提交可由 git 歷史追溯至這兩個提交。測試來源、已提交包及最終版本的 `runtime/` 指紋為：
 
-- 載入正式入口，建立 12 種方塊、自訂物品及 40 個基礎食物的原生 ItemStack，檢查雙格冰箱、盤架高低位和餐點 stage 編碼。
-- 在未放任何椅子時正式接取普通堂食，之後呼叫操作台、取餐及交付函式：消耗正確食品和一個餐盤、放置成品、保留不可堆疊 proof、只付款一次；再次打包與複製包裹不能重扣或重領。
-- 原生坐席顧客啟動保存的完成動作；餐盤實體按排程到達四個進食階段，顧客離開後仍保留髒盤，不自動多掉一個物品。
-- 人工建立重複顯示實體後，正式清理會保留一份；店主收盘得到一個髒盤，舊餐盤參考不能再次領取。
-- 真實儲物實體及冰箱有 81 格、機車貨箱有 54 格；不可堆疊餐包轉入／轉出後名稱、lore 與 dynamic properties 均保留。
-- 真正三槽爐灶完成三路烹調；洗碗機完成 16 盤並選取新的最終姿勢。原生升級檢查確認上下冰箱及洗碗機接受新 frame 狀態。
+```text
+f77209e0fa441e7ee16d400d57d596556fd70f6eea8b73b3fcf0a14225c3b2c4
+```
 
-冰箱表單多開、反向開合與分區權限由服務測試覆蓋；沒有宣稱原生探針開啟了真實 Player 的表單。動畫幾何引用與姿勢範圍可由靜態檢查確認，視覺平滑度仍須客戶端目視。
+算法依路徑排序，逐一對 `runtime/` 檔案的相對路徑、NUL 分隔符及原始內容計算 SHA-256。完整包清單見 [build-info.json](../artifacts/build-info.json)／[SHA256SUMS.txt](../artifacts/SHA256SUMS.txt)。
 
-### 顧客生命週期
+`OrderToCook-Bedrock-0.1.2-alpha.3.mcaddon` 的 SHA-256：
 
-原生顧客測試使用獨立的暫存餐廳、真實區塊與實體，並限定世界查詢範圍。檢查完整支撐面的射線、普通無椅站立、到店無椅拒絕、24 格圓形座位邊界、實際座位掛載、獨立閒置變體，以及取餐／兩種用餐／提前收盤動作的屬性、期限與清理。
+```text
+13ebbb92d4848565bcfb22aa944ec4a3db9c02630f09ac696602b81200001d7b
+```
 
-完成動作的重複呼叫不能延長期限；完成中的顧客不再進入交付；驚喜動作不破壞椅子。損壞的 `seat_id` 指向載有鑽石的原生機車時，顧客清理不刪除該機車與貨物。
+行為包及資源包均使用數字版本 **0.1.2**；既有 UUID 沿用。最低引擎宣告仍為 **1.21.100**，不是最低版本客戶端已測通過的聲明。
 
-本輪原生測試曾捕捉到過短的地面射線在實際引擎沒有命中，以及測試在下一個 tick 前讀取 entity property 的問題。發布前已針對實際 API 行為修正支撐檢查與探針時序，並重新跑完驗證；不是只保留通過的子項目。
+## 新增回歸確認了什麼
 
-### 重啟與舊世界升級
+### 個人進度及保存
 
-新世界測試在第二張已付款訂單仍在進食時停止伺服器。重新啟動同一世界後，檢查餐廳完成數、收益、原生庫存、餐包身份與名稱；餐盤沿用原 token 和開始／結束時間，恢復成唯一髒盤，不重生已離場顧客。再次收盤只取得一個物品。
+訂單進度由正式 `customerInteract` 在原餐廳完成訂單的同次保存內追加交餐玩家累積帳簿。測試確認原 proof 防重複結算仍生效；重點顧客、重播帳簿、跨店同步、正常存檔再載入、已完成歷史裁剪及同址重建都不重計个人收益。
 
-升級基準是 alpha.1 提交 `8713db4d6616f84cc5137e2d3d39e553b6fe9430` 的原生 QA 世界，其 runtime 指紋為 `1a2a9b55ed611889ff2270b9cd83a3d1951e07dd014e0382ef84ec0a81588aeb`。換用 alpha.2 的同 UUID／新版本包後，檢查舊餐廳收入、包裹 proof、名稱／lore、冰箱的命名食品、洗碗機的 16 個已洗餐盤及新狀態編碼均保留。舊已完成訂單歷史沒有被當作新餐盤重新補發。
+個人 profile 保存暫時失敗時，已提交餐廳帳簿仍保留；後續對帳一次補入，不再次給幣。讀取未知版本、反向 checkpoint、零完成單卻有收益或對帳總和不一致的資料會拒絕，保留原記錄。個人狀態與来源 checkpoint 共用分片雙緩衝保存，測試包含多片 Unicode、提交前失败與提交已套用後拋錯。
 
-這個 alpha.1 世界的原餐盤已在舊測試中歸還，**沒有以它驗證「正在進食中的 alpha.1 餐盤」升級**。該舊 `pendingDishes.dueAt` 格式的遷移、已到期記錄及重複記錄，另由服務回歸測試覆蓋。兩者不可混稱。
+操作型進度的待處理事件隨機器／餐廳一起保存。正式 main 流程測試涵蓋：Lv.8 成功後 profile 失敗，由 tick 補發而不重扣費；首次放置補發；洗碗機升級消耗一次工具箱，待確認事件會攔下正常拆除並先保存進度。來源確認保存失敗可重播，解鎖通知不重複。餐廳升級本身保存失敗則退回費用，不留下八星事件。
 
-## 回歸測試補上的錯誤情境
+同餐廳某玩家的壞 profile 不會阻塞其他健康玩家入帳；只要仍有未同步帳簿，拆店清理就保留原記錄。這些保證針對測試中可辨識的同步寫入結果與保存重試，並不宣稱任意世界磁碟崩潰時都零損失。
 
-訂單核心檢查普通坐席顧客的驚喜機率、一次選取並保存加賞、站立／配送分支及重複結算。餐盤服務檢查十種餐點的精確階段界線、未知或損壞記錄保留、歷史裁剪、顯示遺失／重複、未載入位置、滿背包、權限撤銷及領取前後寫入失敗。
+金牌規則測試涵蓋：同一玩家、同一維度至少 4 店；並列最高及 0 收益並列；未載入但仍放置的店；已知位置被拆、不同玩家及跨維度 2＋2 店的負例。原作來源與全部 11 項定義見 [PROGRESSION.md](PROGRESSION.md)。
 
-正式 main adapters 的測試涵蓋餐廳／訂單／物品类型／proof 身份、實體餐包先扣後完成、扣料前後拋例外、保存失敗回復、展示方塊初始保存失敗、重複擺放及收盤。舊盤尚未清理時，新交餐在扣物／付款前拒絕；拆機後清理尚未完成時，重放機器不能繼續經營舊記錄。
+### 設備 HUD 及表單接線
 
-提前收盤會保存 action 7 的半秒中斷期限，即使完成歷史已裁剪，或最後清理保存失敗，也不把顧客恢復成舊進食動作。餐盘的已領取標記先保存，再寫入原生庫存；已知同步寫入異常會嘗試精確回復，結果不確定時保留已領取狀態以避免複製。
+服務測試確認看向設備只讀取快照，不建立 station、helper 或替代庫存，不改物品／存檔。每次重新驗權、檢查維度／距離，冰箱按上 27／下 54 的占用槽位計數。helper 身份錯配、維度不同、移出 anchor 或未載入均不能讀取外來庫存。
 
-## 測試不能證明的事項
+main 測試確認單一 HUD 寫者把手洗／設備資訊與外送導航合併，準星查詢失敗不連帶隱藏導航；失去全部目標只清除一次。表單測試只檢查真正產生的標題、11 條選項、未移植標記及返回清單控制流，**沒有真實 Player 點擊表單**。
 
-- **沒有真實 Player 連線。**未驗證玩家事件在滑鼠、鍵盤、控制器及觸控上的實際觸發順序，或表單顯示／返回、HUD、收盤命中與載具操控。餐盤實體點擊另提供下方桌面的替代入口，仍待客戶端確認。
-- **BDS 不渲染資源包。**240 個 geometry 與 38 個動畫可解析，不代表 UV、透明面、骨骼方向、頭盔、燈光或聲音已目視／聽覺驗收。門與洗碗機姿勢由原作取樣，但非等比例機身擠壓及 Geckolib easing 尚未等同。
-- **沒有多人延遲、長期大世界或任意崩潰時點測試。**單筆世界屬性的完整快照切換不等於世界磁碟、背包和實體之間的原子交易。在已保存領取標記、尚未寫入物品的狹窄崩潰窗口，可能少一個盤子；正常重啟通過不能排除此限制。
-- **宣告最低 1.21.100，實測只有 BDS 1.26.52.3。**沿用穩定 API 2.0.0，沒有 Beta APIs 或 `player.json` 覆寫；最低版本、主機及行動裝置仍須實测。
+手洗需要空手；一般客戶端在完成後要重新拿起票據／包裹才會恢復導航。mock 的合併測試不能證明玩家可以持包裹同時洗碗。兩行 HUD 的排版、字元、觸控與手把可讀性由 dot 實測。
+
+## 未驗證及保留的界線
+
+原生 BDS、真實玩家事件、資源包渲染、音效、實體／方塊點擊、表單焦點、騎乘輸入、雙人網路競爭，以及 alpha.2 → alpha.3 真世界升級仍待測試。本輪沒有把任何原生探針或客戶端結果標成通過。
+
+歷史 alpha.2 的 BDS 1.26.52.3 報告為初始 127、重啟 15、alpha.1 升級 12 個斷言，僅適用其原 runtime 指紋 `a281a8285266923de1a99ad51c163e1c9fabbd8e1adb6034969affe4843d6cc4`，詳見 [VALIDATION_ALPHA2.md](VALIDATION_ALPHA2.md)。其 Player 也是程式化替身，並非客戶端。更早結果見 [VALIDATION_ALPHA1.md](VALIDATION_ALPHA1.md)。
+
+餐廳／profile 的單筆保存與原生物品欄不是同一個原子交易。個人帳簿代表成功交單的結算金額；任意強制終止時點不能保證與背包／地面實物幣完全一致。領髒盤先保存不可重領標記、再寫物品的狹窄崩潰窗口仍可能少一個盤子。這些既有界線不因新增進度而消失。
 
 ## 重現
 
 ```sh
-npm ci
+npm ci --ignore-scripts
 npm run verify
-python tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode initial
-python tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode reload
+diff -u artifacts/build-info.json dist/build-info.json
 ```
 
-目錄需預先放入官方 Linux BDS，且不得含其他世界。`initial` 會重建工具已標記的 `otc-qa`；`reload` 和 `upgrade` 都要求既有 QA 世界。報告寫至 `docs/validation/<package-version>/`。只對獨立測試副本使用。
+接著在 `artifacts/` 執行 `sha256sum --check SHA256SUMS.txt`。需要準備新的版本下載檔時，先完成驗證再執行 `python tools/stage_artifacts.py`；工具保留歷史版本包及對應建置資訊。
 
-重現 alpha.1 升級需先在該固定提交的獨立 checkout 執行 `initial`，保留 BDS 的 QA 世界；再從 alpha.2 checkout 對同一測試目錄執行：
-
-```sh
-python tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode upgrade
-```
-
-`reload` 探針完成後會收取它測試的餐盤；再次驗證同一完整重啟流程，應由 `initial` 重新建立其前置條件。
-
-素材可在另一個輸出目錄重產：
-
-```sh
-python -m pip install Pillow==12.3.0
-python tools/convert_assets.py --output /path/to/offline-rebuild
-```
-
-逐檔比較該目錄與 `runtime/` 中的同路徑檔案，可重現本次 377 份輸出的一致性檢查。原生 probe 及客戶端人工測試不在 GitHub Actions 的執行範圍內。
+本輪沒有執行的 BDS 重現入口仍在 `tools/bedrock_smoke.py`，只應使用已準備好的獨立官方 BDS 測試目錄。dot 請依 [DOT_HANDOFF.md](DOT_HANDOFF.md) 先固定包與世界，再複製回報模板；所有未做的案例保留「未執行」或「阻塞」。
