@@ -43,7 +43,7 @@
 
 此外，[MachineRankingState.get(world)](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/core/MachineRankingState.java) 使用傳入 `ServerLevel` 的 `world.getDataStorage()`。`allPersistedWithOnline(world)` 遍歷的是該維度的持久記錄，並非把所有維度的存檔餐廳合併。基岩版依此**逐維度**檢查，同一玩家任一維度達標即可；主世界 2 間加地獄 2 間不算 4 間，其他維度的競爭餐廳也不影響這一維度的第一名。既有全世界餐廳排行榜的展示範圍與此條件不同。
 
-已放置、但區塊尚未載入的餐廳仍在原作持久名冊內；休息中的餐廳也不被排除。本版不以 `loadedBlock` 過濾。已移除／移除中的記錄不計入。本版用穩定玩家 `ownerId` 對應原作玩家名稱判斷，避免玩家改名或顯示名稱碰撞改變所有權。餐廳記錄需有 `id`、`ownerId`、`dimensionId`、非負安全整數 `stats.earnings`，以及可選 `removing`。重複 ID 或不合法排行資料會使判定不通過，不能藉此多算店數。
+已放置、但區塊尚未載入的餐廳仍在原作持久名冊內；休息中的餐廳也不被排除。本版不因 `loadedBlock` 沒有結果排除餐廳；若已載入位置確定不是打單機，當次排行快照不計入。已移除／移除中的記錄不計入。本版用穩定玩家 `ownerId` 對應原作玩家名稱判斷，避免玩家改名或顯示名稱碰撞改變所有權。餐廳記錄需有 `id`、`ownerId`、`dimensionId`、非負安全整數 `stats.earnings`，以及可選 `removing`。重複 ID 或不合法排行資料會使判定不通過，不能藉此多算店數。
 
 升級觸發另見 [OrderMachineBlockEntity.tryUpgrade](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/OrderMachineBlockEntity.java) 與 [OtcUpgradeBoxItem.tryUpgradeWashingTable](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/item/OtcUpgradeBoxItem.java)。進度授予實際操作玩家，不是自動授予設備主人。
 
@@ -86,6 +86,10 @@
 
 升級自 alpha.2 時，餐廳既有營業額沒有交餐玩家歸屬，不能可靠推算個人的歷史收入。新個人計數從首次記錄本功能之後開始，不把餐廳累積金額灌入任意店主或員工。這不妨礙金牌餐廳以目前仍然存在的餐廳名冊判定；其條件本來就是目前所有權與排行。拆店、搬遷或新建同址餐廳的帳簿必須有不同識別，舊 checkpoint 保留以避免回放。
 
+操作型進度也隨原遊戲記錄保存待處理事件：放置與八星升級寫入餐廳，洗碗池升級寫入設備。個人進度暫時寫入失敗時，tick 重試事件，不重做升級或再次扣工具箱／金幣；解鎖確認保存失敗可安全重播。待確認的設備在正常玩家拆除前先完成進度保存；失敗保留設備及事件。各玩家獨立對帳，單一壞存檔不阻塞其他員工，但餐廳仍保留未同步的帳簿直到可安全清理。
+
+帳簿表示成功交單的**結算金額**。原有訂單保存與實物發幣之間不是跨服務原子交易，不能推論任意強制終止時點都與背包及地面實物幣完全相同；詳細界線見 [VALIDATION.md](VALIDATION.md)。
+
 ## 驗證與 dot 的客戶端驗收
 
 純模組測試在 [progression.test.js](../tests/progression.test.js)，涵蓋收益門檻、絕對對帳重播／倒退、同一事件跨多門檻、玩家所有權、4 店數量、同維度／跨維度、並列與零收益、區塊卸載、升級事件、未知／逾時包裹事件、壞存檔及時鐘倒退。這些測試不等於客戶端驗收；本功能仍需隨整合版執行 `npm run verify`，以該次 CI 實際結果為準。
@@ -97,6 +101,6 @@ dot 需特別檢查：
 - 花幣、撿幣、測試給幣不改動訂單累積；普通訂單不誤觸加急／遠距。
 - 新放機器、工具箱成功升級、實際升至 Lv.8 的通知與清單一致；查看舊機器不冒領操作型進度。
 - 同維度 4 間、跨維度 2 + 2 間、並列 0 收益、遠處未載入店、拆店與同址重建，符合上述規則。
-- 11 項清單可讀，逾時包裹項明確標示未移植；使用觸控及手把時能正常返回指南／機器表單。
+- 11 項清單可讀，逾時包裹項明確標示未移植；使用觸控及手把時，詳情可返回個人清單；關閉或取消回遊戲，需要時重新使用指南／機器入口。
 
 客戶端的實際通過／失敗與裝置資訊由 dot 回報；此文件沒有聲稱任何客戶端測試已通過。

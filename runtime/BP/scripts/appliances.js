@@ -387,7 +387,8 @@ export function createApplianceService(ctx) {
         occupied: undefined, storageLoaded: false };
       if (station.typeId === FRIDGE || station.typeId === STOVE) {
         const helper = findEntity(station.storageId);
-        const inventory = helper?.typeId === STORAGE && helper.getDynamicProperty(`${NS}station_id`) === station.id
+        const inventory = helper?.typeId === STORAGE && helper.getDynamicProperty(`${NS}station_id`) === station.id &&
+          helper.dimension.id === station.dimensionId && squaredDistance(helper.location, center(station.location, 0.1)) <= 1.5 ** 2
           ? helper.getComponent("minecraft:inventory")?.container : undefined;
         snapshot.storageLoaded = !!inventory?.isValid && inventory.size >= (station.typeId === FRIDGE ? 81 : 7);
         if (snapshot.storageLoaded && station.typeId === FRIDGE) {

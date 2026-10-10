@@ -223,3 +223,19 @@ test('manual stop, restart and player departure cannot leave a stale washing HUD
   for (const callback of env.world.afterEvents.playerLeave.subscriptions) callback({ playerId: player.id });
   assert.equal(service.getWashingProgress(player), undefined);
 });
+
+for (const wrongAnchor of ['dimension', 'location']) {
+  test('inspection refuses a saved helper with the wrong ' + wrongAnchor + ' without touching its cargo', () => {
+    const env = makeEnvironment(), player = new FakePlayer(env.dimension), service = appliances.createApplianceService(env.ctx);
+    const block = place(env, 'ordertocook:refrigerator', undefined, { 'ordertocook:half': 'lower' });
+    service.onPlace(block);
+    const station = env.ctx.getStation(block), helper = env.dimension.entities.get(station.storageId);
+    if (wrongAnchor === 'dimension') helper.dimension = { ...env.dimension, id: 'minecraft:nether' };
+    else helper.location = { x: 1000, y: 10, z: 1000 };
+    const before = JSON.stringify(station);
+    helper.container.getItem = () => { throw Error('read incorrectly anchored inventory'); };
+    assert.equal(service.getInspection(player, block), '§f冰箱 · 下層儲物尚未載入');
+    assert.equal(JSON.stringify(station), before);
+    assert.equal(env.dimension.spawnCount, 1);
+  });
+}

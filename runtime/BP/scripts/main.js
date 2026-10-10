@@ -22,7 +22,7 @@ import { createEntityService } from './entities.js';
 import { createApplianceService } from './appliances.js';
 import { createDiningService, DINING_ENTITY } from './dining.js';
 import { progressRows } from './progression.js';
-import { createProgressionService, creditCompletedOrder } from './progression_service.js';
+import { createProgressionService, creditCompletedOrder, queueProgressEvent } from './progression_service.js';
 
 const PREFIX = 'ordertocook:';
 const ITEM_RESTAURANT = 'ordertocook:restaurant';
@@ -98,7 +98,7 @@ function syncMenu(restaurant) {
   restaurant.boardId = candidates[0]?.id || '';
   synchronizeOfferRewards(restaurant);
 }
-function getMachine(player, block) {
+function getMachine(player, block, placedByPlayer = false) {
   const id = locationId(block.dimension.id, block.location);
   let restaurant = getRestaurant(id);
   if (restaurant?.removing) return restaurant;
@@ -106,8 +106,13 @@ function getMachine(player, block) {
     restaurant = createRestaurant({ id, name: `${player.name} 的餐廳`, ownerId: player.id, ownerName: player.name, dimensionId: block.dimension.id, location: block.location, menu: [], config: { refreshMs: settings.refreshMs, orderMachineUpgradeBoardHunger: settings.orderMachineUpgradeBoardHunger } });
     restaurant.staff = [];
     restaurant.pendingDishes = [];
+    if (placedByPlayer) queueProgressEvent(restaurant, player.id, { type: 'order_machine_placed' });
+    saveRestaurant(restaurant);
+  } else if (placedByPlayer) {
+    queueProgressEvent(restaurant, player.id, { type: 'order_machine_placed' });
     saveRestaurant(restaurant);
   }
+  if (placedByPlayer) reconcileProgress(restaurant);
   syncMenu(restaurant);
   return restaurant;
 }
@@ -242,12 +247,18 @@ async function upgradeForm(player, block, restaurant) {
   const current = getUpgradeQuote(restaurant);
   if (!current.ok) { notify(player, reasonText(current.reason)); return; }
   if (!pay(player, current.cost)) { notify(player, '貨幣不足，或背包放不下找零；請空出幾格。'); return; }
-  const result = upgradeRestaurant(restaurant);
-  if (!result.ok) { reward(player, current.cost); notify(player, reasonText(result.reason)); return; }
-  saveRestaurant(restaurant);
+  try {
+    const result = upgradeRestaurant(restaurant);
+    if (!result.ok) { reward(player, current.cost); notify(player, reasonText(result.reason)); return; }
+    if (restaurant.level === 8) queueProgressEvent(restaurant, player.id, { type: 'restaurant_upgraded', level: 8 });
+    saveRestaurant(restaurant);
+  } catch (error) {
+    reward(player, current.cost);
+    throw error;
+  }
   playAt(block, 'prestige_get');
   notify(player, `餐廳已升至 Lv.${restaurant.level}。`);
-  recordProgress(player, { type: 'restaurant_upgraded', level: restaurant.level });
+  reconcileProgress(restaurant);
 }
 
 async function shopForm(player, block, restaurant) {
@@ -569,6 +580,7 @@ function upgradeAppliance(player, block) {
     block.setPermutation(BlockPermutation.resolve(target));
     const station = getStation(block);
     station.ownerId = player.id;
+    if (target === 'ordertocook:dishwasher') queueProgressEvent(station, player.id, { type: 'dishwasher_upgraded' });
     saveStation(station);
     appliances.onPlace(block);
     if (!consumeHeld(player, 'ordertocook:otc_upgrade_box', 1)) throw new Error('工具箱已被移動');
@@ -581,7 +593,7 @@ function upgradeAppliance(player, block) {
     if (oldStation) saveStation(oldStation);
     throw error;
   }
-  if (target === 'ordertocook:dishwasher') recordProgress(player, { type: 'dishwasher_upgraded' });
+  if (target === 'ordertocook:dishwasher') reconcileStationProgress(findStation(block));
   return true;
 }
 
@@ -594,6 +606,14 @@ function reconcileProgress(restaurant) {
   try { progression?.reconcileRestaurant(restaurant); return true; }
   catch (error) {
     console.warn(`[OrderToCook] Pending progress ${restaurant.id}; ledger retained: ${error}`);
+    return false;
+  }
+}
+function reconcileStationProgress(station) {
+  if (!station) return true;
+  try { progression?.reconcileStation(station); return true; }
+  catch (error) {
+    console.warn(`[OrderToCook] Pending station progress ${station.id}; event retained: ${error}`);
     return false;
   }
 }
@@ -778,6 +798,7 @@ function tickRestaurants() {
       reconcileProgress(restaurant);
     } catch (error) { console.warn(`[OrderToCook] Restaurant ${restaurant.id}: ${error}`); }
   }
+  for (const station of stations()) if (station.progressEvents?.length) reconcileStationProgress(station);
   updateProgressRankings();
 }
 
@@ -913,6 +934,15 @@ world.beforeEvents.playerBreakBlock.subscribe(event => {
   if ((restaurant && !canManage(event.player, restaurant)) || (!restaurant && station?.ownerId && station.ownerId !== event.player.id && !isAdmin(event.player))) {
     event.cancel = true; system.run(() => notify(event.player, '你不是這間餐廳的店主／員工。')); return;
   }
+  if (station?.progressEvents?.length) {
+    event.cancel = true;
+    system.run(() => {
+      const current = findStation(block);
+      const saved = reconcileStationProgress(current);
+      notify(event.player, saved ? '個人進度已保存，請再拆除設備。' : '個人進度仍待保存；設備記錄已保留，稍後再試。');
+    });
+    return;
+  }
   if (event.block.typeId === 'ordertocook:order_machine' && restaurant && (restaurant.active || restaurant.orders.some(order => ['accepted', 'packed'].includes(order.status)))) {
     event.cancel = true; system.run(() => notify(event.player, '先暫停營業，並完成或取消處理中的訂單，才可拆除打單機。'));
   }
@@ -924,8 +954,7 @@ world.afterEvents.playerPlaceBlock.subscribe(event => {
   station.ownerId = event.player.id;
   saveStation(station);
   if (block.typeId === 'ordertocook:order_machine') {
-    getMachine(event.player, block);
-    recordProgress(event.player, { type: 'order_machine_placed' });
+    getMachine(event.player, block, true);
     updateProgressRankings();
   }
 });
@@ -965,7 +994,7 @@ world.afterEvents.worldLoad.subscribe(() => {
     const rawWeather = world.getDynamicProperty('ordertocook:weather');
     if (typeof rawWeather === 'string') for (const [id, weather] of JSON.parse(rawWeather)) if (!weatherByDimension.has(id)) weatherByDimension.set(id, weather);
     const context = { world, system, getStation, saveStation, deleteStation, stations, getRestaurant, restaurants, saveRestaurant, notify, canUseStation, food: { isFood: stack => !!foodFromStack(stack) }, onCustomerInteract: customerInteract };
-    progression = createProgressionService({ getProfile, saveProfile, restaurants,
+    progression = createProgressionService({ getProfile, saveProfile, restaurants, saveRestaurant, saveStation,
       onUnlock: (playerId, definitions) => {
         const player = world.getAllPlayers().find(value => value.id === playerId);
         if (player?.isValid) for (const definition of definitions) notify(player, `進度達成：${definition.title}`);
@@ -992,5 +1021,5 @@ world.afterEvents.worldLoad.subscribe(() => {
 // Headless native-engine tests import these same adapters. No test hooks are
 // exposed through chat, commands, script events or a separately installable pack.
 export function getQaHooks() {
-  return { ready, entities, appliances, dining, progression, updateHud, progressForm, recordProgress, reconcileProgress, updateProgressRankings, getMachine, acceptWithTicket, prepareOrderAtCountertop, pickupDisplay, placeParcel, customerInteract, collectDiningPlate, tickRestaurants, itemOrder, onPlace, onBreak, shelfInteract, upgradeAppliance, canUseStation };
+  return { ready, entities, appliances, dining, progression, updateHud, progressForm, recordProgress, reconcileProgress, updateProgressRankings, reconcileStationProgress, upgradeForm, getMachine, acceptWithTicket, prepareOrderAtCountertop, pickupDisplay, placeParcel, customerInteract, collectDiningPlate, tickRestaurants, itemOrder, onPlace, onBreak, shelfInteract, upgradeAppliance, canUseStation };
 }

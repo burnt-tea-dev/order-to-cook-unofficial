@@ -15,7 +15,7 @@ function validId(id) {
 }
 function checkedTotals(value) {
   if (!object(value) || FIELDS.some(key => !Number.isSafeInteger(value[key]) || value[key] < 0) ||
-      value.urgent > value.completed || value.longDistance > value.completed) throw new Error('Invalid progress totals; saved data preserved');
+      value.urgent > value.completed || value.longDistance > value.completed || (value.earned > 0 && value.completed === 0)) throw new Error('Invalid progress totals; saved data preserved');
   return Object.fromEntries(FIELDS.map(key => [key, value[key]]));
 }
 function add(a, b) {
@@ -58,6 +58,21 @@ export function creditCompletedOrder(restaurant, playerId, order) {
   };
   restaurant.progressLedger = ledger;
   order.progressionReceipt = { version: 1, playerId };
+  return true;
+}
+
+function checkedOperation(event) {
+  if (!object(event) || !['order_machine_placed', 'dishwasher_upgraded', 'restaurant_upgraded'].includes(event.type) ||
+      (event.type === 'restaurant_upgraded' && event.level !== 8)) throw new Error('Invalid pending progress operation; saved data preserved');
+}
+
+/** Queue inside the gameplay record BEFORE its existing authoritative save. */
+export function queueProgressEvent(record, playerId, event) {
+  validId(playerId); checkedOperation(event);
+  if (record.progressEvents !== undefined && !Array.isArray(record.progressEvents)) throw new Error('Invalid pending progress operations');
+  const pending = record.progressEvents || [];
+  if (pending.some(value => value.playerId === playerId && value.event?.type === event.type)) return false;
+  record.progressEvents = [...pending, { playerId, event: clone(event) }];
   return true;
 }
 
@@ -125,12 +140,35 @@ export function createProgressionService(context) {
     }
     return result.state;
   }
+  function reconcileEvents(record, saveRecord) {
+    const pending = record.progressEvents;
+    if (pending === undefined || (Array.isArray(pending) && !pending.length)) return;
+    if (!Array.isArray(pending)) throw new Error('Invalid pending progress operations; saved data preserved');
+    const remaining = [], failures = [];
+    for (const entry of pending) {
+      try {
+        validId(entry?.playerId); checkedOperation(entry?.event);
+        recordEvent(entry.playerId, entry.event);
+      } catch (error) { remaining.push(entry); failures.push(String(error)); }
+    }
+    if (remaining.length !== pending.length) {
+      record.progressEvents = remaining;
+      try { saveRecord(record); }
+      catch (error) { record.progressEvents = pending; throw error; }
+    }
+    if (failures.length) throw new Error('Pending operation progress: ' + failures.join('; '));
+  }
   function reconcileRestaurant(restaurant) {
-    const ledger = ledgerOf(restaurant);
-    if (!ledger) return;
-    for (const playerId of Object.keys(ledger.players)) reconcilePlayer(playerId, [restaurant]);
+    const ledger = ledgerOf(restaurant), failures = [];
+    for (const playerId of Object.keys(ledger?.players || {})) {
+      try { reconcilePlayer(playerId, [restaurant]); }
+      catch (error) { failures.push(String(error)); }
+    }
+    try { reconcileEvents(restaurant, context.saveRestaurant); }
+    catch (error) { failures.push(String(error)); }
+    if (failures.length) throw new Error('Pending restaurant progress: ' + failures.join('; '));
   }
   // Checkpoints stay with the personal profile after a restaurant is removed.
   // This allows an acknowledgement/save retry without replaying its earnings.
-  return { recordEvent, reconcilePlayer, reconcileRestaurant, getState: playerId => loadProfile(playerId).state };
+  return { recordEvent, reconcilePlayer, reconcileRestaurant, reconcileStation: station => reconcileEvents(station, context.saveStation), getState: playerId => loadProfile(playerId).state };
 }

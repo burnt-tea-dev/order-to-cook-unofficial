@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createProgressionService, creditCompletedOrder } from '../runtime/BP/scripts/progression_service.js';
+import { createProgressionService, creditCompletedOrder, queueProgressEvent } from '../runtime/BP/scripts/progression_service.js';
 
 const copy = value => JSON.parse(JSON.stringify(value));
 function fixture() {
@@ -185,4 +185,47 @@ test('a well-formed but inconsistent personal checkpoint is preserved for recove
   env.records.set('p', damaged);
   assert.throws(() => env.service.reconcilePlayer('p'), /checkpoint totals/);
   assert.deepEqual(env.records.get('p'), damaged);
+});
+
+test('one damaged player cannot block other players but restaurant cleanup still fails closed', () => {
+  const env = fixture(), r = restaurant(); env.restaurants.push(r);
+  creditCompletedOrder(r, 'alice', paid(r, 'a', 10));
+  creditCompletedOrder(r, 'bob', paid(r, 'b', 20));
+  const damaged = { id: 'alice', state: { version: 99 }, sources: {} };
+  env.records.set('alice', copy(damaged));
+  assert.throws(() => env.service.reconcileRestaurant(r), /Pending restaurant progress/);
+  assert.equal(env.service.getState('bob').totals.earned, 20);
+  assert.deepEqual(env.records.get('alice'), damaged);
+  assert.throws(() => env.service.reconcileRestaurant(r));
+  assert.equal(env.service.getState('bob').totals.completed, 1);
+});
+
+test('earnings without a completed order are rejected in each source before aggregation', () => {
+  const env = fixture(), a = restaurant(), b = restaurant('overworld_30_0_0');
+  env.restaurants.push(a);
+  creditCompletedOrder(a, 'p', paid(a, 'a', 5)); env.service.reconcilePlayer('p');
+  const before = copy(env.records.get('p'));
+  b.progressLedger = { version: 1, id: 'bad-source', players: { p: { earned: 1000, completed: 0, urgent: 0, longDistance: 0 } } };
+  env.restaurants.push(b);
+  assert.throws(() => env.service.reconcilePlayer('p'), /Invalid progress totals/);
+  assert.deepEqual(env.records.get('p'), before);
+});
+
+test('operation acknowledgement failure can replay without granting or announcing twice', () => {
+  const records = new Map(), notifications = [];
+  let failAck = true;
+  const service = createProgressionService({
+    now: () => 1000, getProfile: id => records.get(id), saveProfile: record => records.set(record.id, copy(record)),
+    restaurants: () => [],
+    saveRestaurant: () => { if (failAck) throw Error('ack failed'); },
+    onUnlock: (id, values) => notifications.push([id, values.map(value => value.id)])
+  });
+  const r = restaurant();
+  queueProgressEvent(r, 'worker', { type: 'restaurant_upgraded', level: 8 });
+  assert.throws(() => service.reconcileRestaurant(r), /ack failed/);
+  assert.equal(r.progressEvents.length, 1);
+  assert.ok(service.getState('worker').unlocked.eight_star_restaurant);
+  failAck = false; service.reconcileRestaurant(r);
+  assert.equal(r.progressEvents.length, 0);
+  assert.equal(notifications.length, 1);
 });
