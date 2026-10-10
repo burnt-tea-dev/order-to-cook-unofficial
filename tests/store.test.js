@@ -339,3 +339,47 @@ test('failed root deletion retains the previous record and all its referenced ch
   assert.deepEqual(api.stations(), [value]);
   assert.deepEqual((await reload(api)).stations(), [value]);
 });
+
+test('personal progress profiles share atomic chunk storage and survive reload without a location', async () => {
+  const api = await fixture(); api.initStore();
+  const value = { id: 'player-1', state: { version: 1, totals: { earned: 100 } }, sources: Object.fromEntries(
+    Array.from({ length: 1000 }, (_, i) => ['餐廳🍲-' + i, { earned: i, completed: i, urgent: 0, longDistance: 0 }])
+  ) };
+  api.saveProfile(value);
+  assert.ok(chunksFor(api, value, 'p').length > 1);
+  assert.deepEqual(api.restaurants(), []); assert.deepEqual(api.stations(), []);
+  assert.deepEqual((await reload(api)).getProfile(value.id), value);
+});
+
+test('profile manifest failure rolls back the canonical profile before a later retry', async () => {
+  const api = await fixture(); api.initStore();
+  const original = { id: 'player-2', state: { earned: 80 }, sources: {} };
+  api.saveProfile(original);
+  api.testWorld.beforeWrite = ({ key }) => { if (key === rootKey(original, 'p')) throw Error('profile commit failed'); };
+  assert.throws(() => api.saveProfile({ ...original, state: { earned: 100 } }), /profile commit failed/);
+  assert.deepEqual(api.getProfile(original.id), original);
+  assert.deepEqual((await reload(api)).getProfile(original.id), original);
+  api.testWorld.beforeWrite = undefined;
+  api.saveProfile({ ...original, state: { earned: 100 } });
+  assert.equal((await reload(api)).getProfile(original.id).state.earned, 100);
+});
+
+test('unreadable personal progress root is preserved and cannot be overwritten by a default profile', async () => {
+  const key = 'ordertocook:p:player-3', raw = '{broken progress';
+  const api = await fixture(new Map([[key, raw]]));
+  silenceExpectedWarning(() => api.initStore());
+  assert.throws(() => api.getProfile('player-3'), /needs recovery/);
+  assert.throws(() => api.saveProfile({ id: 'player-3', state: {}, sources: {} }), /needs recovery/);
+  assert.equal(api.testWorld.properties.get(key), raw);
+});
+
+test('a profile root write that applied before throwing commits exactly once', async () => {
+  const api = await fixture(); api.initStore();
+  const original = { id: 'player-4', state: { earned: 80 }, sources: {} };
+  api.saveProfile(original);
+  api.testWorld.afterWrite = ({ key }) => { if (key === rootKey(original, 'p')) throw Error('reported after commit'); };
+  const updated = { ...original, state: { earned: 100 } };
+  api.saveProfile(updated);
+  assert.deepEqual(api.getProfile(original.id), updated);
+  assert.deepEqual((await reload(api)).getProfile(original.id), updated);
+});
