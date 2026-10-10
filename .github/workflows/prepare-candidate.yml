@@ -1,0 +1,62 @@
+name: Prepare Bedrock candidate
+
+on:
+  push:
+    branches: [bedrock/alpha3]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bedrock-candidate-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    if: github.repository == 'casama233/order-to-cook-unofficial'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci --ignore-scripts
+      - run: npm run verify
+      - name: Stage verified candidate downloads
+        run: python tools/stage_artifacts.py
+      - name: Confirm staged source and downloads match
+        run: |
+          diff -u artifacts/build-info.json dist/build-info.json
+          cd artifacts
+          sha256sum --check SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: OrderToCook-Bedrock-candidate
+          path: dist/*
+          if-no-files-found: error
+      - name: Commit generated downloads to the candidate branch
+        env:
+          CANDIDATE_SOURCE_SHA: ${{ github.sha }}
+        run: |
+          git add -- artifacts
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          current_head="$(git ls-remote origin refs/heads/bedrock/alpha3 | cut -f1)"
+          if [ "$current_head" != "$CANDIDATE_SOURCE_SHA" ]; then
+            echo "Candidate branch changed; retain this run's artifact and rebuild the newer source."
+            exit 1
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "build: stage verified Bedrock candidate downloads"
+          git push origin HEAD:refs/heads/bedrock/alpha3
