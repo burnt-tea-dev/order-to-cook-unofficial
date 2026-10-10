@@ -17,6 +17,20 @@
 | runtime 指紋 | 從同一提交的 build-info 複製 `runtimeTreeSha256`，與安裝包雜湊分開記錄 |
 | 相容目標 | Bedrock 1.21.100 起、穩定 API 2.0.0；逐一記錄真正測到的完整遊戲版本 |
 
+本輪已驗證的固定下載提交為 [`66768e0a64b80a4226924cbe580e3144793796f9`](https://github.com/casama233/order-to-cook-unofficial/tree/66768e0a64b80a4226924cbe580e3144793796f9)，可直接使用 [這份 mcaddon](https://github.com/casama233/order-to-cook-unofficial/raw/66768e0a64b80a4226924cbe580e3144793796f9/artifacts/OrderToCook-Bedrock-0.1.2-alpha.3.mcaddon)。預期安裝包 SHA-256 為：
+
+```text
+13ebbb92d4848565bcfb22aa944ec4a3db9c02630f09ac696602b81200001d7b
+```
+
+預期 `runtimeTreeSha256` 為：
+
+```text
+f77209e0fa441e7ee16d400d57d596556fd70f6eea8b73b3fcf0a14225c3b2c4
+```
+
+以上是提供給 dot 的預期值；下載後仍需實際核對，不能預填「已核對」。
+
 GitHub 檔案頁使用 **Download raw file**，避免把網頁存成同名檔案。測試期間若換包，另開一份結果或明確建立新輪次，不能把舊包的通過項目直接搬到新 commit。Actions 下載的 ZIP 先解壓，再匯入其中的 mcaddon；ZIP 雜湊不能代替 mcaddon 雜湊。
 
 在檔案所在目錄，可依平台選一種核對方法：
