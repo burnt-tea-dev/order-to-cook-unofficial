@@ -2,7 +2,7 @@ name: Prepare Bedrock candidate
 
 on:
   push:
-    branches: [bedrock/alpha3]
+    branches: ['bedrock/**']
 
 permissions:
   contents: read
@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   prepare:
-    if: github.repository == 'casama233/order-to-cook-unofficial'
+    if: github.repository == 'burnt-tea-dev/order-to-cook-unofficial'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
