@@ -1,41 +1,27 @@
 # Release compliance checklist
 
-This project is an unofficial derivative Bedrock adaptation of Order To Cook. The checklist is mandatory for every public release.
+This is an unofficial Bedrock adaptation of Order To Cook. Keep the existing licence obligations, but do not turn an unanswered supplementary author inquiry into a blanket development or publication ban.
 
-## Before creating a release tag
+## Required for a release
 
-- [ ] Complete corresponding source, build scripts, tests and conversion inputs are present.
-- [ ] The release tag points to the exact source commit used to build the distributed packages.
-- [ ] BP, RP and combined MCAddon each contain the complete GPL text, third-party notices and source-location notice.
-- [ ] The in-game guide exposes original author, original project links, port maintainer, upstream commit, GPL and unofficial status.
-- [ ] The per-file asset ledger passes validation and every redistributed asset has a documented rights basis.
-- [ ] The upstream rights holder has confirmed authority to license all redistributed original assets, or every exception has a separately verified licence.
-- [ ] Source commit, package version, runtime tree hash and SHA-256 checksums are recorded together.
-- [ ] Minecraft usage guidelines and distribution-platform rules have been reviewed.
+- Preserve original attribution, copyright/licence notices, modification notices and the complete GPL text.
+- Provide the exact corresponding source, build scripts and editable conversion inputs for each distributed package.
+- Record the source identity, package version, runtime fingerprint and SHA-256 checksums. A version tag must match the package version; do not silently replace it.
+- Keep the in-game attribution and unofficial status accessible.
+- Validate the source ledger and legal files in BP, RP and nested MCAddon packs.
+- Resolve any concrete, documented third-party licence conflict affecting the distributed files.
+- Report actual gameplay/client validation and unresolved defects. Automated checks alone are not proof of Java parity or client usability.
 
-## Automated enforcement
+## Automated checks
 
-- Pull requests and normal builds run `python tools/check_compliance.py`.
-- Version tags matching `v*` additionally run `python tools/check_compliance.py --release`.
-- Release mode fails while any upstream asset scope remains pending.
-- `tools/build.py` embeds source-location, original-author, upstream-revision and unofficial-product notices into each BP/RP pack; both are nested in the MCAddon.
-- The release tag is the immutable source-revision anchor. Do not upload a package built from a different commit or silently replace a tagged source revision.
+Normal builds run `python tools/check_compliance.py`. Actual version tags also run `python tools/check_compliance.py --release` for tag and build-output checks. `PENDING_RIGHTS_HOLDER_CONFIRMATION` emits a warning in both modes; it does not fail a build. `BLOCKED` remains an error for a documented rights conflict. Unknown states, missing required notices, source hash mismatches and incorrect release tags still fail.
 
-## Distribution statement
+`python tests/check_release_policy.py` exercises the real checker after a build: matching tag passes with an advisory pending inquiry, incorrect tag fails, and the rights record is not changed. It neither creates a tag nor publishes anything.
 
-Do not imply that the original Java author or Mojang/Microsoft endorses this port. Do not remove upstream copyright notices or impose restrictions that conflict with GPLv3. This document is a project compliance process, not a legal opinion.
+Branch candidates use normal validation, not the actual-tag-only check. Their status must remain clearly experimental. Passing the checker is not a legal opinion or a claim that the original author endorses the port.
 
+## Superseded blanket hold
 
-## Public-source and CI distribution hold
+The earlier rule forbidding every candidate, Actions artifact or package solely because the author had not replied is withdrawn. The source register remains honest about that unanswered inquiry. Existing removed binaries and deleted Actions artifacts are not restored by this policy change, and it does not create a formal Release. New candidates need their own version/commit/hash and validation evidence; old client results must not be relabelled as tests of new bytes.
 
-The rights hold applies to **all conveyance channels**, not only version tags:
-
-- Do not commit generated .mcpack / .mcaddon files to public branches.
-- Do not upload generated packages as GitHub Actions artifacts.
-- Do not publish candidate packages from bedrock/** branches.
-- Local dist/ output may be used privately for maintainer verification and author sample review; it is not a public download.
-- Keep only non-binary build identity/checksum records in the tracked artifacts/ directory while the hold remains.
-
-The main validation workflow may build locally for CI checks, but it must not upload package artifacts while rights are pending. Candidate staging must run python tools/check_compliance.py --release before any upload or commit. A green normal test/build job is not a rights clearance.
-
-The repository itself currently contains source and converted asset inputs. Removing package downloads does not erase historical Git objects or make those source assets private. Repository visibility and historical Git-history exposure require a separate owner decision; do not describe this cleanup as a complete takedown of previously public content.
+This policy does not waive GPL obligations, platform rules, known incompatible asset terms, or credible ownership objections.

@@ -26,9 +26,10 @@ jobs:
       - run: npm run verify
       - name: Validate attribution, source inventory and packaged legal notices
         run: python tools/check_compliance.py
-      - name: Block release tags until upstream asset rights are confirmed
+      - name: Regression-check advisory clarification and release tag validation
+        run: python tests/check_release_policy.py
+      - name: Validate release tag and package requirements
         if: startsWith(github.ref, 'refs/tags/v')
         run: python tools/check_compliance.py --release
-      # Local CI still builds and validates packages for maintainer review.
-      # Do not upload Actions artifacts while upstream asset redistribution
-      # rights are pending; the repository is not a public download channel.
+      # Validation does not publish a Release or restore withdrawn downloads.
+      # Versioned candidate packaging is handled separately by prepare-candidate.

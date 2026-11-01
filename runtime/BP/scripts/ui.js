@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 import { system } from '@minecraft/server';
 import { ActionFormData, ModalFormData, FormCancelationReason } from '@minecraft/server-ui';
+import { readableActionButton } from './button_text.js';
 
 const openForms = new Set();
 export function notify(player, message) { if (player?.isValid) player.sendMessage(`§6[下單了]§r ${message}`); }
@@ -24,7 +25,7 @@ export async function showForm(player, form) {
 }
 export async function choose(player, title, body, buttons) {
   const form = new ActionFormData().title(title).body(body);
-  for (const button of buttons) form.button(button);
+  for (const button of buttons) form.button(readableActionButton(button));
   const result = await showForm(player, form);
   return result?.selection;
 }

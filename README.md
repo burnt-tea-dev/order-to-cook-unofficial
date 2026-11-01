@@ -1,16 +1,16 @@
 # Order To Cook／下單了 — 非官方基岩版移植
 
-**本地候選 `0.1.2-alpha.3`：新增個人進度（原作 11 項中可觸發 10 項）、唯讀設備準星資訊與統一外送／手洗 HUD。餐廳、外送及廚電核心已有實作；客戶端驗收交接給 dot，尚未有實機通過結果。**
+**目前以 `0.1.2-alpha.3` 為開發基線：餐廳、外送、廚電、個人進度與設備 HUD 已有實作。已有部分客戶端驗收，仍有冰箱幾何、手洗粒子及進度灰字失敗紀錄，不能稱為完整 Java 等價版本。** [實機紀錄](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [未發布按鈕可讀性修正](docs/validation/UNRELEASED-button-contrast.md)
 
-原作由 **breezeth** 製作：[CurseForge 官方頁面](https://www.curseforge.com/minecraft/mc-mods/order-to-cook) · [Java 原始碼](https://github.com/breezeth-CN/OrdertoCook)。本專案由 `casama233` 維護。上游明確聲明程式碼採 GPLv3；原始模型、貼圖、音效、動畫及翻譯的完整權利鏈仍待確認，詳見素材授權登記。
+原作由 **breezeth** 製作：[CurseForge 官方頁面](https://www.curseforge.com/minecraft/mc-mods/order-to-cook) · [Java 原始碼](https://github.com/breezeth-CN/OrdertoCook)。本專案由 `casama233`／`burnt-tea-dev` 維護，保留上游 GPLv3、原作者署名及素材來源。補充素材範圍詢問尚未收到確認，現作非阻塞紀錄，不會因作者未回覆就停止功能開發；具體授權衝突仍須處理。
 
 ## 下載與安裝
 
-**暫停公開下載。** 目前沒有可供公眾下載的授權版本。原作程式碼的上游 GPLv3 聲明已核實，但模型、貼圖、動畫、音效及翻譯等原始素材的完整權利鏈仍待原作者確認。依保守發布政策，現有公開安裝包已撤下；在權利登記解除 HOLD 前，不得透過 GitHub Release、Actions artifact、候選分支或其他平台分發包含上游素材的封包。
+本次變更不恢復先前撤下的舊封包、不建立正式 Release，也不將同版本的新來源假稱為已驗收的舊封包。歷史檔案狀態見 [artifacts/README.md](artifacts/README.md)。可由下方開發流程建置目前來源，輸出在 `dist/`；後續候選需標明自己的版本、commit、SHA-256 及實測範圍。
 
-維護者仍可在本機執行建置與測試，以供內部驗證及向原作者提交樣品；本地建置成功不構成公開分發許可。完整來源、素材逐檔清單及授權狀態見 [ASSET_LICENSE_REGISTER](docs/ASSET_LICENSE_REGISTER.md)、[THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES.md) 與 [發布合規清單](docs/RELEASE_COMPLIANCE.md)。
+本地測試請使用可棄置世界，同時啟用對應的行為包與資源包。宣告最低目標為 **Bedrock 1.21.100**，依賴穩定版 `@minecraft/server 2.0.0`、`@minecraft/server-ui 2.0.0`；不需要 Beta APIs 或 Upcoming Creator Features。這不是所有版本／裝置均已實測的聲明。首次加入會收到指南；也可用工作台合成指南及基本設備。
 
-原作作者：**breezeth**。上游程式碼授權聲明：GNU GPL v3。非官方基岩版移植由 `burnt-tea-dev` 維護；不代表原作者或 Mojang/Microsoft 背書。
+原作者補充確認不再是全面發布門檻；原署名、GPL、對應源碼、來源雜湊與實際品質檢查仍保留。證據及政策見 [素材登記](docs/ASSET_LICENSE_REGISTER.md)、[第三方聲明](THIRD_PARTY_NOTICES.md) 與 [發布檢查](docs/RELEASE_COMPLIANCE.md)。本作品不代表原作者或 Mojang/Microsoft 背書。
 
 ### 從 alpha.2／alpha.1 升級
 
@@ -71,17 +71,19 @@
 
 金牌餐廳按原作程式逐維度判定：同一玩家在同一維度擁有至少 4 間仍放置的餐廳，其中一間收益並列或獨占該維度第一。休息及區塊未載入的店仍算；已確認被拆的店不算。0 收益並列有效，跨維度 2＋2 間不等於 4 間。完整條件與來源見 [PROGRESSION.md](docs/PROGRESSION.md)。
 
-看向 6 格內可使用的設備，HUD 顯示實際盤數、包材、洗碗 phase、冰箱已用格數或爐灶進度。冰箱上層 27、下層 54 格，顯示占用槽位而非食物件數。只看設備不建立庫存或搬動物品。第一行優先手洗進度；第二行保留主手有效外送票據／包裹的導航。手洗需雙手空，完成後重新持外送物品即可恢復導航。
+看向 6 格內可使用的設備，HUD 顯示實際盤數、包材、洗碗 phase、冰箱分區占用槽位或爐灶進度。冰箱上層 27、下層 54 格。只看設備不建立庫存或搬動物品。第一行優先手洗進度；第二行保留主手有效外送票據／包裹的導航。手洗需雙手空，完成後重新持外送物品即可恢復導航。
 
 ## 已做的驗證與界線
 
-- `npm test`：**254 項通過**，涵蓋現有核心及新增個人對帳、延後寫入、操作事件重試、HUD 權限／唯讀與正式 main adapters。
-- `npm run check`：官方 stable 2.0.0 型別檢查及 JSON／geometry／動畫／圖標／recipe／custom component 驗證。
-- `npm run build`：重現 BP、RP 及整合包；CI 比對已提交下載檔與來源建置的指紋、checksum。
-- **alpha.3 原生 BDS 與真實客戶端：未執行。** 本轮開發環境離線；歷史 alpha.2 的 127／15／12 原生斷言只適用其原始 runtime 指紋。
-- dot 的 [29 項交接增補](docs/DOT_HANDOFF.md) 與 [73 項完整客戶端表](docs/PLAYTEST.md) 均待執行；鍵鼠、觸控、手把、真雙人、RP 畫面與表單不由 CI 代填通過。
+- 歷史 alpha.3 有 **254 項**自動化測試；後續來源新增的測試以相應 commit 的 CI 結果為準。
+- `npm run check` 執行官方 stable 2.0.0 型別檢查及 JSON／geometry／動畫／圖標／recipe／custom component 驗證。
+- `npm run build` 建置 BP、RP、整合包及雜湊。一般驗證工作流程不發布封包；候選流程另行核對生成檔。
+- alpha.3 已有 [2026-11-01 限定客戶端紀錄](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md)，包含限定通過及三項 FAIL；不是整份驗收表通過。新來源修正必須使用新候選重測。
+- 歷史 alpha.2 的 127／15／12 原生斷言只適用其原始 runtime 指紋。鍵鼠、觸控、手把、真雙人、RP 畫面與表單不能由 CI 代填通過。
 
-當次證據、建置指紋及可重現方法見 [VALIDATION.md](docs/VALIDATION.md)。已保存的個人帳簿可在 profile 暫時寫入失敗後補同步；升級操作也會重試進度，不再扣款或重做升級。拆店前需完成個人帳簿對帳，待確認的設備操作事件則在正常拆除前保存。
+當次證據、建置指紋及可重現方法見 [VALIDATION.md](docs/VALIDATION.md)。客戶端入口為 [DOT_HANDOFF.md](docs/DOT_HANDOFF.md)；後續待驗收範圍見 [REMAINING-SINGLEPLAYER.md](docs/validation/0.1.2-alpha.3/REMAINING-SINGLEPLAYER.md)。
+
+已保存的個人帳簿可在 profile 暫時寫入失敗後補同步；升級操作也會重試進度，不再扣款或重做升級。拆店前需完成個人帳簿對帳，待確認的設備操作事件則在正常拆除前保存。
 
 存檔與原生物品欄不是同一個原子交易。收盤先保存已領取標記，防止重試或正常重啟後重領；若剛好在保存標記後、寫入物品欄前強制終止程序，可能少一個盤子。已知同步寫入錯誤有回復處理，但不宣稱任意崩潰時刻都能零損失。
 
@@ -122,6 +124,7 @@
 ```sh
 npm ci
 npm run verify
+python tools/check_compliance.py
 ```
 
 輸出位於 `dist/`，包含 `.mcaddon`、獨立 `.mcpack`、`SHA256SUMS.txt` 及 runtime 指紋。若修改來源模型或轉換器：
@@ -145,6 +148,6 @@ python tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode reload
 
 ## 原作版本與授權
 
-本次比對的 CurseForge 公開版是 **1.3.6**；選取的較新 GitHub 固定提交 `e59e3db` 的 Forge 版本欄位為 **1.3.7a**，兩者沒有混稱為同一版。已翻譯的規則及來源行號見 [UPSTREAM_RULES.md](docs/UPSTREAM_RULES.md)。
+固定比對記錄中的 CurseForge 公開版是 **1.3.6**；選取的 GitHub 固定提交 `e59e3db` 的 Forge 版本欄位為 **1.3.7a**，兩者沒有混稱為同一版。規則及來源行號見 [UPSTREAM_RULES.md](docs/UPSTREAM_RULES.md)。
 
-**GPL-3.0-only**。完整授權見 [LICENSE](LICENSE)，原作署名與修改說明見 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。不分發原版 Java JAR；本包包含的是基岩版派生作品。
+本移植程式標示 **GPL-3.0-only**。完整授權見 [LICENSE](LICENSE)，原作署名、修改說明及素材範圍紀錄見 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。不分發原版 Java JAR。

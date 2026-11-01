@@ -1,11 +1,9 @@
-# 歷史建置記錄（非下載頁）
+# 歷史建置記錄（目前非下載頁）
 
-**公開分發暫停。**
+此目錄曾保存 0.1.0-alpha.1 至 0.1.2-alpha.3 的測試封包與建置指紋；封包已在先前的保守清理中撤下。本次修改不恢復舊二進位檔，也不建立正式 Release。
 
-此目錄曾保存 0.1.0-alpha.1 至 0.1.2-alpha.3 的測試封包與建置指紋。由於上游原始模型、貼圖、音效、動畫及翻譯的完整權利鏈尚待原作者確認，這些封包已從目前分支撤下，不再提供下載。
+**不再單憑原作者尚未回覆補充詢問而阻止開發、測試候選或發布。** 原署名、GPL、完整對應源碼、素材來源與雜湊檢查繼續保留；具體授權衝突仍須處理。未收到的確認不會被改寫成已取得。
 
-SHA-256 與 build-info 文件只作為歷史建置身份記錄，不代表封包獲准公開分發，也不應用來恢復、鏡像或重新上傳封包。
+現有 SHA-256 和 build-info 只識別當時的封包，不能當作目前來源修正後的新封包證據。新的候選應有明確版本、commit、校驗值與實測範圍，不應默默替換同名歷史包。可用 `npm ci && npm run verify` 建置目前來源至 `dist/`；測試請用可棄置世界。
 
-維護者可在本機重新建置樣品供內部驗證及作者審核。任何 GitHub Release、Actions artifact、候選分支封包或第三方平台發布，都必須先通過 `python tools/check_compliance.py --release`，並在 `docs/ASSET_LICENSE_REGISTER.json` 中將每個素材權利範圍記錄為已確認。
-
-目前請勿把此目錄或舊 commit 中的封包連結提供給玩家。完整背景見 [素材授權登記](../docs/ASSET_LICENSE_REGISTER.md) 及 [發布合規清單](../docs/RELEASE_COMPLIANCE.md)。
+參見 [素材登記](../docs/ASSET_LICENSE_REGISTER.md)、[發布檢查](../docs/RELEASE_COMPLIANCE.md) 及 [既有實機紀錄](../docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md)。

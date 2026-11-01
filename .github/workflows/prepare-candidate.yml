@@ -33,8 +33,9 @@ jobs:
       - run: npm run verify
       - name: Validate compliance metadata and generated packages
         run: python tools/check_compliance.py
-      - name: Require cleared upstream asset rights before any candidate distribution
-        run: python tools/check_compliance.py --release
+      - name: Regression-check advisory clarification and release tag validation
+        run: python tests/check_release_policy.py
+      # A branch candidate is not a version tag: do not run --release here.
       - name: Stage verified candidate downloads
         run: python tools/stage_artifacts.py
       - name: Confirm staged source and downloads match
@@ -56,7 +57,7 @@ jobs:
           if git diff --cached --quiet; then
             exit 0
           fi
-          current_head="$(git ls-remote origin refs/heads/$CANDIDATE_BRANCH | cut -f1)"
+          current_head="$(git ls-remote origin "refs/heads/$CANDIDATE_BRANCH" | cut -f1)"
           if [ "$current_head" != "$CANDIDATE_SOURCE_SHA" ]; then
             echo "Candidate branch changed; retain this run's artifact and rebuild the newer source."
             exit 1
@@ -64,4 +65,4 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "build: stage verified Bedrock candidate downloads"
-          git push origin HEAD:refs/heads/$CANDIDATE_BRANCH
+          git push origin "HEAD:refs/heads/$CANDIDATE_BRANCH"
