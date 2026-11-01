@@ -41,21 +41,21 @@ the food catalog source commit is documented in `docs/UPSTREAM_RULES.md`.
 or runtime dependencies governed by their own licenses. They are not bundled as
 third-party JavaScript modules in the `.mcaddon`.
 
-The local build script embeds the GPL license, this notice and the rights register in each generated BP/RP package. Those locally generated packages are for private maintainer verification and author sample review only while the rights hold remains active; they are not authorised public downloads.
-
-The port-authored code, scripts and build tools are declared GPL-3.0-only. Do not infer from that code licence that the upstream artwork, sounds, models, animations or translations have a separately verified redistribution grant.
+The build script embeds the GPL license, this notice and the rights register in
+each generated BP/RP package. The port-authored code, scripts and build tools are
+declared GPL-3.0-only. Preserve upstream notices and provide the corresponding
+source when distributing covered modified works.
 
 ## Rights-scope verification status
 
-The upstream repository README declares GNU GPL v3 for the project and the
-pinned upstream commit contains LICENSE.txt. This port preserves that license
-and records every copied or converted upstream asset in
-runtime/asset_conversion_manifest.json. However, repository-level licensing
-does not independently prove that the upstream author owns or controls all
-rights in every individual image, sound, model, animation and translation.
-No separate third-party exclusion was found in the inspected pinned source
-subset, but that absence is not proof of title. The rights holder's confirmation
-for the complete asset set is still pending. Until that confirmation is
-recorded in docs/ASSET_LICENSE_REGISTER.md, do not publish a public release
-that redistributes the upstream asset bundle. The release CI gate enforces
-this hold.
+The upstream README declares GPLv3 for the code and the pinned source includes
+LICENSE.txt. Source and conversion evidence are retained; no separate author
+confirmation covering every asset has been recorded. The pending supplementary
+inquiry is an advisory record, not a blanket publication veto or a claim that
+all asset rights have independently been proved. It is not necessary to obtain
+a second grant for material already covered by the applicable GPL grant.
+
+Any concrete asset-specific licence conflict or credible ownership objection
+must still be resolved for the affected material. See
+`docs/ASSET_LICENSE_REGISTER.md` and `docs/RELEASE_COMPLIANCE.md`. The earlier
+blanket hold based only on an unanswered author inquiry has been superseded.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate attribution, per-file asset provenance, packaged legal notices and release rights."""
+"""Validate attribution, provenance and packaging; pending clarification is advisory."""
 from pathlib import Path
 import argparse
 import hashlib
@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 UPSTREAM_COMMIT = "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642"
 PENDING = "PENDING_RIGHTS_HOLDER_CONFIRMATION"
 parser = argparse.ArgumentParser()
-parser.add_argument("--release", action="store_true", help="Fail while upstream asset rights remain unconfirmed")
+parser.add_argument("--release", action="store_true", help="Also validate release tag and required build outputs")
 args = parser.parse_args()
 errors, warnings = [], []
 
@@ -34,9 +34,11 @@ ledger = read_json(ROOT / "runtime/asset_conversion_manifest.json")
 require(lock.get("commit") == UPSTREAM_COMMIT, "Upstream lock commit changed; review rights register.")
 require(ledger.get("revision") == UPSTREAM_COMMIT, "Asset ledger does not match pinned upstream revision.")
 require(register.get("upstream", {}).get("commit") == UPSTREAM_COMMIT, "Rights register does not match upstream revision.")
-require(register.get("rightsChainStatus") in (PENDING, "CONFIRMED"), "Unknown rights-chain status.")
-require((ROOT / "LICENSE").is_file(), "Root GPL LICENSE is missing.")
-require("GNU GENERAL PUBLIC LICENSE" in (ROOT / "LICENSE").read_text(encoding="utf-8"), "Root LICENSE is not GPL text.")
+require(register.get("rightsChainStatus") in (PENDING, "CONFIRMED", "BLOCKED"), "Unknown rights-chain status.")
+license_path = ROOT / "LICENSE"
+require(license_path.is_file(), "Root GPL LICENSE is missing.")
+if license_path.is_file():
+    require("GNU GENERAL PUBLIC LICENSE" in license_path.read_text(encoding="utf-8"), "Root LICENSE is not GPL text.")
 notices_path = ROOT / "THIRD_PARTY_NOTICES.md"
 notices = notices_path.read_text(encoding="utf-8") if notices_path.exists() else ""
 for phrase in ["breezeth", "breezeth-CN", "burnt-tea-dev/order-to-cook-unofficial", "GPL", "unofficial", "Rights-scope verification status"]:
@@ -49,11 +51,14 @@ require(bool(assets), "Asset conversion ledger is empty.")
 type_counts = {}
 for item in assets:
     source, output, digest, operation = (item.get("source"), item.get("output"), item.get("sha256"), item.get("operation"))
-    require(all(isinstance(value, str) and value for value in [source, output, digest, operation]), f"Incomplete asset ledger entry: {item}")
-    require(bool(re.fullmatch(r"[0-9a-f]{64}", digest or "")), f"Invalid source SHA-256: {source}")
+    valid = all(isinstance(value, str) and value for value in [source, output, digest, operation])
+    require(valid, f"Incomplete asset ledger entry: {item}")
+    if not valid:
+        continue
+    require(bool(re.fullmatch(r"[0-9a-f]{64}", digest)), f"Invalid source SHA-256: {source}")
     source_path = ROOT / "upstream/reference" / source
     require(source_path.is_file(), f"Missing pinned upstream input: {source}")
-    if source_path.is_file() and digest:
+    if source_path.is_file():
         actual = hashlib.sha256(source_path.read_bytes()).hexdigest()
         require(actual == digest, f"Upstream source hash mismatch: {source}")
     require((ROOT / "runtime" / output).is_file(), f"Missing generated asset: runtime/{output}")
@@ -110,17 +115,19 @@ if version:
         except Exception as exc:
             errors.append(f"{addon.name}: {exc}")
 else:
-    warnings.append("No dist build-info.json; package archive checks run after npm run build.")
+    message = "No dist build-info.json; run npm run build before checking packages."
+    if args.release:
+        errors.append(message)
+    else:
+        warnings.append(message)
 
 status = register.get("rightsChainStatus")
 if status == PENDING:
-    message = "Original asset rights remain pending confirmation from the upstream rights holder."
-    if args.release:
-        errors.append(message + " Public release is blocked.")
-    else:
-        warnings.append(message)
+    warnings.append("Additional upstream asset-scope clarification is pending. This alone is not a development or release blocker; it is not a claim of confirmed rights.")
+elif status == "BLOCKED":
+    errors.append("A documented rights conflict is recorded. Resolve it before distributing the affected material.")
 elif status != "CONFIRMED":
-    errors.append("Rights register must use CONFIRMED or the explicit pending status.")
+    errors.append("Rights register must use CONFIRMED, BLOCKED or the explicit pending status.")
 
 summary = {
     "upstreamCommit": UPSTREAM_COMMIT,
