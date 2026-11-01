@@ -13,7 +13,9 @@ const MAX_LORE_CODE_UNITS = 32768;
  */
 export function inspectSenluoFood(stack) {
   try {
-    if (typeof stack?.getRawLore !== 'function') return { status: 'unsupported' };
+    // Lack of raw lore does not make the independently readable name unavailable.
+    // Do not parse translated getLore() text or claim V1 verification in this mode.
+    if (typeof stack?.getRawLore !== 'function') return { status: 'unsupported', signature: stack?.nameTag };
     const rows = stack.getRawLore();
     if (!Array.isArray(rows) || rows.length > MAX_LORE_ROWS) return { status: 'unreadable' };
     const raw = JSON.stringify(rows);
@@ -37,6 +39,6 @@ export function matchesSenluoFoodSnapshot(stack, snapshot) {
   if (!snapshot || snapshot.status === 'unreadable') return false;
   const current = inspectSenluoFood(stack);
   if (current.status !== snapshot.status) return false;
-  if (current.status === 'unsupported') return true; // Explicit legacy capability fallback.
+  // In unsupported mode this checks the name only, not raw or opaque metadata.
   return current.status !== 'unreadable' && current.signature === snapshot.signature;
 }
