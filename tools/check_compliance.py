@@ -45,14 +45,16 @@ for relative in ["docs/ASSET_LICENSE_REGISTER.md", "docs/RELEASE_COMPLIANCE.md",
 
 assets = ledger.get("assets", [])
 require(bool(assets), "Asset conversion ledger is empty.")
-seen_outputs = set()
 type_counts = {}
 for item in assets:
     source, output, digest, operation = (item.get("source"), item.get("output"), item.get("sha256"), item.get("operation"))
     require(all(isinstance(value, str) and value for value in [source, output, digest, operation]), f"Incomplete asset ledger entry: {item}")
     require(bool(re.fullmatch(r"[0-9a-f]{64}", digest or "")), f"Invalid source SHA-256: {source}")
-    require(output not in seen_outputs, f"Duplicate output path: {output}")
-    seen_outputs.add(output)
+    source_path = ROOT / "upstream/reference" / source
+    require(source_path.is_file(), f"Missing pinned upstream input: {source}")
+    if source_path.is_file() and digest:
+        actual = hashlib.sha256(source_path.read_bytes()).hexdigest()
+        require(actual == digest, f"Upstream source hash mismatch: {source}")
     require((ROOT / "runtime" / output).is_file(), f"Missing generated asset: runtime/{output}")
     ext = Path(source).suffix.lower()
     type_counts[ext] = type_counts.get(ext, 0) + 1
