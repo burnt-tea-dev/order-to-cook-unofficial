@@ -187,7 +187,12 @@ export class FakeForm {
   async show() { return { canceled: true }; }
 }
 
-globalThis.__otcApplianceMocks = { ItemStack: FakeItem, EquipmentSlot: { Offhand: 'Offhand' }, BlockPermutation: FakePermutation, system: {}, world: {}, ActionFormData: FakeForm };
+class FakeMolangVariableMap {
+  constructor() { this.vectors = {}; }
+  setVector3(name, vector) { this.vectors[name] = { ...vector }; }
+}
+
+globalThis.__otcApplianceMocks = { MolangVariableMap: FakeMolangVariableMap, ItemStack: FakeItem, EquipmentSlot: { Offhand: 'Offhand' }, BlockPermutation: FakePermutation, system: {}, world: {}, ActionFormData: FakeForm };
 // Only Minecraft dependencies are replaced. Pure relative helpers keep their
 // actual shipped implementation when the service is loaded from a data URL.
 function resolveLocalImports(source, moduleUrl) {
@@ -196,7 +201,7 @@ function resolveLocalImports(source, moduleUrl) {
 }
 const applianceUrl = new URL('../runtime/BP/scripts/appliances.js', import.meta.url);
 let applianceSource = await readFile(applianceUrl, 'utf8');
-applianceSource = applianceSource.replace(/import \{[^}]+\} from "@minecraft\/server";/, 'const {BlockPermutation, EquipmentSlot, ItemStack, system, world} = globalThis.__otcApplianceMocks;');
+applianceSource = applianceSource.replace(/import \{[^}]+\} from "@minecraft\/server";/, 'const {BlockPermutation, EquipmentSlot, ItemStack, MolangVariableMap, system, world} = globalThis.__otcApplianceMocks;');
 applianceSource = applianceSource.replace(/import \{[^}]+\} from "@minecraft\/server-ui";/, 'const {ActionFormData} = globalThis.__otcApplianceMocks;');
 applianceSource = resolveLocalImports(applianceSource, applianceUrl);
 export const appliances = await import(`data:text/javascript;base64,${Buffer.from(applianceSource).toString('base64')}`);
