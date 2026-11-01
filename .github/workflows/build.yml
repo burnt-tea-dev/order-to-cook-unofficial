@@ -24,6 +24,10 @@ jobs:
           python-version: '3.12'
       - run: npm ci --ignore-scripts
       - run: npm run verify
+      - name: Reproduce appliance geometry from pinned editable sources
+        run: |
+          python -m pip install Pillow==12.3.0
+          python -m unittest discover -s tests -p test_appliance_geometry.py
       - name: Validate attribution, source inventory and packaged legal notices
         run: python tools/check_compliance.py
       - name: Regression-check advisory clarification and release tag validation
