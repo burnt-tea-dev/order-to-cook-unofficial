@@ -1,0 +1,26 @@
+name: One-time cleanup of withdrawn package artifacts
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/cleanup-unauthorized-artifacts.yml']
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  purge:
+    if: github.repository == 'burnt-tea-dev/order-to-cook-unofficial' && github.repository_id == '1411824540'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete previously uploaded package artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          for artifact_id in 13090056206 13090165722 13089709152 13089778476 13088569441 13088634053 13089422945 13089387669 13089631463 13089422405 13088729538 13088618163 13059972629 13060008908 11657135057 11656862388 11656329065 11656063399 11656125761 11622133535 11618072944; do
+            gh api --method DELETE "repos/${GITHUB_REPOSITORY}/actions/artifacts/${artifact_id}"
+            echo "Deleted artifact ${artifact_id}"
+          done
