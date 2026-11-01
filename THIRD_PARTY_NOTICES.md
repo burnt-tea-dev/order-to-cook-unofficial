@@ -41,9 +41,9 @@ the food catalog source commit is documented in `docs/UPSTREAM_RULES.md`.
 or runtime dependencies governed by their own licenses. They are not bundled as
 third-party JavaScript modules in the `.mcaddon`.
 
-The GPL license and this notice are included in both downloadable packs. All
-source and derived contributions in this repository are distributed under
-GPL-3.0-only, with the original attribution retained.
+The local build script embeds the GPL license, this notice and the rights register in each generated BP/RP package. Those locally generated packages are for private maintainer verification and author sample review only while the rights hold remains active; they are not authorised public downloads.
+
+The port-authored code, scripts and build tools are declared GPL-3.0-only. Do not infer from that code licence that the upstream artwork, sounds, models, animations or translations have a separately verified redistribution grant.
 
 ## Rights-scope verification status
 
