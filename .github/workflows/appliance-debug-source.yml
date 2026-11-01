@@ -1,0 +1,29 @@
+name: Appliance source snapshot
+on:
+  push:
+    branches: [fix/appliance-client-regressions]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: e4421bf637d3465dc24f89fbac6d5fefe1fad2d6
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts
+      - name: Export source and development dependencies only
+        run: |
+          git archive --format=tar HEAD > "$RUNNER_TEMP/source.tar"
+          tar -rf "$RUNNER_TEMP/source.tar" node_modules
+          gzip "$RUNNER_TEMP/source.tar"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: appliance-debug-source-e4421bf
+          path: ${{ runner.temp }}/source.tar.gz
+          retention-days: 1
+          if-no-files-found: error
