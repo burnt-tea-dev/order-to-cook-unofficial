@@ -24,6 +24,11 @@ jobs:
           python-version: '3.12'
       - run: npm ci --ignore-scripts
       - run: npm run verify
+      - name: Validate attribution, source inventory and packaged legal notices
+        run: python tools/check_compliance.py
+      - name: Block release tags until upstream asset rights are confirmed
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: python tools/check_compliance.py --release
       - name: Match committed downloads to the source build
         run: |
           diff -u artifacts/build-info.json dist/build-info.json
