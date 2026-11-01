@@ -1,0 +1,167 @@
+diff --git a/runtime/BP/scripts/appliances.js b/runtime/BP/scripts/appliances.js
+index 97639b8..66c4735 100644
+--- a/runtime/BP/scripts/appliances.js
++++ b/runtime/BP/scripts/appliances.js
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-3.0-only
+ // Bedrock adaptation of Order To Cook by breezeth-CN; see THIRD_PARTY_NOTICES.md.
+-import { BlockPermutation, EquipmentSlot, ItemStack, system, world } from "@minecraft/server";
++import { BlockPermutation, EquipmentSlot, ItemStack, MolangVariableMap, system, world } from "@minecraft/server";
+ import { ActionFormData } from "@minecraft/server-ui";
+ import { advanceDoorMotion, dishwasherFrame, APPLIANCE_TICK_INTERVAL, FRIDGE_MOTION_TICKS, FRIDGE_LAST_FRAME } from "./appliance_motion.js";
+ import { formatEquipmentInspection, INSPECTION_TYPES } from "./equipment_inspection.js";
+@@ -181,6 +181,17 @@ function safeParticle(dimension, id, location) {
+   try { dimension.spawnParticle(id, location); } catch { /* Cosmetic only. */ }
+ }
+ 
++function safeWaterSplash(dimension, location) {
++  try {
++    // The vanilla instant emitter reads variable.direction.x/y/z. Its initial
++    // speed is -6, so a downward direction gives the wash splash upward motion.
++    // Keep these variables scoped to this emission, never a shared mutable map.
++    const variables = new MolangVariableMap();
++    variables.setVector3("variable.direction", { x: 0, y: -1, z: 0 });
++    dimension.spawnParticle("minecraft:water_splash_particle", location, variables);
++  } catch { /* Cosmetic only; washing/plate accounting must continue. */ }
++}
++
+ function center(location, y = 0.5) {
+   return { x: location.x + 0.5, y: location.y + y, z: location.z + 0.5 };
+ }
+@@ -705,7 +716,7 @@ export function createApplianceService(ctx) {
+     if (gameSystem.currentTick % 20 < ticks) {
+       ctx.saveStation(station);
+       const block = loadedStation(station);
+-      if (block && d.phase === 3) safeParticle(block.dimension, "minecraft:water_splash_particle", center(block.location, 0.9));
++      if (block && d.phase === 3) safeWaterSplash(block.dimension, center(block.location, 0.9));
+     }
+     updateVisual(station);
+   }
+@@ -723,7 +734,7 @@ export function createApplianceService(ctx) {
+         if (d.plates <= 0) { washing.delete(id); continue; }
+         const elapsed = gameSystem.currentTick - start;
+         if (elapsed % 20 < APPLIANCE_TICK_INTERVAL) {
+-          safeParticle(player.dimension, "minecraft:water_splash_particle", center(station.location, 0.94));
++          safeWaterSplash(player.dimension, center(station.location, 0.94));
+           safeSound(player.dimension, "random.splash", center(station.location, 0.94), 0.2);
+         }
+         if (elapsed >= 80) {
+diff --git a/runtime/RP/models/blocks/refrigerator_lower_7.geo.json b/runtime/RP/models/blocks/refrigerator_lower_7.geo.json
+index 39bde3f..5987d9f 100644
+--- a/runtime/RP/models/blocks/refrigerator_lower_7.geo.json
++++ b/runtime/RP/models/blocks/refrigerator_lower_7.geo.json
+@@ -253,14 +253,14 @@
+           "pivot": [
+             8,
+             10,
+-            -5.92799
++            -5.927013
+           ],
+           "cubes": [
+             {
+               "origin": [
+                 -8,
+                 0.25,
+-                -7.92799
++                -7.927013
+               ],
+               "size": [
+                 16,
+diff --git a/runtime/RP/models/blocks/refrigerator_upper_6.geo.json b/runtime/RP/models/blocks/refrigerator_upper_6.geo.json
+index 0f16eb4..04477fc 100644
+--- a/runtime/RP/models/blocks/refrigerator_upper_6.geo.json
++++ b/runtime/RP/models/blocks/refrigerator_upper_6.geo.json
+@@ -416,14 +416,14 @@
+           "pivot": [
+             8,
+             -6,
+-            -5.884118
++            -5.883141
+           ],
+           "cubes": [
+             {
+               "origin": [
+                 -8,
+                 3.75,
+-                -7.884118
++                -7.883141
+               ],
+               "size": [
+                 16,
+@@ -497,7 +497,7 @@
+               "origin": [
+                 -7,
+                 5,
+-                -7.634118
++                -7.633141
+               ],
+               "size": [
+                 14,
+@@ -571,7 +571,7 @@
+               "origin": [
+                 -7,
+                 10,
+-                -7.634118
++                -7.633141
+               ],
+               "size": [
+                 14,
+diff --git a/tests/appliances.harness.js b/tests/appliances.harness.js
+index 335b0f1..ac4f97e 100644
+--- a/tests/appliances.harness.js
++++ b/tests/appliances.harness.js
+@@ -187,7 +187,12 @@ export class FakeForm {
+   async show() { return { canceled: true }; }
+ }
+ 
+-globalThis.__otcApplianceMocks = { ItemStack: FakeItem, EquipmentSlot: { Offhand: 'Offhand' }, BlockPermutation: FakePermutation, system: {}, world: {}, ActionFormData: FakeForm };
++class FakeMolangVariableMap {
++  constructor() { this.vectors = {}; }
++  setVector3(name, vector) { this.vectors[name] = { ...vector }; }
++}
++
++globalThis.__otcApplianceMocks = { MolangVariableMap: FakeMolangVariableMap, ItemStack: FakeItem, EquipmentSlot: { Offhand: 'Offhand' }, BlockPermutation: FakePermutation, system: {}, world: {}, ActionFormData: FakeForm };
+ // Only Minecraft dependencies are replaced. Pure relative helpers keep their
+ // actual shipped implementation when the service is loaded from a data URL.
+ function resolveLocalImports(source, moduleUrl) {
+@@ -196,7 +201,7 @@ function resolveLocalImports(source, moduleUrl) {
+ }
+ const applianceUrl = new URL('../runtime/BP/scripts/appliances.js', import.meta.url);
+ let applianceSource = await readFile(applianceUrl, 'utf8');
+-applianceSource = applianceSource.replace(/import \{[^}]+\} from "@minecraft\/server";/, 'const {BlockPermutation, EquipmentSlot, ItemStack, system, world} = globalThis.__otcApplianceMocks;');
++applianceSource = applianceSource.replace(/import \{[^}]+\} from "@minecraft\/server";/, 'const {BlockPermutation, EquipmentSlot, ItemStack, MolangVariableMap, system, world} = globalThis.__otcApplianceMocks;');
+ applianceSource = applianceSource.replace(/import \{[^}]+\} from "@minecraft\/server-ui";/, 'const {ActionFormData} = globalThis.__otcApplianceMocks;');
+ applianceSource = resolveLocalImports(applianceSource, applianceUrl);
+ export const appliances = await import(`data:text/javascript;base64,${Buffer.from(applianceSource).toString('base64')}`);
+diff --git a/tools/convert_assets.py b/tools/convert_assets.py
+index cf5d4f9..8fdb601 100644
+--- a/tools/convert_assets.py
++++ b/tools/convert_assets.py
+@@ -344,8 +344,12 @@ def geometry_bounds(g):
+ 
+ 
+ def assert_block_bounds(g):
++    # Native content-log envelope (-0.875..1.875 blocks) converted to model
++    # pixels: X/Z are centred at 8, whereas Y starts at the block bottom.
++    # An epsilon must not bless a serialized corner outside this envelope.
+     low, high = geometry_bounds(g)
+-    if any(high[i]-low[i] > 30.00001 or low[i] < -30.00001 or high[i] > 30.00001 for i in range(3)):
++    minimum, maximum = (-22, -14, -22), (22, 30, 22)
++    if any(high[i]-low[i] > 30 or low[i] < minimum[i] or high[i] > maximum[i] for i in range(3)):
+         raise ValueError(f"Baked block pose exceeds stable bounds: {g['minecraft:geometry'][0]['description']['identifier']} {low} {high}")
+ 
+ 
+@@ -355,9 +359,12 @@ def bound_fridge_swing(g, half):
+     A 16px wide, 2px thick door reaches slightly beyond 16px at about 83deg.
+     Translate that whole door back by only the excess (at most 0.125px),
+     preserving its dimensions, UVs and sampled angle. End poses are unchanged.
++    A 1/1024px inward guard survives six-decimal JSON and native float rounding;
++    clamping to exactly 30px previously put lower_7 slightly outside the bounds.
+     """
+     low, high = geometry_bounds(g)
+-    correction = max(0.0, high[2]-low[2]-30)
++    guard = 1 / 1024
++    correction = max(0.0, high[2]-low[2]-(30-guard), (-22+guard)-low[2])
+     if correction > 0.126:
+         raise ValueError(f"Unexpected refrigerator swing bound correction: {correction}")
+     if correction:
