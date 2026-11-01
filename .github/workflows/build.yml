@@ -29,13 +29,6 @@ jobs:
       - name: Block release tags until upstream asset rights are confirmed
         if: startsWith(github.ref, 'refs/tags/v')
         run: python tools/check_compliance.py --release
-      - name: Match committed downloads to the source build
-        run: |
-          diff -u artifacts/build-info.json dist/build-info.json
-          cd artifacts
-          sha256sum --check SHA256SUMS.txt
-      - uses: actions/upload-artifact@v4
-        with:
-          name: OrderToCook-Bedrock-alpha
-          path: dist/*
-          if-no-files-found: error
+      # Local CI still builds and validates packages for maintainer review.
+      # Do not upload Actions artifacts while upstream asset redistribution
+      # rights are pending; the repository is not a public download channel.
