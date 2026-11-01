@@ -344,8 +344,12 @@ def geometry_bounds(g):
 
 
 def assert_block_bounds(g):
+    # Native content-log envelope (-0.875..1.875 blocks) converted to model
+    # pixels: X/Z are centred at 8, whereas Y starts at the block bottom.
+    # An epsilon must not bless a serialized corner outside this envelope.
     low, high = geometry_bounds(g)
-    if any(high[i]-low[i] > 30.00001 or low[i] < -30.00001 or high[i] > 30.00001 for i in range(3)):
+    minimum, maximum = (-22, -14, -22), (22, 30, 22)
+    if any(high[i]-low[i] > 30 or low[i] < minimum[i] or high[i] > maximum[i] for i in range(3)):
         raise ValueError(f"Baked block pose exceeds stable bounds: {g['minecraft:geometry'][0]['description']['identifier']} {low} {high}")
 
 
@@ -355,9 +359,12 @@ def bound_fridge_swing(g, half):
     A 16px wide, 2px thick door reaches slightly beyond 16px at about 83deg.
     Translate that whole door back by only the excess (at most 0.125px),
     preserving its dimensions, UVs and sampled angle. End poses are unchanged.
+    A 1/1024px inward guard survives six-decimal JSON and native float rounding;
+    clamping to exactly 30px previously put lower_7 slightly outside the bounds.
     """
     low, high = geometry_bounds(g)
-    correction = max(0.0, high[2]-low[2]-30)
+    guard = 1 / 1024
+    correction = max(0.0, high[2]-low[2]-(30-guard), (-22+guard)-low[2])
     if correction > 0.126:
         raise ValueError(f"Unexpected refrigerator swing bound correction: {correction}")
     if correction:

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Bedrock adaptation of Order To Cook by breezeth-CN; see THIRD_PARTY_NOTICES.md.
-import { BlockPermutation, EquipmentSlot, ItemStack, system, world } from "@minecraft/server";
+import { BlockPermutation, EquipmentSlot, ItemStack, MolangVariableMap, system, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { advanceDoorMotion, dishwasherFrame, APPLIANCE_TICK_INTERVAL, FRIDGE_MOTION_TICKS, FRIDGE_LAST_FRAME } from "./appliance_motion.js";
 import { formatEquipmentInspection, INSPECTION_TYPES } from "./equipment_inspection.js";
@@ -179,6 +179,17 @@ function safeSound(dimension, id, location, volume = 0.6, pitch = 1) {
 
 function safeParticle(dimension, id, location) {
   try { dimension.spawnParticle(id, location); } catch { /* Cosmetic only. */ }
+}
+
+function safeWaterSplash(dimension, location) {
+  try {
+    // The vanilla instant emitter reads variable.direction.x/y/z. Its initial
+    // speed is -6, so a downward direction gives the wash splash upward motion.
+    // Keep these variables scoped to this emission, never a shared mutable map.
+    const variables = new MolangVariableMap();
+    variables.setVector3("variable.direction", { x: 0, y: -1, z: 0 });
+    dimension.spawnParticle("minecraft:water_splash_particle", location, variables);
+  } catch { /* Cosmetic only; washing/plate accounting must continue. */ }
 }
 
 function center(location, y = 0.5) {
@@ -705,7 +716,7 @@ export function createApplianceService(ctx) {
     if (gameSystem.currentTick % 20 < ticks) {
       ctx.saveStation(station);
       const block = loadedStation(station);
-      if (block && d.phase === 3) safeParticle(block.dimension, "minecraft:water_splash_particle", center(block.location, 0.9));
+      if (block && d.phase === 3) safeWaterSplash(block.dimension, center(block.location, 0.9));
     }
     updateVisual(station);
   }
@@ -723,7 +734,7 @@ export function createApplianceService(ctx) {
         if (d.plates <= 0) { washing.delete(id); continue; }
         const elapsed = gameSystem.currentTick - start;
         if (elapsed % 20 < APPLIANCE_TICK_INTERVAL) {
-          safeParticle(player.dimension, "minecraft:water_splash_particle", center(station.location, 0.94));
+          safeWaterSplash(player.dimension, center(station.location, 0.94));
           safeSound(player.dimension, "random.splash", center(station.location, 0.94), 0.2);
         }
         if (elapsed >= 80) {
