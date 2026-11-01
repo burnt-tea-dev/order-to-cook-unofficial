@@ -10,7 +10,7 @@ Original author: **breezeth / breezeth-CN**.
 - License: **GNU General Public License, version 3**; the complete upstream license is included as `LICENSE`.
 
 This project is an **unofficial, modified Bedrock adaptation**, maintained in
-`casama233/order-to-cook-unofficial`. It is not the original Java mod and is not
+`burnt-tea-dev/order-to-cook-unofficial`. It is not the original Java mod and is not
 presented as an official release or endorsement by its author. The first port
 was prepared on 2026-10-09.
 
@@ -44,3 +44,18 @@ third-party JavaScript modules in the `.mcaddon`.
 The GPL license and this notice are included in both downloadable packs. All
 source and derived contributions in this repository are distributed under
 GPL-3.0-only, with the original attribution retained.
+
+## Rights-scope verification status
+
+The upstream repository README declares GNU GPL v3 for the project and the
+pinned upstream commit contains LICENSE.txt. This port preserves that license
+and records every copied or converted upstream asset in
+runtime/asset_conversion_manifest.json. However, repository-level licensing
+does not independently prove that the upstream author owns or controls all
+rights in every individual image, sound, model, animation and translation.
+No separate third-party exclusion was found in the inspected pinned source
+subset, but that absence is not proof of title. The rights holder's confirmation
+for the complete asset set is still pending. Until that confirmation is
+recorded in docs/ASSET_LICENSE_REGISTER.md, do not publish a public release
+that redistributes the upstream asset bundle. The release CI gate enforces
+this hold.
