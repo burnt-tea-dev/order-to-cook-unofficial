@@ -1,27 +1,15 @@
 # Order To Cook／下單了 — 非官方基岩版移植
 
-**可安裝的 `0.1.1-alpha.2`：新增逐段進食與手動收盤、原作顧客動作、上下獨立的冰箱門及洗碗機動畫。餐廳、外送與廚電核心已有實作；真實客戶端的畫面、表單與觸控操作仍待驗收。**
+**歷史候選（已撤下公開下載）：新增逐段進食與手動收盤、原作顧客動作、上下獨立的冰箱門及洗碗機動畫。餐廳、外送與廚電核心已有實作；真實客戶端的畫面、表單與觸控操作仍待驗收。**
 
 原作由 **breezeth** 製作：[CurseForge 官方頁面](https://www.curseforge.com/minecraft/mc-mods/order-to-cook) · [Java 原始碼](https://github.com/breezeth-CN/OrdertoCook)。本專案由 `casama233` 維護，依 GPLv3 保留原作署名、原資源及完整移植來源。
 
 ## 下載與安裝
 
-[下載 OrderToCook-Bedrock-0.1.1-alpha.2.mcaddon](artifacts/OrderToCook-Bedrock-0.1.1-alpha.2.mcaddon) · [變更紀錄](CHANGELOG.md) · [SHA-256](artifacts/SHA256SUMS.txt)
+**公開下載已暫停。** 上游程式碼 GPLv3 聲明已記錄，但原始模型、貼圖、動畫、音效及翻譯的完整權利鏈仍待原作者確認。所有歷史測試封包已從目前分支撤下；不得透過 GitHub、Actions artifact 或其他平台分發。
 
-1. 下載 `.mcaddon`，用 Minecraft 開啟匯入。
-2. 在新測試世界同時啟用 **Order To Cook — Bedrock (Unofficial Alpha)** 行為包及其資源包。
-3. 目標最低版本為 **Bedrock 1.21.100**，依賴穩定版 `@minecraft/server 2.0.0`、`@minecraft/server-ui 2.0.0`；不需要 Beta APIs 或 Upcoming Creator Features。
-4. 首次加入會收到指南，也能在工作台合成指南與基本設備。
+本倉庫僅供維護及權利核查。可在本機建立私人測試樣品；本地建置不構成公開分發許可。詳見主線的 [素材授權登記](https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/main/docs/ASSET_LICENSE_REGISTER.md) 與 [發布合規清單](https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/main/docs/RELEASE_COMPLIANCE.md)。
 
-已執行原生測試的引擎是 **Bedrock Dedicated Server 1.26.52.3**。1.21.100 是本包宣告的最低相容目標，尚未逐一在每個中間版本／裝置測試。正式世界使用前，請先完成 [客戶端驗收表](docs/PLAYTEST.md)。
-
-安裝包亦可由本專案的 GitHub Actions 建置工作取得；完整可重現建置方法見下方。不要把這個基岩版包當作 Java／Forge／Fabric 模組匯入。
-
-### 從 alpha.1 升級
-
-先備份世界，再匯入 alpha.2，確認世界使用的行為包及資源包均為 **0.1.1**。兩包沿用 alpha.1 的 UUID，餐廳、庫存、訂單身份及設定可沿原存檔讀取。不要同時啟用舊版與新版副本。
-
-新版吃完的餐盤會留在桌前，需由店主或員工點擊餐盤／下方桌面收取。舊版已完成的訂單歷史不會憑空補發餐盤；尚未歸還的舊餐盤記錄會按保存期限遷移。升級與正常重啟的實測範圍見 [驗證紀錄](docs/VALIDATION.md)。
 
 ## 生存開店流程
 
