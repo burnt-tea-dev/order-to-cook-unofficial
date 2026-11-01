@@ -24,3 +24,18 @@ This project is an unofficial derivative Bedrock adaptation of Order To Cook. Th
 ## Distribution statement
 
 Do not imply that the original Java author or Mojang/Microsoft endorses this port. Do not remove upstream copyright notices or impose restrictions that conflict with GPLv3. This document is a project compliance process, not a legal opinion.
+
+
+## Public-source and CI distribution hold
+
+The rights hold applies to **all conveyance channels**, not only version tags:
+
+- Do not commit generated .mcpack / .mcaddon files to public branches.
+- Do not upload generated packages as GitHub Actions artifacts.
+- Do not publish candidate packages from bedrock/** branches.
+- Local dist/ output may be used privately for maintainer verification and author sample review; it is not a public download.
+- Keep only non-binary build identity/checksum records in the tracked artifacts/ directory while the hold remains.
+
+The main validation workflow may build locally for CI checks, but it must not upload package artifacts while rights are pending. Candidate staging must run python tools/check_compliance.py --release before any upload or commit. A green normal test/build job is not a rights clearance.
+
+The repository itself currently contains source and converted asset inputs. Removing package downloads does not erase historical Git objects or make those source assets private. Repository visibility and historical Git-history exposure require a separate owner decision; do not describe this cleanup as a complete takedown of previously public content.
