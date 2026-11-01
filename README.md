@@ -6,16 +6,11 @@
 
 ## 下載與安裝
 
-[下載 OrderToCook-Bedrock-0.1.2-alpha.3.mcaddon](artifacts/OrderToCook-Bedrock-0.1.2-alpha.3.mcaddon) · [變更紀錄](CHANGELOG.md) · [SHA-256](artifacts/SHA256SUMS.txt)
+**暫停公開下載。** 目前沒有可供公眾下載的授權版本。原作程式碼的上游 GPLv3 聲明已核實，但模型、貼圖、動畫、音效及翻譯等原始素材的完整權利鏈仍待原作者確認。依保守發布政策，現有公開安裝包已撤下；在權利登記解除 HOLD 前，不得透過 GitHub Release、Actions artifact、候選分支或其他平台分發包含上游素材的封包。
 
-1. 下載 `.mcaddon`，用 Minecraft 開啟匯入。
-2. 在新測試世界同時啟用 **Order To Cook — Bedrock (Unofficial Alpha)** 行為包及其資源包。
-3. 目標最低版本為 **Bedrock 1.21.100**，依賴穩定版 `@minecraft/server 2.0.0`、`@minecraft/server-ui 2.0.0`；不需要 Beta APIs 或 Upcoming Creator Features。
-4. 首次加入會收到指南，也能在工作台合成指南與基本設備。
+維護者仍可在本機執行建置與測試，以供內部驗證及向原作者提交樣品；本地建置成功不構成公開分發許可。完整來源、素材逐檔清單及授權狀態見 [ASSET_LICENSE_REGISTER](docs/ASSET_LICENSE_REGISTER.md)、[THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES.md) 與 [發布合規清單](docs/RELEASE_COMPLIANCE.md)。
 
-本輪 alpha.3 以 GitHub Actions 執行回歸、stable API 型別、靜態檢查及建置。歷史 alpha.2 曾在 **BDS 1.26.52.3** 執行原生探針；alpha.3 尚未重跑原生服務端或客戶端測試。1.21.100 是宣告最低目標，並非各版本／装置已實測。dot 請從 [客戶端交接手冊](docs/DOT_HANDOFF.md) 開始，使用 [回報模板](docs/validation/DOT_REPORT_TEMPLATE.md) 記錄結果。
-
-安裝包亦可由本專案的 GitHub Actions 建置工作取得；完整可重現建置方法見下方。不要把這個基岩版包當作 Java／Forge／Fabric 模組匯入。
+原作作者：**breezeth**。上游程式碼授權聲明：GNU GPL v3。非官方基岩版移植由 `burnt-tea-dev` 維護；不代表原作者或 Mojang/Microsoft 背書。
 
 ### 從 alpha.2／alpha.1 升級
 
