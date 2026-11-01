@@ -6,6 +6,7 @@ import hashlib
 import json
 import re
 import sys
+import os
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -70,6 +71,12 @@ for phrase in ["關於與授權", "breezeth", "GPL v3", "非官方", "burnt-tea-
 build_info = read_json(ROOT / "dist/build-info.json") if (ROOT / "dist/build-info.json").exists() else {}
 version = build_info.get("version")
 if version:
+    expected_tag = f"v{version}"
+    require(build_info.get("sourceRepository") == "https://github.com/burnt-tea-dev/order-to-cook-unofficial", "Build metadata source repository mismatch.")
+    require(build_info.get("sourceTag") == expected_tag, "Build metadata must name the immutable matching source tag.")
+    if args.release:
+        require(os.environ.get("GITHUB_REF_NAME") == expected_tag, "Release tag does not match the package version/source tag.")
+
     required_files = [
         ROOT / "dist" / f"OrderToCook-BP-{version}.mcpack",
         ROOT / "dist" / f"OrderToCook-RP-{version}.mcpack",
@@ -85,7 +92,7 @@ if version:
                     for name in ["LICENSE", "THIRD_PARTY_NOTICES.md", "SOURCE.txt", "LEGAL/ASSET_LICENSE_REGISTER.md", "LEGAL/RELEASE_COMPLIANCE.md"]:
                         require(name in names, f"{package.name} does not contain {name}")
                     source_text = archive.read("SOURCE.txt").decode("utf-8")
-                    for phrase in ["breezeth", "burnt-tea-dev/order-to-cook-unofficial", "GPL", "unofficial"]:
+                    for phrase in ["breezeth", "burnt-tea-dev/order-to-cook-unofficial", "GPL", "unofficial", f"v{version}"]:
                         require(phrase.lower() in source_text.lower(), f"{package.name} SOURCE.txt missing {phrase}")
             except Exception as exc:
                 errors.append(f"{package.name}: {exc}")
