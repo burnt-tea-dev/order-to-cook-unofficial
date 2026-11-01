@@ -41,7 +41,8 @@ class ItemStack {
   }
 }
 `;
-const moduleSource = inventorySource.replace(importLine, stackAdapter) + "\nexport { ItemStack as TestItemStack };";
+const moduleSource = inventorySource.replace(importLine, stackAdapter)
+  .replace("'./senluo_food.js'", JSON.stringify(new URL('../runtime/BP/scripts/senluo_food.js', import.meta.url).href)) + "\nexport { ItemStack as TestItemStack };";
 const api = await import("data:text/javascript;base64," + Buffer.from(moduleSource).toString("base64"));
 const {
   TestItemStack: Stack, countItem, planExtraction, applyExtraction,

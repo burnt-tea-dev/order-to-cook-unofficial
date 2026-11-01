@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 import { ItemStack } from '@minecraft/server';
+import { inspectSenluoFood, matchesSenluoFoodSnapshot } from './senluo_food.js';
 
 export function containerOf(entity) { return entity.getComponent('minecraft:inventory')?.container; }
 export function heldItem(player) { return containerOf(player)?.getItem(player.selectedSlotIndex); }
@@ -35,7 +36,9 @@ export function planExtraction(containers, requirements) {
         const stack = container.getItem(slot);
         if (stack?.typeId !== typeId) continue;
         const take = Math.min(remaining, stack.amount);
-        actions.push({ container, slot, before: stack, take });
+        const foodSnapshot = inspectSenluoFood(stack);
+        if (foodSnapshot.status === 'unreadable') return { ok: false, missing: ['food metadata unreadable'], actions: [] };
+        actions.push({ container, slot, before: stack, take, foodSnapshot });
         remaining -= take;
       }
     }
@@ -51,6 +54,7 @@ export function applyExtraction(plan) {
     for (const action of plan.actions) {
       const current = action.container.getItem(action.slot);
       if (!current || current.typeId !== action.before.typeId || current.amount !== action.before.amount) return false;
+      if (!matchesSenluoFoodSnapshot(current, action.foodSnapshot)) return false;
     }
     for (const action of plan.actions) {
       const next = action.before.clone();
