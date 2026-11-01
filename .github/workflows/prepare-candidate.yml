@@ -33,6 +33,8 @@ jobs:
       - run: npm run verify
       - name: Validate compliance metadata and generated packages
         run: python tools/check_compliance.py
+      - name: Require cleared upstream asset rights before any candidate distribution
+        run: python tools/check_compliance.py --release
       - name: Stage verified candidate downloads
         run: python tools/stage_artifacts.py
       - name: Confirm staged source and downloads match
