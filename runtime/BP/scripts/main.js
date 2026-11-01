@@ -674,10 +674,18 @@ async function guideForm(player) {
     '小電驢：使用物品放車、點車騎乘，蹲下點車開保溫箱／控制面板。\n' +
     '機器每 10 分鐘刷新；普通單 30 分鐘，加急 10 分鐘；退出世界期間仍計時。\n' +
     '首次測試請使用新世界。本版為 alpha，詳見專案的功能差異與實機驗收表。',
-    ['個人進度', '餐廳排行榜', ...(isAdmin(player) ? ['領取測試用開店套組'] : []), '關閉']);
+    ['個人進度', '餐廳排行榜', '關於與授權', ...(isAdmin(player) ? ['領取測試用開店套組'] : []), '關閉']);
   if (selection === 0) await progressForm(player);
   else if (selection === 1) await leaderboardForm(player);
-  else if (selection === 2 && isAdmin(player)) giveTestKit(player);
+  else if (selection === 2) await aboutAndLicenseForm(player);
+  else if (selection === 3 && isAdmin(player)) giveTestKit(player);
+}
+
+
+async function aboutAndLicenseForm(player) {
+  await choose(player, '關於與授權 · Order To Cook',
+    'Order To Cook／下單了\n原作者：breezeth（breezeth-CN）\n原作：github.com/breezeth-CN/OrdertoCook\n原作發布：curseforge.com/minecraft/mc-mods/order-to-cook\n\n基岩版移植與維護：casama233／burnt-tea-dev\n專案：github.com/burnt-tea-dev/order-to-cook-unofficial\n上游基準：e59e3dbcabe19b783d9adb933db5fcb8bc1e4642\n\n授權：GNU GPL v3（本移植標示 GPL-3.0-only）\n本作品是非官方的基岩版改編，未獲 Mojang／Microsoft 或原作者背書，亦不代表原 Java 模組。\n原作程式及素材的來源、轉換與已知授權範圍請查看專案內 LICENSE、THIRD_PARTY_NOTICES.md 及 docs/ASSET_LICENSE_REGISTER.md。',
+    ['關閉']);
 }
 
 function giveTestKit(player) {

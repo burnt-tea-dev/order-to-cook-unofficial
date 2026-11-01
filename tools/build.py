@@ -25,7 +25,9 @@ for short in ['BP', 'RP']:
     entries = {path.relative_to(pack).as_posix(): path.read_bytes() for path in pack.rglob('*') if path.is_file()}
     for filename in ['LICENSE', 'THIRD_PARTY_NOTICES.md']:
         entries[filename] = (ROOT / filename).read_bytes()
-    entries['SOURCE.txt'] = ('Complete corresponding source and build tools:\nhttps://github.com/casama233/order-to-cook-unofficial\n\nUpstream: https://github.com/breezeth-CN/OrdertoCook\nCommit: e59e3dbcabe19b783d9adb933db5fcb8bc1e4642\n\nThis package contains a modified Bedrock adaptation, not the original Java mod.\n').encode()
+    for legal_doc in ['docs/ASSET_LICENSE_REGISTER.md', 'docs/RELEASE_COMPLIANCE.md']:
+        entries['LEGAL/' + Path(legal_doc).name] = (ROOT / legal_doc).read_bytes()
+    entries['SOURCE.txt'] = ('Complete corresponding source and build tools:\nhttps://github.com/burnt-tea-dev/order-to-cook-unofficial\nUse the immutable GitHub Release tag for the exact corresponding source revision.\n\nOriginal project: Order To Cook / 下单了\nOriginal author: breezeth (breezeth-CN)\nUpstream: https://github.com/breezeth-CN/OrdertoCook\nUpstream source commit: e59e3dbcabe19b783d9adb933db5fcb8bc1e4642\nLicense: GNU GPL version 3 (GPL-3.0-only adaptation)\nOriginal release page: https://www.curseforge.com/minecraft/mc-mods/order-to-cook\n\nThis package is an unofficial modified Bedrock adaptation, not the original Java mod. It is not affiliated with or endorsed by Mojang Studios / Microsoft or the original author.\n').encode()
     data = zip_bytes(entries)
     name = f'OrderToCook-{short}-{VERSION}.mcpack'
     (OUT / name).write_bytes(data)

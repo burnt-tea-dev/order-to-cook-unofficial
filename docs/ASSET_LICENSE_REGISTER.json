@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "project": "Order To Cook — Unofficial Bedrock Adaptation",
+  "upstream": {
+    "repository": "https://github.com/breezeth-CN/OrdertoCook",
+    "commit": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+    "author": "breezeth / breezeth-CN",
+    "license": "GPL-3.0-only"
+  },
+  "port": {
+    "repository": "https://github.com/burnt-tea-dev/order-to-cook-unofficial",
+    "license": "GPL-3.0-only"
+  },
+  "rightsChainStatus": "PENDING_RIGHTS_HOLDER_CONFIRMATION",
+  "scopes": [
+    {
+      "id": "source-code",
+      "status": "UPSTREAM_GPLV3_DECLARED"
+    },
+    {
+      "id": "textures-and-icons",
+      "status": "PENDING_RIGHTS_HOLDER_CONFIRMATION"
+    },
+    {
+      "id": "sounds",
+      "status": "PENDING_RIGHTS_HOLDER_CONFIRMATION"
+    },
+    {
+      "id": "models-and-geometry",
+      "status": "PENDING_RIGHTS_HOLDER_CONFIRMATION"
+    },
+    {
+      "id": "animations",
+      "status": "PENDING_RIGHTS_HOLDER_CONFIRMATION"
+    },
+    {
+      "id": "translations",
+      "status": "PENDING_RIGHTS_HOLDER_CONFIRMATION"
+    }
+  ],
+  "perFileLedger": "../runtime/asset_conversion_manifest.json",
+  "note": "Per-file source path, output path, source SHA-256 and transformation are in the referenced ledger. Do not infer third-party rights ownership from repository-level GPL notices."
+}
