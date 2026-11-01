@@ -10,7 +10,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 UPSTREAM_COMMIT = "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642"
-PENDING = "PENDING_UPSTREAM_RIGHTSHOLDER_CONFIRMATION"
+PENDING = "PENDING_RIGHTS_HOLDER_CONFIRMATION"
 parser = argparse.ArgumentParser()
 parser.add_argument("--release", action="store_true", help="Fail while upstream asset rights remain unconfirmed")
 args = parser.parse_args()
@@ -80,7 +80,7 @@ if version:
             try:
                 with zipfile.ZipFile(package) as archive:
                     names = set(archive.namelist())
-                    for name in ["LICENSE", "THIRD_PARTY_NOTICES.md", "SOURCE.txt"]:
+                    for name in ["LICENSE", "THIRD_PARTY_NOTICES.md", "SOURCE.txt", "LEGAL/ASSET_LICENSE_REGISTER.md", "LEGAL/RELEASE_COMPLIANCE.md"]:
                         require(name in names, f"{package.name} does not contain {name}")
                     source_text = archive.read("SOURCE.txt").decode("utf-8")
                     for phrase in ["breezeth", "burnt-tea-dev/order-to-cook-unofficial", "GPL", "unofficial"]:
@@ -96,7 +96,7 @@ if version:
                     if name in archive.namelist():
                         import io
                         with zipfile.ZipFile(io.BytesIO(archive.read(name))) as nested:
-                            for legal in ["LICENSE", "THIRD_PARTY_NOTICES.md", "SOURCE.txt"]:
+                            for legal in ["LICENSE", "THIRD_PARTY_NOTICES.md", "SOURCE.txt", "LEGAL/ASSET_LICENSE_REGISTER.md", "LEGAL/RELEASE_COMPLIANCE.md"]:
                                 require(legal in nested.namelist(), f"Nested {name} missing {legal}")
         except Exception as exc:
             errors.append(f"{addon.name}: {exc}")
