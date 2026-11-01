@@ -1,27 +1,15 @@
 # Order To Cook／下單了 — 非官方基岩版移植
 
-**可安裝的 `0.1.2-alpha.3`：新增個人進度（原作 11 項中可觸發 10 項）、唯讀設備準星資訊與統一外送／手洗 HUD。餐廳、外送及廚電核心已有實作；客戶端驗收交接給 dot，尚未有實機通過結果。**
+**歷史候選（已撤下公開下載）：新增個人進度（原作 11 項中可觸發 10 項）、唯讀設備準星資訊與統一外送／手洗 HUD。餐廳、外送及廚電核心已有實作；客戶端驗收交接給 dot，尚未有實機通過結果。**
 
 原作由 **breezeth** 製作：[CurseForge 官方頁面](https://www.curseforge.com/minecraft/mc-mods/order-to-cook) · [Java 原始碼](https://github.com/breezeth-CN/OrdertoCook)。本專案由 `casama233` 維護，依 GPLv3 保留原作署名、原資源及完整移植來源。
 
 ## 下載與安裝
 
-[下載 OrderToCook-Bedrock-0.1.2-alpha.3.mcaddon](artifacts/OrderToCook-Bedrock-0.1.2-alpha.3.mcaddon) · [變更紀錄](CHANGELOG.md) · [SHA-256](artifacts/SHA256SUMS.txt)
+**公開下載已暫停。** 上游程式碼 GPLv3 聲明已記錄，但原始模型、貼圖、動畫、音效及翻譯的完整權利鏈仍待原作者確認。所有歷史測試封包已從目前分支撤下；不得透過 GitHub、Actions artifact 或其他平台分發。
 
-1. 下載 `.mcaddon`，用 Minecraft 開啟匯入。
-2. 在新測試世界同時啟用 **Order To Cook — Bedrock (Unofficial Alpha)** 行為包及其資源包。
-3. 目標最低版本為 **Bedrock 1.21.100**，依賴穩定版 `@minecraft/server 2.0.0`、`@minecraft/server-ui 2.0.0`；不需要 Beta APIs 或 Upcoming Creator Features。
-4. 首次加入會收到指南，也能在工作台合成指南與基本設備。
+本倉庫僅供維護及權利核查。可在本機建立私人測試樣品；本地建置不構成公開分發許可。詳見主線的 [素材授權登記](https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/main/docs/ASSET_LICENSE_REGISTER.md) 與 [發布合規清單](https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/main/docs/RELEASE_COMPLIANCE.md)。
 
-本輪 alpha.3 以 GitHub Actions 執行回歸、stable API 型別、靜態檢查及建置。歷史 alpha.2 曾在 **BDS 1.26.52.3** 執行原生探針；alpha.3 尚未重跑原生服務端或客戶端測試。1.21.100 是宣告最低目標，並非各版本／装置已實測。dot 請從 [客戶端交接手冊](docs/DOT_HANDOFF.md) 開始，使用 [回報模板](docs/validation/DOT_REPORT_TEMPLATE.md) 記錄結果。
-
-安裝包亦可由本專案的 GitHub Actions 建置工作取得；完整可重現建置方法見下方。不要把這個基岩版包當作 Java／Forge／Fabric 模組匯入。
-
-### 從 alpha.2／alpha.1 升級
-
-先備份整個世界，再匯入 alpha.3，確認世界使用的行為包及資源包均為 **0.1.2**。兩包沿用既有 UUID；不要同時啟用舊版與新版副本。alpha.2 → alpha.3 的真實世界升級需由 dot 驗收，步驟在交接手冊中，不能沿用舊版測試結果。
-
-個人進度從本功能開始記錄的交單結算起算。舊餐廳營業額沒有交餐玩家歸屬，不會自動當作店主或員工的歷史個人收入；餐廳既有等級、訂單、庫存與營業額仍使用原存檔。從 alpha.1 升級也包含 alpha.2 的持續髒盤行為，已完成訂單歷史不會憑空補發餐盤。需要回退時使用升級前的完整備份。
 
 ## 生存開店流程
 
