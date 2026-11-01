@@ -1,8 +1,8 @@
 # Order To Cook／下單了 — 非官方基岩版移植
 
-**可安裝的 `0.1.2-alpha.3`：新增個人進度（原作 11 項中可觸發 10 項）、唯讀設備準星資訊與統一外送／手洗 HUD。餐廳、外送及廚電核心已有實作；客戶端驗收交接給 dot，尚未有實機通過結果。**
+**本地候選 `0.1.2-alpha.3`：新增個人進度（原作 11 項中可觸發 10 項）、唯讀設備準星資訊與統一外送／手洗 HUD。餐廳、外送及廚電核心已有實作；客戶端驗收交接給 dot，尚未有實機通過結果。**
 
-原作由 **breezeth** 製作：[CurseForge 官方頁面](https://www.curseforge.com/minecraft/mc-mods/order-to-cook) · [Java 原始碼](https://github.com/breezeth-CN/OrdertoCook)。本專案由 `casama233` 維護，依 GPLv3 保留原作署名、原資源及完整移植來源。
+原作由 **breezeth** 製作：[CurseForge 官方頁面](https://www.curseforge.com/minecraft/mc-mods/order-to-cook) · [Java 原始碼](https://github.com/breezeth-CN/OrdertoCook)。本專案由 `casama233` 維護。上游明確聲明程式碼採 GPLv3；原始模型、貼圖、音效、動畫及翻譯的完整權利鏈仍待確認，詳見素材授權登記。
 
 ## 下載與安裝
 
