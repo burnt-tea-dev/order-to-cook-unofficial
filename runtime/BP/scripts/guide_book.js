@@ -23,7 +23,7 @@ export const GUIDE_CHAPTERS = Object.freeze([
   ] },
   { id: 'restaurant', icon: I.money, groups: [
     { id: 'menu', icon: I.order, pages: ['menu_design', 'nutrition_variant'] },
-    { id: 'orders', icon: I.food, pages: ['offer_types', 'timers'] },
+    { id: 'order_management', icon: I.food, pages: ['offer_types', 'timers'] },
     { id: 'management', icon: I.money, pages: ['money_upgrades', 'staff'] }
   ] },
   { id: 'kitchen', icon: I.counter, groups: [
@@ -35,7 +35,7 @@ export const GUIDE_CHAPTERS = Object.freeze([
     { id: 'washing', icon: I.clean, pages: ['handwashing', 'dishwasher'] }
   ] },
   { id: 'delivery', icon: I.helmet, groups: [
-    { id: 'orders', icon: I.bag, pages: ['bagging', 'navigation'] },
+    { id: 'delivery_steps', icon: I.bag, pages: ['bagging', 'navigation'] },
     { id: 'vehicle', icon: I.bike, pages: ['motorcycle', 'storage'] }
   ] },
   { id: 'progress', icon: I.upgrade, groups: [
@@ -85,7 +85,7 @@ export function guideBookScreen(route = view('home'), isAdmin = false) {
       go(view('group', chapter.id, group.id)), group.icon));
     buttons.push(homeButton(), closeButton());
     return {
-      title: message('§6', `@${'chapter.' + chapter.id + '.title'}`, ` §8(${index + 1}/${GUIDE_CHAPTERS.length})§r`),
+      title: message('§6', '@chapter.' + chapter.id + '.title', ` §8(${index + 1}/${GUIDE_CHAPTERS.length})§r`),
       body: message('§7', '@chapter.' + chapter.id + '.summary', '\n\n§8', '@ui.choose_group', '§r'),
       buttons
     };
