@@ -109,7 +109,7 @@ test('book menu opens in its own item and icon; never adds a second Cookery guid
   const item=JSON.parse(readFileSync(new URL('BP/items/guide.json',new URL('../runtime/',import.meta.url)), 'utf8'));
   assert.equal(item['minecraft:item'].description.identifier,'ordertocook:guide');
   const textures=JSON.parse(readFileSync(new URL('textures/item_texture.json',paths),'utf8'));
-  assert.equal(textures.texture_data.ordertocook_guide.textures,'textures/items/book_normal');
+  assert.equal(textures.texture_data.ordertocook_guide.textures,'textures/ordertocook/item/guide_book');
   const recipe=JSON.parse(readFileSync(new URL('BP/recipes/guide.json',new URL('../runtime/',import.meta.url)), 'utf8'));
   assert.equal(recipe['minecraft:recipe_shaped'].result.item,'ordertocook:guide');
   assert.deepEqual(recipe['minecraft:recipe_shaped'].pattern,['BP']);

@@ -2,7 +2,7 @@
 // Order To Cook's independent handbook. Cookery owns its own guide and is never
 // imported, modified, registered with, or needed by this navigation tree.
 const I = Object.freeze({
-  book: 'textures/items/book_normal',
+  book: 'textures/ordertocook/item/guide_book',
   order: 'textures/ordertocook/item/order',
   money: 'textures/ordertocook/item/chef_coin_100',
   upgrade: 'textures/ordertocook/item/otc_upgrade_box',

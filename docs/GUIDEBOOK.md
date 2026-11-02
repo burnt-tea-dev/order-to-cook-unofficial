@@ -9,8 +9,8 @@ category → subcategory → entry flow, while chapter contents remain OTC-owned
 - Existing item: `ordertocook:guide` (unchanged identifier and permissions).
 - The existing recipe remains one `minecraft:book` + one
   `minecraft:paper`; first-time players still receive it.
-- The item icon now references vanilla `textures/items/book_normal`,
-  instead of sharing the order-ticket icon.
+- The existing item now uses an original 32×32 `guide_book.png` book-cover
+  sprite, rather than reusing the order-ticket icon.
 - Using that item opens the OTC guide. The order machine retains an entrance
   to the *same* OTC navigation tree.
 - The Cookery guidebook, renderer, data, host APIs, item IDs, language
