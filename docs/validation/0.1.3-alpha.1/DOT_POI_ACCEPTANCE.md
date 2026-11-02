@@ -4,12 +4,13 @@
 
 ## 1. 唯一候選與入場門檻
 
-- PR：[burnt-tea-dev/order-to-cook-unofficial #11](https://github.com/burnt-tea-dev/order-to-cook-unofficial/pull/11)；源碼候選基準：**6f34c17fd47f3dfe43ff3626b0895c3542b9e879**。文件提交可能再前進；實際使用哪個完整 40 位 SHA，必須寫入結果。若程式來源變動，重新打包並重新驗證，不在同輪混用。
+- PR：[burnt-tea-dev/order-to-cook-unofficial #11](https://github.com/burnt-tea-dev/order-to-cook-unofficial/pull/11)；源碼候選基準：**5437c566a27239f645a693b6f9abe8474b3d074a**。文件提交可能再前進；實際使用哪個完整 40 位 SHA，必須寫入結果。若程式來源變動，重新打包並重新驗證，不在同輪混用。
 - npm 版本 **0.1.3-alpha.1**；BP/RP pack version 均 **[0,1,3]**，pack UUID 不變。最低 **Bedrock 26.60**，依賴 @minecraft/server **2.12.0-beta**、@minecraft/server-ui **2.0.0**；**Beta APIs + Points of Interest (POI)** 兩項實驗必開。不同世界版本與實驗條件不可當成同一輪。
 - 候選來源 runtimeTreeSha256：**62500a0d5938f35c749ea77ae47ab4d2ccd1d5c046e10617a84d8bf021773184**（僅代表 runtime tree，不是 .mcaddon 的 SHA256）。最新 Actions 驗證應與實際檢出來源樹再核對，源碼有改動時不得照抄此值。
+- **原生顧客離場時序：**2026-11-02 新增時間邊界回歸：重啟後完成餐點的顧客可合法停留至既有保存的 `depart_at` 時刻，原生驗收應先確認不會同時出現兩位，再待原本截止時間過後確認實體消失，不以開服後 4 秒作硬性截止。已確認前一版 CI 的 18/19 係測試太早判定，修正 QA 後目前同候選 reload 20/20，舊版升級 20/20；未變更正式 NPC gameplay 或其時鐘。
 - **沒有獲確認的新版公開下載檔名／安裝包 SHA256。** 不得使用已撤下的 alpha.3 安裝包，不得把 GitHub Source ZIP 當 .mcaddon。dot 應從**同一精確 commit**本機打包，記錄輸出檔名、大小及自行實算 SHA256；若做不到，所有客戶端案例記「阻塞：未固定安裝包」，不要自行猜測。
 - 建置指令（隔離 checkout）：先執行 npm ci --ignore-scripts，再執行 npm run verify；輸出位於 dist/，再對實際 .mcaddon 計算 sha256sum（Windows 使用 Get-FileHash）。兩份 BP/RP 必須同版本；不要同時啟用舊版同 UUID 包。
-- 目前已執行的 [已通過的原生 BDS 工作流程](https://github.com/burnt-tea-dev/order-to-cook-unofficial/actions/runs/41395654596) 僅證明有限伺服器能力：目前已得 POI 10／10、初次 127／127、同世界重啟 19／19、舊世界升級 19／19；**本交接文件不代填真人、視覺或雙人測試通過**。開始前再確認所測 commit 的 workflow 都成功；若有 FAIL，先記阻塞原因。
+- 目前已執行的 [最新已通過的原生 BDS 工作流程](https://github.com/burnt-tea-dev/order-to-cook-unofficial/actions/runs/41396172650) 僅證明有限伺服器能力：目前已得 POI 10／10、初次 127／127、同世界重啟 20／20、舊世界升級 20／20；**本交接文件不代填真人、視覺或雙人測試通過**。開始前再確認所測 commit 的 workflow 都成功；若有 FAIL，先記阻塞原因。
 
 ## 2. 測試世界與執行順序
 
