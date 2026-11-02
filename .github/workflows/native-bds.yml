@@ -8,6 +8,7 @@ on:
       - 'tools/bedrock_qa_world.py'
       - 'tools/bedrock_smoke.py'
       - '.github/workflows/native-bds.yml'
+      - 'docs/validation/UNRELEASED-poi-discovery.md'
   workflow_dispatch:
 
 permissions:
