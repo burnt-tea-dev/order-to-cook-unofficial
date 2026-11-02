@@ -47,13 +47,20 @@ API 依據：[PoiBlockManager](https://learn.microsoft.com/en-us/minecraft/creat
 6. **真實 BDS 1.26.60.6 的最終候選探針10／10通過**：5種ticket零的索引、近架排序、canonical資料join、冰箱不重複、高低椅子邊界、正方形角落排除、菜單同分近者、真實顧客／座位騎乘及拆除失效。機器、方塊、POI、實體、rider均為原生；只有「附近存在玩家」條件使用測試替身，沒有真玩家連線。詳見 [原生結果](UNRELEASED-poi-native.json) 與 [探針來源](../../tests/bedrock-poi-checks.js)。
 7. 修復既有 `tools/bedrock_smoke.py`：全新隔離 BDS 先生成無附加包的 QA 世界、正常停服，才備份並設定 Beta APIs／POI，再載入候選與探針。拒絕未標記既有世界、非 QA 世界、符號連結及仍在運行的同目錄伺服器。用未經手動預置的 BDS 1.26.60.6 對最終來源執行 [initial 127／127](0.1.3-alpha.1/native-initial.json) 與同一 QA 世界 [reload 15／15](0.1.3-alpha.1/native-reload.json)，均無 addonErrors，runtime 指紋與下方一致。這是同候選存檔重載，不是舊版世界升級驗收。
 
-最終來源的 `runtimeTreeSha256`：
+上述原生 BDS 當次來源（早於後續保存修復）的 `runtimeTreeSha256`：
 
 ```text
 44cc9c4321a4612aefd43cafc5eb2d48d9868cefc1206cb3c74102f83b0ecec0
 ```
 
 原生探針首輪在沒有玩家的 QA 世界未通過顧客生成前置條件；補上與既有 native harness 相同的附近玩家替身後，再對最終候選重跑10項全部通過。沒有為取得通過結果修改正式服務的玩家距離保護。
+
+## 後續儲存安全與 POI 重新綁定回歸（2026-11-02）
+
+- 新增三種實際模組故障的紅測試：不營業時 POI 重新綁定未立即保存、已綁定立牌區塊暫時卸載時被誤認為拆除、POI 索引暫時漏報已載入立牌。修正後沿用單一 canonical 工作站 Map，菜單變更才保存；卸載時延後選牌，不持久清空；舊立牌仍在則查實際方塊後保留。
+- 在 `tests/store.test.js` 新增三種**靜默寫入不生效**故障測試，修復前 348／351 通過，三項失敗：新分塊沒有落盤仍切 root、根索引未更新仍清除舊分塊、根索引未刪除仍清除工作站庫存。直接在既有 `store.js` 中增加每分塊、manifest 根及刪除前的讀回核對；底層 API 回報 void 不能當成成功。修復後 351／351 通過。
+- 在 `tests/station-poi.test.js` 額外測試根保存失敗後：已保存菜單及既有訂單不變，下一次 tick 由 canonical 舊快照重新選立牌，成功後不重複建立工作站資料。當次 `verify` 共 **352／352 Node 斷言通過**，Python／型別／JSON／建置檢查也由同一 GitHub Actions 作業通過。
+- 最終 CI 對應 source commit `ec3f7d4beef7bdd33bd6ed4025ccfd500cabc18a`。**本節的 352 項為 Node 模擬／來源測試，不能冒充真實 BDS**。上方 10／127／15 的原生結果與 `44cc9c43…` 指紋仍僅代表修正前的舊來源；新 head 尚未執行 0.1.2→0.1.3-alpha.1 舊世界原生升級、雙人或客戶端驗收。
 
 ## 重現與尚未完成的驗收
 
