@@ -5,7 +5,6 @@ import { world, system, ItemStack, ItemTypes, BlockPermutation, GameMode } from 
 import { getQaHooks } from './main.js';
 import { getRestaurant, saveRestaurant, getStation, getStationById, saveStation, setBlockState } from './store.js';
 import { nearbyStationBlocks } from './station_poi.js';
-import { nearbyStationBlocks } from './station_poi.js';
 import { generateOrder } from './core.js';
 import { VANILLA_FOODS } from './config.js';
 import { coinBalance, countItem } from './inventory.js';
