@@ -278,3 +278,24 @@ test('physically loaded bound board survives a transient missing POI index entry
   assert.deepEqual(savedRestaurant(env).menu, board.menu);
   env.dimension.poiManager.blocks.getInSquare = query;
 });
+
+test('POI menu rebinding retries after a rejected restaurant commit without losing the old snapshot', async () => {
+  const env = await mainFixture();
+  const block = place(env, 'ordertocook:board', { x: 3, y: 0, z: 1 });
+  const board = env.store.getStation(block);
+  board.ownerId = env.player.id;
+  board.menu = [{ typeId: 'minecraft:bread', label: '新立牌', nutrition: 12 }];
+  env.store.saveStation(board);
+  env.restaurant.active = false;
+  env.store.saveRestaurant(env.restaurant);
+  const before = savedRestaurant(env), rootKey = 'ordertocook:r:' + env.restaurant.id;
+  env.failWrite(id => id === rootKey);
+  silenceWarning(() => env.hooks.tickRestaurants());
+  assert.deepEqual(savedRestaurant(env), before, 'failed commit cannot replace the saved menu or order ledger');
+  assert.deepEqual(env.store.getRestaurant(env.restaurant.id), before, 'canonical cache rolls back to a readable snapshot');
+  env.hooks.tickRestaurants();
+  assert.equal(savedRestaurant(env).boardId, board.id);
+  assert.deepEqual(savedRestaurant(env).menu, board.menu);
+  assert.deepEqual(savedRestaurant(env).orders, before.orders);
+  assert.equal(env.store.stations().length, 1);
+});
