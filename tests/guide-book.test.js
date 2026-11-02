@@ -130,3 +130,16 @@ test('administrator actions are contextual and never exposed to regular players'
   const about=guideBookScreen(pageRoute(chapter,chapter.groups[1],'limitations'));
   assert.equal(about.buttons[0].action.kind,'about');
 });
+
+test('guide icon is a native 16px Minecraft-style book sprite', () => {
+  const sprite = readFileSync(new URL('textures/ordertocook/item/guide_book.png', paths));
+  // PNG signature + IHDR width/height, 8-bit RGBA and no oversized screenshot.
+  assert.equal(sprite.subarray(0,8).toString('hex'), '89504e470d0a1a0a');
+  assert.equal(sprite.readUInt32BE(16), 16);
+  assert.equal(sprite.readUInt32BE(20), 16);
+  assert.equal(sprite[24], 8);
+  assert.equal(sprite[25], 6);
+  assert.ok(sprite.byteLength < 4096, 'Keep the sprite small and pixel-native');
+  const textures = JSON.parse(readFileSync(new URL('textures/item_texture.json', paths), 'utf8'));
+  assert.equal(textures.texture_data.ordertocook_guide.textures, 'textures/ordertocook/item/guide_book');
+});
