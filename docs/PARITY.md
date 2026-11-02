@@ -73,3 +73,8 @@ Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedro
 4. 比對新餐盤階段、7 個顧客 action 和有限取樣廚電動畫，記錄與原作 easing、放盤片段及畫面時序的差異，再逐項建立其他基岩料理／貨幣包的聯動。
 
 交接入口為 [DOT_HANDOFF.md](DOT_HANDOFF.md)，完整基線仍在 [PLAYTEST.md](PLAYTEST.md)，全部待客戶端驗收。alpha.3 的實際自動化結果與未重跑的 BDS 範圍見 [VALIDATION.md](VALIDATION.md)，不能把 alpha.2 的原生結果直接套用到新指紋。
+
+
+## 尚未發布：Order To Cook 專屬遊玩指南
+
+保留原 `ordertocook:guide` 物品與合成配方，改用六章／十三分類／二十六篇教程的獨立三級導覽與三語文字；可由指南物品或打單機入口開啟，沒有改動 Cookery 作者指南。使用 `@minecraft/server-ui` 原生表單搭配已存在的本包圖示，故導航層級與章節佈局類似 Cookery，但不是相同書頁 renderer 或像素級復刻。新來源的自動化驗證不得替代 Windows／手機與真實客戶端的字體、圖示及返回流程驗收。參見 [GUIDEBOOK.md](GUIDEBOOK.md)。
