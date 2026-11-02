@@ -3,7 +3,8 @@
 // This exercises real engine blocks/entities/ItemStacks, not client UI or input.
 import { world, system, ItemStack, ItemTypes, BlockPermutation, GameMode } from '@minecraft/server';
 import { getQaHooks } from './main.js';
-import { getRestaurant, saveRestaurant, getStation, saveStation, setBlockState } from './store.js';
+import { getRestaurant, saveRestaurant, getStation, getStationById, saveStation, setBlockState } from './store.js';
+import { nearbyStationBlocks } from './station_poi.js';
 import { nearbyStationBlocks } from './station_poi.js';
 import { generateOrder } from './core.js';
 import { VANILLA_FOODS } from './config.js';
@@ -30,6 +31,27 @@ async function run(mode) {
     const expected = JSON.parse(String(world.getDynamicProperty('ordertocook:qa_expected')));
     const restaurant = getRestaurant(expected.restaurantId);
     test('restaurant restored across server restart', restaurant?.stats.completed === (expected.completed ?? 1) && restaurant?.stats.earnings === expected.earnings);
+    if (mode === 'reload') {
+      // Verify real native POI reindexing and canonical data after shutting down
+      // the exact same QA world. Initial-only POI probe is not imported here.
+      const expectedPoi = JSON.parse(String(world.getDynamicProperty('ordertocook:qa_poi_expected')));
+      const indexedBoards = nearbyStationBlocks(dim,{x:0,y:70,z:0},'ordertocook:board',24,{shape:'cylinder',halfHeight:8});
+      const restoredPoiRestaurant = getRestaurant(expectedPoi.restaurantId);
+      test('POI board positions remain indexed across BDS restart',
+        indexedBoards.some(block => getStationById(expectedPoi.boardId)?.location.x===block.location.x &&
+          getStationById(expectedPoi.boardId)?.location.y===block.location.y &&
+          getStationById(expectedPoi.boardId)?.location.z===block.location.z));
+      test('restarted POI restaurant retains chosen menu and selected board',
+        restoredPoiRestaurant?.boardId===expectedPoi.boardId &&
+        JSON.stringify(restoredPoiRestaurant.menu)===JSON.stringify(expectedPoi.menu));
+      const restoredShelf = getStationById(expectedPoi.shelfId);
+      test('POI absence after removal does not delete canonical shelf metadata',
+        restoredShelf?.ownerId===expectedPoi.shelfOwner &&
+        restoredShelf?.supplies===expectedPoi.shelfSupplies);
+      test('POI index does not resurrect removed shelf after restart',
+        nearbyStationBlocks(dim,{x:0,y:70,z:0},'ordertocook:shelf',5)
+          .every(block => block.location.x!==2));
+    }
     const storage = world.getEntity(expected.storageId);
     const item = storage?.getComponent('minecraft:inventory')?.container.getItem(7);
     test('native storage entity restored', !!storage?.isValid);

@@ -56,4 +56,10 @@ async function run(dim){
   entities.cleanupOrder(order.id);
   shelfNear.setType('minecraft:air');await wait(2);
   test('native removal no longer returns a usable supply',nearbyStationBlocks(dim,origin,'ordertocook:shelf',5).every(b=>b.location.x!==2));
+  // QA-only restart checkpoint: persist observed identities, never the full world or player data.
+  world.setDynamicProperty('ordertocook:qa_poi_expected',JSON.stringify({
+    restaurantId:restaurant.id,boardId:getStation(boardNear).id,
+    shelfId:stored.id,shelfOwner:stored.ownerId,shelfSupplies:stored.supplies,
+    menu:restaurant.menu
+  }));
 }
