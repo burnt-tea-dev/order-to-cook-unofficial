@@ -96,9 +96,17 @@ function syncMenu(restaurant) {
   candidates.sort((a, b) => getMenuNutrition(b.menu) - getMenuNutrition(a.menu) ||
     distanceSquared(a.location, restaurant.location) - distanceSquared(b.location, restaurant.location));
   // Registration is a snapshot. Catalog/override reloads affect new entries only.
+  // POI rebinding must persist even while the machine is idle: an unrelated
+  // refresh/expiry must never be required to commit the selected menu board.
+  const oldMenu = JSON.stringify(restaurant.menu);
+  const oldBoardId = restaurant.boardId || '';
+  const offered = (restaurant.orders || []).filter(order => order.status === 'offered')
+    .map(order => [order, order.reward, order.benefitLevel]);
   restaurant.menu = normalizeMenu(candidates[0]?.menu || []);
   restaurant.boardId = candidates[0]?.id || '';
   synchronizeOfferRewards(restaurant);
+  return oldBoardId !== restaurant.boardId || oldMenu !== JSON.stringify(restaurant.menu) ||
+    offered.some(([order, reward, benefit]) => order.reward !== reward || order.benefitLevel !== benefit);
 }
 function getMachine(player, block, placedByPlayer = false) {
   const id = locationId(block.dimension.id, block.location);
@@ -115,7 +123,7 @@ function getMachine(player, block, placedByPlayer = false) {
     saveRestaurant(restaurant);
   }
   if (placedByPlayer) reconcileProgress(restaurant);
-  syncMenu(restaurant);
+  if (syncMenu(restaurant)) saveRestaurant(restaurant);
   return restaurant;
 }
 function balance(player) { return settings.currencyItem ? countItem([containerOf(player)], settings.currencyItem) : coinBalance(player); }
@@ -804,7 +812,7 @@ function tickRestaurants() {
       const machine = loadedBlock(restaurant);
       if (machine?.typeId === 'ordertocook:order_machine') {
         let menuReady = false;
-        try { syncMenu(restaurant); menuReady = true; }
+        try { changed = syncMenu(restaurant) || changed; menuReady = true; }
         catch (error) {
           // A transient POI failure must not bypass the expiry commit below.
           // Keep the last menu and defer only new offers until discovery works.
