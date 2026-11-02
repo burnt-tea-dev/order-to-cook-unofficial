@@ -52,7 +52,7 @@ export const GUIDE_PAGE_STEPS = 3;
 const key = suffix => ({ translate: `otc.guide.${suffix}` });
 const message = (...parts) => ({ rawtext: parts.map(part =>
   part.startsWith('@') ? key(part.slice(1)) : { text: part }) });
-const view = (kind, chapter, group, page) => ({kind, chapter, group, page});
+const view = (kind, chapter, group, page) => ({ kind, ...(chapter ? { chapter } : {}), ...(group ? { group } : {}), ...(page ? { page } : {}) });
 const go = next => ({kind: 'goto', view: next});
 const other = kind => ({kind});
 const entryIcon = id => (
