@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 import { ItemStack } from '@minecraft/server';
-import { inspectSenluoFood, matchesSenluoFoodSnapshot } from './senluo_food.js';
+import { inspectSenluoFood, matchesSenluoFoodSnapshot, normalizeFoodIdentity, menuFoodKey, matchesFoodIdentity } from './senluo_food.js';
 
 export function containerOf(entity) { return entity.getComponent('minecraft:inventory')?.container; }
 export function heldItem(player) { return containerOf(player)?.getItem(player.selectedSlotIndex); }
@@ -21,30 +21,53 @@ export function countItem(containers, typeId) {
 /** Build and validate the entire extraction before changing a single slot. */
 export function planExtraction(containers, requirements) {
   const requested = new Map();
+  const invalid = reason => ({ ok: false, missing: [reason], missingFoods: [], actions: [] });
   for (const item of requirements) {
-    if (typeof item.typeId !== 'string' || !item.typeId || !Number.isSafeInteger(item.amount) || item.amount < 1) return { ok: false, missing: ['invalid amount or item'], actions: [] };
-    const total = (requested.get(item.typeId) || 0) + item.amount;
-    if (!Number.isSafeInteger(total)) return { ok: false, missing: ['invalid amount'], actions: [] };
-    requested.set(item.typeId, total);
+    if (typeof item?.typeId !== 'string' || !item.typeId || !Number.isSafeInteger(item.amount) || item.amount < 1) return invalid('invalid amount or item');
+    const identity = normalizeFoodIdentity(item.foodIdentity);
+    if (identity === null) return invalid('invalid food identity');
+    const key = menuFoodKey(item);
+    const total = (requested.get(key)?.amount || 0) + item.amount;
+    if (!Number.isSafeInteger(total)) return invalid('invalid amount');
+    requested.set(key, { typeId: item.typeId, amount: total, label: item.label,
+      ...(identity ? { foodIdentity: identity } : {}) });
   }
-  const actions = [];
-  const missing = [];
-  for (const [typeId, amount] of requested) {
-    let remaining = amount;
-    for (const container of [...new Set(containers.filter(Boolean))]) {
+  const actions = [], missing = [], missingFoods = [];
+  const sources = [...new Set(containers.filter(Boolean))];
+  const reserved = new Map(sources.map(container => [container, new Map()]));
+  // Constrained variants first, then legacy ID-only lines. Otherwise a generic
+  // line could steal the only stack that can satisfy a specific variant.
+  const requests = [...requested.values()].sort((a, b) => Number(!!b.foodIdentity) - Number(!!a.foodIdentity));
+  for (const item of requests) {
+    let remaining = item.amount;
+    for (const container of sources) {
       for (let slot = 0; slot < container.size && remaining > 0; slot++) {
         const stack = container.getItem(slot);
-        if (stack?.typeId !== typeId) continue;
-        const take = Math.min(remaining, stack.amount);
+        if (stack?.typeId !== item.typeId) continue;
+        const action = reserved.get(container).get(slot);
+        const available = stack.amount - (action?.take || 0);
+        if (available <= 0) continue;
         const foodSnapshot = inspectSenluoFood(stack);
-        if (foodSnapshot.status === 'unreadable') return { ok: false, missing: ['food metadata unreadable'], actions: [] };
-        actions.push({ container, slot, before: stack, take, foodSnapshot });
+        if (foodSnapshot.status === 'unreadable') return invalid('food metadata unreadable');
+        if (action && (stack.amount !== action.before.amount ||
+            foodSnapshot.status !== action.foodSnapshot.status || foodSnapshot.signature !== action.foodSnapshot.signature)) return invalid('food changed during planning');
+        if (!matchesFoodIdentity(foodSnapshot, item.foodIdentity)) continue;
+        const take = Math.min(remaining, available);
+        if (action) action.take += take;
+        else {
+          const next = { container, slot, before: stack, take, foodSnapshot };
+          reserved.get(container).set(slot, next);
+          actions.push(next);
+        }
         remaining -= take;
       }
     }
-    if (remaining) missing.push(`${typeId} ×${remaining}`);
+    if (remaining) {
+      missing.push(`${item.typeId} ×${remaining}`);
+      missingFoods.push({ ...item, amount: remaining });
+    }
   }
-  return { ok: missing.length === 0, missing, actions };
+  return { ok: missing.length === 0, missing, missingFoods, actions };
 }
 
 export function applyExtraction(plan) {

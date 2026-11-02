@@ -12,6 +12,8 @@ import {
   NAMESPACE
 } from "./config.js";
 
+import { normalizeFoodIdentity, menuFoodsOverlap } from "./senluo_food.js";
+
 const OPEN_STATUSES = new Set(["offered", "accepted", "packed"]);
 const WORK_STATUSES = new Set(["accepted", "packed"]);
 const STAT_KEYS = ["completed", "delivery", "longDistance", "earnings", "failed",
@@ -67,20 +69,25 @@ export function normalizeFoodId(typeId) {
 export function normalizeMenu(menu, capacity = MENU_CAPACITY) {
   if (!Array.isArray(menu)) return [];
   const result = [];
-  const seen = new Set();
+  const seen = new Map();
   for (const entry of menu) {
     if (!entry || typeof entry !== "object") continue;
     const typeId = normalizeFoodId(entry.typeId);
-    if (!/^[a-z0-9_.-]+:[a-z0-9_./-]+$/.test(typeId) || seen.has(typeId)) continue;
+    const foodIdentity = normalizeFoodIdentity(entry.foodIdentity);
+    if (!/^[a-z0-9_.-]+:[a-z0-9_./-]+$/.test(typeId) || foodIdentity === null) continue;
+    const variants = seen.get(typeId);
+    if (variants && (variants.has(undefined) || !foodIdentity || variants.has(foodIdentity.nativeVariant))) continue;
     const vanilla = VANILLA_FOOD_BY_ID[typeId];
     const nutrition = integer(entry.nutrition ?? vanilla?.nutrition, 0, 0, 10000);
     if (nutrition <= 0) continue;
     result.push({
       typeId,
       nutrition,
-      label: String(entry.label || vanilla?.label || typeId).slice(0, 100)
+      label: String(entry.label || vanilla?.label || typeId).slice(0, 100),
+      ...(foodIdentity ? { foodIdentity } : {})
     });
-    seen.add(typeId);
+    if (!seen.has(typeId)) seen.set(typeId, new Set());
+    seen.get(typeId).add(foodIdentity?.nativeVariant);
     if (result.length >= integer(capacity, MENU_CAPACITY, 1, MENU_CAPACITY)) break;
   }
   return result;
@@ -96,15 +103,18 @@ export function addMenuFood(restaurant, food) {
   const current = normalizeMenu(restaurant.menu);
   const normalized = normalizeMenu([food])[0];
   if (!normalized) return { ok: false, reason: "invalid_food" };
-  if (current.some(item => item.typeId === normalized.typeId)) return { ok: false, reason: "duplicate_food" };
+  if (current.some(item => menuFoodsOverlap(item, normalized))) return { ok: false, reason: "duplicate_food" };
   if (current.length >= MENU_CAPACITY) return { ok: false, reason: "menu_full" };
   restaurant.menu = [...current, normalized];
   return { ok: true, food: normalized, nutrition: getMenuNutrition(restaurant) };
 }
-export function removeMenuFood(restaurant, typeId) {
+export function removeMenuFood(restaurant, typeId, foodIdentity = undefined) {
   const id = normalizeFoodId(typeId);
   const current = normalizeMenu(restaurant.menu);
-  const next = current.filter(item => item.typeId !== id);
+  const identity = normalizeFoodIdentity(foodIdentity);
+  if (identity === null) return { ok: false, reason: "invalid_food" };
+  const next = current.filter(item => item.typeId !== id ||
+    normalizeFoodIdentity(item.foodIdentity)?.nativeVariant !== identity?.nativeVariant);
   if (next.length === current.length) return { ok: false, reason: "food_not_found" };
   restaurant.menu = next;
   return { ok: true, nutrition: getMenuNutrition(restaurant) };
@@ -289,7 +299,8 @@ function makeOrder(restaurant, now, rng, walkIn) {
     typeId: food.typeId,
     amount: 1 + Math.floor(unit(rng) * TIER_MAX_COUNTS[tier]),
     nutrition: food.nutrition,
-    label: food.label
+    label: food.label,
+    ...(food.foodIdentity ? { foodIdentity: { ...food.foodIdentity } } : {})
   }));
   const duration = integer(rush ? cfg.rushDurationMs : cfg.normalDurationMs,
     rush ? DEFAULT_CONFIG.rushDurationMs : DEFAULT_CONFIG.normalDurationMs, 1);
