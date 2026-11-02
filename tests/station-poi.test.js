@@ -182,3 +182,45 @@ test('chair POI failure preserves a completed refresh and retries walk-in genera
   assert.ok(saved.nextWalkInAt > Date.now());
   assert.equal(saved.orders.filter(order => order.walkIn).length, 1);
 });
+
+test('POI menu rebinding persists across restart even with an inactive restaurant', async () => {
+  const env = await mainFixture();
+  const block = place(env, 'ordertocook:board', { x: 3, y: 0, z: 1 });
+  const board = env.store.getStation(block);
+  board.ownerId = env.player.id;
+  const dish = variant => ({
+    typeId: 'test:meal', label: '保存的變體 ' + variant, nutrition: 9,
+    foodIdentity: { carrier: 'senluo.public.food.v1', nativeVariant: variant }
+  });
+  board.menu = [dish(7)];
+  env.store.saveStation(board);
+  env.restaurant.active = false;
+  env.store.saveRestaurant(env.restaurant);
+
+  // No active order refresh or expiry should be required to save a new board.
+  env.hooks.tickRestaurants();
+  let persisted = savedRestaurant(env);
+  assert.equal(persisted.boardId, board.id);
+  assert.deepEqual(persisted.menu, [dish(7)]);
+
+  const original = env.world.setDynamicProperty.bind(env.world);
+  let rootWrites = 0;
+  env.world.setDynamicProperty = (key, value) => {
+    if (key === 'ordertocook:r:' + env.restaurant.id) rootWrites++;
+    return original(key, value);
+  };
+  env.hooks.tickRestaurants();
+  assert.equal(rootWrites, 0, 'stable POI menu must not rewrite the restaurant every tick');
+
+  board.menu = [dish(8)];
+  env.store.saveStation(board);
+  env.hooks.tickRestaurants();
+  persisted = savedRestaurant(env);
+  assert.deepEqual(persisted.menu, [dish(8)], 'variant identity is persisted, not just cached');
+
+  block.setType('minecraft:air');
+  env.hooks.tickRestaurants();
+  persisted = savedRestaurant(env);
+  assert.equal(persisted.boardId, '');
+  assert.deepEqual(persisted.menu, [], 'removed POI board must not resurrect its menu after reload');
+});
