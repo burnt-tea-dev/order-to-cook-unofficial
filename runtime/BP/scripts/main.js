@@ -10,7 +10,7 @@ import {
 import { VANILLA_FOODS, DEFAULT_MENU, DEFAULT_CONFIG, TIER_LABELS, TIER_COLORS } from './config.js';
 import {
   initStore, locationId, getRestaurant, restaurants, saveRestaurant, deleteRestaurant, getProfile, saveProfile,
-  getStation, findStation, stations, saveStation, deleteStation,
+  getStation, getStationById, findStation, stations, saveStation, deleteStation,
   nearbyStations, nearestRestaurant, loadedBlock, distanceSquared, setBlockState
 } from './store.js';
 import {
@@ -91,8 +91,24 @@ function foodFromStack(stack) {
 }
 function foodLabel(typeId) { return foodOverrides.get(typeId)?.label || foods.get(typeId)?.label || typeId; }
 function syncMenu(restaurant) {
+  // A bound board across a chunk edge can become temporarily unreadable while
+  // the restaurant machine is loaded. Do not persist an empty replacement as if
+  // the board had been broken. This is one O(1) canonical record lookup, not a
+  // second spatial index or a scan of all stations.
+  const bound = restaurant.boardId ? getStationById(restaurant.boardId) : undefined;
+  const dx = bound ? bound.location.x - restaurant.location.x : 0;
+  const dz = bound ? bound.location.z - restaurant.location.z : 0;
+  const eligibleBound = bound?.typeId === 'ordertocook:board' && bound.dimensionId === restaurant.dimensionId &&
+    (!bound.ownerId || bound.ownerId === restaurant.ownerId || restaurant.staff?.includes(bound.ownerId)) &&
+    dx * dx + dz * dz <= 24 * 24 && Math.abs(bound.location.y - restaurant.location.y) <= 8;
+  const boundBlock = eligibleBound ? loadedBlock(bound) : undefined;
+  if (eligibleBound && !boundBlock) throw new Error('Bound menu board chunk is unavailable; defer POI rebinding');
+
   const candidates = nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:board', { shape: 'cylinder', halfHeight: 8 })
     .filter(s => !s.ownerId || s.ownerId === restaurant.ownerId || restaurant.staff?.includes(s.ownerId));
+  // POI indexing can lag after chunk reload; keep the physically verified bound
+  // board as an individual candidate, without traversing the station registry.
+  if (boundBlock?.typeId === 'ordertocook:board' && !candidates.some(s => s.id === bound.id)) candidates.push(bound);
   candidates.sort((a, b) => getMenuNutrition(b.menu) - getMenuNutrition(a.menu) ||
     distanceSquared(a.location, restaurant.location) - distanceSquared(b.location, restaurant.location));
   // Registration is a snapshot. Catalog/override reloads affect new entries only.

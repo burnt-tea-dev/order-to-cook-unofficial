@@ -186,6 +186,7 @@ export function saveRestaurant(value) {
 export function deleteRestaurant(id) { remove(REST, restaurantsById, id); }
 
 export function stations() { return [...stationsById.values()]; }
+export function getStationById(id) { return stationsById.get(id); }
 export function findStation(block) { return stationsById.get(locationId(block.dimension.id, block.location)); }
 export function getStation(block, kind) {
   const id = locationId(block.dimension.id, block.location);

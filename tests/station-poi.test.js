@@ -257,3 +257,24 @@ test('an unloaded previously bound POI board preserves the saved menu until it r
   assert.equal(savedRestaurant(env).boardId, board.id);
   assert.deepEqual(savedRestaurant(env).menu, board.menu);
 });
+
+test('physically loaded bound board survives a transient missing POI index entry', async () => {
+  const env = await mainFixture();
+  const block = place(env, 'ordertocook:board', { x: 4, y: 0, z: 0 });
+  const board = env.store.getStation(block);
+  board.ownerId = env.player.id;
+  board.menu = [{ typeId: 'minecraft:bread', nutrition: 11, label: '已載入的立牌' }];
+  env.store.saveStation(board);
+  env.restaurant.active = false;
+  env.store.saveRestaurant(env.restaurant);
+  env.hooks.tickRestaurants();
+  assert.equal(savedRestaurant(env).boardId, board.id);
+
+  const query = env.dimension.poiManager.blocks.getInSquare;
+  env.dimension.poiManager.blocks.getInSquare = (filter, ...args) =>
+    filter.name === 'ordertocook:board' ? [] : query(filter, ...args);
+  env.hooks.tickRestaurants();
+  assert.equal(savedRestaurant(env).boardId, board.id);
+  assert.deepEqual(savedRestaurant(env).menu, board.menu);
+  env.dimension.poiManager.blocks.getInSquare = query;
+});
