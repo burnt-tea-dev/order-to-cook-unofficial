@@ -99,7 +99,19 @@ async function run(mode) {
       test('unfinished meal restores canonical token and original clock', meal?.token === expected.meal?.token && meal?.startedAt === expected.meal?.startedAt && meal?.finishAt === expected.meal?.finishAt);
       const visuals = dim.getEntities({ type: DINING_ENTITY }).filter(entity => entity.getDynamicProperty(MEAL_TOKEN) === meal?.token);
       test('restart reconciles exactly one dirty visual', visuals.length === 1 && visuals[0].getProperty('ordertocook:stage') === meal?.variant * 4 + 4 && meal?.status === 'dirty');
-      test('restart does not respawn the finished meal customer', !dim.getEntities({ type: 'ordertocook:customer' }).some(entity => entity.getDynamicProperty('ordertocook:order_id') === meal?.id));
+      // A customer remains legitimately visible until the persisted departure
+      // deadline. Immediately checking at a variable server-start timestamp
+      // makes this probe flaky; assert uniqueness first, then a bounded check
+      // after the original deadline without extending or rewriting that clock.
+      const customersForMeal = () => dim.getEntities({ type: 'ordertocook:customer' })
+        .filter(entity => entity.getDynamicProperty('ordertocook:order_id') === meal?.id);
+      test('restart never duplicates a completed meal customer before its deadline',
+        customersForMeal().length <= 1, String(customersForMeal().length));
+      const remainingMs = Math.max(0, Number(meal?.finishAt ?? 0) - Date.now());
+      await WAIT(Math.max(10, Math.min(160, Math.ceil(remainingMs / 50) + 10)));
+      test('finished customer departs after its persisted deadline without respawning',
+        customersForMeal().length === 0,
+        JSON.stringify({ remainingMsAtCheck: Math.max(0, Number(meal?.finishAt ?? 0) - Date.now()), actors: customersForMeal().length }));
       const player = makePlayer(dim, storage.getComponent('minecraft:inventory').container);
       player.location = { ...meal.location, y: meal.location.y - 1 };
       const before = countItem([player.getComponent('minecraft:inventory').container], 'ordertocook:dirty_plate');
