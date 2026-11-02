@@ -224,3 +224,36 @@ test('POI menu rebinding persists across restart even with an inactive restauran
   assert.equal(persisted.boardId, '');
   assert.deepEqual(persisted.menu, [], 'removed POI board must not resurrect its menu after reload');
 });
+
+test('an unloaded previously bound POI board preserves the saved menu until it returns', async () => {
+  const env = await mainFixture();
+  const block = place(env, 'ordertocook:board', { x: 3, y: 0, z: 1 });
+  const board = env.store.getStation(block);
+  board.ownerId = env.player.id;
+  board.menu = [{ typeId: 'minecraft:bread', label: '保存中的麵包', nutrition: 6 }];
+  env.store.saveStation(board);
+  env.restaurant.active = false;
+  env.store.saveRestaurant(env.restaurant);
+  env.hooks.tickRestaurants();
+  const saved = savedRestaurant(env);
+  assert.equal(saved.boardId, board.id);
+
+  const originalGetBlock = env.dimension.getBlock;
+  env.dimension.getBlock = position => {
+    if (position.x === block.location.x && position.y === block.location.y && position.z === block.location.z) {
+      throw Error('board chunk temporarily unloaded');
+    }
+    return originalGetBlock(position);
+  };
+  silenceWarning(() => env.hooks.tickRestaurants());
+  assert.equal(env.restaurant.boardId, board.id, 'missing chunk is not a removed board');
+  assert.deepEqual(savedRestaurant(env).menu, saved.menu);
+  assert.equal(savedRestaurant(env).boardId, board.id);
+
+  env.dimension.getBlock = originalGetBlock;
+  board.menu = [{ typeId: 'minecraft:carrot', label: '已恢復的菜品', nutrition: 7 }];
+  env.store.saveStation(board);
+  env.hooks.tickRestaurants();
+  assert.equal(savedRestaurant(env).boardId, board.id);
+  assert.deepEqual(savedRestaurant(env).menu, board.menu);
+});
