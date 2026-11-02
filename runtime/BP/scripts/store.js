@@ -124,11 +124,16 @@ function persist(prefix, records, value, prepare = undefined) {
     manifest = { __otcParts: true, id, buffer: previous?.buffer === 'a' ? 'b' : 'a', parts: chunks.length };
     manifestJson = JSON.stringify(manifest);
     for (let index = 0; index < chunks.length; index++) {
-      world.setDynamicProperty(chunkKey(key, manifest.buffer, index), chunks[index]);
+      const partKey = chunkKey(key, manifest.buffer, index);
+      world.setDynamicProperty(partKey, chunks[index]);
+      // Native setters return void. A silent drop must not publish a root that
+      // points to a missing chunk or erase the last complete buffer.
+      if (world.getDynamicProperty(partKey) !== chunks[index]) throw new Error('Saved record chunk write not confirmed');
     }
     // This one-property write commits the whole record. Before it, all readers
     // still use the old buffer; after it, every new chunk is already present.
     world.setDynamicProperty(key, manifestJson);
+    if (world.getDynamicProperty(key) !== manifestJson) throw new Error('Saved record manifest write not confirmed');
   } catch (error) {
     // A platform adapter can throw after applying a write. If the final root
     // really committed, keep cache and disk consistent instead of replaying it.
@@ -153,8 +158,11 @@ function remove(prefix, records, id) {
   const key = prefix + id;
   assertWritable(key);
   const previous = savedManifests.get(key);
-  try { world.setDynamicProperty(key, undefined); }
-  catch (error) {
+  try {
+    world.setDynamicProperty(key, undefined);
+    // Do not clear the only referenced chunks until the deletion is observed.
+    if (world.getDynamicProperty(key) !== undefined) throw new Error('Saved record deletion not confirmed');
+  } catch (error) {
     let removed = false;
     try { removed = world.getDynamicProperty(key) === undefined; } catch { /* unavailable world */ }
     if (!removed) {
