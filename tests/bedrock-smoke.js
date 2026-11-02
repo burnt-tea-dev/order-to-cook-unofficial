@@ -4,6 +4,7 @@
 import { world, system, ItemStack, ItemTypes, BlockPermutation, GameMode } from '@minecraft/server';
 import { getQaHooks } from './main.js';
 import { getRestaurant, saveRestaurant, getStation, saveStation, setBlockState } from './store.js';
+import { nearbyStationBlocks } from './station_poi.js';
 import { generateOrder } from './core.js';
 import { VANILLA_FOODS } from './config.js';
 import { coinBalance, countItem } from './inventory.js';
@@ -36,6 +37,26 @@ async function run(mode) {
     test('native ItemStack name and lore restored', item?.nameTag === 'Native parcel metadata' && item?.getLore()?.[0] === 'persistent native lore');
     const machine = dim.getBlock(restaurant.location);
     test('custom block restored across server restart', machine?.typeId === 'ordertocook:order_machine');
+
+    if (mode === 'upgrade') {
+      // These blocks were placed and saved by 0.1.2, before the POI definitions
+      // existed. Discover them after enabling POI and restarting 26.60, without
+      // replaying placement events or creating new ownership records.
+      for (const [kind, location] of [
+        ['board', { x: 1, y: 4, z: 0 }],
+        ['chair', { x: 2, y: 4, z: 3 }],
+        ['refrigerator', { x: 6, y: 4, z: 0 }]
+      ]) {
+        const oldBlock = dim.getBlock(location);
+        const indexed = nearbyStationBlocks(dim, location, 'ordertocook:' + kind, 1);
+        test('pre-POI ' + kind + ' is indexed after 0.1.2 upgrade without placement replay',
+          oldBlock?.typeId === 'ordertocook:' + kind &&
+          indexed.length === 1 &&
+          indexed[0].location.x === location.x &&
+          indexed[0].location.y === location.y &&
+          indexed[0].location.z === location.z);
+      }
+    }
     const fridge = dim.getBlock({ x: 6, y: 4, z: 0 });
     const fridgeInventory = hooks.appliances.getStorage(getStation(fridge));
     test('refrigerator native contents and name survive restart or upgrade', fridgeInventory?.getItem(0)?.typeId === 'minecraft:cooked_beef' && fridgeInventory.getItem(0)?.amount === 16 && fridgeInventory.getItem(0)?.nameTag === 'Native retained food');
