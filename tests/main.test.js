@@ -338,3 +338,21 @@ test('failed Lv.8 restaurant save refunds the upgrade and never creates a progre
   assert.equal(balance(env.player), 10000);
   assert.equal(env.hooks.progression.getState(env.player.id).unlocked.eight_star_restaurant, undefined);
 });
+
+test('the existing guide opens chapter, topic and lesson forms with reversible navigation', async () => {
+  const env = await mainFixture();
+  // cover -> start -> setup -> first lesson -> next -> previous -> topic
+  // -> cover -> close. No host-Cookery form is involved.
+  env.formResponses.push(0, 0, 0, 0, 0, 1, 3, 7);
+  await env.hooks.guideForm(env.player);
+  assert.equal(env.forms.length, 8);
+  const book = env.forms[0];
+  assert.equal(book[3].length, 8, 'six chapter buttons, credits and close');
+  assert.ok(JSON.stringify(book[1]).includes('Order To Cook'));
+  assert.ok(JSON.stringify(env.forms[1][1]).includes('otc.guide.chapter.start.title'));
+  assert.ok(JSON.stringify(env.forms[2][1]).includes('otc.guide.group.setup.title'));
+  assert.ok(JSON.stringify(env.forms[3][2]).includes('otc.guide.page.placing_station.step1'));
+  assert.ok(JSON.stringify(env.forms[4][2]).includes('otc.guide.page.first_menu.step3'));
+  assert.ok(JSON.stringify(env.forms[5][2]).includes('otc.guide.page.placing_station.step2'));
+  assert.ok(JSON.stringify(env.forms[7][2]).includes('otc.guide.ui.choose_chapter'));
+});
