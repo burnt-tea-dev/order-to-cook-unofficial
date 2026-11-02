@@ -42,3 +42,53 @@ export function matchesSenluoFoodSnapshot(stack, snapshot) {
   // In unsupported mode this checks the name only, not raw or opaque metadata.
   return current.status !== 'unreadable' && current.signature === snapshot.signature;
 }
+
+/** OTC-owned persisted requirement, not a new version of the Core carrier.
+ * undefined means a legacy ID-only dish; null means an invalid requirement.
+ * Never silently turn malformed variant requirements into generic dishes.
+ */
+export function normalizeFoodIdentity(value) {
+  if (value === undefined) return undefined;
+  if (!value || typeof value !== 'object' || Array.isArray(value) ||
+      value.carrier !== 'senluo.public.food.v1' ||
+      !Number.isInteger(value.nativeVariant) || value.nativeVariant < 0 || value.nativeVariant > 32767 ||
+      Object.keys(value).some(key => !['carrier', 'nativeVariant'].includes(key))) return null;
+  return { carrier: 'senluo.public.food.v1', nativeVariant: value.nativeVariant };
+}
+
+/** The V1 carrier supplies identity, not eligibility, nutrition or a price bonus. */
+export function snapshotMenuFood(stack, food) {
+  const snapshot = inspectSenluoFood(stack);
+  if (snapshot.status === 'unreadable') return undefined;
+  const variant = snapshot.status === 'valid' ? snapshot.state.nativeVariant : undefined;
+  return { ...food, ...(variant === undefined ? {} : {
+    foodIdentity: { carrier: 'senluo.public.food.v1', nativeVariant: variant }
+  }) };
+}
+
+export function menuFoodKey(food) {
+  const identity = normalizeFoodIdentity(food?.foodIdentity);
+  if (identity === null || typeof food?.typeId !== 'string') return '';
+  return JSON.stringify([food.typeId, identity?.nativeVariant ?? null]);
+}
+
+/** Generic and specific entries for the same item overlap; do not double-count them. */
+export function menuFoodsOverlap(left, right) {
+  if (typeof left?.typeId !== 'string' || left.typeId !== right?.typeId) return false;
+  const a = normalizeFoodIdentity(left.foodIdentity), b = normalizeFoodIdentity(right.foodIdentity);
+  return a !== null && b !== null && (!a || !b || a.nativeVariant === b.nativeVariant);
+}
+
+export function matchesFoodIdentity(snapshot, identity) {
+  const normalized = normalizeFoodIdentity(identity);
+  if (normalized === undefined) return true;
+  return normalized !== null && snapshot?.status === 'valid' &&
+    snapshot.state?.nativeVariant === normalized.nativeVariant;
+}
+
+/** Use the registered/quoted name, not a later global catalog or override value. */
+export function menuFoodLabel(food, fallback = '') {
+  const name = food.label || fallback || food.typeId;
+  const identity = normalizeFoodIdentity(food.foodIdentity);
+  return identity ? `${name} · 變體 ${identity.nativeVariant}` : name;
+}

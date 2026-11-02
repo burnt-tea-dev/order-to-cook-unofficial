@@ -1,6 +1,6 @@
 # 未發布：26.60 POI 工作站搜尋候選
 
-日期：2026-11-02（香港）。基於主線 `a118cd5a15cd02652b66d91a0524ca8c04cbbb03`。
+日期：2026-11-02（香港）。已合併最新主線 `d579e046da63a8078dc56ad69b1513a1d2c7da70`，保留菜單／訂單的 food variant 身分與名稱、營養快照。
 本頁對應未發布 `0.1.3-alpha.1` 候選來源；BP／RP 均升為 `[0,1,3]` 並保留 UUID，不重用 alpha.3 舊下載、舊雜湊或舊客戶端驗收。
 沒有發布 Release、部署 LIVE 或修改既有使用者世界。
 
@@ -39,7 +39,7 @@ API 依據：[PoiBlockManager](https://learn.microsoft.com/en-us/minecraft/creat
 
 ## 已完成驗證
 
-1. `npm run verify`：18個 Node 測試檔通過；官方26.60型別檢查通過；291份 JSON、12種方塊、5種實體、240份 geometry 的靜態檢查無錯；BP／RP／mcaddon 建置成功。
+1. `npm run verify`：20個 Node 測試檔通過；官方26.60型別檢查通過；291份 JSON、12種方塊、5種實體、240份 geometry 的靜態檢查無錯；BP／RP／mcaddon 建置成功。
 2. 新 `tests/station-poi.test.js` 的11例檢查範圍、排序、舊／卸載命中、冰箱下半、缺API啟動、canonical資料不變、before-event零POI存取，以及菜單／椅子查詢故障後的持久化與重試。
 3. `tests/entities.test.js` 共36例通過，含隨機空椅、升高邊界，以及單筆椅子查詢故障不走站立 fallback、不阻擋外送顧客重試。
 4. Python 幾何重建與 QA 世界保護測試共12例、compliance 與 release-policy 檢查通過。兩個既有 CI workflow 均執行 `test_*.py`，涵蓋新增7例 QA 世界保護；不代表畫面驗收。
@@ -50,7 +50,7 @@ API 依據：[PoiBlockManager](https://learn.microsoft.com/en-us/minecraft/creat
 最終來源的 `runtimeTreeSha256`：
 
 ```text
-cd7fa5e5d124f31ca5a30ef7ba6b356df81e738ebd7dfa469788bf54ec5d62f0
+44cc9c4321a4612aefd43cafc5eb2d48d9868cefc1206cb3c74102f83b0ecec0
 ```
 
 原生探針首輪在沒有玩家的 QA 世界未通過顧客生成前置條件；補上與既有 native harness 相同的附近玩家替身後，再對最終候選重跑10項全部通過。沒有為取得通過結果修改正式服務的玩家距離保護。
