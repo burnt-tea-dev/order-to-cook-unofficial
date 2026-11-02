@@ -153,6 +153,20 @@ export function makeEnvironment() {
     spawnItem(stack, location) { this.drops.push({ stack: stack.clone(), location: { ...location } }); },
     playSound(id) { this.sounds.push(id); }, spawnParticle() {},
   };
+  // Model the native index boundary, not persistent station records. These are
+  // API doubles; they do not certify engine indexing or chunk lifecycle behavior.
+  const poiHits = (filter, origin, radius, square) => [...dimension.blocks.values()]
+    .filter(block => block.typeId === filter.name)
+    .filter(block => {
+      const p = block.location, dx = p.x - origin.x, dy = p.y - origin.y, dz = p.z - origin.z;
+      return square ? Math.max(Math.abs(dx), Math.abs(dy), Math.abs(dz)) <= radius : dx * dx + dy * dy + dz * dz <= radius * radius;
+    })
+    // 26.60.6 returns a position but an undefined type despite its declarations.
+    .map(block => ({ position: { ...block.location }, type: undefined, tickets: 0 }));
+  dimension.poiManager = { blocks: {
+    getInRange: (filter, origin, radius) => poiHits(filter, origin, radius, false),
+    getInSquare: (filter, origin, radius) => poiHits(filter, origin, radius, true),
+  } };
   const gameSystem = {
     currentTick: 0, callbacks: [], intervals: [],
     run(fn) { this.callbacks.push(fn); return this.callbacks.length; },

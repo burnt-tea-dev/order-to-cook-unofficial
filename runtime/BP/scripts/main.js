@@ -23,6 +23,7 @@ import { createApplianceService } from './appliances.js';
 import { createDiningService, DINING_ENTITY } from './dining.js';
 import { progressRows } from './progression.js';
 import { createProgressionService, creditCompletedOrder, queueProgressEvent } from './progression_service.js';
+import { requireStationPoi, restaurantChairBlocks } from './station_poi.js';
 
 const PREFIX = 'ordertocook:';
 const ITEM_RESTAURANT = 'ordertocook:restaurant';
@@ -89,11 +90,10 @@ function foodFromStack(stack) {
 }
 function foodLabel(typeId) { return foodOverrides.get(typeId)?.label || foods.get(typeId)?.label || typeId; }
 function syncMenu(restaurant) {
-  const candidates = stations().filter(s => s.typeId === 'ordertocook:board' && s.dimensionId === restaurant.dimensionId &&
-    (!s.ownerId || s.ownerId === restaurant.ownerId || restaurant.staff?.includes(s.ownerId)) &&
-    Math.abs(s.location.x - restaurant.location.x) <= 24 && Math.abs(s.location.z - restaurant.location.z) <= 24 && Math.abs(s.location.y - restaurant.location.y) <= 8 &&
-    loadedBlock(s)?.typeId === s.typeId);
-  candidates.sort((a, b) => getMenuNutrition(b.menu) - getMenuNutrition(a.menu));
+  const candidates = nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:board', { shape: 'cylinder', halfHeight: 8 })
+    .filter(s => !s.ownerId || s.ownerId === restaurant.ownerId || restaurant.staff?.includes(s.ownerId));
+  candidates.sort((a, b) => getMenuNutrition(b.menu) - getMenuNutrition(a.menu) ||
+    distanceSquared(a.location, restaurant.location) - distanceSquared(b.location, restaurant.location));
   restaurant.menu = candidates[0]?.menu.map(food => ({ ...foodOverrides.get(food.typeId) || food })) || [];
   restaurant.boardId = candidates[0]?.id || '';
   synchronizeOfferRewards(restaurant);
@@ -226,7 +226,7 @@ function acceptWithTicket(player, restaurant, order) {
   if (freeSlot(containerOf(player)) < 0) { notify(player, '請空出一格背包收取訂單。'); return; }
   // Ordinary machine diners can use the upstream standing fallback. Only
   // independently arriving walk-ins require a restaurant chair to accept.
-  if (order.walkIn && order.type === 'dine_in' && !nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:chair').length) {
+  if (order.walkIn && order.type === 'dine_in' && !restaurantChairBlocks(world.getDimension(restaurant.dimensionId), restaurant.location).length) {
     notify(player, '到店顧客需要餐廳 24 格內有椅子。'); return;
   }
   const result = acceptOrder(restaurant, order.id);
@@ -783,20 +783,33 @@ function tickRestaurants() {
       let changed = expired.expired > 0;
       const machine = loadedBlock(restaurant);
       if (machine?.typeId === 'ordertocook:order_machine') {
-        syncMenu(restaurant);
+        let menuReady = false;
+        try { syncMenu(restaurant); menuReady = true; }
+        catch (error) {
+          // A transient POI failure must not bypass the expiry commit below.
+          // Keep the last menu and defer only new offers until discovery works.
+          console.warn(`[OrderToCook] Menu POI lookup deferred for ${restaurant.id}: ${String(error)}`);
+        }
         const living = restaurant.orders.filter(order => liveStatus.has(order.status)).length;
-        if (restaurant.active && restaurant.menu.length && living < 32 && now >= restaurant.nextRefreshAt) {
+        if (menuReady && restaurant.active && restaurant.menu.length && living < 32 && now >= restaurant.nextRefreshAt) {
           refreshOrders(restaurant, now);
           playAt(machine, 'order_refresh');
           changed = true;
         }
-        if (restaurant.active && restaurant.menu.length && living < 32 && now >= restaurant.nextWalkInAt) {
-          restaurant.nextWalkInAt = now + DEFAULT_CONFIG.walkInIntervalMs;
-          if (Math.random() < getWalkInChance(restaurant) && nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:chair').length) {
-            const order = generateWalkInOrder(restaurant, now);
-            entities.spawnCustomer(restaurant, order);
+        if (menuReady && restaurant.active && restaurant.menu.length && living < 32 && now >= restaurant.nextWalkInAt) {
+          let hasChair;
+          try { hasChair = restaurantChairBlocks(world.getDimension(restaurant.dimensionId), restaurant.location).length > 0; }
+          catch (error) { console.warn(`[OrderToCook] Walk-in POI lookup deferred for ${restaurant.id}: ${String(error)}`); }
+          // An unavailable index is distinct from a successful empty result.
+          // Do not advance the walk-in clock, and still save an earlier refresh.
+          if (hasChair !== undefined) {
+            restaurant.nextWalkInAt = now + DEFAULT_CONFIG.walkInIntervalMs;
+            if (Math.random() < getWalkInChance(restaurant) && hasChair) {
+              const order = generateWalkInOrder(restaurant, now);
+              entities.spawnCustomer(restaurant, order);
+            }
+            changed = true;
           }
-          changed = true;
         }
         const hasOrders = restaurant.orders.some(order => order.status === 'offered');
         setBlockState(machine, 'ordertocook:mode', restaurant.active && hasOrders ? 'waiting' : 'idle');
@@ -987,6 +1000,7 @@ world.afterEvents.weatherChange.subscribe(event => {
 
 world.afterEvents.worldLoad.subscribe(() => {
   try {
+    requireStationPoi(world.getDimension('overworld'));
     initStore();
     const rawSettings = world.getDynamicProperty('ordertocook:settings');
     if (typeof rawSettings === 'string') settings = { ...settings, ...JSON.parse(rawSettings) };
@@ -1022,7 +1036,7 @@ world.afterEvents.worldLoad.subscribe(() => {
     system.runInterval(() => { if (ready) dining.tick(); }, 5);
     system.runInterval(updateHud, 10);
     registerConfiguration();
-    console.warn('[OrderToCook] Bedrock alpha loaded. Stable API 2.0; no experimental toggles required.');
+    console.warn('[OrderToCook] Bedrock 26.60 POI candidate loaded. Beta APIs and Points of Interest experiments are required; engine acceptance is documented separately.');
   } catch (error) { console.error(`[OrderToCook] Initialization stopped; saved data was preserved. ${error}`); }
 });
 

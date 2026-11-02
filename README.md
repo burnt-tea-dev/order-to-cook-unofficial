@@ -1,6 +1,6 @@
 # Order To Cook／下單了 — 非官方基岩版移植
 
-**目前以 `0.1.2-alpha.3` 為開發基線：餐廳、外送、廚電、個人進度與設備 HUD 已有實作。已有部分客戶端驗收，仍有冰箱幾何、手洗粒子及進度灰字失敗紀錄，不能稱為完整 Java 等價版本。** [實機紀錄](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [未發布按鈕可讀性修正](docs/validation/UNRELEASED-button-contrast.md)
+**目前來源為未發布 `0.1.3-alpha.1` POI 候選，基於 `0.1.2-alpha.3` 後續主線開發。餐廳、外送、廚電、個人進度與設備 HUD 已有實作；既有客戶端紀錄仍有冰箱幾何、手洗粒子及進度灰字失敗，不能稱為完整 Java 等價版本。** [舊版實機紀錄](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [本候選驗證](docs/validation/UNRELEASED-poi-discovery.md)
 
 原作由 **breezeth** 製作：[CurseForge 官方頁面](https://www.curseforge.com/minecraft/mc-mods/order-to-cook) · [Java 原始碼](https://github.com/breezeth-CN/OrdertoCook)。本專案由 `casama233`／`burnt-tea-dev` 維護，保留上游 GPLv3、原作者署名及素材來源。補充素材範圍詢問尚未收到確認，現作非阻塞紀錄，不會因作者未回覆就停止功能開發；具體授權衝突仍須處理。
 
@@ -8,13 +8,15 @@
 
 本次變更不恢復先前撤下的舊封包、不建立正式 Release，也不將同版本的新來源假稱為已驗收的舊封包。歷史檔案狀態見 [artifacts/README.md](artifacts/README.md)。可由下方開發流程建置目前來源，輸出在 `dist/`；後續候選需標明自己的版本、commit、SHA-256 及實測範圍。
 
-本地測試請使用可棄置世界，同時啟用對應的行為包與資源包。宣告最低目標為 **Bedrock 1.21.100**，依賴穩定版 `@minecraft/server 2.0.0`、`@minecraft/server-ui 2.0.0`；不需要 Beta APIs 或 Upcoming Creator Features。這不是所有版本／裝置均已實測的聲明。首次加入會收到指南；也可用工作台合成指南及基本設備。
+`0.1.3-alpha.1` 的 BP／RP 版本均為 **0.1.3**，以 **Bedrock 26.60** 為最低目標，依賴 `@minecraft/server 2.12.0-beta`、`@minecraft/server-ui 2.0.0`，世界須同時啟用 **Beta APIs（測試版 API）** 與 **Points of Interest（興趣點／POI）**。請在可棄置世界同時啟用對應 BP／RP；舊 alpha.3 的客戶端驗收不涵蓋此候選。首次加入會收到指南；也可用工作台合成指南及基本設備。
+
+這次候選用引擎 POI 找立牌、椅子、冰箱及供應架，再核對已載入方塊與原有餐廳／工作站記錄。店主、員工、庫存、訂單和座位騎乘仍由原本單一資料來源管理；不另加私有覆蓋包。缺少 POI 能力時明確停止初始化並保留存檔，不會以「附近沒有設備」掩蓋設定錯誤。詳細變更與待實機項目見 [POI 候選驗證](docs/validation/UNRELEASED-poi-discovery.md)。
 
 原作者補充確認不再是全面發布門檻；原署名、GPL、對應源碼、來源雜湊與實際品質檢查仍保留。證據及政策見 [素材登記](docs/ASSET_LICENSE_REGISTER.md)、[第三方聲明](THIRD_PARTY_NOTICES.md) 與 [發布檢查](docs/RELEASE_COMPLIANCE.md)。本作品不代表原作者或 Mojang/Microsoft 背書。
 
-### 從 alpha.2／alpha.1 升級
+### 測試升級至 0.1.3-alpha.1
 
-先備份整個世界，再匯入 alpha.3，確認世界使用的行為包及資源包均為 **0.1.2**。兩包沿用既有 UUID；不要同時啟用舊版與新版副本。alpha.2 → alpha.3 的真實世界升級需由 dot 驗收，步驟在交接手冊中，不能沿用舊版測試結果。
+先備份整個世界，在可棄置副本匯入這次候選，確認世界使用的行為包及資源包均為 **0.1.3**，並啟用 Beta APIs 與 POI。兩包沿用既有 UUID；不要同時啟用舊版與新版副本。從 0.1.2 升級至此候選的完整真實世界驗收尚未完成；舊交接手冊的 alpha.2 → alpha.3 結果、版本及實驗設定不能直接沿用。
 
 個人進度從本功能開始記錄的交單結算起算。舊餐廳營業額沒有交餐玩家歸屬，不會自動當作店主或員工的歷史個人收入；餐廳既有等級、訂單、庫存與營業額仍使用原存檔。從 alpha.1 升級也包含 alpha.2 的持續髒盤行為，已完成訂單歷史不會憑空補發餐盤。需要回退時使用升級前的完整備份。
 
@@ -76,7 +78,7 @@
 ## 已做的驗證與界線
 
 - 歷史 alpha.3 有 **254 項**自動化測試；後續來源新增的測試以相應 commit 的 CI 結果為準。
-- `npm run check` 執行官方 stable 2.0.0 型別檢查及 JSON／geometry／動畫／圖標／recipe／custom component 驗證。
+- `npm run check` 執行官方 26.60 對應 `2.12.0-beta.1.26.60-stable` 型別檢查及 JSON／POI／geometry／動畫／圖標／recipe／custom component 驗證。
 - `npm run build` 建置 BP、RP、整合包及雜湊。一般驗證工作流程不發布封包；候選流程另行核對生成檔。
 - alpha.3 已有 [2026-11-01 限定客戶端紀錄](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md)，包含限定通過及三項 FAIL；不是整份驗收表通過。新來源修正必須使用新候選重測。
 - 歷史 alpha.2 的 127／15／12 原生斷言只適用其原始 runtime 指紋。鍵鼠、觸控、手把、真雙人、RP 畫面與表單不能由 CI 代填通過。
@@ -145,6 +147,11 @@ python tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode reload
 ```
 
 探針不隨正式安裝包啟用；它只會被測試工具注入一次性的測試副本。
+`initial` 會先啟動未掛載附加包的空白 QA 世界，正常停服後備份並設定
+Beta APIs（`gametest`）與 Points of Interest（`poi`），再載入附加包執行原生探針。
+`reload`／`upgrade` 也只接受工具標記的 `otc-qa` 世界，並在停服時確認這兩個旗標；
+工具會拒絕未標記的既有世界、其他世界、符號連結及仍在運行的同目錄 BDS。
+空白世界的產生與旗標設定不是探針通過；完整結果仍以 `native-<mode>.json` 為準。
 
 ## 原作版本與授權
 

@@ -7,13 +7,16 @@ saved-world restoration, not client rendering, menus, or keyboard/touch input.
 """
 from pathlib import Path
 import argparse
+import fcntl
 import hashlib
 import json
 import os
 import selectors
 import shutil
 import subprocess
+import threading
 import time
+from bedrock_qa_world import MARKER_TEXT, enable_required_experiments, validate_qa_runtime
 
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser()
@@ -22,34 +25,19 @@ parser.add_argument('--mode', choices=['initial', 'reload', 'upgrade'], default=
 parser.add_argument('--timeout', type=int, default=75)
 args = parser.parse_args()
 runtime = args.server_dir.resolve()
-if not (runtime / 'bedrock_server').is_file():
-    raise SystemExit('Provide a fresh extracted Linux Bedrock Dedicated Server directory.')
-existing = list((runtime / 'worlds').iterdir()) if (runtime / 'worlds').exists() else []
-if any(path.name != 'otc-qa' for path in existing):
-    raise SystemExit('Refusing to use a directory containing a non-QA world.')
-world = runtime / 'worlds' / 'otc-qa'
-marker = runtime / '.ordertocook-qa-runtime'
-if args.mode != 'initial' and not (world / 'level.dat').is_file():
-    raise SystemExit('Reload/upgrade requires an existing QA world from a successful initial run.')
+try:
+    world, marker = validate_qa_runtime(runtime, args.mode)
+except ValueError as error:
+    raise SystemExit(str(error)) from error
+runtime_lock = (runtime / '.ordertocook-qa-run.lock').open('a')
+try:
+    fcntl.flock(runtime_lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+except BlockingIOError:
+    raise SystemExit('Another QA runner is already using this runtime.')
 if args.mode == 'initial' and world.exists():
-    if not marker.exists():
-        raise SystemExit('Refusing to reset an unmarked existing QA world; use a fresh extracted server directory.')
     shutil.rmtree(world)
-marker.write_text('Disposable Order To Cook QA runtime.\n')
+marker.write_text(MARKER_TEXT)
 world.mkdir(parents=True, exist_ok=True)
-for short, kind in [('BP', 'behavior_packs'), ('RP', 'resource_packs')]:
-    destination = runtime / kind / 'otc'
-    if destination.exists():
-        shutil.rmtree(destination)
-    shutil.copytree(ROOT / 'runtime' / short, destination)
-    manifest = json.loads((destination / 'manifest.json').read_text())
-    if short == 'BP':
-        for probe in ['bedrock-smoke.js', 'bedrock-customer-checks.js']:
-            shutil.copyfile(ROOT / 'tests' / probe, destination / 'scripts' / probe)
-        (destination / 'scripts/qa-entry.js').write_text("import './main.js';\nimport './bedrock-smoke.js';\n")
-        next(module for module in manifest['modules'] if module['type'] == 'script')['entry'] = 'scripts/qa-entry.js'
-        (destination / 'manifest.json').write_text(json.dumps(manifest, indent=2))
-    (world / ('world_' + kind + '.json')).write_text(json.dumps([{'pack_id': manifest['header']['uuid'], 'version': manifest['header']['version']}]))
 (runtime / 'server.properties').write_text('''server-name=OrderToCook isolated QA
 level-name=otc-qa
 gamemode=creative
@@ -71,12 +59,67 @@ max-threads=2
 transport=nethernet
 ''')
 (runtime / 'allowlist.json').write_text('[]\n')
+env = dict(os.environ)
+env['LD_LIBRARY_PATH'] = str(runtime)
+if args.mode == 'initial':
+    # BDS creates the canonical level.dat first, with no addon attached. Only
+    # after a clean shutdown do we edit the two required experiment flags.
+    bootstrap = subprocess.Popen([str(runtime / 'bedrock_server')], cwd=runtime, stdin=subprocess.PIPE,
+                                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=env,
+                                 text=True, encoding='utf-8', errors='replace', bufsize=1)
+    bootstrap_lines = []
+    bootstrap_ready = threading.Event()
+
+    def read_bootstrap():
+        for line in bootstrap.stdout:
+            bootstrap_lines.append(line.rstrip('\r\n'))
+            if 'Server started.' in line:
+                bootstrap_ready.set()
+
+    reader = threading.Thread(target=read_bootstrap, daemon=True)
+    reader.start()
+    deadline = time.monotonic() + args.timeout
+    try:
+        while bootstrap.poll() is None and not bootstrap_ready.wait(0.25) and time.monotonic() < deadline:
+            pass
+        if bootstrap.poll() is None:
+            bootstrap.stdin.write('stop\n')
+            bootstrap.stdin.flush()
+            bootstrap.wait(timeout=10)
+    except subprocess.TimeoutExpired:
+        bootstrap.terminate()
+        bootstrap.wait(timeout=5)
+    finally:
+        if bootstrap.poll() is None:
+            bootstrap.kill()
+            bootstrap.wait(timeout=5)
+        reader.join(timeout=3)
+        (runtime / 'native-bootstrap.log').write_text('\n'.join(bootstrap_lines) + '\n', encoding='utf-8')
+    if not bootstrap_ready.is_set() or bootstrap.returncode != 0 or not (world / 'level.dat').is_file():
+        print('\n'.join(bootstrap_lines[-20:]))
+        raise SystemExit('QA world bootstrap did not stop cleanly; addon probe was not started.')
+try:
+    enable_required_experiments(runtime)
+except ValueError as error:
+    raise SystemExit('QA experiments were not changed: ' + str(error)) from error
+print('Stopped QA world prepared with Beta APIs (gametest) and Points of Interest (poi).', flush=True)
+for short, kind in [('BP', 'behavior_packs'), ('RP', 'resource_packs')]:
+    destination = runtime / kind / 'otc'
+    if destination.exists():
+        shutil.rmtree(destination)
+    shutil.copytree(ROOT / 'runtime' / short, destination)
+    manifest = json.loads((destination / 'manifest.json').read_text())
+    if short == 'BP':
+        for probe in ['bedrock-smoke.js', 'bedrock-customer-checks.js']:
+            shutil.copyfile(ROOT / 'tests' / probe, destination / 'scripts' / probe)
+        (destination / 'scripts/qa-entry.js').write_text("import './main.js';\nimport './bedrock-smoke.js';\n")
+        next(module for module in manifest['modules'] if module['type'] == 'script')['entry'] = 'scripts/qa-entry.js'
+        (destination / 'manifest.json').write_text(json.dumps(manifest, indent=2))
+    (world / ('world_' + kind + '.json')).write_text(json.dumps([{'pack_id': manifest['header']['uuid'], 'version': manifest['header']['version']}]))
 source_hash = hashlib.sha256()
 for path in sorted((ROOT / 'runtime').rglob('*')):
     if path.is_file():
         source_hash.update(path.relative_to(ROOT).as_posix().encode() + b'\0' + path.read_bytes())
-env = dict(os.environ)
-env['LD_LIBRARY_PATH'] = str(runtime)
 process = subprocess.Popen([str(runtime / 'bedrock_server')], cwd=runtime, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=env, bufsize=0)
 selector = selectors.DefaultSelector()
 selector.register(process.stdout, selectors.EVENT_READ)
@@ -142,6 +185,7 @@ if report is None:
     raise SystemExit('Native probe did not produce its completion report; see disposable server log.')
 pack_version = json.loads((ROOT / 'package.json').read_text())['version']
 report.update({'addonVersion': pack_version, 'serverVersion': version, 'runtimeTreeSha256': source_hash.hexdigest(), 'addonErrors': addon_errors,
+               'requiredWorldExperiments': ['gametest', 'poi'],
                'scope': 'Native server blocks, entities, inventory and script adapters. No real Player, client rendering, forms, touch/keyboard, or multiplayer latency is exercised.'})
 report['passed'] = report['passed'] and not addon_errors
 output = ROOT / 'docs/validation' / pack_version

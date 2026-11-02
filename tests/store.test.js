@@ -30,7 +30,8 @@ const world = {
 `;
 let fixtureId = 0;
 async function fixture(properties = new Map()) {
-  const source = storeSource.replace(importLine, worldAdapter) +
+  const source = storeSource.replace(importLine, worldAdapter)
+    .replace("'./station_poi.js'", JSON.stringify(new URL('../runtime/BP/scripts/station_poi.js', import.meta.url).href)) +
     `\nexport { world as testWorld };\n// fixture ${++fixtureId}`;
   const api = await import('data:text/javascript;base64,' + Buffer.from(source).toString('base64'));
   api.testWorld.properties = new Map(properties);

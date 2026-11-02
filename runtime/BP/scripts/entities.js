@@ -3,6 +3,7 @@
 import { ButtonState, InputButton, ItemStack, system, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { containerCapacity, dropContainerContents, itemLabel, openContainerForm, playerInventory } from "./appliances.js";
+import { restaurantChairBlocks } from "./station_poi.js";
 
 const NS = "ordertocook:";
 const CUSTOMER = `${NS}customer`;
@@ -228,22 +229,21 @@ export function createEntityService(ctx) {
   }
 
   function findChair(restaurant) {
-    const choices = (ctx.stations?.() ?? []).filter(station =>
-      station.typeId === CHAIR && station.dimensionId === restaurant.dimensionId &&
-      horizontalDist2(station.location, restaurant.location) <= 24 ** 2 &&
-      Math.abs(station.location.y - restaurant.location.y) <= 8);
-    choices.sort((a, b) => dist2(a.location, restaurant.location) - dist2(b.location, restaurant.location));
-    for (const candidate of choices) {
+    const choices = restaurantChairBlocks(gameWorld.getDimension(restaurant.dimensionId), restaurant.location);
+    const eligible = [];
+    for (const block of choices) {
       try {
-        const block = gameWorld.getDimension(candidate.dimensionId).getBlock(candidate.location);
         if (block?.typeId !== CHAIR || chairClaims.has(chairKey(block))) continue;
         if (chairOccupied(block)) continue;
         const above = block.dimension.getBlock({ ...block.location, y: block.location.y + 1 });
         const head = block.dimension.getBlock({ ...block.location, y: block.location.y + 2 });
-        if (above?.isAir && head?.isAir) return block;
+        if (above?.isAir && head?.isAir) eligible.push(block);
       } catch { /* A candidate can unload between the lookup and head checks. */ }
     }
-    return undefined;
+    if (eligible.length < 2) return eligible[0];
+    // Pinned Java OrderNpcManager.findEmptyChair chooses a random free chair.
+    // A POI ticket does not prove that a rider exists, so keep rider validation.
+    return eligible[Math.min(eligible.length - 1, Math.floor((ctx.random?.() ?? Math.random()) * eligible.length))];
   }
 
   /** Ground checks read loaded blocks only, never tickingarea/structure commands. */
@@ -309,7 +309,15 @@ export function createEntityService(ctx) {
         if (!oldDimension.getBlock(order.customerAnchor.location)) return undefined;
       } catch { return undefined; }
     }
-    const chair = order.type === "dine_in" ? findChair(restaurant) : undefined;
+    let chair;
+    try { chair = order.type === "dine_in" ? findChair(restaurant) : undefined; }
+    catch (error) {
+      // An unavailable index is not evidence that the restaurant has no chairs.
+      // Preserve the accepted order and retry without choosing the standing
+      // fallback or aborting the remaining customers in this tick.
+      console.warn(`[OrderToCook] Customer POI lookup deferred: ${String(error)}`);
+      return undefined;
+    }
     // Java walk-ins require a free chair. An accepted machine order instead
     // permits a nearby standing customer when every chair is missing/occupied.
     if (order.type === "dine_in" && order.walkIn && !chair) return undefined;

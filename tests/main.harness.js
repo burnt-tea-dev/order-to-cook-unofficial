@@ -9,8 +9,9 @@ const scripts = new URL('../runtime/BP/scripts/', import.meta.url);
 const signal = () => ({ subscriptions: [], subscribe(fn) { this.subscriptions.push(fn); return fn; } });
 const signals = () => new Proxy({}, { get(target, name) { return target[name] ||= signal(); } });
 
-export async function mainFixture() {
+export async function mainFixture({ withoutPoi = false, prepareRestaurant = true } = {}) {
   const env = makeEnvironment();
+  if (withoutPoi) delete env.dimension.poiManager;
   const properties = new Map();
   env.world.getDynamicPropertyIds = () => [...properties.keys()];
   env.world.getDynamicProperty = id => properties.get(id);
@@ -68,6 +69,7 @@ export async function mainFixture() {
   const store = await import(await moduleUrl('store.js'));
   const core = await import(await moduleUrl('core.js'));
   const hooks = main.getQaHooks();
+  if (!prepareRestaurant) return { ...env, hooks, store, core, player, properties };
   const machine = place(env, 'ordertocook:order_machine', { x: 0, y: 0, z: 0 });
   const chair = place(env, 'ordertocook:chair', { x: 2, y: 0, z: 2 }, { 'minecraft:cardinal_direction': 'south' });
   const restaurant = hooks.getMachine(player, machine);

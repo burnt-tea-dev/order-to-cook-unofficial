@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Stable pack UUID + an atomic manifest per station/restaurant. Never erase bad data.
 import { world } from '@minecraft/server';
+import { nearbyStationBlocks } from './station_poi.js';
 
 const REST = 'ordertocook:r:';
 const STATION = 'ordertocook:s:';
@@ -206,10 +207,15 @@ export function loadedBlock(record) {
   catch { return undefined; }
 }
 export function distanceSquared(a, b) { return (a.x - b.x) ** 2 + (a.y - b.y) ** 2 + (a.z - b.z) ** 2; }
-export function nearbyStations(dimensionId, location, radius, typeId) {
-  return stations().filter(s => s.dimensionId === dimensionId && (!typeId || s.typeId === typeId) && distanceSquared(s.location, location) <= radius * radius && loadedBlock(s)?.typeId === s.typeId);
+// Ordinary execution only. POI candidates join the existing canonical records;
+// discovering a block must not create/reset its owner, inventory or menu.
+export function nearbyStations(dimensionId, location, radius, typeId, options = {}) {
+  return nearbyStationBlocks(world.getDimension(dimensionId), location, typeId, radius, options)
+    .map(block => findStation(block)).filter(s => s?.typeId === typeId && s.dimensionId === dimensionId);
 }
 export function nearestRestaurant(block, radius = 24) {
+  // Used by beforeOnPlayerPlace/playerBreakBlock to cancel synchronously.
+  // POI queries cannot run in restricted execution; keep this canonical lookup.
   return restaurants().filter(r => r.dimensionId === block.dimension.id && distanceSquared(r.location, block.location) <= radius * radius && loadedBlock(r)?.typeId === 'ordertocook:order_machine')
     .sort((a, b) => distanceSquared(a.location, block.location) - distanceSquared(b.location, block.location))[0];
 }

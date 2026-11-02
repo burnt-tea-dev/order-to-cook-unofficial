@@ -1,0 +1,100 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "exact candidate main entry initialized",
+      "passed": true
+    },
+    {
+      "name": "five tickets-zero native POI definitions return positions",
+      "passed": true
+    },
+    {
+      "name": "native shelf candidates are nearest-first",
+      "passed": true,
+      "detail": [
+        {
+          "z": 0,
+          "y": 70,
+          "x": 2
+        },
+        {
+          "z": 0,
+          "y": 70,
+          "x": 5
+        }
+      ]
+    },
+    {
+      "name": "native locations join unchanged canonical supply metadata",
+      "passed": true
+    },
+    {
+      "name": "upper refrigerator index hit does not duplicate its inventory",
+      "passed": true,
+      "detail": [
+        {
+          "z": 0,
+          "y": 70,
+          "x": 8
+        }
+      ]
+    },
+    {
+      "name": "native chair search includes elevated horizontal edge",
+      "passed": true,
+      "detail": [
+        {
+          "z": 2,
+          "y": 70,
+          "x": 2
+        },
+        {
+          "z": 0,
+          "y": 78,
+          "x": 24
+        }
+      ]
+    },
+    {
+      "name": "native chair search excludes square corner and Y beyond eight",
+      "passed": true
+    },
+    {
+      "name": "native menu selection excludes the richer square corner and breaks ties by distance",
+      "passed": true,
+      "detail": "overworld_3_70_2"
+    },
+    {
+      "name": "native rider uses Java random free-chair selection and preserved elevated geometry",
+      "passed": true,
+      "detail": {
+        "z": 0,
+        "y": 78,
+        "x": 24
+      }
+    },
+    {
+      "name": "native removal no longer returns a usable supply",
+      "passed": true
+    }
+  ],
+  "dateHongKong": "2026-11-02",
+  "serverVersion": "1.26.60.6",
+  "baseCommit": "a118cd5a15cd02652b66d91a0524ca8c04cbbb03",
+  "experiments": [
+    "gametest",
+    "poi"
+  ],
+  "scope": "Real blocks, POI index, entities and riders in a disposable BDS world; player proximity is simulated, with no real Player, client input, GUI or multiplayer test.",
+  "probeSource": "tests/bedrock-poi-checks.js",
+  "version": "0.1.3-alpha.1",
+  "packVersion": [
+    0,
+    1,
+    3
+  ],
+  "runtimeTreeSha256": "cd7fa5e5d124f31ca5a30ef7ba6b356df81e738ebd7dfa469788bf54ec5d62f0",
+  "probeSha256": "170d640e21799d10470d4192e14c5634b702a9c0de1506b1973f903ec6f2a017",
+  "addonErrors": []
+}
