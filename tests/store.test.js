@@ -177,6 +177,60 @@ test('a root commit failure leaves the previous complete snapshot readable', asy
   assert.deepEqual((await reload(api)).stations(), [before]);
 });
 
+test('silent chunk write rejection cannot publish a manifest pointing to missing food inventory', async () => {
+  const api = await fixture(); api.initStore();
+  const value = largeStation(); api.saveStation(value);
+  const saved = structuredClone(value), key = rootKey(value);
+  const rootBefore = api.testWorld.properties.get(key);
+  const previous = manifestOf(api, value);
+  const next = previous.buffer === 'a' ? 'b' : 'a';
+  value.supplies = 42;
+  let suppressed = false;
+  api.testWorld.afterWrite = ({ key: writeKey }, world) => {
+    if (writeKey === key + ':part:' + next + ':0') {
+      world.properties.delete(writeKey);
+      suppressed = true;
+    }
+  };
+  assert.throws(() => api.saveStation(value), /chunk write not confirmed/);
+  assert.equal(suppressed, true);
+  assert.equal(api.testWorld.properties.get(key), rootBefore);
+  assert.deepEqual(api.stations(), [saved]);
+  assert.deepEqual((await reload(api)).stations(), [saved]);
+});
+
+test('silent restaurant root commit rejection retains the old order ledger and live chunks', async () => {
+  const api = await fixture(); api.initStore();
+  const value = createRestaurant({ id: 'overworld_0_64_0' }, 1000);
+  value.orders = [{ id: 'order_1', status: 'accepted', reward: 7 }];
+  api.saveRestaurant(value);
+  const saved = structuredClone(value), key = rootKey(value, 'r');
+  const rootBefore = api.testWorld.properties.get(key);
+  value.orders[0].status = 'completed';
+  value.stats.earnings = 7;
+  api.testWorld.afterWrite = ({ key: writeKey }, world) => {
+    if (writeKey === key) world.properties.set(key, rootBefore);
+  };
+  assert.throws(() => api.saveRestaurant(value), /manifest write not confirmed/);
+  assert.equal(api.testWorld.properties.get(key), rootBefore);
+  assert.deepEqual(api.getRestaurant(value.id), saved);
+  assert.deepEqual((await reload(api)).getRestaurant(value.id), saved);
+});
+
+test('silent station root deletion rejection never removes the only surviving inventory chunks', async () => {
+  const api = await fixture(); api.initStore();
+  const value = largeStation(); api.saveStation(value);
+  const original = new Map(api.testWorld.properties), key = rootKey(value);
+  const rootBefore = api.testWorld.properties.get(key);
+  api.testWorld.afterWrite = ({ key: writeKey, value: next }, world) => {
+    if (writeKey === key && next === undefined) world.properties.set(key, rootBefore);
+  };
+  assert.throws(() => api.deleteStation(value), /deletion not confirmed/);
+  assert.deepEqual(api.testWorld.properties, original);
+  assert.deepEqual(api.stations(), [value]);
+  assert.deepEqual((await reload(api)).stations(), [value]);
+});
+
 test('a first-save interruption cannot expose a partial new record on reload', async () => {
   const api = await fixture();
   api.initStore();
