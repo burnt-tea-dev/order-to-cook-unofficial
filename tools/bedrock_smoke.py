@@ -118,7 +118,7 @@ for short, kind in [('BP', 'behavior_packs'), ('RP', 'resource_packs')]:
         entries = ["import './main.js';", "import './bedrock-smoke.js';"]
         if args.mode == 'initial':
             entries.append("import './bedrock-poi-checks.js';")
-        (destination / 'scripts/qa-entry.js').write_text('\\n'.join(entries) + '\\n')
+        (destination / 'scripts/qa-entry.js').write_text('\n'.join(entries) + '\n')
         next(module for module in manifest['modules'] if module['type'] == 'script')['entry'] = 'scripts/qa-entry.js'
         (destination / 'manifest.json').write_text(json.dumps(manifest, indent=2))
     (world / ('world_' + kind + '.json')).write_text(json.dumps([{'pack_id': manifest['header']['uuid'], 'version': manifest['header']['version']}]))
