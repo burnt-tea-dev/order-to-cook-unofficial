@@ -9,7 +9,7 @@
 - 候選來源 runtimeTreeSha256：**62500a0d5938f35c749ea77ae47ab4d2ccd1d5c046e10617a84d8bf021773184**（僅代表 runtime tree，不是 .mcaddon 的 SHA256）。最新 Actions 驗證應與實際檢出來源樹再核對，源碼有改動時不得照抄此值。
 - **沒有獲確認的新版公開下載檔名／安裝包 SHA256。** 不得使用已撤下的 alpha.3 安裝包，不得把 GitHub Source ZIP 當 .mcaddon。dot 應從**同一精確 commit**本機打包，記錄輸出檔名、大小及自行實算 SHA256；若做不到，所有客戶端案例記「阻塞：未固定安裝包」，不要自行猜測。
 - 建置指令（隔離 checkout）：先執行 npm ci --ignore-scripts，再執行 npm run verify；輸出位於 dist/，再對實際 .mcaddon 計算 sha256sum（Windows 使用 Get-FileHash）。兩份 BP/RP 必須同版本；不要同時啟用舊版同 UUID 包。
-- 目前已執行的 [原生 BDS workflow](https://github.com/burnt-tea-dev/order-to-cook-unofficial/actions/workflows/native-bds.yml) 僅證明有限伺服器能力：先前為 POI 10／10、初次 127／127、重啟 15／15、舊世界升級 19／19；**本交接文件不代填真人、視覺或雙人測試通過**。開始前再確認所測 commit 的 workflow 都成功；若有 FAIL，先記阻塞原因。
+- 目前已執行的 [原生 BDS workflow](https://github.com/burnt-tea-dev/order-to-cook-unofficial/actions/workflows/native-bds.yml) 僅證明有限伺服器能力：目前已得 POI 10／10、初次 127／127、同世界重啟 19／19、舊世界升級 19／19；**本交接文件不代填真人、視覺或雙人測試通過**。開始前再確認所測 commit 的 workflow 都成功；若有 FAIL，先記阻塞原因。
 
 ## 2. 測試世界與執行順序
 

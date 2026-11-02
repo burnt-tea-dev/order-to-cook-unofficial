@@ -67,7 +67,7 @@ API 依據：[PoiBlockManager](https://learn.microsoft.com/en-us/minecraft/creat
 ## 最新完整來源：自動化原生 BDS 與舊存檔升級（2026-11-02）
 
 - 新增 [原生 CI 工作流程](../../.github/workflows/native-bds.yml)：只從 Minecraft 官方下載固定 **BDS 1.26.60.6**，在 GitHub runner 的兩個不同一次性目錄測試；不存取 luosen、不上傳 BDS 執行檔／完整世界，也不以測試替身冒充真客戶端。
-- 當前 `0.1.3-alpha.1` 來源：全新世界 **127／127**、同候選重啟 **15／15**，以及自動載入 `tests/bedrock-poi-checks.js` 的原生 POI **10／10** 全通過。新增 runner 明確要求每次 `initial` 都有本次 `OTC_POI_REPORT`；缺報告會 FAIL，不可沿用舊報告。當次 `runtimeTreeSha256` 為 `62500a0d5938f35c749ea77ae47ab4d2ccd1d5c046e10617a84d8bf021773184`。
+- 當前 `0.1.3-alpha.1` 來源：全新世界 **127／127**、同候選重啟 **19／19**（包含再次載入的 POI 菜單、工作站保存與已移除架子四項檢查），以及自動載入 `tests/bedrock-poi-checks.js` 的原生 POI **10／10** 全通過。新增 runner 明確要求每次 `initial` 都有本次 `OTC_POI_REPORT`；缺報告會 FAIL，不可沿用舊報告。當次 `runtimeTreeSha256` 為 `62500a0d5938f35c749ea77ae47ab4d2ccd1d5c046e10617a84d8bf021773184`。
 - 舊世界路徑：從**固定公開來源提交** `d579e046da63a8078dc56ad69b1513a1d2c7da70`（`0.1.2-alpha.3`）實際安裝舊 BP／RP 於第二個獨立 BDS，先完成原生 **127／127**，正常停服保留該世界，再使用本 PR 現行 `0.1.3-alpha.1` 包升級與啟用 Beta APIs＋POI。升級後 **19／19** 通過：餐廳統計、原生保存的具名物品與冰箱內容、洗碗機、未完成餐點 token／時鐘、單次餐盤領取；額外確認三個舊世界已放置的立牌、椅子、冰箱**不用重新放置就被原生 POI 正確索引**。
 - 最新 `npm run verify`：**353／353 Node 斷言通過**（`station-poi.test.js` 15 例），Python QA 保護、型別、靜態資產及建置亦通過。兩套原生報告皆由 runner 對照執行時**真實來源樹 SHA256**，無 addonErrors。完整執行： [GitHub Actions #41393774400](https://github.com/burnt-tea-dev/order-to-cook-unofficial/actions/runs/41393774400)。報告在 Actions artifact；倉庫內較早的 `native-*.json` 仍是保留的**歷史**來源報告，不可拿來冒充本次的測試。
 - 這些是伺服器原生方塊、實體、庫存、POI 及保存資料證據，並非客戶端表單、觸控／鍵盤、真人雙人搶椅、完整家族整合或 TPS 實測。`client=false`、`production_ready=false`；維持 Draft，不發布／合併／部署。

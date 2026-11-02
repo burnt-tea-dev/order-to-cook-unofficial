@@ -30,6 +30,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Preflight syntax-check native QA entry modules
+        run: |
+          node --check tests/bedrock-smoke.js
+          node --check tests/bedrock-poi-checks.js
+          node --check tests/bedrock-customer-checks.js
       - name: Fetch official pinned Bedrock 1.26.60.6 for isolated QA
         env:
           BDS_DIR: ${{ runner.temp }}/otc-bds
