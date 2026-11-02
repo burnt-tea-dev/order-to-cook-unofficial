@@ -1,5 +1,7 @@
 # 未發布：26.60 POI 工作站搜尋候選
 
+> 待 dot 驗收：請依 [0.1.3-alpha.1 專用清單](0.1.3-alpha.1/DOT_POI_ACCEPTANCE.md) 與 [報告模板](0.1.3-alpha.1/DOT_POI_REPORT_TEMPLATE.md) 操作；文件及原生 BDS 結果不預填真人 PASS。
+
 日期：2026-11-02（香港）。已合併最新主線 `d579e046da63a8078dc56ad69b1513a1d2c7da70`，保留菜單／訂單的 food variant 身分與名稱、營養快照。
 本頁對應未發布 `0.1.3-alpha.1` 候選來源；BP／RP 均升為 `[0,1,3]` 並保留 UUID，不重用 alpha.3 舊下載、舊雜湊或舊客戶端驗收。
 沒有發布 Release、部署 LIVE 或修改既有使用者世界。
