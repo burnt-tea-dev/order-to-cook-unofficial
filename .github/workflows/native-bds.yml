@@ -35,18 +35,43 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$BDS_DIR"
-          curl --fail --silent --show-error --location --retry 2 --retry-all-errors \
-            --connect-timeout 20 --max-time 150 \
+          curl --http1.1 --user-agent 'Mozilla/5.0' --fail --silent --show-error --location --retry 3 --retry-all-errors \
+            --connect-timeout 20 --max-time 180 \
             'https://www.minecraft.net/bedrockdedicatedserver/bin-linux/bedrock-server-1.26.60.6.zip' \
             -o "${{ runner.temp }}/bedrock-1.26.60.6.zip"
           unzip -tq "${{ runner.temp }}/bedrock-1.26.60.6.zip"
           unzip -q "${{ runner.temp }}/bedrock-1.26.60.6.zip" -d "$BDS_DIR"
           test -f "$BDS_DIR/bedrock_server"
           chmod +x "$BDS_DIR/bedrock_server"
+      - name: Exclude previous commit's native evidence from this run
+        run: |
+          rm -f docs/validation/0.1.3-alpha.1/native-initial.json
+          rm -f docs/validation/0.1.3-alpha.1/native-reload.json
       - name: Native QA on a brand-new isolated world
         run: python tools/bedrock_smoke.py --server-dir "${{ runner.temp }}/otc-bds" --mode initial --timeout 120
       - name: Native QA after saving and restarting the exact same world
         run: python tools/bedrock_smoke.py --server-dir "${{ runner.temp }}/otc-bds" --mode reload --timeout 120
+      - name: Verify both reports belong to this exact source and Bedrock build
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib
+          import json
+
+          root = Path('runtime')
+          fingerprint = hashlib.sha256()
+          for path in sorted(root.rglob('*')):
+              if path.is_file():
+                  fingerprint.update(path.as_posix().encode() + b'\\0' + path.read_bytes())
+          expected = fingerprint.hexdigest()
+          reports = [json.loads(Path('docs/validation/0.1.3-alpha.1/native-' + mode + '.json').read_text())
+                     for mode in ('initial', 'reload')]
+          for report in reports:
+              assert report['passed'] and not report['addonErrors']
+              assert report['runtimeTreeSha256'] == expected
+              assert '1.26.60.6' in report['serverVersion'], report['serverVersion']
+          print('Both native reports verified for this checkout:', expected)
+          PY
       - name: Retain native evidence, never publish the server binary or world
         if: always()
         uses: actions/upload-artifact@v4
