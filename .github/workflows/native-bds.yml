@@ -70,6 +70,9 @@ jobs:
               assert report['passed'] and not report['addonErrors']
               assert report['runtimeTreeSha256'] == expected
               assert '1.26.60.6' in report['serverVersion'], report['serverVersion']
+          assert reports[0]['poiPassed']
+          assert len(reports[0]['poiChecks']) == 10
+          assert all(check['passed'] for check in reports[0]['poiChecks'])
           print('Both native reports verified for this checkout:', expected)
           PY
       - name: Check out pinned 0.1.2-alpha.3 source for a real upgrade

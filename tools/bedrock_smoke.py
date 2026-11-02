@@ -110,9 +110,15 @@ for short, kind in [('BP', 'behavior_packs'), ('RP', 'resource_packs')]:
     shutil.copytree(ROOT / 'runtime' / short, destination)
     manifest = json.loads((destination / 'manifest.json').read_text())
     if short == 'BP':
-        for probe in ['bedrock-smoke.js', 'bedrock-customer-checks.js']:
+        probes = ['bedrock-smoke.js', 'bedrock-customer-checks.js']
+        if args.mode == 'initial':
+            probes.append('bedrock-poi-checks.js')
+        for probe in probes:
             shutil.copyfile(ROOT / 'tests' / probe, destination / 'scripts' / probe)
-        (destination / 'scripts/qa-entry.js').write_text("import './main.js';\nimport './bedrock-smoke.js';\n")
+        entries = ["import './main.js';", "import './bedrock-smoke.js';"]
+        if args.mode == 'initial':
+            entries.append("import './bedrock-poi-checks.js';")
+        (destination / 'scripts/qa-entry.js').write_text('\\n'.join(entries) + '\\n')
         next(module for module in manifest['modules'] if module['type'] == 'script')['entry'] = 'scripts/qa-entry.js'
         (destination / 'manifest.json').write_text(json.dumps(manifest, indent=2))
     (world / ('world_' + kind + '.json')).write_text(json.dumps([{'pack_id': manifest['header']['uuid'], 'version': manifest['header']['version']}]))
@@ -130,6 +136,7 @@ stopping = False
 lines = []
 pending = b''
 report = None
+poi_report = None
 version = ''
 addon_errors = []
 def command(text):
@@ -160,6 +167,10 @@ try:
                     print(line, flush=True)
                     if 'OTC_NATIVE_FATAL' in line and not stopping:
                         command('stop'); stopping = True
+                if 'OTC_POI_REPORT ' in line:
+                    raw_json = line.split('OTC_POI_REPORT ', 1)[1]
+                    poi_report = json.loads(raw_json[:raw_json.rfind('}') + 1])
+                    print(f"Native POI probe: {sum(c['passed'] for c in poi_report['checks'])}/{len(poi_report['checks'])} passed", flush=True)
                 if 'OTC_NATIVE_REPORT ' in line:
                     raw_json = line.split('OTC_NATIVE_REPORT ', 1)[1]
                     report = json.loads(raw_json[:raw_json.rfind('}') + 1])
@@ -188,6 +199,11 @@ report.update({'addonVersion': pack_version, 'serverVersion': version, 'runtimeT
                'requiredWorldExperiments': ['gametest', 'poi'],
                'scope': 'Native server blocks, entities, inventory and script adapters. No real Player, client rendering, forms, touch/keyboard, or multiplayer latency is exercised.'})
 report['passed'] = report['passed'] and not addon_errors
+if args.mode == 'initial':
+    # A missing POI report is a test failure, not an omitted or old test run.
+    report['poiChecks'] = poi_report['checks'] if poi_report else []
+    report['poiPassed'] = bool(poi_report and poi_report['passed'] and len(poi_report['checks']) == 10)
+    report['passed'] = report['passed'] and report['poiPassed']
 output = ROOT / 'docs/validation' / pack_version
 output.mkdir(exist_ok=True, parents=True)
 (output / f'native-{args.mode}.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
