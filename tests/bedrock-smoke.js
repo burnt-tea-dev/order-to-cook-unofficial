@@ -43,10 +43,16 @@ async function run(mode) {
     const washer = dim.getBlock({ x: 10, y: 4, z: 0 });
     test('finished dishwasher retains all plates across restart or upgrade', getStation(washer).appliance?.plates === 16 && getStation(washer).appliance?.phase === 5);
     test('finished dishwasher loads new final frame permutation', washer.permutation.getState('ordertocook:frame') === 15);
-    if (mode === 'upgrade') {
+    if (mode === 'upgrade' && !expected.meal) {
+      // Older alpha.1 QA worlds had no unfinished meal; retain the original
+      // acceptance branch, separate from the actual 0.1.2 upgrade scenario.
       test('saved baseline is alpha.1 QA schema', !expected.addonVersion && !expected.meal);
       test('completed alpha.1 history does not mint a new dirty plate', !(restaurant.pendingDishes || []).length && !dim.getEntities({ type: DINING_ENTITY }).length);
     } else {
+      // A 0.1.2-alpha.3 world has the same genuine in-flight meal as the
+      // unchanged-source reload case. Check its persisted token, exact clock,
+      // one visual, and one-time dirty-plate collection after upgrading.
+      if (mode === 'upgrade') test('upgrade source has an unfinished legacy meal', !!expected.meal);
       const meal = restaurant.pendingDishes?.find(entry => entry.id === expected.meal?.id);
       test('unfinished meal restores canonical token and original clock', meal?.token === expected.meal?.token && meal?.startedAt === expected.meal?.startedAt && meal?.finishAt === expected.meal?.finishAt);
       const visuals = dim.getEntities({ type: DINING_ENTITY }).filter(entity => entity.getDynamicProperty(MEAL_TOKEN) === meal?.token);
