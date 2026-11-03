@@ -2,7 +2,57 @@
 
 Date: 2026-11-03. Unreleased source change; no Release or LIVE operation.
 
-## Baseline and scope
+## Completion follow-up on PR #18
+
+This follow-up extends initial commit `f2982a3189f37ca688e193266f67c638684bb970`.
+The initial 349-test record below is retained as history; the current revision
+has **359 passing Node tests** and the completed food/drink coverage described
+here. The final published head and CI run are recorded on
+[PR #18](https://github.com/burnt-tea-dev/order-to-cook-unofficial/pull/18).
+
+| Current check | Result | Scope |
+| --- | --- | --- |
+| `npm run verify` | PASS — 359 Node tests, stable API typecheck, 286 JSON resource validations, local build | Full production source including all catalog, provider and drink regressions |
+| Catalog/provider/drink focused tests | 26/26 PASS | 10 catalog cases, 9 provider/runtime cases, 7 drink/runtime cases |
+| Supplier item-set comparison | PASS — 72 drinks, 282 unique physical IDs | Matches the complete previously unsupported drink set; each ID exists in its pinned supplier and has an actual drink-consumption path |
+
+The three newly included positive foods are secret skewers (with two hand-ID
+aliases), skewer plates and Sichuan pepper, each using Java base nutrition **1**.
+The initial exclusion of secret skewers/plates was over-conservative: Java OTC
+reads no-argument `Item.getFoodProperties()`, not the stack-aware eating overload.
+No private ingredient or plate parsing is needed for that rule. Pepper is
+harvestable and now eligible for OTC service; its supplier's handheld-eating
+component gap remains outside this change.
+
+The **72 zero-nutrition drinks / 282 physical IDs** use the explicit
+`servingKind: 'drink'` menu extension. Java's positive-nutrition gate is documented,
+not claimed as parity. The regression suite covers quality alias deduplication,
+drink-only order generation, zero progression/hunger-bonus contribution, original
+base service rewards, fridge/backpack preparation, delivery/replay, accepted and
+packed cancellations, provider changes while a picker is open, and fresh
+production-store JSON reload alongside legacy food entries. Unknown zero-value
+food/tools are still rejected.
+
+The resulting Senluo catalog has **67 positive foods / 331 nutrition** and
+**72 drinks**, with **139 menu identities / 425 physical IDs**. Including vanilla
+gives 107 positive foods plus 72 drinks, total nutrition **490**, or **470** without
+the expired wedding candy. All 107 positive foods fit within the unchanged
+150-template capacity; Lv.8 still requires **600**. The two excluded items are a
+recipe book and a processing ingredient, not missing food support.
+
+World Liquor Java 1.1.12 independently confirms all four fallback snacks at
+nutrition 5. Its conditional fallback registration differs from standalone
+Twilight's values; the latter are not substituted. Official artifact IDs,
+checksums, source methods and the drink-consumption audit are recorded in
+[UNRELEASED-drinks-source-audit.md](UNRELEASED-drinks-source-audit.md).
+
+The local build's runtime fingerprint is
+`de59c4fff817b962a265876a112212769420a904c683f04c0e212dbc791417e5`.
+No native BDS, real cross-pack announcement, old player-world restart, rendered
+client, supplier crafting chain or multiplayer acceptance was run in this
+follow-up. The initial native/client limitations below continue to apply.
+
+## Initial revision: baseline and scope
 
 Started from main `eaf593d330b24405c09f068dec531f5fdc09a12f`, which already
 contains merged PR #10's V1 variant/menu/order flow. Before submission, main
@@ -16,11 +66,11 @@ manifest/UUID, save-owner or world-property-key change is included.
 
 Primary Java rules and the intentionally retained Bedrock native-variant
 extension are documented in [FOOD-PROVIDERS.md](../FOOD-PROVIDERS.md). Supplier
-revisions, every added food and every unsupported drink are documented in
+revisions and the complete food/drink inventory are documented in
 [FOOD-CATALOG.md](../FOOD-CATALOG.md). Pins are evidence, not new installation
 version locks.
 
-## Executed verification
+## Initial revision: executed verification
 
 | Check | Result | Meaning |
 | --- | --- | --- |
@@ -44,7 +94,7 @@ the PR; local success does not stand in for remote CI success. The build above
 is a local verification output using the existing development package version,
 not a newly published or redistributed same-version candidate.
 
-## Player-visible scenarios covered
+## Initial revision: player-visible scenarios covered
 
 - Held Grilling lamb skewer enters the board from the real shipped catalog
   without administrator registration or a mocked food component. Base,
@@ -69,7 +119,11 @@ not a newly published or redistributed same-version candidate.
   accepted/packed/cancelled orders survive without a provider registry or load
   writes. This is a storage-module reload, not an engine restart.
 
-## Nutrition and remaining support gaps
+## Initial revision: nutrition and then-open gaps
+
+The following is the original revision's result. The completion follow-up above
+supersedes its secret-skewer/plate/pepper and drink exclusions and resolves the
+World Liquor Java fallback nutrition question.
 
 The catalog adds 64 canonical foods with 328 nutrition, recognizing 138 physical
 IDs after the 74 aliases. Together with vanilla, the table has 104 dishes and

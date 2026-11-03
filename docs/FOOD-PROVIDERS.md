@@ -7,14 +7,14 @@ nutrition and saved order requirements. No shared JavaScript singleton between
 behavior packs, private host API, player override, family recipe or fixed pack
 order is required.
 
-The built-in [audited catalog](FOOD-CATALOG.md) already recognizes Grilling's
-fixed foods, Tavern grapes and 世界名酒 snacks. Players install the supplying
-addon, obtain its food and use the usual board interaction; they do **not** run
+The built-in [audited catalog](FOOD-CATALOG.md) recognizes 67 positive-nutrition
+Grilling/Tavern/世界名酒 foods and 72 zero-nutrition drinks. Players install the
+supplying addon, obtain its food or drink and use the usual board interaction; they do **not** run
 one administrator command per dish. The board still registers a held/backpack
 sample without consuming it. Uninstalled items are never generated or inserted
 into a menu by the catalog.
 
-## Java rule and the existing Bedrock extension
+## Java rule and the Bedrock extensions
 
 Pinned Java OTC 1.3.7a
 [`MenuFoodCompatApi.resolve`](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/api/MenuFoodCompatApi.java)
@@ -24,6 +24,9 @@ item's base food properties, not a stack quality multiplier or saturation.
 [`BoardBlockEntity.tryAddTemplate`](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/BoardBlockEntity.java)
 deduplicates Java Item IDs and counts one portion per template. Consequently
 Grilling's Bedrock animation IDs and quality IDs represent the **same dish**.
+Secret skewers and skewer plates both have base nutrition **1** in Java. Their
+stack-aware eating properties do not replace the no-argument Item properties
+that OTC reads, so OTC does not sum their private ingredients or plate contents.
 
 Already-merged [PR #10](https://github.com/burnt-tea-dev/order-to-cook-unofficial/pull/10)
 adds genuine recipe `nativeVariant` identities and quoted menu/order snapshots.
@@ -32,6 +35,16 @@ Java's pinned generator carries Item IDs. This change preserves the extension
 while requiring a provider to declare actual recipe variants. Known fixed foods
 do not gain extra identities from arbitrary V1 metadata.
 
+Zero-nutrition drink service is another explicit Bedrock extension. Java's
+`Result.allowed()`, board and order pool require positive nutrition. The audited
+drinks instead declare `servingKind: 'drink', nutrition: 0`, allowing them into
+menus and orders without inventing hunger points. A drink contributes zero to
+menu progression and the hunger portion of rewards; existing base service,
+rush/delivery and settlement rules still apply. Quality, alcohol and effects do
+not introduce a separate reward multiplier. The
+[source audit](validation/UNRELEASED-drinks-source-audit.md) records actual drink
+consumption and container-return paths, including the six juice buckets.
+
 Lookup order for newly selected items:
 
 1. Existing exact-ID administrator `ordertocook:food` overrides, including old
@@ -39,10 +52,11 @@ Lookup order for newly selected items:
 2. Live provider declaration, then the built-in audited catalog for that item.
 3. The existing vanilla table and readable positive native food component.
 
-Known zero-nutrition drinks, unresolved dynamic foods and nonfood use-trigger
-items do not receive invented values from the native fallback. A later explicit
-provider can support them with a sourced, positive food rule. The protocol is a
-cooperative installed-addon contract, not authentication of food or metadata.
+Unknown zero-nutrition items and nonfood use-trigger items still cannot enter a
+menu through the native fallback. A provider must explicitly identify a real
+drink to declare zero nutrition; ordinary food still requires a sourced positive
+value. The protocol is a cooperative installed-addon contract, not
+authentication of food or metadata.
 
 ## Message contract
 
@@ -66,6 +80,12 @@ publishes a batch:
       "nativeVariant": 7,
       "nutrition": 6,
       "label": "Example bowl recipe"
+    },
+    {
+      "typeId": "example_foods:bottled_drink",
+      "nutrition": 0,
+      "servingKind": "drink",
+      "label": "Example drink"
     }
   ]
 }
@@ -78,10 +98,11 @@ Use the actual supplier's edible output, recipe and nutrition facts.
 | --- | --- |
 | `v` | Exactly `1`; does not change the Core food carrier version. |
 | `provider` | The item namespace this addon owns. `minecraft` and `ordertocook` are reserved; existing administrator overrides remain available. |
-| `foods` | Batch of positive food declarations. Every canonical ID and alias must belong to `provider`. |
+| `foods` | Batch of food/drink declarations. Every canonical ID and alias must belong to `provider`. |
 | `replace` | Optional boolean. `true` replaces this provider's live declarations before applying the batch. Otherwise batches upsert by canonical ID plus optional variant. An empty replacement withdraws live declarations, leaving built-in defaults and all saved menus/orders intact. |
-| `typeId` | Canonical dish ID. This and its aliases must represent the same real food. |
-| `nutrition` | Explicit integer `1..10000`, in hunger points. No inferred quality, heat, seasoning or price multiplier. |
+| `typeId` | Canonical dish/drink ID. This and its aliases must represent the same real consumable. |
+| `nutrition` | Explicit integer `1..10000` for ordinary food, or `0..10000` when `servingKind` is `drink`, in hunger points. No inferred quality, heat, seasoning or price multiplier. |
+| `servingKind` | Optional literal `drink`. Required for zero nutrition; omit for ordinary food. Unknown values are rejected. Declaring a drink does not change its actual eating/drinking components or container behavior. |
 | `label` | Optional display name, at most 100 characters; otherwise the ID. |
 | `aliases` | Optional additional physical item IDs for that dish. An alias cannot belong to two different canonical dishes in a provider catalog. |
 | `nativeVariant` | Optional integer `0..32767` identifying a specific recipe in valid public V1 item metadata. Omit for a fixed dish. |
@@ -144,12 +165,12 @@ OTC, no consumer receives the event. API evidence is the pinned official
 
 ## Menu, order, preparation and save behavior
 
-New menu entries snapshot `{typeId, nutrition, label, aliases?, foodIdentity?}`.
+New menu entries snapshot `{typeId, nutrition, label, servingKind?, aliases?, foodIdentity?}`.
 Orders copy that data. Extraction matches the **saved** canonical/alias IDs and
 the saved recipe variant, then uses the existing raw-lore/name preflight and
 native stack clones. It never rebuilds foreign food or reads another addon's
 private properties. A provider update during the inventory picker rejects a
-changed name, nutrition, alias set or recipe; the player selects again.
+changed name, nutrition, serving kind, alias set or recipe; the player selects again.
 
 Heat, quality and seasoning are preserved during extraction rollback, but are
 not part of the recipe identity or additional payment. Cooling a matching dish
@@ -157,7 +178,8 @@ does not invalidate its order. Menu nutrition counts each dish once, independent
 of held stack size and the number of presentation IDs.
 
 Old menu/order entries without `aliases` keep their original exact-ID matching;
-old V1 identities remain supported. The new catalog does not rewrite, clear or
+old V1 identities remain supported. Entries without `servingKind` retain the
+positive-nutrition food rule. The new catalog does not rewrite, clear or
 refill saved restaurant menus. An old alias entry prevents adding its new
 canonical dish as a duplicate. To adopt the new equivalent-ID policy for an old
 menu entry, remove and re-add that one dish; existing accepted orders keep their
@@ -171,11 +193,15 @@ saved food that was uninstalled is not fabricated; the original requirement
 remains visible. Existing supplies, preparation rollback, cancellation and
 single-payment delivery rules continue to own their operations.
 
-The full fixed catalog totals 487 with vanilla, or 467 without the expired-event
-wedding candy, before other supplier acquisition gaps. Java Lv.8 remains 600.
-[FOOD-CATALOG.md](FOOD-CATALOG.md) lists every supported food, exact unsupported
-drink ID and acquisition limitation. This is food supply wiring, not stove
-recipe, Cookery guide, currency, dynamic plate or secret-skewer implementation.
+The catalog has 107 positive-nutrition foods including vanilla, totaling 490,
+or 470 without the expired-event wedding candy, before other supplier
+acquisition gaps. The 72 drinks add zero nutrition; Java Lv.8 remains 600.
+There are 179 available templates, and a board still holds at most 150 selected
+templates. [FOOD-CATALOG.md](FOOD-CATALOG.md) lists every supported food/drink ID,
+the two deliberately excluded nonfood items and acquisition limitations.
+Sichuan pepper is menu-eligible at Java nutrition 1; its supplier-side handheld
+eating gap remains documented. Stove recipes, Cookery guide, currency and the
+supplier's dynamic plate/secret-skewer processes retain their existing behavior.
 
 Verification for this source change is recorded in
 [UNRELEASED-food-catalog.md](validation/UNRELEASED-food-catalog.md).

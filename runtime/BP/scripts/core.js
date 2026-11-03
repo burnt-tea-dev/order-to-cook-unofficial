@@ -83,11 +83,15 @@ export function normalizeMenu(menu, capacity = MENU_CAPACITY) {
     })) continue;
     const vanilla = VANILLA_FOOD_BY_ID[typeId];
     const nutrition = integer(entry.nutrition ?? vanilla?.nutrition, 0, 0, 10000);
-    if (nutrition <= 0) continue;
+    const drink = entry.servingKind === 'drink';
+    // A declared zero-nutrition drink can be served without increasing hunger
+    // points. Do not turn missing/invalid/negative values into a zero drink.
+    if (nutrition <= 0 && !(drink && entry.nutrition === 0)) continue;
     const food = {
       typeId,
       nutrition,
       label: String(entry.label || vanilla?.label || typeId).slice(0, 100),
+      ...(drink ? { servingKind: 'drink' } : {}),
       ...(foodIdentity ? { foodIdentity } : {}),
       ...(aliases?.length ? { aliases } : {})
     };
@@ -308,6 +312,7 @@ function makeOrder(restaurant, now, rng, walkIn) {
     amount: 1 + Math.floor(unit(rng) * TIER_MAX_COUNTS[tier]),
     nutrition: food.nutrition,
     label: food.label,
+    ...(food.servingKind === 'drink' ? { servingKind: 'drink' } : {}),
     ...(food.foodIdentity ? { foodIdentity: { ...food.foodIdentity } } : {}),
     ...(food.aliases ? { aliases: [...food.aliases] } : {})
   }));

@@ -97,8 +97,14 @@ assigned before packaging this runtime as a distributable candidate.
 
 Food catalog/nutrition registration is now implemented by the separate OTC-owned
 provider contract; PR #10's menu/order snapshots are extended with equivalent-ID
-snapshots. These are no longer pending reader work. Remaining work includes
-dynamic secret-skewer/plate nutrition, unsupported beverages, recipe
-ownership/station routing, any actual currency-provider integration, and safe guide extension only after
-inspecting the exact Cookery host contract and preserving its original hierarchy.
+and optional drink-kind snapshots. Secret skewers and plates use Java OTC's
+no-argument Item food properties (base nutrition 1), without interpreting private
+ingredient or plate payloads. The 72 audited drinks (282 physical IDs) can be
+served at nutrition 0 through an explicit Bedrock extension; they do not gain
+hunger bonuses or quality multipliers. See [FOOD-CATALOG.md](FOOD-CATALOG.md)
+and [FOOD-PROVIDERS.md](FOOD-PROVIDERS.md) for the completed supply wiring.
+Remaining work includes supplier-side handheld pepper eating, recipe
+ownership/station routing, any actual currency-provider integration, and safe
+guide extension only after inspecting the exact Cookery host contract and
+preserving its original hierarchy.
 Do not label the whole T1 phase, full Senluo interoperability or Java parity complete.

@@ -312,10 +312,10 @@ async function boardForm(player, block) {
   if (currentFood && !player.isSneaking) {
     const result = addMenuFood(station, currentFood);
     saveStation(station);
-    notify(player, result.ok ? `已加入 ${menuFoodLabel(currentFood)}，不消耗手中食品。菜單總營養 ${getMenuNutrition(station.menu)}。` : result.reason === 'duplicate_food' ? '菜單已有這道菜或同 ID 的通用菜品；要改用指定變體，請先移除通用菜品。' : reasonText(result.reason));
+    notify(player, result.ok ? `已加入 ${menuFoodLabel(currentFood)}，不消耗手中物品。菜單總營養 ${getMenuNutrition(station.menu)}。` : result.reason === 'duplicate_food' ? '菜單已有這道菜或同 ID 的通用菜品；要改用指定變體，請先移除通用菜品。' : reasonText(result.reason));
     return;
   }
-  const selection = await choose(player, '菜單立牌', `${station.menu.length}/150 道菜 · 總營養 ${getMenuNutrition(station.menu)}\n用食品點擊可直接加入，空手／蹲下點擊開啟管理。`, ['從背包新增菜品', '查看／移除菜品', '關閉']);
+  const selection = await choose(player, '菜單立牌', `${station.menu.length}/150 道菜 · 總營養 ${getMenuNutrition(station.menu)}\n用食品或飲品點擊可直接加入，空手／蹲下點擊開啟管理。`, ['從背包新增菜品', '查看／移除菜品', '關閉']);
   if (selection === undefined || !validStationAction(player, block, station)) return;
   if (selection === 0) {
     const inventory = containerOf(player);
@@ -329,14 +329,15 @@ async function boardForm(player, block) {
       }
     }
     const options = [...available.values()];
-    if (!options.length) { notify(player, '背包沒有新的可識別食品。特殊食品可由管理員註冊虛擬營養。'); return; }
-    const index = await choose(player, '新增菜品', '只建立菜單範本，不消耗物品。公開變體會分開辨識；不鎖定熱度、品質或調味。', options.map(({ food }) => `${menuFoodLabel(food)} · 營養 ${food.nutrition}`));
+    if (!options.length) { notify(player, '背包沒有新的可識別食品或飲品。'); return; }
+    const index = await choose(player, '新增菜品', '只建立菜單範本，不消耗物品。營養 0 的飲品也可供應訂單；不鎖定熱度、品質或調味。', options.map(({ food }) => `${menuFoodLabel(food)}${food.servingKind === 'drink' ? ' · 飲品' : ''} · 營養 ${food.nutrition}`));
     if (index === undefined || !validStationAction(player, block, station)) return;
     const selected = options[index];
     const stack = selected && inventory.getItem(selected.slot);
     const current = stack && foodFromStack(stack);
     if (!selected || !current || stack.typeId !== selected.typeId || menuFoodKey(current) !== menuFoodKey(selected.food) ||
         current.nutrition !== selected.food.nutrition || current.label !== selected.food.label ||
+        current.servingKind !== selected.food.servingKind ||
         JSON.stringify(current.aliases) !== JSON.stringify(selected.food.aliases) ||
         !matchesSenluoFoodSnapshot(stack, selected.snapshot)) {
       notify(player, '選取的食品或資料已改變，請重新開啟菜單。'); return;

@@ -3,6 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createFoodCatalog, connectFoodCatalog, FOOD_CATALOG_EVENT, FOOD_CATALOG_REQUEST } from '../runtime/BP/scripts/food_catalog.js';
 import { SENLUO_FOODS, SENLUO_UNSUPPORTED_IDS } from '../runtime/BP/scripts/senluo_food_catalog.js';
+import { SENLUO_DRINKS } from '../runtime/BP/scripts/senluo_drink_catalog.js';
 import { VANILLA_FOODS, UPGRADE_NUTRITION } from '../runtime/BP/scripts/config.js';
 import { normalizeMenu, addMenuFood, getMenuNutrition, createRestaurant, upgradeRestaurant, getUpgradeQuote } from '../runtime/BP/scripts/core.js';
 
@@ -14,21 +15,21 @@ const publish = (catalog, foods, other = {}) => catalog.register({ v: 1, provide
 
 test('audited catalog improves the original 159 without lowering Java upgrade requirements', () => {
   assert.equal(getMenuNutrition(VANILLA_FOODS), 159);
-  assert.equal(SENLUO_FOODS.length, 64);
-  assert.equal(getMenuNutrition(SENLUO_FOODS), 328);
-  assert.equal(new Set(SENLUO_FOODS.flatMap(f => [f.typeId, ...(f.aliases || [])])).size, 138);
-  assert.equal(SENLUO_UNSUPPORTED_IDS.length, 289);
+  assert.equal(SENLUO_FOODS.length, 67);
+  assert.equal(getMenuNutrition(SENLUO_FOODS), 331);
+  assert.equal(new Set(SENLUO_FOODS.flatMap(f => [f.typeId, ...(f.aliases || [])])).size, 143);
+  assert.deepEqual(SENLUO_UNSUPPORTED_IDS, ['kaleidoscope_grilling:skewer_recipe_book', 'kaleidoscope_grilling:sweet_potato_powder']);
   const catalog = createFoodCatalog();
   const menu = [...VANILLA_FOODS, ...SENLUO_FOODS.map(f => catalog.resolve(stack(f.typeId)).food)];
   const restaurant = createRestaurant({ menu });
-  assert.equal(restaurant.menu.length, 104);
-  assert.equal(getMenuNutrition(restaurant), 487);
+  assert.equal(restaurant.menu.length, 107);
+  assert.equal(getMenuNutrition(restaurant), 490);
   for (let level = 1; level <= 7; level++) assert.equal(upgradeRestaurant(restaurant).ok, true);
   assert.equal(restaurant.level, 7);
   assert.deepEqual(UPGRADE_NUTRITION, [0, 40, 80, 120, 160, 200, 300, 400, 600]);
   assert.equal(getUpgradeQuote(restaurant).requiredNutrition, 600);
   assert.equal(upgradeRestaurant(restaurant).reason, 'menu_nutrition');
-  assert.equal(getMenuNutrition(menu.filter(f => f.typeId !== 'kaleidoscope_grilling:wedding_candy')), 467);
+  assert.equal(getMenuNutrition(menu.filter(f => f.typeId !== 'kaleidoscope_grilling:wedding_candy')), 470);
 });
 
 test('real food aliases are one dish; quality, heat and fabricated V1 variants add no nutrition', () => {
@@ -103,12 +104,54 @@ test('food declarations require positive sourced nutrition and unambiguous owned
     assert.equal(catalog.resolve(stack('test:new')).known, false);
   }
   assert.throws(() => publish(catalog, [food('test:other', 7, { aliases: ['test:meal'] })]));
-  for (const typeId of ['kaleidoscope_grilling:secret_skewer', 'kaleidoscope_grilling:skewer_plate',
-    'kaleidoscope_tavern:wine_q1', 'kaleidoscope_world_liquor:cola']) {
+  for (const typeId of SENLUO_UNSUPPORTED_IDS) {
     const result = catalog.resolve(stack(typeId, { quality: 0, nativeVariant: 1 }));
     assert.equal(result.known, true); assert.equal(result.food, undefined);
   }
   assert.equal(catalog.resolve(stack('test:tool')).known, false);
+});
+
+test('secret skewers, plates and harvested pepper use the exact Java OTC base nutrition', () => {
+  const catalog = createFoodCatalog();
+  for (const id of ['secret_skewer', 'secret_skewer_native_plain', 'secret_skewer_java_three_alt', 'skewer_plate', 'sichuan_pepper']) {
+    const result = catalog.resolve(stack('kaleidoscope_grilling:' + id, {
+      nativeVariant: 123, quality: 0, hotUntil: 99999, seasoning: ['test:salt']
+    }));
+    assert.equal(result.known, true); assert.equal(result.food.nutrition, 1);
+    assert.equal(result.food.foodIdentity, undefined, 'Java OTC identifies the item, not its private ingredients');
+  }
+});
+
+test('all 282 audited drink IDs resolve to 72 zero-nutrition menu drinks without quality duplication', () => {
+  const catalog = createFoodCatalog(), menu = { menu: [] }, ids = new Set();
+  assert.equal(SENLUO_DRINKS.length, 72);
+  for (const declared of SENLUO_DRINKS) {
+    const canonical = catalog.resolve(stack(declared.typeId)).food;
+    assert.equal(canonical.servingKind, 'drink'); assert.equal(canonical.nutrition, 0);
+    assert.equal(addMenuFood(menu, canonical).ok, true);
+    for (const id of [declared.typeId, ...(declared.aliases || [])]) {
+      assert.equal(ids.has(id), false); ids.add(id);
+      const result = catalog.resolve(stack(id, { quality: 3, nativeVariant: 42 })).food;
+      assert.deepEqual(result, canonical);
+      assert.equal(addMenuFood(menu, result).reason, 'duplicate_food');
+    }
+  }
+  assert.equal(ids.size, 282); assert.equal(menu.menu.length, 72);
+  assert.equal(getMenuNutrition(menu), 0);
+});
+
+test('zero nutrition requires an explicit drink declaration, and invalid numbers cannot become zero drinks', () => {
+  const catalog = createFoodCatalog();
+  publish(catalog, [food('test:tea', 0, { servingKind: 'drink', label: '茶' })]);
+  assert.equal(catalog.resolve(stack('test:tea')).food.servingKind, 'drink');
+  for (const nutrition of [-1, NaN, undefined, '0', 0.5]) {
+    assert.throws(() => publish(catalog, [food('test:bad', nutrition, { servingKind: 'drink' })]));
+    assert.deepEqual(normalizeMenu([food('test:bad', nutrition, { servingKind: 'drink' })]), []);
+  }
+  assert.throws(() => publish(catalog, [food('test:tool', 0)]));
+  assert.throws(() => publish(catalog, [food('test:tool', 0, { servingKind: 'tool' })]));
+  assert.deepEqual(normalizeMenu([food('test:tool', 0)]), []);
+  assert.equal(normalizeMenu([food('test:tea', 0, { servingKind: 'drink' })]).length, 1);
 });
 
 test('boot announcement and request/reply both work without world access or pack-order dependencies', () => {

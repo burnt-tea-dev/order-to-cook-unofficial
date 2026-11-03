@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Optional suppliers: these definitions never make an absent addon mandatory.
-// Grilling main 389b9b5cdfafae631f84d6b66cd30fe82cfdf0a2, data/java/foods.json
+// Grilling main 7ba0c6ac0461f56d4de4d4aafd15baaddedc05af, data/java/foods.json
 // pins Java 1.1.1 9a1acdab27698457bec16c9362678e574895a28c (NeoForge).
 // OTC Java uses the Item's base food nutrition. Eating-duration and cuisine
 // quality IDs below alias that Item; heat, seasoning and quality add no bonus.
@@ -59,6 +59,13 @@ const GRILLING = [
   ["red_sweet_potato_porridge", 14, "紅苕稀飯"],
   ["roasted_chicken_wing", 5, "烤雞翅"],
   ["roasted_sweet_potato", 6, "烤番薯"],
+  // Java OTC reads the Item's base food properties, not stack-aware eating
+  // nutrition. Secret ingredients and plate contents therefore remain 1.
+  ["secret_skewer", 1, "秘製烤串", ["_native_plain", "_java_three_alt"]],
+  // Java registers this edible ingredient at 1. Bedrock harvests the real ID;
+  // its missing handheld eating component does not change OTC menu nutrition.
+  ["sichuan_pepper", 1, "花椒"],
+  ["skewer_plate", 1, "烤串盤"],
   ["sour_spicy_noodles", 10, "酸辣粉"],
   ["sugared_tomato", 6, "糖拌番茄"],
   ["sweet_potato", 3, "番薯"],
@@ -90,92 +97,9 @@ export const SENLUO_FOODS = Object.freeze([
   ...FRUIT_AND_SNACKS.map(([typeId, nutrition, label]) => Object.freeze({ typeId, nutrition, label }))
 ]);
 
-// Exact audited drink IDs with no positive nutrition. Explicit providers may
-// later supply sourced nutrition; the native fallback must not invent it.
-const QUALITY_DRINKS = [
-  'kaleidoscope_tavern:brandy',
-  'kaleidoscope_tavern:carignan',
-  'kaleidoscope_tavern:champagne',
-  'kaleidoscope_tavern:glowflower_brew',
-  'kaleidoscope_tavern:honey_wine',
-  'kaleidoscope_tavern:ice_wine',
-  'kaleidoscope_tavern:luminous_bride',
-  'kaleidoscope_tavern:madame_shexiang',
-  'kaleidoscope_tavern:miners_star',
-  'kaleidoscope_tavern:mother_snow',
-  'kaleidoscope_tavern:plum_wine',
-  'kaleidoscope_tavern:polaris_sweet_white',
-  'kaleidoscope_tavern:red_queen',
-  'kaleidoscope_tavern:riesling_dry_white',
-  'kaleidoscope_tavern:rum',
-  'kaleidoscope_tavern:sakura_wine',
-  'kaleidoscope_tavern:sauvignon_blanc_dry_white',
-  'kaleidoscope_tavern:sherry',
-  'kaleidoscope_tavern:sunset_glow',
-  'kaleidoscope_tavern:sweet_berry_wine',
-  'kaleidoscope_tavern:vinegar',
-  'kaleidoscope_tavern:vodka',
-  'kaleidoscope_tavern:whiskey',
-  'kaleidoscope_tavern:wine',
-  'kaleidoscope_world_liquor:absolut_vodka',
-  'kaleidoscope_world_liquor:bacardi_carta_blanca',
-  'kaleidoscope_world_liquor:bamboo_leaf_green_liquor',
-  'kaleidoscope_world_liquor:bombay_sapphire_gin',
-  'kaleidoscope_world_liquor:cool_tea',
-  'kaleidoscope_world_liquor:dassai',
-  'kaleidoscope_world_liquor:ice_tea',
-  'kaleidoscope_world_liquor:jack_daniel',
-  'kaleidoscope_world_liquor:johnnie_walker',
-  'kaleidoscope_world_liquor:kwas_chlebowy',
-  'kaleidoscope_world_liquor:lafite_1982',
-  'kaleidoscope_world_liquor:maotai',
-  'kaleidoscope_world_liquor:pina_colada',
-  'kaleidoscope_world_liquor:skyy_vodka',
-  'kaleidoscope_world_liquor:smirnoff_red_vodka',
-  'kaleidoscope_world_liquor:sour_plum',
-  'kaleidoscope_world_liquor:spiryt_vodka',
-  'kaleidoscope_world_liquor:strongbow',
-];
-
-// Dynamic dishes lack a public per-stack recipe/nutrition contract. Their
-// native use-trigger component or Java placeholder is not a menu food value.
+// These are a processing ingredient and a tool, not restaurant foods.
+// Their zero-nutrition use-trigger components do not make them edible.
 export const SENLUO_UNSUPPORTED_IDS = Object.freeze([
-  'kaleidoscope_grilling:secret_skewer',
-  'kaleidoscope_grilling:secret_skewer_native_plain',
-  'kaleidoscope_grilling:secret_skewer_java_three_alt',
-  'kaleidoscope_grilling:skewer_plate',
   'kaleidoscope_grilling:skewer_recipe_book',
-  'kaleidoscope_grilling:sweet_potato_powder',
-  'kaleidoscope_grilling:sichuan_pepper',
-  'kaleidoscope_tavern:allium_garden',
-  'kaleidoscope_tavern:bloody_mary',
-  'kaleidoscope_tavern:brass_heart',
-  'kaleidoscope_tavern:depth_charge',
-  'kaleidoscope_tavern:emerald',
-  'kaleidoscope_tavern:glow_berries_bucket',
-  'kaleidoscope_tavern:godfather',
-  'kaleidoscope_tavern:gold_grape_bucket',
-  'kaleidoscope_tavern:grape_bucket',
-  'kaleidoscope_tavern:grasshopper',
-  'kaleidoscope_tavern:green_grape_bucket',
-  'kaleidoscope_tavern:ice_grape_bucket',
-  'kaleidoscope_tavern:mojito',
-  'kaleidoscope_tavern:mystery_cocktail',
-  'kaleidoscope_tavern:nether_special',
-  'kaleidoscope_tavern:screwdriver',
-  'kaleidoscope_tavern:sculk_special',
-  'kaleidoscope_tavern:signature_cocktail',
-  'kaleidoscope_tavern:sweet_berries_bucket',
-  'kaleidoscope_tavern:watermelon_juice',
-  'kaleidoscope_tavern:white_lady',
-  'kaleidoscope_world_liquor:around_the_world',
-  'kaleidoscope_world_liquor:cola',
-  'kaleidoscope_world_liquor:gin_tonic',
-  'kaleidoscope_world_liquor:highball',
-  'kaleidoscope_world_liquor:jerk',
-  'kaleidoscope_world_liquor:long_island_iced_tea',
-  'kaleidoscope_world_liquor:pine_colada',
-  'kaleidoscope_world_liquor:shrimp_cocktail',
-  'kaleidoscope_world_liquor:tonic_water',
-  ...QUALITY_DRINKS.flatMap(typeId => [1, 2, 3, 4, 5, 6].map(quality => `${typeId}_q${quality}`))
+  'kaleidoscope_grilling:sweet_potato_powder'
 ]);

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Optional food declarations. This catalog never creates items or changes saves.
 import { SENLUO_FOODS, SENLUO_UNSUPPORTED_IDS } from './senluo_food_catalog.js';
+import { SENLUO_DRINKS } from './senluo_drink_catalog.js';
 import { inspectSenluoFood, normalizeFoodIdentity, normalizeFoodAliases, menuFoodKey } from './senluo_food.js';
 
 export const FOOD_CATALOG_EVENT = 'ordertocook:food_catalog_v1';
@@ -24,7 +25,9 @@ function indexFoods(foods) {
 function providerFood(entry, namespace) {
   if (!entry || typeof entry.typeId !== 'string' || !entry.typeId.startsWith(namespace + ':') ||
       !/^[a-z0-9_.-]+:[a-z0-9_./-]+$/.test(entry.typeId)) throw new Error('Food ID must belong to the provider namespace');
-  if (!Number.isInteger(entry.nutrition) || entry.nutrition < 1 || entry.nutrition > 10000) throw new Error('Food nutrition must be an explicit integer in 1..10000');
+  if (entry.servingKind !== undefined && entry.servingKind !== 'drink') throw new Error('Unknown serving kind');
+  const drink = entry.servingKind === 'drink';
+  if (!Number.isInteger(entry.nutrition) || entry.nutrition < (drink ? 0 : 1) || entry.nutrition > 10000) throw new Error('Food requires positive nutrition; only declared drinks may use zero');
   const foodIdentity = entry.nativeVariant === undefined ? undefined : normalizeFoodIdentity({
     carrier: 'senluo.public.food.v1', nativeVariant: entry.nativeVariant
   });
@@ -33,12 +36,13 @@ function providerFood(entry, namespace) {
   return {
     typeId: entry.typeId, nutrition: entry.nutrition,
     label: String(entry.label || entry.typeId).slice(0, 100),
+    ...(drink ? { servingKind: 'drink' } : {}),
     ...(aliases?.length ? { aliases } : {}), ...(foodIdentity ? { foodIdentity } : {})
   };
 }
 
 export function createFoodCatalog() {
-  const builtin = indexFoods(SENLUO_FOODS);
+  const builtin = indexFoods([...SENLUO_FOODS, ...SENLUO_DRINKS]);
   const unsupported = new Set(SENLUO_UNSUPPORTED_IDS);
   const providers = new Map();
   let supplied = new Map();
@@ -74,6 +78,7 @@ export function createFoodCatalog() {
     // quality, seasoning or a forged variant cannot multiply fixed-food entries.
     return { known: true, food: {
       typeId: declared.typeId, nutrition: declared.nutrition, label: declared.label,
+      ...(declared.servingKind === 'drink' ? { servingKind: 'drink' } : {}),
       ...(declared.aliases ? { aliases: [...declared.aliases] } : {}),
       ...(declared.foodIdentity ? { foodIdentity: { ...declared.foodIdentity } } : {})
     } };
