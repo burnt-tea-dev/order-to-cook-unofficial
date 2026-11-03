@@ -1,5 +1,7 @@
 # Order To Cook／下單了 — 非官方基岩版移植
 
+[简体中文](README.zh-CN.md) · **繁體中文** · [English](README.en.md)
+
 **目前以 `0.1.2-alpha.3` 為開發基線：餐廳、外送、廚電、個人進度與設備 HUD 已有實作。已有部分客戶端驗收，仍有冰箱幾何、手洗粒子及進度灰字失敗紀錄，不能稱為完整 Java 等價版本。** [實機紀錄](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [未發布按鈕可讀性修正](docs/validation/UNRELEASED-button-contrast.md)
 
 原作由 **breezeth** 製作：[CurseForge 官方頁面](https://www.curseforge.com/minecraft/mc-mods/order-to-cook) · [Java 原始碼](https://github.com/breezeth-CN/OrdertoCook)。本專案由 `casama233`／`burnt-tea-dev` 維護，保留上游 GPLv3、原作者署名及素材來源。補充素材範圍詢問尚未收到確認，現作非阻塞紀錄，不會因作者未回覆就停止功能開發；具體授權衝突仍須處理。
