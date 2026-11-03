@@ -1,0 +1,233 @@
+{
+  "mode": "upgrade",
+  "passed": true,
+  "checks": [
+    {
+      "name": "production entry initialized",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy migration: lower ID retained",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy migration: upper native block installed",
+      "passed": true,
+      "detail": "ordertocook:refrigerator_upper"
+    },
+    {
+      "name": "legacy migration: real lower block inventory has 54 slots",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy migration: real upper block inventory has 27 slots",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy migration: joined adapter has 81 slots",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy migration: station remains canonical with original owner",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy migration: native station has no helper ID",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy migration: no matching helper remains",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy migration: slot 0 keeps exact count and metadata",
+      "passed": true,
+      "detail": "{\"typeId\":\"minecraft:apple\",\"amount\":17,\"nameTag\":\"legacy-upper-first\",\"lore\":[\"Native fridge: legacy-upper-first\",\"Preserve exact stack metadata\"],\"properties\":{}}"
+    },
+    {
+      "name": "legacy migration: slot 26 keeps exact count and metadata",
+      "passed": true,
+      "detail": "{\"typeId\":\"ordertocook:food_plate\",\"amount\":1,\"nameTag\":\"legacy-upper-last\",\"lore\":[\"Native fridge: legacy-upper-last\",\"Preserve exact stack metadata\"],\"properties\":{\"ordertocook:order_id\":\"legacy-upper-last-order\",\"ordertocook:proof\":\"legacy-plate-proof\",\"ordertocook:restaurant\":\"native-fridge-test-restaurant\"}}"
+    },
+    {
+      "name": "legacy migration: slot 27 keeps exact count and metadata",
+      "passed": true,
+      "detail": "{\"typeId\":\"minecraft:cooked_beef\",\"amount\":63,\"nameTag\":\"legacy-lower-first\",\"lore\":[\"Native fridge: legacy-lower-first\",\"Preserve exact stack metadata\"],\"properties\":{}}"
+    },
+    {
+      "name": "legacy migration: slot 80 keeps exact count and metadata",
+      "passed": true,
+      "detail": "{\"typeId\":\"ordertocook:takeout_bag\",\"amount\":1,\"nameTag\":\"legacy-lower-last\",\"lore\":[\"Native fridge: legacy-lower-last\",\"Preserve exact stack metadata\"],\"properties\":{\"ordertocook:order_id\":\"legacy-lower-last-order\",\"ordertocook:proof\":\"legacy-bag-proof\",\"ordertocook:restaurant\":\"native-fridge-test-restaurant\"}}"
+    },
+    {
+      "name": "legacy migration: no duplicate stacks",
+      "passed": true,
+      "detail": "4"
+    },
+    {
+      "name": "original legacy helper retired",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "same-ID animated permutations: slot 0 keeps exact count and metadata",
+      "passed": true,
+      "detail": "{\"typeId\":\"minecraft:apple\",\"amount\":17,\"nameTag\":\"legacy-upper-first\",\"lore\":[\"Native fridge: legacy-upper-first\",\"Preserve exact stack metadata\"],\"properties\":{}}"
+    },
+    {
+      "name": "same-ID animated permutations: slot 26 keeps exact count and metadata",
+      "passed": true,
+      "detail": "{\"typeId\":\"ordertocook:food_plate\",\"amount\":1,\"nameTag\":\"legacy-upper-last\",\"lore\":[\"Native fridge: legacy-upper-last\",\"Preserve exact stack metadata\"],\"properties\":{\"ordertocook:order_id\":\"legacy-upper-last-order\",\"ordertocook:proof\":\"legacy-plate-proof\",\"ordertocook:restaurant\":\"native-fridge-test-restaurant\"}}"
+    },
+    {
+      "name": "same-ID animated permutations: slot 27 keeps exact count and metadata",
+      "passed": true,
+      "detail": "{\"typeId\":\"minecraft:cooked_beef\",\"amount\":63,\"nameTag\":\"legacy-lower-first\",\"lore\":[\"Native fridge: legacy-lower-first\",\"Preserve exact stack metadata\"],\"properties\":{}}"
+    },
+    {
+      "name": "same-ID animated permutations: slot 80 keeps exact count and metadata",
+      "passed": true,
+      "detail": "{\"typeId\":\"ordertocook:takeout_bag\",\"amount\":1,\"nameTag\":\"legacy-lower-last\",\"lore\":[\"Native fridge: legacy-lower-last\",\"Preserve exact stack metadata\"],\"properties\":{\"ordertocook:order_id\":\"legacy-lower-last-order\",\"ordertocook:proof\":\"legacy-bag-proof\",\"ordertocook:restaurant\":\"native-fridge-test-restaurant\"}}"
+    },
+    {
+      "name": "same-ID animated permutations: no duplicate stacks",
+      "passed": true,
+      "detail": "4"
+    },
+    {
+      "name": "new native fridge: lower ID retained",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "new native fridge: upper native block installed",
+      "passed": true,
+      "detail": "ordertocook:refrigerator_upper"
+    },
+    {
+      "name": "new native fridge: real lower block inventory has 54 slots",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "new native fridge: real upper block inventory has 27 slots",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "new native fridge: joined adapter has 81 slots",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "new native fridge: station remains canonical with original owner",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "new native fridge: native station has no helper ID",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "new native fridge: no matching helper remains",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "new native fridge: slot 0 keeps exact count and metadata",
+      "passed": true,
+      "detail": "{\"typeId\":\"minecraft:apple\",\"amount\":17,\"nameTag\":\"native-upper-first\",\"lore\":[\"Native fridge: native-upper-first\",\"Preserve exact stack metadata\"],\"properties\":{}}"
+    },
+    {
+      "name": "new native fridge: slot 26 keeps exact count and metadata",
+      "passed": true,
+      "detail": "{\"typeId\":\"ordertocook:food_plate\",\"amount\":1,\"nameTag\":\"native-upper-last\",\"lore\":[\"Native fridge: native-upper-last\",\"Preserve exact stack metadata\"],\"properties\":{\"ordertocook:order_id\":\"native-upper-last-order\",\"ordertocook:proof\":\"native-plate-proof\",\"ordertocook:restaurant\":\"native-fridge-test-restaurant\"}}"
+    },
+    {
+      "name": "new native fridge: slot 27 keeps exact count and metadata",
+      "passed": true,
+      "detail": "{\"typeId\":\"minecraft:cooked_beef\",\"amount\":63,\"nameTag\":\"native-lower-first\",\"lore\":[\"Native fridge: native-lower-first\",\"Preserve exact stack metadata\"],\"properties\":{}}"
+    },
+    {
+      "name": "new native fridge: slot 80 keeps exact count and metadata",
+      "passed": true,
+      "detail": "{\"typeId\":\"ordertocook:takeout_bag\",\"amount\":1,\"nameTag\":\"native-lower-last\",\"lore\":[\"Native fridge: native-lower-last\",\"Preserve exact stack metadata\"],\"properties\":{\"ordertocook:order_id\":\"native-lower-last-order\",\"ordertocook:proof\":\"native-bag-proof\",\"ordertocook:restaurant\":\"native-fridge-test-restaurant\"}}"
+    },
+    {
+      "name": "new native fridge: no duplicate stacks",
+      "passed": true,
+      "detail": "4"
+    },
+    {
+      "name": "break lower: break-lower-upper drops once with metadata",
+      "passed": true,
+      "detail": "[{\"typeId\":\"minecraft:apple\",\"amount\":3,\"nameTag\":\"break-lower-upper\",\"lore\":[\"Native fridge: break-lower-upper\",\"Preserve exact stack metadata\"],\"properties\":{}}]"
+    },
+    {
+      "name": "break lower: break-lower-lower drops once with metadata",
+      "passed": true,
+      "detail": "[{\"typeId\":\"minecraft:cooked_beef\",\"amount\":4,\"nameTag\":\"break-lower-lower\",\"lore\":[\"Native fridge: break-lower-lower\",\"Preserve exact stack metadata\"],\"properties\":{}}]"
+    },
+    {
+      "name": "break lower: both halves removed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "break lower: station retired",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "break lower: no helper can drop twice",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "break upper: break-upper-upper drops once with metadata",
+      "passed": true,
+      "detail": "[{\"typeId\":\"minecraft:apple\",\"amount\":3,\"nameTag\":\"break-upper-upper\",\"lore\":[\"Native fridge: break-upper-upper\",\"Preserve exact stack metadata\"],\"properties\":{}}]"
+    },
+    {
+      "name": "break upper: break-upper-lower drops once with metadata",
+      "passed": true,
+      "detail": "[{\"typeId\":\"minecraft:cooked_beef\",\"amount\":4,\"nameTag\":\"break-upper-lower\",\"lore\":[\"Native fridge: break-upper-lower\",\"Preserve exact stack metadata\"],\"properties\":{}}]"
+    },
+    {
+      "name": "break upper: both halves removed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "break upper: station retired",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "break upper: no helper can drop twice",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "scope": "Native BDS blocks, real container ItemStacks, genuine old-runtime migration and normal restart. No client GUI, real Player, input, open-window permission revocation or player-break packets.",
+  "serverVersion": "1.26.60.6",
+  "runtimeTreeSha256": "339844fa518da513d578de877b1c6d82a8f9c88daa77dc87c9bb7066b5efb0aa",
+  "sourceCommit": "ad3c06e34ddbde1d3489b78b92884be04a3027a3",
+  "probeSha256": "fef0c4b5a60f414911c92ce5c4a574f27067eb27cf92b569068273904e7b2047",
+  "sourceDirectory": "/workspace/scratch/0b67965b8e90/otc-final-source",
+  "sourcePacksVerified": true,
+  "addonErrors": [],
+  "serverExitCode": 0,
+  "requiredWorldExperiments": [
+    "upcoming_creator_features"
+  ]
+}

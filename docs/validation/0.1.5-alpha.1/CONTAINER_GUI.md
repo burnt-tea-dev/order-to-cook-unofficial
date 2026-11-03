@@ -51,7 +51,30 @@
 
 ## 驗證結果
 
-最終來源、測試數、原生報告與 runtime 指紋在提交前由本次實際執行結果填入。
+本輪固定測試來源為 [`ad3c06e34ddbde1d3489b78b92884be04a3027a3`](https://github.com/burnt-tea-dev/order-to-cook-unofficial/commit/ad3c06e34ddbde1d3489b78b92884be04a3027a3)，tree 為 `fd4b35762448ab15fe7127e1ec5bda0e8874ca6a`。遠端 tree 與本地已完成 verify 的 tree 完全相同；後續提交只補本驗證文件與原生測試 JSON，不改 runtime。
+
+| 驗證 | 實際結果與範圍 |
+| --- | --- |
+| `npm run verify` | **395／395 Node tests**；`tsc --noEmit` 使用官方 server 2.11.0／server-ui 2.0.0；資源驗證與建置成功。 |
+| 資源驗證 | **287 JSON、13 方塊、15 顯式物品、5 實體、10 配方、240 幾何、38 動畫、243 permutations**；errors 為空。 |
+| 幾何來源重現 | `python -m unittest discover -s tests -p test_appliance_geometry.py`：**5／5**。 |
+| 既有合規／版本檢查 | `python tools/check_compliance.py`、`python tests/check_release_policy.py` 與 `git diff --check` 通過；沒有新增發布 gate。 |
+| 真舊版 fixture | 官方 BDS **1.26.60.6** 載入 `ce8a45e` 舊 runtime，建立兩個舊 ID 方塊及真實 81 格 helper；**8／8**。見 [legacy 證據](native-fridge-legacy.json)。 |
+| 固定新來源升級 | 同一正常停服的舊世界 checkpoint 載入固定新來源；**43／43**。見 [upgrade JSON](native-fridge-upgrade.json)。 |
+| 固定新來源重啟 | 不改世界、runtime 或探針，正常停服再啟動；**28／28**。見 [reload JSON](native-fridge-reload.json)。 |
+
+原生升級與重啟兩輪均記錄 `sourcePacksVerified: true`、相同完整 runtime 指紋、相同 probe 指紋、空的 addon content／scripting errors 與正常停止結果 `serverExitCode: 0`。測試世界只啟用 Upcoming Creator Features，沒有 Beta APIs／GameTest／POI 實驗。
+
+```text
+runtimeTreeSha256: 339844fa518da513d578de877b1c6d82a8f9c88daa77dc87c9bb7066b5efb0aa
+probeSha256: fef0c4b5a60f414911c92ce5c4a574f27067eb27cf92b569068273904e7b2047
+```
+
+完整 runtime 指紋使用建置工具相同的排序路徑＋NUL＋bytes 方法，包含整個 `runtime/`；探針只在比對原 BP／RP 檔案之後注入測試入口。舊版 fixture 的探索 runner 當時只雜湊 BP／RP，該舊值不冒充完整 runtime 指紋；legacy 證據另標示其 scope 及從固定舊來源重算的完整指紋。
+
+Node 回歸覆蓋表單取消、metadata 改變、兩份過期畫面競爭同一成品、滿容器／滿背包、斷線 session、撤權／設備移除後拒絕提交、批次中途失敗回退、洗碗機保存失敗回退，以及遷移未載入 helper、身份錯配、目的槽非空和保存失敗。這些替身測試沒有被計作真人或網路驗收。
+
+真 BDS 檢查上下半各自的 27／54 格 native inventory、映射邊界 0／26／27／80 的數量與名稱／lore／動態 proof、原 owner 和 canonical station、已空 helper 退休、新放置冰箱、同 ID 動畫 state 後庫存不變，以及正常重啟後兩種冰箱資料一致。拆除案例用原生 `setType` 加正式破壞 adapter，驗證兩半貨物各掉一次並保留 metadata；它不等同真人破壞封包或容器視窗測試。
 
 本輪真 BDS 探索曾發現新 block format 不接受 `ambient_occlusion:false`，先判為失敗；依官方新版數值格式改為 `0` 並同步生成器，再從舊版世界 checkpoint 重跑。這不是略過內容錯誤。探索結果不冒充最後來源的驗收，最終 upgrade／reload 必須使用同一凍結來源。
 
