@@ -102,6 +102,23 @@ test('cosmetic meal progresses and remains dirty after the customer departure de
   assert.equal(dirtyCount(env.player), 0);
 });
 
+test('late-loaded placement seeks the original half-second clip without restarting the meal', () => {
+  const env = fixture();
+  env.service.tick(NOW + 350);
+  let plate = env.dimension.getEntities({ type: DINING_ENTITY })[0];
+  assert.equal(plate.getProperty('ordertocook:stage'), 0);
+  assert.equal(plate.getProperty('ordertocook:placement_age'), 0.35);
+  plate.remove();
+  env.service.tick(NOW + 700);
+  plate = env.dimension.getEntities({ type: DINING_ENTITY })[0];
+  assert.equal(plate.getProperty('ordertocook:placement_age'), 0.5);
+  assert.equal(plate.getProperty('ordertocook:stage'), 0);
+  env.service.tick(NOW + 750);
+  assert.equal(plate.getProperty('ordertocook:stage'), 29);
+  assert.equal(env.meal.startedAt, NOW);
+  assert.equal(dirtyCount(env.player), 0);
+});
+
 test('restart reconciles the persisted plate without resetting meal time or duplicating geometry', () => {
   const env = fixture(); env.service.tick(NOW + 3000);
   env.ctx.saveRestaurant(env.restaurant);

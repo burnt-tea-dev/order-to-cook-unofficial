@@ -52,6 +52,16 @@
         "stage39": "geometry.ordertocook.dining_plate_39",
         "stage40": "geometry.ordertocook.dining_plate_40"
       },
+      "animations": {
+        "placed": "animation.ordertocook.food_plate_placed.maked"
+      },
+      "scripts": {
+        "animate": [
+          {
+            "placed": "q.property('ordertocook:stage') == 0"
+          }
+        ]
+      },
       "render_controllers": [
         "controller.render.ordertocook.dining_plate"
       ]

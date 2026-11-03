@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Bedrock adapter. World state, inventory and UI stay outside the pure order core.
-import { world, system, ItemStack, BlockPermutation, GameMode } from '@minecraft/server';
+import { world, system, ItemStack, BlockPermutation, GameMode, MolangVariableMap } from '@minecraft/server';
 import {
   createRestaurant, refreshOrders, acceptOrder, packOrder, completeOrder,
   cancelOrder, expireOrders, upgradeRestaurant, getUpgradeQuote,
@@ -25,6 +25,7 @@ import { createApplianceService } from './appliances.js';
 import { createDiningService, DINING_ENTITY } from './dining.js';
 import { progressRows } from './progression.js';
 import { createProgressionService, creditCompletedOrder, queueProgressEvent } from './progression_service.js';
+import { playEffects, plateSound, freshMealEffects, newOrderEffects } from './audiovisual.js';
 
 const PREFIX = 'ordertocook:';
 const ITEM_RESTAURANT = 'ordertocook:restaurant';
@@ -42,6 +43,9 @@ let ready = false;
 /** @type {any} */ let progression;
 const activeHudPlayers = new Set();
 const interactionTicks = new Map();
+// Cosmetic playback only: the restaurant/order store remains authoritative.
+// Java raises the paper for 20 ticks, then holds it through a 45-tick PRINTING state.
+const printerStarts = new Map();
 const blockNames = {
   order_machine: '打單機', board: '菜單立牌', countertop: '操作台', shelf: '包裝架',
   plate_shelf: '餐盤架', washingtable: '洗碗池', chair: '椅子', dishwasher: '洗碗機',
@@ -75,8 +79,63 @@ function canUseStation(player, value) {
 function validStationAction(player, block, station) {
   return nearBlock(player, block) && findStation(block) === station && block.typeId === station.typeId && canUseStation(player, station);
 }
-function playAt(block, sound) {
-  try { block.dimension.playSound(`ordertocook:${sound}`, block.location); } catch { /* Cosmetic only. */ }
+function playAt(block, sound, volume = 1, pitch = 1) {
+  const location = { x: block.location.x + 0.5, y: block.location.y + 0.5, z: block.location.z + 0.5 };
+  try { block.dimension.playSound(`ordertocook:${sound}`, location, { volume, pitch }); } catch { /* Cosmetic only. */ }
+}
+function beginBagPlacement(block) {
+  if (block?.typeId !== 'ordertocook:takeout_bag') return;
+  // Java's placed Geo renderer plays maked once for 0.5 seconds. Frame zero
+  // is the held final pose; frames 1..10 sample 0..0.45 seconds at 20 TPS.
+  try { block.setPermutation(block.permutation.withState('ordertocook:frame', 1)); }
+  catch { /* Cosmetic state must not roll back a committed parcel. */ }
+}
+function tickBagPlacement(block) {
+  if (!ready || !block?.isValid || block.typeId !== 'ordertocook:takeout_bag') return;
+  try {
+    const frame = Number(block.permutation.getState('ordertocook:frame'));
+    if (Number.isInteger(frame) && frame > 0 && frame <= 10) {
+      block.setPermutation(block.permutation.withState('ordertocook:frame', frame === 10 ? 0 : frame + 1));
+    }
+  } catch { /* An unloaded/replaced visual block has no transaction to undo. */ }
+  // Native ticks exist only for frame > 0. Reloading midway finishes the
+  // remaining poses; settled bags have no callback and never restart.
+}
+function syncPrinter(restaurant, block = loadedBlock(restaurant)) {
+  if (block?.typeId !== 'ordertocook:order_machine') return;
+  const pending = !restaurant.removing && restaurant.orders.some(order => order.status === 'offered' && !order.walkIn);
+  const started = printerStarts.get(restaurant.id);
+  const elapsed = started === undefined ? 45 : Math.max(0, system.currentTick - started);
+  const printing = pending && elapsed < 45;
+  if (!printing) printerStarts.delete(restaurant.id);
+  const mode = !pending ? 'idle' : printing ? 'printing' : 'waiting';
+  const frame = printing ? Math.min(15, Math.floor(elapsed * 15 / 20)) : 0;
+  try {
+    // Stable API typings enumerate vanilla state keys only; these custom keys
+    // are declared in our block JSON and checked by the native probe.
+    /** @type {any} */ const permutation = block.permutation;
+    if (permutation.getState('ordertocook:mode') !== mode || permutation.getState('ordertocook:frame') !== frame) {
+      block.setPermutation(permutation.withState('ordertocook:mode', mode).withState('ordertocook:frame', frame));
+    }
+  } catch { /* A cosmetic permutation must never undo a valid order transaction. */ }
+}
+function refreshMachineOrders(restaurant, block = loadedBlock(restaurant), now = Date.now()) {
+  refreshOrders(restaurant, now);
+  printerStarts.set(restaurant.id, system.currentTick);
+  if (block?.typeId === 'ordertocook:order_machine') {
+    playEffects(block.dimension, newOrderEffects(block.location), MolangVariableMap);
+    syncPrinter(restaurant, block);
+  }
+}
+function tickPrinters() {
+  if (!ready) return;
+  for (const [id, started] of printerStarts) {
+    const restaurant = getRestaurant(id);
+    if (!restaurant || restaurant.removing) { printerStarts.delete(id); continue; }
+    syncPrinter(restaurant);
+    // Do not retain unloaded machines forever or restart their paper on reload.
+    if (system.currentTick - started >= 45) printerStarts.delete(id);
+  }
 }
 function foodFromStack(stack) {
   if (!stack) return undefined;
@@ -180,7 +239,9 @@ async function machineForm(player, block) {
     if (!restaurant.active && !restaurant.menu.length) { notify(player, '先在 24 格內放菜單立牌，用食品點擊立牌新增菜式。'); return; }
     restaurant.active = !restaurant.active;
     // Opening a brand new restaurant starts its first round; toggling does not reroll.
-    if (restaurant.active && restaurant.orderSequence === 0) refreshOrders(restaurant);
+    if (restaurant.active && restaurant.orderSequence === 0) {
+      refreshMachineOrders(restaurant, block);
+    }
     saveRestaurant(restaurant);
     notify(player, restaurant.active ? '開始營業；打單機每 10 分鐘刷新一輪候選單。' : '已暫停新單，已接訂單仍需按時完成。');
   } else if (selection === 1) await orderList(player, block, restaurant, 'offered');
@@ -216,7 +277,7 @@ async function orderList(player, block, restaurant, kind) {
       if (confirm !== 1 || !validRestaurant(player, restaurant, block)) return;
       const result = cancelOrder(restaurant, order.id);
       saveRestaurant(restaurant);
-      if (result.ok) { entities.cleanupOrder(order.id); removeTickets(player, order.id); notify(player, '訂單已取消。'); }
+      if (result.ok) { entities.cleanupOrder(order.id, true); removeTickets(player, order.id); notify(player, '訂單已取消。'); }
       else notify(player, reasonText(result.reason));
     }
   }
@@ -235,8 +296,11 @@ function acceptWithTicket(player, restaurant, order) {
   const result = acceptOrder(restaurant, order.id);
   saveRestaurant(restaurant);
   if (!result.ok) { notify(player, reasonText(result.reason)); return; }
+  syncPrinter(restaurant);
   giveStack(player, parcelFor(restaurant, order, 'ordertocook:order'));
-  entities.spawnCustomer(restaurant, order);
+  const customer = entities.spawnCustomer(restaurant, order);
+  if (order.walkIn && customer) playEffects(customer.dimension,
+    [{ sound: 'random.orb', location: customer.location, volume: 1, pitch: 1 }], MolangVariableMap);
   notify(player, '已接單。準備好食品後，在附近操作台選擇裝盤／打包。');
 }
 
@@ -259,7 +323,7 @@ async function upgradeForm(player, block, restaurant) {
     reward(player, current.cost);
     throw error;
   }
-  playAt(block, 'prestige_get');
+  playAt(block, 'order_refresh', 1, 1.2);
   notify(player, `餐廳已升至 Lv.${restaurant.level}。`);
   reconcileProgress(restaurant);
 }
@@ -356,7 +420,7 @@ function shelfInteract(player, block) {
     station.supplies += amount;
     saveStation(station);
     setBlockState(block, plates ? 'ordertocook:plates' : 'ordertocook:papers', station.supplies);
-    playAt(block, plates ? 'plate_place' : 'bag_place');
+    playAt(block, plates ? 'plate_place' : 'bag_place', plates ? 0.75 : 1, plates ? 0.95 + Math.random() * 0.1 : 1);
   } else if (!current && player.isSneaking && station.supplies > 0) {
     station.supplies--;
     saveStation(station);
@@ -421,7 +485,8 @@ function prepareOrderAtCountertop(player, block, restaurant, order) {
     const supplyBlock = loadedBlock(supply);
     if (supplyBlock) setBlockState(supplyBlock, order.type === 'delivery' ? 'ordertocook:papers' : 'ordertocook:plates', supply.supplies);
     removeTickets(player, order.id);
-    playAt(block, order.type === 'delivery' ? 'bag_place' : 'food_plate_place');
+    if (order.type === 'dine_in') playAt(block, 'food_plate_place', 0.9);
+    playEffects(output.dimension, freshMealEffects(output.location), MolangVariableMap);
     notify(player, '餐點已備妥並放到操作台上。空手點擊取走，再拿給對應顧客。');
   } catch (error) {
     restoreExtraction(plan);
@@ -433,6 +498,7 @@ function prepareOrderAtCountertop(player, block, restaurant, order) {
     if (display) deleteStation(display);
     throw error;
   }
+  beginBagPlacement(output);
 }
 
 function displayStack(station) {
@@ -462,7 +528,7 @@ function pickupDisplay(player, block) {
     saveStation(station);
     throw error;
   }
-  playAt(block, 'bag_pickup');
+  playAt(block, stack.typeId === 'ordertocook:food_plate' ? 'food_plate_place' : 'bag_pickup');
 }
 function placeParcel(player, clickedBlock, face) {
   if (!nearBlock(player, clickedBlock) || face !== 'Up' || !player.isSneaking) {
@@ -493,6 +559,7 @@ function placeParcel(player, clickedBlock, face) {
     if (!inventory.getItem(slot)) inventory.setItem(slot, stack);
     throw error;
   }
+  beginBagPlacement(output);
 }
 
 function customerInteract(player, entity, linkage, options = {}) {
@@ -555,6 +622,8 @@ function customerInteract(player, entity, linkage, options = {}) {
   removeTickets(player, order.id);
   reward(player, result.reward);
   reconcileProgress(restaurant);
+  if (order.type === 'dine_in') playEffects(entity.dimension,
+    [{ sound: 'ordertocook:food_plate_place', location: entity.location, volume: 1, pitch: 1 }], MolangVariableMap);
   entities.finishCustomer(order.id, result.completion);
   dining.tick(now);
   notify(player, `交付成功！獲得 ${result.reward} ${currencyLabel()}${result.tip ? `（含小費 ${result.tip}）` : ''}${result.boomBonus ? `（驚喜加賞 ${result.boomBonus}）` : ''}。${order.type === 'dine_in' ? '顧客用餐後會留下髒餐盤；點擊餐盤或下方桌面收回。' : ''}`);
@@ -565,6 +634,10 @@ function collectDiningPlate(player, value) {
   if (!linked) return false;
   const result = dining.claim(player, linked.restaurant, linked.meal);
   if (result.ok) {
+    const location = { x: Math.floor(linked.meal.location.x) + 0.5, y: Math.floor(linked.meal.location.y) + 0.5, z: Math.floor(linked.meal.location.z) + 0.5 };
+    playEffects(player.dimension, result.early
+      ? [{ sound: 'ordertocook:food_plate_place', location, volume: 1, pitch: 1 }]
+      : plateSound(location), MolangVariableMap);
     notify(player, result.early ? '顧客還沒吃完就被收盤了；已收回髒餐盤，顧客提前離開。' : '已收回一個髒餐盤，可送去清洗。');
   } else if (result.reason === 'inventory_full') notify(player, '請空出一格背包，或留出髒餐盤的堆疊空間。');
   else if (result.reason === 'permission') notify(player, '只有餐廳店主或員工可收取餐盤。');
@@ -770,6 +843,7 @@ function onBreak(event) {
   if (typeId === 'ordertocook:order_machine') {
     const restaurant = getRestaurant(locationId(block.dimension.id, block.location));
     if (restaurant) {
+      printerStarts.delete(restaurant.id);
       restaurant.removing = true;
       saveRestaurant(restaurant);
       for (const order of restaurant.orders) entities.cleanupOrder(order.id);
@@ -799,28 +873,25 @@ function tickRestaurants() {
         continue;
       }
       const expired = expireOrders(restaurant, now);
-      for (const order of expired.orders) entities.cleanupOrder(order.id);
+      for (const order of expired.orders) entities.cleanupOrder(order.id, true);
       let changed = expired.expired > 0;
       const machine = loadedBlock(restaurant);
       if (machine?.typeId === 'ordertocook:order_machine') {
         syncMenu(restaurant);
         const living = restaurant.orders.filter(order => liveStatus.has(order.status)).length;
         if (restaurant.active && restaurant.menu.length && living < 32 && now >= restaurant.nextRefreshAt) {
-          refreshOrders(restaurant, now);
-          playAt(machine, 'order_refresh');
+          refreshMachineOrders(restaurant, machine, now);
           changed = true;
         }
         if (restaurant.active && restaurant.menu.length && living < 32 && now >= restaurant.nextWalkInAt) {
           restaurant.nextWalkInAt = now + DEFAULT_CONFIG.walkInIntervalMs;
           if (Math.random() < getWalkInChance(restaurant) && nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:chair').length) {
             const order = generateWalkInOrder(restaurant, now);
-            entities.spawnCustomer(restaurant, order);
+            if (entities.spawnCustomer(restaurant, order)) playAt(machine, 'order_refresh');
           }
           changed = true;
         }
-        const hasOrders = restaurant.orders.some(order => order.status === 'offered');
-        setBlockState(machine, 'ordertocook:mode', restaurant.active && hasOrders ? 'waiting' : 'idle');
-        setBlockState(machine, 'ordertocook:frame', Math.floor(system.currentTick / 20) % 3);
+        syncPrinter(restaurant, machine);
       }
       if (changed) saveRestaurant(restaurant);
       reconcileProgress(restaurant);
@@ -876,7 +947,7 @@ function registerConfiguration() {
       if (event.id === 'ordertocook:kit' && player) { giveTestKit(player); return; }
       if (event.id === 'ordertocook:refresh' && player) {
         const machine = restaurants().filter(r => r.dimensionId === player.dimension.id && distanceSquared(r.location, player.location) < 24 * 24).sort((a, b) => distanceSquared(a.location, player.location) - distanceSquared(b.location, player.location))[0];
-        if (machine) { syncMenu(machine); if (machine.menu.length) { refreshOrders(machine); saveRestaurant(machine); notify(player, '測試用訂單已刷新。'); } }
+        if (machine) { syncMenu(machine); if (machine.menu.length) { refreshMachineOrders(machine); saveRestaurant(machine); notify(player, '測試用訂單已刷新。'); } }
         return;
       }
       if (event.id === 'ordertocook:food') {
@@ -907,6 +978,11 @@ function registerConfiguration() {
 }
 
 system.beforeEvents.startup.subscribe(event => {
+  // Kept separate from interact: Bedrock requires minecraft:tick on every
+  // permutation carrying a component that listens to onTick.
+  event.blockComponentRegistry.registerCustomComponent('ordertocook:bag_motion', {
+    onTick: event => tickBagPlacement(event.block)
+  });
   event.blockComponentRegistry.registerCustomComponent('ordertocook:interact', {
     beforeOnPlayerPlace: event => {
       if (!ready) { event.cancel = true; return; }
@@ -1039,6 +1115,7 @@ world.afterEvents.worldLoad.subscribe(() => {
     appliances.init?.();
     entities.init?.();
     system.runInterval(tickRestaurants, 20);
+    system.runInterval(tickPrinters, 2);
     system.runInterval(() => { if (ready) dining.tick(); }, 5);
     system.runInterval(updateHud, 10);
     registerConfiguration();
@@ -1049,5 +1126,5 @@ world.afterEvents.worldLoad.subscribe(() => {
 // Headless native-engine tests import these same adapters. No test hooks are
 // exposed through chat, commands, script events or a separately installable pack.
 export function getQaHooks() {
-  return { ready, entities, appliances, dining, progression, guideForm, boardForm, foodFromStack, syncMenu, orderBody, parcelFor, updateHud, progressForm, recordProgress, reconcileProgress, updateProgressRankings, reconcileStationProgress, upgradeForm, getMachine, acceptWithTicket, prepareOrderAtCountertop, pickupDisplay, placeParcel, customerInteract, collectDiningPlate, tickRestaurants, itemOrder, onPlace, onBreak, shelfInteract, upgradeAppliance, canUseStation };
+  return { ready, entities, appliances, dining, progression, guideForm, boardForm, foodFromStack, syncMenu, orderBody, parcelFor, updateHud, progressForm, recordProgress, reconcileProgress, updateProgressRankings, reconcileStationProgress, upgradeForm, getMachine, acceptWithTicket, prepareOrderAtCountertop, pickupDisplay, placeParcel, customerInteract, collectDiningPlate, tickRestaurants, refreshMachineOrders, syncPrinter, tickPrinters, itemOrder, onPlace, onBreak, shelfInteract, upgradeAppliance, canUseStation };
 }

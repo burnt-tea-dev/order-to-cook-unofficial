@@ -141,14 +141,8 @@
         "components": {
           "minecraft:geometry": "geometry.ordertocook.food_plate_display_0",
           "minecraft:material_instances": {
-            "ordertocook_item_clean_plate": {
-              "texture": "ordertocook_item_clean_plate",
-              "render_method": "alpha_test",
-              "ambient_occlusion": false,
-              "face_dimming": true
-            },
             "*": {
-              "texture": "ordertocook_item_clean_plate",
+              "texture": "ordertocook_block_food_plate_placed",
               "render_method": "alpha_test",
               "ambient_occlusion": false,
               "face_dimming": true

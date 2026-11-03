@@ -2,7 +2,7 @@
 // Loads the shipped main/core/store/inventory/dining source with isolated native
 // doubles. This checks adapter transactions, not native GUI or actual disk IO.
 import { readFile } from 'node:fs/promises';
-import { FakeItem, FakePlayer, FakePermutation, makeEnvironment, place } from './appliances.harness.js';
+import { FakeItem, FakePlayer, FakePermutation, FakeMolangVariableMap, makeEnvironment, place } from './appliances.harness.js';
 
 let sequence = 0;
 const scripts = new URL('../runtime/BP/scripts/', import.meta.url);
@@ -30,7 +30,7 @@ export async function mainFixture() {
   const player = new FakePlayer(env.dimension, { x: 1.5, y: 0, z: 1.5 });
   player.getGameMode = () => 'Survival';
   env.world.players.push(player);
-  const native = { world: env.world, system: env.system, ItemStack: FakeItem, BlockPermutation: FakePermutation, GameMode: { Creative: 'Creative', Survival: 'Survival' } };
+  const native = { world: env.world, system: env.system, ItemStack: FakeItem, MolangVariableMap: FakeMolangVariableMap, BlockPermutation: FakePermutation, GameMode: { Creative: 'Creative', Survival: 'Survival' } };
   const key = `__otcMainTests${++sequence}`;
   const endings = [], interruptions = [];
   const formResponses = [], forms = [];

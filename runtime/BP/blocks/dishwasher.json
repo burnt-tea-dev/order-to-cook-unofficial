@@ -21,7 +21,8 @@
           2,
           3,
           4,
-          5
+          5,
+          6
         ],
         "ordertocook:plates": [
           0,
@@ -66,7 +67,23 @@
       }
     },
     "components": {
-      "minecraft:geometry": "geometry.ordertocook.dishwasher_0_0",
+      "minecraft:geometry": {
+        "identifier": "geometry.ordertocook.dishwasher_0_0",
+        "bone_visibility": {
+          "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+          "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+          "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+          "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+          "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+          "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+          "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+          "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+          "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+          "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+          "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+          "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+        }
+      },
       "minecraft:material_instances": {
         "*": {
           "texture": "ordertocook_block_dishwasher",
@@ -146,397 +163,1805 @@
       {
         "condition": "q.block_state('ordertocook:phase') == 0",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_0_0"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_0_0",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 0",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_0"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_1_0",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 1",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_1"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_1_1",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 2",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_2"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_1_2",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 3",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_3"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_1_3",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 4",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_4"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_1_4",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 5",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_5"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_1_5",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 6",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_6"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_1_6",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 7",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_7"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_1_7",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 8",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_8"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_1_8",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 9",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_9"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_1_9",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 10",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_10"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_1_10",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 11",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_11"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_1_11",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 12",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_12"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_1_12",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 13",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_13"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_1_13",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 14",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_14"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_1_14",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 1 && q.block_state('ordertocook:frame') == 15",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_1_15"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_1_15",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 0",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_0"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_2_0",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 1",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_1"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_2_1",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 2",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_2"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_2_2",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 3",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_3"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_2_3",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 4",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_4"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_2_4",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 5",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_5"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_2_5",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 6",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_6"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_2_6",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 7",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_7"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_2_7",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 8",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_8"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_2_8",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 9",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_9"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_2_9",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 10",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_10"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_2_10",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 11",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_11"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_2_11",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 12",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_12"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_2_12",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 13",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_13"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_2_13",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 14",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_14"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_2_14",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 2 && q.block_state('ordertocook:frame') == 15",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_2_15"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_2_15",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 0",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_0"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_3_0",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 1",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_1"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_3_1",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 2",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_2"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_3_2",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 3",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_3"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_3_3",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 4",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_4"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_3_4",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 5",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_5"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_3_5",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 6",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_6"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_3_6",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 7",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_7"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_3_7",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 8",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_8"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_3_8",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 9",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_9"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_3_9",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 10",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_10"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_3_10",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 11",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_11"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_3_11",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 12",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_12"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_3_12",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 13",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_13"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_3_13",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 14",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_14"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_3_14",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 3 && q.block_state('ordertocook:frame') == 15",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_3_15"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_3_15",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 0",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_0"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_4_0",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 1",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_1"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_4_1",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 2",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_2"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_4_2",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 3",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_3"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_4_3",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 4",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_4"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_4_4",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 5",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_5"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_4_5",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 6",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_6"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_4_6",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 7",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_7"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_4_7",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 8",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_8"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_4_8",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 9",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_9"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_4_9",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 10",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_10"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_4_10",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 11",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_11"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_4_11",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 12",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_12"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_4_12",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 13",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_13"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_4_13",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 14",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_14"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_4_14",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 4 && q.block_state('ordertocook:frame') == 15",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_4_15"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_4_15",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       },
       {
         "condition": "q.block_state('ordertocook:phase') == 5",
         "components": {
-          "minecraft:geometry": "geometry.ordertocook.dishwasher_5_0"
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_5_0",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 6 && q.block_state('ordertocook:frame') == 0",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_6_0",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 6 && q.block_state('ordertocook:frame') == 1",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_6_1",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 6 && q.block_state('ordertocook:frame') == 2",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_6_2",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 6 && q.block_state('ordertocook:frame') == 3",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_6_3",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 6 && q.block_state('ordertocook:frame') == 4",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_6_4",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 6 && q.block_state('ordertocook:frame') == 5",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_6_5",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 6 && q.block_state('ordertocook:frame') == 6",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_6_6",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 6 && q.block_state('ordertocook:frame') == 7",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_6_7",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 6 && q.block_state('ordertocook:frame') == 8",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_6_8",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 6 && q.block_state('ordertocook:frame') == 9",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_6_9",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 6 && q.block_state('ordertocook:frame') == 10",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_6_10",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 6 && q.block_state('ordertocook:frame') == 11",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_6_11",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 6 && q.block_state('ordertocook:frame') == 12",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_6_12",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 6 && q.block_state('ordertocook:frame') == 13",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_6_13",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 6 && q.block_state('ordertocook:frame') == 14",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_6_14",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:phase') == 6 && q.block_state('ordertocook:frame') == 15",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.ordertocook.dishwasher_6_15",
+            "bone_visibility": {
+              "drity_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "drity_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "drity_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "drity_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_1": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_2": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 1",
+              "clear_dish_3": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_4": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3",
+              "clear_dish_5": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 2",
+              "clear_dish_6": "(q.block_state('ordertocook:plates') + 16 * q.block_state('ordertocook:plates_high')) >= 3"
+            }
+          }
         }
       }
     ]

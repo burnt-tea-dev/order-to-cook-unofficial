@@ -4,6 +4,7 @@ import { BlockPermutation, EquipmentSlot, ItemStack, MolangVariableMap, system, 
 import { ActionFormData } from "@minecraft/server-ui";
 import { advanceDoorMotion, dishwasherFrame, APPLIANCE_TICK_INTERVAL, FRIDGE_MOTION_TICKS, FRIDGE_LAST_FRAME } from "./appliance_motion.js";
 import { formatEquipmentInspection, INSPECTION_TYPES } from "./equipment_inspection.js";
+import { playEffects, plateSound, fridgeDoorEffects, dishwasherTakeEffects, dishwasherTimedEffects, washingEffectBeat, handwashingEffects } from "./audiovisual.js";
 
 const NS = "ordertocook:";
 const FRIDGE = `${NS}refrigerator`;
@@ -181,17 +182,6 @@ function safeParticle(dimension, id, location) {
   try { dimension.spawnParticle(id, location); } catch { /* Cosmetic only. */ }
 }
 
-function safeWaterSplash(dimension, location) {
-  try {
-    // The vanilla instant emitter reads variable.direction.x/y/z. Its initial
-    // speed is -6, so a downward direction gives the wash splash upward motion.
-    // Keep these variables scoped to this emission, never a shared mutable map.
-    const variables = new MolangVariableMap();
-    variables.setVector3("variable.direction", { x: 0, y: -1, z: 0 });
-    dimension.spawnParticle("minecraft:water_splash_particle", location, variables);
-  } catch { /* Cosmetic only; washing/plate accounting must continue. */ }
-}
-
 function center(location, y = 0.5) {
   return { x: location.x + 0.5, y: location.y + y, z: location.z + 0.5 };
 }
@@ -282,6 +272,9 @@ export function createApplianceService(ctx) {
   const washingFeedback = new Map();
   const viewers = new Map();
   const doorPositions = new Map();
+  // Cosmetic only. Java's preview is local to one client; Bedrock block poses
+  // are shared, so keep the drawer open while any eligible viewer targets it.
+  const dishwasherPreviews = new Map();
   let lastTick = -1;
   let lastRecoveryTick = -100;
   const recipes = { ...SMOKING_RECIPES, ...(ctx.smokingRecipes ?? {}) };
@@ -366,8 +359,11 @@ export function createApplianceService(ctx) {
     const d = data(station);
     if (station.typeId === SINK) setState(block, `${NS}plates`, d.plates);
     if (station.typeId === DISHWASHER) {
-      setState(block, `${NS}phase`, d.phase);
-      setState(block, `${NS}frame`, dishwasherFrame(d));
+      const preview = d.phase === 0 ? dishwasherPreviews.get(station.id) : undefined;
+      setState(block, `${NS}phase`, preview ? 6 : d.phase);
+      setState(block, `${NS}frame`, preview
+        ? Math.min(15, Math.floor((gameSystem.currentTick - preview.start) / (1.1667 * 20) * 15))
+        : dishwasherFrame(d));
       setState(block, `${NS}plates`, d.plates % 16);
       setState(block, `${NS}plates_high`, d.plates === 16);
     }
@@ -378,6 +374,37 @@ export function createApplianceService(ctx) {
     return player.isValid && player.dimension.id === station.dimensionId &&
       squaredDistance(player.location, center(station.location)) <= 36 && !!loadedStation(station) &&
       (!ctx.canUseStation || !!ctx.canUseStation(player, station));
+  }
+
+  function updateDishwasherPreviews(stations) {
+    const idle = new Map(stations.filter(station => station.typeId === DISHWASHER && station.appliance?.phase === 0)
+      .map(station => [`${station.dimensionId}:${station.location.x}:${station.location.y}:${station.location.z}`, station]));
+    const next = new Map();
+    for (const player of gameWorld.getAllPlayers()) {
+      try {
+        const held = playerInventory(player)?.getItem(player.selectedSlotIndex);
+        const offhand = player.getComponent("minecraft:equippable")?.getEquipment(EquipmentSlot.Offhand);
+        if (held?.typeId !== DIRTY && offhand?.typeId !== DIRTY) continue;
+        const block = player.getBlockFromViewDirection({ maxDistance: 6, includeLiquidBlocks: false })?.block;
+        if (block?.typeId !== DISHWASHER) continue;
+        const station = idle.get(`${block.dimension.id}:${block.location.x}:${block.location.y}:${block.location.z}`);
+        if (!station || !accessible(player, station)) continue;
+        const previous = dishwasherPreviews.get(station.id);
+        let preview = next.get(station.id);
+        if (!preview) {
+          preview = { start: previous?.start ?? gameSystem.currentTick, viewers: new Set() };
+          next.set(station.id, preview);
+        }
+        preview.viewers.add(player.id);
+        if (!previous?.viewers.has(player.id)) {
+          // Match Java playLocalSound: do not make other players hear another
+          // viewer repeatedly moving their crosshair over the same appliance.
+          try { player.playSound(`${NS}dishwasher_out`, { location: center(station.location, 0.6), volume: 0.75, pitch: 1 }); } catch { /* Cosmetic only. */ }
+        }
+      } catch { /* A departing player or unloaded ray target has no preview. */ }
+    }
+    dishwasherPreviews.clear();
+    for (const [id, preview] of next) dishwasherPreviews.set(id, preview);
   }
 
   /**
@@ -453,7 +480,7 @@ export function createApplianceService(ctx) {
     if (!block) return;
     const changed = block.permutation.getState(`${NS}open`) !== open;
     setState(block, `${NS}open`, open);
-    if (changed) safeSound(block.dimension, `${NS}${open ? "dishwasher_out" : "dishwasher_in"}`, center(block.location), 0.35, 1.5);
+    if (changed) playEffects(block.dimension, fridgeDoorEffects(station.location, half, open), MolangVariableMap);
   }
 
   function resetFridgeSessions(station) {
@@ -474,11 +501,21 @@ export function createApplianceService(ctx) {
       }
       const open = (sessions?.size ?? 0) > 0;
       const storedFrame = block.permutation.getState(`${NS}frame`);
-      const previous = doorPositions.get(key) ?? (Number.isFinite(storedFrame) ? Number(storedFrame) / FRIDGE_LAST_FRAME * FRIDGE_MOTION_TICKS : 0);
+      const storedClosing = block.permutation.getState(`${NS}closing`) === true;
+      const frame = Number.isFinite(storedFrame) ? Number(storedFrame) : 0;
+      const previous = doorPositions.get(key) ?? {
+        position: (storedClosing ? FRIDGE_LAST_FRAME - frame : frame) / FRIDGE_LAST_FRAME * FRIDGE_MOTION_TICKS,
+        closing: storedClosing,
+      };
       const motion = advanceDoorMotion(previous, open, ticks);
-      doorPositions.set(key, motion.position);
+      doorPositions.set(key, motion);
       fridgeDoors(station, half, open);
-      setState(block, `${NS}frame`, motion.frame);
+      // Switch the clip selector and frame together; mismatched intermediate
+      // permutations would briefly show the opposite end of the door stroke.
+      try {
+        if (block.permutation.getState(`${NS}closing`) !== motion.closing || storedFrame !== motion.frame)
+          block.setPermutation(block.permutation.withState(`${NS}closing`, motion.closing).withState(`${NS}frame`, motion.frame));
+      } catch { /* Missing resources do not change stored food. */ }
     }
     if (compartments && !compartments.lower.size && !compartments.upper.size) viewers.delete(station.id);
   }
@@ -539,7 +576,7 @@ export function createApplianceService(ctx) {
         d.plates++;
         ctx.saveStation(station);
         updateVisual(station);
-        safeSound(player.dimension, `${NS}plate_place`, center(station.location));
+        playEffects(player.dimension, plateSound(center(station.location)), MolangVariableMap);
       }
       return;
     }
@@ -550,7 +587,7 @@ export function createApplianceService(ctx) {
       say(ctx, player, "已有玩家正在使用這個洗碗池。"); return;
     }
     washingFeedback.delete(player.id);
-    washing.set(player.id, { player, station, start: gameSystem.currentTick });
+    washing.set(player.id, { player, station, start: gameSystem.currentTick, effectBeat: -1 });
     say(ctx, player, "清洗中：保持空手並望著洗碗池 4 秒；再次點擊可停止。");
   }
 
@@ -565,7 +602,10 @@ export function createApplianceService(ctx) {
       d.remainingTicks = 14;
       ctx.saveStation(station);
       updateVisual(station);
-      safeSound(player.dimension, `${NS}dishwasher_in`, center(station.location));
+      playEffects(player.dimension, [
+        ...dishwasherTakeEffects(station.location),
+        ...dishwasherTimedEffects(station.location, "north", 1, 0, -1, 0)
+      ], MolangVariableMap);
       say(ctx, player, `已取出 ${count} 個乾淨盤子。`);
       return;
     }
@@ -597,7 +637,7 @@ export function createApplianceService(ctx) {
       throw error;
     }
     updateVisual(station);
-    safeSound(player.dimension, `${NS}plate_place`, center(station.location));
+    // Java plays this when the dish contacts the drawer, 14 ticks into dirty_in.
     say(ctx, player, `已放入 ${count} 個髒盤子；完成後再次點擊取出。`);
   }
 
@@ -698,26 +738,27 @@ export function createApplianceService(ctx) {
   function tickDishwasher(station, ticks) {
     const d = data(station);
     if (d.phase === 0 || d.phase === 5) return;
-    d.remainingTicks -= ticks;
-    while (d.remainingTicks <= 0 && d.phase !== 0 && d.phase !== 5) {
-      if (d.phase === 1) { d.phase = 0; d.remainingTicks = 0; }
-      else if (d.phase === 2) { d.phase = 3; d.remainingTicks += d.plates > 8 ? 80 : 40; }
-      else if (d.phase === 3) { d.phase = 4; d.remainingTicks += 24; }
-      else if (d.phase === 4) { d.phase = 5; d.remainingTicks = 0; }
-      else throw new Error("洗碗機狀態超出範圍，已保留原資料。");
+    const block = loadedStation(station);
+    const facing = block?.permutation.getState("minecraft:cardinal_direction") || "north";
+    const durations = { 1: 14, 2: 30, 3: d.plates > 8 ? 80 : 40, 4: 24 };
+    let remaining = ticks;
+    while (remaining > 0 && d.phase !== 0 && d.phase !== 5) {
+      const duration = durations[d.phase];
+      if (!duration) throw new Error("洗碗機狀態超出範圍，已保留原資料。");
+      const before = duration - d.remainingTicks;
+      const step = Math.min(remaining, Math.max(0, d.remainingTicks));
+      d.remainingTicks -= step;
+      remaining -= step;
+      if (block) playEffects(block.dimension,
+        dishwasherTimedEffects(station.location, facing, d.phase, d.plates, before, before + step), MolangVariableMap);
+      if (d.remainingTicks > 0) break;
+      d.phase = d.phase === 1 ? 0 : d.phase + 1;
+      d.remainingTicks = durations[d.phase] || 0;
       ctx.saveStation(station);
-      const block = loadedStation(station);
-      if (block && d.phase === 3) safeSound(block.dimension, `${NS}dishwasher_washing`, center(block.location), 0.9);
-      if (block && d.phase === 4) {
-        safeSound(block.dimension, `${NS}dishwasher_clear_out`, center(block.location), 0.9);
-        safeParticle(block.dimension, "minecraft:basic_smoke_particle", center(block.location, 0.8));
-      }
+      if (block) playEffects(block.dimension,
+        dishwasherTimedEffects(station.location, facing, d.phase, d.plates, -1, 0), MolangVariableMap);
     }
-    if (gameSystem.currentTick % 20 < ticks) {
-      ctx.saveStation(station);
-      const block = loadedStation(station);
-      if (block && d.phase === 3) safeWaterSplash(block.dimension, center(block.location, 0.9));
-    }
+    if (gameSystem.currentTick % 20 < ticks) ctx.saveStation(station);
     updateVisual(station);
   }
 
@@ -733,9 +774,11 @@ export function createApplianceService(ctx) {
         const d = data(station);
         if (d.plates <= 0) { washing.delete(id); continue; }
         const elapsed = gameSystem.currentTick - start;
-        if (elapsed % 20 < APPLIANCE_TICK_INTERVAL) {
-          safeWaterSplash(player.dimension, center(station.location, 0.94));
-          safeSound(player.dimension, "random.splash", center(station.location, 0.94), 0.2);
+        const effectBeat = washingEffectBeat(elapsed);
+        if (effectBeat >= 0 && effectBeat > session.effectBeat) {
+          session.effectBeat = effectBeat;
+          playEffects(player.dimension, handwashingEffects(station.location,
+            hit.block.permutation.getState("minecraft:cardinal_direction") || "north"), MolangVariableMap);
         }
         if (elapsed >= 80) {
           if (!giveItem(player, new ItemStack(CLEAN))) {
@@ -744,7 +787,7 @@ export function createApplianceService(ctx) {
             d.plates--;
             ctx.saveStation(station);
             updateVisual(station);
-            safeSound(player.dimension, `${NS}plate_place`, center(station.location));
+            playEffects(player.dimension, plateSound(center(station.location)), MolangVariableMap);
             say(ctx, player, "已洗好 1 個盤子。");
           }
           washing.delete(id);
@@ -827,6 +870,7 @@ export function createApplianceService(ctx) {
       }
       ctx.deleteStation(station.id);
       clocks.delete(station.id);
+      dishwasherPreviews.delete(station.id);
       resetFridgeSessions(station);
       for (const [id, session] of washing) if (session.station.id === station.id) washing.delete(id);
     }
@@ -864,7 +908,9 @@ export function createApplianceService(ctx) {
     lastTick = now;
     for (const [id, feedback] of washingFeedback) if (now >= feedback.until) washingFeedback.delete(id);
     tickWashing();
-    for (const station of ctx.stations?.() ?? []) {
+    const stations = ctx.stations?.() ?? [];
+    updateDishwasherPreviews(stations);
+    for (const station of stations) {
       if (!KINDS.has(station.typeId)) continue;
       const block = loadedStation(station);
       if (!block) { clocks.delete(station.id); if (station.typeId === FRIDGE) resetFridgeSessions(station); continue; }
@@ -872,7 +918,7 @@ export function createApplianceService(ctx) {
       clocks.set(station.id, now);
       try {
         if (station.typeId === STOVE && delta) tickStove(station, delta);
-        else if (station.typeId === DISHWASHER && delta) tickDishwasher(station, delta);
+        else if (station.typeId === DISHWASHER && delta) { tickDishwasher(station, delta); updateVisual(station); }
         if (station.typeId === FRIDGE) tickFridge(station, delta);
         else if (!delta) updateVisual(station);
       } catch (error) {
