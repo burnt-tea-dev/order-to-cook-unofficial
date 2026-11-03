@@ -103,7 +103,7 @@ helper 無庫存、重力、物理碰撞或自動掉落。`minecraft:custom_hit_
 
 進食約 5 秒後，第四階段髒盤留在原位直到店主／員工領取；沒有顯示實體自動掉一個髒盤的規則。權威記錄在 `restaurant.pendingDishes`，領取先保存 claim，再由腳本給一個 `dirty_plate`，因此重建 helper 或重複 visual ID 不應再次發盤。提前收盤、同一位置舊盤阻擋新餐及重啟邊界見 [RUNTIME_ADAPTATIONS.md](RUNTIME_ADAPTATIONS.md#餐盤進食收盤與付款)。
 
-打單機使用原三個紙張位置，由 `mode`、`frame` 切換列印狀態；原 `neworder` GeckoLib 片段保留但沒有直接作為方塊動畫播放。爐火則使用原四張畫格製成 Bedrock flipbook。
+打單機使用原三個紙張位置，由 `mode`、`frame` 切換列印狀態；原 `neworder` GeckoLib 片段保留但沒有直接作為方塊動畫播放。爐火使用原六張 PNG，由各爐自己的 `fire_frame` 選擇熄火、爆火與四張循環畫格：15 tick 等待、5 tick 爆火、每 8 tick 循環；不再共用全域 flipbook。點火骨骼的非均勻 squash 尚未渲染。
 
 ### 顧客、騎乘與保留片段
 
@@ -130,7 +130,7 @@ GeckoLib 的 `{ "vector": [...] }` 包裝轉為原生向量，識別碼中的 `&
 | food_plate_display | `stage` + 16 × `stage_high`: 0–40 |
 | dishwasher | `phase`: 0–5；`frame`: 0–15；`plates` + 16 × `plates_high`: 0–16 |
 | refrigerator | `half`: lower／upper；`open`: false／true；`frame`: 0–10 |
-| stove | `lit`: false／true |
+| stove | `lit`: false／true；`fire_frame`: 0–5（原六張貼圖） |
 
 超過 16 個值的整數狀態拆成低位與高位，以免單一 block state 超出允許值數。`plates_high` 是布林值，`stage_high` 是 0–2；真實數量仍由 script 保存。盤數 16 必須寫低位 0、高位 true，不能寫低位 15、高位 true。未使用的高低位組合不由 script 產生。
 

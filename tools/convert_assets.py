@@ -568,13 +568,19 @@ def make_blocks():
                      {"phase": list(range(6)), "plates": list(range(17)), "frame": list(range(16))}, variants)
     g, mats = convert_java_model(f"{NS}:block/stove", f"geometry.{NS}.stove")
     emit_geo("stove", g)
-    lit_mats = copy.deepcopy(mats)
-    for material in lit_mats.values():
-        if material["texture"] == texture_tile(f"{NS}:block/stove"):
-            material["texture"] = f"{NS}_stove_lit"
-    block_definition("stove", f"geometry.{NS}.stove", mats, {"lit": [False, True]}, [{
-        "condition": state_condition({"lit": True}), "components": {"minecraft:material_instances": lit_mats,
-        "minecraft:light_emission": 7}}])
+    # Each stove owns its ignition delay, burst and four 8-tick cycle frames.
+    # A global atlas flipbook cannot preserve independent ignition/reload times.
+    # Java's stove has no block light emission; retain lit only as saved state.
+    variants = []
+    for frame, texture in enumerate(("stove_fire", *(f"stove_fire_{n}" for n in range(4))), 1):
+        frame_mats = copy.deepcopy(mats)
+        for material in frame_mats.values():
+            if material["texture"] == texture_tile(f"{NS}:block/stove"):
+                material["texture"] = texture_tile(f"{NS}:block/{texture}")
+        variants.append({"condition": state_condition({"fire_frame": frame}),
+                         "components": {"minecraft:material_instances": frame_mats}})
+    block_definition("stove", f"geometry.{NS}.stove", mats,
+                     {"lit": [False, True], "fire_frame": list(range(6))}, variants)
 
 
 def transform3(v, rotation, pivot=(0, 0, 0)):
@@ -1025,19 +1031,11 @@ def make_textures_and_sounds():
     light_dest = RP / "textures" / NS / "entity/electric_motorcycle_light_emissive.tga"
     light.save(light_dest)
     record(light_source, light_dest, "Original lamp RGB and transparency mask; nonzero alpha encoded as 64 for Bedrock emissiveness")
-    frames = [Image.open(ASSETS / "textures/block" / f"stove_fire_{n}.png").convert("RGBA") for n in range(4)]
-    if len({im.size for im in frames}) != 1:
-        raise ValueError("Stove animation frame sizes differ")
-    sheet = Image.new("RGBA", (frames[0].width,frames[0].height*4))
-    for index, frame in enumerate(frames):
-        sheet.paste(frame, (0,index*frame.height))
-    dest = RP / "textures" / NS / "block/stove_fire_flipbook.png"
-    sheet.save(dest)
-    for index in range(4):
-        record(ASSETS / "textures/block" / f"stove_fire_{index}.png", dest, "Four original frames vertically concatenated; no pixel repainting")
-    terrain[f"{NS}_stove_lit"] = {"textures": f"textures/{NS}/block/stove_fire_0"}
+    # Original stove.png, stove_fire.png and stove_fire_0..3.png are already
+    # copied above and selected by each stove's explicit fire_frame block state.
+    (RP / "textures" / NS / "block/stove_fire_flipbook.png").unlink(missing_ok=True)
     write_json(RP / "textures/terrain_texture.json", {"resource_pack_name":"Order To Cook Unofficial","texture_name":"atlas.terrain","padding":8,"num_mip_levels":4,"texture_data":terrain})
-    write_json(RP / "textures/flipbook_textures.json", [{"flipbook_texture":f"textures/{NS}/block/stove_fire_flipbook","atlas_tile":f"{NS}_stove_lit","ticks_per_frame":2,"blend_frames":False}])
+    write_json(RP / "textures/flipbook_textures.json", [])
     for source in sorted((ASSETS / "sounds").rglob("*.ogg")):
         copy_asset(source, RP / "sounds" / NS / source.relative_to(ASSETS / "sounds"))
     sounddefs = {}
@@ -1124,6 +1122,7 @@ def main():
         "license":"GPL-3.0", "assets":PROVENANCE,
         "adaptations":["Two-part cabinet with each complete refrigerator door assigned to its own compartment and 11 reversible baked poses; at most 0.125px intermediate hinge translation keeps the sweep within 30px",
             "GeckoLib easing replaced by linear interpolation; nonuniform appliance cabinet squash omitted",
+            "Stove uses six original textures selected by saved per-stove fire phases: 15-tick ignition delay, 5-tick burst and four 8-tick cycle frames; original ignition bone squash is not rendered",
             "Dishwasher drawer, door, uniform dish scale and wash vibration sampled into at most 16 bounded poses per original phase",
             "Dining plate entity uses all 41 original stage shapes and a single exact-pixel atlas; no inventory or automatic loot",
             "Seven original customer actions and separate four-way weighted idle variation; action clip restarts on client reload while server finish time remains authoritative",

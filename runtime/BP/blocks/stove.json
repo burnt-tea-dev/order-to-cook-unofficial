@@ -18,6 +18,14 @@
         "ordertocook:lit": [
           false,
           true
+        ],
+        "ordertocook:fire_frame": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
         ]
       }
     },
@@ -107,23 +115,98 @@
         }
       },
       {
-        "condition": "q.block_state('ordertocook:lit') == true",
+        "condition": "q.block_state('ordertocook:fire_frame') == 1",
         "components": {
           "minecraft:material_instances": {
             "ordertocook_block_stove": {
-              "texture": "ordertocook_stove_lit",
+              "texture": "ordertocook_block_stove_fire",
               "render_method": "alpha_test",
               "ambient_occlusion": false,
               "face_dimming": true
             },
             "*": {
-              "texture": "ordertocook_stove_lit",
+              "texture": "ordertocook_block_stove_fire",
               "render_method": "alpha_test",
               "ambient_occlusion": false,
               "face_dimming": true
             }
-          },
-          "minecraft:light_emission": 7
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:fire_frame') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "ordertocook_block_stove": {
+              "texture": "ordertocook_block_stove_fire_0",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_stove_fire_0",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:fire_frame') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "ordertocook_block_stove": {
+              "texture": "ordertocook_block_stove_fire_1",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_stove_fire_1",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:fire_frame') == 4",
+        "components": {
+          "minecraft:material_instances": {
+            "ordertocook_block_stove": {
+              "texture": "ordertocook_block_stove_fire_2",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_stove_fire_2",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:fire_frame') == 5",
+        "components": {
+          "minecraft:material_instances": {
+            "ordertocook_block_stove": {
+              "texture": "ordertocook_block_stove_fire_3",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "*": {
+              "texture": "ordertocook_block_stove_fire_3",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
         }
       }
     ]
