@@ -2,7 +2,9 @@
 
 [简体中文](README.zh-CN.md) · [繁體中文](README.md) · **English**
 
-**Current development baseline: `0.1.2-alpha.3`. Restaurant management, delivery, kitchen appliances, personal progression and equipment HUDs exist. Limited client acceptance is recorded, but refrigerator geometry, hand-washing particles and greyed progression text have FAIL results. This is not full Java parity.** [Client evidence](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [Unreleased button-contrast correction](docs/validation/UNRELEASED-button-contrast.md)
+**Current source version: `0.1.5-alpha.1` (unreleased). The refrigerator uses native upper 27-slot / lower 54-slot containers; stove and countertop controls take fewer steps, and dishwasher batch transfers have stronger recovery handling. Bedrock 26.60 and Upcoming Creator Features are required. Full Java parity and real-client acceptance remain incomplete.** [Current validation](docs/validation/0.1.5-alpha.1/CONTAINER_GUI.md) · [Native container capabilities and limits](docs/NATIVE-CONTAINERS.md)
+
+Historical `0.1.2-alpha.3` client evidence includes refrigerator geometry, hand-washing particles and greyed progression text FAILs; it does not certify this version: [historical client record](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [button-contrast correction](docs/validation/UNRELEASED-button-contrast.md).
 
 Original by **breezeth**: [CurseForge](https://www.curseforge.com/minecraft/mc-mods/order-to-cook) · [Java source](https://github.com/breezeth-CN/OrdertoCook). Maintained by `casama233` / `burnt-tea-dev`, retaining upstream GPLv3, author attribution and asset provenance. A request about supplementary asset scope has not received a response and is recorded as non-blocking; development continues, but actual licensing conflicts still require resolution.
 
@@ -10,15 +12,19 @@ Original by **breezeth**: [CurseForge](https://www.curseforge.com/minecraft/mc-m
 
 These changes **do not restore previously withdrawn packages, publish a formal Release, or misrepresent new source with an old version number as an accepted historical package**. See [historical artifacts](artifacts/README.md). Build current sources using the commands below; output goes to `dist/`. Future candidates must have their own version, commit, SHA-256 and documented test scope.
 
-Use a disposable world for local testing; enable both behavior (BP) and resource (RP) packs. Declared minimum target: **Bedrock 1.21.100** with stable `@minecraft/server 2.0.0` and `@minecraft/server-ui 2.0.0`. **Beta APIs and Upcoming Creator Features are not required.** This does not claim validation on every version/device. The guide is supplied on first join and can also be crafted alongside basic equipment.
+Use a disposable world for local testing; enable both behavior (BP) and resource (RP) packs. Declared minimum target: **Bedrock 26.60 (manifest: 1.26.60)** with stable `@minecraft/server 2.11.0` and `@minecraft/server-ui 2.0.0`. **Enable Upcoming Creator Features** for the native refrigerator block containers. Beta APIs and POI experiments are not required. See the [version and capability audit](docs/NATIVE-CONTAINERS.md). This does not claim validation on every version/device. The guide is supplied on first join and can also be crafted alongside basic equipment.
 
 **Guidebook (unreleased source improvement):** Order To Cook retains its own `ordertocook:guide`. It is not a Cookery chapter and does not require Cookery. Following Cookery's three-level taxonomy, it contains **6 chapters, 13 topic groups and 26 tutorials**, with icons, previous/next page, index navigation and Traditional Chinese / Simplified Chinese / English. Existing item and crafting recipes remain unchanged. Bedrock uses native forms rather than a literal copy of Cookery's book UI. See the [independent guidebook structure](docs/GUIDEBOOK.md); hands-on client UI acceptance is pending.
 
 Additional original-author confirmation is no longer a blanket release gate; attribution, GPL, corresponding source, source hashes and actual QA checks are still required. See the [asset register](docs/ASSET_LICENSE_REGISTER.md), [third-party notices](THIRD_PARTY_NOTICES.md) and [release compliance checks](docs/RELEASE_COMPLIANCE.md). Neither original authors nor Mojang/Microsoft endorse this project.
 
-### Upgrading from alpha.2 / alpha.1
+### Upgrading to 0.1.5-alpha.1 (unreleased source)
 
-Back up the entire world first, import alpha.3, and confirm **both BP and RP use version 0.1.2**. Their UUIDs are preserved; do not enable old and new copies together. A real-world alpha.2 → alpha.3 upgrade requires dot's acceptance following the handoff instructions; historical test results cannot be reused.
+Back up the complete world, enable Upcoming Creator Features in a Bedrock 26.60 test copy, and confirm **both BP and RP use version 0.1.5**. Their existing UUIDs are preserved; do not enable old and new copies together. The equipment service moves each slot of the legacy 81-slot entity inventory into the two native compartments. Unloaded storage or a blocked migration waits; opening and countertop extraction stay unavailable while migration is pending. Do not manually delete the old storage entity. Rollback requires the complete pre-upgrade backup. See [migration and validation limits](docs/NATIVE-CONTAINERS.md).
+
+### Historical: 0.1.2-alpha.2 / alpha.1 to alpha.3
+
+This paragraph records the old upgrade only: back up the world, import alpha.3 and confirm BP/RP version 0.1.2 with unchanged UUIDs. That alpha.2 → alpha.3 upgrade requires dot's acceptance under its handoff instructions; results from other versions cannot be reused.
 
 Personal progression counts completed order settlements only after this feature started recording them. Old restaurant revenue has no per-delivering-player attribution and cannot be retroactively assigned to owners/employees. Existing levels, orders, inventory and revenue remain in the original save. Upgrading from alpha.1 also includes alpha.2's persistent dirty-dish behavior; old settled orders do not retroactively spawn dishes. Rollback requires the complete pre-upgrade backup.
 
@@ -28,7 +34,7 @@ Personal progression counts completed order settlements only after this feature 
 2. **Configure the menu.** Click the stand with food to register a dish without consuming it. Empty-hand/sneak-click to manage the menu. Each dish counts a single nutritional value regardless of stack size.
 3. **Restock supplies.** Supply leather to the packaging rack and clean plates to the plate rack. Both racks must be within **5 blocks** of the counter; the counter, chairs and relevant freezers must be within **24 blocks** of the restaurant.
 4. **Open and accept orders.** Click the printer to open, then choose a candidate order. Accepting one removes the other candidates in that batch; independent walk-in orders remain.
-5. **Prepare finished foods.** Put already-cooked required foods in your inventory or an accessible nearby refrigerator, then click the counter to plate/pack them. **The counter does not craft whole dishes automatically**; it consumes finished food.
+5. **Prepare finished foods.** Put required foods in your inventory or an accessible nearby refrigerator. Use a valid order ticket on the countertop to plate/pack it directly; interact empty-handed to see dish names, quantities and missing supplies on one page. **The counter does not craft whole dishes automatically**; it consumes finished food.
 6. **Collect and deliver.** Keep the block above the counter clear. Completed plates/parcels appear on the counter; click to pick them up and use them on the corresponding customer. Delivery packages/tickets can show destination and direction.
 7. **Receive payment, clear dishes and wash.** Successful orders award oTc coins and possibly tips. Dine-in customers eat in about **5 seconds**, leaving a dirty plate. Owners/employees click the plate or supporting table, put it into the basin, start with an empty hand and keep looking at the basin for **4 seconds**. Restock the clean plate rack. Old plates at the same table must be collected before the next delivery.
 8. **Expand.** Spend coins on levels and equipment via the printer. A toolbox upgrades an empty two-block barrel into a refrigerator, an empty smoker into a three-slot stove, and an empty washing basin into a dishwasher.
@@ -36,6 +42,17 @@ Personal progression counts completed order settlements only after this feature 
 Standard orders last **30 minutes**, rush orders **10 minutes**, measured from creation. The order printer refreshes every **10 minutes**. Maximum restaurant level is **8**. Deadlines use real time, so orders can expire while away from the world; appliances do not retroactively cook while their chunks are unloaded.
 
 > The default stand lists four dishes. The 40 vanilla foods total **159**, supporting only Lv.3. Unreleased source adds 67 positive-nutrition Senluo foods and 72 zero-nutrition drinks. The complete catalog totals **490**, supporting Lv.7 but still below Java's **600** for Lv.8. Excluding the expired-event wedding candy leaves 470; other acquisition limits are listed in the [food catalog](docs/FOOD-CATALOG.md). Drinks add no nutrition and upgrade thresholds are unchanged.
+
+## Appliance controls (0.1.5-alpha.1)
+
+| Equipment | Controls |
+| --- | --- |
+| Refrigerator | Interact with the upper or lower block to open its native 27-slot or 54-slot container. Use Bedrock's inventory controls; there is no paginated storage menu. |
+| Stove | Use a supported ingredient/fuel stack on the stove to deposit it. Interact empty-handed for all seven slots on one page: select a slot to withdraw, collect all outputs, or refill from inventory. |
+| Dishwasher | Retains its existing direct batch controls: hold a dirty plate and interact to load up to 16 from inventory. Once ready, empty both hands and interact to collect the whole batch. Insufficient inventory space leaves it inside. |
+| Countertop | Use a valid ticket to process that order directly, or interact empty-handed to choose a ready order and inspect shortages on the same page. Pick up the finished plate/parcel before delivering it. |
+
+Closing a stove or countertop form exits; reopening reads the latest state. Keyboard/mouse, touch and controller use the native container/form input paths; actual experience on all three still needs client acceptance.
 
 ## Features implemented in this version
 
@@ -46,20 +63,21 @@ Standard orders last **30 minutes**, rush orders **10 minutes**, measured from c
 | Personal progression | 11 original definitions, 10 wired; first/rush/distant orders, 100/1000/10000 earned, equipment upgrades, eight-star and gold restaurants; cross-store persistence and reconciliation |
 | Crosshair HUD | Racks, basins, dishwashers, freezer tiers and stove readings; 10-tick refresh with washing/delivery display and renewed permission checks |
 | Menu | Up to 150 non-consuming templates per board; 40 vanilla foods, 67 optional Senluo foods, 72 zero-nutrition drinks, automatic provider declarations and existing admin overrides; presentation/quality aliases count as one dish |
-| Preparation counter | Consume from inventory and permitted refrigerators within 24 blocks; consumables from racks within 5 blocks; place and retrieve physical plates/bags |
+| Preparation counter | Consume from inventory and permitted refrigerators within 24 blocks, with supplies within 5 blocks; ticket shortcut and same-page readiness/shortages; physical plate/bag placement and pickup |
 | Plates | Ten staged dine-in meal animations, persistent dirty dishes, owner/employee collection, early pickup interruption, manual/automatic washing |
-| Appliances | 27+54-slot refrigerator with separate upper/lower doors and 11 poses each; three-slot stove; dishwasher holding up to 16 plates with 66 poses; toolbox upgrades |
+| Appliances | Native upper 27-slot / lower 54-slot refrigerator, 11 door poses each; seven-slot stove controls on one page; up to 16 dishwasher plates and 66 poses, with batch-transfer rollback; toolbox upgrades |
 | Customers | Two original looks, four idle variants, seven arrival/collection/dining actions; standing if no chair for standard customers, chairs mandatory for walk-ins; original surprise rewards |
 | Scooter | Original model, four dye colors, Bedrock riding, 54-slot insulated box, horn, emissive lights, remote control and retrieval |
-| Multiplayer | Owners/employees, supply permission, rechecks after forms and save persistence across restarts |
-| Resources | 12 blocks, 15 explicit custom items plus block items, 5 entities, 240 geometry and 38 animation definitions; 67 original PNG and 12 OGG retained |
+| Multiplayer | Owners/employees, supply permissions, script-operation rechecks and persistence; an already-open native refrigerator cannot be forcibly closed immediately after revocation (see limits below) |
+| Resources | 13 block definitions (including the hidden refrigerator upper half), 15 explicit custom items plus block items, 5 entities, 240 geometry and 38 animation definitions; 67 original PNG and 12 OGG retained |
 
 **Asset presence is not proof of complete gameplay-driven animations.** See the [parity matrix](docs/PARITY.md), [visual provenance](docs/ASSET_PROVENANCE.md) and [runtime adaptations](docs/RUNTIME_ADAPTATIONS.md).
 
 ## Deliberate adaptations and open gaps
 
-- Java container windows use Bedrock native forms, without identical drag/drop, Shift-click or shortcut layouts.
-- The refrigerator keeps two compartments and slot counts, but uses Bedrock item stack limits; it lacks Java's 128 items per slot and internal food display. Doors are independent; animations are discretely sampled from source keyframes. Dishwasher body does not use the original non-uniform squash.
+- Refrigerators use real native containers. Stove and countertop controls combine direct interaction with single-page forms; Java's specialized slot layouts and shortcuts are not identical.
+- The 26.60 native refrigerator has no food-only slots, Java sorting, 128-item stacks or internal food display. Bedrock item stack limits apply. Doors remain independent with sampled keyframes; dishwasher body squash remains omitted.
+- 26.60 provides no usable native-container force-close API, so revocation cannot immediately terminate an already-open refrigerator screen. Whether the before-event entry cancellation reliably prevents a native window still needs a real Player test. The refrigerator is not a validated private vault; see [permission boundaries](docs/NATIVE-CONTAINERS.md).
 - Source review confirmed original customers spawn directly rather than navigating through a door. Standard dining prefers a chair within 24 blocks and stands within 5 if none exists; walk-ins require a chair. Easter-egg characters, downloaded skins and maid integration are unfinished.
 - Ordinary seated customers have an original **10% surprise** chance and a `1–4 + restaurant level` bonus. This port pays when food is delivered, rather than after the animation, and early plate collection does not reclaim the award. Old plates must be cleared, whereas Java replaces/drops them.
 - Washing requires clicking and sustained looking; `player.json` is not overridden, so the player-specific washing, clapping and scooter-riding poses are incomplete.
@@ -88,12 +106,12 @@ Look at permitted appliances within **6 blocks** to see real plate counts, packi
 ## Validation completed and limitations
 
 - Historical alpha.3 recorded **254 automated tests**; newer source checks depend on the CI of their specific commits.
-- `npm run check` uses official stable 2.0.0 type checking plus JSON, geometry, animation, icon, recipe and custom component checks.
+- `npm run check` uses official stable `@minecraft/server 2.11.0` / `@minecraft/server-ui 2.0.0` type checking plus JSON, geometry, animation, icon, recipe and custom component checks.
 - `npm run build` produces BP, RP, combined pack and hashes. Ordinary validation does not publish packages; the separate candidate workflow verifies artifacts.
 - The [limited 2026-11-01 alpha.3 client record](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) contains bounded passes and **three FAILs**; the full client matrix has not passed. New fixes need a new candidate retest.
 - Historical alpha.2 native assertions (127/15/12) apply only to that runtime fingerprint. Keyboard/mouse, touch, controller, genuine multiplayer, RP visuals and forms cannot be certified by CI alone.
 
-See [VALIDATION.md](docs/VALIDATION.md) for build fingerprints and evidence, [DOT_HANDOFF.md](docs/DOT_HANDOFF.md) for client handoff, and [remaining single-player cases](docs/validation/0.1.2-alpha.3/REMAINING-SINGLEPLAYER.md) for unverified coverage.
+See the [0.1.5-alpha.1 report](docs/validation/0.1.5-alpha.1/CONTAINER_GUI.md) for this change's executed checks, fingerprint and outstanding cases. [VALIDATION.md](docs/VALIDATION.md) retains historical evidence; the old [DOT_HANDOFF.md](docs/DOT_HANDOFF.md) and [remaining single-player cases](docs/validation/0.1.2-alpha.3/REMAINING-SINGLEPLAYER.md) do not certify this version.
 
 Personal ledgers can catch up after temporary profile-write failure; upgrades retry the accounting without charging or upgrading again. Reconcile the personal ledger before deleting a restaurant; pending equipment actions are saved before normal demolition.
 

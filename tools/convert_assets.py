@@ -22,6 +22,7 @@ from PIL import Image
 
 NS = "ordertocook"
 BLOCK_VERSION = "1.21.100"
+NATIVE_CONTAINER_VERSION = "1.26.60"
 GEOMETRY_VERSION = "1.21.0"
 ROOT = Path(__file__).resolve().parents[1]
 ASSET_REL = Path("common/src/main/resources/assets/ordertocook")
@@ -422,9 +423,12 @@ def state_condition(states):
     return " && ".join(f"q.block_state('{NS}:{key}') == " + (f"'{value}'" if isinstance(value, str) else str(value).lower()) for key, value in states.items())
 
 
-def block_definition(name, base_geo, materials, states=None, variants=(), collision=True, selection=None):
+def block_definition(name, base_geo, materials, states=None, variants=(), collision=True, selection=None,
+                     native_container=None, hidden=False, loot_table=None):
     description = {"identifier": f"{NS}:{name}", "menu_category": {"category": "construction"},
                    "traits": {"minecraft:placement_direction": {"enabled_states": ["minecraft:cardinal_direction"], "y_rotation_offset": 180}}}
+    if hidden:
+        description["menu_category"] = {"category": "none", "is_hidden_in_commands": True}
     if states:
         description["states"] = {}
         for key, values in states.items():
@@ -444,21 +448,25 @@ def block_definition(name, base_geo, materials, states=None, variants=(), collis
         "minecraft:collision_box": collision, "minecraft:selection_box": selection if selection is not None else collision,
         "minecraft:destructible_by_mining": {"seconds_to_destroy": 1.5},
         "minecraft:destructible_by_explosion": {"explosion_resistance": 6},
-        "minecraft:loot": f"loot_tables/blocks/{name}.json",
+        "minecraft:loot": loot_table if loot_table is not None else f"loot_tables/blocks/{name}.json",
         "minecraft:destruction_particles": {"texture": particle, "particle_count": 50},
         "minecraft:light_dampening": 0, "minecraft:map_color": "#9b9286",
         "minecraft:movable": {"movement_type": "immovable"}, f"{NS}:interact": {}}
+    if native_container is not None:
+        components["minecraft:block_entity"] = {"dynamic_properties": True, "container": native_container}
     permutations = [{"condition": f"q.block_state('minecraft:cardinal_direction') == '{direction}'",
                      "components": {"minecraft:transformation": {"rotation": [0, rotation, 0]}}}
                     for direction, rotation in (("north", 0), ("south", 180), ("west", 90), ("east", -90))]
     permutations.extend(variants)
-    result = {"format_version": BLOCK_VERSION, "minecraft:block": {"description": description, "components": components, "permutations": permutations}}
+    version = NATIVE_CONTAINER_VERSION if native_container is not None else BLOCK_VERSION
+    result = {"format_version": version, "minecraft:block": {"description": description, "components": components, "permutations": permutations}}
     write_json(BP / "blocks" / (name + ".json"), result)
     drop = "dirty_plate" if name == "food_plate_display" else name
     loot = {"pools": [{"rolls": 1, "entries": [{"type": "item", "name": f"{NS}:{drop}", "weight": 1}]}]}
     if name in ("food_plate_display", "takeout_bag"):
         loot = {"pools": []}  # Script returns the unique signed stack, never an unbound duplicate.
-    write_json(BP / "loot_tables" / "blocks" / (name + ".json"), loot)
+    if loot_table is None:
+        write_json(BP / "loot_tables" / "blocks" / (name + ".json"), loot)
 
 
 def simple_block(name, model, collision=True, selection=None):
@@ -514,8 +522,10 @@ def make_blocks():
     fridge = normalize_geo(fridge_source, f"geometry.{NS}.refrigerator_source")
     fridge_clips = read_json(fridge_animation)["animations"]
     tile = texture_tile(f"{NS}:block/refrigerator")
-    mats = {"*": {"texture": tile, "render_method": "alpha_test", "ambient_occlusion": False}}
+    # Format >= 1.26.20 requires a numeric AO exponent; 0 disables the effect.
+    mats = {"*": {"texture": tile, "render_method": "alpha_test", "ambient_occlusion": 0}}
     variants = []
+    upper_variants = []
     for half, frame in itertools.product(("lower", "upper"), range(11)):
         name = f"refrigerator_{half}_{frame}"
         clip = fridge_clips["up_open" if half == "upper" else "down_open"]
@@ -527,9 +537,19 @@ def make_blocks():
         components = {"minecraft:geometry": identifier}
         if half == "upper":
             components["minecraft:loot"] = "loot_tables/empty.json"
-        variants.append({"condition": state_condition({"half": half, "frame": frame}), "components": components})
+        variant = {"condition": state_condition({"half": half, "frame": frame}), "components": components}
+        variants.append(variant)
+        if half == "upper":
+            upper_variants.append(variant)
+    # block_entity is not allowed in permutations. Two identifiers give each
+    # compartment its actual capacity; the old upper state remains migratable.
     block_definition("refrigerator", f"geometry.{NS}.refrigerator_lower_0", mats,
-                     {"half": ["lower", "upper"], "open": [False, True], "frame": list(range(11))}, variants)
+                     {"half": ["lower", "upper"], "open": [False, True], "frame": list(range(11))}, variants,
+                     native_container={"slot_count": 54, "title": f"container.{NS}.refrigerator.lower"})
+    block_definition("refrigerator_upper", f"geometry.{NS}.refrigerator_upper_0", mats,
+                     {"half": ["upper"], "open": [False, True], "frame": list(range(11))}, upper_variants,
+                     native_container={"slot_count": 27, "title": f"container.{NS}.refrigerator.upper"},
+                     hidden=True, loot_table="loot_tables/empty.json")
     write_json(BP / "loot_tables" / "empty.json", {"pools": []})
     # Source drawer/door keyframes, selected by persisted phase and elapsed time.
     source = ASSETS / "geo/block/dishwasher.geo.json"
@@ -1046,7 +1066,7 @@ def make_textures_and_sounds():
     write_json(RP / "sounds/sound_definitions.json", {"format_version":"1.14.0","sound_definitions":sounddefs})
     record(ASSETS / "sounds.json", RP / "sounds/sound_definitions.json", "Original sound event aliases registered in the Bedrock sound schema")
     block_sounds = {"format_version":"1.1.0"}
-    for name in ("order_machine","countertop","washingtable","chair","shelf","plate_shelf","takeout_bag","food_plate_display","board","dishwasher","refrigerator","stove"):
+    for name in ("order_machine","countertop","washingtable","chair","shelf","plate_shelf","takeout_bag","food_plate_display","board","dishwasher","refrigerator","refrigerator_upper","stove"):
         block_sounds[f"{NS}:{name}"]={"sound":"wood" if name in ("chair","shelf","plate_shelf","board") else "metal"}
     write_json(RP / "blocks.json", block_sounds)
     copy_asset(ASSETS / "icon.png", RP / "pack_icon.png")
@@ -1064,18 +1084,27 @@ def preserve_imported_geometry():
 def make_languages():
     traditional = {"order_machine":"訂單機","countertop":"料理檯","washingtable":"洗碗檯","chair":"椅子","shelf":"包裝架",
         "plate_shelf":"餐盤架","takeout_bag":"外賣袋","food_plate_display":"已擺放的餐盤","board":"菜單板","dishwasher":"洗碗機",
-        "refrigerator":"冰箱","stove":"爐灶","clean_plate":"乾淨餐盤","dirty_plate":"髒餐盤","food_plate":"裝盤料理",
+        "refrigerator":"冰箱","refrigerator_upper":"冰箱上層","stove":"爐灶","clean_plate":"乾淨餐盤","dirty_plate":"髒餐盤","food_plate":"裝盤料理",
         "motorcycle":"外賣電單車","helmet":"外賣頭盔","order":"訂單","otc_upgrade_box":"設備升級工具箱","guide":"Order To Cook 使用指南","controller":"餐廳控制器"}
     for value in (1,5,20,100,10000):
         traditional[f"chef_coin_{value}"]=f"廚師幣（{value}）"
     english_extra = {"guide":"Order To Cook Guide", "controller":"Restaurant Controller"}
+    fridge_labels = {
+        "en_US": {"upper": "Refrigerator — Upper (27 slots)", "lower": "Refrigerator — Lower (54 slots)", "block": "Upper Refrigerator"},
+        "zh_CN": {"upper": "冰箱上层（27格）", "lower": "冰箱下层（54格）", "block": "冰箱上层"},
+        "zh_TW": {"upper": "冰箱上層（27格）", "lower": "冰箱下層（54格）", "block": "冰箱上層"},
+    }
     for src_name, out_name in (("en_us","en_US"),("zh_cn","zh_CN"),("zh_cn","zh_TW")):
         lang = read_json(ASSETS / "lang" / (src_name + ".json"))
         lines=["## Order To Cook — source translations by breezeth-CN; Bedrock additions by this port.","pack.name=Order To Cook Unofficial","pack.description=Unofficial Bedrock adaptation of Order To Cook."]
         for path in sorted((BP / "blocks").glob("*.json")):
             name=path.stem
             value=traditional[name] if out_name == "zh_TW" else lang.get(f"block.{NS}.{name}", name.replace("_"," ").title())
+            if name == "refrigerator_upper":
+                value = fridge_labels[out_name]["block"]
             lines.append(f"tile.{NS}:{name}.name={value}")
+        for half in ("upper", "lower"):
+            lines.append(f"container.{NS}.refrigerator.{half}={fridge_labels[out_name][half]}")
         for path in sorted((BP / "items").glob("*.json")):
             name=path.stem
             fallback=english_extra.get(name,name.replace("_"," ").title())
@@ -1085,8 +1114,15 @@ def make_languages():
                   f"entity.{NS}:dining_plate.name="+("Dining Plate" if out_name=="en_US" else "用餐餐盤"),
                   f"action.interact.{NS}.plate="+("Check plate" if out_name=="en_US" else "查看餐盤")]
         dest=RP / "texts" / (out_name+".lang")
+        # Handbook and runtime messages are maintained independently of Java
+        # asset labels. Regeneration must retain those additional keys.
+        previous = dest if dest.is_file() else ROOT / "runtime/RP/texts" / (out_name+".lang")
+        if previous.is_file():
+            generated_keys = {line.partition("=")[0] for line in lines if "=" in line}
+            lines += [line for line in previous.read_text(encoding="utf-8").splitlines()
+                      if line not in lines and line.partition("=")[0] not in generated_keys]
         dest.parent.mkdir(parents=True,exist_ok=True)
-        dest.write_text("\n".join(lines)+"\n",encoding="utf-8")
+        dest.write_text("\n".join(lines).rstrip("\n")+"\n",encoding="utf-8")
         record(ASSETS / "lang" / (src_name + ".json"), dest, "Bedrock localization keys; additional port labels and Traditional Chinese translations")
     write_json(RP / "texts/languages.json",["en_US","zh_CN","zh_TW"])
 

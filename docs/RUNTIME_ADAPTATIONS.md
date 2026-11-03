@@ -1,43 +1,45 @@
 # 顧客、載具與廚房設備：基岩版實作及差異
 
-本文件對應 **0.1.2-alpha.3** 的 `runtime/BP/scripts/entities.js`、`dining.js`、`appliances.js` 與 `appliance_motion.js`。這是基岩版改編；Java 的介面、實體物理和 GeckoLib 方塊動畫不能原樣載入基岩版。**型別檢查、模擬測試及原生服務端探針，均不能代替 Minecraft 客戶端畫面、表單及觸控驗收。**
+本文件對應 **0.1.5-alpha.1（未發布來源）** 的 `entities.js`、`dining.js`、`appliances.js`、`appliance_motion.js`、`native_fridge.js` 與 `stove_controls.js`。這是基岩版改編；Java 的介面、實體物理和 GeckoLib 方塊動畫不能原樣載入。**型別檢查、模擬測試及原生服務端探針均不能代替真實 Player 的容器操作、客戶端畫面與觸控驗收。**
 
 上游基準為 [breezeth-CN/OrdertoCook，提交 e59e3dbcabe19b783d9adb933db5fcb8bc1e4642](https://github.com/breezeth-CN/OrdertoCook/tree/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642)。下列 Java 規則以 `forge-1.20.1/src/main/java/cn/breezeth/ordertocook/` 為依據，共用模型與動畫位於 `common/src/main/resources/assets/ordertocook/`。
 
 ## 版本與 API
 
-目標最低版本為 **Minecraft Bedrock 1.21.100**；依賴固定為穩定版 `@minecraft/server 2.0.0`、`@minecraft/server-ui 2.0.0`，不要求 Beta APIs 或 Upcoming Creator Features。Microsoft 的 [1.21.90 創作者更新說明](https://learn.microsoft.com/en-us/minecraft/creator/documents/update1.21.90?view=minecraft-bedrock-stable)已列明 Script API 2.0 與 Custom Components V2 正式推出。本專案選用稍後的 1.21.100 作共同的資源格式及相容基準。
+目標最低版本為 **Minecraft Bedrock 26.60（manifest：1.26.60）**；固定使用 stable `@minecraft/server 2.11.0` 與 `@minecraft/server-ui 2.0.0`。冰箱的 `minecraft:block_entity.container` **需要 Upcoming Creator Features**，不需要 Beta APIs 或 POI 實驗。原生容器在 [26.50 創作者更新](https://learn.microsoft.com/en-us/minecraft/creator/documents/update1.26.50?view=minecraft-bedrock-stable)加入；[26.60 更新紀錄](https://feedback.minecraft.net/hc/en-us/articles/49852828563853-Minecraft-Bedrock-Edition-26-60-Changelog)列明 server 2.11.0 與容器標題能力。完整 API／schema 版本核對與限制見 [NATIVE-CONTAINERS.md](NATIVE-CONTAINERS.md)。原 0.1.2 的 1.21.100／無實驗設定只屬歷史要求，不適用本輪。
 
 方塊及物品自訂元件由 `main.js` 在 `system.beforeEvents.startup` 註冊；世界存檔讀取及服務建立在 `world.afterEvents.worldLoad` 執行。服務的 `init()` 接著啟動更新，不再等待另一個 `worldLoad`；設備每 2 tick 更新，顧客與餐盤每 5 tick 更新。這遵循 [Script V2 的 early execution 限制](https://learn.microsoft.com/en-us/minecraft/creator/documents/scripting/v2-overview?view=minecraft-bedrock-stable)。
 
-介面使用 [ActionFormData](https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server-ui/actionformdata?view=minecraft-bedrock-stable)，交由原生表單提供鍵鼠、控制器和觸控入口；各裝置的實際操作仍待驗收。排列、拖曳、快捷移動及動畫不同於 Java 容器視窗。本模組沒有覆寫 `player.json`。
+冰箱直接使用原生方塊容器視窗，鍵鼠、控制器、觸控交由 Bedrock 庫存操作處理；爐灶與操作台以直接互動及單頁 [ActionFormData](https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server-ui/actionformdata?view=minecraft-bedrock-stable) 縮短操作。表單使用現有 stable UI 2.0 即可，不需要測試版表單 API。各裝置實際操作仍待驗收，不能宣稱相同於 Java 拖曳、快捷移動及專用槽位佈局。本模組沒有覆寫 `player.json`。
 
 ## 冰箱
 
 | 項目 | 本版行為 |
 | --- | --- |
-| 放置 | 同一 ID `ordertocook:refrigerator` 的上下兩格；上半格沒有獨立掉落。放置前需確保上方空間。 |
-| 儲存 | 保留原版 **上層 27 格、下層 54 格**，共 81 格。點上半開上層；點下半開下層。 |
-| 可存物品 | 已知原版食品、設定中登記的食品、具有可讀食物 component 的自訂食品。 |
-| 存取 | 原生表單選擇整疊存入或取出；分頁顯示格子。每次操作再次核對玩家距離、設備是否存在、即時店主／員工權限及所選物品；開啟表單後被撤權也不能繼續取物。 |
-| 開門 | 每個分區各自計算觀看者；上下門獨立開合，每扇門有 11 個關鍵姿態，正常 20 TPS 下約 1 秒完成。最後一位觀看者關閉該分區後才關門，可在途中反轉。 |
-| 拆除 | 破壞任一半都拆除另一半，只掉落一個冰箱物品，並掉出庫存中的真實物品堆疊。 |
+| 放置 | 下半保留 `ordertocook:refrigerator`，上半改為隱藏的 `ordertocook:refrigerator_upper`；上半沒有獨立方塊掉落。原 ID 保留舊 `half=upper` 狀態供升級辨識。 |
+| 儲存 | **上層 27 格、下層 54 格**直接保存在各方塊的原生 inventory，共 81 格。點哪一半就開哪一半的原生視窗，沒有儲物翻頁選單。 |
+| 可存物品 | 遵守原生容器規則；26.60 schema 不提供食品限定槽，其他物品也可存入。操作台仍僅按訂單所需的有效食品及變體取料。 |
+| 存取 | 引擎處理格子移物；腳本在 before-event 檢查入口、權限與遷移完成狀態。該取消是否可靠阻止 26.60 原生 GUI，仍需真 Player 驗收；已開容器無可用強制關閉 API。 |
+| 開門 | stable `blockContainerOpened`／`blockContainerClosed` 驅動各分區觀看者；每扇門 11 姿態，正常 20 TPS 下約 1 秒完成，途中可反轉。移除無效觀看者只管理動畫，不代表強制關閉原生視窗。 |
+| 拆除 | 破壞任一半會清理另一半，只掉一個冰箱物品；原生容器內容交由引擎掉落，腳本不能再複製一份貨物。舊 helper 的清理另依遷移狀態處理。 |
 
 原版源碼 `block/entity/RefrigeratorBlockEntity.java` 額外允許每疊 128 件。**本版遵守各 Bedrock 物品自己的最大堆疊數**，一般食品通常為 64；因此相同格數不代表相同的總件數。
 
 模型只把櫃體在 Y=16 分格，整扇下門保留在下半模型並跨至 Y=19.5，避免獨立開門時把門片截斷。上下門分別取樣原 `up_open`／`down_open`，終點角度為 −135°／−125°；關門反向走同一組姿態。原 GeckoLib easing 改用線性取樣，未保留關門機身擠壓、回彈及櫃內食品陳列。少數中間姿態對整扇門施加不超過 0.125 像素的位移，使旋轉後幾何留在 Bedrock 30 像素邊界內；門片尺寸、UV 與端點姿態不變。詳見 [素材轉換說明](ASSET_PROVENANCE.md#冰箱)。
 
-每次開表單都綁定獨立的觀看 session。玩家離線、走遠、撤權或設備區塊卸載會使舊 session 失效；重新載入後，舊表單不能恢復取物權限。當前門 frame 保存在方塊狀態，重啟從該姿態收回；觀看者不跨重啟保留。這些動畫狀態不改寫庫存。
+門 frame 保存在方塊狀態，重啟後從該姿態收回；觀看者不跨重啟保留。玩家離線、離開、失去權限或區塊卸載會清理動畫觀看者。**這不是原生 GUI 撤權**：26.60 沒有公開的 native container close API，不能把移除觀看者當作已阻止取物。權限變更須考慮已開容器仍可操作的限制；其他腳本取料／表單操作會重新核對權限。入口取消及原生多人畫面列為待驗收。
 
-庫存實際保存在不可見的 `ordertocook:storage` 實體原生 inventory 裡，沒有把食物簡化成「ID + 數量」後重造。餐點、包裹的唯一訂單 proof、動態屬性、名稱、lore、耐久及其他原生堆疊資料會隨 ItemStack 保留。已記錄的庫存實體尚未載入時，程式保留其 ID 並拒絕建立空櫃，避免把暫時未載入誤認成從未有貨物。
+新冰箱直接使用兩個方塊 inventory；81 格介面只是按「上層 0–26、下層 27–80」映射原生槽位，沒有另一份虛擬庫存。舊世界的不可見 `ordertocook:storage` helper 使用 [Container.moveItem](https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/container?view=minecraft-bedrock-stable) 逐槽移入；不以 ID＋數量重造物品，訂單 proof、動態屬性、名稱、lore、耐久等 native ItemStack 資料隨物品移動。遷移中途失敗可從來源剩餘槽繼續；目的槽有物品時停止，不能覆寫。
 
-技術依據：[EntityInventoryComponent](https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/entityinventorycomponent?view=minecraft-bedrock-stable)、[minecraft:inventory](https://learn.microsoft.com/en-us/minecraft/creator/reference/content/entityreference/examples/entitycomponents/minecraftcomponent_inventory?view=minecraft-bedrock-stable)。原生容器資料與世界動態屬性不是資料庫交易，突然終止程序時的原子落盤保證不能由本套測試推出。
+舊 helper 尚未載入時保留其 ID 並等待，期間不允許開櫃或操作台取料，不建立替代空櫃。沒有 Upcoming Creator Features、下半缺少原生 inventory 時，在替換舊上半 ID 之前停止，保留舊方塊及 helper。搬完並保存遷移標記後才移除空 helper。僅看向設備的 HUD 不會啟動遷移。
+
+原生方塊容器 schema、容量與持久化行為見 [官方 block_entity 文件](https://learn.microsoft.com/en-us/minecraft/creator/reference/content/blockreference/examples/blockcomponents/minecraftblock_block_entity?view=minecraft-bedrock-stable)。它不能放進 permutations，因此使用兩個 ID，而不是在同一 ID 的上下狀態切換容量。方塊狀態變更保留 inventory，換成不同方塊 ID 則會掉出貨物；詳細版本依據及無法 1:1 的項目見 [NATIVE-CONTAINERS.md](NATIVE-CONTAINERS.md)。原生庫存與 world dynamic properties 不是同一筆原子交易，不能宣稱任意強制中止都零損失。
 
 ## 三槽爐灶
 
 依 `block/entity/StoveBlockEntity.java`，保留 7 格結構：3 格食材、1 格共用燃料、3 格對應成品。**每 200 tick（正常 20 TPS 下為 10 秒），三條能出菜的槽同時完成一次烹調**。成品格已滿或物品不相容時，該槽不消耗食材。燃料只在至少一槽能烹調時點燃；燃燒中的燃料會繼續計時。失火後未完成進度以每 tick 2 點回退。
 
-穩定 Script API 2.0 沒有提供此處可用的通用煙燻配方 registry 查詢，因此本版使用明確的配方表：
+本輪介面改進沿用既有明確配方表、燃料規則與烹調時序，不變更其他食品／配方整合範圍：
 
 | 食材 | 成品 |
 | --- | --- |
@@ -48,7 +50,9 @@
 
 已支援煤炭、木炭、煤炭方塊、乾海帶塊、烈焰棒、木棒、竹子、熔岩桶及程式列出的木材燃料。熔岩桶燃燒後留下空桶。支援表在 `SMOKING_RECIPES`、`FUEL_TICKS`；服務建立時可透過 `ctx.smokingRecipes`、`ctx.fuelTicks` 擴充。**其他附加包的食品能加入餐廳菜單，不代表它們的烹調配方會自動加入爐灶。**
 
-火焰狀態與煙霧已有對應；完整 Java 火焰骨骼、短暫爆火、任意模組燃料與配方載入仍屬差異。爐灶介面是逐槽操作表單，不能在同一視窗拖曳多個格子。
+火焰狀態與煙霧已有對應；完整 Java 火焰骨骼、短暫爆火、任意模組燃料與配方載入仍屬差異。爐灶的七格物品保存在原生實體 inventory，介面不是自訂原生熔爐視窗。
+
+手持支援的食材／燃料點擊，直接把該堆疊存入可用輸入槽／燃料槽；放不下則保留原堆疊。空手或手持其他物品時開啟單頁七槽控制：點槽取出、收全部成品、從背包補料、刷新或關閉，不需進入槽位子選單。整批取出先核對背包容量；槽位已被其他玩家改動時拒絕舊選擇並刷新。表單返回後重新驗證距離、權限及設備；取消、設備移除或失去權限直接退出。同步寫入例外嘗試回復原 ItemStack，完整成敗邊界以本輪測試報告為準。
 
 ## 洗碗池及洗碗機
 
@@ -56,7 +60,7 @@
 
 原版採「持續按住使用鍵」。本版為「點擊開始並保持望著池子」，避免依賴 Java 自訂封包與客戶端按鍵事件。未改 `player.json`，所以也沒有聲稱保留原版玩家上身洗碗動作。水花、聲音及 action bar 進度提供操作回饋。
 
-洗碗機依 `block/entity/DishwasherBlockEntity.java`，一次從玩家背包收取最多 **16 個**髒盤子：
+洗碗機依 `block/entity/DishwasherBlockEntity.java`，沿用既有的直接批次操作：**手持髒盤點擊**，一次從玩家背包收取最多 **16 個**髒盤子；洗好後必須**雙手空**才可點擊領取整批。這不是本輪才加入的無表單介面；本輪補強手持條件與保存錯誤時的回退。
 
 | phase | 狀態 | 時間 |
 | --- | --- | --- |
@@ -67,9 +71,15 @@
 | 5 | clear_ready，等候取出 | 等待操作 |
 | 1 | empty_in，取走後收回 | 14 tick |
 
-因此最多 8 個盤子需 94 tick，9–16 個需 134 tick 到達可取出狀態；設備腳本以 2 tick 間隔更新，畫面狀態切換受此取樣間隔影響。庫存不足以領取整批時，不會取走或刪除機內盤子。方塊 state 每個最多 16 種值，16 個盤子的視覺計數拆為 `plates = count % 16` 與 `plates_high = count >= 16`；實際存檔數量仍為 16。
+因此最多 8 個盤子需 94 tick，9–16 個需 134 tick 到達可取出狀態；設備腳本以 2 tick 間隔更新，畫面狀態切換受此取樣間隔影響。庫存不足以領取整批時，不會取走或刪除機內盤子。裝入／領取遇到已知保存錯誤會回復盤數、phase 及玩家庫存，仍不承諾程序任意崩潰時的跨存檔原子性。方塊 state 每個最多 16 種值，16 個盤子的視覺計數拆為 `plates = count % 16` 與 `plates_high = count >= 16`；實際存檔數量仍為 16。
 
 方塊資源共有 **66 個姿態**：4 個活動 phase 各 16 個，加 idle／clear_ready 兩個端點。`frame` 0–15 由已保存的剩餘 tick 計算，洗滌姿態以原 40 tick 週期重複。轉換保留原門、抽屜、盤子的剛體位移／旋轉、均勻縮放與洗滌抖動，省略無法在此方塊幾何中精確表示的非均勻機身 squash/stretch，並採線性關鍵幀取樣。重啟恢復 phase／時間，不額外領盤。原 `empty_out` 片段仍保存，但「只把準星移上去便預覽開門」尚未接線；有限姿態不等同逐幀 GeckoLib 渲染。
+
+## 操作台裝盤與外送打包
+
+手持有效的本店已接訂單點擊操作台，可直接製作該單。空手開啟單頁列表，每張訂單同時顯示菜名、數量、可製作或缺少的食品／包材／乾淨盤，以及台面是否受阻；點選即製作，沒有另開確認子頁。取消表單不扣料。
+
+食品仍取自玩家背包及有權使用的 24 格內冰箱，耗材取自 5 格內對應架子；上方需空置以擺放原生盤／袋。送出後重新核對餐廳、訂單期限／狀態、權限、距離、設備及完整物品需求。沿用現有食品變體匹配、ItemStack 核對、同步扣料及失敗回退，不把菜單食品註冊當作烹調配方。成品仍帶唯一訂單 proof，點台取走後交給相應顧客。
 
 ## 顧客及椅子
 
@@ -138,7 +148,7 @@
 
 ## 設備準星資訊與個人進度
 
-alpha.3 用 `equipment_inspection.js` 與設備服務提供唯讀快照，再由 main 的單一 action bar 更新器每 10 ticks 合併顯示。6 格射線命中後，仍需同維度、設備中心 6 格內、已載入且有使用權限。架子容量為包材 10／盤架 18；洗碗池 10、洗碗機 16；冰箱顯示上 27／下 54 的已用槽位。儲物 helper 必須與設備 ID、維度及原搜尋 anchor 相符，缺失時顯示尚未載入；檢視不建立 station、替代庫存或修復坏資料。
+`equipment_inspection.js` 自 alpha.3 起提供唯讀快照，由 main 的單一 action bar 更新器每 10 ticks 合併顯示。6 格射線命中後，仍需同維度、設備中心 6 格內、已載入且有使用權限。架子容量為包材 10／盤架 18；洗碗池 10、洗碗機 16；冰箱直接讀取上 27／下 54 原生容器的已用槽位，遷移未完成時顯示尚未載入，不觸發搬移。爐灶 helper 仍需與設備 ID、維度及原 anchor 相符。檢視不建立 station、替代庫存或修復壞資料。
 
 第一行優先手洗百分比／20 tick 中止訊息，否則顯示設備資訊；若主手票據／包裹有進行中的外送，第二行顯示方向、座標及時間。手洗仍要求空手，完成後重新手持外送物品才能恢復導航。無任何本包提示時只清除上一次 HUD 一次，不持續清空閒置玩家 action bar。兩行排版與不同裝置可讀性待 dot 實測。
 
@@ -150,12 +160,14 @@ Jade 來源是固定提交的 [OrderToCookJadePlugin.java](https://github.com/br
 
 Microsoft 的 [ItemFoodComponent 文件](https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/itemfoodcomponent?view=minecraft-bedrock-stable) 明確限定其適用於 data-driven items。本版以已核對的原版食品清單為基礎，再加可讀 component 及管理員登記規則；不能據此宣稱任意已安裝附加包食品都會自動被正確識別。
 
-設備狀態、餐廳及訂單使用世界 dynamic properties，容器 ItemStack 使用原生實體 inventory。[官方多人腳本指南](https://learn.microsoft.com/en-us/minecraft/creator/documents/scripting/multiplayer-scripts?view=minecraft-bedrock-stable)說明 dynamic properties 會跨伺服器重新啟動保留。套件 header UUID 需要保持固定。讀取異常資料時保留原值，不以清空存檔作「修復」。
+設備狀態、餐廳及訂單使用世界 dynamic properties；冰箱 ItemStack 使用原生方塊 inventory，爐灶及載具使用原生實體 inventory。[官方多人腳本指南](https://learn.microsoft.com/en-us/minecraft/creator/documents/scripting/multiplayer-scripts?view=minecraft-bedrock-stable)說明 dynamic properties 會跨伺服器重新啟動保留。套件 header UUID 需要保持固定。讀取異常資料時保留原值，不以清空存檔作「修復」。
 
 設備只有載入時處理；離線、遠離區塊或重新載入不補算大量烹飪 tick。訂單期限、餐盤進食及顧客完成時間使用真實毫秒，離線期間仍推進。餐盤名義 0.75／3／4／5 秒對應原 20 TPS 的門檻，但世界卡頓或暫停時並不保證與 Java 世界 tick 完全同步。
 
 ## 驗證範圍與記錄
 
-回歸測試直接匯入正式腳本，把 Minecraft／表單依賴換成可控配接器。設備測試涵蓋原生堆疊保留、分區容量、存取回退、舊表單失效、多人觀看、動畫反轉、卸載恢復及洗碗機原 phase 時序；餐盤與顧客測試涵蓋各階段邊界、動作選擇、持續髒盤、提前收盤、舊記錄拒絕、重複領取與存檔失敗。資源檢查另核對原檔雜湊、atlas 像素、幾何邊界及離線重產。當次版本、實際執行結果與數量統一記於 [VALIDATION.md](VALIDATION.md)，不能把 alpha.2 的原生結果直接沿用為 alpha.3 通過。
+回歸測試直接匯入正式腳本，並用可控配接器代替 Minecraft／表單依賴；它能檢查交易分支、回退及狀態，但不能證明原生 GUI 的真 Player 事件順序。原生服務端探針使用真方塊、容器與 ItemStack，仍不能代替玩家連線、原生拖放、觸控、手把、雙人競爭及 RP 渲染驗收。
 
-原生服務端探針使用真實方塊、實體及 ItemStack；需要玩家介面的部分仍可能由持有原生容器的測試物件代替 Player。**真實玩家連線、鍵鼠／手機／控制器輸入、GUI 表單、雙人競爭與 RP 渲染尚未完成驗收。** 最低宣告版本 **1.21.100 客戶端亦未實測**；較新服務端通過不能證明最低版本完整相容。alpha.3 本輪沒有重跑原生服務端；dot 依 [DOT_HANDOFF.md](DOT_HANDOFF.md) 與 [PLAYTEST.md](PLAYTEST.md) 執行並記錄客戶端驗收。
+**0.1.5-alpha.1 的實際命令、結果、指紋及尚未執行的案例以 [CONTAINER_GUI.md](validation/0.1.5-alpha.1/CONTAINER_GUI.md) 為準。** 本文不把腳本實作描述當作已通過測試的聲明。26.60 入口 before-event 取消原生容器、各輸入裝置及雙人視窗仍需真 Player 證據；已開視窗即時撤權屬已知引擎限制。
+
+[VALIDATION.md](VALIDATION.md)、[DOT_HANDOFF.md](DOT_HANDOFF.md) 及 [PLAYTEST.md](PLAYTEST.md) 保留歷史版本的結果與交接範圍。alpha.2 原生斷言及 alpha.3 限定客戶端結果均不直接套用到 0.1.5-alpha.1；較新服務端通過也不能證明所有客戶端／裝置相容。

@@ -23,6 +23,7 @@ import { guideBookScreen } from './guide_book.js';
 import { notify, choose, textInput, safely } from './ui.js';
 import { createEntityService } from './entities.js';
 import { createApplianceService } from './appliances.js';
+import { isFridge, isUpperFridge } from './native_fridge.js';
 import { createDiningService, DINING_ENTITY } from './dining.js';
 import { progressRows } from './progression.js';
 import { createProgressionService, creditCompletedOrder, queueProgressEvent } from './progression_service.js';
@@ -385,9 +386,30 @@ async function countertopForm(player, block) {
   if (!restaurant || !canManage(player, restaurant)) { notify(player, '操作台需要在你可管理的打單機 24 格內。'); return; }
   expireOrders(restaurant);
   saveRestaurant(restaurant);
+  if (heldItem(player)?.typeId === 'ordertocook:order') {
+    const linked = itemOrder(heldItem(player));
+    if (!linked || linked.restaurant !== restaurant || linked.order.status !== 'accepted' ||
+        linked.proof !== linked.order.proof || Date.now() >= linked.order.expiresAt) {
+      notify(player, '手持訂單無效、已處理，或不屬於這個操作台的餐廳。'); return;
+    }
+    return prepareOrderAtCountertop(player, block, restaurant, linked.order);
+  }
   const orders = restaurant.orders.filter(order => order.status === 'accepted');
   if (!orders.length) { notify(player, '先在打單機接單；已備妥的成品不會重複製作。'); return; }
-  const index = await choose(player, '操作台 · 裝盤／打包', '會消耗背包及附近 24 格冰箱內的指定成品食品。\n外送用 5 格內包裝架的皮革，堂食用餐盤架的乾淨盤子。\n請保持操作台上方空置，成品會擺在台上。', orders.map(order => `${orderHeading(order)}\n${order.items.map(item => menuFoodLabel(item, foodLabel(item.typeId)) + ' ×' + item.amount).join('、')}`));
+  const ingredients = ingredientContainers(player, block);
+  const labels = orders.map(order => {
+    const plan = planExtraction(ingredients, order.items);
+    const shelfId = order.type === 'delivery' ? 'ordertocook:shelf' : 'ordertocook:plate_shelf';
+    const supplies = nearbyStations(block.dimension.id, block.location, 5, shelfId)
+      .some(station => station.supplies > 0 && canUseStation(player, station));
+    const problems = [];
+    if (!block.above()?.isAir) problems.push('台上已有成品／方塊');
+    if (!supplies) problems.push(order.type === 'delivery' ? '缺少包材' : '缺少乾淨餐盤');
+    if (!plan.ok) problems.push(plan.missingFoods.length ? `缺少 ${plan.missingFoods.map(item => `${menuFoodLabel(item, foodLabel(item.typeId))} ×${item.amount}`).join('、')}` : '食品資料無法讀取');
+    const dishes = order.items.map(item => `${menuFoodLabel(item, foodLabel(item.typeId))} ×${item.amount}`).join('、');
+    return `${orderHeading(order)}\n${dishes}\n${problems.length ? problems.join('；') : '可製作'} · ${order.type === 'delivery' ? '打包' : '裝盤'}`;
+  });
+  const index = await choose(player, '操作台 · 裝盤／打包', '點選訂單直接製作；手持訂單點台可直接處理該單。\n使用背包與附近 24 格冰箱的食品、5 格內架子的包材／乾淨盤。\n成品放在台上，請先保持上方空置。', labels);
   if (index === undefined || !nearBlock(player, block) || block.typeId !== 'ordertocook:countertop' || !canManage(player, restaurant)) return;
   const order = orders[index];
   return prepareOrderAtCountertop(player, block, restaurant, order);
@@ -764,7 +786,7 @@ function onUse(player, itemStack) {
 function onPlace(block) {
   if (!ready || !block?.isValid || !block.typeId.startsWith(PREFIX)) return;
   // The refrigerator's upper half is owned by the lower-half station.
-  if (block.typeId === 'ordertocook:refrigerator' && block.permutation.getState('ordertocook:half') === 'upper') return;
+  if (isUpperFridge(block)) return;
   const station = getStation(block);
   if (block.typeId === 'ordertocook:board' && !station.initialized) { station.menu = DEFAULT_MENU.map(food => ({ ...food })); station.initialized = true; saveStation(station); }
   appliances?.onPlace(block);
@@ -939,7 +961,7 @@ system.beforeEvents.startup.subscribe(event => {
 });
 
 world.beforeEvents.playerInteractWithBlock.subscribe(event => {
-  if (!ready) return;
+  if (!ready) { if (isFridge(event.block)) event.cancel = true; return; }
   const item = event.itemStack;
   const meal = dining?.atBlock(event.block);
   if (meal) {
@@ -951,6 +973,15 @@ world.beforeEvents.playerInteractWithBlock.subscribe(event => {
   if (parcel) {
     event.cancel = true;
     if (event.isFirstEvent) system.run(() => safely(event.player, () => placeParcel(event.player, event.block, event.blockFace)));
+    return;
+  }
+  if (isFridge(event.block) && item?.typeId !== 'ordertocook:otc_upgrade_box') {
+    // Native block interaction opens the actual container. Do not cancel an
+    // authorized ready fridge or dispatch the former paginated form adapter.
+    const station = findStation(appliances.normalizeBlock(event.block));
+    if (station?.ownerId && appliances.canOpenFridge(event.player, event.block)) return;
+    event.cancel = true;
+    if (event.isFirstEvent) system.run(() => safely(event.player, () => interactBlock(event.player, event.block)));
     return;
   }
   if (event.block.typeId.startsWith(PREFIX) || item?.typeId === 'ordertocook:otc_upgrade_box') {
@@ -1052,12 +1083,12 @@ world.afterEvents.worldLoad.subscribe(() => {
     system.runInterval(updateHud, 10);
     registerConfiguration();
     requestFoodCatalogs();
-    console.warn('[OrderToCook] Bedrock alpha loaded. Stable API 2.0; no experimental toggles required.');
+    console.warn('[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.');
   } catch (error) { console.error(`[OrderToCook] Initialization stopped; saved data was preserved. ${error}`); }
 });
 
 // Headless native-engine tests import these same adapters. No test hooks are
 // exposed through chat, commands, script events or a separately installable pack.
 export function getQaHooks() {
-  return { ready, entities, appliances, dining, progression, guideForm, boardForm, foodFromStack, syncMenu, orderBody, parcelFor, updateHud, progressForm, recordProgress, reconcileProgress, updateProgressRankings, reconcileStationProgress, upgradeForm, getMachine, acceptWithTicket, prepareOrderAtCountertop, pickupDisplay, placeParcel, customerInteract, collectDiningPlate, tickRestaurants, itemOrder, onPlace, onBreak, shelfInteract, upgradeAppliance, canUseStation };
+  return { ready, entities, appliances, dining, progression, guideForm, boardForm, foodFromStack, syncMenu, orderBody, parcelFor, updateHud, progressForm, recordProgress, reconcileProgress, updateProgressRankings, reconcileStationProgress, upgradeForm, getMachine, acceptWithTicket, countertopForm, prepareOrderAtCountertop, pickupDisplay, placeParcel, customerInteract, collectDiningPlate, tickRestaurants, itemOrder, onPlace, onBreak, shelfInteract, upgradeAppliance, canUseStation };
 }

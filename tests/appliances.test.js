@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { appliances, FakeContainer, FakeItem, FakePlayer, FakeForm, makeEnvironment, place, advance } from './appliances.harness.js';
+import { appliances, FakeContainer, FakeItem, FakePlayer, makeEnvironment, place, advance } from './appliances.harness.js';
 
 test('unstackable parcel transfers with its proof, name and lore intact', () => {
   const player = new FakeContainer(5), cooler = new FakeContainer(54);
@@ -46,17 +46,23 @@ test('failed destination write rolls source and destination back', () => {
 test('saved unloaded inventory is never replaced by a new empty helper', () => {
   const env = makeEnvironment(), service = appliances.createApplianceService(env.ctx);
   const block = place(env, 'ordertocook:refrigerator', undefined, { 'ordertocook:half': 'lower' });
+  place(env, 'ordertocook:refrigerator_upper', { x: 0, y: 1, z: 0 }, { 'ordertocook:half': 'upper' });
   const station = env.ctx.getStation(block); station.storageId = 'not-loaded-yet';
   assert.equal(service.getStorage(station), undefined); assert.equal(env.dimension.spawnCount, 0); assert.equal(station.storageId, 'not-loaded-yet');
 });
 
-test('double fridge initialization preserves both halves and one inventory', () => {
+test('double fridge initialization preserves the 27/54 native inventories without creating helpers', () => {
   const env = makeEnvironment(), service = appliances.createApplianceService(env.ctx);
   const block = place(env, 'ordertocook:refrigerator', undefined, { 'ordertocook:half': 'lower' });
-  service.onPlace(block); const station = env.ctx.getStation(block); const helperId = station.storageId;
+  service.onPlace(block); const station = env.ctx.getStation(block);
+  const upper = env.dimension.getBlock({ x: 0, y: 1, z: 0 });
+  const lowerInventory = block.getComponent('minecraft:inventory').container, upperInventory = upper.getComponent('minecraft:inventory').container;
   service.getStorage(station).setItem(0, new FakeItem('minecraft:apple', 4)); service.onPlace(block);
-  assert.equal(block.typeId, 'ordertocook:refrigerator'); assert.equal(env.dimension.getBlock({ x: 0, y: 1, z: 0 }).permutation.getState('ordertocook:half'), 'upper');
-  assert.equal(station.storageId, helperId); assert.equal(env.dimension.spawnCount, 1); assert.equal(service.getStorage(station).getItem(0).amount, 4); assert.equal(env.dimension.drops.length, 0);
+  assert.equal(block.typeId, 'ordertocook:refrigerator'); assert.equal(upper.typeId, 'ordertocook:refrigerator_upper');
+  assert.equal(upper.permutation.getState('ordertocook:half'), 'upper');
+  assert.equal(lowerInventory.size, 54); assert.equal(upperInventory.size, 27);
+  assert.equal(block.getComponent('minecraft:inventory').container, lowerInventory); assert.equal(upper.getComponent('minecraft:inventory').container, upperInventory);
+  assert.equal(station.storageId, undefined); assert.equal(env.dimension.spawnCount, 0); assert.equal(service.getStorage(station).getItem(0).amount, 4); assert.equal(env.dimension.drops.length, 0);
 });
 
 test('three stove lanes cook together after 200 ticks using one fuel supply', () => {
@@ -83,10 +89,41 @@ test('sixteen-plate washer follows 30+80+24 ticks and produces plates once', () 
   assert.equal(player.container.getItem(0).amount, 4); assert.equal(station.appliance.phase, 2); assert.equal(station.appliance.plates, 16);
   assert.equal(block.permutation.getState('ordertocook:plates'), 0); assert.equal(block.permutation.getState('ordertocook:plates_high'), true);
   advance(service, env, 30); assert.equal(station.appliance.phase, 3); advance(service, env, 80); assert.equal(station.appliance.phase, 4);
-  advance(service, env, 24); assert.equal(station.appliance.phase, 5); service.onInteract(player, block);
+  advance(service, env, 24); assert.equal(station.appliance.phase, 5);
+  player.selectedSlotIndex = 1; // Empty main hand; the four excess dirty plates remain in slot 0.
+  service.onInteract(player, block);
   assert.equal(station.appliance.plates, 0); assert.equal(station.appliance.phase, 1);
+  assert.equal(player.container.getItem(0).typeId, 'ordertocook:dirty_plate'); assert.equal(player.container.getItem(0).amount, 4);
   assert.equal(player.container.slots.filter(stack => stack?.typeId === 'ordertocook:clean_plate').reduce((n, item) => n + item.amount, 0), 16);
   service.onInteract(player, block); assert.equal(station.appliance.phase, 1); advance(service, env, 14); assert.equal(station.appliance.phase, 0);
+});
+
+test('washer save failures restore both the complete item stacks and the batch state before retry', () => {
+  for (const mode of ['intake', 'output']) {
+    const env = makeEnvironment(), player = new FakePlayer(env.dimension), service = appliances.createApplianceService(env.ctx);
+    const block = place(env, 'ordertocook:dishwasher'); service.onPlace(block);
+    const station = env.ctx.getStation(block);
+    if (mode === 'intake') {
+      const dirty = new FakeItem('ordertocook:dirty_plate', 20); dirty.nameTag = 'Owned plates'; dirty.setDynamicProperty('sample:batch', 'kept-on-failure');
+      player.container.setItem(0, dirty);
+    } else Object.assign(station.appliance, { phase: 5, plates: 16 });
+    const beforeState = JSON.stringify(station.appliance);
+    const beforeItems = Array.from({ length: player.container.size }, (_, slot) => appliances.itemFingerprint(player.container.getItem(slot)));
+    const save = env.ctx.saveStation; let fail = true;
+    env.ctx.saveStation = value => { if (fail) { fail = false; throw Error('simulated station save failure'); } return save(value); };
+    service.onInteract(player, block);
+    assert.equal(JSON.stringify(station.appliance), beforeState);
+    assert.deepEqual(Array.from({ length: player.container.size }, (_, slot) => appliances.itemFingerprint(player.container.getItem(slot))), beforeItems);
+    service.onInteract(player, block);
+    if (mode === 'intake') {
+      assert.equal(station.appliance.phase, 2); assert.equal(station.appliance.plates, 16);
+      assert.equal(player.container.getItem(0).amount, 4); assert.equal(player.container.getItem(0).getDynamicProperty('sample:batch'), 'kept-on-failure');
+    } else {
+      assert.equal(station.appliance.phase, 1); assert.equal(station.appliance.plates, 0);
+      assert.equal(player.container.getItem(0).typeId, 'ordertocook:clean_plate'); assert.equal(player.container.getItem(0).amount, 16);
+      service.onInteract(player, block); assert.equal(player.container.getItem(0).amount, 16);
+    }
+  }
 });
 
 test('washing a sink requires staying empty-handed and facing it for 80 ticks', () => {
@@ -105,38 +142,26 @@ test('looking away cancels sink washing without deleting the dirty plate', () =>
   assert.equal(env.ctx.getStation(block).appliance.plates, 1); assert.equal(player.container.emptySlotsCount, 36);
 });
 
-test('staff permission revoked during a fridge selection prevents the transfer', async () => {
+test('native fridge entry rechecks permission and revocation clears visual viewers without moving cargo', () => {
   const env = makeEnvironment(), player = new FakePlayer(env.dimension);
   let permitted = true;
   env.ctx.canUseStation = (actor, station) => actor === player && env.records.get(station.id) === station && permitted;
   const service = appliances.createApplianceService(env.ctx);
   const block = place(env, 'ordertocook:refrigerator', undefined, { 'ordertocook:half': 'lower' });
-  service.onPlace(block);
+  service.onPlace(block); service.tick();
   const station = env.ctx.getStation(block), inventory = service.getStorage(station);
   const food = new FakeItem('minecraft:apple', 12); food.nameTag = 'Owner stock'; inventory.setItem(27, food);
-  const originalShow = FakeForm.prototype.show;
-  let showCount = 0, selectionReady, chooseItem;
-  const itemFormShown = new Promise(resolve => { selectionReady = resolve; });
-  const pendingSelection = new Promise(resolve => { chooseItem = resolve; });
-  FakeForm.prototype.show = async function () {
-    if (++showCount === 1) return { canceled: false, selection: 1 }; // Take from the lower compartment.
-    selectionReady();
-    return pendingSelection;
-  };
-  try {
-    service.onInteract(player, block);
-    await itemFormShown;
-    permitted = false;
-    chooseItem({ canceled: false, selection: 0 });
-    await new Promise(resolve => setImmediate(resolve));
-    assert.equal(showCount, 2);
-    assert.equal(player.container.emptySlotsCount, 36);
-    assert.equal(inventory.getItem(27).amount, 12);
-    assert.equal(inventory.getItem(27).nameTag, 'Owner stock');
-    assert.equal(block.permutation.getState('ordertocook:open'), false);
-  } finally {
-    FakeForm.prototype.show = originalShow;
-  }
+  assert.equal(service.canOpenFridge(player, block), true);
+  service.onContainerOpened({ block, openSource: { entity: player } }); advance(service, env, 20);
+  assert.equal(block.permutation.getState('ordertocook:open'), true);
+  permitted = false;
+  assert.equal(service.canOpenFridge(player, block), false);
+  advance(service, env, 20);
+  assert.equal(block.permutation.getState('ordertocook:open'), false);
+  assert.equal(player.container.emptySlotsCount, 36);
+  assert.equal(inventory.getItem(27).amount, 12); assert.equal(inventory.getItem(27).nameTag, 'Owner stock');
+  // This tests entry authorization and bookkeeping only. An after-event mock
+  // cannot prove that Bedrock closes an already-open native inventory on revoke.
 });
 
 test('staff permission revoked during washing leaves the dirty plate in the sink', () => {
