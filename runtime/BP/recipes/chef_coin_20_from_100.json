@@ -1,0 +1,24 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "ordertocook:chef_coin_20_from_100"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "group": "ordertocook:chef_coins",
+    "ingredients": [
+      {
+        "item": "ordertocook:chef_coin_100"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "ordertocook:chef_coin_20",
+      "count": 5
+    }
+  }
+}
