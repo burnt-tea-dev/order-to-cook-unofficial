@@ -161,49 +161,45 @@ multiplier until the real provider quality scale and original OTC reward formula
 have been reviewed and a balance regression suite exists. Existing OTC prices and
 rewards remain the default.
 
-## 7. Cookery guide and operation-entry invariants
+## 7. Independent guide ownership — Order To Cook and Cookery
 
-**The original Cookery guide layout is a protected interface.** Integration work
-must not redesign, flatten, reorder, rename, or replace its existing structure.
+**Order To Cook is a different add-on and owns a different guidebook.** The
+maintainer explicitly chose independent books with comparable categorization
+and tutorial layout, not another chapter hosted by Cookery.
 
-The following are invariants:
+- **OTC owner:** the existing `ordertocook:guide` item, crafting recipe and
+  first-join grant. The source module `guide_book.js` supplies a six-chapter,
+  topic-group and individual-lesson tree, with an icon and entry count for
+  chapters/topics, page navigation and three localized languages.
+- **Cookery owner:** the author's original guide item, host renderer, navigation,
+  chapter IDs, recipes, page layout, translations and API. OTC must not patch,
+  import, flatten, rename, reorder or overwrite these assets.
+- OTC may mirror Cookery's general information architecture (main category →
+  subcategory → item/tutorial page), but must not copy author-owned guide
+  sprites or falsely claim identical native book rendering.
+- Do not create a second OTC guide item, silently replace the existing
+  `ordertocook:guide`, or add an extra guide to the Cookery root.
+- Neither book has a mandatory manifest dependency on the other. A missing
+  Cookery package must not hide or break OTC's handbook.
+- Keep recipe ownership with its original add-on. OTC's stove shows only the
+  conversions it actually implements; other producers keep their own stations.
 
-- Preserve every original top-level section and its hierarchy/depth.
-- Preserve original section IDs, parent relationships, ordering, entry IDs,
-  recipe ordering, localized content, icons, and navigation behavior.
-- Preserve the original renderer, typography, page sizing, pagination, and
-  interaction model.
-- Do not move original entries into new categories or merge unrelated categories.
-- Do not rewrite the author's Cookery archive in the public repository or publish
-  a modified author archive as if it were an official release.
-- Do not add another guidebook item or a parallel replacement UI.
+OTC does not modify Cookery or any proprietary author archive when the
+independent book opens. Any optional reciprocal references should be
+clearly labelled and use a documented host capability, not invasive UI hooks.
 
-Preferred integration path:
+The guide's current native form presentation uses stable
+`@minecraft/server-ui` buttons and locally available icons, rather than
+overriding Minecraft's global book UI. A fully custom skinned two-page book
+would need separate rendering and client acceptance work; don't describe
+the native-form implementation as pixel-identical to Cookery.
 
-1. Inspect the exact supported Cookery guide extension API and current author
-   version used by the family.
-2. Publish OTC content as a separate, namespaced extension payload through that
-   API, using the same host rendering path as existing extensions.
-3. Add one clearly owned OTC entry/entrance only at a documented extension slot.
-4. Keep OTC's internal hierarchy beneath that entrance; do not inject OTC entries
-   into unrelated original categories.
-5. Preserve all existing locale maps and use the host's locale selection/fallback.
-
-Before and after guide snapshots must compare the original host payload. For all
-pre-existing nodes, IDs, parents, sibling order, recipes, locales, and rendered
-navigation must remain unchanged. Only the new OTC-owned extension node and its
-children may be added.
-
-If the current Cookery API has no safe independent extension slot, do not mutate
-the guide structure. Keep the Cookery guide unchanged and provide a reciprocal
-navigation link from the existing Tavern guide/OTC guide entry instead. This
-fallback is preferable to breaking the author's information architecture.
-
-The OTC guide content should cover restaurant operation, orders/delivery, menu
-management, equipment, dining/cleaning, motorcycle delivery, and optional Senluo
-food/drink integration. It must distinguish “how to use a station” from “recipe
-owned by a product”: equipment pages explain operation; product entries own
-their recipes.
+All guide content has matching `zh_TW`, `zh_CN` and `en_US` translations.
+For tutorial accuracy, each lesson must distinguish implemented gameplay,
+intentional Bedrock adaptations and unported integration features.
+Regression tests check category continuity, translation completeness,
+back/home/previous/next navigation and access control. Client touch and
+keyboard UI validation remains separate.
 
 ## 8. Versioning, save compatibility, and security
 

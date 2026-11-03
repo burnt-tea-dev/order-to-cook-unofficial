@@ -1,6 +1,6 @@
 # dot 客戶端驗收交接 — 0.1.2-alpha.3
 
-> **新候選（0.1.3-alpha.1）請改用 [新版 dot POI 驗收清單](validation/0.1.3-alpha.1/DOT_POI_ACCEPTANCE.md) 與 [新版空白報告](validation/0.1.3-alpha.1/DOT_POI_REPORT_TEMPLATE.md)**。本頁舊的關閉實驗、固定下載及 K-min 1.21.100 條件僅限歷史 0.1.2，**不得用於 26.60 POI**。
+> **目前 POI 候選是 0.1.5-alpha.1，請使用 [當前原生／性能報告](validation/0.1.5-alpha.1/POI_AUDIT.md) 與 [客戶端重測](validation/0.1.5-alpha.1/CLIENT_RETEST.md)**。下文及 0.1.3-alpha.1 舊交接各自保留歷史身份，不是當前候選的安裝／通過證據。
 
 > 本頁固定下載及關閉實驗功能的步驟只適用原 alpha.3。目前來源另有未發布 `0.1.3-alpha.1` POI 候選，BP／RP 均為 0.1.3，需 Bedrock 26.60、Beta APIs＋POI；使用 [POI 候選驗證](validation/UNRELEASED-poi-discovery.md) 的來源與設定，不得沿用本頁舊包／雜湊或當成同一份驗收。
 

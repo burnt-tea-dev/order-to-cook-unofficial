@@ -29,14 +29,14 @@ function locationOrder(a, b) { return a.x - b.x || a.y - b.y || a.z - b.z; }
  * @param {import('@minecraft/server').Vector3} center
  * @param {string} typeId
  * @param {number} radius
- * @param {{ shape?: 'sphere' | 'cylinder', halfHeight?: number }} options
+ * @param {{ shape?: 'sphere' | 'cylinder' | 'cube', halfHeight?: number }} options
  * @returns {import('@minecraft/server').Block[]}
  */
 export function nearbyStationBlocks(dimension, center, typeId, radius, options = {}) {
   const shape = options.shape ?? 'sphere', halfHeight = options.halfHeight ?? radius;
   if (!STATION_TYPES.has(typeId)) throw new Error(`Unsupported station POI: ${typeId}`);
   if (!Number.isFinite(radius) || radius < 0 || !Number.isFinite(halfHeight) || halfHeight < 0 ||
-      !['sphere', 'cylinder'].includes(shape)) throw new Error('Invalid station POI range');
+      !['sphere', 'cylinder', 'cube'].includes(shape)) throw new Error('Invalid station POI range');
   const manager = requireStationPoi(dimension);
   // getInRangeSorted's beta documentation is ambiguous about its volume.
   // Use the unsorted shape-specific queries and define our ordering explicitly.
@@ -48,8 +48,10 @@ export function nearbyStationBlocks(dimension, center, typeId, radius, options =
     const p = hit.position;
     if (!p || ![p.x, p.y, p.z].every(Number.isInteger)) continue;
     const dx = p.x - center.x, dy = p.y - center.y, dz = p.z - center.z;
-    if (shape === 'sphere' ? dx * dx + dy * dy + dz * dz > radius * radius :
-        Math.abs(dy) > halfHeight || dx * dx + dz * dz > radius * radius) continue;
+    const outside = shape === 'sphere' ? dx * dx + dy * dy + dz * dz > radius * radius :
+      shape === 'cube' ? Math.max(Math.abs(dx), Math.abs(dy), Math.abs(dz)) > radius :
+      Math.abs(dy) > halfHeight || dx * dx + dz * dz > radius * radius;
+    if (outside) continue;
     const key = `${p.x},${p.y},${p.z}`;
     if (seen.has(key)) continue;
     seen.add(key);

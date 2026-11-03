@@ -1,5 +1,7 @@
 # 未發布：26.60 POI 工作站搜尋候選
 
+> **本頁保留 0.1.3-alpha.1 的歷史來源及原生結果。** 最新同線候選為 `0.1.5-alpha.1`；新功能修正、原生與性能結果見 [當前審查](0.1.5-alpha.1/POI_AUDIT.md)。下列舊 runtime 指紋不能套用於新來源；舊供應架球形敘述已修正為 Java 各軸 ±5 立方範圍。
+
 > 待 dot 驗收：請依 [0.1.3-alpha.1 專用清單](0.1.3-alpha.1/DOT_POI_ACCEPTANCE.md) 與 [報告模板](0.1.3-alpha.1/DOT_POI_REPORT_TEMPLATE.md) 操作；文件及原生 BDS 結果不預填真人 PASS。
 
 日期：2026-11-02（香港）。已合併最新主線 `d579e046da63a8078dc56ad69b1513a1d2c7da70`，保留菜單／訂單的 food variant 身分與名稱、營養快照。

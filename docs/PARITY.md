@@ -6,6 +6,8 @@ Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedro
 
 未發布的 POI 候選已把普通執行期的附近立牌、冰箱、供應架及椅子搜尋接到 26.60 實驗 API。主資料仍在原 world dynamic properties；同步取消放置與破壞授權的 before-event 路徑仍只讀既有餐廳記錄。椅子保持水平圓半徑 24、Y±8，並改為依 Java 從實際空椅隨機選取；POI 不取代騎乘或產生新的入店尋路。立牌依固定上游 `OrderMachineBlockEntity.findBestBoardPos` 改為水平圓半徑 24、Y±8，修正舊移植誤納正方形角落的範圍；最高營養同分時取最近者。原版已綁立牌存在時維持綁定的行為仍未移植，目前延續定期重新選牌，不宣稱完整菜單綁定一致。此候選的 chunk 重載、多人與完整餐廳循環驗收另列於 [UNRELEASED-poi-discovery.md](validation/UNRELEASED-poi-discovery.md)，不沿用下文 alpha.3 的驗收狀態。
 
+2026-11-04 的 `0.1.5-alpha.1` 同線修正：重新核對固定 Java `RestaurantSupplyCompatApi.targets()` 後，包裝架／餐盤架改回各軸 ±5 的完整立方體；冰箱仍是三維半徑 24。補上升級介面取消／確認失敗及管理員空菜單刷新時的菜單換綁保存。最新來源的原生功能、區塊卸載／實驗關閉與性能對照見 [POI_AUDIT.md](validation/0.1.5-alpha.1/POI_AUDIT.md)。舊候選的「供應架球形範圍」說明已被此 Java 核對修正。
+
 本文件對應 **0.1.2-alpha.3**。此版延續餐盤、顧客與廚电，新增 10／11 個原作進度的包內清單與通知，以及唯讀設備 HUD；進度以個人帳簿對帳並重試待保存的操作事件。**完整一比一仍未達成**：Java 的 GUI、GeckoLib renderer、玩家動畫、物理與跨模組 API 仍有適配差異，真實客戶端畫面、表單、觸控與多人操作也尚未完成驗收。
 
 基準：[官方作品頁](https://www.curseforge.com/minecraft/mc-mods/order-to-cook)，Java [e59e3dbcabe19b783d9adb933db5fcb8bc1e4642](https://github.com/breezeth-CN/OrdertoCook/tree/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642)。證據分層：源碼對照、單元／服務回歸、原生伺服器探針、客戶端驗收。前三者不能代替最後一層。
@@ -75,3 +77,8 @@ Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedro
 4. 比對新餐盤階段、7 個顧客 action 和有限取樣廚電動畫，記錄與原作 easing、放盤片段及畫面時序的差異，再逐項建立其他基岩料理／貨幣包的聯動。
 
 交接入口為 [DOT_HANDOFF.md](DOT_HANDOFF.md)，完整基線仍在 [PLAYTEST.md](PLAYTEST.md)，全部待客戶端驗收。alpha.3 的實際自動化結果與未重跑的 BDS 範圍見 [VALIDATION.md](VALIDATION.md)，不能把 alpha.2 的原生結果直接套用到新指紋。
+
+
+## 尚未發布：Order To Cook 專屬遊玩指南
+
+保留原 `ordertocook:guide` 物品與合成配方，改用六章／十三分類／二十六篇教程的獨立三級導覽與三語文字；可由指南物品或打單機入口開啟，沒有改動 Cookery 作者指南。使用 `@minecraft/server-ui` 原生表單搭配已存在的本包圖示，故導航層級與章節佈局類似 Cookery，但不是相同書頁 renderer 或像素級復刻。新來源的自動化驗證不得替代 Windows／手機與真實客戶端的字體、圖示及返回流程驗收。參見 [GUIDEBOOK.md](GUIDEBOOK.md)。

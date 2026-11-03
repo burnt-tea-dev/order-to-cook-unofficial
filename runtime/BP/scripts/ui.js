@@ -25,7 +25,13 @@ export async function showForm(player, form) {
 }
 export async function choose(player, title, body, buttons) {
   const form = new ActionFormData().title(title).body(body);
-  for (const button of buttons) form.button(readableActionButton(button));
+  for (const button of buttons) {
+    // Optional icon-bearing handbook buttons; existing string/RawMessage
+    // callers continue through the unchanged behavior.
+    if (button && typeof button === 'object' && 'label' in button) {
+      form.button(readableActionButton(button.label), button.icon);
+    } else form.button(readableActionButton(button));
+  }
   const result = await showForm(player, form);
   return result?.selection;
 }

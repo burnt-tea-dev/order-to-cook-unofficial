@@ -18,6 +18,7 @@ import {
   restoreExtraction, consumeHeld, giveStack, giveItems, coinBalance, giveCoins, payCoins
 } from './inventory.js';
 import { inspectSenluoFood, matchesSenluoFoodSnapshot, snapshotMenuFood, menuFoodKey, menuFoodsOverlap, menuFoodLabel } from './senluo_food.js';
+import { guideBookScreen } from './guide_book.js';
 import { notify, choose, textInput, safely } from './ui.js';
 import { createEntityService } from './entities.js';
 import { createApplianceService } from './appliances.js';
@@ -264,12 +265,12 @@ function acceptWithTicket(player, restaurant, order) {
 }
 
 async function upgradeForm(player, block, restaurant) {
-  syncMenu(restaurant);
+  if (syncMenu(restaurant)) saveRestaurant(restaurant);
   const quote = getUpgradeQuote(restaurant);
   if (quote.reason === 'max_level') { notify(player, reasonText(quote.reason)); return; }
   const choice = await choose(player, `升級至 Lv.${quote.nextLevel}`, `費用 ${quote.cost} ${currencyLabel()}\n菜單營養要求 ${quote.requiredNutrition} · 目前 ${quote.currentNutrition}\n每種菜只按一份計算，堆疊數量不會增加菜單營養。`, ['升級', '返回']);
   if (choice !== 0 || !validRestaurant(player, restaurant, block)) return;
-  syncMenu(restaurant);
+  if (syncMenu(restaurant)) saveRestaurant(restaurant);
   const current = getUpgradeQuote(restaurant);
   if (!current.ok) { notify(player, reasonText(current.reason)); return; }
   if (!pay(player, current.cost)) { notify(player, '貨幣不足，或背包放不下找零；請空出幾格。'); return; }
@@ -414,7 +415,8 @@ function prepareOrderAtCountertop(player, block, restaurant, order) {
   const output = block.above();
   if (!output?.isAir) { notify(player, '先取走操作台上方的成品／方塊。'); return; }
   const shelfId = order.type === 'delivery' ? 'ordertocook:shelf' : 'ordertocook:plate_shelf';
-  const supply = nearbyStations(block.dimension.id, block.location, 5, shelfId).find(station => station.supplies > 0 && canUseStation(player, station));
+  // Java RestaurantSupplyCompatApi scans the full ±5 cube, including corners.
+  const supply = nearbyStations(block.dimension.id, block.location, 5, shelfId, { shape: 'cube' }).find(station => station.supplies > 0 && canUseStation(player, station));
   if (!supply) { notify(player, `缺少 5 格內的${order.type === 'delivery' ? '包裝架包材（皮革）' : '餐盤架乾淨餐盤'}。`); return; }
   const plan = planExtraction(ingredientContainers(player, block), order.items);
   if (!plan.ok) {
@@ -706,25 +708,24 @@ async function progressForm(player) {
 }
 
 async function guideForm(player) {
-  const selection = await choose(player, '下單了 · 基岩版指南',
-    '1. 合成打單機、立牌、操作台、包裝架、餐盤架、椅子、洗碗池。\n' +
-    '2. 用食品點擊立牌設定菜單；所有設備放在打單機 24 格內。\n' +
-    '3. 皮革補包裝架、乾淨餐盤補餐盤架，兩架距操作台不超過 5 格。\n' +
-    '4. 打單機開始營業並接單；準備的是訂單要求的成品食品。\n' +
-    '5. 點操作台裝盤／打包，再點台上的成品取走。\n' +
-    '6. 拿餐點點對應顧客交付。外送持包裹可看方向和座標。\n' +
-    '7. 堂食吃完留下髒盤；洗碗池清洗後回補餐盤架。\n' +
-    '8. 金幣購買設備、升級餐廳；工具箱可升級空雙木桶／洗碗池／空煙燻爐。\n\n' +
-    '小電驢：使用物品放車、點車騎乘，蹲下點車開保溫箱／控制面板。\n' +
-    '機器每 10 分鐘刷新；普通單 30 分鐘，加急 10 分鐘；退出世界期間仍計時。\n' +
-    '首次測試請使用新世界。本版為 alpha，詳見專案的功能差異與實機驗收表。',
-    ['個人進度', '餐廳排行榜', '關於與授權', ...(isAdmin(player) ? ['領取測試用開店套組'] : []), '關閉']);
-  if (selection === 0) await progressForm(player);
-  else if (selection === 1) await leaderboardForm(player);
-  else if (selection === 2) await aboutAndLicenseForm(player);
-  else if (selection === 3 && isAdmin(player)) giveTestKit(player);
+  // One native ActionForm at a time. This reuses the existing OTC guide item,
+  // with its own chapter/topic/page tree; no Cookery host or extra guide item.
+  let route = { kind: 'home' };
+  for (let pageTurns = 0; pageTurns < 128 && player?.isValid; pageTurns++) {
+    const screen = guideBookScreen(route, isAdmin(player));
+    const selection = await choose(player, screen.title, screen.body, screen.buttons);
+    if (selection === undefined) return;
+    const action = screen.buttons[selection]?.action;
+    if (!action || action.kind === 'close') return;
+    if (action.kind === 'goto') { route = action.view; continue; }
+    if (action.kind === 'progress') await progressForm(player);
+    else if (action.kind === 'leaderboard') await leaderboardForm(player);
+    else if (action.kind === 'about') await aboutAndLicenseForm(player);
+    else if (action.kind === 'test_kit' && isAdmin(player)) giveTestKit(player);
+    else return;
+    // Returning from a secondary feature retains the place in this book.
+  }
 }
-
 
 async function aboutAndLicenseForm(player) {
   await choose(player, '關於與授權 · Order To Cook',
@@ -913,7 +914,11 @@ function registerConfiguration() {
       if (event.id === 'ordertocook:kit' && player) { giveTestKit(player); return; }
       if (event.id === 'ordertocook:refresh' && player) {
         const machine = restaurants().filter(r => r.dimensionId === player.dimension.id && distanceSquared(r.location, player.location) < 24 * 24).sort((a, b) => distanceSquared(a.location, player.location) - distanceSquared(b.location, player.location))[0];
-        if (machine) { syncMenu(machine); if (machine.menu.length) { refreshOrders(machine); saveRestaurant(machine); notify(player, '測試用訂單已刷新。'); } }
+        if (machine) {
+          const changed = syncMenu(machine);
+          if (machine.menu.length) { refreshOrders(machine); saveRestaurant(machine); notify(player, '測試用訂單已刷新。'); }
+          else if (changed) saveRestaurant(machine);
+        }
         return;
       }
       if (event.id === 'ordertocook:food') {
@@ -1087,5 +1092,5 @@ world.afterEvents.worldLoad.subscribe(() => {
 // Headless native-engine tests import these same adapters. No test hooks are
 // exposed through chat, commands, script events or a separately installable pack.
 export function getQaHooks() {
-  return { ready, entities, appliances, dining, progression, boardForm, foodFromStack, syncMenu, orderBody, parcelFor, updateHud, progressForm, recordProgress, reconcileProgress, updateProgressRankings, reconcileStationProgress, upgradeForm, getMachine, acceptWithTicket, prepareOrderAtCountertop, pickupDisplay, placeParcel, customerInteract, collectDiningPlate, tickRestaurants, itemOrder, onPlace, onBreak, shelfInteract, upgradeAppliance, canUseStation };
+  return { ready, entities, appliances, dining, progression, guideForm, boardForm, foodFromStack, syncMenu, orderBody, parcelFor, updateHud, progressForm, recordProgress, reconcileProgress, updateProgressRankings, reconcileStationProgress, upgradeForm, getMachine, acceptWithTicket, prepareOrderAtCountertop, pickupDisplay, placeParcel, customerInteract, collectDiningPlate, tickRestaurants, itemOrder, onPlace, onBreak, shelfInteract, upgradeAppliance, canUseStation };
 }
