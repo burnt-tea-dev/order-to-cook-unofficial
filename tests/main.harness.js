@@ -20,6 +20,11 @@ export async function mainFixture() {
     if (value === undefined) properties.delete(id); else properties.set(id, value);
   };
   env.system.beforeEvents = signals(); env.system.afterEvents = signals();
+  const scriptEvents = [];
+  env.system.sendScriptEvent = (id, message) => {
+    scriptEvents.push({ id, message });
+    for (const callback of env.system.afterEvents.scriptEventReceive.subscriptions) callback({ id, message, sourceType: 'Server' });
+  };
   const originalGetBlock = env.dimension.getBlock.bind(env.dimension);
   env.dimension.getBlock = location => {
     const block = originalGetBlock(location);
@@ -87,7 +92,7 @@ export async function mainFixture() {
   customer.setDynamicProperty('ordertocook:restaurant_id', restaurant.id);
   customer.setDynamicProperty('ordertocook:order_id', order.id);
   return { ...env, hooks, store, core, player, customer, chair, machine, restaurant, order, parcel, properties,
-    endings, interruptions, forms, formResponses, failWrite: predicate => { failProperty = predicate; },
+    endings, interruptions, forms, formResponses, scriptEvents, failWrite: predicate => { failProperty = predicate; },
     linkage: { restaurantId: restaurant.id, orderId: order.id } };
 }
 

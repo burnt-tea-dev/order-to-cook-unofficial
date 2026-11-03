@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 import { ItemStack } from '@minecraft/server';
-import { inspectSenluoFood, matchesSenluoFoodSnapshot, normalizeFoodIdentity, menuFoodKey, matchesFoodIdentity } from './senluo_food.js';
+import { inspectSenluoFood, matchesSenluoFoodSnapshot, normalizeFoodIdentity, normalizeFoodAliases, menuFoodKey, matchesFoodIdentity, matchesFoodType } from './senluo_food.js';
 
 export function containerOf(entity) { return entity.getComponent('minecraft:inventory')?.container; }
 export function heldItem(player) { return containerOf(player)?.getItem(player.selectedSlotIndex); }
@@ -25,25 +25,27 @@ export function planExtraction(containers, requirements) {
   for (const item of requirements) {
     if (typeof item?.typeId !== 'string' || !item.typeId || !Number.isSafeInteger(item.amount) || item.amount < 1) return invalid('invalid amount or item');
     const identity = normalizeFoodIdentity(item.foodIdentity);
-    if (identity === null) return invalid('invalid food identity');
-    const key = menuFoodKey(item);
+    const aliases = normalizeFoodAliases(item.aliases, item.typeId);
+    if (identity === null || aliases === null) return invalid('invalid food identity');
+    const key = JSON.stringify([menuFoodKey(item), aliases || []]);
     const total = (requested.get(key)?.amount || 0) + item.amount;
     if (!Number.isSafeInteger(total)) return invalid('invalid amount');
     requested.set(key, { typeId: item.typeId, amount: total, label: item.label,
-      ...(identity ? { foodIdentity: identity } : {}) });
+      ...(identity ? { foodIdentity: identity } : {}), ...(aliases?.length ? { aliases } : {}) });
   }
   const actions = [], missing = [], missingFoods = [];
   const sources = [...new Set(containers.filter(Boolean))];
   const reserved = new Map(sources.map(container => [container, new Map()]));
   // Constrained variants first, then legacy ID-only lines. Otherwise a generic
   // line could steal the only stack that can satisfy a specific variant.
-  const requests = [...requested.values()].sort((a, b) => Number(!!b.foodIdentity) - Number(!!a.foodIdentity));
+  const requests = [...requested.values()].sort((a, b) => Number(!!b.foodIdentity) - Number(!!a.foodIdentity) ||
+    (a.aliases?.length || 0) - (b.aliases?.length || 0));
   for (const item of requests) {
     let remaining = item.amount;
     for (const container of sources) {
       for (let slot = 0; slot < container.size && remaining > 0; slot++) {
         const stack = container.getItem(slot);
-        if (stack?.typeId !== item.typeId) continue;
+        if (!stack || !matchesFoodType(item, stack.typeId)) continue;
         const action = reserved.get(container).get(slot);
         const available = stack.amount - (action?.take || 0);
         if (available <= 0) continue;

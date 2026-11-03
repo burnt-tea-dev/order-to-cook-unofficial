@@ -35,7 +35,7 @@ Personal progression counts completed order settlements only after this feature 
 
 Standard orders last **30 minutes**, rush orders **10 minutes**, measured from creation. The order printer refreshes every **10 minutes**. Maximum restaurant level is **8**. Deadlines use real time, so orders can expire while away from the world; appliances do not retroactively cook while their chunks are unloaded.
 
-> The original nutrition thresholds intentionally encourage more dishes. The default stand lists only four recipes; the combined nutrition of the 40 built-in vanilla foods is **159**. With these foods alone the default thresholds only reach Lv.3. Higher levels require other addon dishes, virtual nutrition configuration, or administrator threshold changes.
+> The default stand lists four dishes. The 40 vanilla foods total **159**, supporting only Lv.3. Unreleased source adds 64 optional Senluo foods: the complete catalog totals **487**, supporting Lv.7 but still below Java's **600** for Lv.8. Excluding the expired-event wedding candy leaves 467; other acquisition limits are listed in the [food catalog](docs/FOOD-CATALOG.md). Upgrade thresholds are unchanged.
 
 ## Features implemented in this version
 
@@ -45,7 +45,7 @@ Standard orders last **30 minutes**, rush orders **10 minutes**, measured from c
 | Business | Lv.0–8, original upgrade costs and nutrition thresholds, nutrition/level reward multipliers, tips, coin denominations/change and restaurant ranking |
 | Personal progression | 11 original definitions, 10 wired; first/rush/distant orders, 100/1000/10000 earned, equipment upgrades, eight-star and gold restaurants; cross-store persistence and reconciliation |
 | Crosshair HUD | Racks, basins, dishwashers, freezer tiers and stove readings; 10-tick refresh with washing/delivery display and renewed permission checks |
-| Menu | Up to 150 non-consuming food templates, 40 vanilla food entries, custom food components and admin-defined virtual nutrition |
+| Menu | Up to 150 non-consuming templates; 40 vanilla foods, 64 optional Senluo foods, automatic provider declarations and existing admin overrides; presentation aliases count as one dish |
 | Preparation counter | Consume from inventory and permitted refrigerators within 24 blocks; consumables from racks within 5 blocks; place and retrieve physical plates/bags |
 | Plates | Ten staged dine-in meal animations, persistent dirty dishes, owner/employee collection, early pickup interruption, manual/automatic washing |
 | Appliances | 27+54-slot refrigerator with separate upper/lower doors and 11 poses each; three-slot stove; dishwasher holding up to 16 plates with 66 poses; toolbox upgrades |
@@ -75,7 +75,7 @@ Public foods exposing `nativeVariant` via `senluo.public.food.v1` use **item ID 
 
 Dish names and nutrition are frozen when registered. Updating virtual nutrition settings does not silently mutate existing menu entries or accepted orders; remove and re-register to apply changes. Selecting a dish from inventory also rechecks the original item on form submission to avoid registering an item that moved/changed while the form was open.
 
-This **does not complete Senluo food catalog or cooking recipe integration**. The `v1` API itself provides no nutrition and cannot make unknown items or tools edible. See [scope and tests](docs/validation/UNRELEASED-menu-variants.md).
+The fixed food catalog now includes 56 Grilling foods, four Tavern grapes and four World Liquor (世界名酒) snacks. Hold the actual food to register it without per-food admin commands. Seventy-four presentation/quality aliases count as their original dish and are saved into new orders; old menu/order matching is preserved. Other addons can announce through the [food provider interface](docs/FOOD-PROVIDERS.md). V1 itself supplies no nutrition: dynamic secret skewers, plates and 282 drinks without positive nutrition remain unsupported. See the [complete food catalog](docs/FOOD-CATALOG.md) and [verification record](docs/validation/UNRELEASED-food-catalog.md). Cooking processes and the Cookery guide are unchanged.
 
 ## Personal progression and equipment information
 
@@ -111,7 +111,7 @@ Only creative-mode players, players with the `otc_admin` tag or server commands 
 
 `kit` is a test kit; `refresh` tests the printer within 24 blocks. **Neither is needed for normal survival play.**
 
-For special foods/drinks without a readable food component, enable their addon first and then register:
+Catalog/provider foods are recognized automatically. Administrators can still explicitly override other installed foods using the existing command:
 
 ```mcfunction
 /scriptevent ordertocook:food {"typeId":"example:your_dish","nutrition":12,"label":"你的料理"}

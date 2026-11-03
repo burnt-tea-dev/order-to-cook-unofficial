@@ -18,6 +18,7 @@ import {
   restoreExtraction, consumeHeld, giveStack, giveItems, coinBalance, giveCoins, payCoins
 } from './inventory.js';
 import { inspectSenluoFood, matchesSenluoFoodSnapshot, snapshotMenuFood, menuFoodKey, menuFoodsOverlap, menuFoodLabel } from './senluo_food.js';
+import { createFoodCatalog, connectFoodCatalog } from './food_catalog.js';
 import { guideBookScreen } from './guide_book.js';
 import { notify, choose, textInput, safely } from './ui.js';
 import { createEntityService } from './entities.js';
@@ -33,6 +34,8 @@ const ITEM_PROOF = 'ordertocook:proof';
 const liveStatus = new Set(['offered', 'accepted', 'packed']);
 const foods = new Map(VANILLA_FOODS.map(food => [food.typeId, food]));
 const foodOverrides = new Map();
+const foodCatalog = createFoodCatalog();
+const requestFoodCatalogs = connectFoodCatalog(system, foodCatalog);
 const weatherByDimension = new Map();
 let settings = { currencyItem: '', refreshMs: Number(DEFAULT_CONFIG.refreshMs), orderMachineUpgradeBoardHunger: [...DEFAULT_CONFIG.orderMachineUpgradeBoardHunger] };
 let ready = false;
@@ -81,15 +84,19 @@ function playAt(block, sound) {
 function foodFromStack(stack) {
   if (!stack) return undefined;
   const typeId = normalizeFoodId(stack.typeId);
-  const configured = foodOverrides.get(typeId) || foods.get(typeId);
+  const configured = foodOverrides.get(typeId);
   if (configured) return snapshotMenuFood(stack, configured);
+  const supplied = foodCatalog.resolve(stack);
+  if (supplied.known) return supplied.food;
+  const vanilla = foods.get(typeId);
+  if (vanilla) return snapshotMenuFood(stack, vanilla);
   try {
     const component = stack.getComponent('minecraft:food');
     if (Number.isFinite(component?.nutrition) && component.nutrition >= 1) return snapshotMenuFood(stack, { typeId, nutrition: Math.min(10000, Math.floor(component.nutrition)), label: stack.nameTag || typeId });
   } catch { /* Vanilla food properties are supplied by the pinned catalog. */ }
   return undefined;
 }
-function foodLabel(typeId) { return foodOverrides.get(typeId)?.label || foods.get(typeId)?.label || typeId; }
+function foodLabel(typeId) { return foodOverrides.get(typeId)?.label || foodCatalog.labelFor(typeId) || foods.get(typeId)?.label || typeId; }
 function syncMenu(restaurant) {
   const candidates = stations().filter(s => s.typeId === 'ordertocook:board' && s.dimensionId === restaurant.dimensionId &&
     (!s.ownerId || s.ownerId === restaurant.ownerId || restaurant.staff?.includes(s.ownerId)) &&
@@ -318,7 +325,7 @@ async function boardForm(player, block) {
       const food = foodFromStack(stack);
       if (food && !station.menu.some(item => menuFoodsOverlap(item, food))) {
         const key = menuFoodKey(food);
-        if (!available.has(key)) available.set(key, { food, slot, snapshot: inspectSenluoFood(stack) });
+        if (!available.has(key)) available.set(key, { food, slot, typeId: stack.typeId, snapshot: inspectSenluoFood(stack) });
       }
     }
     const options = [...available.values()];
@@ -328,8 +335,9 @@ async function boardForm(player, block) {
     const selected = options[index];
     const stack = selected && inventory.getItem(selected.slot);
     const current = stack && foodFromStack(stack);
-    if (!selected || !current || menuFoodKey(current) !== menuFoodKey(selected.food) ||
+    if (!selected || !current || stack.typeId !== selected.typeId || menuFoodKey(current) !== menuFoodKey(selected.food) ||
         current.nutrition !== selected.food.nutrition || current.label !== selected.food.label ||
+        JSON.stringify(current.aliases) !== JSON.stringify(selected.food.aliases) ||
         !matchesSenluoFoodSnapshot(stack, selected.snapshot)) {
       notify(player, '選取的食品或資料已改變，請重新開啟菜單。'); return;
     }
@@ -1042,6 +1050,7 @@ world.afterEvents.worldLoad.subscribe(() => {
     system.runInterval(() => { if (ready) dining.tick(); }, 5);
     system.runInterval(updateHud, 10);
     registerConfiguration();
+    requestFoodCatalogs();
     console.warn('[OrderToCook] Bedrock alpha loaded. Stable API 2.0; no experimental toggles required.');
   } catch (error) { console.error(`[OrderToCook] Initialization stopped; saved data was preserved. ${error}`); }
 });
