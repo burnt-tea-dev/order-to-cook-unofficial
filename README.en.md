@@ -2,7 +2,7 @@
 
 [简体中文](README.zh-CN.md) · [繁體中文](README.md) · **English**
 
-**Current development baseline: `0.1.2-alpha.3`. Restaurant management, delivery, kitchen appliances, personal progression and equipment HUDs exist. Limited client acceptance is recorded, but refrigerator geometry, hand-washing particles and greyed progression text have FAIL results. This is not full Java parity.** [Client evidence](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [Unreleased button-contrast correction](docs/validation/UNRELEASED-button-contrast.md)
+**Current source: unreleased `0.1.5-alpha.1` native POI candidate, based on the `0.1.2-alpha.3` main line. Restaurant management, delivery, kitchen appliances, personal progression and equipment HUDs exist. Limited client acceptance is recorded, but refrigerator geometry, hand-washing particles and greyed progression text have FAIL results. This is not full Java parity.** [Client evidence](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [Unreleased button-contrast correction](docs/validation/UNRELEASED-button-contrast.md)
 
 Original by **breezeth**: [CurseForge](https://www.curseforge.com/minecraft/mc-mods/order-to-cook) · [Java source](https://github.com/breezeth-CN/OrdertoCook). Maintained by `casama233` / `burnt-tea-dev`, retaining upstream GPLv3, author attribution and asset provenance. A request about supplementary asset scope has not received a response and is recorded as non-blocking; development continues, but actual licensing conflicts still require resolution.
 
@@ -10,15 +10,17 @@ Original by **breezeth**: [CurseForge](https://www.curseforge.com/minecraft/mc-m
 
 These changes **do not restore previously withdrawn packages, publish a formal Release, or misrepresent new source with an old version number as an accepted historical package**. See [historical artifacts](artifacts/README.md). Build current sources using the commands below; output goes to `dist/`. Future candidates must have their own version, commit, SHA-256 and documented test scope.
 
-Use a disposable world for local testing; enable both behavior (BP) and resource (RP) packs. Declared minimum target: **Bedrock 1.21.100** with stable `@minecraft/server 2.0.0` and `@minecraft/server-ui 2.0.0`. **Beta APIs and Upcoming Creator Features are not required.** This does not claim validation on every version/device. The guide is supplied on first join and can also be crafted alongside basic equipment.
+This candidate requires **Bedrock 26.60**, `@minecraft/server 2.12.0-beta`, `@minecraft/server-ui 2.0.0`, and both **Beta APIs** and **Points of Interest (POI)** world experiments. BP and RP both use **0.1.5**, preserving their UUIDs. Enable both packs in a disposable world. With Beta APIs disabled the engine can reject module loading before our startup guard; with POI unavailable initialization stops without clearing saved records. There is no full-scan fallback. Future Bedrock releases may change the beta module version and require a compatible build. The guide is supplied on first join and can also be crafted alongside basic equipment.
+
+POI supplies nearby candidate positions only. Loaded blocks and canonical restaurant/station records still determine identity, permissions, inventory and orders; no second persistent position database is added. See the [current POI audit](docs/validation/0.1.5-alpha.1/POI_AUDIT.md).
 
 **Guidebook (unreleased source improvement):** Order To Cook retains its own `ordertocook:guide`. It is not a Cookery chapter and does not require Cookery. Following Cookery's three-level taxonomy, it contains **6 chapters, 13 topic groups and 26 tutorials**, with icons, previous/next page, index navigation and Traditional Chinese / Simplified Chinese / English. Existing item and crafting recipes remain unchanged. Bedrock uses native forms rather than a literal copy of Cookery's book UI. See the [independent guidebook structure](docs/GUIDEBOOK.md); hands-on client UI acceptance is pending.
 
 Additional original-author confirmation is no longer a blanket release gate; attribution, GPL, corresponding source, source hashes and actual QA checks are still required. See the [asset register](docs/ASSET_LICENSE_REGISTER.md), [third-party notices](THIRD_PARTY_NOTICES.md) and [release compliance checks](docs/RELEASE_COMPLIANCE.md). Neither original authors nor Mojang/Microsoft endorse this project.
 
-### Upgrading from alpha.2 / alpha.1
+### Testing an upgrade to 0.1.5-alpha.1
 
-Back up the entire world first, import alpha.3, and confirm **both BP and RP use version 0.1.2**. Their UUIDs are preserved; do not enable old and new copies together. A real-world alpha.2 → alpha.3 upgrade requires dot's acceptance following the handoff instructions; historical test results cannot be reused.
+Back up the entire world first. Test the new candidate on a copy, confirm both BP and RP are **0.1.5**, and enable Beta APIs and POI. Existing UUIDs are preserved; do not enable old and new copies together. Historical 0.1.3 native reports do not certify this new source. Use the [current client handoff](docs/validation/0.1.5-alpha.1/CLIENT_RETEST.md) and its source hashes; real player worlds and multiplayer still require client acceptance.
 
 Personal progression counts completed order settlements only after this feature started recording them. Old restaurant revenue has no per-delivering-player attribution and cannot be retroactively assigned to owners/employees. Existing levels, orders, inventory and revenue remain in the original save. Upgrading from alpha.1 also includes alpha.2's persistent dirty-dish behavior; old settled orders do not retroactively spawn dishes. Rollback requires the complete pre-upgrade backup.
 
@@ -26,7 +28,7 @@ Personal progression counts completed order settlements only after this feature 
 
 1. **Set up a restaurant.** Craft/place an order printer, menu stand, preparation counter, packaging rack, plate rack, chairs and washing basin. Different restaurants' order printers must be more than **24 blocks apart**.
 2. **Configure the menu.** Click the stand with food to register a dish without consuming it. Empty-hand/sneak-click to manage the menu. Each dish counts a single nutritional value regardless of stack size.
-3. **Restock supplies.** Supply leather to the packaging rack and clean plates to the plate rack. Both racks must be within **5 blocks** of the counter; the counter, chairs and relevant freezers must be within **24 blocks** of the restaurant.
+3. **Restock supplies.** Supply leather to the packaging rack and clean plates to the plate rack. Both racks must be within **±5 blocks on each axis** of the counter (a cube); the counter, chairs and relevant freezers must be within **24 blocks** of the restaurant.
 4. **Open and accept orders.** Click the printer to open, then choose a candidate order. Accepting one removes the other candidates in that batch; independent walk-in orders remain.
 5. **Prepare finished foods.** Put already-cooked required foods in your inventory or an accessible nearby refrigerator, then click the counter to plate/pack them. **The counter does not craft whole dishes automatically**; it consumes finished food.
 6. **Collect and deliver.** Keep the block above the counter clear. Completed plates/parcels appear on the counter; click to pick them up and use them on the corresponding customer. Delivery packages/tickets can show destination and direction.
@@ -46,7 +48,7 @@ Standard orders last **30 minutes**, rush orders **10 minutes**, measured from c
 | Personal progression | 11 original definitions, 10 wired; first/rush/distant orders, 100/1000/10000 earned, equipment upgrades, eight-star and gold restaurants; cross-store persistence and reconciliation |
 | Crosshair HUD | Racks, basins, dishwashers, freezer tiers and stove readings; 10-tick refresh with washing/delivery display and renewed permission checks |
 | Menu | Up to 150 non-consuming food templates, 40 vanilla food entries, custom food components and admin-defined virtual nutrition |
-| Preparation counter | Consume from inventory and permitted refrigerators within 24 blocks; consumables from racks within 5 blocks; place and retrieve physical plates/bags |
+| Preparation counter | Consume from inventory and permitted refrigerators within 24 blocks; consumables from racks within ±5 blocks on each axis; place and retrieve physical plates/bags |
 | Plates | Ten staged dine-in meal animations, persistent dirty dishes, owner/employee collection, early pickup interruption, manual/automatic washing |
 | Appliances | 27+54-slot refrigerator with separate upper/lower doors and 11 poses each; three-slot stove; dishwasher holding up to 16 plates with 66 poses; toolbox upgrades |
 | Customers | Two original looks, four idle variants, seven arrival/collection/dining actions; standing if no chair for standard customers, chairs mandatory for walk-ins; original surprise rewards |
@@ -88,12 +90,12 @@ Look at permitted appliances within **6 blocks** to see real plate counts, packi
 ## Validation completed and limitations
 
 - Historical alpha.3 recorded **254 automated tests**; newer source checks depend on the CI of their specific commits.
-- `npm run check` uses official stable 2.0.0 type checking plus JSON, geometry, animation, icon, recipe and custom component checks.
+- `npm run check` uses official 26.60 `2.12.0-beta.1.26.60-stable` type checking plus JSON, geometry, animation, icon, recipe and custom component checks.
 - `npm run build` produces BP, RP, combined pack and hashes. Ordinary validation does not publish packages; the separate candidate workflow verifies artifacts.
 - The [limited 2026-11-01 alpha.3 client record](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) contains bounded passes and **three FAILs**; the full client matrix has not passed. New fixes need a new candidate retest.
 - Historical alpha.2 native assertions (127/15/12) apply only to that runtime fingerprint. Keyboard/mouse, touch, controller, genuine multiplayer, RP visuals and forms cannot be certified by CI alone.
 
-See [VALIDATION.md](docs/VALIDATION.md) for build fingerprints and evidence, [DOT_HANDOFF.md](docs/DOT_HANDOFF.md) for client handoff, and [remaining single-player cases](docs/validation/0.1.2-alpha.3/REMAINING-SINGLEPLAYER.md) for unverified coverage.
+See the [0.1.5-alpha.1 POI audit](docs/validation/0.1.5-alpha.1/POI_AUDIT.md) for this candidate's evidence, build fingerprints and reproduction steps, and its [client retest handoff](docs/validation/0.1.5-alpha.1/CLIENT_RETEST.md) for player testing. [VALIDATION.md](docs/VALIDATION.md) and [DOT_HANDOFF.md](docs/DOT_HANDOFF.md) retain historical 0.1.2-alpha.3 verification and handoff records; the [historical remaining single-player cases](docs/validation/0.1.2-alpha.3/REMAINING-SINGLEPLAYER.md) still identify unfinished coverage.
 
 Personal ledgers can catch up after temporary profile-write failure; upgrades retry the accounting without charging or upgrading again. Reconcile the personal ledger before deleting a restaurant; pending equipment actions are saved before normal demolition.
 

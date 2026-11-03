@@ -10,7 +10,7 @@ import {
 import { VANILLA_FOODS, DEFAULT_MENU, DEFAULT_CONFIG, TIER_LABELS, TIER_COLORS } from './config.js';
 import {
   initStore, locationId, getRestaurant, restaurants, saveRestaurant, deleteRestaurant, getProfile, saveProfile,
-  getStation, findStation, stations, saveStation, deleteStation,
+  getStation, getStationById, findStation, stations, saveStation, deleteStation,
   nearbyStations, nearestRestaurant, loadedBlock, distanceSquared, setBlockState
 } from './store.js';
 import {
@@ -25,6 +25,7 @@ import { createApplianceService } from './appliances.js';
 import { createDiningService, DINING_ENTITY } from './dining.js';
 import { progressRows } from './progression.js';
 import { createProgressionService, creditCompletedOrder, queueProgressEvent } from './progression_service.js';
+import { requireStationPoi, restaurantChairBlocks } from './station_poi.js';
 
 const PREFIX = 'ordertocook:';
 const ITEM_RESTAURANT = 'ordertocook:restaurant';
@@ -91,15 +92,38 @@ function foodFromStack(stack) {
 }
 function foodLabel(typeId) { return foodOverrides.get(typeId)?.label || foods.get(typeId)?.label || typeId; }
 function syncMenu(restaurant) {
-  const candidates = stations().filter(s => s.typeId === 'ordertocook:board' && s.dimensionId === restaurant.dimensionId &&
-    (!s.ownerId || s.ownerId === restaurant.ownerId || restaurant.staff?.includes(s.ownerId)) &&
-    Math.abs(s.location.x - restaurant.location.x) <= 24 && Math.abs(s.location.z - restaurant.location.z) <= 24 && Math.abs(s.location.y - restaurant.location.y) <= 8 &&
-    loadedBlock(s)?.typeId === s.typeId);
-  candidates.sort((a, b) => getMenuNutrition(b.menu) - getMenuNutrition(a.menu));
+  // A bound board across a chunk edge can become temporarily unreadable while
+  // the restaurant machine is loaded. Do not persist an empty replacement as if
+  // the board had been broken. This is one O(1) canonical record lookup, not a
+  // second spatial index or a scan of all stations.
+  const bound = restaurant.boardId ? getStationById(restaurant.boardId) : undefined;
+  const dx = bound ? bound.location.x - restaurant.location.x : 0;
+  const dz = bound ? bound.location.z - restaurant.location.z : 0;
+  const eligibleBound = bound?.typeId === 'ordertocook:board' && bound.dimensionId === restaurant.dimensionId &&
+    (!bound.ownerId || bound.ownerId === restaurant.ownerId || restaurant.staff?.includes(bound.ownerId)) &&
+    dx * dx + dz * dz <= 24 * 24 && Math.abs(bound.location.y - restaurant.location.y) <= 8;
+  const boundBlock = eligibleBound ? loadedBlock(bound) : undefined;
+  if (eligibleBound && !boundBlock) throw new Error('Bound menu board chunk is unavailable; defer POI rebinding');
+
+  const candidates = nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:board', { shape: 'cylinder', halfHeight: 8 })
+    .filter(s => !s.ownerId || s.ownerId === restaurant.ownerId || restaurant.staff?.includes(s.ownerId));
+  // POI indexing can lag after chunk reload; keep the physically verified bound
+  // board as an individual candidate, without traversing the station registry.
+  if (boundBlock?.typeId === 'ordertocook:board' && !candidates.some(s => s.id === bound.id)) candidates.push(bound);
+  candidates.sort((a, b) => getMenuNutrition(b.menu) - getMenuNutrition(a.menu) ||
+    distanceSquared(a.location, restaurant.location) - distanceSquared(b.location, restaurant.location));
   // Registration is a snapshot. Catalog/override reloads affect new entries only.
+  // POI rebinding must persist even while the machine is idle: an unrelated
+  // refresh/expiry must never be required to commit the selected menu board.
+  const oldMenu = JSON.stringify(restaurant.menu);
+  const oldBoardId = restaurant.boardId || '';
+  const offered = (restaurant.orders || []).filter(order => order.status === 'offered')
+    .map(order => [order, order.reward, order.benefitLevel]);
   restaurant.menu = normalizeMenu(candidates[0]?.menu || []);
   restaurant.boardId = candidates[0]?.id || '';
   synchronizeOfferRewards(restaurant);
+  return oldBoardId !== restaurant.boardId || oldMenu !== JSON.stringify(restaurant.menu) ||
+    offered.some(([order, reward, benefit]) => order.reward !== reward || order.benefitLevel !== benefit);
 }
 function getMachine(player, block, placedByPlayer = false) {
   const id = locationId(block.dimension.id, block.location);
@@ -116,7 +140,7 @@ function getMachine(player, block, placedByPlayer = false) {
     saveRestaurant(restaurant);
   }
   if (placedByPlayer) reconcileProgress(restaurant);
-  syncMenu(restaurant);
+  if (syncMenu(restaurant)) saveRestaurant(restaurant);
   return restaurant;
 }
 function balance(player) { return settings.currencyItem ? countItem([containerOf(player)], settings.currencyItem) : coinBalance(player); }
@@ -229,7 +253,7 @@ function acceptWithTicket(player, restaurant, order) {
   if (freeSlot(containerOf(player)) < 0) { notify(player, '請空出一格背包收取訂單。'); return; }
   // Ordinary machine diners can use the upstream standing fallback. Only
   // independently arriving walk-ins require a restaurant chair to accept.
-  if (order.walkIn && order.type === 'dine_in' && !nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:chair').length) {
+  if (order.walkIn && order.type === 'dine_in' && !restaurantChairBlocks(world.getDimension(restaurant.dimensionId), restaurant.location).length) {
     notify(player, '到店顧客需要餐廳 24 格內有椅子。'); return;
   }
   const result = acceptOrder(restaurant, order.id);
@@ -241,12 +265,12 @@ function acceptWithTicket(player, restaurant, order) {
 }
 
 async function upgradeForm(player, block, restaurant) {
-  syncMenu(restaurant);
+  if (syncMenu(restaurant)) saveRestaurant(restaurant);
   const quote = getUpgradeQuote(restaurant);
   if (quote.reason === 'max_level') { notify(player, reasonText(quote.reason)); return; }
   const choice = await choose(player, `升級至 Lv.${quote.nextLevel}`, `費用 ${quote.cost} ${currencyLabel()}\n菜單營養要求 ${quote.requiredNutrition} · 目前 ${quote.currentNutrition}\n每種菜只按一份計算，堆疊數量不會增加菜單營養。`, ['升級', '返回']);
   if (choice !== 0 || !validRestaurant(player, restaurant, block)) return;
-  syncMenu(restaurant);
+  if (syncMenu(restaurant)) saveRestaurant(restaurant);
   const current = getUpgradeQuote(restaurant);
   if (!current.ok) { notify(player, reasonText(current.reason)); return; }
   if (!pay(player, current.cost)) { notify(player, '貨幣不足，或背包放不下找零；請空出幾格。'); return; }
@@ -391,7 +415,8 @@ function prepareOrderAtCountertop(player, block, restaurant, order) {
   const output = block.above();
   if (!output?.isAir) { notify(player, '先取走操作台上方的成品／方塊。'); return; }
   const shelfId = order.type === 'delivery' ? 'ordertocook:shelf' : 'ordertocook:plate_shelf';
-  const supply = nearbyStations(block.dimension.id, block.location, 5, shelfId).find(station => station.supplies > 0 && canUseStation(player, station));
+  // Java RestaurantSupplyCompatApi scans the full ±5 cube, including corners.
+  const supply = nearbyStations(block.dimension.id, block.location, 5, shelfId, { shape: 'cube' }).find(station => station.supplies > 0 && canUseStation(player, station));
   if (!supply) { notify(player, `缺少 5 格內的${order.type === 'delivery' ? '包裝架包材（皮革）' : '餐盤架乾淨餐盤'}。`); return; }
   const plan = planExtraction(ingredientContainers(player, block), order.items);
   if (!plan.ok) {
@@ -717,10 +742,12 @@ function giveTestKit(player) {
 
 function claimStation(player, block) {
   const normalized = appliances?.normalizeBlock(block) || block;
+  const restaurant = nearestRestaurant(normalized);
+  // Reject visitors before creating a station or claiming an unowned legacy one.
+  if (restaurant && !canManage(player, restaurant)) return false;
   const station = getStation(normalized);
   if (!station.ownerId) { station.ownerId = player.id; saveStation(station); }
-  const restaurant = nearestRestaurant(normalized);
-  if (restaurant) return canManage(player, restaurant);
+  if (restaurant) return true;
   return station.ownerId === player.id || isAdmin(player);
 }
 async function interactBlock(player, block) {
@@ -803,20 +830,33 @@ function tickRestaurants() {
       let changed = expired.expired > 0;
       const machine = loadedBlock(restaurant);
       if (machine?.typeId === 'ordertocook:order_machine') {
-        syncMenu(restaurant);
+        let menuReady = false;
+        try { changed = syncMenu(restaurant) || changed; menuReady = true; }
+        catch (error) {
+          // A transient POI failure must not bypass the expiry commit below.
+          // Keep the last menu and defer only new offers until discovery works.
+          console.warn(`[OrderToCook] Menu POI lookup deferred for ${restaurant.id}: ${String(error)}`);
+        }
         const living = restaurant.orders.filter(order => liveStatus.has(order.status)).length;
-        if (restaurant.active && restaurant.menu.length && living < 32 && now >= restaurant.nextRefreshAt) {
+        if (menuReady && restaurant.active && restaurant.menu.length && living < 32 && now >= restaurant.nextRefreshAt) {
           refreshOrders(restaurant, now);
           playAt(machine, 'order_refresh');
           changed = true;
         }
-        if (restaurant.active && restaurant.menu.length && living < 32 && now >= restaurant.nextWalkInAt) {
-          restaurant.nextWalkInAt = now + DEFAULT_CONFIG.walkInIntervalMs;
-          if (Math.random() < getWalkInChance(restaurant) && nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:chair').length) {
-            const order = generateWalkInOrder(restaurant, now);
-            entities.spawnCustomer(restaurant, order);
+        if (menuReady && restaurant.active && restaurant.menu.length && living < 32 && now >= restaurant.nextWalkInAt) {
+          let hasChair;
+          try { hasChair = restaurantChairBlocks(world.getDimension(restaurant.dimensionId), restaurant.location).length > 0; }
+          catch (error) { console.warn(`[OrderToCook] Walk-in POI lookup deferred for ${restaurant.id}: ${String(error)}`); }
+          // An unavailable index is distinct from a successful empty result.
+          // Do not advance the walk-in clock, and still save an earlier refresh.
+          if (hasChair !== undefined) {
+            restaurant.nextWalkInAt = now + DEFAULT_CONFIG.walkInIntervalMs;
+            if (Math.random() < getWalkInChance(restaurant) && hasChair) {
+              const order = generateWalkInOrder(restaurant, now);
+              entities.spawnCustomer(restaurant, order);
+            }
+            changed = true;
           }
-          changed = true;
         }
         const hasOrders = restaurant.orders.some(order => order.status === 'offered');
         setBlockState(machine, 'ordertocook:mode', restaurant.active && hasOrders ? 'waiting' : 'idle');
@@ -876,7 +916,11 @@ function registerConfiguration() {
       if (event.id === 'ordertocook:kit' && player) { giveTestKit(player); return; }
       if (event.id === 'ordertocook:refresh' && player) {
         const machine = restaurants().filter(r => r.dimensionId === player.dimension.id && distanceSquared(r.location, player.location) < 24 * 24).sort((a, b) => distanceSquared(a.location, player.location) - distanceSquared(b.location, player.location))[0];
-        if (machine) { syncMenu(machine); if (machine.menu.length) { refreshOrders(machine); saveRestaurant(machine); notify(player, '測試用訂單已刷新。'); } }
+        if (machine) {
+          const changed = syncMenu(machine);
+          if (machine.menu.length) { refreshOrders(machine); saveRestaurant(machine); notify(player, '測試用訂單已刷新。'); }
+          else if (changed) saveRestaurant(machine);
+        }
         return;
       }
       if (event.id === 'ordertocook:food') {
@@ -1007,6 +1051,7 @@ world.afterEvents.weatherChange.subscribe(event => {
 
 world.afterEvents.worldLoad.subscribe(() => {
   try {
+    requireStationPoi(world.getDimension('overworld'));
     initStore();
     const rawSettings = world.getDynamicProperty('ordertocook:settings');
     if (typeof rawSettings === 'string') settings = { ...settings, ...JSON.parse(rawSettings) };
@@ -1042,7 +1087,7 @@ world.afterEvents.worldLoad.subscribe(() => {
     system.runInterval(() => { if (ready) dining.tick(); }, 5);
     system.runInterval(updateHud, 10);
     registerConfiguration();
-    console.warn('[OrderToCook] Bedrock alpha loaded. Stable API 2.0; no experimental toggles required.');
+    console.warn('[OrderToCook] Bedrock 26.60 POI candidate loaded. Beta APIs and Points of Interest experiments are required; engine acceptance is documented separately.');
   } catch (error) { console.error(`[OrderToCook] Initialization stopped; saved data was preserved. ${error}`); }
 });
 

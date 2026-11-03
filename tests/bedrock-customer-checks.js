@@ -67,6 +67,12 @@ export async function runCustomerChecks({ world, system, hooks, restaurant, play
     const view = {
       id: real.id,
       heightRange: real.heightRange,
+      // The index is native; scope returned positions to this fixture just as
+      // its entities are scoped below, so nearby production chairs stay intact.
+      poiManager: { blocks: {
+        getInRange: (...args) => real.poiManager.blocks.getInRange(...args).filter(hit => touchedBlocks.has(blockKey(hit.position))),
+        getInSquare: (...args) => real.poiManager.blocks.getInSquare(...args).filter(hit => touchedBlocks.has(blockKey(hit.position))),
+      } },
       getEntities: options => real.getEntities(options).filter(ours),
       getBlock: location => real.getBlock(location),
       getBlockFromRay: (location, direction, options) => real.getBlockFromRay(location, direction, options),

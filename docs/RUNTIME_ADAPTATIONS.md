@@ -6,7 +6,7 @@
 
 ## 版本與 API
 
-目標最低版本為 **Minecraft Bedrock 1.21.100**；依賴固定為穩定版 `@minecraft/server 2.0.0`、`@minecraft/server-ui 2.0.0`，不要求 Beta APIs 或 Upcoming Creator Features。Microsoft 的 [1.21.90 創作者更新說明](https://learn.microsoft.com/en-us/minecraft/creator/documents/update1.21.90?view=minecraft-bedrock-stable)已列明 Script API 2.0 與 Custom Components V2 正式推出。本專案選用稍後的 1.21.100 作共同的資源格式及相容基準。
+本文原 alpha.3 的穩定 API 基線為 1.21.100／2.0.0。未發布 POI 候選將最低引擎提高為 **Bedrock 26.60**、伺服器模組固定 `@minecraft/server 2.12.0-beta`，表單模組仍為 `@minecraft/server-ui 2.0.0`，須啟用 **Beta APIs** 及 **Points of Interest**。候選驗證見 [UNRELEASED-poi-discovery.md](validation/UNRELEASED-poi-discovery.md)，下文原版客戶端／BDS 結果不自動適用此版本。
 
 方塊及物品自訂元件由 `main.js` 在 `system.beforeEvents.startup` 註冊；世界存檔讀取及服務建立在 `world.afterEvents.worldLoad` 執行。服務的 `init()` 接著啟動更新，不再等待另一個 `worldLoad`；設備每 2 tick 更新，顧客與餐盤每 5 tick 更新。這遵循 [Script V2 的 early execution 限制](https://learn.microsoft.com/en-us/minecraft/creator/documents/scripting/v2-overview?view=minecraft-bedrock-stable)。
 

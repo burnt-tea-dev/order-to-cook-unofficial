@@ -3,7 +3,8 @@
 // This exercises real engine blocks/entities/ItemStacks, not client UI or input.
 import { world, system, ItemStack, ItemTypes, BlockPermutation, GameMode } from '@minecraft/server';
 import { getQaHooks } from './main.js';
-import { getRestaurant, saveRestaurant, getStation, saveStation, setBlockState } from './store.js';
+import { getRestaurant, saveRestaurant, getStation, getStationById, saveStation, setBlockState } from './store.js';
+import { nearbyStationBlocks } from './station_poi.js';
 import { generateOrder } from './core.js';
 import { VANILLA_FOODS } from './config.js';
 import { coinBalance, countItem } from './inventory.js';
@@ -29,6 +30,27 @@ async function run(mode) {
     const expected = JSON.parse(String(world.getDynamicProperty('ordertocook:qa_expected')));
     const restaurant = getRestaurant(expected.restaurantId);
     test('restaurant restored across server restart', restaurant?.stats.completed === (expected.completed ?? 1) && restaurant?.stats.earnings === expected.earnings);
+    if (mode === 'reload') {
+      // Verify real native POI reindexing and canonical data after shutting down
+      // the exact same QA world. Initial-only POI probe is not imported here.
+      const expectedPoi = JSON.parse(String(world.getDynamicProperty('ordertocook:qa_poi_expected')));
+      const indexedBoards = nearbyStationBlocks(dim,{x:0,y:70,z:0},'ordertocook:board',24,{shape:'cylinder',halfHeight:8});
+      const restoredPoiRestaurant = getRestaurant(expectedPoi.restaurantId);
+      test('POI board positions remain indexed across BDS restart',
+        indexedBoards.some(block => getStationById(expectedPoi.boardId)?.location.x===block.location.x &&
+          getStationById(expectedPoi.boardId)?.location.y===block.location.y &&
+          getStationById(expectedPoi.boardId)?.location.z===block.location.z));
+      test('restarted POI restaurant retains chosen menu and selected board',
+        restoredPoiRestaurant?.boardId===expectedPoi.boardId &&
+        JSON.stringify(restoredPoiRestaurant.menu)===JSON.stringify(expectedPoi.menu));
+      const restoredShelf = getStationById(expectedPoi.shelfId);
+      test('POI absence after removal does not delete canonical shelf metadata',
+        restoredShelf?.ownerId===expectedPoi.shelfOwner &&
+        restoredShelf?.supplies===expectedPoi.shelfSupplies);
+      test('POI index does not resurrect removed shelf after restart',
+        nearbyStationBlocks(dim,{x:0,y:70,z:0},'ordertocook:shelf',5)
+          .every(block => block.location.x!==2));
+    }
     const storage = world.getEntity(expected.storageId);
     const item = storage?.getComponent('minecraft:inventory')?.container.getItem(7);
     test('native storage entity restored', !!storage?.isValid);
@@ -36,6 +58,26 @@ async function run(mode) {
     test('native ItemStack name and lore restored', item?.nameTag === 'Native parcel metadata' && item?.getLore()?.[0] === 'persistent native lore');
     const machine = dim.getBlock(restaurant.location);
     test('custom block restored across server restart', machine?.typeId === 'ordertocook:order_machine');
+
+    if (mode === 'upgrade') {
+      // These blocks were placed and saved by 0.1.2, before the POI definitions
+      // existed. Discover them after enabling POI and restarting 26.60, without
+      // replaying placement events or creating new ownership records.
+      for (const [kind, location] of [
+        ['board', { x: 1, y: 4, z: 0 }],
+        ['chair', { x: 2, y: 4, z: 3 }],
+        ['refrigerator', { x: 6, y: 4, z: 0 }]
+      ]) {
+        const oldBlock = dim.getBlock(location);
+        const indexed = nearbyStationBlocks(dim, location, 'ordertocook:' + kind, 1);
+        test('pre-POI ' + kind + ' is indexed after 0.1.2 upgrade without placement replay',
+          oldBlock?.typeId === 'ordertocook:' + kind &&
+          indexed.length === 1 &&
+          indexed[0].location.x === location.x &&
+          indexed[0].location.y === location.y &&
+          indexed[0].location.z === location.z);
+      }
+    }
     const fridge = dim.getBlock({ x: 6, y: 4, z: 0 });
     const fridgeInventory = hooks.appliances.getStorage(getStation(fridge));
     test('refrigerator native contents and name survive restart or upgrade', fridgeInventory?.getItem(0)?.typeId === 'minecraft:cooked_beef' && fridgeInventory.getItem(0)?.amount === 16 && fridgeInventory.getItem(0)?.nameTag === 'Native retained food');
@@ -43,15 +85,33 @@ async function run(mode) {
     const washer = dim.getBlock({ x: 10, y: 4, z: 0 });
     test('finished dishwasher retains all plates across restart or upgrade', getStation(washer).appliance?.plates === 16 && getStation(washer).appliance?.phase === 5);
     test('finished dishwasher loads new final frame permutation', washer.permutation.getState('ordertocook:frame') === 15);
-    if (mode === 'upgrade') {
+    if (mode === 'upgrade' && !expected.meal) {
+      // Older alpha.1 QA worlds had no unfinished meal; retain the original
+      // acceptance branch, separate from the actual 0.1.2 upgrade scenario.
       test('saved baseline is alpha.1 QA schema', !expected.addonVersion && !expected.meal);
       test('completed alpha.1 history does not mint a new dirty plate', !(restaurant.pendingDishes || []).length && !dim.getEntities({ type: DINING_ENTITY }).length);
     } else {
+      // A 0.1.2-alpha.3 world has the same genuine in-flight meal as the
+      // unchanged-source reload case. Check its persisted token, exact clock,
+      // one visual, and one-time dirty-plate collection after upgrading.
+      if (mode === 'upgrade') test('upgrade source has an unfinished legacy meal', !!expected.meal);
       const meal = restaurant.pendingDishes?.find(entry => entry.id === expected.meal?.id);
       test('unfinished meal restores canonical token and original clock', meal?.token === expected.meal?.token && meal?.startedAt === expected.meal?.startedAt && meal?.finishAt === expected.meal?.finishAt);
       const visuals = dim.getEntities({ type: DINING_ENTITY }).filter(entity => entity.getDynamicProperty(MEAL_TOKEN) === meal?.token);
       test('restart reconciles exactly one dirty visual', visuals.length === 1 && visuals[0].getProperty('ordertocook:stage') === meal?.variant * 4 + 4 && meal?.status === 'dirty');
-      test('restart does not respawn the finished meal customer', !dim.getEntities({ type: 'ordertocook:customer' }).some(entity => entity.getDynamicProperty('ordertocook:order_id') === meal?.id));
+      // A customer remains legitimately visible until the persisted departure
+      // deadline. Immediately checking at a variable server-start timestamp
+      // makes this probe flaky; assert uniqueness first, then a bounded check
+      // after the original deadline without extending or rewriting that clock.
+      const customersForMeal = () => dim.getEntities({ type: 'ordertocook:customer' })
+        .filter(entity => entity.getDynamicProperty('ordertocook:order_id') === meal?.id);
+      test('restart never duplicates a completed meal customer before its deadline',
+        customersForMeal().length <= 1, String(customersForMeal().length));
+      const remainingMs = Math.max(0, Number(meal?.finishAt ?? 0) - Date.now());
+      await WAIT(Math.max(10, Math.min(160, Math.ceil(remainingMs / 50) + 10)));
+      test('finished customer departs after its persisted deadline without respawning',
+        customersForMeal().length === 0,
+        JSON.stringify({ remainingMsAtCheck: Math.max(0, Number(meal?.finishAt ?? 0) - Date.now()), actors: customersForMeal().length }));
       const player = makePlayer(dim, storage.getComponent('minecraft:inventory').container);
       player.location = { ...meal.location, y: meal.location.y - 1 };
       const before = countItem([player.getComponent('minecraft:inventory').container], 'ordertocook:dirty_plate');

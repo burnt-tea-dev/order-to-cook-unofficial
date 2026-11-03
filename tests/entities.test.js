@@ -126,6 +126,36 @@ test('chair eligibility uses the original circular radius instead of a square co
   assert.ok(service.spawnCustomer(fixture.restaurant, fixture.order));
 });
 
+test('POI chair selection uses Java random choice among physically free chairs, including elevated edges', () => {
+  const env = makeEnvironment(), fixture = restaurantFixture(env, 'offered', true);
+  // This chair has no store record: physical seats need no business-data owner.
+  const edge = place(env, 'ordertocook:chair', { x: 24, y: 8, z: 0 });
+  const blocked = place(env, 'ordertocook:chair', { x: 10, y: 0, z: 0 });
+  place(env, 'minecraft:stone', { ...blocked.location, y: 1 });
+  env.ctx.random = () => 0.999;
+  const service = entityServices.createEntityService(env.ctx);
+  const customer = service.spawnCustomer(fixture.restaurant, fixture.order);
+  assert.deepEqual(service.getCustomerSeat(customer)?.location, edge.location);
+  assert.notDeepEqual(service.getCustomerSeat(customer)?.location, fixture.chair.location);
+});
+
+test('a failed chair query preserves the order without standing fallback and other customer retries continue', () => {
+  const env = makeEnvironment(), fixture = restaurantFixture(env), service = readyService(env);
+  place(env, 'minecraft:stone', { x: 0, y: -1, z: 0 });
+  place(env, 'minecraft:stone', { x: 4, y: -1, z: 0 });
+  const delivery = { ...fixture.order, id: 'r1-delivery', type: 'delivery', destination: { x: 4, y: 0, z: 0, dimensionId: env.dimension.id } };
+  fixture.restaurant.orders.push(delivery);
+  env.dimension.poiManager.blocks.getInSquare = () => { throw Error('native index temporarily unavailable'); };
+  const warnings = [], warn = console.warn; console.warn = message => warnings.push(message);
+  try { service.tick(); } finally { console.warn = warn; }
+  const customers = env.dimension.getEntities({ type: 'ordertocook:customer' });
+  assert.equal(fixture.order.status, 'accepted');
+  assert.equal(fixture.order.customerEntityId, undefined);
+  assert.equal(customers.length, 1);
+  assert.equal(customers[0].getDynamicProperty('ordertocook:order_id'), delivery.id);
+  assert.match(warnings.join('\n'), /Customer POI lookup deferred.*native index temporarily unavailable/);
+});
+
 test('idle variants use the upstream 55/15/15/15 distribution independently of action IDs', () => {
   assert.deepEqual([0, .549999, .55, .699999, .70, .849999, .85, .999999].map(entityServices.rollCustomerAnimationVariant), [1, 1, 2, 2, 3, 3, 4, 4]);
   const env = makeEnvironment(), fixture = restaurantFixture(env), service = readyService(env), start = Date.now();

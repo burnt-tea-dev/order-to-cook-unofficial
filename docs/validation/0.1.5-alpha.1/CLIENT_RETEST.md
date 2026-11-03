@@ -1,0 +1,26 @@
+# Order To Cook 0.1.5-alpha.1：剩餘玩家實機驗收
+
+本文件是操作交接，**所有下列客戶端案例目前均為 NOT RUN**。原生 BDS、替身 Player 和強制查詢壓力測試的結果見 [POI_AUDIT.md](POI_AUDIT.md)，不代填真人成功。
+
+## 候選身份
+
+- 沿用 [PR #11](https://github.com/burnt-tea-dev/order-to-cook-unofficial/pull/11)；BP／RP **[0,1,5]**，npm **0.1.5-alpha.1**，UUID 不變。
+- 可取得的最終等價功能來源：[05229d7376db7079384dc433652ba07f1b65087e](https://github.com/burnt-tea-dev/order-to-cook-unofficial/commit/05229d7376db7079384dc433652ba07f1b65087e)。測量時本機來源是 `3cdd7f7039ea6d857cab944ef97452b1e2ab6f4e`，兩者完整 Git tree 同為 `ee0117d85adf222ef3dd3116d6e0f97060c03ff2`；API 提交只改變 commit metadata／parents，來源內容相同。原測量欄位保留，遠端對應見各 JSON 的 `publishedEquivalentRuntimeCommit`，不代表額外重測。後續純文檔提交可以前進，runtime 指紋必須一致。
+- 本次被測 runtime tree SHA-256：`0fe26e9c410e8fea354a6fac5ace43ad0aa2b81af7bfdc46d76b63db8ed4a4b6`。
+- Bedrock／BDS **26.60**、`@minecraft/server 2.12.0-beta`、`@minecraft/server-ui 2.0.0`；Beta APIs、Points of Interest 都須開啟。
+- 使用上述遠端等價功能 commit 建置，記錄 commit、安裝包大小／SHA-256、客戶端完整版本、輸入方式及實際角色。若需執行新 QA 工具，從包含本文件的 PR 證據提交取得工具，再指定等價功能來源；該功能提交未必包含後續新增工具。本輪未建立 `v0.1.5-alpha.1` Git tag、未發布 Release，不以 build-info 的 `sourceTag` 文字作 checkout 入口。來源再次改動，重做受影響驗證；不要把歷史 0.1.3 或 0.1.4 封包當作本候選。
+- 僅在全新測試世界或舊世界的完整副本驗收；LIVE 不屬此工作。回退使用原包及升級前的完整世界備份。
+
+## 本輪需要真人補上的案例
+
+| 案例 | 操作與判定 | 結果 |
+|---|---|---|
+| 開店與交易 | 正常生存設菜單→接單→備料→打包／裝盤→交付→收款→收盤／清洗；核對食品、耗材、訂單與款項 | NOT RUN |
+| 原作搜尋距離 | 立牌／椅子水平 24、Y±8；冰箱三維半徑 24；包裝架／餐盤架各軸 ±5，含 (5,5,5)；任一軸 6 的架子不可供料 | NOT RUN |
+| 菜單保存修復 | 升級介面開啟前／確認期間更換立牌或菜單，分別取消、營養不足及成功操作；正常重登後菜單／board 綁定仍正確 | NOT RUN |
+| 雙人權限與座位 | 店主、員工、鄰店／陌生玩家共用查詢範圍；表單開啟期間撤權、競爭同一椅子／訂單／架子；不得越權扣料或重複交付 | NOT RUN |
+| 真舊世界副本 | 真實 0.1.2 世界保留已放設備、上下冰箱具名食品、未完成訂單與收入；升級、不重放設備，離開使區塊卸載、返回、再重啟 | NOT RUN |
+| 已知可見問題 | 使用本候選重看冰箱模型／門動畫、洗手粒子、個人進度文字，以及主線獨立指南三語操作；保留舊版 FAIL，不以無日誌錯誤代替畫面成功 | NOT RUN |
+| 真多人性能 | 同一測試機器、模擬距離、世界副本與人數，記錄真實玩家／餐廳／站點數、MSPT／TPS／CPU／RAM及訂單刷新。自動化的 1／8／32 查詢起點不是 1／8／32 玩家 | NOT RUN |
+
+每項記錄 PASS／FAIL／NOT RUN、必要操作、實際結果及相關日誌／影片。先處理上述實際行為，不增加新的普遍 CI 門鎖。舊完整案例表仍可供定位其他功能，但本輪不把它重抄成另一份通過清單。

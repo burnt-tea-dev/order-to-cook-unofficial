@@ -1,0 +1,146 @@
+name: Native Bedrock QA (disposable worlds)
+
+on:
+  pull_request:
+    paths:
+      - 'runtime/**'
+      - 'tests/bedrock-*.js'
+      - 'tools/bedrock_qa_world.py'
+      - 'tools/bedrock_smoke.py'
+      - '.github/workflows/native-bds.yml'
+      - 'docs/validation/UNRELEASED-poi-discovery.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: otc-native-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  native:
+    if: github.repository == 'burnt-tea-dev/order-to-cook-unofficial'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Preflight syntax-check native QA entry modules
+        run: |
+          node --check tests/bedrock-smoke.js
+          node --check tests/bedrock-poi-checks.js
+          node --check tests/bedrock-customer-checks.js
+      - name: Fetch official pinned Bedrock 1.26.60.6 for isolated QA
+        env:
+          BDS_DIR: ${{ runner.temp }}/otc-bds
+        run: |
+          set -euo pipefail
+          mkdir -p "$BDS_DIR"
+          curl --http1.1 --user-agent 'Mozilla/5.0' --fail --silent --show-error --location --retry 3 --retry-all-errors \
+            --connect-timeout 20 --max-time 180 \
+            'https://www.minecraft.net/bedrockdedicatedserver/bin-linux/bedrock-server-1.26.60.6.zip' \
+            -o "${{ runner.temp }}/bedrock-1.26.60.6.zip"
+          unzip -tq "${{ runner.temp }}/bedrock-1.26.60.6.zip"
+          unzip -q "${{ runner.temp }}/bedrock-1.26.60.6.zip" -d "$BDS_DIR"
+          test -f "$BDS_DIR/bedrock_server"
+          chmod +x "$BDS_DIR/bedrock_server"
+      - name: Exclude previous commit's native evidence from this run
+        run: |
+          rm -f docs/validation/0.1.5-alpha.1/native-initial.json
+          rm -f docs/validation/0.1.5-alpha.1/native-reload.json
+      - name: Native QA on a brand-new isolated world
+        run: python tools/bedrock_smoke.py --server-dir "${{ runner.temp }}/otc-bds" --mode initial --timeout 120
+      - name: Native QA after saving and restarting the exact same world
+        run: python tools/bedrock_smoke.py --server-dir "${{ runner.temp }}/otc-bds" --mode reload --timeout 120
+      - name: Verify both reports belong to this exact source and Bedrock build
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib
+          import json
+
+          root = Path('runtime')
+          fingerprint = hashlib.sha256()
+          for path in sorted(root.rglob('*')):
+              if path.is_file():
+                  fingerprint.update(path.as_posix().encode() + b'\0' + path.read_bytes())
+          expected = fingerprint.hexdigest()
+          reports = [json.loads(Path('docs/validation/0.1.5-alpha.1/native-' + mode + '.json').read_text())
+                     for mode in ('initial', 'reload')]
+          for report in reports:
+              assert report['passed'] and not report['addonErrors']
+              assert report['runtimeTreeSha256'] == expected
+              assert '1.26.60.6' in report['serverVersion'], report['serverVersion']
+          assert reports[0]['poiPassed']
+          assert len(reports[0]['poiChecks']) == 10
+          assert all(check['passed'] for check in reports[0]['poiChecks'])
+          print('Both native reports verified for this checkout:', expected)
+          PY
+      - name: Check out pinned 0.1.2-alpha.3 source for a real upgrade
+        uses: actions/checkout@v4
+        with:
+          repository: burnt-tea-dev/order-to-cook-unofficial
+          ref: d579e046da63a8078dc56ad69b1513a1d2c7da70
+          path: qa-old-0.1.2
+          persist-credentials: false
+      - name: Create a second empty BDS instance for old-world upgrade
+        run: |
+          set -euo pipefail
+          mkdir -p "${{ runner.temp }}/otc-bds-upgrade"
+          unzip -q "${{ runner.temp }}/bedrock-1.26.60.6.zip" -d "${{ runner.temp }}/otc-bds-upgrade"
+          chmod +x "${{ runner.temp }}/otc-bds-upgrade/bedrock_server"
+          # The old report path can already exist in the pinned source.
+          rm -f qa-old-0.1.2/docs/validation/0.1.2-alpha.3/native-initial.json
+          rm -f docs/validation/0.1.5-alpha.1/native-upgrade.json
+      - name: Produce actual saved world with historical 0.1.2-alpha.3 source
+        run: |
+          python -c 'import json; assert json.load(open("qa-old-0.1.2/package.json"))["version"] == "0.1.2-alpha.3"'
+          python qa-old-0.1.2/tools/bedrock_smoke.py --server-dir "${{ runner.temp }}/otc-bds-upgrade" --mode initial --timeout 120
+      - name: Upgrade the stopped 0.1.2 world to this PR's production source
+        run: python tools/bedrock_smoke.py --server-dir "${{ runner.temp }}/otc-bds-upgrade" --mode upgrade --timeout 120
+      - name: Compare original and upgraded reports with both actual source trees
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib
+          import json
+
+          def fingerprint(root):
+              digest = hashlib.sha256()
+              for path in sorted(root.rglob('*')):
+                  if path.is_file():
+                      digest.update(path.relative_to(root.parent).as_posix().encode() + b'\0' + path.read_bytes())
+              return digest.hexdigest()
+
+          old = json.loads(Path('qa-old-0.1.2/docs/validation/0.1.2-alpha.3/native-initial.json').read_text())
+          new = json.loads(Path('docs/validation/0.1.5-alpha.1/native-upgrade.json').read_text())
+          assert old['passed'] and new['passed']
+          assert old['addonVersion'] == '0.1.2-alpha.3'
+          assert new['addonVersion'] == '0.1.5-alpha.1'
+          assert not old['addonErrors'] and not new['addonErrors']
+          # Old QA report uses paths relative to the old source checkout,
+          # and the new report uses paths relative to the PR checkout.
+          assert old['runtimeTreeSha256'] == fingerprint(Path('qa-old-0.1.2/runtime'))
+          assert new['runtimeTreeSha256'] == fingerprint(Path('runtime'))
+          print('0.1.2-alpha.3 native saved world upgraded to 0.1.5-alpha.1; exact source trees matched')
+          PY
+      - name: Retain native evidence, never publish the server binary or world
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: otc-native-bds-${{ github.sha }}
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            ${{ runner.temp }}/otc-bds/native-*.log
+            ${{ runner.temp }}/otc-bds/native-bootstrap.log
+            ${{ runner.temp }}/otc-bds-upgrade/native-*.log
+            qa-old-0.1.2/docs/validation/0.1.2-alpha.3/native-initial.json
+            docs/validation/0.1.5-alpha.1/native-upgrade.json
+            docs/validation/0.1.5-alpha.1/native-initial.json
+            docs/validation/0.1.5-alpha.1/native-reload.json

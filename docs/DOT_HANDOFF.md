@@ -1,5 +1,9 @@
 # dot 客戶端驗收交接 — 0.1.2-alpha.3
 
+> **目前 POI 候選是 0.1.5-alpha.1，請使用 [當前原生／性能報告](validation/0.1.5-alpha.1/POI_AUDIT.md) 與 [客戶端重測](validation/0.1.5-alpha.1/CLIENT_RETEST.md)**。下文及 0.1.3-alpha.1 舊交接各自保留歷史身份，不是當前候選的安裝／通過證據。
+
+> 歷史版本說明：本頁固定下載及關閉實驗功能的步驟只適用原 alpha.3。其後的 `0.1.3-alpha.1` POI 候選使用 BP／RP 0.1.3，需 Bedrock 26.60、Beta APIs＋POI；其獨立來源與設定保留於 [歷史 POI 驗證](validation/UNRELEASED-poi-discovery.md)。兩者的舊包／雜湊及結果均不屬於頁首連結的當前 0.1.5-alpha.1 候選。
+
 **交接對象：dot。狀態：測試文件已準備；下列客戶端案例全部未執行，待實際填報。**
 
 本輪請先確認真實玩家能完成開店與交付，再檢查新增的設備準星資訊與個人進度。完整外觀、按鍵、觸控、控制器與多人清單仍以 [PLAYTEST.md](PLAYTEST.md) 為準；本文件提供執行順序及 alpha.3 增補，不將自動測試當成客戶端結果。每次執行複製 [DOT_REPORT_TEMPLATE.md](validation/DOT_REPORT_TEMPLATE.md) 填寫。

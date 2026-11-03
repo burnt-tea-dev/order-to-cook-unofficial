@@ -1,0 +1,234 @@
+{
+  "addonVersion": "0.1.5-alpha.1",
+  "runtimeTreeSha256": "0fe26e9c410e8fea354a6fac5ace43ad0aa2b81af7bfdc46d76b63db8ed4a4b6",
+  "passed": true,
+  "scenarios": [
+    {
+      "mode": "prepare",
+      "passed": true,
+      "checks": [
+        {
+          "name": "current production entry initialized",
+          "passed": true
+        },
+        {
+          "name": "canonical accepted-order fixture is nonempty",
+          "passed": true
+        },
+        {
+          "name": "menu bound from native POI",
+          "passed": true
+        },
+        {
+          "name": "five native station types found",
+          "passed": true
+        },
+        {
+          "name": "Java packaging cube includes three-axis corner",
+          "passed": true
+        },
+        {
+          "name": "Java plate cube includes negative-Y corner",
+          "passed": true
+        },
+        {
+          "name": "fridge lower and upper share one indexed inventory",
+          "passed": true
+        },
+        {
+          "name": "named upper-tier native food retained",
+          "passed": true
+        },
+        {
+          "name": "named lower-tier native food retained",
+          "passed": true
+        }
+      ],
+      "addonErrors": [],
+      "unexpectedAddonErrors": [],
+      "qaEntryExecuted": true,
+      "serverVersion": "1.26.60.6",
+      "processExitCode": 0
+    },
+    {
+      "mode": "unload",
+      "passed": true,
+      "checks": [
+        {
+          "name": "current production entry initialized",
+          "passed": true
+        },
+        {
+          "name": "actual native equipment chunk becomes unreadable",
+          "passed": true,
+          "detail": {
+            "waitedTicks": 20
+          }
+        },
+        {
+          "name": "unloaded bound board defers menu rebinding",
+          "passed": true
+        },
+        {
+          "name": "unloaded block candidates do not return usable stations",
+          "passed": true
+        },
+        {
+          "name": "native unload leaves saved menu and supply records intact",
+          "passed": true
+        },
+        {
+          "name": "unloaded chair is not a usable seat",
+          "passed": true
+        },
+        {
+          "name": "chunk reload restores five native station kinds",
+          "passed": true
+        },
+        {
+          "name": "reloaded menu and supply records match saved checkpoint",
+          "passed": true
+        },
+        {
+          "name": "named upper-tier native food retained",
+          "passed": true
+        },
+        {
+          "name": "named lower-tier native food retained",
+          "passed": true
+        }
+      ],
+      "addonErrors": [],
+      "unexpectedAddonErrors": [],
+      "qaEntryExecuted": true,
+      "serverVersion": "1.26.60.6",
+      "processExitCode": 0
+    },
+    {
+      "mode": "poi-off",
+      "passed": true,
+      "checks": [
+        {
+          "name": "POI-disabled startup refuses gameplay initialization",
+          "passed": true
+        },
+        {
+          "name": "POI-disabled startup preserves canonical fixture records",
+          "passed": true
+        }
+      ],
+      "addonErrors": [
+        "[2026-11-03 11:40:46:209 ERROR] [Scripting] [OrderToCook] Initialization stopped; saved data was preserved. Error: Order To Cook requires Bedrock 26.60, @minecraft/server 2.12.0-beta, and the Beta APIs and Points of Interest (POI) world experiments. RuntimeConditionError: Dimension::poiManager is missing these runtime conditions: Poi"
+      ],
+      "unexpectedAddonErrors": [],
+      "qaEntryExecuted": true,
+      "serverVersion": "1.26.60.6",
+      "processExitCode": 0
+    },
+    {
+      "mode": "beta-off",
+      "passed": true,
+      "checks": [
+        {
+          "name": "engine rejects beta module before QA entry can execute",
+          "passed": true
+        },
+        {
+          "name": "production does not report successful initialization",
+          "passed": true
+        }
+      ],
+      "engineMessages": [
+        "[2026-11-03 11:40:51:246 ERROR] [Scripting] Plugin [Order To Cook — Bedrock (Unofficial Alpha) - 0.1.5] - requesting dependency on beta APIs [@minecraft/server - 2.12.0-beta], but the Beta APIs experiment is not enabled."
+      ],
+      "note": "Data retention is checked after experiments are re-enabled, not inferred from this load failure.",
+      "addonErrors": [
+        "[2026-11-03 11:40:51:246 ERROR] [Scripting] Plugin [Order To Cook — Bedrock (Unofficial Alpha) - 0.1.5] - requesting dependency on beta APIs [@minecraft/server - 2.12.0-beta], but the Beta APIs experiment is not enabled.",
+        "[2026-11-03 11:40:51:254 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/plate_shelf.json | behavior_packs/otc | blocks/plate_shelf.json | ordertocook:plate_shelf | components | ordertocook:interact | child 'ordertocook:interact' not valid here.",
+        "[2026-11-03 11:40:51:254 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/plate_shelf.json | Block definition parsing failed",
+        "[2026-11-03 11:40:51:255 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/takeout_bag.json | behavior_packs/otc | blocks/takeout_bag.json | ordertocook:takeout_bag | components | ordertocook:interact | child 'ordertocook:interact' not valid here.",
+        "[2026-11-03 11:40:51:255 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/takeout_bag.json | Block definition parsing failed",
+        "[2026-11-03 11:40:51:255 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/countertop.json | behavior_packs/otc | blocks/countertop.json | ordertocook:countertop | components | ordertocook:interact | child 'ordertocook:interact' not valid here.",
+        "[2026-11-03 11:40:51:255 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/countertop.json | Block definition parsing failed",
+        "[2026-11-03 11:40:51:255 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/stove.json | behavior_packs/otc | blocks/stove.json | ordertocook:stove | components | ordertocook:interact | child 'ordertocook:interact' not valid here.",
+        "[2026-11-03 11:40:51:255 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/stove.json | Block definition parsing failed",
+        "[2026-11-03 11:40:51:255 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/board.json | behavior_packs/otc | blocks/board.json | ordertocook:board | components | ordertocook:interact | child 'ordertocook:interact' not valid here.",
+        "[2026-11-03 11:40:51:255 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/board.json | Block definition parsing failed",
+        "[2026-11-03 11:40:51:255 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/chair.json | behavior_packs/otc | blocks/chair.json | ordertocook:chair | components | ordertocook:interact | child 'ordertocook:interact' not valid here.",
+        "[2026-11-03 11:40:51:255 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/chair.json | Block definition parsing failed",
+        "[2026-11-03 11:40:51:256 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/shelf.json | behavior_packs/otc | blocks/shelf.json | ordertocook:shelf | components | ordertocook:interact | child 'ordertocook:interact' not valid here.",
+        "[2026-11-03 11:40:51:256 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/shelf.json | Block definition parsing failed",
+        "[2026-11-03 11:40:51:256 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/food_plate_display.json | behavior_packs/otc | blocks/food_plate_display.json | ordertocook:food_plate_display | components | ordertocook:interact | child 'ordertocook:interact' not valid here.",
+        "[2026-11-03 11:40:51:256 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/food_plate_display.json | Block definition parsing failed",
+        "[2026-11-03 11:40:51:256 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/order_machine.json | behavior_packs/otc | blocks/order_machine.json | ordertocook:order_machine | components | ordertocook:interact | child 'ordertocook:interact' not valid here.",
+        "[2026-11-03 11:40:51:256 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/order_machine.json | Block definition parsing failed",
+        "[2026-11-03 11:40:51:257 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/refrigerator.json | behavior_packs/otc | blocks/refrigerator.json | ordertocook:refrigerator | components | ordertocook:interact | child 'ordertocook:interact' not valid here.",
+        "[2026-11-03 11:40:51:257 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/refrigerator.json | Block definition parsing failed",
+        "[2026-11-03 11:40:51:257 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/washingtable.json | behavior_packs/otc | blocks/washingtable.json | ordertocook:washingtable | components | ordertocook:interact | child 'ordertocook:interact' not valid here.",
+        "[2026-11-03 11:40:51:257 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/washingtable.json | Block definition parsing failed",
+        "[2026-11-03 11:40:51:257 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/dishwasher.json | behavior_packs/otc | blocks/dishwasher.json | ordertocook:dishwasher | components | ordertocook:interact | child 'ordertocook:interact' not valid here.",
+        "[2026-11-03 11:40:51:257 ERROR] [Blocks] block_definitions | behavior_packs/otc | blocks/dishwasher.json | Block definition parsing failed",
+        "[2026-11-03 11:40:51:894 ERROR] [Recipes] recipes/washingtable.json | ordertocook:washingtable | The Item: ordertocook:washingtable is missing or invalid, can't make the recipe",
+        "[2026-11-03 11:40:51:894 ERROR] [Recipes] recipes/washingtable.json | ordertocook:washingtable | Recipe result malformed",
+        "[2026-11-03 11:40:51:894 ERROR] [Recipes] recipes/order_machine.json | ordertocook:order_machine | The Item: ordertocook:order_machine is missing or invalid, can't make the recipe",
+        "[2026-11-03 11:40:51:894 ERROR] [Recipes] recipes/order_machine.json | ordertocook:order_machine | Recipe result malformed",
+        "[2026-11-03 11:40:51:894 ERROR] [Recipes] recipes/shelf.json | ordertocook:shelf | The Item: ordertocook:shelf is missing or invalid, can't make the recipe",
+        "[2026-11-03 11:40:51:894 ERROR] [Recipes] recipes/shelf.json | ordertocook:shelf | Recipe result malformed",
+        "[2026-11-03 11:40:51:894 ERROR] [Recipes] recipes/chair.json | ordertocook:chair | The Item: ordertocook:chair is missing or invalid, can't make the recipe",
+        "[2026-11-03 11:40:51:894 ERROR] [Recipes] recipes/chair.json | ordertocook:chair | Recipe result malformed",
+        "[2026-11-03 11:40:51:894 ERROR] [Recipes] recipes/board.json | ordertocook:board | The Item: ordertocook:board is missing or invalid, can't make the recipe",
+        "[2026-11-03 11:40:51:895 ERROR] [Recipes] recipes/board.json | ordertocook:board | Recipe result malformed",
+        "[2026-11-03 11:40:51:895 ERROR] [Recipes] recipes/countertop.json | ordertocook:countertop | The Item: ordertocook:countertop is missing or invalid, can't make the recipe",
+        "[2026-11-03 11:40:51:895 ERROR] [Recipes] recipes/countertop.json | ordertocook:countertop | Recipe result malformed",
+        "[2026-11-03 11:40:51:895 ERROR] [Recipes] recipes/plate_shelf.json | ordertocook:plate_shelf | The Item: ordertocook:plate_shelf is missing or invalid, can't make the recipe",
+        "[2026-11-03 11:40:51:895 ERROR] [Recipes] recipes/plate_shelf.json | ordertocook:plate_shelf | Recipe result malformed"
+      ],
+      "unexpectedAddonErrors": [],
+      "qaEntryExecuted": false,
+      "serverVersion": "1.26.60.6",
+      "processExitCode": 0
+    },
+    {
+      "mode": "restore",
+      "passed": true,
+      "checks": [
+        {
+          "name": "current production entry initialized",
+          "passed": true
+        },
+        {
+          "name": "experiment re-enable retains canonical records",
+          "passed": true
+        },
+        {
+          "name": "re-enable reindexes all five already placed station kinds",
+          "passed": true
+        },
+        {
+          "name": "board binding is unchanged",
+          "passed": true
+        },
+        {
+          "name": "named upper-tier native food retained",
+          "passed": true
+        },
+        {
+          "name": "named lower-tier native food retained",
+          "passed": true
+        }
+      ],
+      "addonErrors": [],
+      "unexpectedAddonErrors": [],
+      "qaEntryExecuted": true,
+      "serverVersion": "1.26.60.6",
+      "processExitCode": 0
+    }
+  ],
+  "scope": "Native BDS, synthetic closed-restaurant fixtures and inventories. No real players, UI, multiplayer or LIVE.",
+  "verifiedRuntimeCommit": "3cdd7f7039ea6d857cab944ef97452b1e2ab6f4e",
+  "provenanceNote": "Tested worktree runtime fingerprint matches this subsequently committed runtime; report was not relabelled as a different source.",
+  "publishedEquivalentRuntimeCommit": "05229d7376db7079384dc433652ba07f1b65087e",
+  "publishedEquivalentGitTreeSha": "ee0117d85adf222ef3dd3116d6e0f97060c03ff2",
+  "publicationSourceLocalCommit": "3cdd7f7039ea6d857cab944ef97452b1e2ab6f4e",
+  "publicationNote": "Published through the GitHub API with different commit metadata/parents. The complete Git tree matches the measured local source commit exactly. Original measurement fields and runtimeTreeSha256 are unchanged; this content-equivalence mapping does not claim an additional test run."
+}

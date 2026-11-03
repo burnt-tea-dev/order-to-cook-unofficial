@@ -33,7 +33,7 @@ manifests = [documents.get(pack / 'manifest.json', {}) for pack in [BP, RP]]
 uuids = []
 for manifest in manifests:
     header = manifest.get('header', {})
-    check(header.get('min_engine_version') == [1, 21, 100], 'Unexpected minimum engine version')
+    check(header.get('min_engine_version') == [1, 26, 60], 'Expected Bedrock 26.60 minimum engine version')
     check(header.get('version') == PACK_VERSION, 'Pack version must match package.json numeric version')
     for entry in [header, *manifest.get('modules', [])]:
         check(entry.get('version') == PACK_VERSION, 'Pack/module version mismatch')
@@ -44,8 +44,8 @@ for manifest in manifests:
             errors.append('Invalid pack/module UUID')
 check(len(uuids) == len(set(uuids)), 'Pack/module UUID collision')
 dependencies = manifests[0].get('dependencies', [])
-for module in ['@minecraft/server', '@minecraft/server-ui']:
-    check(any(d.get('module_name') == module and d.get('version') == '2.0.0' for d in dependencies), module + ' must be stable 2.0.0')
+for module, version in [('@minecraft/server', '2.12.0-beta'), ('@minecraft/server-ui', '2.0.0')]:
+    check(any(d.get('module_name') == module and d.get('version') == version for d in dependencies), module + ' must be ' + version)
 check(any(d.get('uuid') == manifests[1].get('header', {}).get('uuid') and d.get('version') == PACK_VERSION for d in dependencies), 'BP must depend on the matching RP version')
 check((BP / 'scripts/main.js').is_file(), 'Missing script entry')
 
@@ -158,6 +158,17 @@ for path in (BP / 'scripts').rglob('*.js'):
     for target in re.findall(r"(?:from\s*|import\s*)['\"]([^'\"]+)['\"]", text):
         check(target in ['@minecraft/server', '@minecraft/server-ui'] or (target.startswith('.') and (path.parent / target).is_file()), f'{path.name}: unresolved import {target}')
 check(len(blocks) == 12, f'Expected 12 blocks, got {len(blocks)}')
+poi_types = set()
+for path in (BP / 'poi/blocks').glob('*.json'):
+    document = documents.get(path, {})
+    definition = document.get('minecraft:poi_block', {})
+    ident = definition.get('description', {}).get('identifier')
+    check(document.get('format_version') == '1.26.40', f'{path.name}: unexpected POI format')
+    check(ident in blocks and ident not in poi_types, f'{path.name}: invalid or duplicate station POI')
+    check(definition.get('blocks') == [ident], f'{path.name}: POI must map to its owning block')
+    check(definition.get('tickets') == 0, f'{path.name}: station discovery must not claim seat tickets')
+    poi_types.add(ident)
+check(poi_types == {'ordertocook:' + name for name in ['board', 'chair', 'refrigerator', 'shelf', 'plate_shelf']}, 'Station POI definitions are incomplete')
 expected_entities = {'ordertocook:' + name for name in ['customer', 'motorcycle', 'storage', 'seat', 'dining_plate']}
 check(set(entities) == expected_entities, f'Entity set mismatch: missing {sorted(expected_entities - set(entities))}, extra {sorted(set(entities) - expected_entities)}')
 check(len(recipes) >= 10, 'Survival bootstrap recipes are incomplete')

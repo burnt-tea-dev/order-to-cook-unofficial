@@ -2,7 +2,7 @@
 
 **简体中文** · [繁體中文](README.md) · [English](README.en.md)
 
-**当前开发基线为 `0.1.2-alpha.3`：餐厅、外送、厨房电器、个人进度与设备 HUD 已实现。已有部分客户端验证，但冰箱几何、手洗粒子与进度灰字存在 FAIL，不能称为完全等同于 Java 版。** [实机记录](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [尚未发布的按钮可读性修复](docs/validation/UNRELEASED-button-contrast.md)
+**当前源码为尚未发布的 `0.1.5-alpha.1` POI 候选，基于 `0.1.2-alpha.3` 后续主线开发。餐厅、外送、厨房电器、个人进度与设备 HUD 已实现。历史客户端记录中仍有冰箱几何、手洗粒子与进度灰字 FAIL，不能称为完全等同于 Java 版。** [历史实机记录](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [本候选 POI 审查](docs/validation/0.1.5-alpha.1/POI_AUDIT.md)
 
 原作作者：**breezeth** — [CurseForge](https://www.curseforge.com/minecraft/mc-mods/order-to-cook) · [Java 源代码](https://github.com/breezeth-CN/OrdertoCook)。本项目由 `casama233`／`burnt-tea-dev` 维护，保留上游 GPLv3、作者署名和素材来源。有关补充素材使用范围的询问尚未收到回复，作为非阻塞事项记录；作者未回复不阻止功能开发，但实际许可证冲突仍须处理。
 
@@ -10,15 +10,17 @@
 
 本次更改**不恢复曾撤回的旧包、不建立正式 Release**，也不将同版本新源码冒称为已验证的旧包。历史文件状态见 [artifacts/README.md](artifacts/README.md)。可以按下方开发流程构建当前源码，产物位于 `dist/`；新候选须独立标注版本、commit、SHA-256 和实际测试范围。
 
-本地测试请使用可丢弃世界，同时启用对应行为包和资源包。声明的最低目标为 **Bedrock 1.21.100**，依赖稳定版 `@minecraft/server 2.0.0` 和 `@minecraft/server-ui 2.0.0`；**不需要 Beta APIs 或 Upcoming Creator Features**。这并不意味着所有版本／设备都已实测。首次加入世界会获得指南，也可在工作台合成指南及基础设备。
+此候选需要 **Bedrock 26.60**、`@minecraft/server 2.12.0-beta`、`@minecraft/server-ui 2.0.0`，世界同时开启 **Beta APIs（测试版 API）** 和 **Points of Interest（POI）**。BP／RP 均为 **0.1.5**，保留原 UUID。请在可丢弃世界同时启用两包。关闭 Beta APIs 时，引擎可能在启动检查前拒绝加载 beta 模块；POI 不可用时停止初始化并保留存档，不会自动回退为全站点扫描。Beta API 不保证未来游戏版本兼容，升级 BDS 前须核对模块版本。首次加入世界会获得指南，也可在工作台合成指南及基础设备。
+
+POI 只提供附近位置候选，实际方块和原有餐厅／设备记录仍决定身份、权限、库存和订单，不另建持久位置数据库。详见[本次 POI 审查](docs/validation/0.1.5-alpha.1/POI_AUDIT.md)。
 
 **指南书（尚未发布的源码改进）：** Order To Cook 保留自己的 `ordertocook:guide`，不是 Cookery 的章节，也无需安装 Cookery 才能使用。其组织方式参考 Cookery 三级分类，包含 6 大章、13 个主题组与 26 篇教程，支持图标、前一页／后一页、返回目录及繁中／简中／英文。物品与合成配方不变。基岩版仍使用原生表单，**没有复制 Cookery 的书本外观**。详见[独立指南结构](docs/GUIDEBOOK.md)；真实客户端界面尚未完成验收。
 
 原作者补充确认不再是全面发布门槛，但原署名、GPL、对应源代码、来源哈希和实际品质检查仍须保留。依据见[素材登记](docs/ASSET_LICENSE_REGISTER.md)、[第三方声明](THIRD_PARTY_NOTICES.md)和[发布检查](docs/RELEASE_COMPLIANCE.md)。本项目未获原作者或 Mojang／Microsoft 背书。
 
-### 从 alpha.2／alpha.1 升级
+### 测试升级至 0.1.5-alpha.1
 
-首先备份整个世界，再导入 alpha.3，确认行为包和资源包均为 **0.1.2**。两包沿用现有 UUID，不能同时启用新旧版本。alpha.2 → alpha.3 的真实世界升级仍需由 dot 验收，按照交接手册操作，不能复用旧测试结果。
+首先备份整个世界，在副本中测试新候选；确认 BP／RP 均为 **0.1.5**，并开启 Beta APIs 与 POI。两包保留原 UUID，不要同时启用新旧副本。历史 0.1.3 原生报告不适用于本次新来源，请使用[当前客户端交接](docs/validation/0.1.5-alpha.1/CLIENT_RETEST.md)及其来源指纹。真实玩家世界和多人仍需客户端验收。
 
 个人进度从本功能开始记录的交单结算起算。旧营业额未记录交餐玩家，不能作为店主或员工的历史个人收入。餐厅已有等级、订单、库存和营业额继续沿用原存档。alpha.1 升级还包含 alpha.2 的持久脏餐盘机制；已经完成的旧订单不会凭空补发盘子。回滚须使用升级前的完整备份。
 
@@ -26,7 +28,7 @@
 
 1. **建立餐厅。** 合成并放置打单机、菜单立牌、操作台、包装架、餐盘架、椅子和洗碗池。不同餐厅的打单机相距须超过 24 格。
 2. **设置菜单。** 用食品点击立牌加入菜式，不消耗食品。空手／潜行点击可管理菜单。每道菜只计算一份营养，不按手上堆叠数累加。
-3. **补货。** 用皮革补包装架、干净餐盘补餐盘架。两架必须在操作台 **5 格内**；操作台、椅子与相关冰箱必须在餐厅附近 **24 格内**。
+3. **补货。** 用皮革补包装架、干净餐盘补餐盘架。两架必须在操作台 X／Y／Z 各 **±5 格**的立方范围内；操作台、椅子与相关冰箱必须在餐厅附近 **24 格内**。
 4. **营业和接单。** 点击打单机开启营业并选择一张候选单。接下一单后，同批其他候选会消失；到店顾客的独立订单不受影响。
 5. **准备成品食物。** 将订单要求的成品食品放在背包或可访问的附近冰箱，再点击操作台装盘／打包。**操作台不会自动制作整道料理**，它消耗已完成的食品。
 6. **交付。** 操作台上方须留空，成品盘／包裹会出现于台面。点击拿起，在手持时点击对应顾客交餐。外送包裹和订单可显示目的地与方向。
@@ -46,7 +48,7 @@
 | 个人进度 | 原作 11 条定义，已接入 10 条；首单、加急、远距、100／1000／10000 结算、设备升级、八星与金牌餐厅；跨店累计和持久对账 |
 | 准星信息 | 货架、洗碗池、洗碗机、冰箱上下层和炉灶读数；每 10 ticks 更新，统一显示手洗／外送信息并重新检查权限 |
 | 菜单 | 最多 150 道非消耗食品模板；40 种原版食品基础表、定制 food component 和管理员虚拟营养 |
-| 操作台 | 从背包及允许访问的 24 格内冰箱取料，消耗 5 格内货架材料，摆放并重新拾取原生盘／袋 |
+| 操作台 | 从背包及允许访问的 24 格内冰箱取料，消耗各轴 ±5 格内货架材料，摆放并重新拾取原生盘／袋 |
 | 餐盘 | 十种餐点分阶段吃完、持久脏盘、店主／员工收盘、提前收盘打断动作、手动或自动清洗 |
 | 厨房电器 | 27＋54 格冰箱分层独立开门、每门 11 个姿态；三槽炉灶；最多 16 盘、66 个动画姿态的洗碗机；工具箱升级 |
 | 顾客 | 两套原版外观、四种待机变体、七个出场／取餐／用餐动作；普通顾客没椅子可站立，到店顾客必须有椅子；惊喜反应与加赏 |
@@ -88,12 +90,12 @@
 ## 已做验证与界限
 
 - 历史 alpha.3 有 **254 项**自动化测试；新源码的测试须以对应 commit 的 CI 结果为准。
-- `npm run check` 运行官方 stable 2.0.0 类型检查和 JSON／geometry／动画／图标／recipe／custom component 检查。
+- `npm run check` 运行官方 26.60 `2.12.0-beta.1.26.60-stable` 类型检查和 JSON／geometry／动画／图标／recipe／custom component 检查。
 - `npm run build` 构建 BP、RP、整合包及哈希；一般验证工作流不会发布包，候选流程单独核验生成文件。
 - alpha.3 已有 [2026-11-01 限定客户端记录](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md)，含限定通过与三项 FAIL，不代表整张验收表已通过。新修复需要新候选复测。
 - alpha.2 历史 127／15／12 原生断言只对应当时的 runtime 指纹。键鼠、触控、手柄、真实双人、RP 画面和表单不能由 CI 代为通过。
 
-当次证据、构建指纹与复现方法见 [VALIDATION.md](docs/VALIDATION.md)。客户端交接入口为 [DOT_HANDOFF.md](docs/DOT_HANDOFF.md)，剩余待测范围见 [REMAINING-SINGLEPLAYER.md](docs/validation/0.1.2-alpha.3/REMAINING-SINGLEPLAYER.md)。
+本候选的证据、构建指纹及复现方法见 [0.1.5-alpha.1 POI 审查](docs/validation/0.1.5-alpha.1/POI_AUDIT.md)，玩家操作交接见 [本候选客户端复测](docs/validation/0.1.5-alpha.1/CLIENT_RETEST.md)。[VALIDATION.md](docs/VALIDATION.md) 与 [DOT_HANDOFF.md](docs/DOT_HANDOFF.md) 保留 0.1.2-alpha.3 的历史验证及交接；[历史单人待测范围](docs/validation/0.1.2-alpha.3/REMAINING-SINGLEPLAYER.md)仍可用于查漏。
 
 个人账本在 profile 暂时写入失败后可补同步；升级也会重试记账而不重复扣款或升级。拆店前必须完成账本对账；待确认的设备操作事件会在正常拆除前保存。
 
