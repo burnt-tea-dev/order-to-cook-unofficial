@@ -19,6 +19,17 @@ function silenceWarning(action) {
   try { return action(); } finally { console.warn = warn; }
 }
 
+async function interactThroughEvent(env, player, block) {
+  env.system.currentTick += 4;
+  // The fixture leaves unrelated appliance/entity interaction services inert.
+  env.hooks.appliances.onInteract = () => false;
+  env.hooks.entities.onBlockInteract = () => false;
+  const event = { player, block, isFirstEvent: true, cancel: false };
+  for (const callback of env.world.beforeEvents.playerInteractWithBlock.subscriptions) callback(event);
+  assert.equal(event.cancel, true);
+  while (env.system.callbacks.length) await env.system.callbacks.shift()();
+}
+
 test('POI sphere results are ordered by distance and never expand the exact radius', () => {
   const env = makeEnvironment();
   const far = place(env, 'ordertocook:shelf', { x: 5, y: 0, z: 0 });
@@ -183,6 +194,54 @@ test('POI menu selection and equipment use honor staff revocation without storin
     assert.equal(env.hooks.canUseStation(employee, station), false, station.typeId);
     assert.equal(env.hooks.canUseStation(env.player, station), true, station.typeId);
     assert.equal(env.store.getStationById(station.id).ownerId, employee.id);
+  }
+});
+
+for (const registered of [false, true]) {
+  test(`visitor cannot claim an unowned restaurant board through interaction (${registered ? 'existing canonical record' : 'unregistered block'})`, async () => {
+    const env = await mainFixture();
+    const board = place(env, 'ordertocook:board', { x: 3, y: 0, z: 0 });
+    if (registered) {
+      const station = env.store.getStation(board);
+      station.initialized = true;
+      station.menu = [{ typeId: 'minecraft:bread', label: 'Legacy menu', nutrition: 5 }];
+      env.store.saveStation(station);
+      env.hooks.tickRestaurants();
+    }
+    const visitor = new FakePlayer(env.dimension, { x: 3.5, y: 0, z: 0.5 });
+    visitor.getGameMode = () => 'Survival';
+    const before = new Map(env.properties), menu = structuredClone(env.restaurant.menu);
+
+    await interactThroughEvent(env, visitor, board);
+    assert.match(visitor.messages.at(-1), /其他玩家的餐廳設備/);
+    assert.deepEqual(env.properties, before, 'permission denial must precede all canonical station writes');
+    if (registered) {
+      assert.equal(env.store.findStation(board).ownerId, '');
+      env.hooks.tickRestaurants();
+      assert.deepEqual(env.restaurant.menu, menu, 'denied visitor cannot sever the legacy menu binding');
+    } else assert.equal(env.store.findStation(board), undefined);
+  });
+}
+
+test('owner and staff can still claim legacy and unregistered boards through the normal interaction event', async () => {
+  for (const role of ['owner', 'staff']) for (const registered of [false, true]) {
+    const env = await mainFixture();
+    const board = place(env, 'ordertocook:board', { x: 3, y: 0, z: 0 });
+    const actor = role === 'owner' ? env.player : new FakePlayer(env.dimension, { x: 3.5, y: 0, z: 0.5 });
+    actor.getGameMode = () => 'Survival';
+    if (role === 'staff') { env.restaurant.staff = [actor.id]; env.store.saveRestaurant(env.restaurant); }
+    if (registered) {
+      const station = env.store.getStation(board);
+      station.initialized = true;
+      station.menu = [{ typeId: 'minecraft:bread', label: 'Legacy menu', nutrition: 5 }];
+      env.store.saveStation(station);
+    }
+
+    await interactThroughEvent(env, actor, board);
+    const station = env.store.findStation(board);
+    assert.equal(station.ownerId, actor.id, `${role}, registered=${registered}`);
+    assert.ok(station.menu.length > 0);
+    assert.equal(env.forms.at(-1)[1], '菜單立牌');
   }
 });
 

@@ -742,10 +742,12 @@ function giveTestKit(player) {
 
 function claimStation(player, block) {
   const normalized = appliances?.normalizeBlock(block) || block;
+  const restaurant = nearestRestaurant(normalized);
+  // Reject visitors before creating a station or claiming an unowned legacy one.
+  if (restaurant && !canManage(player, restaurant)) return false;
   const station = getStation(normalized);
   if (!station.ownerId) { station.ownerId = player.id; saveStation(station); }
-  const restaurant = nearestRestaurant(normalized);
-  if (restaurant) return canManage(player, restaurant);
+  if (restaurant) return true;
   return station.ownerId === player.id || isAdmin(player);
 }
 async function interactBlock(player, block) {

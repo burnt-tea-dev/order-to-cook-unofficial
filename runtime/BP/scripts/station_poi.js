@@ -19,7 +19,6 @@ export function requireStationPoi(dimension) {
   return blocks;
 }
 
-function distanceSquared(a, b) { return (a.x - b.x) ** 2 + (a.y - b.y) ** 2 + (a.z - b.z) ** 2; }
 function locationOrder(a, b) { return a.x - b.x || a.y - b.y || a.z - b.z; }
 
 /**
@@ -46,25 +45,31 @@ export function nearbyStationBlocks(dimension, center, typeId, radius, options =
   const candidates = [], seen = new Set();
   for (const hit of hits) {
     const p = hit.position;
-    if (!p || ![p.x, p.y, p.z].every(Number.isInteger)) continue;
-    const dx = p.x - center.x, dy = p.y - center.y, dz = p.z - center.z;
-    const outside = shape === 'sphere' ? dx * dx + dy * dy + dz * dz > radius * radius :
+    if (!p) continue;
+    const { x, y, z } = p;
+    if (![x, y, z].every(Number.isInteger)) continue;
+    const position = { x, y, z };
+    const dx = x - center.x, dy = y - center.y, dz = z - center.z;
+    const distance = dx * dx + dy * dy + dz * dz;
+    const outside = shape === 'sphere' ? distance > radius * radius :
       shape === 'cube' ? Math.max(Math.abs(dx), Math.abs(dy), Math.abs(dz)) > radius :
       Math.abs(dy) > halfHeight || dx * dx + dz * dz > radius * radius;
     if (outside) continue;
-    const key = `${p.x},${p.y},${p.z}`;
+    const key = `${x},${y},${z}`;
     if (seen.has(key)) continue;
     seen.add(key);
     try {
-      const block = dimension.getBlock(p);
+      const block = dimension.getBlock(position);
       if (!block || block.typeId !== typeId) continue;
       // A refrigerator is one inventory anchored at its lower half.
       if (typeId === 'ordertocook:refrigerator' && block.permutation.getAllStates()['ordertocook:half'] === 'upper') continue;
-      candidates.push(block);
+      candidates.push({ block, position, distance });
     } catch { /* A chunk can unload between the POI query and the block read. */ }
   }
-  return candidates.sort((a, b) => distanceSquared(a.location, center) - distanceSquared(b.location, center) ||
-    locationOrder(a.location, b.location));
+  // Sorting must stay in JavaScript: Block.location crosses the native bridge
+  // on every comparison. The validated POI position already identifies the block.
+  return candidates.sort((a, b) => a.distance - b.distance || locationOrder(a.position, b.position))
+    .map(candidate => candidate.block);
 }
 
 /** Java's restaurant chair search is a horizontal circle, with a separate Y cap. */
