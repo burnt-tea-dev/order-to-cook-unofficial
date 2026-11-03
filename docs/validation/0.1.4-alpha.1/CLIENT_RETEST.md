@@ -1,4 +1,4 @@
-# OTC 0.1.2-alpha.4 — client retest handoff (NOT-RUN)
+# OTC 0.1.4-alpha.1 — client retest handoff (NOT-RUN)
 
 ## Scope and immutable history
 
@@ -11,7 +11,7 @@ as evidence for the other.
 Original 2026-11-01 client observations and hashes stay unchanged:
 [checkpoint](../0.1.2-alpha.3/client-20261101-linux-dot.md).
 All [11 remaining single-player batches](../0.1.2-alpha.3/REMAINING-SINGLEPLAYER.md)
-are **NOT-RUN on alpha.4** until independently observed. No participant or
+are **NOT-RUN on alpha.1** until independently observed. No participant or
 test agent may overwrite that checkpoint to mark a historical FAIL as PASS.
 
 ## Entry identity
@@ -21,7 +21,7 @@ test agent may overwrite that checkpoint to mark a historical FAIL as PASS.
   obtain from the passing `Validate and build Bedrock add-on` run for the
   **final** PR head and the corresponding packaged files. The build prints
   `dist/build-info.json`; a source tree digest alone is **not** a package digest.
-- npm 0.1.2-alpha.4; BP/RP version `[0,1,4]`; original pack UUIDs unchanged.
+- npm 0.1.4-alpha.1; BP/RP version `[0,1,4]`; original pack UUIDs unchanged.
 - Stable `@minecraft/server` 2.0.0 + UI 2.0.0, minimum Bedrock 1.21.100;
   no experimental POI / Beta APIs requirement on this branch.
 - Use an isolated copy of a world, back up the complete original world before
@@ -53,7 +53,7 @@ test agent may overwrite that checkpoint to mark a historical FAIL as PASS.
    Each operation preserves total value; also try a full inventory and log
    actual behavior. Recipe JSON tests are NOT a native crafting test.
 6. **World migration and rollback**: use a *clone* of a backed-up
-   0.1.2-alpha.3 diagnostic world, import 0.1.2-alpha.4 with unchanged
+   0.1.2-alpha.3 diagnostic world, import 0.1.4-alpha.1 with unchanged
    UUIDs, compare a named fridge item, a saved customer/order and restaurant
    coin ledger, exit normally, reload and compare again. For rollback, restore
    the complete original world backup **and** original BP/RP together.
