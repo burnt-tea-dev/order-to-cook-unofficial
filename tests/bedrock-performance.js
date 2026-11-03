@@ -102,7 +102,10 @@ async function phase(dimension, spec) {
     }
     return count;
   };
-  for (let i = 0; i < settings.warmupTicks; i++) { work(i); await wait(1); }
+  for (let i = 0; i < settings.warmupTicks; i++) {
+    if (spec.workload === 'lookup' || i % settings.refreshEveryTicks === 0) work(i);
+    await wait(1);
+  }
   // Diagnostics commands must be issued by the runner's BDS console; calling
   // them through Dimension.runCommand can return without producing a capture.
   output('CAPTURE', spec);
@@ -113,9 +116,11 @@ async function phase(dimension, spec) {
   let previous = start, checksum = 0;
   const intervals = [], workTimes = [];
   for (let i = 0; i < settings.measureTicks; i++) {
-    const workStart = Date.now();
-    checksum += work(i + settings.warmupTicks);
-    workTimes.push(Date.now() - workStart);
+    if (spec.workload === 'lookup' || i % settings.refreshEveryTicks === 0) {
+      const workStart = Date.now();
+      checksum += work(i + settings.warmupTicks);
+      workTimes.push(Date.now() - workStart);
+    }
     await wait(1);
     const now = Date.now();
     intervals.push(now - previous);
@@ -124,12 +129,14 @@ async function phase(dimension, spec) {
   const elapsedMs = Date.now() - start, elapsedTicks = system.currentTick - startTick;
   const result = {
     ...spec, startTick, endTick: system.currentTick, absoluteStartTick, absoluteEndTick: world.getAbsoluteTime(),
+    distinctQueryLocations: new Set(points.map(p => `${p.x},${p.y},${p.z}`)).size,
     elapsedMs, elapsedTicks, effectiveTps: elapsedTicks * 1000 / elapsedMs,
     meanTickIntervalMs: elapsedMs / elapsedTicks, p95TickIntervalMs: quantile(intervals, 0.95),
     workloadMs: workTimes.reduce((a, b) => a + b, 0),
     meanWorkloadMsPerBatch: workTimes.reduce((a, b) => a + b, 0) / workTimes.length,
     p95WorkloadMsPerBatch: quantile(workTimes, 0.95), batches: workTimes.length, checksum,
-    queriesOrRefreshes: settings.measureTicks * spec.origins * (spec.workload === 'lookup' ? kinds.length : 1),
+    queriesOrRefreshes: workTimes.length * spec.origins * (spec.workload === 'lookup' ? kinds.length : 1),
+    workloadCadenceTicks: spec.workload === 'lookup' ? 1 : settings.refreshEveryTicks,
     timerResolutionMs: 1
   };
   output('END', result);
@@ -145,26 +152,28 @@ async function run() {
   dimension.runCommand('gamerule randomTickSpeed 0');
   await wait(40);
   const equality = [];
-  for (const stations of settings.stationCounts) {
-    await extendFixture(dimension, stations);
-    for (const count of settings.originCounts) {
+  for (const { stations, origins: count } of settings.scenarios) {
+      if (fixtureCount !== stations) await extendFixture(dimension, stations);
       equality.push({ stations, origins: count, candidatesPerLookupBatch: equalCandidateSets(dimension, origins(count, stations)) });
       for (const workload of ['lookup', 'refresh-save']) {
-        // ABBA balances a monotonic thermal, GC, or cache drift between arms.
-        for (const [index, arm] of ['scan', 'poi', 'poi', 'scan'].entries()) {
-          await phase(dimension, { id: phases.length, stations, origins: count, workload, arm, repeat: Math.floor(index / 2) + 1 });
+        // ABBA balances drift in the paired helper test. Whole-runtime comparison
+        // instead repeats only the unmodified production helper in each boot.
+        for (const [index, arm] of settings.arms.entries()) {
+          await phase(dimension, { id: phases.length, stations, origins: count, workload, arm,
+            repeat: arm === 'production' ? index + 1 : Math.floor(index / 2) + 1 });
         }
       }
-    }
   }
-  output('REPORT', { passed: true, candidateEquality: equality, phases,
+  output('REPORT', { passed: true, candidateEquality: equality, completedPhaseCount: phases.length,
     realPlayers: 0, clientValidation: false,
-    scope: 'Same BDS process, dense native blocks and canonical records; exact old query helper vs current POI helper. Synthetic query origins and forced refreshes once per tick, not full old/new pack or real multiplayer comparison.',
+    scope: settings.arms[0] === 'production'
+      ? 'One exact production runtime in an isolated BDS boot. Synthetic query issuers, native blocks and canonical records. Compare separate matched boots for whole-runtime deployment cost, including all source differences; no real multiplayer.'
+      : 'Same BDS process, dense native blocks and canonical records; exact old query helper vs current POI helper. Synthetic query issuers (some locations overlap); lookup every tick, forced refreshes at the recorded cadence. Not a full old/new pack or real multiplayer comparison.',
     timingNote: 'Date.now measures JS workload wall time at millisecond resolution. Effective TPS includes paced waits; mean tick interval is not active engine MSPT. Use native diagnostics for active tick categories.' });
 }
 
 system.afterEvents.scriptEventReceive.subscribe(event => {
   if (event.id !== 'ordertocook:performance' || running) return;
   running = true;
-  run().catch(error => output('REPORT', { passed: false, error: String(error?.stack || error), phases }));
+  run().catch(error => output('REPORT', { passed: false, error: String(error?.stack || error), completedPhaseCount: phases.length }));
 });

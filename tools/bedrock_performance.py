@@ -2,11 +2,12 @@
 # SPDX-License-Identifier: GPL-3.0-only
 """Native query-path A/B benchmark in an isolated Linux BDS. Never use LIVE.
 
-The old query function is extracted verbatim from --baseline-ref and shares the
-current canonical station Map with the POI arm. This isolates discovery cost;
-it is not a full-pack or real-player benchmark. Both arms include the POI index
-in process memory. Native diagnostic captures are retained to assess engine
-tick time; paced tick intervals must never be labelled active MSPT.
+The default paired test extracts the old query function from --baseline-ref and
+shares the current canonical station Map with the POI arm. Both arms include
+the POI index in memory. --production-only with --runtime-ref instead measures
+one exact full runtime in a separate boot; compare two such boots for deployment
+cost, including other source changes. Neither mode exercises real players.
+Native captures assess active tick time; paced intervals are not active MSPT.
 """
 from pathlib import Path
 import argparse
@@ -15,6 +16,7 @@ from datetime import datetime, timezone
 import fcntl
 import gzip
 import hashlib
+import io
 import json
 import os
 import platform
@@ -23,10 +25,27 @@ import selectors
 import shutil
 import statistics
 import subprocess
+import tarfile
+import tempfile
 import time
 from bedrock_qa_world import MARKER_TEXT, enable_required_experiments, validate_qa_runtime
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def stopped_check(action):
+    # A just-exited BDS helper can briefly remain visible with an unreadable cwd
+    # in hosted procfs. Wait for the existing safety check to succeed; never
+    # waive it or edit a world while its runtime may still be owned.
+    for attempt in range(20):
+        try:
+            return action()
+        except ValueError as error:
+            if 'Cannot confirm that the BDS runtime is stopped' not in str(error) or attempt == 19:
+                raise
+            if attempt == 0:
+                print('Waiting for transient BDS procfs entries to exit before touching the QA world.', flush=True)
+            time.sleep(0.25)
 
 
 def fingerprint(root):
@@ -38,7 +57,7 @@ def fingerprint(root):
 
 
 def native_diagnostics(path, phase):
-    """Decode Mojang .mcstats and retain only this phase's measured ticks.
+    """Decode the complete native capture, including its short guard interval.
 
     Format/units: Mojang/minecraft-debugger stats-provider.ts and diagnostics
     schema. Last array value belongs to record.tick; preceding values are prior
@@ -68,17 +87,19 @@ def native_diagnostics(path, phase):
                 memory.append({'tick': tick, 'name': stat['name'],
                                **{child['name']: child['values'][-1] for child in stat.get('children', []) if child.get('values')}})
     required = ('level_tick', 'script_tick', 'script_job_tick')
-    selected, domain = [], None
-    for name, start, end in [('system.currentTick', phase['startTick'], phase['endTick']),
-                             ('world.getAbsoluteTime', phase['absoluteStartTick'], phase['absoluteEndTick'])]:
-        available = [{'tick': tick, **value} for tick, value in sorted(ticks.items())
-                     if start <= tick < end and all(key in value for key in required)]
-        if len(available) >= 0.8 * phase['elapsedTicks']:
-            selected, domain = available, name
-            break
+    # Native collection has an observed +/-1 tick offset from JS currentTick.
+    # Filtering by the JS boundaries can drop a large first refresh spike for
+    # one arm. Use EVERY complete native capture sample for ALL arms instead;
+    # never choose an offset according to the resulting performance figures.
+    selected = [{'tick': tick, **value} for tick, value in sorted(ticks.items())
+                if all(key in value for key in required)]
     result = {'file': path.name, 'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
-              'sampleCount': len(selected), 'tickDomain': domain,
-              'definition': 'Sum of native level_tick + script_tick + script_job_tick, converted from microseconds; no paced sleep.',
+              'sampleCount': len(selected), 'tickDomain': 'native diagnostic capture sequence',
+              'nativeCaptureIncludesGuards': True,
+              'nativeWindowStartTick': selected[0]['tick'] if selected else None,
+              'nativeWindowEndTickInclusive': selected[-1]['tick'] if selected else None,
+              'javascriptPhaseTickRange': [phase['startTick'], phase['endTick']],
+              'definition': 'Complete native capture: sum of level_tick + script_tick + script_job_tick in milliseconds, no paced sleep. Includes short start/stop guards and any collector history; not filtered by JS currentTick because observed offsets can omit first-work spikes.',
               'availableTickRange': [min(ticks), max(ticks)] if ticks else []}
     if selected:
         durations = [sum(row[key] for key in required) for row in selected]
@@ -110,7 +131,11 @@ def process_sample(pid, runtime=None):
 
 
 def server(runtime, env, timeout, trigger=None):
-    process = subprocess.Popen([str(runtime / 'bedrock_server')], cwd=runtime, env=env,
+    binary = runtime / 'bedrock_server'
+    # Hosted workspace synchronization can restore downloaded files as 0644.
+    # Set owner execute immediately before each launch of this isolated binary.
+    binary.chmod(binary.stat().st_mode | 0o100)
+    process = subprocess.Popen([str(binary)], cwd=runtime, env=env,
                                stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=0)
     selector = selectors.DefaultSelector()
     selector.register(process.stdout, selectors.EVENT_READ)
@@ -193,6 +218,8 @@ def server(runtime, env, timeout, trigger=None):
                   'partialEvidence': True, 'phases': phases}
     if report:
         report['phases'] = phases
+        report['phaseCountMatches'] = report.get('completedPhaseCount', len(phases)) == len(phases)
+        report['passed'] = report['passed'] and report['phaseCountMatches']
     return report, lines, version, process.returncode
 
 
@@ -200,22 +227,48 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--server-dir', type=Path, required=True)
     parser.add_argument('--baseline-ref', default='ce8a45e6c7d7bc3e8d04ce92ae2529e2c9601e49')
+    parser.add_argument('--runtime-ref', help='Stage this exact git revision, leaving production source unchanged.')
+    parser.add_argument('--production-only', action='store_true', help='Two repeats using only the staged production helper.')
+    parser.add_argument('--disable-experiments', action='store_true', help='Use for the stable baseline; POI candidate requires experiments.')
+    parser.add_argument('--seed', default='26600011')
+    parser.add_argument('--scenarios', help='Explicit station:origin pairs, e.g. 80:1,800:8,3200:32.')
     parser.add_argument('--stations', default='80,800,3200')
     parser.add_argument('--origins', default='1,8,32')
     parser.add_argument('--ticks', type=int, default=60)
     parser.add_argument('--warmup-ticks', type=int, default=10)
+    parser.add_argument('--refresh-every-ticks', type=int, default=1,
+                        help='1 preserves forced-refresh stress; 20 runs one refresh batch per nominal second.')
     parser.add_argument('--timeout', type=int, default=900)
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
     settings = {'stationCounts': [int(x) for x in args.stations.split(',')],
                 'originCounts': [int(x) for x in args.origins.split(',')],
-                'measureTicks': args.ticks, 'warmupTicks': args.warmup_ticks}
+                'measureTicks': args.ticks, 'warmupTicks': args.warmup_ticks,
+                'refreshEveryTicks': args.refresh_every_ticks,
+                'arms': ['production', 'production'] if args.production_only else ['scan', 'poi', 'poi', 'scan']}
+    settings['scenarios'] = ([dict(zip(('stations', 'origins'), map(int, pair.split(':')))) for pair in args.scenarios.split(',')]
+                             if args.scenarios else [{'stations': n, 'origins': count}
+                             for n in settings['stationCounts'] for count in settings['originCounts']])
+    settings['stationCounts'] = sorted({row['stations'] for row in settings['scenarios']})
+    settings['originCounts'] = sorted({row['origins'] for row in settings['scenarios']})
     if not (settings['stationCounts'] == sorted(set(settings['stationCounts'])) and
             1 <= min(settings['stationCounts']) <= max(settings['stationCounts']) <= 4800 and
-            1 <= min(settings['originCounts']) <= max(settings['originCounts']) <= 32 and args.ticks >= 1):
+            1 <= min(settings['originCounts']) <= max(settings['originCounts']) <= 32 and args.ticks >= 1 and args.refresh_every_ticks >= 1):
         parser.error('Use increasing station counts (1..4800), origins (1..32), and positive ticks.')
+    if [row['stations'] for row in settings['scenarios']] != sorted(row['stations'] for row in settings['scenarios']):
+        parser.error('Scenarios must have nondecreasing station counts.')
+    source_temp = None
+    source_root = ROOT
+    runtime_ref = None
+    if args.runtime_ref:
+        runtime_ref = subprocess.check_output(['git', 'rev-parse', args.runtime_ref], cwd=ROOT, text=True).strip()
+        source_temp = tempfile.TemporaryDirectory(prefix='otc-perf-source-')
+        source_root = Path(source_temp.name)
+        archive = subprocess.check_output(['git', 'archive', runtime_ref, 'runtime', 'package.json'], cwd=ROOT)
+        with tarfile.open(fileobj=io.BytesIO(archive)) as tar:
+            tar.extractall(source_root, filter='data')
     runtime = args.server_dir.resolve()
-    world, marker = validate_qa_runtime(runtime, 'initial')
+    world, marker = stopped_check(lambda: validate_qa_runtime(runtime, 'initial'))
     if world.exists():
         raise SystemExit('Performance runner requires an empty isolated QA runtime; choose a fresh extracted BDS directory.')
     lock = (runtime / '.ordertocook-qa-run.lock').open('a')
@@ -241,12 +294,15 @@ max-threads=2
 transport=nethernet
 ''')
     (runtime / 'allowlist.json').write_text('[]\n')
+    with (runtime / 'server.properties').open('a') as properties:
+        properties.write('level-seed=' + args.seed + '\n')
     env = dict(os.environ, LD_LIBRARY_PATH=str(runtime))
     _, bootstrap, _, code = server(runtime, env, 90)
     (runtime / 'performance-bootstrap.log').write_text('\n'.join(bootstrap) + '\n')
     if code != 0 or not (world / 'level.dat').exists():
         raise SystemExit('Clean bootstrap failed; see performance-bootstrap.log')
-    enable_required_experiments(runtime)
+    if not args.disable_experiments:
+        stopped_check(lambda: enable_required_experiments(runtime))
     baseline_sha = subprocess.check_output(['git', 'rev-parse', args.baseline_ref], cwd=ROOT, text=True).strip()
     baseline_source = subprocess.check_output(['git', 'show', baseline_sha + ':runtime/BP/scripts/store.js'], cwd=ROOT, text=True)
     match = re.search(r'export function nearbyStations\([^\n]+\n.*?\n\}', baseline_source, re.S)
@@ -256,7 +312,7 @@ transport=nethernet
     baseline_module = "import { stations, loadedBlock, distanceSquared } from './store.js';\n" + baseline_helper + '\n'
     for short, kind in [('BP', 'behavior_packs'), ('RP', 'resource_packs')]:
         destination = runtime / kind / 'otc'
-        shutil.copytree(ROOT / 'runtime' / short, destination)
+        shutil.copytree(source_root / 'runtime' / short, destination)
         manifest = json.loads((destination / 'manifest.json').read_text())
         if short == 'BP':
             scripts = destination / 'scripts'
@@ -267,11 +323,12 @@ transport=nethernet
             next(x for x in manifest['modules'] if x['type'] == 'script')['entry'] = 'scripts/qa-performance-entry.js'
             (destination / 'manifest.json').write_text(json.dumps(manifest, indent=2))
         (world / ('world_' + kind + '.json')).write_text(json.dumps([{'pack_id': manifest['header']['uuid'], 'version': manifest['header']['version']}]))
-    expected = fingerprint(ROOT / 'runtime')
+    expected = fingerprint(source_root / 'runtime')
     source_identity = {'runtimeTreeSha256': expected,
-                       'addonVersion': json.loads((ROOT / 'package.json').read_text())['version'],
-                       'gitHeadAtMeasurement': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
-                       'gitWorktreeDirtyAtMeasurement': bool(subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True)),
+                       'addonVersion': json.loads((source_root / 'package.json').read_text())['version'],
+                       'gitHeadAtMeasurement': runtime_ref or subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
+                       'gitWorktreeDirtyAtMeasurement': False if runtime_ref else bool(subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True)),
+                       'sourceFromGitArchive': runtime_ref is not None,
                        'startedAtUtc': datetime.now(timezone.utc).isoformat(),
                        'probeSha256': hashlib.sha256((ROOT / 'tests/bedrock-performance.js').read_bytes()).hexdigest()}
     report, lines, version, code = server(runtime, env, args.timeout, 'scriptevent ordertocook:performance start')
@@ -289,6 +346,9 @@ transport=nethernet
         checksums.setdefault(key, set()).add(phase['checksum'])
     report['phaseChecksumEquality'] = all(len(values) == 1 for values in checksums.values())
     report.update({**source_identity, 'serverVersion': version, 'baselineRef': baseline_sha,
+                   'comparisonMode': 'whole-runtime-production-helper' if args.production_only else 'paired-helper-ABBA',
+                   'worldSeed': args.seed, 'worldType': 'FLAT', 'bdsMaxThreads': 2,
+                   'requiredWorldExperiments': [] if args.disable_experiments else ['gametest', 'poi'],
                    'baselineHelperSha256': hashlib.sha256(baseline_module.encode()).hexdigest(),
                    'settings': settings, 'host': {'platform': platform.platform(), 'logicalCpuCount': os.cpu_count(),
                    'cpuAffinityCount': len(os.sched_getaffinity(0)),
@@ -297,13 +357,15 @@ transport=nethernet
                    'cpuModel': next((line.split(':', 1)[1].strip() for line in Path('/proc/cpuinfo').read_text().splitlines() if line.startswith('model name')), '')},
                    'diagnosticFiles': [str(p.relative_to(runtime)) for p in captures],
                    'addonErrors': [line for line in lines if ' ERROR]' in line], 'serverExitCode': code})
-    report['sourceUnchangedDuringMeasurement'] = fingerprint(ROOT / 'runtime') == expected
+    report['sourceUnchangedDuringMeasurement'] = fingerprint(source_root / 'runtime') == expected
     report['passed'] = (report['passed'] and not report['addonErrors'] and code == 0 and
                         report['sourceUnchangedDuringMeasurement'] and report['phaseChecksumEquality'])
     output = args.output or ROOT / 'docs/validation' / report['addonVersion'] / 'native-performance.json'
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
     print(str(output), flush=True)
+    if source_temp:
+        source_temp.cleanup()
     if not report['passed']:
         raise SystemExit(1)
 

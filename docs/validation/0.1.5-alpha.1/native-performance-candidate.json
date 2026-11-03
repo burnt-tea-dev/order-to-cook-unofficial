@@ -1,0 +1,4309 @@
+{
+  "passed": true,
+  "candidateEquality": [
+    {
+      "stations": 80,
+      "origins": 1,
+      "candidatesPerLookupBatch": 33
+    },
+    {
+      "stations": 800,
+      "origins": 8,
+      "candidatesPerLookupBatch": 2198
+    },
+    {
+      "stations": 3200,
+      "origins": 32,
+      "candidatesPerLookupBatch": 23596
+    }
+  ],
+  "completedPhaseCount": 12,
+  "realPlayers": 0,
+  "clientValidation": false,
+  "scope": "One exact production runtime in an isolated BDS boot. Synthetic query issuers, native blocks and canonical records. Compare separate matched boots for whole-runtime deployment cost, including all source differences; no real multiplayer.",
+  "timingNote": "Date.now measures JS workload wall time at millisecond resolution. Effective TPS includes paced waits; mean tick interval is not active engine MSPT. Use native diagnostics for active tick categories.",
+  "phases": [
+    {
+      "id": 0,
+      "stations": 80,
+      "origins": 1,
+      "workload": "lookup",
+      "arm": "production",
+      "repeat": 1,
+      "startTick": 136,
+      "endTick": 176,
+      "absoluteStartTick": 137,
+      "absoluteEndTick": 177,
+      "distinctQueryLocations": 1,
+      "elapsedMs": 2002,
+      "elapsedTicks": 40,
+      "effectiveTps": 19.98001998001998,
+      "meanTickIntervalMs": 50.05,
+      "p95TickIntervalMs": 55,
+      "workloadMs": 72,
+      "meanWorkloadMsPerBatch": 1.8,
+      "p95WorkloadMsPerBatch": 3,
+      "batches": 40,
+      "checksum": 1320,
+      "queriesOrRefreshes": 200,
+      "workloadCadenceTicks": 1,
+      "timerResolutionMs": 1,
+      "process": {
+        "cpuSeconds": 0.22999999999999954,
+        "procfsPid": 25610,
+        "cpuPercentOneCore": 11.49394234757694,
+        "rssStartBytes": 488505344,
+        "rssEndBytes": 488636416,
+        "peakSampledRssBytes": 488636416,
+        "sampleWindowSeconds": 2.0010540599978413
+      },
+      "nativeDiagnostics": {
+        "file": "diagnostics_2026-11-03_11-57-56.mcstats",
+        "sha256": "64ea1516170f61a103d6f220cd312aef501f097610b70bde74037d46c7a7ac56",
+        "sampleCount": 44,
+        "tickDomain": "native diagnostic capture sequence",
+        "nativeCaptureIncludesGuards": true,
+        "nativeWindowStartTick": 132,
+        "nativeWindowEndTickInclusive": 175,
+        "javascriptPhaseTickRange": [
+          136,
+          176
+        ],
+        "definition": "Complete native capture: sum of level_tick + script_tick + script_job_tick in milliseconds, no paced sleep. Includes short start/stop guards and any collector history; not filtered by JS currentTick because observed offsets can omit first-work spikes.",
+        "availableTickRange": [
+          132,
+          175
+        ],
+        "meanActiveMspt": 4.5203181818181815,
+        "p95ActiveMspt": 6.633,
+        "meanCategoryMs": {
+          "level_tick": 1.135,
+          "script_tick": 3.3822954545454547,
+          "script_job_tick": 0.003022727272727273
+        },
+        "tickSamples": [
+          {
+            "tick": 132,
+            "level_tick": 1.476,
+            "script_tick": 0.241,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 133,
+            "level_tick": 1.338,
+            "script_tick": 3.585,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 134,
+            "level_tick": 1.098,
+            "script_tick": 0.455,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 135,
+            "level_tick": 1.136,
+            "script_tick": 3.142,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 136,
+            "level_tick": 1.04,
+            "script_tick": 2.233,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 137,
+            "level_tick": 0.92,
+            "script_tick": 4.961,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 138,
+            "level_tick": 1.216,
+            "script_tick": 2.208,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 139,
+            "level_tick": 1.009,
+            "script_tick": 4.565,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 140,
+            "level_tick": 0.967,
+            "script_tick": 2.298,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 141,
+            "level_tick": 1.154,
+            "script_tick": 4.912,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 142,
+            "level_tick": 1.157,
+            "script_tick": 2.524,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 143,
+            "level_tick": 0.95,
+            "script_tick": 8.828,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 144,
+            "level_tick": 0.97,
+            "script_tick": 1.966,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 145,
+            "level_tick": 1.223,
+            "script_tick": 4.798,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 146,
+            "level_tick": 1.468,
+            "script_tick": 3.183,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 147,
+            "level_tick": 0.98,
+            "script_tick": 3.755,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 148,
+            "level_tick": 1.278,
+            "script_tick": 2.597,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 149,
+            "level_tick": 1.142,
+            "script_tick": 3.806,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 150,
+            "level_tick": 1.378,
+            "script_tick": 2.525,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 151,
+            "level_tick": 0.965,
+            "script_tick": 3.599,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 152,
+            "level_tick": 0.973,
+            "script_tick": 1.952,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 153,
+            "level_tick": 1.424,
+            "script_tick": 4.029,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 154,
+            "level_tick": 1.205,
+            "script_tick": 2.9,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 155,
+            "level_tick": 1.82,
+            "script_tick": 4.232,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 156,
+            "level_tick": 1.398,
+            "script_tick": 2.178,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 157,
+            "level_tick": 0.964,
+            "script_tick": 3.583,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 158,
+            "level_tick": 1.109,
+            "script_tick": 2.877,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 159,
+            "level_tick": 1.114,
+            "script_tick": 4.166,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 160,
+            "level_tick": 1.163,
+            "script_tick": 3.329,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 161,
+            "level_tick": 1.009,
+            "script_tick": 3.747,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 162,
+            "level_tick": 0.977,
+            "script_tick": 2.625,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 163,
+            "level_tick": 1.124,
+            "script_tick": 3.903,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 164,
+            "level_tick": 0.968,
+            "script_tick": 1.929,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 165,
+            "level_tick": 0.963,
+            "script_tick": 7.338,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 166,
+            "level_tick": 1.105,
+            "script_tick": 2.136,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 167,
+            "level_tick": 1.075,
+            "script_tick": 4.109,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 168,
+            "level_tick": 0.928,
+            "script_tick": 1.939,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 169,
+            "level_tick": 1.061,
+            "script_tick": 4.319,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 170,
+            "level_tick": 0.981,
+            "script_tick": 2.334,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 171,
+            "level_tick": 0.983,
+            "script_tick": 3.843,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 172,
+            "level_tick": 0.955,
+            "script_tick": 2.762,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 173,
+            "level_tick": 1.204,
+            "script_tick": 5.426,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 174,
+            "level_tick": 1.304,
+            "script_tick": 1.865,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 175,
+            "level_tick": 1.268,
+            "script_tick": 5.119,
+            "script_job_tick": 0.003
+          }
+        ],
+        "memorySamples": [
+          {
+            "tick": 133,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1772953600.0
+          },
+          {
+            "tick": 133,
+            "name": "runtime_memory",
+            "allocated": 2809600.0,
+            "used": 2326107.0
+          },
+          {
+            "tick": 153,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1773084672.0
+          },
+          {
+            "tick": 173,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1762983936.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "stations": 80,
+      "origins": 1,
+      "workload": "lookup",
+      "arm": "production",
+      "repeat": 2,
+      "startTick": 195,
+      "endTick": 235,
+      "absoluteStartTick": 196,
+      "absoluteEndTick": 236,
+      "distinctQueryLocations": 1,
+      "elapsedMs": 2000,
+      "elapsedTicks": 40,
+      "effectiveTps": 20,
+      "meanTickIntervalMs": 50,
+      "p95TickIntervalMs": 54,
+      "workloadMs": 82,
+      "meanWorkloadMsPerBatch": 2.05,
+      "p95WorkloadMsPerBatch": 4,
+      "batches": 40,
+      "checksum": 1320,
+      "queriesOrRefreshes": 200,
+      "workloadCadenceTicks": 1,
+      "timerResolutionMs": 1,
+      "process": {
+        "cpuSeconds": 0.25,
+        "procfsPid": 25610,
+        "cpuPercentOneCore": 12.504142997703624,
+        "rssStartBytes": 488636416,
+        "rssEndBytes": 488898560,
+        "peakSampledRssBytes": 488898560,
+        "sampleWindowSeconds": 1.9993373399993288
+      },
+      "nativeDiagnostics": {
+        "file": "diagnostics_2026-11-03_11-57-59.mcstats",
+        "sha256": "e198e90e45ac997f3f6b0abadd7a1306a72de830ac8e022d4b9f2446c1b57dc4",
+        "sampleCount": 44,
+        "tickDomain": "native diagnostic capture sequence",
+        "nativeCaptureIncludesGuards": true,
+        "nativeWindowStartTick": 191,
+        "nativeWindowEndTickInclusive": 234,
+        "javascriptPhaseTickRange": [
+          195,
+          235
+        ],
+        "definition": "Complete native capture: sum of level_tick + script_tick + script_job_tick in milliseconds, no paced sleep. Includes short start/stop guards and any collector history; not filtered by JS currentTick because observed offsets can omit first-work spikes.",
+        "availableTickRange": [
+          191,
+          234
+        ],
+        "meanActiveMspt": 4.8799090909090905,
+        "p95ActiveMspt": 7.631,
+        "meanCategoryMs": {
+          "level_tick": 1.1268863636363635,
+          "script_tick": 3.7497727272727275,
+          "script_job_tick": 0.0032500000000000003
+        },
+        "tickSamples": [
+          {
+            "tick": 191,
+            "level_tick": 1.424,
+            "script_tick": 3.025,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 192,
+            "level_tick": 1.088,
+            "script_tick": 0.584,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 193,
+            "level_tick": 1.043,
+            "script_tick": 2.781,
+            "script_job_tick": 0.008
+          },
+          {
+            "tick": 194,
+            "level_tick": 1.098,
+            "script_tick": 0.396,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 195,
+            "level_tick": 1.06,
+            "script_tick": 3.73,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 196,
+            "level_tick": 0.919,
+            "script_tick": 3.024,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 197,
+            "level_tick": 1.018,
+            "script_tick": 6.04,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 198,
+            "level_tick": 0.996,
+            "script_tick": 2.055,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 199,
+            "level_tick": 0.997,
+            "script_tick": 3.667,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 200,
+            "level_tick": 1.139,
+            "script_tick": 2.669,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 201,
+            "level_tick": 1.139,
+            "script_tick": 4.283,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 202,
+            "level_tick": 0.954,
+            "script_tick": 2.117,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 203,
+            "level_tick": 1.297,
+            "script_tick": 5.232,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 204,
+            "level_tick": 0.977,
+            "script_tick": 4.345,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 205,
+            "level_tick": 1.004,
+            "script_tick": 5.447,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 206,
+            "level_tick": 2.057,
+            "script_tick": 2.492,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 207,
+            "level_tick": 0.942,
+            "script_tick": 4.797,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 208,
+            "level_tick": 0.919,
+            "script_tick": 1.862,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 209,
+            "level_tick": 0.996,
+            "script_tick": 8.329,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 210,
+            "level_tick": 1.005,
+            "script_tick": 2.747,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 211,
+            "level_tick": 0.949,
+            "script_tick": 8.401,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 212,
+            "level_tick": 1.454,
+            "script_tick": 3.488,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 213,
+            "level_tick": 1.155,
+            "script_tick": 4.92,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 214,
+            "level_tick": 1.056,
+            "script_tick": 2.19,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 215,
+            "level_tick": 0.959,
+            "script_tick": 4.558,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 216,
+            "level_tick": 1.269,
+            "script_tick": 2.595,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 217,
+            "level_tick": 1.799,
+            "script_tick": 3.88,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 218,
+            "level_tick": 1.016,
+            "script_tick": 2.527,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 219,
+            "level_tick": 1.167,
+            "script_tick": 4.129,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 220,
+            "level_tick": 1.044,
+            "script_tick": 3.236,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 221,
+            "level_tick": 0.987,
+            "script_tick": 4.372,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 222,
+            "level_tick": 1.526,
+            "script_tick": 2.904,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 223,
+            "level_tick": 1.272,
+            "script_tick": 5.617,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 224,
+            "level_tick": 1.371,
+            "script_tick": 2.756,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 225,
+            "level_tick": 1.158,
+            "script_tick": 4.407,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 226,
+            "level_tick": 1.093,
+            "script_tick": 4.296,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 227,
+            "level_tick": 0.978,
+            "script_tick": 5.152,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 228,
+            "level_tick": 1.187,
+            "script_tick": 3.287,
+            "script_job_tick": 0.007
+          },
+          {
+            "tick": 229,
+            "level_tick": 0.951,
+            "script_tick": 3.606,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 230,
+            "level_tick": 0.898,
+            "script_tick": 2.364,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 231,
+            "level_tick": 0.954,
+            "script_tick": 4.145,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 232,
+            "level_tick": 0.958,
+            "script_tick": 2.292,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 233,
+            "level_tick": 1.325,
+            "script_tick": 6.303,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 234,
+            "level_tick": 0.985,
+            "script_tick": 3.943,
+            "script_job_tick": 0.003
+          }
+        ],
+        "memorySamples": [
+          {
+            "tick": 193,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1752014848.0
+          },
+          {
+            "tick": 213,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1747345408.0
+          },
+          {
+            "tick": 233,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1746780160.0
+          },
+          {
+            "tick": 233,
+            "name": "runtime_memory",
+            "allocated": 2812392.0,
+            "used": 2328684.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "stations": 80,
+      "origins": 1,
+      "workload": "refresh-save",
+      "arm": "production",
+      "repeat": 1,
+      "startTick": 254,
+      "endTick": 294,
+      "absoluteStartTick": 255,
+      "absoluteEndTick": 295,
+      "distinctQueryLocations": 1,
+      "elapsedMs": 1998,
+      "elapsedTicks": 40,
+      "effectiveTps": 20.02002002002002,
+      "meanTickIntervalMs": 49.95,
+      "p95TickIntervalMs": 55,
+      "workloadMs": 5,
+      "meanWorkloadMsPerBatch": 2.5,
+      "p95WorkloadMsPerBatch": 3,
+      "batches": 2,
+      "checksum": 2,
+      "queriesOrRefreshes": 2,
+      "workloadCadenceTicks": 20,
+      "timerResolutionMs": 1,
+      "process": {
+        "cpuSeconds": 0.1899999999999995,
+        "procfsPid": 25610,
+        "cpuPercentOneCore": 9.523967425931684,
+        "rssStartBytes": 488898560,
+        "rssEndBytes": 489160704,
+        "peakSampledRssBytes": 489160704,
+        "sampleWindowSeconds": 1.9949669240013463
+      },
+      "nativeDiagnostics": {
+        "file": "diagnostics_2026-11-03_11-58-02.mcstats",
+        "sha256": "c462c2772d6eed1a35754021e3ff8c260ef34d8462d11545ece1f2395a681b82",
+        "sampleCount": 44,
+        "tickDomain": "native diagnostic capture sequence",
+        "nativeCaptureIncludesGuards": true,
+        "nativeWindowStartTick": 250,
+        "nativeWindowEndTickInclusive": 293,
+        "javascriptPhaseTickRange": [
+          254,
+          294
+        ],
+        "definition": "Complete native capture: sum of level_tick + script_tick + script_job_tick in milliseconds, no paced sleep. Includes short start/stop guards and any collector history; not filtered by JS currentTick because observed offsets can omit first-work spikes.",
+        "availableTickRange": [
+          250,
+          293
+        ],
+        "meanActiveMspt": 3.866340909090909,
+        "p95ActiveMspt": 7.995,
+        "meanCategoryMs": {
+          "level_tick": 1.0965227272727271,
+          "script_tick": 2.7667045454545454,
+          "script_job_tick": 0.0031136363636363636
+        },
+        "tickSamples": [
+          {
+            "tick": 250,
+            "level_tick": 1.141,
+            "script_tick": 0.268,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 251,
+            "level_tick": 1.221,
+            "script_tick": 3.176,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 252,
+            "level_tick": 1.129,
+            "script_tick": 0.233,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 253,
+            "level_tick": 1.459,
+            "script_tick": 6.594,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 254,
+            "level_tick": 1.145,
+            "script_tick": 0.401,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 255,
+            "level_tick": 1.117,
+            "script_tick": 6.875,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 256,
+            "level_tick": 0.964,
+            "script_tick": 0.349,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 257,
+            "level_tick": 1.031,
+            "script_tick": 3.117,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 258,
+            "level_tick": 1.11,
+            "script_tick": 0.639,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 259,
+            "level_tick": 0.975,
+            "script_tick": 2.644,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 260,
+            "level_tick": 0.974,
+            "script_tick": 0.348,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 261,
+            "level_tick": 1.238,
+            "script_tick": 2.448,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 262,
+            "level_tick": 1.259,
+            "script_tick": 0.411,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 263,
+            "level_tick": 1.014,
+            "script_tick": 3.214,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 264,
+            "level_tick": 1.079,
+            "script_tick": 0.51,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 265,
+            "level_tick": 1.024,
+            "script_tick": 31.321,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 266,
+            "level_tick": 1.176,
+            "script_tick": 1.047,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 267,
+            "level_tick": 1.14,
+            "script_tick": 2.526,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 268,
+            "level_tick": 1.218,
+            "script_tick": 0.43,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 269,
+            "level_tick": 1.057,
+            "script_tick": 3.742,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 270,
+            "level_tick": 1.176,
+            "script_tick": 3.52,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 271,
+            "level_tick": 1.004,
+            "script_tick": 3.705,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 272,
+            "level_tick": 0.976,
+            "script_tick": 0.361,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 273,
+            "level_tick": 1.007,
+            "script_tick": 3.716,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 274,
+            "level_tick": 0.988,
+            "script_tick": 0.564,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 275,
+            "level_tick": 0.995,
+            "script_tick": 4.735,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 276,
+            "level_tick": 1.097,
+            "script_tick": 0.348,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 277,
+            "level_tick": 1.042,
+            "script_tick": 2.415,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 278,
+            "level_tick": 1.03,
+            "script_tick": 0.701,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 279,
+            "level_tick": 1.186,
+            "script_tick": 3.509,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 280,
+            "level_tick": 0.948,
+            "script_tick": 0.352,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 281,
+            "level_tick": 0.984,
+            "script_tick": 2.769,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 282,
+            "level_tick": 1.083,
+            "script_tick": 0.356,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 283,
+            "level_tick": 1.253,
+            "script_tick": 3.389,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 284,
+            "level_tick": 0.963,
+            "script_tick": 0.338,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 285,
+            "level_tick": 1.026,
+            "script_tick": 4.266,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 286,
+            "level_tick": 0.942,
+            "script_tick": 0.379,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 287,
+            "level_tick": 0.969,
+            "script_tick": 2.774,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 288,
+            "level_tick": 0.966,
+            "script_tick": 0.649,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 289,
+            "level_tick": 0.956,
+            "script_tick": 3.281,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 290,
+            "level_tick": 1.389,
+            "script_tick": 0.678,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 291,
+            "level_tick": 1.51,
+            "script_tick": 3.504,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 292,
+            "level_tick": 1.072,
+            "script_tick": 0.389,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 293,
+            "level_tick": 1.214,
+            "script_tick": 4.744,
+            "script_job_tick": 0.003
+          }
+        ],
+        "memorySamples": [
+          {
+            "tick": 253,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1757528064.0
+          },
+          {
+            "tick": 273,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1768931328.0
+          },
+          {
+            "tick": 293,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1757761536.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "stations": 80,
+      "origins": 1,
+      "workload": "refresh-save",
+      "arm": "production",
+      "repeat": 2,
+      "startTick": 313,
+      "endTick": 353,
+      "absoluteStartTick": 314,
+      "absoluteEndTick": 354,
+      "distinctQueryLocations": 1,
+      "elapsedMs": 2000,
+      "elapsedTicks": 40,
+      "effectiveTps": 20,
+      "meanTickIntervalMs": 50,
+      "p95TickIntervalMs": 54,
+      "workloadMs": 6,
+      "meanWorkloadMsPerBatch": 3,
+      "p95WorkloadMsPerBatch": 3,
+      "batches": 2,
+      "checksum": 2,
+      "queriesOrRefreshes": 2,
+      "workloadCadenceTicks": 20,
+      "timerResolutionMs": 1,
+      "process": {
+        "cpuSeconds": 0.17999999999999972,
+        "procfsPid": 25610,
+        "cpuPercentOneCore": 9.002112156575517,
+        "rssStartBytes": 489160704,
+        "rssEndBytes": 489160704,
+        "peakSampledRssBytes": 489160704,
+        "sampleWindowSeconds": 1.9995307419994788
+      },
+      "nativeDiagnostics": {
+        "file": "diagnostics_2026-11-03_11-58-05.mcstats",
+        "sha256": "e49edb25fe07ccfdc9f8190bbd4b90888b99bf30f2c4acdb502272998f09c2ba",
+        "sampleCount": 46,
+        "tickDomain": "native diagnostic capture sequence",
+        "nativeCaptureIncludesGuards": true,
+        "nativeWindowStartTick": 309,
+        "nativeWindowEndTickInclusive": 354,
+        "javascriptPhaseTickRange": [
+          313,
+          353
+        ],
+        "definition": "Complete native capture: sum of level_tick + script_tick + script_job_tick in milliseconds, no paced sleep. Includes short start/stop guards and any collector history; not filtered by JS currentTick because observed offsets can omit first-work spikes.",
+        "availableTickRange": [
+          309,
+          354
+        ],
+        "meanActiveMspt": 3.452391304347826,
+        "p95ActiveMspt": 5.806,
+        "meanCategoryMs": {
+          "level_tick": 1.2007173913043478,
+          "script_tick": 2.2475652173913043,
+          "script_job_tick": 0.004108695652173913
+        },
+        "tickSamples": [
+          {
+            "tick": 309,
+            "level_tick": 1.067,
+            "script_tick": 2.918,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 310,
+            "level_tick": 1.073,
+            "script_tick": 0.548,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 311,
+            "level_tick": 1.91,
+            "script_tick": 3.892,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 312,
+            "level_tick": 1.359,
+            "script_tick": 0.3,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 313,
+            "level_tick": 1.004,
+            "script_tick": 2.636,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 314,
+            "level_tick": 1.21,
+            "script_tick": 3.509,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 315,
+            "level_tick": 0.964,
+            "script_tick": 3.141,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 316,
+            "level_tick": 0.963,
+            "script_tick": 0.419,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 317,
+            "level_tick": 1.205,
+            "script_tick": 3.133,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 318,
+            "level_tick": 1.13,
+            "script_tick": 0.456,
+            "script_job_tick": 0.028
+          },
+          {
+            "tick": 319,
+            "level_tick": 1.063,
+            "script_tick": 3.158,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 320,
+            "level_tick": 0.947,
+            "script_tick": 0.79,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 321,
+            "level_tick": 0.949,
+            "script_tick": 2.498,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 322,
+            "level_tick": 1.042,
+            "script_tick": 0.361,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 323,
+            "level_tick": 0.957,
+            "script_tick": 2.779,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 324,
+            "level_tick": 1.118,
+            "script_tick": 2.832,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 325,
+            "level_tick": 0.95,
+            "script_tick": 2.441,
+            "script_job_tick": 0.023
+          },
+          {
+            "tick": 326,
+            "level_tick": 1.723,
+            "script_tick": 0.678,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 327,
+            "level_tick": 1.821,
+            "script_tick": 4.008,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 328,
+            "level_tick": 1.027,
+            "script_tick": 0.367,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 329,
+            "level_tick": 1.189,
+            "script_tick": 2.673,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 330,
+            "level_tick": 0.99,
+            "script_tick": 0.379,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 331,
+            "level_tick": 1.061,
+            "script_tick": 2.634,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 332,
+            "level_tick": 1.061,
+            "script_tick": 0.344,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 333,
+            "level_tick": 1.048,
+            "script_tick": 2.542,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 334,
+            "level_tick": 0.941,
+            "script_tick": 3.159,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 335,
+            "level_tick": 2.504,
+            "script_tick": 14.434,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 336,
+            "level_tick": 1.008,
+            "script_tick": 0.404,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 337,
+            "level_tick": 1.099,
+            "script_tick": 2.704,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 338,
+            "level_tick": 1.08,
+            "script_tick": 0.446,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 339,
+            "level_tick": 0.941,
+            "script_tick": 2.669,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 340,
+            "level_tick": 0.949,
+            "script_tick": 0.642,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 341,
+            "level_tick": 1.232,
+            "script_tick": 3.293,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 342,
+            "level_tick": 1.89,
+            "script_tick": 0.351,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 343,
+            "level_tick": 1.554,
+            "script_tick": 3.892,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 344,
+            "level_tick": 1.256,
+            "script_tick": 0.377,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 345,
+            "level_tick": 1.208,
+            "script_tick": 3.004,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 346,
+            "level_tick": 2.035,
+            "script_tick": 0.985,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 347,
+            "level_tick": 1.326,
+            "script_tick": 2.809,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 348,
+            "level_tick": 0.946,
+            "script_tick": 0.419,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 349,
+            "level_tick": 1.408,
+            "script_tick": 3.556,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 350,
+            "level_tick": 0.943,
+            "script_tick": 0.455,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 351,
+            "level_tick": 1.127,
+            "script_tick": 3.901,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 352,
+            "level_tick": 1.025,
+            "script_tick": 0.435,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 353,
+            "level_tick": 0.942,
+            "script_tick": 3.344,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 354,
+            "level_tick": 0.988,
+            "script_tick": 2.673,
+            "script_job_tick": 0.003
+          }
+        ],
+        "memorySamples": [
+          {
+            "tick": 313,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1759752192.0
+          },
+          {
+            "tick": 333,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1756270592.0
+          },
+          {
+            "tick": 333,
+            "name": "runtime_memory",
+            "allocated": 2822032.0,
+            "used": 2334090.0
+          },
+          {
+            "tick": 353,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1723158528.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "stations": 800,
+      "origins": 8,
+      "workload": "lookup",
+      "arm": "production",
+      "repeat": 1,
+      "startTick": 401,
+      "endTick": 441,
+      "absoluteStartTick": 402,
+      "absoluteEndTick": 442,
+      "distinctQueryLocations": 8,
+      "elapsedMs": 3957,
+      "elapsedTicks": 40,
+      "effectiveTps": 10.108668182966895,
+      "meanTickIntervalMs": 98.925,
+      "p95TickIntervalMs": 126,
+      "workloadMs": 3378,
+      "meanWorkloadMsPerBatch": 84.45,
+      "p95WorkloadMsPerBatch": 101,
+      "batches": 40,
+      "checksum": 87920,
+      "queriesOrRefreshes": 1600,
+      "workloadCadenceTicks": 1,
+      "timerResolutionMs": 1,
+      "process": {
+        "cpuSeconds": 3.9499999999999993,
+        "procfsPid": 25610,
+        "cpuPercentOneCore": 99.84683861483306,
+        "rssStartBytes": 498204672,
+        "rssEndBytes": 498466816,
+        "peakSampledRssBytes": 498466816,
+        "sampleWindowSeconds": 3.9560591549998207
+      },
+      "nativeDiagnostics": {
+        "file": "diagnostics_2026-11-03_11-58-10.mcstats",
+        "sha256": "88bb878caffb57b1b292c78dd66170124992ce381f28d755c6412020057f9568",
+        "sampleCount": 44,
+        "tickDomain": "native diagnostic capture sequence",
+        "nativeCaptureIncludesGuards": true,
+        "nativeWindowStartTick": 398,
+        "nativeWindowEndTickInclusive": 441,
+        "javascriptPhaseTickRange": [
+          401,
+          441
+        ],
+        "definition": "Complete native capture: sum of level_tick + script_tick + script_job_tick in milliseconds, no paced sleep. Includes short start/stop guards and any collector history; not filtered by JS currentTick because observed offsets can omit first-work spikes.",
+        "availableTickRange": [
+          398,
+          441
+        ],
+        "meanActiveMspt": 90.3931590909091,
+        "p95ActiveMspt": 123.714,
+        "meanCategoryMs": {
+          "level_tick": 2.2027045454545453,
+          "script_tick": 88.18702272727273,
+          "script_job_tick": 0.0034318181818181817
+        },
+        "tickSamples": [
+          {
+            "tick": 398,
+            "level_tick": 4.419,
+            "script_tick": 0.648,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 399,
+            "level_tick": 1.952,
+            "script_tick": 27.023,
+            "script_job_tick": 0.001
+          },
+          {
+            "tick": 400,
+            "level_tick": 2.094,
+            "script_tick": 88.064,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 401,
+            "level_tick": 2.626,
+            "script_tick": 23.656,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 402,
+            "level_tick": 2.404,
+            "script_tick": 97.071,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 403,
+            "level_tick": 1.782,
+            "script_tick": 114.204,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 404,
+            "level_tick": 2.619,
+            "script_tick": 85.172,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 405,
+            "level_tick": 3.213,
+            "script_tick": 120.499,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 406,
+            "level_tick": 2.512,
+            "script_tick": 85.215,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 407,
+            "level_tick": 2.549,
+            "script_tick": 123.342,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 408,
+            "level_tick": 1.884,
+            "script_tick": 67.771,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 409,
+            "level_tick": 1.922,
+            "script_tick": 98.935,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 410,
+            "level_tick": 1.93,
+            "script_tick": 81.547,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 411,
+            "level_tick": 1.681,
+            "script_tick": 91.238,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 412,
+            "level_tick": 2.623,
+            "script_tick": 92.35,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 413,
+            "level_tick": 2.253,
+            "script_tick": 111.149,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 414,
+            "level_tick": 2.154,
+            "script_tick": 101.471,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 415,
+            "level_tick": 1.854,
+            "script_tick": 95.801,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 416,
+            "level_tick": 2.134,
+            "script_tick": 79.075,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 417,
+            "level_tick": 2.111,
+            "script_tick": 88.488,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 418,
+            "level_tick": 1.951,
+            "script_tick": 82.52,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 419,
+            "level_tick": 2.008,
+            "script_tick": 111.245,
+            "script_job_tick": 0.001
+          },
+          {
+            "tick": 420,
+            "level_tick": 2.568,
+            "script_tick": 74.266,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 421,
+            "level_tick": 2.224,
+            "script_tick": 98.601,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 422,
+            "level_tick": 2.447,
+            "script_tick": 80.407,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 423,
+            "level_tick": 1.911,
+            "script_tick": 98.851,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 424,
+            "level_tick": 2.637,
+            "script_tick": 70.586,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 425,
+            "level_tick": 1.945,
+            "script_tick": 95.521,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 426,
+            "level_tick": 1.785,
+            "script_tick": 93.819,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 427,
+            "level_tick": 2.488,
+            "script_tick": 102.443,
+            "script_job_tick": 0.001
+          },
+          {
+            "tick": 428,
+            "level_tick": 2.051,
+            "script_tick": 77.476,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 429,
+            "level_tick": 1.859,
+            "script_tick": 99.288,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 430,
+            "level_tick": 2.113,
+            "script_tick": 81.603,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 431,
+            "level_tick": 1.998,
+            "script_tick": 100.116,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 432,
+            "level_tick": 1.964,
+            "script_tick": 99.591,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 433,
+            "level_tick": 1.837,
+            "script_tick": 96.304,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 434,
+            "level_tick": 2.099,
+            "script_tick": 91.59,
+            "script_job_tick": 0.061
+          },
+          {
+            "tick": 435,
+            "level_tick": 1.945,
+            "script_tick": 120.977,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 436,
+            "level_tick": 2.05,
+            "script_tick": 73.685,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 437,
+            "level_tick": 1.819,
+            "script_tick": 115.881,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 438,
+            "level_tick": 2.263,
+            "script_tick": 82.609,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 439,
+            "level_tick": 1.729,
+            "script_tick": 99.483,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 440,
+            "level_tick": 2.414,
+            "script_tick": 0.484,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 441,
+            "level_tick": 2.098,
+            "script_tick": 160.164,
+            "script_job_tick": 0.003
+          }
+        ],
+        "memorySamples": [
+          {
+            "tick": 399,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1739513856.0
+          },
+          {
+            "tick": 419,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1739984896.0
+          },
+          {
+            "tick": 433,
+            "name": "runtime_memory",
+            "allocated": 4031512.0,
+            "used": 2938905.0
+          },
+          {
+            "tick": 439,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1774387200.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "stations": 800,
+      "origins": 8,
+      "workload": "lookup",
+      "arm": "production",
+      "repeat": 2,
+      "startTick": 460,
+      "endTick": 500,
+      "absoluteStartTick": 461,
+      "absoluteEndTick": 501,
+      "distinctQueryLocations": 8,
+      "elapsedMs": 3759,
+      "elapsedTicks": 40,
+      "effectiveTps": 10.641127959563713,
+      "meanTickIntervalMs": 93.975,
+      "p95TickIntervalMs": 122,
+      "workloadMs": 3223,
+      "meanWorkloadMsPerBatch": 80.575,
+      "p95WorkloadMsPerBatch": 106,
+      "batches": 40,
+      "checksum": 87920,
+      "queriesOrRefreshes": 1600,
+      "workloadCadenceTicks": 1,
+      "timerResolutionMs": 1,
+      "process": {
+        "cpuSeconds": 3.7600000000000016,
+        "procfsPid": 25610,
+        "cpuPercentOneCore": 100.06682212212678,
+        "rssStartBytes": 498466816,
+        "rssEndBytes": 500039680,
+        "peakSampledRssBytes": 500039680,
+        "sampleWindowSeconds": 3.757489166000596
+      },
+      "nativeDiagnostics": {
+        "file": "diagnostics_2026-11-03_11-58-15.mcstats",
+        "sha256": "322183532c1c7a00c8e034753ac6c9d1ea100cc9c425ff07eac7fbb7ccb4e466",
+        "sampleCount": 44,
+        "tickDomain": "native diagnostic capture sequence",
+        "nativeCaptureIncludesGuards": true,
+        "nativeWindowStartTick": 458,
+        "nativeWindowEndTickInclusive": 501,
+        "javascriptPhaseTickRange": [
+          460,
+          500
+        ],
+        "definition": "Complete native capture: sum of level_tick + script_tick + script_job_tick in milliseconds, no paced sleep. Includes short start/stop guards and any collector history; not filtered by JS currentTick because observed offsets can omit first-work spikes.",
+        "availableTickRange": [
+          458,
+          501
+        ],
+        "meanActiveMspt": 85.91806818181819,
+        "p95ActiveMspt": 126.221,
+        "meanCategoryMs": {
+          "level_tick": 2.223659090909091,
+          "script_tick": 83.69227272727272,
+          "script_job_tick": 0.0021363636363636363
+        },
+        "tickSamples": [
+          {
+            "tick": 458,
+            "level_tick": 6.05,
+            "script_tick": 0.648,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 459,
+            "level_tick": 1.877,
+            "script_tick": 16.438,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 460,
+            "level_tick": 2.004,
+            "script_tick": 89.128,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 461,
+            "level_tick": 3.02,
+            "script_tick": 120.649,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 462,
+            "level_tick": 2.367,
+            "script_tick": 84.855,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 463,
+            "level_tick": 2.279,
+            "script_tick": 100.879,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 464,
+            "level_tick": 2.192,
+            "script_tick": 76.019,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 465,
+            "level_tick": 1.896,
+            "script_tick": 91.296,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 466,
+            "level_tick": 2.002,
+            "script_tick": 87.468,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 467,
+            "level_tick": 1.873,
+            "script_tick": 130.264,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 468,
+            "level_tick": 3.952,
+            "script_tick": 101.493,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 469,
+            "level_tick": 1.983,
+            "script_tick": 130.017,
+            "script_job_tick": 0.001
+          },
+          {
+            "tick": 470,
+            "level_tick": 2.675,
+            "script_tick": 97.266,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 471,
+            "level_tick": 2.677,
+            "script_tick": 123.541,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 472,
+            "level_tick": 2.493,
+            "script_tick": 95.03,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 473,
+            "level_tick": 2.589,
+            "script_tick": 119.059,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 474,
+            "level_tick": 1.681,
+            "script_tick": 67.849,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 475,
+            "level_tick": 2.49,
+            "script_tick": 89.354,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 476,
+            "level_tick": 1.838,
+            "script_tick": 67.14,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 477,
+            "level_tick": 2.016,
+            "script_tick": 86.586,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 478,
+            "level_tick": 1.716,
+            "script_tick": 74.305,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 479,
+            "level_tick": 1.751,
+            "script_tick": 86.703,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 480,
+            "level_tick": 1.897,
+            "script_tick": 68.39,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 481,
+            "level_tick": 2.069,
+            "script_tick": 94.516,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 482,
+            "level_tick": 2.04,
+            "script_tick": 74.602,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 483,
+            "level_tick": 1.761,
+            "script_tick": 86.003,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 484,
+            "level_tick": 2.383,
+            "script_tick": 74.191,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 485,
+            "level_tick": 2.106,
+            "script_tick": 100.456,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 486,
+            "level_tick": 2.299,
+            "script_tick": 73.718,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 487,
+            "level_tick": 1.893,
+            "script_tick": 89.744,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 488,
+            "level_tick": 1.837,
+            "script_tick": 81.966,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 489,
+            "level_tick": 1.818,
+            "script_tick": 96.758,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 490,
+            "level_tick": 1.944,
+            "script_tick": 78.922,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 491,
+            "level_tick": 2.515,
+            "script_tick": 110.91,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 492,
+            "level_tick": 1.828,
+            "script_tick": 70.466,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 493,
+            "level_tick": 2.019,
+            "script_tick": 105.258,
+            "script_job_tick": 0.001
+          },
+          {
+            "tick": 494,
+            "level_tick": 2.319,
+            "script_tick": 86.854,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 495,
+            "level_tick": 2.19,
+            "script_tick": 91.428,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 496,
+            "level_tick": 1.774,
+            "script_tick": 70.421,
+            "script_job_tick": 0.001
+          },
+          {
+            "tick": 497,
+            "level_tick": 2.169,
+            "script_tick": 103.878,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 498,
+            "level_tick": 1.736,
+            "script_tick": 77.59,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 499,
+            "level_tick": 1.86,
+            "script_tick": 89.87,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 500,
+            "level_tick": 2.062,
+            "script_tick": 0.104,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 501,
+            "level_tick": 1.901,
+            "script_tick": 20.428,
+            "script_job_tick": 0.003
+          }
+        ],
+        "memorySamples": [
+          {
+            "tick": 459,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1765396480.0
+          },
+          {
+            "tick": 479,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1770196992.0
+          },
+          {
+            "tick": 499,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1781534720.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "stations": 800,
+      "origins": 8,
+      "workload": "refresh-save",
+      "arm": "production",
+      "repeat": 1,
+      "startTick": 519,
+      "endTick": 559,
+      "absoluteStartTick": 520,
+      "absoluteEndTick": 560,
+      "distinctQueryLocations": 8,
+      "elapsedMs": 2095,
+      "elapsedTicks": 40,
+      "effectiveTps": 19.09307875894988,
+      "meanTickIntervalMs": 52.375,
+      "p95TickIntervalMs": 146,
+      "workloadMs": 285,
+      "meanWorkloadMsPerBatch": 142.5,
+      "p95WorkloadMsPerBatch": 163,
+      "batches": 2,
+      "checksum": 16,
+      "queriesOrRefreshes": 16,
+      "workloadCadenceTicks": 20,
+      "timerResolutionMs": 1,
+      "process": {
+        "cpuSeconds": 0.9500000000000028,
+        "procfsPid": 25610,
+        "cpuPercentOneCore": 45.38385766418175,
+        "rssStartBytes": 500170752,
+        "rssEndBytes": 500826112,
+        "peakSampledRssBytes": 500826112,
+        "sampleWindowSeconds": 2.09325528699992
+      },
+      "nativeDiagnostics": {
+        "file": "diagnostics_2026-11-03_11-58-20.mcstats",
+        "sha256": "b03664b49a66376455734841a9be1c3c82d13c53fb8f7265055c0f562cbc66a7",
+        "sampleCount": 46,
+        "tickDomain": "native diagnostic capture sequence",
+        "nativeCaptureIncludesGuards": true,
+        "nativeWindowStartTick": 515,
+        "nativeWindowEndTickInclusive": 560,
+        "javascriptPhaseTickRange": [
+          519,
+          559
+        ],
+        "definition": "Complete native capture: sum of level_tick + script_tick + script_job_tick in milliseconds, no paced sleep. Includes short start/stop guards and any collector history; not filtered by JS currentTick because observed offsets can omit first-work spikes.",
+        "availableTickRange": [
+          515,
+          560
+        ],
+        "meanActiveMspt": 21.394260869565215,
+        "p95ActiveMspt": 44.977,
+        "meanCategoryMs": {
+          "level_tick": 2.7679782608695653,
+          "script_tick": 18.62123913043478,
+          "script_job_tick": 0.005043478260869565
+        },
+        "tickSamples": [
+          {
+            "tick": 515,
+            "level_tick": 3.642,
+            "script_tick": 26.16,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 516,
+            "level_tick": 2.009,
+            "script_tick": 0.378,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 517,
+            "level_tick": 3.783,
+            "script_tick": 40.619,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 518,
+            "level_tick": 7.957,
+            "script_tick": 0.433,
+            "script_job_tick": 0.037
+          },
+          {
+            "tick": 519,
+            "level_tick": 2.388,
+            "script_tick": 28.511,
+            "script_job_tick": 0.001
+          },
+          {
+            "tick": 520,
+            "level_tick": 2.211,
+            "script_tick": 163.664,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 521,
+            "level_tick": 2.442,
+            "script_tick": 21.138,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 522,
+            "level_tick": 2.231,
+            "script_tick": 0.219,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 523,
+            "level_tick": 2.806,
+            "script_tick": 26.385,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 524,
+            "level_tick": 3.618,
+            "script_tick": 1.105,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 525,
+            "level_tick": 2.097,
+            "script_tick": 26.519,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 526,
+            "level_tick": 2.142,
+            "script_tick": 0.398,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 527,
+            "level_tick": 2.416,
+            "script_tick": 22.298,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 528,
+            "level_tick": 3.024,
+            "script_tick": 0.581,
+            "script_job_tick": 0.005
+          },
+          {
+            "tick": 529,
+            "level_tick": 2.032,
+            "script_tick": 19.319,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 530,
+            "level_tick": 2.508,
+            "script_tick": 0.389,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 531,
+            "level_tick": 2.674,
+            "script_tick": 20.027,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 532,
+            "level_tick": 3.095,
+            "script_tick": 0.488,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 533,
+            "level_tick": 1.936,
+            "script_tick": 19.063,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 534,
+            "level_tick": 3.285,
+            "script_tick": 0.597,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 535,
+            "level_tick": 2.262,
+            "script_tick": 18.491,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 536,
+            "level_tick": 2.824,
+            "script_tick": 0.398,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 537,
+            "level_tick": 2.35,
+            "script_tick": 18.884,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 538,
+            "level_tick": 2.17,
+            "script_tick": 0.356,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 539,
+            "level_tick": 3.842,
+            "script_tick": 19.384,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 540,
+            "level_tick": 2.059,
+            "script_tick": 122.487,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 541,
+            "level_tick": 4.14,
+            "script_tick": 19.322,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 542,
+            "level_tick": 2.041,
+            "script_tick": 0.173,
+            "script_job_tick": 0.001
+          },
+          {
+            "tick": 543,
+            "level_tick": 2.413,
+            "script_tick": 42.561,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 544,
+            "level_tick": 2.611,
+            "script_tick": 0.356,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 545,
+            "level_tick": 4.81,
+            "script_tick": 36.927,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 546,
+            "level_tick": 2.716,
+            "script_tick": 0.939,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 547,
+            "level_tick": 2.384,
+            "script_tick": 21.208,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 548,
+            "level_tick": 2.17,
+            "script_tick": 0.487,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 549,
+            "level_tick": 3.985,
+            "script_tick": 31.394,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 550,
+            "level_tick": 2.346,
+            "script_tick": 3.48,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 551,
+            "level_tick": 2.253,
+            "script_tick": 20.432,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 552,
+            "level_tick": 2.059,
+            "script_tick": 0.4,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 553,
+            "level_tick": 3.0,
+            "script_tick": 18.33,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 554,
+            "level_tick": 2.325,
+            "script_tick": 0.456,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 555,
+            "level_tick": 2.553,
+            "script_tick": 18.561,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 556,
+            "level_tick": 2.109,
+            "script_tick": 0.386,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 557,
+            "level_tick": 2.848,
+            "script_tick": 21.361,
+            "script_job_tick": 0.07
+          },
+          {
+            "tick": 558,
+            "level_tick": 2.194,
+            "script_tick": 0.385,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 559,
+            "level_tick": 2.037,
+            "script_tick": 20.47,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 560,
+            "level_tick": 2.53,
+            "script_tick": 0.658,
+            "script_job_tick": 0.003
+          }
+        ],
+        "memorySamples": [
+          {
+            "tick": 519,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1781653504.0
+          },
+          {
+            "tick": 533,
+            "name": "runtime_memory",
+            "allocated": 4076312.0,
+            "used": 2959548.0
+          },
+          {
+            "tick": 539,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1770864640.0
+          },
+          {
+            "tick": 559,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1777467392.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "stations": 800,
+      "origins": 8,
+      "workload": "refresh-save",
+      "arm": "production",
+      "repeat": 2,
+      "startTick": 578,
+      "endTick": 618,
+      "absoluteStartTick": 579,
+      "absoluteEndTick": 619,
+      "distinctQueryLocations": 8,
+      "elapsedMs": 2104,
+      "elapsedTicks": 40,
+      "effectiveTps": 19.011406844106464,
+      "meanTickIntervalMs": 52.6,
+      "p95TickIntervalMs": 130,
+      "workloadMs": 258,
+      "meanWorkloadMsPerBatch": 129,
+      "p95WorkloadMsPerBatch": 131,
+      "batches": 2,
+      "checksum": 16,
+      "queriesOrRefreshes": 16,
+      "workloadCadenceTicks": 20,
+      "timerResolutionMs": 1,
+      "process": {
+        "cpuSeconds": 0.8499999999999979,
+        "procfsPid": 25610,
+        "cpuPercentOneCore": 40.41534932482218,
+        "rssStartBytes": 500826112,
+        "rssEndBytes": 501481472,
+        "peakSampledRssBytes": 501481472,
+        "sampleWindowSeconds": 2.103161333998287
+      },
+      "nativeDiagnostics": {
+        "file": "diagnostics_2026-11-03_11-58-23.mcstats",
+        "sha256": "ca3791301b45a73937034e56c89d19790ab05dfb8824b9d10c90206334eeb6c4",
+        "sampleCount": 44,
+        "tickDomain": "native diagnostic capture sequence",
+        "nativeCaptureIncludesGuards": true,
+        "nativeWindowStartTick": 574,
+        "nativeWindowEndTickInclusive": 617,
+        "javascriptPhaseTickRange": [
+          578,
+          618
+        ],
+        "definition": "Complete native capture: sum of level_tick + script_tick + script_job_tick in milliseconds, no paced sleep. Includes short start/stop guards and any collector history; not filtered by JS currentTick because observed offsets can omit first-work spikes.",
+        "availableTickRange": [
+          574,
+          617
+        ],
+        "meanActiveMspt": 18.81206818181818,
+        "p95ActiveMspt": 31.989,
+        "meanCategoryMs": {
+          "level_tick": 2.3543863636363636,
+          "script_tick": 16.45493181818182,
+          "script_job_tick": 0.00275
+        },
+        "tickSamples": [
+          {
+            "tick": 574,
+            "level_tick": 2.284,
+            "script_tick": 0.262,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 575,
+            "level_tick": 2.051,
+            "script_tick": 16.651,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 576,
+            "level_tick": 2.407,
+            "script_tick": 0.227,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 577,
+            "level_tick": 2.74,
+            "script_tick": 18.562,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 578,
+            "level_tick": 4.358,
+            "script_tick": 0.366,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 579,
+            "level_tick": 2.449,
+            "script_tick": 150.314,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 580,
+            "level_tick": 2.713,
+            "script_tick": 0.373,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 581,
+            "level_tick": 1.759,
+            "script_tick": 20.528,
+            "script_job_tick": 0.0
+          },
+          {
+            "tick": 582,
+            "level_tick": 2.782,
+            "script_tick": 0.473,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 583,
+            "level_tick": 2.223,
+            "script_tick": 29.763,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 584,
+            "level_tick": 2.313,
+            "script_tick": 0.399,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 585,
+            "level_tick": 2.22,
+            "script_tick": 20.468,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 586,
+            "level_tick": 2.208,
+            "script_tick": 0.39,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 587,
+            "level_tick": 2.366,
+            "script_tick": 25.59,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 588,
+            "level_tick": 2.142,
+            "script_tick": 0.707,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 589,
+            "level_tick": 1.895,
+            "script_tick": 21.499,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 590,
+            "level_tick": 2.158,
+            "script_tick": 0.367,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 591,
+            "level_tick": 2.22,
+            "script_tick": 17.11,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 592,
+            "level_tick": 2.519,
+            "script_tick": 0.394,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 593,
+            "level_tick": 2.33,
+            "script_tick": 27.714,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 594,
+            "level_tick": 2.329,
+            "script_tick": 0.371,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 595,
+            "level_tick": 2.69,
+            "script_tick": 19.684,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 596,
+            "level_tick": 2.258,
+            "script_tick": 0.453,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 597,
+            "level_tick": 2.015,
+            "script_tick": 18.525,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 598,
+            "level_tick": 1.919,
+            "script_tick": 0.207,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 599,
+            "level_tick": 2.254,
+            "script_tick": 144.405,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 600,
+            "level_tick": 3.417,
+            "script_tick": 0.368,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 601,
+            "level_tick": 1.108,
+            "script_tick": 18.721,
+            "script_job_tick": 0.0
+          },
+          {
+            "tick": 602,
+            "level_tick": 2.322,
+            "script_tick": 0.453,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 603,
+            "level_tick": 2.773,
+            "script_tick": 19.406,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 604,
+            "level_tick": 2.442,
+            "script_tick": 0.41,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 605,
+            "level_tick": 2.317,
+            "script_tick": 21.012,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 606,
+            "level_tick": 2.334,
+            "script_tick": 0.434,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 607,
+            "level_tick": 2.15,
+            "script_tick": 24.975,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 608,
+            "level_tick": 1.971,
+            "script_tick": 1.041,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 609,
+            "level_tick": 2.067,
+            "script_tick": 17.16,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 610,
+            "level_tick": 2.179,
+            "script_tick": 0.432,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 611,
+            "level_tick": 2.076,
+            "script_tick": 17.857,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 612,
+            "level_tick": 1.959,
+            "script_tick": 0.506,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 613,
+            "level_tick": 2.497,
+            "script_tick": 19.066,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 614,
+            "level_tick": 2.642,
+            "script_tick": 0.372,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 615,
+            "level_tick": 2.321,
+            "script_tick": 22.329,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 616,
+            "level_tick": 3.026,
+            "script_tick": 0.452,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 617,
+            "level_tick": 2.39,
+            "script_tick": 23.221,
+            "script_job_tick": 0.003
+          }
+        ],
+        "memorySamples": [
+          {
+            "tick": 579,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1778069504.0
+          },
+          {
+            "tick": 599,
+            "name": "app_memory",
+            "used": 1836948.0,
+            "free": 1763602432.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "stations": 3200,
+      "origins": 32,
+      "workload": "lookup",
+      "arm": "production",
+      "repeat": 1,
+      "startTick": 687,
+      "endTick": 727,
+      "absoluteStartTick": 688,
+      "absoluteEndTick": 728,
+      "distinctQueryLocations": 32,
+      "elapsedMs": 39613,
+      "elapsedTicks": 40,
+      "effectiveTps": 1.0097695201070356,
+      "meanTickIntervalMs": 990.325,
+      "p95TickIntervalMs": 1144,
+      "workloadMs": 37525,
+      "meanWorkloadMsPerBatch": 938.125,
+      "p95WorkloadMsPerBatch": 1074,
+      "batches": 40,
+      "checksum": 943840,
+      "queriesOrRefreshes": 6400,
+      "workloadCadenceTicks": 1,
+      "timerResolutionMs": 1,
+      "process": {
+        "cpuSeconds": 39.65,
+        "procfsPid": 25610,
+        "cpuPercentOneCore": 100.09647908321394,
+        "rssStartBytes": 530841600,
+        "rssEndBytes": 534511616,
+        "peakSampledRssBytes": 534511616,
+        "sampleWindowSeconds": 39.61178291499891
+      },
+      "nativeDiagnostics": {
+        "file": "diagnostics_2026-11-03_11-58-35.mcstats",
+        "sha256": "977f9a34acaeb34e7de8bab6ef377e97e893c939fbb7bf2f73f478d93e22851e",
+        "sampleCount": 44,
+        "tickDomain": "native diagnostic capture sequence",
+        "nativeCaptureIncludesGuards": true,
+        "nativeWindowStartTick": 684,
+        "nativeWindowEndTickInclusive": 727,
+        "javascriptPhaseTickRange": [
+          687,
+          727
+        ],
+        "definition": "Complete native capture: sum of level_tick + script_tick + script_job_tick in milliseconds, no paced sleep. Includes short start/stop guards and any collector history; not filtered by JS currentTick because observed offsets can omit first-work spikes.",
+        "availableTickRange": [
+          684,
+          727
+        ],
+        "meanActiveMspt": 901.2376136363637,
+        "p95ActiveMspt": 1129.018,
+        "meanCategoryMs": {
+          "level_tick": 6.6336818181818185,
+          "script_tick": 894.6012954545455,
+          "script_job_tick": 0.0026363636363636363
+        },
+        "tickSamples": [
+          {
+            "tick": 684,
+            "level_tick": 5.615,
+            "script_tick": 0.182,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 685,
+            "level_tick": 4.806,
+            "script_tick": 76.44,
+            "script_job_tick": 0.001
+          },
+          {
+            "tick": 686,
+            "level_tick": 5.338,
+            "script_tick": 921.508,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 687,
+            "level_tick": 8.685,
+            "script_tick": 79.81,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 688,
+            "level_tick": 7.874,
+            "script_tick": 971.065,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 689,
+            "level_tick": 7.873,
+            "script_tick": 1048.947,
+            "script_job_tick": 0.005
+          },
+          {
+            "tick": 690,
+            "level_tick": 6.201,
+            "script_tick": 834.091,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 691,
+            "level_tick": 5.476,
+            "script_tick": 993.963,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 692,
+            "level_tick": 5.887,
+            "script_tick": 985.86,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 693,
+            "level_tick": 5.482,
+            "script_tick": 988.478,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 694,
+            "level_tick": 5.738,
+            "script_tick": 948.652,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 695,
+            "level_tick": 7.827,
+            "script_tick": 1016.678,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 696,
+            "level_tick": 5.742,
+            "script_tick": 859.766,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 697,
+            "level_tick": 8.908,
+            "script_tick": 1120.107,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 698,
+            "level_tick": 5.714,
+            "script_tick": 903.186,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 699,
+            "level_tick": 5.405,
+            "script_tick": 952.815,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 700,
+            "level_tick": 7.188,
+            "script_tick": 1012.046,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 701,
+            "level_tick": 6.104,
+            "script_tick": 1024.357,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 702,
+            "level_tick": 7.644,
+            "script_tick": 974.235,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 703,
+            "level_tick": 7.917,
+            "script_tick": 1055.339,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 704,
+            "level_tick": 5.285,
+            "script_tick": 833.39,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 705,
+            "level_tick": 5.774,
+            "script_tick": 1073.599,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 706,
+            "level_tick": 6.114,
+            "script_tick": 946.135,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 707,
+            "level_tick": 14.488,
+            "script_tick": 1048.834,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 708,
+            "level_tick": 9.508,
+            "script_tick": 861.24,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 709,
+            "level_tick": 5.664,
+            "script_tick": 1021.47,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 710,
+            "level_tick": 5.218,
+            "script_tick": 971.761,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 711,
+            "level_tick": 5.431,
+            "script_tick": 911.522,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 712,
+            "level_tick": 5.507,
+            "script_tick": 1016.661,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 713,
+            "level_tick": 7.975,
+            "script_tick": 984.739,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 714,
+            "level_tick": 7.872,
+            "script_tick": 1084.225,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 715,
+            "level_tick": 6.366,
+            "script_tick": 1119.499,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 716,
+            "level_tick": 6.758,
+            "script_tick": 975.169,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 717,
+            "level_tick": 6.113,
+            "script_tick": 1156.781,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 718,
+            "level_tick": 5.468,
+            "script_tick": 834.737,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 719,
+            "level_tick": 5.321,
+            "script_tick": 969.913,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 720,
+            "level_tick": 6.705,
+            "script_tick": 833.369,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 721,
+            "level_tick": 5.265,
+            "script_tick": 877.266,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 722,
+            "level_tick": 5.914,
+            "script_tick": 988.288,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 723,
+            "level_tick": 5.463,
+            "script_tick": 965.877,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 724,
+            "level_tick": 6.246,
+            "script_tick": 869.14,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 725,
+            "level_tick": 9.754,
+            "script_tick": 1108.759,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 726,
+            "level_tick": 6.3,
+            "script_tick": 0.538,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 727,
+            "level_tick": 5.949,
+            "script_tick": 1142.02,
+            "script_job_tick": 0.004
+          }
+        ],
+        "memorySamples": [
+          {
+            "tick": 685,
+            "name": "app_memory",
+            "used": 1902484.0,
+            "free": 1751986176.0
+          },
+          {
+            "tick": 685,
+            "name": "runtime_memory",
+            "allocated": 8111952.0,
+            "used": 4969745.0
+          },
+          {
+            "tick": 705,
+            "name": "app_memory",
+            "used": 1902484.0,
+            "free": 1717575680.0
+          },
+          {
+            "tick": 725,
+            "name": "app_memory",
+            "used": 1902484.0,
+            "free": 1725669376.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "stations": 3200,
+      "origins": 32,
+      "workload": "lookup",
+      "arm": "production",
+      "repeat": 2,
+      "startTick": 746,
+      "endTick": 786,
+      "absoluteStartTick": 747,
+      "absoluteEndTick": 787,
+      "distinctQueryLocations": 32,
+      "elapsedMs": 43141,
+      "elapsedTicks": 40,
+      "effectiveTps": 0.9271922301291116,
+      "meanTickIntervalMs": 1078.525,
+      "p95TickIntervalMs": 1385,
+      "workloadMs": 40929,
+      "meanWorkloadMsPerBatch": 1023.225,
+      "p95WorkloadMsPerBatch": 1301,
+      "batches": 40,
+      "checksum": 943840,
+      "queriesOrRefreshes": 6400,
+      "workloadCadenceTicks": 1,
+      "timerResolutionMs": 1,
+      "process": {
+        "cpuSeconds": 43.14,
+        "procfsPid": 25610,
+        "cpuPercentOneCore": 99.99777891349517,
+        "rssStartBytes": 534511616,
+        "rssEndBytes": 544473088,
+        "peakSampledRssBytes": 544473088,
+        "sampleWindowSeconds": 43.14095819800059
+      },
+      "nativeDiagnostics": {
+        "file": "diagnostics_2026-11-03_11-59-20.mcstats",
+        "sha256": "cfc3317f4f52fc6129a402b3ace6f759ac3258c23210f7f06c5d23828b57a997",
+        "sampleCount": 42,
+        "tickDomain": "native diagnostic capture sequence",
+        "nativeCaptureIncludesGuards": true,
+        "nativeWindowStartTick": 745,
+        "nativeWindowEndTickInclusive": 786,
+        "javascriptPhaseTickRange": [
+          746,
+          786
+        ],
+        "definition": "Complete native capture: sum of level_tick + script_tick + script_job_tick in milliseconds, no paced sleep. Includes short start/stop guards and any collector history; not filtered by JS currentTick because observed offsets can omit first-work spikes.",
+        "availableTickRange": [
+          745,
+          786
+        ],
+        "meanActiveMspt": 1024.5650952380952,
+        "p95ActiveMspt": 1280.941,
+        "meanCategoryMs": {
+          "level_tick": 7.740095238095238,
+          "script_tick": 1016.821,
+          "script_job_tick": 0.004
+        },
+        "tickSamples": [
+          {
+            "tick": 745,
+            "level_tick": 6.65,
+            "script_tick": 975.673,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 746,
+            "level_tick": 7.216,
+            "script_tick": 0.227,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 747,
+            "level_tick": 5.489,
+            "script_tick": 1149.372,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 748,
+            "level_tick": 6.602,
+            "script_tick": 978.453,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 749,
+            "level_tick": 14.025,
+            "script_tick": 990.709,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 750,
+            "level_tick": 5.609,
+            "script_tick": 981.579,
+            "script_job_tick": 0.03
+          },
+          {
+            "tick": 751,
+            "level_tick": 5.768,
+            "script_tick": 1258.805,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 752,
+            "level_tick": 17.081,
+            "script_tick": 1076.671,
+            "script_job_tick": 0.008
+          },
+          {
+            "tick": 753,
+            "level_tick": 5.555,
+            "script_tick": 992.213,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 754,
+            "level_tick": 8.773,
+            "script_tick": 944.426,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 755,
+            "level_tick": 5.805,
+            "script_tick": 1103.77,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 756,
+            "level_tick": 6.046,
+            "script_tick": 866.29,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 757,
+            "level_tick": 6.526,
+            "script_tick": 934.063,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 758,
+            "level_tick": 6.105,
+            "script_tick": 942.137,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 759,
+            "level_tick": 5.799,
+            "script_tick": 1019.102,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 760,
+            "level_tick": 5.875,
+            "script_tick": 851.169,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 761,
+            "level_tick": 5.309,
+            "script_tick": 879.888,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 762,
+            "level_tick": 6.18,
+            "script_tick": 870.418,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 763,
+            "level_tick": 5.69,
+            "script_tick": 998.675,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 764,
+            "level_tick": 5.658,
+            "script_tick": 860.804,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 765,
+            "level_tick": 5.704,
+            "script_tick": 1221.993,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 766,
+            "level_tick": 8.155,
+            "script_tick": 907.531,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 767,
+            "level_tick": 10.568,
+            "script_tick": 1401.921,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 768,
+            "level_tick": 7.867,
+            "script_tick": 1273.07,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 769,
+            "level_tick": 8.733,
+            "script_tick": 1195.453,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 770,
+            "level_tick": 8.891,
+            "script_tick": 1396.417,
+            "script_job_tick": 0.024
+          },
+          {
+            "tick": 771,
+            "level_tick": 5.467,
+            "script_tick": 877.232,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 772,
+            "level_tick": 8.225,
+            "script_tick": 940.895,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 773,
+            "level_tick": 8.288,
+            "script_tick": 1035.996,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 774,
+            "level_tick": 5.491,
+            "script_tick": 998.181,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 775,
+            "level_tick": 7.796,
+            "script_tick": 1205.653,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 776,
+            "level_tick": 8.738,
+            "script_tick": 1114.416,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 777,
+            "level_tick": 8.186,
+            "script_tick": 1209.822,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 778,
+            "level_tick": 7.976,
+            "script_tick": 1128.13,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 779,
+            "level_tick": 7.501,
+            "script_tick": 1233.302,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 780,
+            "level_tick": 17.156,
+            "script_tick": 1090.832,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 781,
+            "level_tick": 5.589,
+            "script_tick": 1205.152,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 782,
+            "level_tick": 8.877,
+            "script_tick": 988.386,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 783,
+            "level_tick": 7.729,
+            "script_tick": 1251.256,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 784,
+            "level_tick": 9.544,
+            "script_tick": 1151.625,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 785,
+            "level_tick": 8.311,
+            "script_tick": 92.866,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 786,
+            "level_tick": 8.531,
+            "script_tick": 1111.909,
+            "script_job_tick": 0.003
+          }
+        ],
+        "memorySamples": [
+          {
+            "tick": 746,
+            "name": "app_memory",
+            "used": 1902484.0,
+            "free": 1742626816.0
+          },
+          {
+            "tick": 766,
+            "name": "app_memory",
+            "used": 1968020.0,
+            "free": 1608450048.0
+          },
+          {
+            "tick": 785,
+            "name": "runtime_memory",
+            "allocated": 8115104.0,
+            "used": 4971944.0
+          },
+          {
+            "tick": 786,
+            "name": "app_memory",
+            "used": 1968020.0,
+            "free": 1561071616.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "stations": 3200,
+      "origins": 32,
+      "workload": "refresh-save",
+      "arm": "production",
+      "repeat": 1,
+      "startTick": 805,
+      "endTick": 845,
+      "absoluteStartTick": 806,
+      "absoluteEndTick": 846,
+      "distinctQueryLocations": 32,
+      "elapsedMs": 7884,
+      "elapsedTicks": 40,
+      "effectiveTps": 5.073566717402334,
+      "meanTickIntervalMs": 197.1,
+      "p95TickIntervalMs": 2808,
+      "workloadMs": 5446,
+      "meanWorkloadMsPerBatch": 2723,
+      "p95WorkloadMsPerBatch": 2737,
+      "batches": 2,
+      "checksum": 64,
+      "queriesOrRefreshes": 64,
+      "workloadCadenceTicks": 20,
+      "timerResolutionMs": 1,
+      "process": {
+        "cpuSeconds": 7.889999999999986,
+        "procfsPid": 25610,
+        "cpuPercentOneCore": 100.08097927494555,
+        "rssStartBytes": 545128448,
+        "rssEndBytes": 547749888,
+        "peakSampledRssBytes": 547749888,
+        "sampleWindowSeconds": 7.8836159050006245
+      },
+      "nativeDiagnostics": {
+        "file": "diagnostics_2026-11-03_12-00-07.mcstats",
+        "sha256": "1ecc5433c60c945990014f935f4a9ec06477f5bc6bda298d0c11ce685cabf812",
+        "sampleCount": 44,
+        "tickDomain": "native diagnostic capture sequence",
+        "nativeCaptureIncludesGuards": true,
+        "nativeWindowStartTick": 803,
+        "nativeWindowEndTickInclusive": 846,
+        "javascriptPhaseTickRange": [
+          805,
+          845
+        ],
+        "definition": "Complete native capture: sum of level_tick + script_tick + script_job_tick in milliseconds, no paced sleep. Includes short start/stop guards and any collector history; not filtered by JS currentTick because observed offsets can omit first-work spikes.",
+        "availableTickRange": [
+          803,
+          846
+        ],
+        "meanActiveMspt": 179.08838636363635,
+        "p95ActiveMspt": 128.397,
+        "meanCategoryMs": {
+          "level_tick": 8.341477272727273,
+          "script_tick": 170.74356818181818,
+          "script_job_tick": 0.003340909090909091
+        },
+        "tickSamples": [
+          {
+            "tick": 803,
+            "level_tick": 5.294,
+            "script_tick": 85.795,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 804,
+            "level_tick": 6.488,
+            "script_tick": 0.144,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 805,
+            "level_tick": 8.39,
+            "script_tick": 105.373,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 806,
+            "level_tick": 8.69,
+            "script_tick": 2709.111,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 807,
+            "level_tick": 7.248,
+            "script_tick": 83.156,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 808,
+            "level_tick": 8.182,
+            "script_tick": 0.282,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 809,
+            "level_tick": 7.086,
+            "script_tick": 94.313,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 810,
+            "level_tick": 8.408,
+            "script_tick": 0.84,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 811,
+            "level_tick": 8.532,
+            "script_tick": 97.271,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 812,
+            "level_tick": 9.312,
+            "script_tick": 0.407,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 813,
+            "level_tick": 7.533,
+            "script_tick": 90.668,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 814,
+            "level_tick": 8.683,
+            "script_tick": 0.244,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 815,
+            "level_tick": 6.468,
+            "script_tick": 101.624,
+            "script_job_tick": 0.001
+          },
+          {
+            "tick": 816,
+            "level_tick": 8.009,
+            "script_tick": 0.475,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 817,
+            "level_tick": 7.784,
+            "script_tick": 95.165,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 818,
+            "level_tick": 9.28,
+            "script_tick": 0.356,
+            "script_job_tick": 0.03
+          },
+          {
+            "tick": 819,
+            "level_tick": 7.678,
+            "script_tick": 93.228,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 820,
+            "level_tick": 9.161,
+            "script_tick": 0.5,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 821,
+            "level_tick": 7.558,
+            "script_tick": 94.118,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 822,
+            "level_tick": 9.06,
+            "script_tick": 0.33,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 823,
+            "level_tick": 8.054,
+            "script_tick": 96.894,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 824,
+            "level_tick": 9.53,
+            "script_tick": 0.37,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 825,
+            "level_tick": 5.51,
+            "script_tick": 65.773,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 826,
+            "level_tick": 9.052,
+            "script_tick": 2737.129,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 827,
+            "level_tick": 7.907,
+            "script_tick": 99.975,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 828,
+            "level_tick": 6.027,
+            "script_tick": 1.253,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 829,
+            "level_tick": 13.114,
+            "script_tick": 92.95,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 830,
+            "level_tick": 10.007,
+            "script_tick": 1.015,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 831,
+            "level_tick": 8.699,
+            "script_tick": 87.896,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 832,
+            "level_tick": 9.028,
+            "script_tick": 0.421,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 833,
+            "level_tick": 7.453,
+            "script_tick": 120.941,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 834,
+            "level_tick": 12.451,
+            "script_tick": 0.409,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 835,
+            "level_tick": 8.817,
+            "script_tick": 91.263,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 836,
+            "level_tick": 8.78,
+            "script_tick": 0.505,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 837,
+            "level_tick": 7.393,
+            "script_tick": 91.388,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 838,
+            "level_tick": 8.664,
+            "script_tick": 0.564,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 839,
+            "level_tick": 10.214,
+            "script_tick": 101.64,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 840,
+            "level_tick": 9.203,
+            "script_tick": 0.597,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 841,
+            "level_tick": 8.54,
+            "script_tick": 91.408,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 842,
+            "level_tick": 8.535,
+            "script_tick": 0.47,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 843,
+            "level_tick": 7.906,
+            "script_tick": 88.457,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 844,
+            "level_tick": 8.01,
+            "script_tick": 0.392,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 845,
+            "level_tick": 7.076,
+            "script_tick": 86.842,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 846,
+            "level_tick": 8.211,
+            "script_tick": 0.765,
+            "script_job_tick": 0.003
+          }
+        ],
+        "memorySamples": [
+          {
+            "tick": 806,
+            "name": "app_memory",
+            "used": 1968020.0,
+            "free": 1514409984.0
+          },
+          {
+            "tick": 826,
+            "name": "app_memory",
+            "used": 1968020.0,
+            "free": 1479122944.0
+          },
+          {
+            "tick": 846,
+            "name": "app_memory",
+            "used": 1968020.0,
+            "free": 1467830272.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "stations": 3200,
+      "origins": 32,
+      "workload": "refresh-save",
+      "arm": "production",
+      "repeat": 2,
+      "startTick": 864,
+      "endTick": 904,
+      "absoluteStartTick": 865,
+      "absoluteEndTick": 905,
+      "distinctQueryLocations": 32,
+      "elapsedMs": 6488,
+      "elapsedTicks": 40,
+      "effectiveTps": 6.165228113440198,
+      "meanTickIntervalMs": 162.2,
+      "p95TickIntervalMs": 2075,
+      "workloadMs": 4269,
+      "meanWorkloadMsPerBatch": 2134.5,
+      "p95WorkloadMsPerBatch": 2201,
+      "batches": 2,
+      "checksum": 64,
+      "queriesOrRefreshes": 64,
+      "workloadCadenceTicks": 20,
+      "timerResolutionMs": 1,
+      "process": {
+        "cpuSeconds": 6.449999999999989,
+        "procfsPid": 25610,
+        "cpuPercentOneCore": 99.41906952969148,
+        "rssStartBytes": 547749888,
+        "rssEndBytes": 547749888,
+        "peakSampledRssBytes": 547749888,
+        "sampleWindowSeconds": 6.487688961999083
+      },
+      "nativeDiagnostics": {
+        "file": "diagnostics_2026-11-03_12-00-19.mcstats",
+        "sha256": "956d791f4ccba26f906a1e769d5a6327b24b0deb8752ad30544251cc19dc2d63",
+        "sampleCount": 44,
+        "tickDomain": "native diagnostic capture sequence",
+        "nativeCaptureIncludesGuards": true,
+        "nativeWindowStartTick": 862,
+        "nativeWindowEndTickInclusive": 905,
+        "javascriptPhaseTickRange": [
+          864,
+          904
+        ],
+        "definition": "Complete native capture: sum of level_tick + script_tick + script_job_tick in milliseconds, no paced sleep. Includes short start/stop guards and any collector history; not filtered by JS currentTick because observed offsets can omit first-work spikes.",
+        "availableTickRange": [
+          862,
+          905
+        ],
+        "meanActiveMspt": 146.8290681818182,
+        "p95ActiveMspt": 144.841,
+        "meanCategoryMs": {
+          "level_tick": 7.322568181818181,
+          "script_tick": 139.5038181818182,
+          "script_job_tick": 0.002681818181818182
+        },
+        "tickSamples": [
+          {
+            "tick": 862,
+            "level_tick": 7.976,
+            "script_tick": 0.202,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 863,
+            "level_tick": 4.39,
+            "script_tick": 75.26,
+            "script_job_tick": 0.001
+          },
+          {
+            "tick": 864,
+            "level_tick": 5.629,
+            "script_tick": 0.257,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 865,
+            "level_tick": 9.777,
+            "script_tick": 2171.791,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 866,
+            "level_tick": 5.374,
+            "script_tick": 0.3,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 867,
+            "level_tick": 4.276,
+            "script_tick": 65.666,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 868,
+            "level_tick": 6.675,
+            "script_tick": 0.658,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 869,
+            "level_tick": 5.532,
+            "script_tick": 67.062,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 870,
+            "level_tick": 6.065,
+            "script_tick": 0.455,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 871,
+            "level_tick": 8.887,
+            "script_tick": 89.802,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 872,
+            "level_tick": 6.772,
+            "script_tick": 0.869,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 873,
+            "level_tick": 5.842,
+            "script_tick": 72.629,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 874,
+            "level_tick": 15.129,
+            "script_tick": 0.567,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 875,
+            "level_tick": 12.088,
+            "script_tick": 117.195,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 876,
+            "level_tick": 6.904,
+            "script_tick": 0.349,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 877,
+            "level_tick": 22.811,
+            "script_tick": 122.025,
+            "script_job_tick": 0.005
+          },
+          {
+            "tick": 878,
+            "level_tick": 5.835,
+            "script_tick": 0.55,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 879,
+            "level_tick": 5.402,
+            "script_tick": 81.604,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 880,
+            "level_tick": 9.283,
+            "script_tick": 0.413,
+            "script_job_tick": 0.005
+          },
+          {
+            "tick": 881,
+            "level_tick": 6.035,
+            "script_tick": 96.513,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 882,
+            "level_tick": 6.112,
+            "script_tick": 0.317,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 883,
+            "level_tick": 6.514,
+            "script_tick": 82.674,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 884,
+            "level_tick": 5.402,
+            "script_tick": 0.303,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 885,
+            "level_tick": 8.228,
+            "script_tick": 2308.978,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 886,
+            "level_tick": 7.788,
+            "script_tick": 0.388,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 887,
+            "level_tick": 5.054,
+            "script_tick": 70.293,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 888,
+            "level_tick": 7.681,
+            "script_tick": 0.84,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 889,
+            "level_tick": 7.23,
+            "script_tick": 81.878,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 890,
+            "level_tick": 5.577,
+            "script_tick": 0.296,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 891,
+            "level_tick": 6.937,
+            "script_tick": 84.06,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 892,
+            "level_tick": 8.262,
+            "script_tick": 0.461,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 893,
+            "level_tick": 4.474,
+            "script_tick": 82.908,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 894,
+            "level_tick": 8.197,
+            "script_tick": 0.406,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 895,
+            "level_tick": 10.443,
+            "script_tick": 101.389,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 896,
+            "level_tick": 8.457,
+            "script_tick": 0.481,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 897,
+            "level_tick": 7.24,
+            "script_tick": 73.101,
+            "script_job_tick": 0.003
+          },
+          {
+            "tick": 898,
+            "level_tick": 5.762,
+            "script_tick": 0.325,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 899,
+            "level_tick": 9.892,
+            "script_tick": 80.698,
+            "script_job_tick": 0.004
+          },
+          {
+            "tick": 900,
+            "level_tick": 5.649,
+            "script_tick": 0.2,
+            "script_job_tick": 0.001
+          },
+          {
+            "tick": 901,
+            "level_tick": 4.428,
+            "script_tick": 68.052,
+            "script_job_tick": 0.001
+          },
+          {
+            "tick": 902,
+            "level_tick": 5.375,
+            "script_tick": 0.176,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 903,
+            "level_tick": 5.726,
+            "script_tick": 65.98,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 904,
+            "level_tick": 5.424,
+            "script_tick": 0.157,
+            "script_job_tick": 0.002
+          },
+          {
+            "tick": 905,
+            "level_tick": 5.659,
+            "script_tick": 69.64,
+            "script_job_tick": 0.003
+          }
+        ],
+        "memorySamples": [
+          {
+            "tick": 866,
+            "name": "app_memory",
+            "used": 1968020.0,
+            "free": 1662119936.0
+          },
+          {
+            "tick": 885,
+            "name": "runtime_memory",
+            "allocated": 8352680.0,
+            "used": 5079558.0
+          },
+          {
+            "tick": 886,
+            "name": "app_memory",
+            "used": 1968020.0,
+            "free": 1619644416.0
+          }
+        ]
+      }
+    }
+  ],
+  "phaseCountMatches": true,
+  "phaseChecksumEquality": true,
+  "runtimeTreeSha256": "0fe26e9c410e8fea354a6fac5ace43ad0aa2b81af7bfdc46d76b63db8ed4a4b6",
+  "addonVersion": "0.1.5-alpha.1",
+  "gitHeadAtMeasurement": "3cdd7f7039ea6d857cab944ef97452b1e2ab6f4e",
+  "gitWorktreeDirtyAtMeasurement": false,
+  "sourceFromGitArchive": true,
+  "startedAtUtc": "2026-11-03T16:57:43.964767+00:00",
+  "probeSha256": "b64e224e08f6e08af1ba91df48c26dddc09c7ab73632026569185f6f93030f07",
+  "serverVersion": "1.26.60.6",
+  "baselineRef": "ce8a45e6c7d7bc3e8d04ce92ae2529e2c9601e49",
+  "comparisonMode": "whole-runtime-production-helper",
+  "worldSeed": "26600011",
+  "worldType": "FLAT",
+  "bdsMaxThreads": 2,
+  "requiredWorldExperiments": [
+    "gametest",
+    "poi"
+  ],
+  "baselineHelperSha256": "dc43396d307db1d4c4031abb620809b973fd50bdfbf7b5d19f2ca8cd0e8c74fc",
+  "settings": {
+    "stationCounts": [
+      80,
+      800,
+      3200
+    ],
+    "originCounts": [
+      1,
+      8,
+      32
+    ],
+    "measureTicks": 40,
+    "warmupTicks": 5,
+    "refreshEveryTicks": 20,
+    "arms": [
+      "production",
+      "production"
+    ],
+    "scenarios": [
+      {
+        "stations": 80,
+        "origins": 1
+      },
+      {
+        "stations": 800,
+        "origins": 8
+      },
+      {
+        "stations": 3200,
+        "origins": 32
+      }
+    ]
+  },
+  "host": {
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.39",
+    "logicalCpuCount": 9,
+    "cpuAffinityCount": 9,
+    "cgroupCpuMax": "800000 100000",
+    "cgroupMemoryMax": "8589934592",
+    "cpuModel": "AMD EPYC 9V74 80-Core Processor"
+  },
+  "diagnosticFiles": [
+    "diagnostics/diagnostics_2026-11-03_11-57-56.mcstats",
+    "diagnostics/diagnostics_2026-11-03_11-57-59.mcstats",
+    "diagnostics/diagnostics_2026-11-03_11-58-02.mcstats",
+    "diagnostics/diagnostics_2026-11-03_11-58-05.mcstats",
+    "diagnostics/diagnostics_2026-11-03_11-58-10.mcstats",
+    "diagnostics/diagnostics_2026-11-03_11-58-15.mcstats",
+    "diagnostics/diagnostics_2026-11-03_11-58-20.mcstats",
+    "diagnostics/diagnostics_2026-11-03_11-58-23.mcstats",
+    "diagnostics/diagnostics_2026-11-03_11-58-35.mcstats",
+    "diagnostics/diagnostics_2026-11-03_11-59-20.mcstats",
+    "diagnostics/diagnostics_2026-11-03_12-00-07.mcstats",
+    "diagnostics/diagnostics_2026-11-03_12-00-19.mcstats"
+  ],
+  "addonErrors": [],
+  "serverExitCode": 0,
+  "sourceUnchangedDuringMeasurement": true,
+  "publishedEquivalentRuntimeCommit": "05229d7376db7079384dc433652ba07f1b65087e",
+  "publishedEquivalentGitTreeSha": "ee0117d85adf222ef3dd3116d6e0f97060c03ff2",
+  "publicationSourceLocalCommit": "3cdd7f7039ea6d857cab944ef97452b1e2ab6f4e",
+  "publicationNote": "Published through the GitHub API with different commit metadata/parents. The complete Git tree matches the measured local source commit exactly. Original measurement fields and runtimeTreeSha256 are unchanged; this content-equivalence mapping does not claim an additional test run."
+}

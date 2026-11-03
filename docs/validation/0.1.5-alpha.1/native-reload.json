@@ -1,0 +1,121 @@
+{
+  "mode": "reload",
+  "passed": true,
+  "checks": [
+    {
+      "name": "production entry initialized",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restaurant restored across server restart",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "POI board positions remain indexed across BDS restart",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restarted POI restaurant retains chosen menu and selected board",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "POI absence after removal does not delete canonical shelf metadata",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "POI index does not resurrect removed shelf after restart",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native storage entity restored",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "non-stackable parcel proof restored",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native ItemStack name and lore restored",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "custom block restored across server restart",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "refrigerator native contents and name survive restart or upgrade",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "refrigerator persisted state accepts independent frame encoding",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "finished dishwasher retains all plates across restart or upgrade",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "finished dishwasher loads new final frame permutation",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "unfinished meal restores canonical token and original clock",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restart reconciles exactly one dirty visual",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restart never duplicates a completed meal customer before its deadline",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "name": "finished customer departs after its persisted deadline without respawning",
+      "passed": true,
+      "detail": "{\"remainingMsAtCheck\":0,\"actors\":0}"
+    },
+    {
+      "name": "restored dirty plate can be collected exactly once",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "stale restored meal reference cannot mint a second plate",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "addonVersion": "0.1.5-alpha.1",
+  "serverVersion": "1.26.60.6",
+  "runtimeTreeSha256": "0fe26e9c410e8fea354a6fac5ace43ad0aa2b81af7bfdc46d76b63db8ed4a4b6",
+  "addonErrors": [],
+  "requiredWorldExperiments": [
+    "gametest",
+    "poi"
+  ],
+  "scope": "Native server blocks, entities, inventory and script adapters. No real Player, client rendering, forms, touch/keyboard, or multiplayer latency is exercised.",
+  "verifiedRuntimeCommit": "3cdd7f7039ea6d857cab944ef97452b1e2ab6f4e",
+  "provenanceNote": "Tested worktree runtime fingerprint matches this subsequently committed runtime; report was not relabelled as a different source.",
+  "publishedEquivalentRuntimeCommit": "05229d7376db7079384dc433652ba07f1b65087e",
+  "publishedEquivalentGitTreeSha": "ee0117d85adf222ef3dd3116d6e0f97060c03ff2",
+  "publicationSourceLocalCommit": "3cdd7f7039ea6d857cab944ef97452b1e2ab6f4e",
+  "publicationNote": "Published through the GitHub API with different commit metadata/parents. The complete Git tree matches the measured local source commit exactly. Original measurement fields and runtimeTreeSha256 are unchanged; this content-equivalence mapping does not claim an additional test run."
+}

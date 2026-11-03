@@ -97,7 +97,7 @@
 - alpha.3 已有 [2026-11-01 限定客戶端紀錄](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md)，包含限定通過及三項 FAIL；不是整份驗收表通過。新來源修正必須使用新候選重測。
 - 歷史 alpha.2 的 127／15／12 原生斷言只適用其原始 runtime 指紋。鍵鼠、觸控、手把、真雙人、RP 畫面與表單不能由 CI 代填通過。
 
-當次證據、建置指紋及可重現方法見 [VALIDATION.md](docs/VALIDATION.md)。客戶端入口為 [DOT_HANDOFF.md](docs/DOT_HANDOFF.md)；後續待驗收範圍見 [REMAINING-SINGLEPLAYER.md](docs/validation/0.1.2-alpha.3/REMAINING-SINGLEPLAYER.md)。
+本候選的證據、建置指紋及可重現方法見 [0.1.5-alpha.1 POI 審查](docs/validation/0.1.5-alpha.1/POI_AUDIT.md)，玩家操作交接見 [本候選客戶端重測](docs/validation/0.1.5-alpha.1/CLIENT_RETEST.md)。[VALIDATION.md](docs/VALIDATION.md) 與 [DOT_HANDOFF.md](docs/DOT_HANDOFF.md) 保留 0.1.2-alpha.3 的歷史驗證及交接；[歷史單人待驗收範圍](docs/validation/0.1.2-alpha.3/REMAINING-SINGLEPLAYER.md)仍可供查漏。
 
 已保存的個人帳簿可在 profile 暫時寫入失敗後補同步；升級操作也會重試進度，不再扣款或重做升級。拆店前需完成個人帳簿對帳，待確認的設備操作事件則在正常拆除前保存。
 

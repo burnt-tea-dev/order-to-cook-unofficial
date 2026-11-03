@@ -95,7 +95,7 @@ Look at permitted appliances within **6 blocks** to see real plate counts, packi
 - The [limited 2026-11-01 alpha.3 client record](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) contains bounded passes and **three FAILs**; the full client matrix has not passed. New fixes need a new candidate retest.
 - Historical alpha.2 native assertions (127/15/12) apply only to that runtime fingerprint. Keyboard/mouse, touch, controller, genuine multiplayer, RP visuals and forms cannot be certified by CI alone.
 
-See [VALIDATION.md](docs/VALIDATION.md) for build fingerprints and evidence, [DOT_HANDOFF.md](docs/DOT_HANDOFF.md) for client handoff, and [remaining single-player cases](docs/validation/0.1.2-alpha.3/REMAINING-SINGLEPLAYER.md) for unverified coverage.
+See the [0.1.5-alpha.1 POI audit](docs/validation/0.1.5-alpha.1/POI_AUDIT.md) for this candidate's evidence, build fingerprints and reproduction steps, and its [client retest handoff](docs/validation/0.1.5-alpha.1/CLIENT_RETEST.md) for player testing. [VALIDATION.md](docs/VALIDATION.md) and [DOT_HANDOFF.md](docs/DOT_HANDOFF.md) retain historical 0.1.2-alpha.3 verification and handoff records; the [historical remaining single-player cases](docs/validation/0.1.2-alpha.3/REMAINING-SINGLEPLAYER.md) still identify unfinished coverage.
 
 Personal ledgers can catch up after temporary profile-write failure; upgrades retry the accounting without charging or upgrading again. Reconcile the personal ledger before deleting a restaurant; pending equipment actions are saved before normal demolition.
 

@@ -5,9 +5,10 @@
 ## 候選身份
 
 - 沿用 [PR #11](https://github.com/burnt-tea-dev/order-to-cook-unofficial/pull/11)；BP／RP **[0,1,5]**，npm **0.1.5-alpha.1**，UUID 不變。
-- 本次被測 runtime tree SHA-256：`e3c36f652ba50e7c646d2955109222de7f48a07503bd83ac48d39321026b00f1`。
+- 可取得的最終等價功能來源：[05229d7376db7079384dc433652ba07f1b65087e](https://github.com/burnt-tea-dev/order-to-cook-unofficial/commit/05229d7376db7079384dc433652ba07f1b65087e)。測量時本機來源是 `3cdd7f7039ea6d857cab944ef97452b1e2ab6f4e`，兩者完整 Git tree 同為 `ee0117d85adf222ef3dd3116d6e0f97060c03ff2`；API 提交只改變 commit metadata／parents，來源內容相同。原測量欄位保留，遠端對應見各 JSON 的 `publishedEquivalentRuntimeCommit`，不代表額外重測。後續純文檔提交可以前進，runtime 指紋必須一致。
+- 本次被測 runtime tree SHA-256：`0fe26e9c410e8fea354a6fac5ace43ad0aa2b81af7bfdc46d76b63db8ed4a4b6`。
 - Bedrock／BDS **26.60**、`@minecraft/server 2.12.0-beta`、`@minecraft/server-ui 2.0.0`；Beta APIs、Points of Interest 都須開啟。
-- 使用實際被測 commit 建置，記錄 commit、安裝包大小／SHA-256、客戶端完整版本、輸入方式及實際角色。來源再次改動，重做受影響驗證；不要把歷史 0.1.3 或 0.1.4 封包當作本候選。
+- 使用上述遠端等價功能 commit 建置，記錄 commit、安裝包大小／SHA-256、客戶端完整版本、輸入方式及實際角色。若需執行新 QA 工具，從包含本文件的 PR 證據提交取得工具，再指定等價功能來源；該功能提交未必包含後續新增工具。本輪未建立 `v0.1.5-alpha.1` Git tag、未發布 Release，不以 build-info 的 `sourceTag` 文字作 checkout 入口。來源再次改動，重做受影響驗證；不要把歷史 0.1.3 或 0.1.4 封包當作本候選。
 - 僅在全新測試世界或舊世界的完整副本驗收；LIVE 不屬此工作。回退使用原包及升級前的完整世界備份。
 
 ## 本輪需要真人補上的案例
