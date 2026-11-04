@@ -412,30 +412,6 @@
       "operation": "Original lamp RGB and transparency mask; nonzero alpha encoded as 64 for Bedrock emissiveness"
     },
     {
-      "source": "common/src/main/resources/assets/ordertocook/textures/block/stove_fire_0.png",
-      "output": "RP/textures/ordertocook/block/stove_fire_flipbook.png",
-      "sha256": "1e5daa50715f13ba739b52b7258a73e24884666c899da25069ab3adfbcc4a1be",
-      "operation": "Four original frames vertically concatenated; no pixel repainting"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/textures/block/stove_fire_1.png",
-      "output": "RP/textures/ordertocook/block/stove_fire_flipbook.png",
-      "sha256": "618ae232ba2f83b7be272fe4a8c72475546940c6d7acb4bd8847d8b54b47eb72",
-      "operation": "Four original frames vertically concatenated; no pixel repainting"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/textures/block/stove_fire_2.png",
-      "output": "RP/textures/ordertocook/block/stove_fire_flipbook.png",
-      "sha256": "2e7fd6c963f7312aed1dfd2b57fb583a5d78d4aa4568daf576a27ba5e7ce4954",
-      "operation": "Four original frames vertically concatenated; no pixel repainting"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/textures/block/stove_fire_3.png",
-      "output": "RP/textures/ordertocook/block/stove_fire_flipbook.png",
-      "sha256": "18fedd4de5bd5823369e76430b8d876a1f8eefd826b66831f611c8268f5f08f0",
-      "operation": "Four original frames vertically concatenated; no pixel repainting"
-    },
-    {
       "source": "common/src/main/resources/assets/ordertocook/sounds/bag_interact.ogg",
       "output": "RP/sounds/ordertocook/bag_interact.ogg",
       "sha256": "f48919e1e8e0800fd5c5c48d663b7ecaebe33fc3a3b45ff34f78f2c0e9b144f7",
@@ -2905,6 +2881,7 @@
   "adaptations": [
     "Two-part cabinet with each complete refrigerator door assigned to its own compartment and 11 reversible baked poses; at most 0.125px intermediate hinge translation keeps the sweep within 30px",
     "GeckoLib easing replaced by linear interpolation; nonuniform appliance cabinet squash omitted",
+    "Stove uses six original textures selected by saved per-stove fire phases: 15-tick ignition delay, 5-tick burst and four 8-tick cycle frames; original ignition bone squash is not rendered",
     "Dishwasher drawer, door, uniform dish scale and wash vibration sampled into at most 16 bounded poses per original phase",
     "Dining plate entity uses all 41 original stage shapes and a single exact-pixel atlas; no inventory or automatic loot",
     "Seven original customer actions and separate four-way weighted idle variation; action clip restarts on client reload while server finish time remains authoritative",

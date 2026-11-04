@@ -81,9 +81,26 @@ export function createStoveControls(ctx) {
     return { ok: true, message: `已移動 ${entries.reduce((sum, entry) => sum + entry.stack.amount, 0)} 件物品。` };
   }
 
+  // Keep direct controls and cooking-state persistence in the same synchronous
+  // transaction. A save failure restores both native inventories and lets the
+  // cooking owner restore its input fingerprint/progress, without another store.
+  function commitChange(station, stove, inventory, transfer) {
+    const beforeStove = snapshot(stove, ALL_SLOTS);
+    const beforePlayer = snapshot(inventory, slotsOf(inventory));
+    try {
+      const result = transfer();
+      if (result.ok) ctx.onChange?.(station, stove);
+      return result;
+    } catch (error) {
+      for (const entry of beforeStove) stove.setItem(entry.slot, entry.stack);
+      for (const entry of beforePlayer) inventory.setItem(entry.slot, entry.stack);
+      throw error;
+    }
+  }
+
   async function interact(player, station) {
     if (sessions.has(player.id) || !player.isValid || !ctx.isAccessible(player, station)) return;
-    const session = {};
+    const session = { player, station };
     sessions.set(player.id, session);
     const accessible = () => sessions.get(player.id) === session && player.isValid && ctx.isAccessible(player, station);
     try {
@@ -95,7 +112,8 @@ export function createStoveControls(ctx) {
       const held = initialInventory.getItem(player.selectedSlotIndex);
       const targetSlots = held && destinations(held);
       if (targetSlots) {
-        const result = ctx.transferStackToRange(initialInventory, player.selectedSlotIndex, initialStove, targetSlots, held);
+        const result = commitChange(station, initialStove, initialInventory, () =>
+          ctx.transferStackToRange(initialInventory, player.selectedSlotIndex, initialStove, targetSlots, held));
         ctx.notify(player, result.message);
         return;
       }
@@ -133,20 +151,23 @@ export function createStoveControls(ctx) {
             ctx.notify(player, "這一格已改變，請在更新後的畫面重新選擇。");
             continue;
           }
-          ctx.notify(player, ctx.transferStackToRange(liveStove, selected, liveInventory, undefined, entry.stack).message);
+          ctx.notify(player, commitChange(station, liveStove, liveInventory, () =>
+            ctx.transferStackToRange(liveStove, selected, liveInventory, undefined, entry.stack)).message);
         } else if (selected === 7) {
           const outputs = contents.filter(entry => OUTPUTS.includes(entry.slot));
           if (!matches(liveStove, outputs)) {
             ctx.notify(player, "成品已改變，請在更新後的畫面重新收取。");
             continue;
           }
-          ctx.notify(player, moveBatch(liveStove, liveInventory, outputs.filter(entry => entry.stack), slotsOf(liveInventory)).message);
+          ctx.notify(player, commitChange(station, liveStove, liveInventory, () =>
+            moveBatch(liveStove, liveInventory, outputs.filter(entry => entry.stack), slotsOf(liveInventory))).message);
         } else if (selected === 8) {
           if (!matches(liveStove, contents.slice(0, 4)) || !matches(liveInventory, refill)) {
             ctx.notify(player, "食材或燃料已改變，請在更新後的畫面重新補料。");
             continue;
           }
-          ctx.notify(player, moveBatch(liveInventory, liveStove, refill, [0, 1, 2, 3]).message);
+          ctx.notify(player, commitChange(station, liveStove, liveInventory, () =>
+            moveBatch(liveInventory, liveStove, refill, [0, 1, 2, 3])).message);
         }
       }
     } catch (error) {
@@ -156,5 +177,16 @@ export function createStoveControls(ctx) {
     }
   }
 
-  return { interact, forgetPlayer: playerId => sessions.delete(playerId) };
+  return {
+    interact,
+    forgetPlayer: playerId => sessions.delete(playerId),
+    forgetStation: stationId => {
+      for (const [id, session] of sessions) if (session.station.id === stationId) sessions.delete(id);
+    },
+    forgetInaccessible: () => {
+      for (const [id, session] of sessions) {
+        if (!session.player.isValid || !ctx.isAccessible(session.player, session.station)) sessions.delete(id);
+      }
+    },
+  };
 }

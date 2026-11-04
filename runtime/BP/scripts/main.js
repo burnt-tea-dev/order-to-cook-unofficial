@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Bedrock adapter. World state, inventory and UI stay outside the pure order core.
-import { world, system, ItemStack, BlockPermutation, GameMode } from '@minecraft/server';
+import { world, system, ItemStack, ItemTypes, BlockPermutation, GameMode } from '@minecraft/server';
 import {
   createRestaurant, refreshOrders, acceptOrder, packOrder, completeOrder,
   cancelOrder, expireOrders, upgradeRestaurant, getUpgradeQuote,
@@ -24,6 +24,7 @@ import { notify, choose, textInput, safely } from './ui.js';
 import { createEntityService } from './entities.js';
 import { createApplianceService } from './appliances.js';
 import { isFridge, isUpperFridge } from './native_fridge.js';
+import { createSmokingRecipeRegistry } from './smoking_recipes.js';
 import { createDiningService, DINING_ENTITY } from './dining.js';
 import { progressRows } from './progression.js';
 import { createProgressionService, creditCompletedOrder, queueProgressEvent } from './progression_service.js';
@@ -1061,7 +1062,8 @@ world.afterEvents.worldLoad.subscribe(() => {
     }
     const rawWeather = world.getDynamicProperty('ordertocook:weather');
     if (typeof rawWeather === 'string') for (const [id, weather] of JSON.parse(rawWeather)) if (!weatherByDimension.has(id)) weatherByDimension.set(id, weather);
-    const context = { world, system, getStation, saveStation, deleteStation, stations, getRestaurant, restaurants, saveRestaurant, notify, canUseStation, food: { isFood: stack => !!foodFromStack(stack) }, onCustomerInteract: customerInteract };
+    const smoking = createSmokingRecipeRegistry({ hasItem: id => !!ItemTypes.get(id) });
+    const context = { world, system, getStation, saveStation, deleteStation, stations, getRestaurant, restaurants, saveRestaurant, notify, canUseStation, smokingRecipes: smoking.recipes, food: { isFood: stack => !!foodFromStack(stack) }, onCustomerInteract: customerInteract };
     progression = createProgressionService({ getProfile, saveProfile, restaurants, saveRestaurant, saveStation,
       onUnlock: (playerId, definitions) => {
         const player = world.getAllPlayers().find(value => value.id === playerId);
@@ -1083,6 +1085,16 @@ world.afterEvents.worldLoad.subscribe(() => {
     system.runInterval(updateHud, 10);
     registerConfiguration();
     requestFoodCatalogs();
+    // Recipe suppliers announce after their own worldLoad and answer this one
+    // deferred request. Both startup orders work without polling or saved caches.
+    system.afterEvents.scriptEventReceive.subscribe(event => {
+      if (!ready || event.id !== 'ordertocook:smoking_recipes_v1' || event.sourceType !== 'Server') return;
+      try {
+        const result = smoking.registerProvider(JSON.parse(event.message));
+        if (!result.ok) console.warn(`[OrderToCook] Smoking provider rejected: ${result.reason}`);
+      } catch (error) { console.warn(`[OrderToCook] Invalid smoking provider message: ${error}`); }
+    });
+    system.run(() => system.sendScriptEvent('ordertocook:request_smoking_recipes_v1', JSON.stringify({ version: 1 })));
     console.warn('[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.');
   } catch (error) { console.error(`[OrderToCook] Initialization stopped; saved data was preserved. ${error}`); }
 });

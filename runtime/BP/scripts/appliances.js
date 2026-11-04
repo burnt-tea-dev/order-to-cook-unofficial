@@ -6,6 +6,10 @@ import { advanceDoorMotion, dishwasherFrame, APPLIANCE_TICK_INTERVAL, FRIDGE_MOT
 import { formatEquipmentInspection, INSPECTION_TYPES } from "./equipment_inspection.js";
 import { createNativeFridgeStorage, FRIDGE_UPPER, isFridge, isUpperFridge } from "./native_fridge.js";
 import { createStoveControls } from "./stove_controls.js";
+import { SMOKING_RECIPES } from "./smoking_recipes.js";
+import { initializeStoveFire, igniteStoveFire, advanceStoveFire, stoveFireFrame } from "./stove_fire.js";
+
+export { SMOKING_RECIPES };
 
 const NS = "ordertocook:";
 const FRIDGE = `${NS}refrigerator`;
@@ -17,19 +21,6 @@ const DIRTY = `${NS}dirty_plate`;
 const CLEAN = `${NS}clean_plate`;
 const KINDS = new Set([FRIDGE, FRIDGE_UPPER, STOVE, SINK, DISHWASHER]);
 const storageForms = new Set();
-
-/** Explicit baseline: Script API 2.0.0 cannot query the smoking recipe registry. */
-export const SMOKING_RECIPES = Object.freeze({
-  "minecraft:beef": "minecraft:cooked_beef",
-  "minecraft:porkchop": "minecraft:cooked_porkchop",
-  "minecraft:chicken": "minecraft:cooked_chicken",
-  "minecraft:mutton": "minecraft:cooked_mutton",
-  "minecraft:rabbit": "minecraft:cooked_rabbit",
-  "minecraft:cod": "minecraft:cooked_cod",
-  "minecraft:salmon": "minecraft:cooked_salmon",
-  "minecraft:potato": "minecraft:baked_potato",
-  "minecraft:kelp": "minecraft:dried_kelp",
-});
 
 /** Burn times in game ticks. Only known, explicitly supported fuels are accepted. */
 export const FUEL_TICKS = Object.freeze({
@@ -241,6 +232,11 @@ export async function openContainerForm(ctx, player, resolveContainer, title, op
         const refreshed = resolveContainer();
         const refreshedPlayer = playerInventory(player);
         if (!refreshed?.isValid || !refreshedPlayer?.isValid) return;
+        const selectedStack = mode === "put" ? refreshedPlayer.getItem(entry.slot) : undefined;
+        if (mode === "put" && options.accept && (!selectedStack || !options.accept(selectedStack))) {
+          say(ctx, player, "所選物品目前不能放入這個分區。");
+          return;
+        }
         const result = mode === "put"
           ? transferStackToRange(refreshedPlayer, entry.slot, refreshed, range, entry.stack)
           : transferStackToRange(refreshed, entry.slot, refreshedPlayer, undefined, entry.stack);
@@ -273,9 +269,12 @@ export function createApplianceService(ctx) {
   const washingFeedback = new Map();
   const viewers = new Map();
   const doorPositions = new Map();
+  const initializedStoves = new Set();
   let lastTick = -1;
   let lastRecoveryTick = -100;
-  const recipes = { ...SMOKING_RECIPES, ...(ctx.smokingRecipes ?? {}) };
+  // Keep the provider's live registry: late announcements and withdrawals must
+  // reach existing stoves. Legacy callers may still supply input -> output IDs.
+  const recipes = ctx.smokingRecipes ?? {};
   const fuelTicks = { ...FUEL_TICKS, ...(ctx.fuelTicks ?? {}) };
   const nativeFridge = createNativeFridgeStorage({
     loadedBlock: loadedStation, saveStation: ctx.saveStation,
@@ -284,8 +283,13 @@ export function createApplianceService(ctx) {
   const stoveControls = createStoveControls({
     getStorage, isAccessible: accessible, playerInventory, transferStackToRange,
     itemLabel, fingerprint: itemFingerprint,
-    isIngredient: stack => !!recipes[stack.typeId], isFuel: stack => fuelTicks[stack.typeId] > 0,
+    isIngredient: stack => !!recipeResult(stack), isFuel: stack => fuelTicks[stack.typeId] > 0,
     makeForm: () => new ActionFormData(), notify: (player, message) => say(ctx, player, message), getProgress: data,
+    onChange: (station, inventory) => {
+      const d = data(station), before = { inputKeys: d.inputKeys, cookProgress: d.cookProgress };
+      try { syncStoveInputs(station, inventory); ctx.saveStation(station); }
+      catch (error) { Object.assign(d, before); throw error; }
+    },
   });
 
   function placeFridgeUpper(lower, upper) {
@@ -379,7 +383,10 @@ export function createApplianceService(ctx) {
       setState(block, `${NS}plates`, d.plates % 16);
       setState(block, `${NS}plates_high`, d.plates === 16);
     }
-    if (station.typeId === STOVE) setState(block, `${NS}lit`, d.litTime > 0);
+    if (station.typeId === STOVE) {
+      setState(block, `${NS}lit`, d.litTime > 0);
+      setState(block, `${NS}fire_frame`, stoveFireFrame(d));
+    }
   }
 
   function accessible(player, station) {
@@ -637,25 +644,56 @@ export function createApplianceService(ctx) {
   }
 
   async function openStove(player, station) {
+    const inventory = getStorage(station);
+    if (inventory && syncStoveInputs(station, inventory)) ctx.saveStation(station);
     return stoveControls.interact(player, station);
   }
 
+  function stoveInputKeys(container) {
+    return [0, 1, 2].map(lane => {
+      const item = container.getItem(lane);
+      if (!item) return "";
+      item.amount = 1; // Java identity excludes count; same-stack top-ups keep progress.
+      return itemFingerprint(item);
+    });
+  }
+
+  function syncStoveInputs(station, container) {
+    const d = data(station), keys = stoveInputKeys(container);
+    const previous = d.inputKeys;
+    if (previous && keys.every((key, lane) => key === previous[lane])) return false;
+    // Old saves lack the fingerprints: seed them without discarding valid progress.
+    if (previous) d.cookProgress = 0;
+    d.inputKeys = keys;
+    return true;
+  }
+
+  function recipeResult(input) {
+    if (!input) return undefined;
+    const recipe = recipes[input.typeId] ?? SMOKING_RECIPES[input.typeId];
+    const output = typeof recipe === "string" ? recipe : recipe?.output;
+    const count = typeof recipe === "string" ? 1 : recipe?.count;
+    if (!output || !Number.isInteger(count) || count < 1) return undefined;
+    try {
+      const result = new ItemStack(output, count);
+      return count <= result.maxAmount && result.amount === count ? result : undefined;
+    } catch { return undefined; } // A removed supplier cannot mint a missing item.
+  }
+
   function canCook(container, lane) {
-    const input = container.getItem(lane);
-    const resultId = input && recipes[input.typeId];
-    if (!resultId) return false;
-    let result;
-    try { result = new ItemStack(resultId); } catch { return false; }
+    const result = recipeResult(container.getItem(lane));
+    if (!result) return false;
     const output = container.getItem(lane + 4);
-    return !output || (output.isStackableWith(result) && output.amount < output.maxAmount);
+    return !output || (output.isStackableWith(result) && output.amount + result.amount <= output.maxAmount);
   }
 
   function cookLane(container, lane) {
     if (!canCook(container, lane)) return;
     const input = container.getItem(lane);
     const beforeOutput = container.getItem(lane + 4);
-    const output = beforeOutput ? beforeOutput.clone() : new ItemStack(recipes[input.typeId]);
-    if (beforeOutput) output.amount++;
+    const result = recipeResult(input);
+    const output = beforeOutput ? beforeOutput.clone() : result;
+    if (beforeOutput) output.amount += result.amount;
     const remainder = input.clone();
     try {
       if (remainder.amount === 1) container.setItem(lane, undefined);
@@ -672,8 +710,10 @@ export function createApplianceService(ctx) {
     const d = data(station);
     const inventory = getStorage(station);
     if (!inventory) return;
-    let changed = false;
+    let changed = syncStoveInputs(station, inventory);
     for (let step = 0; step < ticks; step++) {
+      const effect = advanceStoveFire(d);
+      if (effect) stoveFeedback(station, effect);
       if (d.litTime > 0) { d.litTime--; changed = true; }
       const possible = [0, 1, 2].some(lane => canCook(inventory, lane));
       if (d.litTime <= 0 && possible) {
@@ -685,30 +725,49 @@ export function createApplianceService(ctx) {
           else { fuel.amount--; inventory.setItem(3, fuel); }
           d.litTime = duration;
           d.litDuration = duration;
+          igniteStoveFire(d);
           changed = true;
-          const block = loadedStation(station);
-          if (block) safeSound(block.dimension, "fire.ignite", center(block.location), 0.6);
         }
       }
       if (d.litTime > 0 && possible) {
         d.cookProgress++;
         changed = true;
         if (d.cookProgress >= 200) {
-          for (let lane = 0; lane < 3; lane++) cookLane(inventory, lane);
+          const before = [0, 1, 2, 4, 5, 6].map(slot => ({ slot, item: inventory.getItem(slot) }));
+          try {
+            for (let lane = 0; lane < 3; lane++) cookLane(inventory, lane);
+          } catch (error) {
+            for (const { slot, item } of before) inventory.setItem(slot, item);
+            d.cookProgress = 199;
+            ctx.saveStation(station);
+            throw error;
+          }
           d.cookProgress = 0;
-          ctx.saveStation(station);
+          // Internal shrink is not a player changing the input identity.
+          d.inputKeys = stoveInputKeys(inventory);
         }
       } else if (d.litTime <= 0 && d.cookProgress > 0) {
         d.cookProgress = Math.max(0, d.cookProgress - 2);
         changed = true;
       }
     }
-    if (changed && gameSystem.currentTick % 20 < ticks) ctx.saveStation(station);
+    // Persist one processed update (normally two ticks), including ignition and
+    // the exact remaining fuel/progress. A shutdown before-event cannot write
+    // world state, and a 20-tick checkpoint would rewind an ordinary restart.
+    if (changed) ctx.saveStation(station);
     updateVisual(station);
-    if (d.litTime > 0 && gameSystem.currentTick % 20 < ticks) {
-      const block = loadedStation(station);
-      if (block) safeParticle(block.dimension, "minecraft:basic_smoke_particle", center(block.location, 0.75));
-    }
+  }
+
+  function stoveFeedback(station, effect) {
+    const block = loadedStation(station);
+    if (!block) return;
+    const facing = block.permutation.getState("minecraft:cardinal_direction");
+    const direction = { north: [0, -1], south: [0, 1], west: [-1, 0], east: [1, 0] }[String(facing)] ?? [0, -1];
+    const position = { x: block.location.x + 0.5 + direction[0] * 0.375,
+      y: block.location.y + 0.4, z: block.location.z + 0.5 + direction[1] * 0.375 };
+    if (effect === "burst") safeSound(block.dimension, "item.firecharge.use", center(block.location), 1, 1);
+    for (let i = 0; i < (effect === "burst" ? 12 : 3); i++) safeParticle(block.dimension, "minecraft:basic_flame_particle", position);
+    if (effect === "burst") for (let i = 0; i < 6; i++) safeParticle(block.dimension, "minecraft:basic_smoke_particle", position);
   }
 
   function tickDishwasher(station, ticks) {
@@ -849,6 +908,8 @@ export function createApplianceService(ctx) {
       }
       ctx.deleteStation(station.id);
       clocks.delete(station.id);
+      initializedStoves.delete(station.id);
+      stoveControls.forgetStation(station.id);
       resetFridgeSessions(station);
       for (const [id, session] of washing) if (session.station.id === station.id) washing.delete(id);
     }
@@ -904,15 +965,25 @@ export function createApplianceService(ctx) {
     const now = gameSystem.currentTick;
     if (now === lastTick) return;
     lastTick = now;
+    stoveControls.forgetInaccessible();
     for (const [id, feedback] of washingFeedback) if (now >= feedback.until) washingFeedback.delete(id);
     tickWashing();
     for (const station of ctx.stations?.() ?? []) {
       if (!KINDS.has(station.typeId)) continue;
       const block = loadedStation(station);
-      if (!block) { clocks.delete(station.id); if (station.typeId === FRIDGE) resetFridgeSessions(station); continue; }
+      if (!block) {
+        clocks.delete(station.id);
+        initializedStoves.delete(station.id);
+        if (station.typeId === FRIDGE) resetFridgeSessions(station);
+        continue;
+      }
       const delta = Math.max(0, Math.min(20, now - (clocks.get(station.id) ?? now)));
       clocks.set(station.id, now);
       try {
+        if (station.typeId === STOVE && !initializedStoves.has(station.id)) {
+          initializeStoveFire(data(station));
+          initializedStoves.add(station.id);
+        }
         if (station.typeId === STOVE && delta) tickStove(station, delta);
         else if (station.typeId === DISHWASHER && delta) tickDishwasher(station, delta);
         if (station.typeId === FRIDGE) { nativeFridge.ensure(station); tickFridge(station, delta); }

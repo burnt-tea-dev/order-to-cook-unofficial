@@ -1,0 +1,91 @@
+{
+  "mode": "initial",
+  "passed": true,
+  "checks": [
+    {
+      "name": "production entry and all baseline/native fixture item identifiers are registered",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "name": "specialized grilling process is refused through the real supplier event ingress",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "uninstalled output ID cannot create a valid supplier recipe",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "real main scheduler does not complete an ordinary batch before 200 ticks",
+      "passed": true,
+      "detail": "elapsed=190"
+    },
+    {
+      "name": "real main scheduler cooks all three lanes using one fuel after the Java batch interval",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "late provider event reaches an already-created production stove and produces its actual count two",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "provider withdrawal stops existing production stoves without consuming the raw item",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "count-two capacity blocks only its lane, invalid raw is retained, and freed capacity resumes output",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native output metadata blocks mixing and a fully blocked stove does not ignite fuel",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native fuel exhaustion cools by two and the last burn tick cannot finish a 199-tick batch",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native lava fuel leaves one empty bucket and immediately persists all 20000 burn ticks",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "replacing real native input resets the shared batch and the replacement needs its own 200 ticks",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native transfers preserve ItemStack metadata and a full 36-slot destination leaves all source items intact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "all six stove fire frames are valid native permutations",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native world checkpoint retains the exact partial batch and spent fuel before shutdown",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "addonVersion": "0.1.2-alpha.3",
+  "serverVersion": "1.26.60.6",
+  "runtimeTreeSha256": "b2794c2064cd600e2975c64836f27335e7b4cb5105ee11fa5b6a084dc52b69d8",
+  "addonErrors": [],
+  "scope": "Real BDS ItemStacks, inventories, block states, main scheduling and supplier script-event ingress. Most edge cases use a controlled service clock over native objects. Initial/reload are separate server processes with real disk persistence. Two synthetic QA item IDs only; this does not certify an installed Grilling pack, real Player forms, client rendering/sound, or physical chunk unload.",
+  "suite": "stove",
+  "qaSourceSha256": {
+    "tools/bedrock_smoke.py": "0fcf323883b72f7170c040158cd6b18bd5a772f7bf1119575adf83888bd82c27",
+    "tests/bedrock-stove-smoke.js": "664967ce573bf33e1509a96dde6dbe08315f0793b0eeddfd843b144d21f58cbb"
+  }
+}

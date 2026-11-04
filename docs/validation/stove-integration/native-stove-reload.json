@@ -1,0 +1,36 @@
+{
+  "mode": "reload",
+  "passed": true,
+  "checks": [
+    {
+      "name": "real server restart restores the same stove block and native storage entity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "all seven native slots and input metadata survive the real disk save",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "offline time and unrelated main scheduling do not advance the isolated saved stove",
+      "passed": true,
+      "detail": "{\"expected\":[73,1528],\"actual\":[73,1528]}"
+    },
+    {
+      "name": "restored fuel and progress finish exactly one batch without repeating ignition or debiting fuel twice",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "addonVersion": "0.1.2-alpha.3",
+  "serverVersion": "1.26.60.6",
+  "runtimeTreeSha256": "b2794c2064cd600e2975c64836f27335e7b4cb5105ee11fa5b6a084dc52b69d8",
+  "addonErrors": [],
+  "scope": "Real BDS ItemStacks, inventories, block states, main scheduling and supplier script-event ingress. Most edge cases use a controlled service clock over native objects. Initial/reload are separate server processes with real disk persistence. Two synthetic QA item IDs only; this does not certify an installed Grilling pack, real Player forms, client rendering/sound, or physical chunk unload.",
+  "suite": "stove",
+  "qaSourceSha256": {
+    "tools/bedrock_smoke.py": "0fcf323883b72f7170c040158cd6b18bd5a772f7bf1119575adf83888bd82c27",
+    "tests/bedrock-stove-smoke.js": "664967ce573bf33e1509a96dde6dbe08315f0793b0eeddfd843b144d21f58cbb"
+  }
+}

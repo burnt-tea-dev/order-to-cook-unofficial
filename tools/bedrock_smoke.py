@@ -19,8 +19,12 @@ ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser()
 parser.add_argument('--server-dir', type=Path, required=True)
 parser.add_argument('--mode', choices=['initial', 'reload', 'upgrade'], default='initial')
+parser.add_argument('--suite', choices=['full', 'stove'], default='full')
+parser.add_argument('--output-dir', type=Path, help='Report directory; stove defaults to docs/validation/stove-integration, without replacing historical reports.')
 parser.add_argument('--timeout', type=int, default=75)
 args = parser.parse_args()
+if args.suite == 'stove' and args.mode == 'upgrade':
+    raise SystemExit('The stove probe supports initial and reload; it has no historical upgrade fixture.')
 runtime = args.server_dir.resolve()
 if not (runtime / 'bedrock_server').is_file():
     raise SystemExit('Provide a fresh extracted Linux Bedrock Dedicated Server directory.')
@@ -44,9 +48,20 @@ for short, kind in [('BP', 'behavior_packs'), ('RP', 'resource_packs')]:
     shutil.copytree(ROOT / 'runtime' / short, destination)
     manifest = json.loads((destination / 'manifest.json').read_text())
     if short == 'BP':
-        for probe in ['bedrock-smoke.js', 'bedrock-customer-checks.js']:
+        probes = ['bedrock-stove-smoke.js'] if args.suite == 'stove' else ['bedrock-smoke.js', 'bedrock-customer-checks.js']
+        for probe in probes:
             shutil.copyfile(ROOT / 'tests' / probe, destination / 'scripts' / probe)
-        (destination / 'scripts/qa-entry.js').write_text("import './main.js';\nimport './bedrock-smoke.js';\n")
+        (destination / 'scripts/qa-entry.js').write_text(f"import './main.js';\nimport './{probes[0]}';\n")
+        if args.suite == 'stove':
+            # Synthetic supplier items exist only in this disposable test copy.
+            # They are never added to runtime/, build.py output, or another Addon.
+            for name in ['raw', 'cooked']:
+                fixture = {'format_version': '1.21.100', 'minecraft:item': {
+                    'description': {'identifier': f'otc_stove_probe:{name}'},
+                    'components': {'minecraft:display_name': {'value': f'OTC QA synthetic {name}'},
+                                   'minecraft:icon': {'textures': {'default': 'ordertocook_clean_plate'}},
+                                   'minecraft:max_stack_size': 64}}}
+                (destination / 'items' / f'qa_stove_{name}.json').write_text(json.dumps(fixture, indent=2))
         next(module for module in manifest['modules'] if module['type'] == 'script')['entry'] = 'scripts/qa-entry.js'
         (destination / 'manifest.json').write_text(json.dumps(manifest, indent=2))
     (world / ('world_' + kind + '.json')).write_text(json.dumps([{'pack_id': manifest['header']['uuid'], 'version': manifest['header']['version']}]))
@@ -136,16 +151,21 @@ finally:
     if process.poll() is None:
         process.kill()
     selector.close()
-(runtime / f'native-{args.mode}.log').write_text('\n'.join(lines) + '\n', encoding='utf-8')
+report_name = f'native-stove-{args.mode}' if args.suite == 'stove' else f'native-{args.mode}'
+(runtime / (report_name + '.log')).write_text('\n'.join(lines) + '\n', encoding='utf-8')
 if report is None:
     print('\n'.join(lines[-35:]))
     raise SystemExit('Native probe did not produce its completion report; see disposable server log.')
 pack_version = json.loads((ROOT / 'package.json').read_text())['version']
 report.update({'addonVersion': pack_version, 'serverVersion': version, 'runtimeTreeSha256': source_hash.hexdigest(), 'addonErrors': addon_errors,
                'scope': 'Native server blocks, entities, inventory and script adapters. No real Player, client rendering, forms, touch/keyboard, or multiplayer latency is exercised.'})
+if args.suite == 'stove':
+    report.update({'suite': 'stove', 'qaSourceSha256': {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
+                   for name in ['tools/bedrock_smoke.py', 'tests/bedrock-stove-smoke.js']},
+                   'scope': 'Real BDS ItemStacks, inventories, block states, main scheduling and supplier script-event ingress. Most edge cases use a controlled service clock over native objects. Initial/reload are separate server processes with real disk persistence. Two synthetic QA item IDs only; this does not certify an installed Grilling pack, real Player forms, client rendering/sound, or physical chunk unload.'})
 report['passed'] = report['passed'] and not addon_errors
-output = ROOT / 'docs/validation' / pack_version
+output = args.output_dir.resolve() if args.output_dir else ROOT / 'docs/validation' / ('stove-integration' if args.suite == 'stove' else pack_version)
 output.mkdir(exist_ok=True, parents=True)
-(output / f'native-{args.mode}.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+(output / (report_name + '.json')).write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 if not report['passed']:
     raise SystemExit('Native probe has failures.')
