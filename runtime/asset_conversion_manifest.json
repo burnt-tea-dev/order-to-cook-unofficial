@@ -3184,6 +3184,18 @@
       "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
     },
     {
+      "source": "common/src/main/resources/assets/ordertocook/npc_names.json",
+      "output": "BP/scripts/customer_names.js",
+      "sha256": "c2251f72bebf6cce6135ccc6ca9e4a68a2809f47986e06aedd5c4d70a7320357",
+      "operation": "Original customer names; Java insertion-order deduplication and trimming"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/npc_names_en_us.json",
+      "output": "BP/scripts/customer_names.js",
+      "sha256": "f32db6016e638441b8e2734155231d88cbd082744ac604bf99a4b16c4bdd5ce6",
+      "operation": "Original customer names; Java insertion-order deduplication and trimming"
+    },
+    {
       "source": "common/src/main/resources/assets/ordertocook/models/block/clean_plate.json",
       "output": "RP/textures/items/clean_plate.png",
       "sha256": "6d4d5c4ad1189c7502c42e3225d66c752348342434821e47e10ac0cd9b3c89df",

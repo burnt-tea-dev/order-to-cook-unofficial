@@ -52,6 +52,8 @@ export const DEFAULT_CONFIG = Object.freeze({
   longMaxDistance: 3000,
   normalCustomerRate: 0.90,
   easterEggCustomerRate: 0.10,
+  customerFemaleRate: 0.50,
+  namesLanguage: 'default',
   tipNormalChance: 0.10,
   tipUrgentChance: 0.50,
   tipEasterEggCustomerChance: 1.0,
