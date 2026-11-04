@@ -1,0 +1,40 @@
+name: Temporary closeout workspace
+on:
+  push:
+    branches: [integration/closeout-20261104]
+    paths: [.github/workflows/closeout-workspace.yml]
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Export source objects and installed development dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/otc-closeout
+          for pr in 15 16 18 19 20 21; do
+            git fetch --no-tags origin "pull/${pr}/head:refs/heads/source-pr-${pr}"
+          done
+          git bundle create /tmp/otc-closeout/otc.bundle HEAD refs/remotes/origin/main refs/heads/source-pr-15 refs/heads/source-pr-16 refs/heads/source-pr-18 refs/heads/source-pr-19 refs/heads/source-pr-20 refs/heads/source-pr-21
+          tar -czf /tmp/otc-closeout/node_modules.tar.gz node_modules
+          git for-each-ref --format='%(refname) %(objectname)' refs/heads/source-pr- refs/remotes/origin/main > /tmp/otc-closeout/source-refs.txt
+          sha256sum /tmp/otc-closeout/*.bundle /tmp/otc-closeout/*.tar.gz > /tmp/otc-closeout/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: otc-closeout-workspace
+          path: /tmp/otc-closeout/
+          retention-days: 1
+# Temporary source transport only: no secret files, .git/config, author downloads,
+# world files, LIVE operations, new test gate, release or deployment. Removed
+# from the final integration tree after local resolution and existing tests.
