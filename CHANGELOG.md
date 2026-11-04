@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.9-alpha.1
+
+- Select the original seven named Easter egg customers at Java’s default 10% rate for machine and walk-in orders. Preserve their name, account, UUID and special flag in the order; actor retries do not reroll them.
+- Generate ordinary names from the pinned original locale lists and use Java’s default 50% slim/wide split. Names are deduplicated by the existing asset converter.
+- Wire the persisted identity into the existing actual-handoff special tips and 60% seated reaction; display the original special names in red. Remote player skins remain unported and use the bundled wide fallback.
+- Advance paired BP/RP/modules/dependency identity to 0.1.9 and append its runtime trees. Source regressions cover profile boundaries, acceptance/packing/store reload and real handoff rewards. The isolated observer adds an original special-order identity check across the same-world restart.
+
 ## 0.1.8-alpha.1
 
 - Complete the expired-takeout advancement from native consumption, with no nutrition or saturation gain. New parcels retain their deadline after order-history trimming.

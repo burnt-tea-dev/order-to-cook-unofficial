@@ -942,6 +942,19 @@ def render_item_icon(model_name, dest):
     record(model_path(model_name), dest, "Orthographic thumbnail rendered from original model and texture pixels")
 
 
+def make_customer_names():
+    """NpcNames.java trims and deduplicates each locale in insertion order."""
+    destination = BP / "scripts/customer_names.js"
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    source = "// SPDX-License-Identifier: GPL-3.0-only\n// Generated from pinned upstream npc_names*.json by tools/convert_assets.py.\n"
+    for key, filename in (("DEFAULT_CUSTOMER_NAMES", "npc_names.json"), ("ENGLISH_CUSTOMER_NAMES", "npc_names_en_us.json")):
+        path = ASSETS / filename
+        names = list(dict.fromkeys(name.strip() for name in read_json(path)["npc_names"] if isinstance(name, str) and name.strip()))
+        source += f"export const {key} = Object.freeze(" + json.dumps(names, ensure_ascii=False) + ");\n"
+        record(path, destination, "Original customer names; Java insertion-order deduplication and trimming")
+    destination.write_text(source, encoding="utf-8")
+
+
 def make_items():
     flat = {f"chef_coin_{n}": f"item/chef_coin_{n}" for n in (1,5,20,100,10000)}
     flat.update({"order": "item/order", "otc_upgrade_box": "item/otc_upgrade_box", "guide": "item/guide_book", "controller": "item/order"})
@@ -1499,6 +1512,7 @@ def main():
     make_textures_and_sounds()
     animations=convert_animations()
     make_blocks()
+    make_customer_names()
     make_items()
     make_helmet_attachable()
     make_entities(animations)

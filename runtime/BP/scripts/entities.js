@@ -331,7 +331,7 @@ export function createEntityService(ctx) {
       entity.addTag(`${NS}order_customer`);
       property(entity, "variant", [0, 1].includes(order.customerVariant) ? order.customerVariant : stableVariant(order.id));
       property(entity, "stage", "waiting");
-      entity.nameTag = `${order.customerName || (order.type === "delivery" ? "外送顧客" : "堂食顧客")}\n§e${restaurant.name || "餐廳"} · ${String(order.id).slice(-6)}`;
+      entity.nameTag = `${order.easterEgg ? '§c' : ''}${order.customerName || (order.type === "delivery" ? "外送顧客" : "堂食顧客")}§r\n§e${restaurant.name || "餐廳"} · ${String(order.id).slice(-6)}`;
       if (chair && !sitOnChair(entity, chair)) { entity.remove(); return undefined; }
       startSpawnAction(entity, !!chair);
       order.customerEntityId = entity.id;

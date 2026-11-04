@@ -2,11 +2,11 @@
 
 **简体中文** · [繁體中文](README.md) · [English](README.en.md)
 
-**当前源码版本为 `0.1.8-alpha.1`（尚未发布）：冰箱改为上 27／下 54 格原生容器，炉灶和操作台减少操作步骤，洗碗机加强批次存取。需要 Bedrock 26.60 和 Upcoming Creator Features。完整 Java 等价及真实客户端验收尚未完成。** [本轮验证](docs/validation/0.1.5-alpha.1/CONTAINER_GUI.md) · [原生容器能力与限制](docs/NATIVE-CONTAINERS.md)
+**当前源码版本为 `0.1.9-alpha.1`（尚未发布）：冰箱改为上 27／下 54 格原生容器，炉灶和操作台减少操作步骤，洗碗机加强批次存取。需要 Bedrock 26.60 和 Upcoming Creator Features。完整 Java 等价及真实客户端验收尚未完成。** [本轮验证](docs/validation/0.1.5-alpha.1/CONTAINER_GUI.md) · [原生容器能力与限制](docs/NATIVE-CONTAINERS.md)
 
 历史 `0.1.2-alpha.3` 的限定客户端记录含冰箱几何、手洗粒子和进度灰字 FAIL，不能作为本版验收结果：[历史实机记录](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [按钮可读性修复](docs/validation/UNRELEASED-button-contrast.md)。
 
-**当前源码为 `0.1.8-alpha.1` 视觉／音效候选**：修正冰箱内壁与开关曲线、洗碗机变形及预览、餐盘初始食物、顾客时序、打单机／外卖袋动画，以及已确认的声音和粒子差异。修正与可复现证据见 [VISUAL_AUDIO_PARITY.md](docs/VISUAL_AUDIO_PARITY.md)。本轮尚未执行 Blockbench 交互检查或 Java／Bedrock 客户端画面复验；离线对照不改写上述历史实测结果，也不代表完整一比一完成。
+**当前源码为 `0.1.9-alpha.1` 视觉／音效候选**：修正冰箱内壁与开关曲线、洗碗机变形及预览、餐盘初始食物、顾客时序、打单机／外卖袋动画，以及已确认的声音和粒子差异。修正与可复现证据见 [VISUAL_AUDIO_PARITY.md](docs/VISUAL_AUDIO_PARITY.md)。本轮尚未执行 Blockbench 交互检查或 Java／Bedrock 客户端画面复验；离线对照不改写上述历史实测结果，也不代表完整一比一完成。
 
 
 原作作者：**breezeth** — [CurseForge](https://www.curseforge.com/minecraft/mc-mods/order-to-cook) · [Java 源代码](https://github.com/breezeth-CN/OrdertoCook)。本项目由 `casama233`／`burnt-tea-dev` 维护，保留上游 GPLv3、作者署名和素材来源。有关补充素材使用范围的询问尚未收到回复，作为非阻塞事项记录；作者未回复不阻止功能开发，但实际许可证冲突仍须处理。
@@ -84,7 +84,7 @@
 - 洗碗机持脏盘准星预览已接线，由合资格玩家共用方块姿态；Java 是每客户端独立预览。外卖袋放置动画在卸载时暂停，打单机重启后恢复待取纸张；实机播放节奏仍待比较。
 - 立牌与打单机掉落物尚未保留 Java 菜单／餐厅资料及机器 ID 的 NBT，不能将普通方块掉落视为元数据还原完成。
 - 26.60 没有可用的原生容器强制关闭 API：撤权后不能保证立即终止已打开的冰箱界面。新开入口的 before-event 取消是否能拦截原生窗口仍待真 Player 验收；不能将当前冰箱当作已验证的私人保险箱。详见 [权限边界](docs/NATIVE-CONTAINERS.md)。
-- 源码核对确认原版顾客也是直接生成，并非从门口寻路。普通堂食优先使用 24 格内座椅，无椅则在 5 格内站立；到店顾客必须有座椅。特殊彩蛋人物、线上皮肤下载及女仆联动尚未完成。
+- 源码核对确认原版顾客也是直接生成，并非从门口寻路。普通堂食优先使用 24 格内座椅，无椅则在 5 格内站立；到店顾客必须有座椅。七位彩蛋人物的姓名、身份、小费与反应已接线；线上玩家皮肤下载及女仆联动尚未完成。
 - 普通坐席顾客有原版 10% 惊喜反应和 `1–4＋餐厅等级` 加赏。本版交餐时就付款，不会延迟至动画结束；提前收盘不会扣回加赏。同位置旧盘须先收走，而 Java 会替换并掉落旧盘。
 - 洗碗改为点击开始并保持注视；没有覆盖 `player.json`，玩家洗碗、拍手及专属骑行动作尚未全部还原。
 - 小电驴使用 Bedrock 原生载具物理；跳跃键／控制面板触发喇叭。灯面发光，但不能动态照亮周围地形。

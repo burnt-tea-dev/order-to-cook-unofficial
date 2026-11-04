@@ -154,6 +154,18 @@ test('both explicit customer skins are preserved instead of rehashing the wide s
   }
 });
 
+test('named special customer is red and reuses the saved identity on actor respawn', () => {
+  const env = makeEnvironment(), fixture = restaurantFixture(env), service = readyService(env);
+  Object.assign(fixture.order, { customerName: '微风(作者)', easterEgg: true, customerVariant: 0, skinAccount: 'Breezeth' });
+  const customer = service.spawnCustomer(fixture.restaurant, fixture.order);
+  assert.match(customer.nameTag, /^§c微风\(作者\)§r\n/);
+  service.cleanupOrder(fixture.order.id);
+  const resumed = service.spawnCustomer(fixture.restaurant, fixture.order);
+  assert.match(resumed.nameTag, /^§c微风\(作者\)§r\n/);
+  assert.equal(resumed.getProperty('ordertocook:variant'), 0);
+  assert.equal(fixture.order.skinAccount, 'Breezeth');
+});
+
 test('customer action seek phase restores elapsed time and resets for early interruption', () => {
   const env = makeEnvironment(), fixture = restaurantFixture(env), service = readyService(env), start = Date.now();
   env.ctx.now = () => start;
