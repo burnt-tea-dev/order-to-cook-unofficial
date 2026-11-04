@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readdir, readFile } from 'node:fs/promises';
 import { mainFixture } from './main.harness.js';
 import { FakeItem, place } from './appliances.harness.js';
 import { writePortableBlock, readPortableBlock } from '../runtime/BP/scripts/portable_blocks.js';
@@ -39,16 +40,15 @@ test('expired bag requires native consumption, retains its deadline without the 
   const use = { source: env.player, itemStack: bag, cancel: false };
   emit(env.world.beforeEvents.itemUse, use);
   assert.equal(use.cancel, false);
-  const component = env.itemComponents.get('ordertocook:use');
-  component.onUse(use);
+  env.itemComponents.get('ordertocook:use').onUse(use);
   assert.equal(env.store.getProfile(env.player.id), undefined);
-  component.onConsume(use);
+  env.itemComponents.get('ordertocook:consume_bag').onConsume(use);
   const saved = structuredClone(env.store.getProfile(env.player.id));
   assert.ok(saved.state.unlocked.expired_bag_eaten);
   assert.deepEqual(saved.state.totals, { earned: 0, completed: 0, urgent: 0, longDistance: 0 });
   const resumed = await mainFixture(env.properties);
   resumed.player.id = env.player.id;
-  resumed.itemComponents.get('ordertocook:use').onConsume({ source: resumed.player, itemStack: bag.clone() });
+  resumed.itemComponents.get('ordertocook:consume_bag').onConsume({ source: resumed.player, itemStack: bag.clone() });
   assert.deepEqual(resumed.store.getProfile(resumed.player.id), saved);
 });
 
@@ -60,7 +60,7 @@ test('fresh, blank and malformed bags cannot start eating or claim progress', as
     const event = { source: env.player, itemStack, cancel: false };
     emit(env.world.beforeEvents.itemUse, event);
     if (itemStack.typeId === 'ordertocook:takeout_bag') assert.equal(event.cancel, true);
-    env.itemComponents.get('ordertocook:use').onConsume(event);
+    env.itemComponents.get('ordertocook:consume_bag').onConsume(event);
   }
   assert.equal(env.store.getProfile(env.player.id), undefined);
 });
@@ -70,7 +70,7 @@ test('failed native-consumption progress save returns the complete consumed parc
   const bag = env.hooks.parcelFor(env.restaurant, { ...env.order, type: 'delivery', expiresAt: Date.now() - 1 });
   env.player.container.setItem(0, undefined); // Native consumption already removed it.
   env.failWrite(id => id.startsWith('ordertocook:p:'));
-  env.itemComponents.get('ordertocook:use').onConsume({ source: env.player, itemStack: bag });
+  env.itemComponents.get('ordertocook:consume_bag').onConsume({ source: env.player, itemStack: bag });
   assert.deepEqual(env.player.container.getItem(0), bag);
   assert.equal(env.store.getProfile(env.player.id), undefined);
 });
@@ -141,4 +141,18 @@ test('portable placement returns the original data-bearing item when the world s
     assert.equal(env.store.getRestaurant(env.store.locationId(block.dimension.id, block.location)), undefined);
     assert.equal(env.store.findStation(block), undefined);
   }
+});
+
+test('native consume callbacks are attached only to items that declare minecraft:food', async () => {
+  const env = await mainFixture(), items = new URL('../runtime/BP/items/', import.meta.url);
+  for (const filename of await readdir(items)) {
+    if (!filename.endsWith('.json')) continue;
+    const item = JSON.parse(await readFile(new URL(filename, items), 'utf8'))['minecraft:item'];
+    for (const [id, component] of env.itemComponents) {
+      if (component.onConsume && Object.hasOwn(item.components, id)) {
+        assert.ok(item.components['minecraft:food'], `${item.description.identifier} cannot register a native consume callback`);
+      }
+    }
+  }
+  assert.equal(env.itemComponents.get('ordertocook:use').onConsume, undefined);
 });

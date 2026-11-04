@@ -4,7 +4,9 @@
 
 Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedrock 行為包、資源包及穩定 Script API 重寫；本輪原生冰箱另需啟用 Upcoming Creator Features。原作已有 GeckoLib／Blockbench 格式資源，因此能保留大量原模型、UV、紋理及聲音；跨平台主要成本在程式、介面與動畫驅動。
 
-本文件對應 **0.1.9-alpha.1（整合來源）**。冰箱改用 Bedrock 26.60 的上下獨立原生容器；爐灶改為直接存入及單頁七槽控制，操作台支援持訂單直接製作與同頁缺料，洗碗機沿用批次操作並補強寫入失敗回退。使用 stable `@minecraft/server 2.11.0`／`@minecraft/server-ui 2.0.0`，不要求 Beta APIs。**完整一比一仍未達成**，尤其原生冰箱已開介面的即時撤權沒有可用 API；入口攔截、鍵鼠／觸控／手把及真實多人 GUI 仍需客戶端驗收。官方能力核對見 [NATIVE-CONTAINERS.md](NATIVE-CONTAINERS.md)，本輪實際結果見 [驗證報告](validation/0.1.5-alpha.1/CONTAINER_GUI.md)。
+本文件對應 **0.1.10-alpha.1（整合來源）**。冰箱改用 Bedrock 26.60 的上下獨立原生容器；爐灶改為直接存入及單頁七槽控制，操作台支援持訂單直接製作與同頁缺料，洗碗機沿用批次操作並補強寫入失敗回退。使用 stable `@minecraft/server 2.11.0`／`@minecraft/server-ui 2.0.0`，不要求 Beta APIs。**完整一比一仍未達成**，尤其原生冰箱已開介面的即時撤權沒有可用 API；入口攔截、鍵鼠／觸控／手把及真實多人 GUI 仍需客戶端驗收。官方能力核對見 [NATIVE-CONTAINERS.md](NATIVE-CONTAINERS.md)，本輪實際結果見 [驗證報告](validation/0.1.5-alpha.1/CONTAINER_GUI.md)。
+
+2026-11-05 原生 BDS 1.26.60.6 載入抓到 0.1.8／0.1.9 共用物品元件的 `onConsume` 註冊錯誤；兩版不適用遊戲交付。0.1.10 將此回呼只掛到具有 `minecraft:food` 的包裹；修正後的原生結果須以同份隔離世界後續讀回為準，不以來源 CI 代替。
 
 本文件包含 alpha.3 玩法基線及 **已整合的視覺／音效修復**。本輪修正、離線對照與可重現測試見 [VISUAL_AUDIO_PARITY.md](VISUAL_AUDIO_PARITY.md)；alpha.3 的實機失敗記錄仍保留，不能由新來源測試推定已通過實機複驗。**完整一比一仍未達成**：Java 的 GUI、GeckoLib renderer、玩家動畫、物理與跨模組 API 仍有適配差異；本候選尚未執行 Blockbench 互動檢視及 Java／Bedrock 客戶端畫面驗收。
 

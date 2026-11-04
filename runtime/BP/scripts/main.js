@@ -1094,7 +1094,10 @@ system.beforeEvents.startup.subscribe(event => {
     onPlayerInteract: event => { if (event.player) safely(event.player, () => interactBlock(event.player, event.block)); }
   });
   event.itemComponentRegistry.registerCustomComponent('ordertocook:use', {
-    onUse: event => onUse(event.source, event.itemStack),
+    onUse: event => onUse(event.source, event.itemStack)
+  });
+  // Native BDS rejects onConsume on every non-food item sharing a component.
+  event.itemComponentRegistry.registerCustomComponent('ordertocook:consume_bag', {
     onConsume: event => consumeBag(event.source, event.itemStack)
   });
 });
