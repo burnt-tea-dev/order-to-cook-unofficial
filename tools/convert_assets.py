@@ -981,6 +981,7 @@ def make_items():
             components["minecraft:interact_button"] = True
             components["minecraft:use_modifiers"] = {"use_duration": .1, "movement_modifier": 1}
         if name == "takeout_bag":
+            components[f"{NS}:consume_bag"] = {}
             components["minecraft:block_placer"] = {"block": f"{NS}:takeout_bag", "replace_block_item": True}
             # Java's expired branch shrinks the bag without applying food stats.
             components["minecraft:food"] = {"nutrition": 0, "saturation_modifier": 0, "can_always_eat": True}

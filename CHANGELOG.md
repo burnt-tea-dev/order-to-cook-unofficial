@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.10-alpha.1
+
+- Fix the native BDS registration error introduced by 0.1.8: the shared use component attached `onConsume` to non-food items such as the guide and food plate. Register consumption on a separate bag-only component.
+- A regression derives the registered callbacks from the actual startup adapter and checks their item definitions against the native food requirement. Ordinary use callbacks stay on the existing shared component.
+- Pair BP/RP/modules/dependency at 0.1.10 with unchanged UUIDs and a new append-only payload identity. Native 1.26.60.6 rejected 0.1.8; 0.1.9 inherits the same error. Neither is suitable for game delivery. The same isolated world is retained for the corrected-source restart probe.
+
 ## 0.1.9-alpha.1
 
 - Select the original seven named Easter egg customers at Java’s default 10% rate for machine and walk-in orders. Preserve their name, account, UUID and special flag in the order; actor retries do not reroll them.

@@ -2,11 +2,11 @@
 
 **简体中文** · [繁體中文](README.md) · [English](README.en.md)
 
-**当前源码版本为 `0.1.9-alpha.1`（尚未发布）：冰箱改为上 27／下 54 格原生容器，炉灶和操作台减少操作步骤，洗碗机加强批次存取。需要 Bedrock 26.60 和 Upcoming Creator Features。完整 Java 等价及真实客户端验收尚未完成。** [本轮验证](docs/validation/0.1.5-alpha.1/CONTAINER_GUI.md) · [原生容器能力与限制](docs/NATIVE-CONTAINERS.md)
+**当前源码版本为 `0.1.10-alpha.1`（尚未发布）：冰箱改为上 27／下 54 格原生容器，炉灶和操作台减少操作步骤，洗碗机加强批次存取。需要 Bedrock 26.60 和 Upcoming Creator Features。完整 Java 等价及真实客户端验收尚未完成。** [本轮验证](docs/validation/0.1.5-alpha.1/CONTAINER_GUI.md) · [原生容器能力与限制](docs/NATIVE-CONTAINERS.md)
 
 历史 `0.1.2-alpha.3` 的限定客户端记录含冰箱几何、手洗粒子和进度灰字 FAIL，不能作为本版验收结果：[历史实机记录](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [按钮可读性修复](docs/validation/UNRELEASED-button-contrast.md)。
 
-**当前源码为 `0.1.9-alpha.1` 视觉／音效候选**：修正冰箱内壁与开关曲线、洗碗机变形及预览、餐盘初始食物、顾客时序、打单机／外卖袋动画，以及已确认的声音和粒子差异。修正与可复现证据见 [VISUAL_AUDIO_PARITY.md](docs/VISUAL_AUDIO_PARITY.md)。本轮尚未执行 Blockbench 交互检查或 Java／Bedrock 客户端画面复验；离线对照不改写上述历史实测结果，也不代表完整一比一完成。
+**当前源码为 `0.1.10-alpha.1` 视觉／音效候选**：修正冰箱内壁与开关曲线、洗碗机变形及预览、餐盘初始食物、顾客时序、打单机／外卖袋动画，以及已确认的声音和粒子差异。修正与可复现证据见 [VISUAL_AUDIO_PARITY.md](docs/VISUAL_AUDIO_PARITY.md)。本轮尚未执行 Blockbench 交互检查或 Java／Bedrock 客户端画面复验；离线对照不改写上述历史实测结果，也不代表完整一比一完成。
 
 
 原作作者：**breezeth** — [CurseForge](https://www.curseforge.com/minecraft/mc-mods/order-to-cook) · [Java 源代码](https://github.com/breezeth-CN/OrdertoCook)。本项目由 `casama233`／`burnt-tea-dev` 维护，保留上游 GPLv3、作者署名和素材来源。有关补充素材使用范围的询问尚未收到回复，作为非阻塞事项记录；作者未回复不阻止功能开发，但实际许可证冲突仍须处理。
