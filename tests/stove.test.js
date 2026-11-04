@@ -200,11 +200,11 @@ test('cancelled input selection keeps stock and progress; successfully taking it
   f.inventory.setItem(0, new FakeItem('minecraft:beef', 4));
   f.inventory.setItem(3, new FakeItem('minecraft:coal'));
   advance(f.service, f.env, 70);
-  await respondWith([choose(0), choose(1), { canceled: true }], () => f.service.onInteract(player, f.block));
+  await respondWith([{ canceled: true }], () => f.service.onInteract(player, f.block));
   assert.equal(f.inventory.getItem(0).amount, 4);
   assert.equal(f.station.appliance.cookProgress, 70);
   assert.equal(player.container.emptySlotsCount, 36);
-  await respondWith([choose(0), choose(1), choose(0)], () => f.service.onInteract(player, f.block));
+  await respondWith([choose(0), { canceled: true }], () => f.service.onInteract(player, f.block));
   assert.equal(f.inventory.getItem(0), undefined);
   assert.equal(player.container.getItem(0).amount, 4);
   assert.equal(f.station.appliance.cookProgress, 0);
@@ -233,11 +233,11 @@ test('a full backpack refuses both raw-stock and finished-food collection withou
   advance(f.service, f.env, 70);
   f.inventory.setItem(4, new FakeItem('minecraft:cooked_beef', 3));
   for (let slot = 0; slot < player.container.size; slot++) player.container.setItem(slot, new FakeItem('minecraft:stone', 64));
-  await respondWith([choose(0), choose(1), choose(0)], () => f.service.onInteract(player, f.block));
+  await respondWith([choose(0), { canceled: true }], () => f.service.onInteract(player, f.block));
   assert.equal(f.inventory.getItem(0).amount, 4);
   assert.equal(f.station.appliance.cookProgress, 70);
-  // Outputs have only Take and Close, so Take is button 0.
-  await respondWith([choose(4), choose(0), choose(0)], () => f.service.onInteract(player, f.block));
+  // In the integrated seven-slot screen, output slot 4 is directly withdrawable.
+  await respondWith([choose(4), { canceled: true }], () => f.service.onInteract(player, f.block));
   assert.equal(f.inventory.getItem(4).amount, 3);
   assert.equal(f.station.appliance.cookProgress, 70);
   assert.equal(f.dimension.drops.length, 0);
@@ -248,14 +248,14 @@ test('a selected player stack that changes before confirmation is retained and d
   f.inventory.setItem(0, new FakeItem('minecraft:beef', 4));
   f.inventory.setItem(3, new FakeItem('minecraft:coal'));
   advance(f.service, f.env, 70);
-  player.container.setItem(0, new FakeItem('minecraft:beef', 2));
-  await respondWith([choose(0), choose(0), () => {
+  player.container.setItem(1, new FakeItem('minecraft:beef', 2));
+  await respondWith([() => {
     const changed = new FakeItem('minecraft:beef', 2); changed.setLore(['changed batch']);
-    player.container.setItem(0, changed);
-    return choose(0);
+    player.container.setItem(1, changed);
+    return choose(8);
   }], () => f.service.onInteract(player, f.block));
   assert.equal(f.inventory.getItem(0).amount, 4);
-  assert.deepEqual(player.container.getItem(0).getLore(), ['changed batch']);
+  assert.deepEqual(player.container.getItem(1).getLore(), ['changed batch']);
   assert.equal(f.station.appliance.cookProgress, 70);
 });
 
@@ -270,9 +270,7 @@ test('a stove selection left open across an observed unload cannot regain access
   let forms = 0;
   FakeForm.prototype.show = async function () {
     forms++;
-    if (forms === 1) return choose(0);
-    if (forms === 2) return choose(1);
-    if (forms === 3) { reachedSelection(); return selection; }
+    if (forms === 1) { reachedSelection(); return selection; }
     return { canceled: true };
   };
   try {
@@ -285,7 +283,7 @@ test('a stove selection left open across an observed unload cannot regain access
     selected(choose(0)); await settle();
     assert.equal(player.container.emptySlotsCount, 36);
     assert.equal(f.inventory.getItem(0).amount, 4);
-    assert.equal(forms, 3);
+    assert.equal(forms, 1);
   } finally {
     selected({ canceled: true });
     f.dimension.getBlock = getBlock;
@@ -403,4 +401,38 @@ test('breaking a stove drops all seven real stacks once and leaves no helper to 
   assert.deepEqual(f.dimension.drops.map(drop => appliances.itemFingerprint(drop.stack)), stacks.map(appliances.itemFingerprint));
   assert.equal(f.dimension.getEntities({ type: 'ordertocook:storage' }).length, 0);
   assert.equal(f.records.size, 0);
+});
+
+
+test('integrated direct stove input saves a reset immediately and recovers both inventories on save failure', async () => {
+  const f = makeStove(), player = new FakePlayer(f.dimension);
+  f.inventory.setItem(0, new FakeItem('minecraft:beef', 2));
+  f.inventory.setItem(3, new FakeItem('minecraft:coal'));
+  advance(f.service, f.env, 70);
+  // A different ingredient fills another lane and resets shared progress.
+  player.container.setItem(0, new FakeItem('minecraft:potato', 3));
+  const save = f.ctx.saveStation;
+  f.ctx.saveStation = () => { throw new Error('unavailable save'); };
+  await respondWith([], () => f.service.onInteract(player, f.block));
+  assert.equal(player.container.getItem(0).amount, 3);
+  assert.equal(f.inventory.getItem(1), undefined);
+  assert.equal(f.station.appliance.cookProgress, 70);
+  f.ctx.saveStation = save;
+  await respondWith([], () => f.service.onInteract(player, f.block));
+  assert.equal(player.container.getItem(0), undefined);
+  assert.equal(f.inventory.getItem(1).typeId, 'minecraft:potato');
+  assert.equal(f.station.appliance.cookProgress, 0);
+  assert.equal(f.saved.get(f.station.id).appliance.cookProgress, 0);
+});
+
+test('integrated direct controls use the live recipe registry after a supplier joins', async () => {
+  const recipes = {}, f = makeStove({ smokingRecipes: recipes });
+  const player = new FakePlayer(f.dimension);
+  player.container.setItem(0, new FakeItem('supplier:raw', 2));
+  await respondWith([{ canceled: true }], () => f.service.onInteract(player, f.block));
+  assert.equal(player.container.getItem(0).amount, 2);
+  recipes['supplier:raw'] = { output: 'supplier:cooked', count: 2 };
+  await respondWith([], () => f.service.onInteract(player, f.block));
+  assert.equal(player.container.getItem(0), undefined);
+  assert.equal(f.inventory.getItem(0).amount, 2);
 });

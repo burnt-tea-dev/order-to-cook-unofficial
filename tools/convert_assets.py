@@ -1453,13 +1453,14 @@ def make_languages():
         dest=RP / "texts" / (out_name+".lang")
         # Handbook and runtime messages are maintained independently of Java
         # asset labels. Regeneration must retain those additional keys.
+        guide_text = (ROOT / "assets/guidebook" / (out_name + ".lang")).read_text(encoding="utf-8")
+        guide_keys = {line.partition("=")[0] for line in guide_text.splitlines() if "=" in line}
         previous = dest if dest.is_file() else ROOT / "runtime/RP/texts" / (out_name+".lang")
         if previous.is_file():
             generated_keys = {line.partition("=")[0] for line in lines if "=" in line}
             lines += [line for line in previous.read_text(encoding="utf-8").splitlines()
-                      if line not in lines and line.partition("=")[0] not in generated_keys]
+                      if line not in lines and line.partition("=")[0] not in generated_keys | guide_keys]
         dest.parent.mkdir(parents=True,exist_ok=True)
-        guide_text = (ROOT / "assets/guidebook" / (out_name + ".lang")).read_text(encoding="utf-8")
         dest.write_text("\n".join(lines)+"\n"+guide_text,encoding="utf-8")
         record(ASSETS / "lang" / (src_name + ".json"), dest, "Bedrock localization keys; additional port labels and Traditional Chinese translations")
     write_json(RP / "texts/languages.json",["en_US","zh_CN","zh_TW"])
