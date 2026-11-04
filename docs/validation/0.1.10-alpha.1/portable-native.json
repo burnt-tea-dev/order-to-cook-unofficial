@@ -1,0 +1,154 @@
+{
+  "passed": true,
+  "source_sha": "dfdd5809bbbaa8471a950f05a7863de0a6b98ff8",
+  "version": "0.1.10-alpha.1",
+  "engine": "1.26.60.6",
+  "api": "2.11.0",
+  "stages": [
+    {
+      "mode": "first",
+      "passed": true,
+      "reason": "complete",
+      "normal_stop_requested": true,
+      "quit_correctly": true,
+      "returncode": 0,
+      "report": {
+        "mode": "first",
+        "passed": true,
+        "checks": [
+          {
+            "name": "runtime initialized",
+            "passed": true
+          },
+          {
+            "name": "ordertocook:board native break emits one item",
+            "passed": true
+          },
+          {
+            "name": "ordertocook:board item permits native dynamic properties",
+            "passed": true
+          },
+          {
+            "name": "all menu variants survived native break",
+            "passed": true
+          },
+          {
+            "name": "ordertocook:order_machine native break emits one item",
+            "passed": true
+          },
+          {
+            "name": "ordertocook:order_machine item permits native dynamic properties",
+            "passed": true
+          },
+          {
+            "name": "owner level statistics survived native break",
+            "passed": true
+          }
+        ],
+        "scope": "Native break/drop and item disk save; placement adapter uses a fixture actor. Native player consumption/input and client audiovisuals are not established."
+      },
+      "errors": [],
+      "memory_events": {
+        "low": 0,
+        "high": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_kill": 0,
+        "oom_group_kill": 0,
+        "sock_throttled": 0
+      },
+      "memory_peak": 356130816
+    },
+    {
+      "mode": "reload",
+      "passed": true,
+      "reason": "complete",
+      "normal_stop_requested": true,
+      "quit_correctly": true,
+      "returncode": 0,
+      "report": {
+        "mode": "reload",
+        "passed": true,
+        "checks": [
+          {
+            "name": "runtime initialized",
+            "passed": true
+          },
+          {
+            "name": "native item storage restored in same world",
+            "passed": true
+          },
+          {
+            "name": "ordertocook:board all native properties survived restart",
+            "passed": true
+          },
+          {
+            "name": "ordertocook:board name and lore survived restart",
+            "passed": true
+          },
+          {
+            "name": "ordertocook:board production adapter restored durable data",
+            "passed": true
+          },
+          {
+            "name": "ordertocook:order_machine all native properties survived restart",
+            "passed": true
+          },
+          {
+            "name": "ordertocook:order_machine name and lore survived restart",
+            "passed": true
+          },
+          {
+            "name": "ordertocook:order_machine production adapter restored durable data",
+            "passed": true
+          },
+          {
+            "name": "parcel expiry survives native restart",
+            "passed": true
+          },
+          {
+            "name": "named special order identity survives native restart",
+            "passed": true
+          }
+        ],
+        "scope": "Native break/drop and item disk save; placement adapter uses a fixture actor. Native player consumption/input and client audiovisuals are not established."
+      },
+      "errors": [],
+      "memory_events": {
+        "low": 0,
+        "high": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_kill": 0,
+        "oom_group_kill": 0,
+        "sock_throttled": 0
+      },
+      "memory_peak": 361988096
+    }
+  ],
+  "client": false,
+  "scope": "Native command destroy event through production onBreak/drop, native ItemStack metadata and same-world disk restart. Placement uses the production adapter with a fixture actor; no native Player break/place/use or audiovisual claim.",
+  "observed_date": "2026-11-05",
+  "observer_sha256": "445ffc48472d2f06e6391af3eafabf0ccaa962d489f9bee56e5d1d33e8b9e9e0",
+  "experiments": {
+    "experiments_ever_used": 1,
+    "saved_with_toggled_experiments": 1,
+    "upcoming_creator_features": 1
+  },
+  "resource_limits": {
+    "memory_max": 2684354560,
+    "swap_max": 0,
+    "private_network": true
+  },
+  "stop_status": {
+    "ActiveState": "inactive",
+    "SubState": "dead",
+    "MainPID": "0",
+    "Result": "success",
+    "ExecMainStatus": "0"
+  },
+  "qa_world_deleted_after_stop": true,
+  "live_modified": false,
+  "production_saved_world_migration": false,
+  "native_player_input_exercised": false
+}
