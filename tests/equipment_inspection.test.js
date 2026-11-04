@@ -9,6 +9,7 @@ const baseline = (changes = {}) => ({
   phase: 0, remainingTicks: 0, plates: 0, litTime: 0, litDuration: 0, cookProgress: 0, ...changes,
 });
 const format = (type, fields = {}) => formatEquipmentInspection({ typeId: 'ordertocook:' + type, ...fields });
+const cargoSnapshot = inventory => JSON.stringify(Array.from({ length: inventory.size }, (_, slot) => appliances.itemFingerprint(inventory.getItem(slot))));
 
 test('shelf HUD uses the actual packaging 10 and plate 18 capacities', () => {
   assert.equal(format('shelf', { supplies: 10 }), '§f包裝架 · 皮革 10/10');
@@ -67,7 +68,7 @@ test('fridge inspection reads only the viewed 27/54 partition without writing st
   inventory.setItem(0, new FakeItem('minecraft:apple', 64));
   inventory.setItem(26, new FakeItem('minecraft:apple', 1));
   inventory.setItem(80, new FakeItem('minecraft:apple', 12));
-  const original = JSON.stringify(station), items = JSON.stringify(inventory.slots);
+  const original = JSON.stringify(station), items = cargoSnapshot(inventory);
   Object.freeze(station.appliance);
   Object.freeze(station);
   env.ctx.getStation = () => { throw Error('inspection requested a mutable station'); };
@@ -76,27 +77,45 @@ test('fridge inspection reads only the viewed 27/54 partition without writing st
   assert.equal(service.getInspection(player, upper), '§f冰箱 · 上層 已用 2/27 格');
   assert.equal(service.getInspection(player, lower), '§f冰箱 · 下層 已用 1/54 格');
   assert.equal(JSON.stringify(station), original);
-  assert.equal(JSON.stringify(inventory.slots), items);
-  assert.equal(env.dimension.spawnCount, 1);
+  assert.equal(cargoSnapshot(inventory), items);
+  assert.equal(env.dimension.spawnCount, 0);
 });
 
-test('inspection of an unloaded saved helper preserves the helper identity and saved cargo', () => {
+test('inspection of unavailable native containers preserves cargo without creating a helper', () => {
   const env = makeEnvironment(), player = new FakePlayer(env.dimension), service = appliances.createApplianceService(env.ctx);
   const block = place(env, 'ordertocook:refrigerator', undefined, { 'ordertocook:half': 'lower' });
   service.onPlace(block);
-  const station = env.ctx.getStation(block), helper = env.dimension.entities.get(station.storageId);
-  helper.container.setItem(27, new FakeItem('minecraft:apple', 8));
-  env.dimension.entities.delete(helper.id);
-  const before = JSON.stringify(station);
+  const station = env.ctx.getStation(block), inventory = service.getStorage(station);
+  inventory.setItem(27, new FakeItem('minecraft:apple', 8));
+  const before = JSON.stringify(station), cargo = cargoSnapshot(inventory);
+  env.dimension.nativeContainers = false;
   assert.equal(service.getInspection(player, block), '§f冰箱 · 下層儲物尚未載入');
-  assert.equal(JSON.stringify(station), before);
-  assert.equal(env.dimension.spawnCount, 1);
-  assert.equal(helper.container.getItem(27).amount, 8);
-  env.dimension.entities.set(helper.id, helper);
+  assert.equal(JSON.stringify(station), before); assert.equal(cargoSnapshot(inventory), cargo);
+  assert.equal(env.dimension.spawnCount, 0); assert.equal(station.storageId, undefined);
+  env.dimension.nativeContainers = true;
   assert.equal(service.getInspection(player, block), '§f冰箱 · 下層 已用 1/54 格');
 });
 
-test('a missing helper ID is never filled in by looking at a fridge', () => {
+test('looking at a legacy fridge never migrates a saved helper or changes its upper block ID', () => {
+  const env = makeEnvironment(), player = new FakePlayer(env.dimension), service = appliances.createApplianceService(env.ctx);
+  const lower = place(env, 'ordertocook:refrigerator', undefined, { 'ordertocook:half': 'lower' });
+  const upper = place(env, 'ordertocook:refrigerator', { x: 0, y: 1, z: 0 }, { 'ordertocook:half': 'upper' });
+  const station = env.ctx.getStation(lower), helper = env.dimension.spawnEntity('ordertocook:storage', { x: 0.5, y: 0.1, z: 0.5 });
+  station.storageId = helper.id; helper.setDynamicProperty('ordertocook:station_id', station.id);
+  const item = new FakeItem('minecraft:apple', 8); item.nameTag = 'Legacy cargo'; helper.container.setItem(27, item);
+  const before = JSON.stringify(station), cargo = cargoSnapshot(helper.container);
+  env.ctx.saveStation = () => { throw Error('inspection saved or migrated legacy data'); };
+  for (const loaded of [false, true]) {
+    if (loaded) env.dimension.entities.set(helper.id, helper); else env.dimension.entities.delete(helper.id);
+    assert.equal(service.getInspection(player, lower), '§f冰箱 · 下層儲物尚未載入');
+    assert.equal(service.getInspection(player, upper), '§f冰箱 · 上層儲物尚未載入');
+    assert.equal(JSON.stringify(station), before); assert.equal(cargoSnapshot(helper.container), cargo);
+    assert.equal(upper.typeId, 'ordertocook:refrigerator'); assert.equal(helper.isValid, true);
+    assert.equal(env.dimension.spawnCount, 1);
+  }
+});
+
+test('an uninitialized native fridge is never initialized merely by looking at it', () => {
   const env = makeEnvironment(), player = new FakePlayer(env.dimension), service = appliances.createApplianceService(env.ctx);
   const block = place(env, 'ordertocook:refrigerator', undefined, { 'ordertocook:half': 'lower' });
   const station = env.ctx.getStation(block);
@@ -107,14 +126,14 @@ test('a missing helper ID is never filled in by looking at a fridge', () => {
   assert.equal(env.dimension.spawnCount, 0);
 });
 
-test('a helper linked to another station never exposes that station inventory', () => {
+test('a stove helper linked to another station never exposes that station inventory', () => {
   const env = makeEnvironment(), player = new FakePlayer(env.dimension), service = appliances.createApplianceService(env.ctx);
-  const block = place(env, 'ordertocook:refrigerator', undefined, { 'ordertocook:half': 'lower' });
+  const block = place(env, 'ordertocook:stove');
   service.onPlace(block);
   const station = env.ctx.getStation(block), helper = env.dimension.entities.get(station.storageId);
   helper.setDynamicProperty('ordertocook:station_id', 'other-restaurant');
   helper.container.getItem = () => { throw Error('read foreign inventory'); };
-  assert.equal(service.getInspection(player, block), '§f冰箱 · 下層儲物尚未載入');
+  assert.equal(service.getInspection(player, block), '§f爐灶 · 儲物尚未載入');
 });
 
 test('inspection rechecks permission, dimension, distance and current block before reading inventory', () => {
@@ -227,14 +246,14 @@ test('manual stop, restart and player departure cannot leave a stale washing HUD
 for (const wrongAnchor of ['dimension', 'location']) {
   test('inspection refuses a saved helper with the wrong ' + wrongAnchor + ' without touching its cargo', () => {
     const env = makeEnvironment(), player = new FakePlayer(env.dimension), service = appliances.createApplianceService(env.ctx);
-    const block = place(env, 'ordertocook:refrigerator', undefined, { 'ordertocook:half': 'lower' });
+    const block = place(env, 'ordertocook:stove');
     service.onPlace(block);
     const station = env.ctx.getStation(block), helper = env.dimension.entities.get(station.storageId);
     if (wrongAnchor === 'dimension') helper.dimension = { ...env.dimension, id: 'minecraft:nether' };
     else helper.location = { x: 1000, y: 10, z: 1000 };
     const before = JSON.stringify(station);
     helper.container.getItem = () => { throw Error('read incorrectly anchored inventory'); };
-    assert.equal(service.getInspection(player, block), '§f冰箱 · 下層儲物尚未載入');
+    assert.equal(service.getInspection(player, block), '§f爐灶 · 儲物尚未載入');
     assert.equal(JSON.stringify(station), before);
     assert.equal(env.dimension.spawnCount, 1);
   });

@@ -7,6 +7,7 @@ export const MEAL_TOKEN = 'ordertocook:meal_token';
 const RESTAURANT = 'ordertocook:restaurant_id';
 const ORDER = 'ordertocook:order_id';
 const STAGE = 'ordertocook:stage';
+const PLACEMENT_AGE = 'ordertocook:placement_age';
 const DIRTY_PLATE = 'ordertocook:dirty_plate';
 const DIRTY_AFTER = 5000;
 const DIRECTIONS = { north: [0, -1], east: [1, 0], south: [0, 1], west: [-1, 0] };
@@ -170,6 +171,9 @@ export function createDiningService(ctx) {
       // Entity ID is a cache. A stale/missing ID never decides plate ownership.
     }
     const stage = mealStage(meal, now);
+    // Stage zero uses Java's placed-food model and half-second maked clip.
+    // A helper restored partway through placement seeks to the saved meal age.
+    if (stage === 0) entity.setProperty(PLACEMENT_AGE, Math.min(0.5, Math.max(0, (now - meal.startedAt) / 1000)));
     if (lastStages.get(entity.id) !== stage) {
       entity.setProperty(STAGE, stage);
       lastStages.set(entity.id, stage);

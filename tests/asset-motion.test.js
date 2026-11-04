@@ -12,7 +12,7 @@ const bone = (geometry, name) => geometry.bones.find(entry => entry.name === nam
 function rotate(point, angles = [0, 0, 0], pivot = [0, 0, 0]) {
   let [x, y, z] = point.map((value, axis) => value - pivot[axis]);
   for (let axis = 0; axis < 3; axis++) {
-    const r = angles[axis] * Math.PI / 180, c = Math.cos(r), s = Math.sin(r);
+    const r = angles[axis] * (axis === 1 ? 1 : -1) * Math.PI / 180, c = Math.cos(r), s = Math.sin(r);
     if (axis === 0) [y, z] = [y * c - z * s, y * s + z * c];
     if (axis === 1) [x, z] = [x * c + z * s, -x * s + z * c];
     if (axis === 2) [x, y] = [x * c - y * s, x * s + y * c];
@@ -20,9 +20,9 @@ function rotate(point, angles = [0, 0, 0], pivot = [0, 0, 0]) {
   return [x, y, z].map((value, axis) => value + pivot[axis]);
 }
 
-test('all 88 generated appliance poses fit the stable bounds after parent rotations', () => {
-  const paths = readdirSync(new URL('runtime/RP/models/blocks/', root)).filter(name => /^(refrigerator_(lower|upper)_\d+|dishwasher_\d+_\d+)\.geo\.json$/.test(name));
-  assert.equal(paths.length, 88);
+test('all 126 generated appliance poses fit the stable bounds after parent rotations', () => {
+  const paths = readdirSync(new URL('runtime/RP/models/blocks/', root)).filter(name => /^(refrigerator_(lower|upper)_(?:close_)?\d+|dishwasher_\d+_\d+)\.geo\.json$/.test(name));
+  assert.equal(paths.length, 126);
   for (const path of paths) {
     const geometry = json(`runtime/RP/models/blocks/${path}`)['minecraft:geometry'][0];
     const bones = new Map(geometry.bones.map(entry => [entry.name, entry]));
@@ -57,7 +57,7 @@ test('dishwasher terminal poses keep the original drawer translation and only th
   assert.equal(bone(ready, 'group3').pivot[2], -12);
   assert.deepEqual(bone(ready, 'group3').rotation, [5, 0, 0]);
   assert.deepEqual(bone(ready, 'group5').rotation, [92.5, 0, 0]);
-  assert.equal(bone(ready, 'drity_dish').cubes.length, 0); assert.equal(bone(ready, 'clear_dish').cubes.length, 6);
+  assert.equal(ready.bones.filter(b => /^drity_dish_/.test(b.name) && b.cubes.length).length, 0); assert.equal(ready.bones.filter(b => /^clear_dish_/.test(b.name) && b.cubes.length).length, 6);
   assert.equal(bone(closed, 'group3').pivot[2], 0); assert.deepEqual(bone(closed, 'group5').rotation, [0, 0, 0]);
   assert.equal(bone(closed, 'drity_dish').cubes.length, 0); assert.equal(bone(closed, 'clear_dish').cubes.length, 0);
 });
@@ -92,6 +92,45 @@ test('customer actions have seven distinct original clips and no automatic compl
     assert.deepEqual(states[`action_${action}`].animations, [`action${action}`]);
     assert.equal(JSON.stringify(states[`action_${action}`]).includes('all_animations_finished'), false);
   }
-  assert.equal(JSON.stringify(states.waiting.animations).includes('animation_variant'), true);
+  assert.equal(JSON.stringify(states.select.on_entry).includes('animation_variant'), true);
+  assert.equal(JSON.stringify(states.waiting.animations).includes('v.idle_variant'), true);
+  assert.equal(JSON.stringify(states.waiting.animations).includes('q.property'), false);
+  assert.equal(JSON.stringify(states.waiting_reset.on_entry).includes('math.random'), true);
+  assert.ok(JSON.stringify(states.waiting_reset.on_entry).includes('0.55'));
+  assert.ok(JSON.stringify(states.waiting_reset.on_entry).includes('0.7'));
+  assert.ok(JSON.stringify(states.waiting_reset.on_entry).includes('0.85'));
   assert.equal(JSON.stringify(states.waiting.animations).includes('math.mod'), false);
+});
+
+test('stage zero uses original placed food and its maked clip rather than a plain clean plate', () => {
+  const stage = json('runtime/RP/models/entity/dining_plate.geo.json')['minecraft:geometry'][0];
+  const source = json('upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/food_plate_placed.geo.json')['minecraft:geometry'][0];
+  assert.deepEqual(stage.bones.map(bone => [bone.name, bone.parent, bone.pivot, bone.cubes.map(cube => [cube.origin, cube.size])]),
+    source.bones.map(bone => [bone.name, bone.parent, bone.pivot, (bone.cubes ?? []).map(cube => [cube.origin, cube.size])]));
+  const description = json('runtime/RP/entity/dining_plate.entity.json')['minecraft:client_entity'].description;
+  assert.equal(description.animations.placed, 'animation.ordertocook.food_plate_placed.maked');
+  assert.equal(description.scripts.animate[0].placed, "q.property('ordertocook:stage') == 0");
+  const placed = json('runtime/RP/animations/food_plate_placed.animation.json').animations[description.animations.placed];
+  assert.equal(placed.animation_length, 0.5);
+  assert.ok(placed.anim_time_update.includes('placement_age'));
+  assert.deepEqual(placed.bones.group2.scale['0.1667'], [1.05, 1.05, 1.05]);
+});
+
+test('customer original bone tracks remain exact while action clocks seek and keep terminal invisibility', () => {
+  const source = json('upstream/reference/common/src/main/resources/assets/ordertocook/animations/npc.transition.animation.json').animations;
+  const converted = json('runtime/RP/animations/npc.transition.animation.json').animations;
+  const description = json('runtime/RP/entity/customer.entity.json')['minecraft:client_entity'].description;
+  const sourceClips = ['npc_sitspawn', 'npc_standspawn', 'npc_sittake', 'npc_standtake', 'npc_eat&boom', 'npc_eat&scale', 'npc_eat&scale_interrupt'];
+  const unwrap = value => Array.isArray(value) ? value.map(unwrap) : value && typeof value === 'object'
+    ? 'vector' in value ? unwrap(value.vector) : Object.fromEntries(Object.entries(value).map(([key, child]) => [key, unwrap(child)])) : value;
+  for (const [index, clip] of sourceClips.entries()) {
+    const animation = converted[description.animations[`action${index + 1}`]];
+    assert.deepEqual(animation.bones, unwrap(source[clip].bones));
+    assert.equal(animation.animation_length, source[clip].animation_length);
+    assert.equal(animation.loop, 'hold_on_last_frame');
+    assert.ok(animation.anim_time_update.includes('action_elapsed'));
+  }
+  const components = json('runtime/BP/entities/customer.json')['minecraft:entity'].components;
+  assert.equal(components['minecraft:behavior.look_at_player'].look_distance, 8);
+  assert.equal(components['minecraft:behavior.random_look_around'].priority, 9);
 });

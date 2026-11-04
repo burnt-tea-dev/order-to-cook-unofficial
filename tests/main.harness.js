@@ -2,7 +2,7 @@
 // Loads the shipped main/core/store/inventory/dining source with isolated native
 // doubles. This checks adapter transactions, not native GUI or actual disk IO.
 import { readFile } from 'node:fs/promises';
-import { FakeItem, FakePlayer, FakePermutation, makeEnvironment, place } from './appliances.harness.js';
+import { FakeItem, FakePlayer, FakePermutation, FakeMolangVariableMap, makeEnvironment, place } from './appliances.harness.js';
 
 let sequence = 0;
 const scripts = new URL('../runtime/BP/scripts/', import.meta.url);
@@ -20,6 +20,11 @@ export async function mainFixture() {
     if (value === undefined) properties.delete(id); else properties.set(id, value);
   };
   env.system.beforeEvents = signals(); env.system.afterEvents = signals();
+  const scriptEvents = [], installedItems = new Set();
+  env.system.sendScriptEvent = (id, message) => {
+    scriptEvents.push({ id, message });
+    for (const fn of env.system.afterEvents.scriptEventReceive.subscriptions) fn({ id, message, sourceType: 'Server' });
+  };
   const originalGetBlock = env.dimension.getBlock.bind(env.dimension);
   env.dimension.getBlock = location => {
     const block = originalGetBlock(location);
@@ -30,16 +35,19 @@ export async function mainFixture() {
   const player = new FakePlayer(env.dimension, { x: 1.5, y: 0, z: 1.5 });
   player.getGameMode = () => 'Survival';
   env.world.players.push(player);
-  const native = { world: env.world, system: env.system, ItemStack: FakeItem, BlockPermutation: FakePermutation, GameMode: { Creative: 'Creative', Survival: 'Survival' } };
+  const native = { world: env.world, system: env.system, ItemStack: FakeItem, MolangVariableMap: FakeMolangVariableMap,
+    ItemTypes: { get: id => id.startsWith('minecraft:') || id.startsWith('ordertocook:') || installedItems.has(id) ? { id } : undefined },
+    BlockPermutation: FakePermutation, GameMode: { Creative: 'Creative', Survival: 'Survival' } };
   const key = `__otcMainTests${++sequence}`;
   const endings = [], interruptions = [];
   const formResponses = [], forms = [];
+  let applianceContext;
   const stubs = {
     createEntityService: () => ({ init() {}, spawnCustomer() {}, cleanupOrder() {}, onBlockBreak() {},
       finishCustomer: (...args) => endings.push(args), resumeCustomerMeal() {},
       interruptCustomerMeal: (...args) => interruptions.push(args),
       getCustomerSeat: () => chair }),
-    createApplianceService: () => ({ init() {}, onPlace() {}, onBreak() {}, getStorage() {}, normalizeBlock: block => block }),
+    createApplianceService: context => { applianceContext = context; return { init() {}, onPlace() {}, onBreak() {}, getStorage() {}, normalizeBlock: block => block }; },
     notify: (who, text) => who.sendMessage(text),
     choose: async (...args) => { forms.push(args); const response = formResponses.shift(); return typeof response === 'function' ? response(...args) : response; }, textInput: async () => undefined,
     safely: (who, fn) => Promise.resolve().then(fn),
@@ -87,6 +95,7 @@ export async function mainFixture() {
   customer.setDynamicProperty('ordertocook:restaurant_id', restaurant.id);
   customer.setDynamicProperty('ordertocook:order_id', order.id);
   return { ...env, hooks, store, core, player, customer, chair, machine, restaurant, order, parcel, properties,
+    applianceContext, installedItems, scriptEvents,
     endings, interruptions, forms, formResponses, failWrite: predicate => { failProperty = predicate; },
     linkage: { restaurantId: restaurant.id, orderId: order.id } };
 }

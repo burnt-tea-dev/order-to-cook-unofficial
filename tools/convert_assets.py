@@ -22,6 +22,7 @@ from PIL import Image
 
 NS = "ordertocook"
 BLOCK_VERSION = "1.21.100"
+NATIVE_CONTAINER_VERSION = "1.26.60"
 GEOMETRY_VERSION = "1.21.0"
 ROOT = Path(__file__).resolve().parents[1]
 ASSET_REL = Path("common/src/main/resources/assets/ordertocook")
@@ -176,6 +177,37 @@ def convert_java_model(name, identifier, extra_models=()):
     return geometry(identifier, [{"name": "root", "pivot": [0, 0, 0], "cubes": cubes}]), materials
 
 
+def normalize_signed_cube(cube):
+    """Keep the physical face/texel mapping when making signed sizes legal.
+
+    The source uses negative X/Z cubes for the dishwasher/fridge inner walls.
+    Taking abs(size) alone moves their opaque rear face over the open front.
+    These face/UV reflections follow GeckoLib's VertexSet/GeoQuad ordering,
+    which is also used by Blockbench's Bedrock codec.
+    """
+    for axis in range(3):
+        if cube["size"][axis] >= 0:
+            continue
+        cube["origin"][axis] += cube["size"][axis]
+        cube["size"][axis] *= -1
+        if not isinstance(cube.get("uv"), dict):
+            raise ValueError("Signed source cubes require explicit per-face UVs")
+        opposite = (("east", "west"), ("up", "down"), ("north", "south"))[axis]
+        faces = cube["uv"]
+        cube["uv"] = {}
+        for name, face in faces.items():
+            target = opposite[1-opposite.index(name)] if name in opposite else name
+            flip = 0 if axis == 0 or (axis == 2 and name not in ("up", "down")) else 1
+            # For quarter-turned UVs, the reflected texture axis is exchanged.
+            if face.get("uv_rotation", 0) % 180:
+                flip = 1-flip
+            uv = copy.deepcopy(face)
+            uv["uv"][flip] += uv["uv_size"][flip]
+            uv["uv_size"][flip] *= -1
+            cube["uv"][target] = uv
+    return cube
+
+
 def normalize_geo(source: Path, identifier: str):
     g = copy.deepcopy(read_json(source))
     g["format_version"] = GEOMETRY_VERSION
@@ -183,10 +215,7 @@ def normalize_geo(source: Path, identifier: str):
         entry["description"]["identifier"] = identifier
         for bone in entry["bones"]:
             for cube in bone.get("cubes", []):
-                for axis in range(3):
-                    if cube["size"][axis] < 0:
-                        cube["origin"][axis] += cube["size"][axis]
-                        cube["size"][axis] *= -1
+                normalize_signed_cube(cube)
     return g
 
 
@@ -252,8 +281,41 @@ def sample_number(value, seconds):
     return math.sin(math.radians(seconds*float(match.group(1))))*float(match.group(2))
 
 
+def easing_fraction(kind, fraction, args=()):
+    """GeckoLib 4 curves used by the pinned source, including easingArgs.
+
+    Verified against core/animation/EasingType.java at GeckoLib 7d6f32d.
+    In particular its elastic/bounce are not the usual easings.net formulas.
+    """
+    t = max(0.0, min(1.0, fraction))
+    if t == 1 or kind in (None, "linear", "none"):
+        return t
+    if kind == "step":
+        steps = int(args[0]) if args else 2
+        if steps < 2:
+            raise ValueError("GeckoLib step easing requires at least two steps")
+        return min(steps-1, math.floor(t*steps))/steps
+    def elastic(value):
+        amount = args[0] if args else 1
+        return 1-math.cos(value*math.pi/2)**3*math.cos(value*amount*math.pi)
+    def bounce(value):
+        amount = args[0] if args else 0.5
+        return min(121/16*value**2,
+                   121/4*amount*(value-6/11)**2+1-amount,
+                   121*amount**2*(value-9/11)**2+1-amount**2,
+                   484*amount**3*(value-10.5/11)**2+1-amount**3)
+    for family, curve in (("Elastic", elastic), ("Bounce", bounce)):
+        if kind == "easeIn"+family:
+            return curve(t)
+        if kind == "easeOut"+family:
+            return 1-curve(1-t)
+        if kind == "easeInOut"+family:
+            return curve(t*2)/2 if t < 0.5 else 1-curve((1-t)*2)/2
+    raise ValueError(f"Unsupported source easing: {kind!r}")
+
+
 def sample_channel(channel, seconds, default):
-    """Sample original GeckoLib vectors with bounded linear interpolation."""
+    """Sample source vectors, honoring the destination keyframe's easing."""
     if channel is None:
         return list(default)
     if isinstance(channel, dict) and "vector" in channel:
@@ -270,21 +332,101 @@ def sample_channel(channel, seconds, default):
                 return sample_channel(value, seconds, default)
             previous_time, previous = keys[index-1]
             fraction = (seconds-previous_time)/(time-previous_time)
+            if isinstance(value, dict):
+                fraction = easing_fraction(value.get("easing"), fraction, value.get("easingArgs", ()))
             a = sample_channel(previous, seconds, default)
             b = sample_channel(value, seconds, default)
             return [x+(y-x)*fraction for x, y in zip(a, b)]
     return sample_channel(keys[-1][1], seconds, default)
 
 
-def bake_pose(g, clip, seconds, identifier):
-    """Bake rigid bone motion into legal static geometry.
+def closest_cuboid_axes(matrix):
+    """Polar rotation of a positive-scale affine matrix, without dependencies.
 
-    Bone translation is applied to the complete descendant subtree before its
-    parent rotations. Uniform scale (including a hidden plate) is preserved.
-    Nonuniform cabinet squash/stretch is intentionally omitted: a static cube
-    hierarchy cannot express the resulting shears exactly and a split fridge
-    cabinet must retain its seam. Original clips remain available unmodified
-    apart from their separate Bedrock syntax normalization.
+    Static Bedrock cubes cannot contain a shear. R * diag(R^T * M) preserves
+    the closest rigid axes and their scale; only off-diagonal shear remains.
+    """
+    rotation = [row[:] for row in matrix]
+    for _ in range(16):
+        a,b,c = rotation
+        cofactors = [[b[1]*c[2]-b[2]*c[1], b[2]*c[0]-b[0]*c[2], b[0]*c[1]-b[1]*c[0]],
+                     [a[2]*c[1]-a[1]*c[2], a[0]*c[2]-a[2]*c[0], a[1]*c[0]-a[0]*c[1]],
+                     [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]]]
+        determinant = sum(a[i]*cofactors[0][i] for i in range(3))
+        updated = [[(rotation[i][j]+cofactors[i][j]/determinant)/2 for j in range(3)] for i in range(3)]
+        error = max(abs(updated[i][j]-rotation[i][j]) for i in range(3) for j in range(3))
+        rotation = updated
+        if error < 1e-12:
+            break
+    scale = [sum(rotation[k][i]*matrix[k][i] for k in range(3)) for i in range(3)]
+    y = math.asin(max(-1.0,min(1.0,-rotation[2][0])))
+    if abs(math.cos(y)) > 1e-8:
+        x = math.atan2(rotation[2][1],rotation[2][2])
+        z = math.atan2(rotation[1][0],rotation[0][0])
+    else:
+        x = 0
+        z = math.atan2(-rotation[0][1],rotation[1][1])
+    return [math.degrees(value) for value in (-x,y,-z)], scale
+
+
+def preserve_scaled_descendants(original, baked, clip, seconds):
+    """Correct inherited scale after rotations using each cube's full affine.
+
+    This keeps rotated door dimensions and translations faithful instead of
+    applying a parent's Z squash in the child's already-rotated axes. Per-axis
+    deformation is exact for orthogonal transformed cubes; remaining shear is
+    approximated by the closest cuboid and measured in the validation report.
+    """
+    source = {bone["name"]: bone for bone in original["minecraft:geometry"][0]["bones"]}
+    target = {bone["name"]: bone for bone in baked["minecraft:geometry"][0]["bones"]}
+    channels = {}
+    for name,bone in source.items():
+        tracks = clip.get("bones", {}).get(name,{})
+        channels[name] = (sample_channel(tracks.get("position"),seconds,[0]*3),
+                          sample_channel(tracks.get("scale"),seconds,[1]*3),
+                          [a+b for a,b in zip(bone.get("rotation",[0]*3),sample_channel(tracks.get("rotation"),seconds,[0]*3))])
+    for name,bone in source.items():
+        chain = [name]
+        while "parent" in source[chain[-1]]:
+            chain.append(source[chain[-1]]["parent"])
+        if not any(max(channels[key][1])-min(channels[key][1]) > 1e-7 for key in chain):
+            continue
+        for cube,output in zip(bone.get("cubes",[]),target[name].get("cubes",[])):
+            def converted(point):
+                point = geometry_transform3(point,cube.get("rotation",[0]*3),cube.get("pivot",[0]*3))
+                for key in chain:
+                    position,scale,rotation = channels[key]; pivot = source[key]["pivot"]
+                    point = [pivot[i]+(point[i]-pivot[i])*scale[i] for i in range(3)]
+                    point = geometry_transform3(point,rotation,pivot)
+                    point = [a+b for a,b in zip(point,position)]
+                # Express exact world vertices in the baked bone's rigid frame.
+                for key in reversed(chain):
+                    node = target[key]
+                    for axis in (2,1,0):
+                        inverse = [0]*3; inverse[axis] = -node.get("rotation",[0]*3)[axis]
+                        point = geometry_transform3(point,inverse,node["pivot"])
+                return point
+            center = [a+b/2 for a,b in zip(cube["origin"],cube["size"])]
+            transformed = converted(center)
+            axes = []
+            for axis in range(3):
+                endpoint = center[:]; endpoint[axis] += 1
+                axes.append([a-b for a,b in zip(converted(endpoint),transformed)])
+            rotation,scale = closest_cuboid_axes([[axes[j][i] for j in range(3)] for i in range(3)])
+            size = [a*b for a,b in zip(cube["size"],scale)]
+            output.update({"origin":[a-b/2 for a,b in zip(transformed,size)],"size":size,
+                           "pivot":transformed,"rotation":rotation})
+
+
+def bake_pose(g, clip, seconds, identifier):
+    """Bake source bone motion, including per-axis squash/stretch.
+
+    Static cuboids retain dimensions, UVs, pivots and the source rotations.
+    Nonuniform scales are applied to the complete descendant subtree; local
+    translations inherit their ancestor scales. The full source affine then
+    corrects rotated descendants to the closest cuboid. Only residual shear,
+    which static cuboid geometry cannot encode, remains approximate. No texture
+    pixels are redrawn.
     """
     result = copy.deepcopy(g)
     entry = result["minecraft:geometry"][0]
@@ -300,25 +442,29 @@ def bake_pose(g, clip, seconds, identifier):
                 return False
             bone = by_name[bone["parent"]]
 
+    inherited_scales = {}
     for bone in bones:
         channels = clip.get("bones", {}).get(bone["name"], {})
         rotation = sample_channel(channels.get("rotation"), seconds, [0, 0, 0])
         bone["rotation"] = [a+b for a, b in zip(bone.get("rotation", [0, 0, 0]), rotation)]
         position = sample_channel(channels.get("position"), seconds, [0, 0, 0])
         scale = sample_channel(channels.get("scale"), seconds, [1, 1, 1])
-        uniform = scale[0] if max(scale)-min(scale) < 1e-7 else 1.0
+        inherited = inherited_scales.get(bone.get("parent"), [1, 1, 1])
+        position = [a*b for a, b in zip(position, inherited)]
+        inherited_scales[bone["name"]] = [a*b for a, b in zip(scale, inherited)]
         pivot = list(bone["pivot"])
         for child in bones:
             if not under(child, bone["name"]):
                 continue
-            child["pivot"] = [pivot[i]+(child["pivot"][i]-pivot[i])*uniform+position[i] for i in range(3)]
-            if uniform <= 0.00001:
+            child["pivot"] = [pivot[i]+(child["pivot"][i]-pivot[i])*scale[i]+position[i] for i in range(3)]
+            if max(scale) <= 0.00001:
                 child["cubes"] = []
             for cube in child.get("cubes", []):
-                cube["origin"] = [pivot[i]+(cube["origin"][i]-pivot[i])*uniform+position[i] for i in range(3)]
-                cube["size"] = [size*uniform for size in cube["size"]]
+                cube["origin"] = [pivot[i]+(cube["origin"][i]-pivot[i])*scale[i]+position[i] for i in range(3)]
+                cube["size"] = [size*factor for size, factor in zip(cube["size"], scale)]
                 if "pivot" in cube:
-                    cube["pivot"] = [pivot[i]+(cube["pivot"][i]-pivot[i])*uniform+position[i] for i in range(3)]
+                    cube["pivot"] = [pivot[i]+(cube["pivot"][i]-pivot[i])*scale[i]+position[i] for i in range(3)]
+    preserve_scaled_descendants(g, result, clip, seconds)
     return rounded(result)
 
 
@@ -331,10 +477,10 @@ def geometry_bounds(g):
         for cube in bone.get("cubes", []):
             for factors in itertools.product((0, 1), repeat=3):
                 point = [cube["origin"][axis]+cube["size"][axis]*factors[axis] for axis in range(3)]
-                point = transform3(point, cube.get("rotation", [0, 0, 0]), cube.get("pivot", [0, 0, 0]))
+                point = geometry_transform3(point, cube.get("rotation", [0, 0, 0]), cube.get("pivot", [0, 0, 0]))
                 current = bone
                 while True:
-                    point = transform3(point, current.get("rotation", [0, 0, 0]), current["pivot"])
+                    point = geometry_transform3(point, current.get("rotation", [0, 0, 0]), current["pivot"])
                     if "parent" not in current:
                         break
                     current = bones[current["parent"]]
@@ -354,27 +500,28 @@ def assert_block_bounds(g):
 
 
 def bound_fridge_swing(g, half):
-    """Keep intermediate hinge sweeps within Bedrock's 30-pixel extent.
+    """Keep the complete door's sampled elastic sweep inside native bounds.
 
-    A 16px wide, 2px thick door reaches slightly beyond 16px at about 83deg.
-    Translate that whole door back by only the excess (at most 0.125px),
-    preserving its dimensions, UVs and sampled angle. End poses are unchanged.
-    A 1/1024px inward guard survives six-decimal JSON and native float rounding;
-    clamping to exactly 30px previously put lower_7 slightly outside the bounds.
+    The source door can exceed the 30px extent by under 0.126px at two points:
+    depth near a right angle, and X near the upper door's elastic overshoot.
+    Translate only that complete door by the excess; never resize it or crop
+    its UV. Endpoints need no correction. The 1/1024px guard survives rounding.
     """
     low, high = geometry_bounds(g)
     guard = 1 / 1024
-    correction = max(0.0, high[2]-low[2]-(30-guard), (-22+guard)-low[2])
-    if correction > 0.126:
+    correction = [0.0, 0.0, 0.0]
+    correction[2] = max(0.0, high[2]-low[2]-(30-guard), (-22+guard)-low[2])
+    correction[0] = -max(0.0, high[0]-low[0]-(30-guard), high[0]-(22-guard))
+    if max(abs(value) for value in correction) > 0.126:
         raise ValueError(f"Unexpected refrigerator swing bound correction: {correction}")
-    if correction:
+    if any(correction):
         for bone in g["minecraft:geometry"][0]["bones"]:
             if bone["name"] == ("bone2" if half == "upper" else "bone3"):
-                bone["pivot"][2] += correction
+                bone["pivot"] = [a+b for a, b in zip(bone["pivot"], correction)]
                 for cube in bone.get("cubes", []):
-                    cube["origin"][2] += correction
+                    cube["origin"] = [a+b for a, b in zip(cube["origin"], correction)]
                     if "pivot" in cube:
-                        cube["pivot"][2] += correction
+                        cube["pivot"] = [a+b for a, b in zip(cube["pivot"], correction)]
     return rounded(g)
 
 
@@ -400,6 +547,17 @@ def convert_animations():
             # Java's easing extensions do not exist in Bedrock. The key poses
             # and durations remain exact; native interpolation is used between.
             body.pop("particle_effects", None)  # upstream's effect '3' has no declared particle asset
+            if family == "npc_transition":
+                # Seek to the authoritative action phase when an actor enters
+                # view/reloads. Otherwise Bedrock restarts a six-second eating
+                # clip although the server may remove the actor a moment later.
+                length = body["animation_length"]
+                body["anim_time_update"] = (f"math.min({length}, math.max(q.anim_time + q.delta_time, "
+                                            f"q.property('{NS}:action_elapsed')))")
+                body["loop"] = "hold_on_last_frame"
+            elif family == "food_plate_placed":
+                body["anim_time_update"] = (f"math.min(0.5, math.max(q.anim_time + q.delta_time, "
+                                            f"q.property('{NS}:placement_age')))")
             result["animations"][identifier] = body
         dest = RP / "animations" / source.name
         write_json(dest, result)
@@ -422,9 +580,12 @@ def state_condition(states):
     return " && ".join(f"q.block_state('{NS}:{key}') == " + (f"'{value}'" if isinstance(value, str) else str(value).lower()) for key, value in states.items())
 
 
-def block_definition(name, base_geo, materials, states=None, variants=(), collision=True, selection=None):
+def block_definition(name, base_geo, materials, states=None, variants=(), collision=True, selection=None,
+                     native_container=None, hidden=False, loot_table=None):
     description = {"identifier": f"{NS}:{name}", "menu_category": {"category": "construction"},
                    "traits": {"minecraft:placement_direction": {"enabled_states": ["minecraft:cardinal_direction"], "y_rotation_offset": 180}}}
+    if hidden:
+        description["menu_category"] = {"category": "none", "is_hidden_in_commands": True}
     if states:
         description["states"] = {}
         for key, values in states.items():
@@ -444,21 +605,25 @@ def block_definition(name, base_geo, materials, states=None, variants=(), collis
         "minecraft:collision_box": collision, "minecraft:selection_box": selection if selection is not None else collision,
         "minecraft:destructible_by_mining": {"seconds_to_destroy": 1.5},
         "minecraft:destructible_by_explosion": {"explosion_resistance": 6},
-        "minecraft:loot": f"loot_tables/blocks/{name}.json",
+        "minecraft:loot": loot_table if loot_table is not None else f"loot_tables/blocks/{name}.json",
         "minecraft:destruction_particles": {"texture": particle, "particle_count": 50},
         "minecraft:light_dampening": 0, "minecraft:map_color": "#9b9286",
         "minecraft:movable": {"movement_type": "immovable"}, f"{NS}:interact": {}}
+    if native_container is not None:
+        components["minecraft:block_entity"] = {"dynamic_properties": True, "container": native_container}
     permutations = [{"condition": f"q.block_state('minecraft:cardinal_direction') == '{direction}'",
                      "components": {"minecraft:transformation": {"rotation": [0, rotation, 0]}}}
                     for direction, rotation in (("north", 0), ("south", 180), ("west", 90), ("east", -90))]
     permutations.extend(variants)
-    result = {"format_version": BLOCK_VERSION, "minecraft:block": {"description": description, "components": components, "permutations": permutations}}
+    version = NATIVE_CONTAINER_VERSION if native_container is not None else BLOCK_VERSION
+    result = {"format_version": version, "minecraft:block": {"description": description, "components": components, "permutations": permutations}}
     write_json(BP / "blocks" / (name + ".json"), result)
     drop = "dirty_plate" if name == "food_plate_display" else name
     loot = {"pools": [{"rolls": 1, "entries": [{"type": "item", "name": f"{NS}:{drop}", "weight": 1}]}]}
     if name in ("food_plate_display", "takeout_bag"):
         loot = {"pools": []}  # Script returns the unique signed stack, never an unbound duplicate.
-    write_json(BP / "loot_tables" / "blocks" / (name + ".json"), loot)
+    if loot_table is None:
+        write_json(BP / "loot_tables" / "blocks" / (name + ".json"), loot)
 
 
 def simple_block(name, model, collision=True, selection=None):
@@ -471,7 +636,29 @@ def make_blocks():
     simple_block("board", "board", False, {"origin": [-8, 0, 4], "size": [16, 16, 4]})
     simple_block("countertop", "countertop")
     simple_block("chair", "chair", {"origin": [-5, 0, -5], "size": [10, 8, 10]}, {"origin": [-5, 0, -5], "size": [10, 16, 10]})
-    simple_block("takeout_bag", "takeout_bag", False, {"origin": [-5, 0, -5], "size": [10, 10, 10]})
+    # Java's placed bag has an empty block model and a complete Geo renderer.
+    # Keep frame zero settled for existing worlds; frames 1..10 play maked at
+    # one source tick each. Only an active placement requests native block ticks.
+    bag_source = ASSETS / "geo/block/takeout_bag_placed.geo.json"
+    bag_animation = ASSETS / "animations/takeout_bag_placed.animation.json"
+    bag = normalize_geo(bag_source, f"geometry.{NS}.takeout_bag_source")
+    bag_clip = read_json(bag_animation)["animations"]["maked"]
+    bag_tile = texture_tile(f"{NS}:block/takeout_bag_placed")
+    mats = {"*": {"texture": bag_tile, "render_method": "alpha_test", "ambient_occlusion": False}}
+    variants = []
+    for frame in range(11):
+        name = "takeout_bag" if frame == 0 else f"takeout_bag_{frame}"
+        seconds = .5 if frame == 0 else (frame-1)/20
+        g = bake_pose(bag, bag_clip, seconds, f"geometry.{NS}.{name}")
+        assert_block_bounds(g)
+        identifier = emit_geo(name, g)
+        for source in (bag_source, bag_animation):
+            record(source, RP / "models/blocks" / f"{name}.geo.json", "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint")
+        variants.append({"condition": state_condition({"frame": frame}), "components": {"minecraft:geometry": identifier}})
+    variants.append({"condition": f"q.block_state('{NS}:frame') > 0", "components": {
+        "minecraft:tick": {"interval_range": [1, 1], "looping": True}, f"{NS}:bag_motion": {}}})
+    block_definition("takeout_bag", f"geometry.{NS}.takeout_bag", mats, {"frame": list(range(11))}, variants,
+                     False, {"origin": [-5, 0, -5], "size": [10, 10, 10]})
     for name, state, maximum in (("shelf", "papers", 10), ("plate_shelf", "plates", 18), ("washingtable", "plates", 10)):
         variants = []
         for count in range(maximum+1):
@@ -481,7 +668,8 @@ def make_blocks():
             variants.append({"condition": state_condition({state: count}), "components": {"minecraft:geometry": identifier, "minecraft:material_instances": mats}})
         coll = True if name == "washingtable" else {"origin": [-8, 0, 0], "size": [16, 16, 8]}
         block_definition(name, f"geometry.{NS}.{name}_0", mats, {state: list(range(maximum+1))}, variants, coll)
-    # Every Java food/eating stage is retained. Stage 0 is the empty display.
+    # Stage zero is drawn by Java's placed-meal renderer. The block fallback
+    # retains its terminal geometry; the dining entity plays the actual clip.
     blockstates_source = ASSETS / "blockstates" / "food_plate_display.json"
     blockstates = read_json(blockstates_source)["variants"]
     variants = []
@@ -489,49 +677,97 @@ def make_blocks():
         spec = blockstates[f"facing=north,stage={stage}"]
         if isinstance(spec, list):
             spec = spec[0]
-        display_model = f"{NS}:block/clean_plate" if stage == 0 else spec["model"]
-        g, mats = convert_java_model(display_model, f"geometry.{NS}.food_plate_display_{stage}")
+        if stage == 0:
+            source = ASSETS / "geo/block/food_plate_placed.geo.json"
+            geometry_id = f"geometry.{NS}.food_plate_display_{stage}"
+            g = normalize_geo(source, geometry_id)
+            tile = texture_tile(f"{NS}:block/food_plate_placed")
+            mats = {"*": {"texture": tile, "render_method": "alpha_test", "ambient_occlusion": False, "face_dimming": True}}
+            GEOMETRY_SOURCES[geometry_id] = ([source], "Original placed-meal renderer terminal pose for the static block display")
+        else:
+            g, mats = convert_java_model(spec["model"], f"geometry.{NS}.food_plate_display_{stage}")
         identifier = emit_geo(f"food_plate_display_{stage}", g)
         variants.append({"condition": state_condition({"stage": stage}), "components": {"minecraft:geometry": identifier, "minecraft:material_instances": mats}})
     block_definition("food_plate_display", f"geometry.{NS}.food_plate_display_0", mats, {"stage": list(range(41))}, variants,
                      False, {"origin": [-6, 0, -6], "size": [12, 5, 12]})
-    record(blockstates_source, BP / "blocks/food_plate_display.json", "Original stage-to-model mapping with clean-plate stage zero adaptation")
-    # Printer animation uses the original three paper positions.
+    record(blockstates_source, BP / "blocks/food_plate_display.json", "Original stage1..40 mapping with original placed-meal renderer geometry at stage zero")
+    # Fixed Java blockstates are empty; the Geo renderer owns the entire
+    # printer. Sample its real 1s neworder rise/squash/wobble, then hold the
+    # terminal paper pose until all pending machine orders are taken.
+    printer_source = ASSETS / "geo/block/order_machine.geo.json"
+    printer_animation = ASSETS / "animations/order_machine.animation.json"
+    printer = normalize_geo(printer_source, f"geometry.{NS}.order_machine_source")
+    printer_clip = read_json(printer_animation)["animations"]["neworder"]
+    printer_tile = texture_tile(f"{NS}:block/order_machine_geo")
+    mats = {"*": {"texture": printer_tile, "render_method": "alpha_test", "ambient_occlusion": False}}
     variants = []
+    for old in (RP / "models/blocks").glob("order_machine_*.geo.json"):
+        if re.fullmatch(r"order_machine_(idle|waiting)_[12]\.geo\.json", old.name):
+            old.unlink()
     for mode in ("idle", "printing", "waiting"):
-        for frame in range(3):
-            extra = () if mode == "idle" else (f"{NS}:block/order_machine_paper{frame if mode == 'printing' else 2}",)
-            g, mats = convert_java_model(f"{NS}:block/order_machine_idle", f"geometry.{NS}.order_machine_{mode}_{frame}", extra)
-            identifier = emit_geo(f"order_machine_{mode}_{frame}", g)
-            variants.append({"condition": state_condition({"mode": mode, "frame": frame}), "components": {"minecraft:geometry": identifier}})
+        for frame in (range(16) if mode == "printing" else (0,)):
+            name = f"order_machine_{mode}_{frame}"
+            clip = {} if mode == "idle" else printer_clip
+            seconds = frame/15 if mode == "printing" else 1
+            g = bake_pose(printer, clip, seconds, f"geometry.{NS}.{name}")
+            if mode == "idle":
+                next(bone for bone in g["minecraft:geometry"][0]["bones"] if bone["name"] == "group")["cubes"] = []
+            assert_block_bounds(g)
+            identifier = emit_geo(name, g)
+            for source in (printer_source, printer_animation):
+                record(source, RP / "models/blocks" / f"{name}.geo.json", "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held")
+            condition = {"mode": mode, "frame": frame} if mode == "printing" else {"mode": mode}
+            variants.append({"condition": state_condition(condition), "components": {"minecraft:geometry": identifier}})
     block_definition("order_machine", f"geometry.{NS}.order_machine_idle_0", mats,
-                     {"mode": ["idle", "printing", "waiting"], "frame": [0, 1, 2]}, variants,
+                     {"mode": ["idle", "printing", "waiting"], "frame": list(range(16))}, variants,
                      {"origin": [-7, 0, -7], "size": [14, 14, 14]})
-    # Cabinet halves remain two blocks, while each entire door belongs to its
-    # own compartment. Eleven bounded source poses give reversible 1s motion.
+    # Separate source open/close curves; each complete door belongs to one
+    # compartment. Root squash uses each half's closing phase (see adaptations).
     fridge_source = ASSETS / "geo/block/refrigerator.geo.json"
     fridge_animation = ASSETS / "animations/refrigerator.animation.json"
     fridge = normalize_geo(fridge_source, f"geometry.{NS}.refrigerator_source")
     fridge_clips = read_json(fridge_animation)["animations"]
     tile = texture_tile(f"{NS}:block/refrigerator")
-    mats = {"*": {"texture": tile, "render_method": "alpha_test", "ambient_occlusion": False}}
+    # Format >= 1.26.20 requires a numeric AO exponent; 0 disables the effect.
+    mats = {"*": {"texture": tile, "render_method": "alpha_test", "ambient_occlusion": 0}}
     variants = []
-    for half, frame in itertools.product(("lower", "upper"), range(11)):
-        name = f"refrigerator_{half}_{frame}"
-        clip = fridge_clips["up_open" if half == "upper" else "down_open"]
+    upper_variants = []
+    for half, closing, frame in itertools.product(("lower", "upper"), (False, True), range(11)):
+        name = f"refrigerator_{half}_{'close_' if closing else ''}{frame}"
+        clip = fridge_clips[("up_" if half == "upper" else "down_")+("close" if closing else "open")]
         g = bound_fridge_swing(bake_pose(split_fridge_geo(fridge, half), clip, frame/10, f"geometry.{NS}.{name}"), half)
         assert_block_bounds(g)
         identifier = emit_geo(name, g)
         for source in (fridge_source, fridge_animation):
-            record(source, RP / "models/blocks" / f"{name}.geo.json", "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation")
+            record(source, RP / "models/blocks" / f"{name}.geo.json", "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep")
         components = {"minecraft:geometry": identifier}
         if half == "upper":
             components["minecraft:loot"] = "loot_tables/empty.json"
-        variants.append({"condition": state_condition({"half": half, "frame": frame}), "components": components})
+        variant = {"condition": state_condition({"half": half, "closing": closing, "frame": frame}), "components": components}
+        variants.append(variant)
+        if half == "upper":
+            upper_variants.append(variant)
+    # block_entity is not allowed in permutations. Two identifiers give each
+    # compartment its actual capacity; the old upper state remains migratable.
     block_definition("refrigerator", f"geometry.{NS}.refrigerator_lower_0", mats,
-                     {"half": ["lower", "upper"], "open": [False, True], "frame": list(range(11))}, variants)
+                     {"half": ["lower", "upper"], "open": [False, True], "closing": [False, True], "frame": list(range(11))}, variants,
+                     native_container={"slot_count": 54, "title": f"container.{NS}.refrigerator.lower"})
+    block_definition("refrigerator_upper", f"geometry.{NS}.refrigerator_upper_0", mats,
+                     {"half": ["upper"], "open": [False, True], "closing": [False, True], "frame": list(range(11))}, upper_variants,
+                     native_container={"slot_count": 27, "title": f"container.{NS}.refrigerator.upper"},
+                     hidden=True, loot_table="loot_tables/empty.json")
+    # Shared data keeps script reversal selection tied to the actual baked
+    # source angles, rather than duplicating a second easing implementation.
+    progress = {mode: [rounded(sample_channel(fridge_clips["down_"+mode]["bones"]["bone3"]["rotation"], frame/10, [0, 0, 0])[1]/-125)
+                       for frame in range(11)] for mode in ("open", "close")}
+    pose_data = BP / "scripts/appliance_pose_data.js"
+    pose_data.parent.mkdir(parents=True, exist_ok=True)
+    pose_data.write_text("// SPDX-License-Identifier: GPL-3.0-only\n// Generated from pinned refrigerator.animation.json by tools/convert_assets.py.\n"
+                        + "export const FRIDGE_POSE_PROGRESS = " + json.dumps(progress, indent=2) + ";\n", encoding="utf-8")
+    record(fridge_animation, pose_data, "Normalized source door angles shared with reversible runtime motion")
     write_json(BP / "loot_tables" / "empty.json", {"pools": []})
-    # Source drawer/door keyframes, selected by persisted phase and elapsed time.
+    # Source drawer/door keyframes plus the original empty_out preview. Preview
+    # is visual phase 6 only; it never becomes a saved washing-machine phase.
     source = ASSETS / "geo/block/dishwasher.geo.json"
     animation_source = ASSETS / "animations/dishwasher.animation.json"
     dishwasher_clips = read_json(animation_source)["animations"]
@@ -539,11 +775,15 @@ def make_blocks():
     tile = texture_tile(f"{NS}:block/dishwasher")
     mats = {"*": {"texture": tile, "render_method": "alpha_test", "ambient_occlusion": False}}
     variants = []
-    phase_clips = {0: None, 1: "empty_in", 2: "dirty_in", 3: "washing", 4: "clear_out", 5: "clear_out"}
-    # Remove alpha.1's six unused poses when regenerating in an existing checkout.
+    phase_clips = {0: None, 1: "empty_in", 2: "dirty_in", 3: "washing", 4: "clear_out", 5: "clear_out", 6: "empty_out"}
+    # Java DishwasherRenderer: 1 plate -> cube 2, 2 -> cubes 2 and 5,
+    # 3+ -> all six. Separate child bones keep the original cube transforms.
+    plate_count = f"(q.block_state('{NS}:plates') + 16 * q.block_state('{NS}:plates_high'))"
+    visibility = {f"{dish}_{index}": f"{plate_count} >= {1 if index == 2 else 2 if index == 5 else 3}"
+                  for dish in ("drity_dish", "clear_dish") for index in range(1, 7)}
     for old in (RP / "models/blocks").glob("dishwasher_[0-5].geo.json"):
         old.unlink()
-    for phase in range(6):
+    for phase in range(7):
         frames = [0] if phase in (0, 5) else range(16)
         for frame in frames:
             clip = dishwasher_clips[phase_clips[phase]] if phase_clips[phase] else {}
@@ -553,28 +793,43 @@ def make_blocks():
             seconds = length if phase == 5 else length*frame/(16 if phase == 3 else 15)
             name = f"dishwasher_{phase}_{frame}"
             g = bake_pose(base, clip, seconds, f"geometry.{NS}.{name}")
-            for bone in g["minecraft:geometry"][0]["bones"]:
+            bones = g["minecraft:geometry"][0]["bones"]
+            dishes = []
+            for bone in bones:
                 if bone["name"] == "drity_dish" and phase != 2:
                     bone["cubes"] = []
                 if bone["name"] == "clear_dish" and phase not in (4, 5):
                     bone["cubes"] = []
+                if bone["name"] in ("drity_dish", "clear_dish"):
+                    cubes = bone.get("cubes", [])
+                    for index in range(1, 7):
+                        dishes.append({"name": f"{bone['name']}_{index}", "parent": bone["name"],
+                                       "pivot": list(bone["pivot"]), "cubes": cubes[index-1:index]})
+                    bone["cubes"] = []
+            bones.extend(dishes)
             assert_block_bounds(g)
             identifier = emit_geo(name, g)
             for original in (source, animation_source):
-                record(original, RP / "models/blocks" / f"{name}.geo.json", f"Bounded original rigid keyframe pose for phase {phase}, frame {frame}; uniform plate scale preserved, cabinet squash omitted")
+                record(original, RP / "models/blocks" / f"{name}.geo.json", f"Source phase {phase}, frame {frame}; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation")
             condition = {"phase": phase} if phase in (0, 5) else {"phase": phase, "frame": frame}
-            variants.append({"condition": state_condition(condition), "components": {"minecraft:geometry": identifier}})
-    block_definition("dishwasher", f"geometry.{NS}.dishwasher_0_0", mats,
-                     {"phase": list(range(6)), "plates": list(range(17)), "frame": list(range(16))}, variants)
+            variants.append({"condition": state_condition(condition), "components": {"minecraft:geometry": {"identifier": identifier, "bone_visibility": visibility}}})
+    block_definition("dishwasher", {"identifier": f"geometry.{NS}.dishwasher_0_0", "bone_visibility": visibility}, mats,
+                     {"phase": list(range(7)), "plates": list(range(17)), "frame": list(range(16))}, variants)
     g, mats = convert_java_model(f"{NS}:block/stove", f"geometry.{NS}.stove")
     emit_geo("stove", g)
-    lit_mats = copy.deepcopy(mats)
-    for material in lit_mats.values():
-        if material["texture"] == texture_tile(f"{NS}:block/stove"):
-            material["texture"] = f"{NS}_stove_lit"
-    block_definition("stove", f"geometry.{NS}.stove", mats, {"lit": [False, True]}, [{
-        "condition": state_condition({"lit": True}), "components": {"minecraft:material_instances": lit_mats,
-        "minecraft:light_emission": 7}}])
+    # Each stove owns its ignition delay, burst and four 8-tick cycle frames.
+    # A global atlas flipbook cannot preserve independent ignition/reload times.
+    # Java's stove has no block light emission; retain lit only as saved state.
+    variants = []
+    for frame, texture in enumerate(("stove_fire", *(f"stove_fire_{n}" for n in range(4))), 1):
+        frame_mats = copy.deepcopy(mats)
+        for material in frame_mats.values():
+            if material["texture"] == texture_tile(f"{NS}:block/stove"):
+                material["texture"] = texture_tile(f"{NS}:block/{texture}")
+        variants.append({"condition": state_condition({"fire_frame": frame}),
+                         "components": {"minecraft:material_instances": frame_mats}})
+    block_definition("stove", f"geometry.{NS}.stove", mats,
+                     {"lit": [False, True], "fire_frame": list(range(6))}, variants)
 
 
 def transform3(v, rotation, pivot=(0, 0, 0)):
@@ -589,6 +844,16 @@ def transform3(v, rotation, pivot=(0, 0, 0)):
         else:
             x, y = x*c-y*s, x*s+y*c
     return [x+pivot[0], y+pivot[1], z+pivot[2]]
+
+
+def geometry_transform3(v, rotation, pivot=(0, 0, 0)):
+    """Rotate JSON-space geometry using the actual Bedrock/GeckoLib axes.
+
+    Both loaders reflect X and negate declared X/Y angles in render space.
+    Conjugating that operation back into JSON coordinates negates X/Z angles.
+    Java thumbnail transforms instead use the conventional transform3 above.
+    """
+    return transform3(v, [-rotation[0], rotation[1], -rotation[2]], pivot)
 
 
 def render_item_icon(model_name, dest):
@@ -679,7 +944,12 @@ def render_item_icon(model_name, dest):
 
 def make_items():
     flat = {f"chef_coin_{n}": f"item/chef_coin_{n}" for n in (1,5,20,100,10000)}
-    flat.update({"order": "item/order", "otc_upgrade_box": "item/otc_upgrade_box", "guide": "item/order", "controller": "item/order"})
+    flat.update({"order": "item/order", "otc_upgrade_box": "item/otc_upgrade_box", "guide": "item/guide_book", "controller": "item/order"})
+    # The existing port-authored pixel book is an editable input too. Rebuilding
+    # upstream models must not silently revert it to the printer ticket icon.
+    guide_dest = RP / "textures" / NS / "item/guide_book.png"
+    guide_dest.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(ROOT / "assets/guidebook/guide_book.png", guide_dest)
     models = {"clean_plate": "block/clean_plate", "dirty_plate": "block/dirty_plate_item", "food_plate": "block/food_plate", "takeout_bag": "block/takeout_bag",
               "motorcycle": "block/motorcycle", "helmet": "item/helmet"}
     icon_map = {}
@@ -773,14 +1043,32 @@ def make_dining_plate():
         spec = variants[f"facing=north,stage={stage}"]
         if isinstance(spec, list):
             spec = spec[0]
-        model_name = f"{NS}:block/clean_plate" if stage == 0 else spec["model"]
         identifier = f"geometry.{NS}.dining_plate_{stage}"
-        g, _ = convert_java_model(model_name, identifier)
+        if stage == 0:
+            # Java's blockstate is empty here because its Gecko renderer draws
+            # the original placed meal during ticks 0..14. A clean plate is not
+            # that render: preserve the food, hierarchy, pixels and maked clip.
+            source = ASSETS / "geo/block/food_plate_placed.geo.json"
+            g = normalize_geo(source, identifier)
+            tile = texture_tile(f"{NS}:block/food_plate_placed")
+            textures[tile] = texture_file(f"{NS}:block/food_plate_placed")
+            GEOMETRY_SOURCES[identifier] = ([source], "Original stage-zero placed meal geometry and hierarchy")
+            for bone in g["minecraft:geometry"][0]["bones"]:
+                for cube in bone.setdefault("cubes", []):
+                    for face in cube["uv"].values():
+                        # Native geo UVs use 32px; the common atlas conversion
+                        # below takes normalized Java 16-unit UV coordinates.
+                        face["uv"] = [value / 2 for value in face["uv"]]
+                        face["uv_size"] = [value / 2 for value in face["uv_size"]]
+                        face["material_instance"] = tile
+        else:
+            model_name = spec["model"]
+            g, _ = convert_java_model(model_name, identifier)
+            model = resolve_model(model_name)
+            for value in model.get("textures", {}).values():
+                name = resolve_texture(value, model["textures"])
+                textures[texture_tile(name)] = texture_file(name)
         meshes.append(g["minecraft:geometry"][0])
-        model = resolve_model(model_name)
-        for value in model.get("textures", {}).values():
-            name = resolve_texture(value, model["textures"])
-            textures[texture_tile(name)] = texture_file(name)
     images = {name: Image.open(path).convert("RGBA") for name, path in sorted(textures.items())}
     padding = 2
     raw_width = sum(img.width+2*padding for img in images.values())
@@ -818,7 +1106,7 @@ def make_dining_plate():
                     face["uv_size"] = [face["uv_size"][0]*sx, face["uv_size"][1]*sy]
     geometry_path = RP / "models/entity/dining_plate.geo.json"
     write_json(geometry_path, {"format_version": GEOMETRY_VERSION, "minecraft:geometry": rounded(meshes)})
-    record(blockstates_source, geometry_path, "Original stage0..40 mapping; stage0 is an empty clean plate as in the display adaptation")
+    record(blockstates_source, geometry_path, "Original stage1..40 mapping; stage0 uses the original FoodPlatePlacedRenderer meal")
     for path in sorted({source for mesh in meshes for source in GEOMETRY_SOURCES[mesh['description']['identifier']][0]}):
         record(path, geometry_path, "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas")
     components = entity_base("ordertocook_dining_plate")
@@ -831,11 +1119,14 @@ def make_dining_plate():
     })
     write_entity("dining_plate", components, {
         f"{NS}:stage": {"type": "int", "range": [0, 40], "default": 0, "client_sync": True},
+        f"{NS}:placement_age": {"type": "float", "range": [0.0, 0.5], "default": 0.0, "client_sync": True},
     }, {f"{NS}:plate_interact": {}})
     write_json(RP / "entity/dining_plate.entity.json", {"format_version": "1.10.0", "minecraft:client_entity": {"description": {
         "identifier": f"{NS}:dining_plate", "materials": {"default": "entity_alphatest"},
         "textures": {"default": f"textures/{NS}/entity/dining_plate_atlas"},
         "geometry": {f"stage{stage}": f"geometry.{NS}.dining_plate_{stage}" for stage in range(41)},
+        "animations": {"placed": f"animation.{NS}.food_plate_placed.maked"},
+        "scripts": {"animate": [{"placed": f"q.property('{NS}:stage') == 0"}]},
         "render_controllers": [f"controller.render.{NS}.dining_plate"],
     }}})
     write_json(RP / "render_controllers/dining_plate.render_controllers.json", {"format_version": "1.10.0", "render_controllers": {
@@ -885,10 +1176,13 @@ def make_entities(animation_names):
     customer = entity_base("ordertocook_customer", True, True)
     customer.update({"minecraft:collision_box": {"width": .6, "height": 1.8}, "minecraft:movement": {"value": 0},
         "minecraft:movement.basic": {}, "minecraft:navigation.walk": {"can_walk": True, "can_open_doors": True},
-        "minecraft:jump.static": {}, "minecraft:nameable": {"always_show": True, "allow_name_tag_renaming": False}})
+        "minecraft:jump.static": {}, "minecraft:nameable": {"always_show": True, "allow_name_tag_renaming": False},
+        "minecraft:behavior.look_at_player": {"priority": 8, "look_distance": 8, "probability": 0.02},
+        "minecraft:behavior.random_look_around": {"priority": 9}})
     props = {f"{NS}:stage": {"type": "enum", "values": ["waiting","seated","eating","leaving"], "default": "waiting", "client_sync": True},
              f"{NS}:variant": {"type": "int", "range": [0,1], "default": 0, "client_sync": True},
              f"{NS}:action": {"type": "int", "range": [0,7], "default": 0, "client_sync": True},
+             f"{NS}:action_elapsed": {"type": "float", "range": [0.0,6.0], "default": 0.0, "client_sync": True},
              f"{NS}:animation_variant": {"type": "int", "range": [1,4], "default": 1, "client_sync": True}}
     write_entity("customer", customer, props)
     for name in ("storage", "seat"):
@@ -937,22 +1231,30 @@ def make_entities(animation_names):
             "rear_t":{"rotation":["q.modified_distance_moved * -114.6",0,0]}}}}})
     stages = {}
     action_transitions = [{f"action_{action}": f"q.property('{NS}:action') == {action}"} for action in action_clips]
-    idle_transitions = [{"seated": f"q.property('{NS}:action') == 0 && q.property('{NS}:stage') == 'seated'"},
-                        {"waiting": f"q.property('{NS}:action') == 0 && q.property('{NS}:stage') != 'seated'"}]
+    idle_transitions = [{"select": f"q.property('{NS}:action') == 0"}]
+    stages["select"] = {"on_entry": [f"v.idle_variant = q.property('{NS}:animation_variant');"],
+        "transitions": copy.deepcopy(action_transitions) + [
+            {"seated": f"q.property('{NS}:stage') == 'seated'"}, {"waiting": "1.0"}]}
     for stage in ("waiting", "seated"):
         other = "seated" if stage == "waiting" else "waiting"
         condition = f"q.property('{NS}:stage') {'==' if other == 'seated' else '!='} 'seated'"
-        transitions = copy.deepcopy(action_transitions)+[{other: condition}, {stage+"_reset": "q.all_animations_finished"}]
-        stages[stage] = {"animations": [{f"{stage}{index}": f"q.property('{NS}:animation_variant') == {index}"} for index in range(1, 5)],
+        transitions = copy.deepcopy(action_transitions)+[{"select": condition}, {stage+"_reset": "q.all_animations_finished"}]
+        # Java selects a new weighted idle only when the current clip finishes
+        # on the client. Latch it for that cycle; a server timer must not change
+        # animation weights halfway through a late-loaded four-second clip.
+        stages[stage] = {"animations": [{f"{stage}{index}": f"v.idle_variant == {index}"} for index in range(1, 5)],
                          "blend_transition": 0, "transitions": transitions}
-        stages[stage+"_reset"] = {"transitions": copy.deepcopy(action_transitions)+[{other: condition}, {stage: "1.0"}]}
+        stages[stage+"_reset"] = {
+            "on_entry": ["v.idle_roll = math.random(0, 1);",
+                         "v.idle_variant = v.idle_roll < 0.55 ? 1 : (v.idle_roll < 0.7 ? 2 : (v.idle_roll < 0.85 ? 3 : 4));"],
+            "transitions": copy.deepcopy(action_transitions)+[{"select": condition}, {stage: "1.0"}]}
     for action in action_clips:
         # Authoritative server action/timer decides completion. Never loop a
         # completed eating/arrival effect simply because the clip ended locally.
         transitions = [entry for entry in action_transitions if f"action_{action}" not in entry]+copy.deepcopy(idle_transitions)
         stages[f"action_{action}"] = {"animations": [f"action{action}"], "blend_transition": 0, "transitions": transitions}
     write_json(RP / "animation_controllers/customer.animation_controllers.json", {"format_version":"1.10.0","animation_controllers":{
-        f"controller.animation.{NS}.customer":{"initial_state":"waiting","states":stages}}})
+        f"controller.animation.{NS}.customer":{"initial_state":"select","states":stages}}})
     anims["controller"] = f"controller.animation.{NS}.customer"
     write_json(RP / "entity/customer.entity.json", {"format_version":"1.10.0","minecraft:client_entity":{"description":{
         "identifier":f"{NS}:customer", "materials":{"default":"entity_alphatest"},
@@ -1007,6 +1309,64 @@ def make_recipes():
     record(source, BP / "recipes/otc_upgrade_box.json", "Java shaped recipe converted to Bedrock; original ingredients and result retained")
 
 
+def make_feedback_particles():
+    """One-shot OTC cues using vanilla particle-atlas sprites, never new art.
+
+    The vanilla endrod/happy/mob_portal/smoke definitions use manual emitters;
+    spawnParticle does not supply their native emitter data. Explicit instant
+    emitters make Java packet counts, Gaussian spread and velocity observable.
+    Sprite UVs: Mojang/bedrock-samples resource_pack/particles (see audio audit).
+    """
+    gaussian = "(math.sqrt(-2 * math.ln(math.max(0.000001, math.random(0, 1)))) * math.cos(360 * math.random(0, 1)))"
+    smoke_uv = {"texture_width":128,"texture_height":128,"uv":[0,0],"uv_size":[1,1],
+                "flipbook":{"base_UV":[56,0],"size_UV":[8,8],"step_UV":[-8,0],"frames_per_second":8,"max_frame":8,"stretch_to_lifetime":True}}
+    specs = {
+        "sparkle": {"uv": {**copy.deepcopy(smoke_uv), "flipbook": {**smoke_uv["flipbook"], "base_UV":[56,88]}},
+                    "size":"0.1 + variable.particle_random_1 * 0.1", "life":"math.random(3, 3.6)", "color":[1,1,1,"1 - 0.6 * math.max(0, 2 * variable.particle_age / variable.particle_lifetime - 1)"], "gravity":-0.2},
+        "cloud": {"uv":smoke_uv,"size":"0.15 + variable.particle_random_1 * 0.15","life":"math.random(0.6, 1.4)","color":[1,1,1,"1 - variable.particle_age / variable.particle_lifetime"],"gravity":0.1},
+        "smoke": {"uv":smoke_uv,"size":0.1,"life":"math.random(0.4, 1.4)","color":["variable.particle_random_1 * 0.5"]*3+[1],"gravity":0.1},
+        "large_smoke": {"uv":smoke_uv,"size":0.25,"life":"math.random(0.4, 1.4)","color":["variable.particle_random_1 * 0.5"]*3+[1],"gravity":0.1},
+        "poof": {"uv":smoke_uv,"size":"0.1 + variable.particle_random_1 * 0.2","life":"math.random(0.3, 0.7)","color":[1,1,1,"1 - variable.particle_age / variable.particle_lifetime"],"gravity":0},
+        "happy": {"uv":{"texture_width":128,"texture_height":128,"uv":[16,40],"uv_size":[8,8]},"size":0.14,"life":"math.random(1, 1.5)","color":[1,1,1,1],"gravity":0},
+        "portal": {"uv":{"texture_width":128,"texture_height":128,"uv":["math.floor(variable.particle_random_3 * 8) * 8",0],"uv_size":[8,8]},
+                   "size":"(0.05 + 0.02 * variable.particle_random_2) * (1 - math.pow(1 - variable.particle_age / variable.particle_lifetime, 2))", "life":"math.random(2, 2.45)",
+                   "color":["variable.particle_random_1 * 0.6 + 0.4","(variable.particle_random_1 * 0.6 + 0.4) * 0.3","(variable.particle_random_1 * 0.6 + 0.4) * 0.9",1],"gravity":0},
+        "bubble_pop": {"uv":{"texture_width":128,"texture_height":128,"uv":[0,16],"uv_size":[8,8]},"size":"0.06 * (1 - variable.particle_age / variable.particle_lifetime)","life":0.2,"color":[1,1,1,1],"gravity":0},
+        "splash": {"uv":{"texture_width":128,"texture_height":128,"uv":["24 + math.floor(variable.particle_random_1 * 4) * 8",8],"uv_size":[8,8]},"size":0.1,"life":"math.random(0.2, 0.5)","color":[1,1,1,1],"gravity":-4},
+    }
+    defaults = "variable.count = variable.count ?? 1; variable.spread.x = variable.spread.x ?? 0; variable.spread.y = variable.spread.y ?? 0; variable.spread.z = variable.spread.z ?? 0; variable.speed = variable.speed ?? 0;"
+    for name, spec in specs.items():
+        components = {
+            "minecraft:emitter_initialization":{"creation_expression":defaults},
+            "minecraft:emitter_lifetime_once":{"active_time":0.05},
+            "minecraft:emitter_rate_instant":{"num_particles":"variable.count"},
+            "minecraft:emitter_shape_point":{"offset":[f"variable.spread.{axis} * {gaussian}" for axis in "xyz"]},
+            "minecraft:particle_initial_speed":[f"variable.speed * {gaussian}" for _ in range(3)],
+            "minecraft:particle_lifetime_expression":{"max_lifetime":spec["life"]},
+            "minecraft:particle_motion_dynamic":{"linear_acceleration":[0,spec["gravity"],0],"linear_drag_coefficient":0.49},
+            "minecraft:particle_appearance_billboard":{"size":[spec["size"],spec["size"]],"facing_camera_mode":"lookat_xyz","uv":copy.deepcopy(spec["uv"])},
+            "minecraft:particle_appearance_tinting":{"color":spec["color"]},
+        }
+        if name == "splash":
+            components["minecraft:particle_initial_speed"] = ["math.random(-0.4, 0.4)", "math.random(0.5, 1)", "math.random(-0.4, 0.4)"]
+        if name not in ("sparkle", "portal"):
+            components["minecraft:particle_appearance_lighting"] = {}
+        write_json(RP / "particles" / (name + ".json"), {"format_version":"1.10.0","particle_effect":{
+            "description":{"identifier":f"{NS}:{name}","basic_render_parameters":{"material":"particles_blend","texture":"textures/particle/particles"}},"components":components}})
+    # Java EXPLOSION_EMITTER is one short-lived emitter, not one smoke mote.
+    write_json(RP / "particles/explosion.json", {"format_version":"1.10.0","particle_effect":{
+        "description":{"identifier":f"{NS}:explosion","basic_render_parameters":{"material":"particles_alpha","texture":"textures/particle/particles"}},
+        "components":{
+            "minecraft:emitter_lifetime_once":{"active_time":0.4},
+            "minecraft:emitter_rate_steady":{"spawn_rate":120,"max_particles":50},
+            "minecraft:emitter_shape_point":{"offset":["math.random(-4, 4)"]*3},
+            "minecraft:particle_lifetime_expression":{"max_lifetime":"math.random(0.3, 0.5)"},
+            "minecraft:particle_appearance_billboard":{"size":[1,1],"facing_camera_mode":"lookat_xyz","uv":{
+                "texture_width":128,"texture_height":128,"uv":[0,0],"uv_size":[1,1],"flipbook":{"base_UV":[0,80],"size_UV":[8,8],"step_UV":[8,0],"frames_per_second":8,"max_frame":16,"stretch_to_lifetime":True}}},
+            "minecraft:particle_appearance_tinting":{"color":["0.4 + variable.particle_random_1 * 0.6"]*3+[1]}
+        }}})
+
+
 def make_textures_and_sounds():
     terrain = {}
     for source in sorted((ASSETS / "textures").rglob("*.png")):
@@ -1025,30 +1385,27 @@ def make_textures_and_sounds():
     light_dest = RP / "textures" / NS / "entity/electric_motorcycle_light_emissive.tga"
     light.save(light_dest)
     record(light_source, light_dest, "Original lamp RGB and transparency mask; nonzero alpha encoded as 64 for Bedrock emissiveness")
-    frames = [Image.open(ASSETS / "textures/block" / f"stove_fire_{n}.png").convert("RGBA") for n in range(4)]
-    if len({im.size for im in frames}) != 1:
-        raise ValueError("Stove animation frame sizes differ")
-    sheet = Image.new("RGBA", (frames[0].width,frames[0].height*4))
-    for index, frame in enumerate(frames):
-        sheet.paste(frame, (0,index*frame.height))
-    dest = RP / "textures" / NS / "block/stove_fire_flipbook.png"
-    sheet.save(dest)
-    for index in range(4):
-        record(ASSETS / "textures/block" / f"stove_fire_{index}.png", dest, "Four original frames vertically concatenated; no pixel repainting")
-    terrain[f"{NS}_stove_lit"] = {"textures": f"textures/{NS}/block/stove_fire_0"}
+    # Original stove.png, stove_fire.png and stove_fire_0..3.png are already
+    # copied above and selected by each stove's explicit fire_frame block state.
+    (RP / "textures" / NS / "block/stove_fire_flipbook.png").unlink(missing_ok=True)
     write_json(RP / "textures/terrain_texture.json", {"resource_pack_name":"Order To Cook Unofficial","texture_name":"atlas.terrain","padding":8,"num_mip_levels":4,"texture_data":terrain})
-    write_json(RP / "textures/flipbook_textures.json", [{"flipbook_texture":f"textures/{NS}/block/stove_fire_flipbook","atlas_tile":f"{NS}_stove_lit","ticks_per_frame":2,"blend_frames":False}])
+    write_json(RP / "textures/flipbook_textures.json", [])
     for source in sorted((ASSETS / "sounds").rglob("*.ogg")):
         copy_asset(source, RP / "sounds" / NS / source.relative_to(ASSETS / "sounds"))
     sounddefs = {}
     for name, spec in read_json(ASSETS / "sounds.json").items():
-        sounddefs[f"{NS}:{name}"] = {"category":"block","sounds":["sounds/"+NS+"/"+s.split(":",1)[1] for s in spec["sounds"]]}
+        sounddefs[f"{NS}:{name}"] = {"category":"player" if name == "horn" else "block","sounds":["sounds/"+NS+"/"+s.split(":",1)[1] for s in spec["sounds"]]}
     write_json(RP / "sounds/sound_definitions.json", {"format_version":"1.14.0","sound_definitions":sounddefs})
     record(ASSETS / "sounds.json", RP / "sounds/sound_definitions.json", "Original sound event aliases registered in the Bedrock sound schema")
     block_sounds = {"format_version":"1.1.0"}
-    for name in ("order_machine","countertop","washingtable","chair","shelf","plate_shelf","takeout_bag","food_plate_display","board","dishwasher","refrigerator","stove"):
-        block_sounds[f"{NS}:{name}"]={"sound":"wood" if name in ("chair","shelf","plate_shelf","board") else "metal"}
+    # Preserve the block sound families inherited in pinned ModBlocks.java.
+    sound_families = {"order_machine":"stone","countertop":"wood","washingtable":"stone",
+        "chair":"wood","shelf":"wood","plate_shelf":"wood","takeout_bag":"cloth",
+        "food_plate_display":"cloth","board":"wood","dishwasher":"metal","refrigerator":"metal","refrigerator_upper":"metal","stove":"wood"}
+    for name, sound_family in sound_families.items():
+        block_sounds[f"{NS}:{name}"]={"sound":sound_family}
     write_json(RP / "blocks.json", block_sounds)
+    make_feedback_particles()
     copy_asset(ASSETS / "icon.png", RP / "pack_icon.png")
     copy_asset(ASSETS / "icon.png", BP / "pack_icon.png")
 
@@ -1064,18 +1421,27 @@ def preserve_imported_geometry():
 def make_languages():
     traditional = {"order_machine":"訂單機","countertop":"料理檯","washingtable":"洗碗檯","chair":"椅子","shelf":"包裝架",
         "plate_shelf":"餐盤架","takeout_bag":"外賣袋","food_plate_display":"已擺放的餐盤","board":"菜單板","dishwasher":"洗碗機",
-        "refrigerator":"冰箱","stove":"爐灶","clean_plate":"乾淨餐盤","dirty_plate":"髒餐盤","food_plate":"裝盤料理",
+        "refrigerator":"冰箱","refrigerator_upper":"冰箱上層","stove":"爐灶","clean_plate":"乾淨餐盤","dirty_plate":"髒餐盤","food_plate":"裝盤料理",
         "motorcycle":"外賣電單車","helmet":"外賣頭盔","order":"訂單","otc_upgrade_box":"設備升級工具箱","guide":"Order To Cook 使用指南","controller":"餐廳控制器"}
     for value in (1,5,20,100,10000):
         traditional[f"chef_coin_{value}"]=f"廚師幣（{value}）"
     english_extra = {"guide":"Order To Cook Guide", "controller":"Restaurant Controller"}
+    fridge_labels = {
+        "en_US": {"upper": "Refrigerator — Upper (27 slots)", "lower": "Refrigerator — Lower (54 slots)", "block": "Upper Refrigerator"},
+        "zh_CN": {"upper": "冰箱上层（27格）", "lower": "冰箱下层（54格）", "block": "冰箱上层"},
+        "zh_TW": {"upper": "冰箱上層（27格）", "lower": "冰箱下層（54格）", "block": "冰箱上層"},
+    }
     for src_name, out_name in (("en_us","en_US"),("zh_cn","zh_CN"),("zh_cn","zh_TW")):
         lang = read_json(ASSETS / "lang" / (src_name + ".json"))
         lines=["## Order To Cook — source translations by breezeth-CN; Bedrock additions by this port.","pack.name=Order To Cook Unofficial","pack.description=Unofficial Bedrock adaptation of Order To Cook."]
         for path in sorted((BP / "blocks").glob("*.json")):
             name=path.stem
             value=traditional[name] if out_name == "zh_TW" else lang.get(f"block.{NS}.{name}", name.replace("_"," ").title())
+            if name == "refrigerator_upper":
+                value = fridge_labels[out_name]["block"]
             lines.append(f"tile.{NS}:{name}.name={value}")
+        for half in ("upper", "lower"):
+            lines.append(f"container.{NS}.refrigerator.{half}={fridge_labels[out_name][half]}")
         for path in sorted((BP / "items").glob("*.json")):
             name=path.stem
             fallback=english_extra.get(name,name.replace("_"," ").title())
@@ -1085,8 +1451,17 @@ def make_languages():
                   f"entity.{NS}:dining_plate.name="+("Dining Plate" if out_name=="en_US" else "用餐餐盤"),
                   f"action.interact.{NS}.plate="+("Check plate" if out_name=="en_US" else "查看餐盤")]
         dest=RP / "texts" / (out_name+".lang")
+        # Handbook and runtime messages are maintained independently of Java
+        # asset labels. Regeneration must retain those additional keys.
+        guide_text = (ROOT / "assets/guidebook" / (out_name + ".lang")).read_text(encoding="utf-8")
+        guide_keys = {line.partition("=")[0] for line in guide_text.splitlines() if "=" in line}
+        previous = dest if dest.is_file() else ROOT / "runtime/RP/texts" / (out_name+".lang")
+        if previous.is_file():
+            generated_keys = {line.partition("=")[0] for line in lines if "=" in line}
+            lines += [line for line in previous.read_text(encoding="utf-8").splitlines()
+                      if line not in lines and line.partition("=")[0] not in generated_keys | guide_keys]
         dest.parent.mkdir(parents=True,exist_ok=True)
-        dest.write_text("\n".join(lines)+"\n",encoding="utf-8")
+        dest.write_text("\n".join(lines)+"\n"+guide_text,encoding="utf-8")
         record(ASSETS / "lang" / (src_name + ".json"), dest, "Bedrock localization keys; additional port labels and Traditional Chinese translations")
     write_json(RP / "texts/languages.json",["en_US","zh_CN","zh_TW"])
 
@@ -1122,11 +1497,14 @@ def main():
     make_languages()
     write_json(OUT / "asset_conversion_manifest.json", {"upstream":"https://github.com/breezeth-CN/OrdertoCook","revision":revision,
         "license":"GPL-3.0", "assets":PROVENANCE,
-        "adaptations":["Two-part cabinet with each complete refrigerator door assigned to its own compartment and 11 reversible baked poses; at most 0.125px intermediate hinge translation keeps the sweep within 30px",
-            "GeckoLib easing replaced by linear interpolation; nonuniform appliance cabinet squash omitted",
-            "Dishwasher drawer, door, uniform dish scale and wash vibration sampled into at most 16 bounded poses per original phase",
-            "Dining plate entity uses all 41 original stage shapes and a single exact-pixel atlas; no inventory or automatic loot",
-            "Seven original customer actions and separate four-way weighted idle variation; action clip restarts on client reload while server finish time remains authoritative",
+        "port_assets": [{"source": str(path.relative_to(ROOT)), "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+                        for path in sorted((ROOT / "assets/guidebook").glob("*")) if path.suffix in (".png", ".lang")],
+        "adaptations":["Two-part refrigerator with complete independent doors; separate 11-pose open/close source clips; at most 0.126px intermediate hinge translation bounds the sweep",
+            "Original GeckoLib elastic/bounce easing and appliance squash retained in sampled static cuboids; residual descendant shear and unsynchronized cabinet halves remain documented",
+            "Stove uses six original textures selected by saved per-stove fire phases: 15-tick ignition delay, 5-tick burst and four 8-tick cycle frames; original ignition bone squash is not rendered",
+            "Dishwasher drawer, door, plate-count visibility and wash vibration sampled into 82 poses including look-target preview; preview geometry is shared rather than per-client",
+            "Dining plate entity uses original stage-zero placement geometry/animation plus 40 source food stages and an exact-pixel atlas; no inventory or automatic loot",
+            "Seven original customer actions seek from canonical elapsed time; weighted idle variation changes only between completed clips",
             "Default customer skins prebundled; runtime web skin lookup not available", "Source-model inventory thumbnails", "Early-game furniture recipes added for survival access"]})
     print(f"Converted {len(PROVENANCE)} source resource references; {len(list(BP.rglob('*.json')))} BP JSON, {len(list(RP.rglob('*.json')))} RP JSON")
 

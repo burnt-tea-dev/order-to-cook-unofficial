@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Native BDS probe. Copied into an isolated QA pack by tools/bedrock_smoke.py.
 // This exercises real engine blocks/entities/ItemStacks, not client UI or input.
-import { world, system, ItemStack, ItemTypes, BlockPermutation, GameMode } from '@minecraft/server';
+import { world, system, ItemStack, ItemTypes, BlockPermutation, GameMode, MolangVariableMap } from '@minecraft/server';
 import { getQaHooks } from './main.js';
 import { getRestaurant, saveRestaurant, getStation, saveStation, setBlockState } from './store.js';
 import { generateOrder } from './core.js';
@@ -72,6 +72,47 @@ async function run(mode) {
     try { test('block registered: ' + id, BlockPermutation.resolve('ordertocook:' + id).type.id === 'ordertocook:' + id); }
     catch (error) { test('block registered: ' + id, false, String(error)); }
   }
+  // Native schema/property checks only; BDS does not render any of these poses.
+  const visualBlock = dim.getBlock({ x: 14, y: 4, z: 12 });
+  for (const direction of ['north', 'east', 'south', 'west']) {
+    let matched = 0;
+    for (const id of blockIds) {
+      visualBlock.setPermutation(BlockPermutation.resolve('ordertocook:' + id, { 'minecraft:cardinal_direction': direction }));
+      if (visualBlock.permutation.getState('minecraft:cardinal_direction') === direction) matched++;
+    }
+    test('all 12 block directions resolve natively: ' + direction, matched === 12);
+  }
+  visualBlock.setPermutation(BlockPermutation.resolve('ordertocook:refrigerator', { 'ordertocook:closing': true, 'ordertocook:frame': 5 }));
+  test('fridge original close-clip selector is accepted by the engine', visualBlock.permutation.getState('ordertocook:closing') === true && visualBlock.permutation.getState('ordertocook:frame') === 5);
+  visualBlock.setPermutation(BlockPermutation.resolve('ordertocook:dishwasher', { 'ordertocook:phase': 6, 'ordertocook:frame': 15 }));
+  test('dishwasher visual preview is a legal native permutation', visualBlock.permutation.getState('ordertocook:phase') === 6 && visualBlock.permutation.getState('ordertocook:frame') === 15);
+  visualBlock.setPermutation(BlockPermutation.resolve('ordertocook:order_machine', { 'ordertocook:mode': 'printing', 'ordertocook:frame': 15 }));
+  test('printer original terminal animation pose is a legal native permutation', visualBlock.permutation.getState('ordertocook:mode') === 'printing' && visualBlock.permutation.getState('ordertocook:frame') === 15);
+  visualBlock.setPermutation(BlockPermutation.resolve('ordertocook:takeout_bag', { 'ordertocook:frame': 1 }));
+  await WAIT(12);
+  test('bag native tick completes its finite placement animation without a viewer', visualBlock.permutation.getState('ordertocook:frame') === 0);
+  visualBlock.setType('minecraft:air');
+  const visualPlate = dim.spawnEntity(DINING_ENTITY, { x: 14.5, y: 4, z: 12.5 });
+  let plateStages = 0;
+  // Native property writes commit next tick. Check range/type acceptance here;
+  // canonical dining below observes actual stages after scheduled updates.
+  for (let stage = 0; stage <= 40; stage++) { visualPlate.setProperty('ordertocook:stage', stage); plateStages++; }
+  visualPlate.setProperty('ordertocook:placement_age', 0.35);
+  test('all 41 plate stages and placement seek property writes are accepted natively', plateStages === 41);
+  visualPlate.remove();
+  const visualCustomer = dim.spawnEntity('ordertocook:customer', { x: 14.5, y: 4, z: 12.5 });
+  visualCustomer.setProperty('ordertocook:action_elapsed', 3.25);
+  test('customer action seek property write is accepted natively', true);
+  visualCustomer.remove();
+  const variables = new MolangVariableMap();
+  variables.setFloat('variable.count', 2); variables.setFloat('variable.speed', 0.3);
+  variables.setVector3('variable.spread', { x: 0.1, y: 0.1, z: 0.1 });
+  let particleCalls = 0;
+  for (const id of ['sparkle', 'cloud', 'poof', 'happy', 'portal', 'bubble_pop', 'splash', 'smoke', 'large_smoke', 'explosion']) {
+    try { dim.spawnParticle('ordertocook:' + id, { x: 14.5, y: 5, z: 12.5 }, variables); particleCalls++; }
+    catch (error) { test('particle API accepted: ' + id, false, String(error)); }
+  }
+  test('ten explicit particle emitters accept native Molang maps (rendering untested)', particleCalls === 10);
   const itemIds = ItemTypes.getAll().map(type => type.id).filter(id => id.startsWith('ordertocook:'));
   test('custom items registered', itemIds.length >= 26, String(itemIds.length));
   for (const food of VANILLA_FOODS) {

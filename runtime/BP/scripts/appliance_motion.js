@@ -8,12 +8,24 @@ export const DISHWASHER_LAST_FRAME = 15;
 
 const clamp = (value, minimum, maximum) => Math.max(minimum, Math.min(maximum, value));
 
-/** Progress measures opening, so reversing a target never jumps to an endpoint. */
-export function advanceDoorMotion(position, open, elapsedTicks) {
-  const current = clamp(Number.isFinite(position) ? position : 0, 0, FRIDGE_MOTION_TICKS);
+/**
+ * Full strokes use the original open/close clips. On an intermediate reversal
+ * play the active clip backwards, retaining the visible pose instead of jumping
+ * between two different elastic/bounce curves. `closing` selects the clip, not
+ * the target. Position keeps the old 0=closed/20=open time coordinate.
+ */
+export function advanceDoorMotion(previous, open, elapsedTicks) {
+  const state = typeof previous === 'number' ? { position: previous, closing: false } : previous;
+  const current = clamp(Number.isFinite(state?.position) ? state.position : 0, 0, FRIDGE_MOTION_TICKS);
   const elapsed = Math.max(0, Number.isFinite(elapsedTicks) ? elapsedTicks : 0);
+  let closing = state?.closing === true;
+  if (elapsed && current === FRIDGE_MOTION_TICKS && !open) closing = true;
+  else if (elapsed && current === 0 && open) closing = false;
   const next = clamp(current + (open ? elapsed : -elapsed), 0, FRIDGE_MOTION_TICKS);
-  return { position: next, frame: Math.round(next / FRIDGE_MOTION_TICKS * FRIDGE_LAST_FRAME) };
+  // Both terminal poses have neutral cabinet scale and coincide between clips.
+  if (elapsed && (next === 0 || next === FRIDGE_MOTION_TICKS)) closing = false;
+  return { position: next, closing,
+    frame: Math.round((closing ? FRIDGE_MOTION_TICKS - next : next) / FRIDGE_MOTION_TICKS * FRIDGE_LAST_FRAME) };
 }
 
 /** A persisted phase and remaining timer fully determine the cosmetic pose. */

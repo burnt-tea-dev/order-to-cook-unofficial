@@ -13,7 +13,7 @@ const min = [-22, -14, -22], max = [22, 30, 22];
 function rotate(point, angles = [0, 0, 0], pivot = [0, 0, 0], round = x => x) {
   let [x, y, z] = point.map((v, i) => round(round(v) - round(pivot[i])));
   for (let i = 0; i < 3; i++) {
-    const r = round(round(angles[i]) * Math.PI / 180);
+    const r = round(round(angles[i] * (i === 1 ? 1 : -1)) * Math.PI / 180);
     const c = round(Math.cos(r)), s = round(Math.sin(r));
     if (i === 0) [y, z] = [round(round(y*c) - round(z*s)), round(round(y*s) + round(z*c))];
     if (i === 1) [x, z] = [round(round(x*c) + round(z*s)), round(-round(x*s) + round(z*c))];
@@ -43,14 +43,14 @@ function check(mesh, path, round, facing) {
 }
 
 test('all generated block meshes stay strictly within the observed native envelope and 30px extent', () => {
-  assert.equal(meshes.length, 184);
+  assert.equal(meshes.length, 241);
   for (const { path, mesh } of meshes) for (let facing = 0; facing < 4; facing++) check(mesh, path, x => x, facing);
 });
 test('serialized block geometry remains bounded with Float32 arithmetic in all four facings', () => {
   for (const { path, mesh } of meshes) for (let facing = 0; facing < 4; facing++) check(mesh, path, Math.fround, facing);
 });
-test('both corrected fridge swing extremes retain a positive inward rounding guard', () => {
-  for (const path of ['refrigerator_lower_7.geo.json', 'refrigerator_upper_6.geo.json']) {
+test('corrected fridge depth swing extremes retain a positive inward rounding guard', () => {
+  for (const path of ['refrigerator_lower_close_2.geo.json', 'refrigerator_upper_3.geo.json']) {
     const mesh = meshes.find(m => m.path === path).mesh;
     const lowZ = Math.min(...corners(mesh, Math.fround, 0).map(p => p[2]));
     assert.ok(lowZ >= -22 + 1/2048, `${path}: ${lowZ} must not be rounded onto the edge`);

@@ -412,30 +412,6 @@
       "operation": "Original lamp RGB and transparency mask; nonzero alpha encoded as 64 for Bedrock emissiveness"
     },
     {
-      "source": "common/src/main/resources/assets/ordertocook/textures/block/stove_fire_0.png",
-      "output": "RP/textures/ordertocook/block/stove_fire_flipbook.png",
-      "sha256": "1e5daa50715f13ba739b52b7258a73e24884666c899da25069ab3adfbcc4a1be",
-      "operation": "Four original frames vertically concatenated; no pixel repainting"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/textures/block/stove_fire_1.png",
-      "output": "RP/textures/ordertocook/block/stove_fire_flipbook.png",
-      "sha256": "618ae232ba2f83b7be272fe4a8c72475546940c6d7acb4bd8847d8b54b47eb72",
-      "operation": "Four original frames vertically concatenated; no pixel repainting"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/textures/block/stove_fire_2.png",
-      "output": "RP/textures/ordertocook/block/stove_fire_flipbook.png",
-      "sha256": "2e7fd6c963f7312aed1dfd2b57fb583a5d78d4aa4568daf576a27ba5e7ce4954",
-      "operation": "Four original frames vertically concatenated; no pixel repainting"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/textures/block/stove_fire_3.png",
-      "output": "RP/textures/ordertocook/block/stove_fire_flipbook.png",
-      "sha256": "18fedd4de5bd5823369e76430b8d876a1f8eefd826b66831f611c8268f5f08f0",
-      "operation": "Four original frames vertically concatenated; no pixel repainting"
-    },
-    {
       "source": "common/src/main/resources/assets/ordertocook/sounds/bag_interact.ogg",
       "output": "RP/sounds/ordertocook/bag_interact.ogg",
       "sha256": "f48919e1e8e0800fd5c5c48d663b7ecaebe33fc3a3b45ff34f78f2c0e9b144f7",
@@ -610,10 +586,136 @@
       "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
     },
     {
-      "source": "common/src/main/resources/assets/ordertocook/models/block/takeout_bag.json",
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
       "output": "RP/models/blocks/takeout_bag.geo.json",
-      "sha256": "6c7903ff3f7560439aa74e4461b598cc0b42e144538549eefe4b0d0d36bba210",
-      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/blocks/takeout_bag_1.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag_1.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/blocks/takeout_bag_2.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag_2.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/blocks/takeout_bag_3.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag_3.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/blocks/takeout_bag_4.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag_4.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/blocks/takeout_bag_5.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag_5.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/blocks/takeout_bag_6.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag_6.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/blocks/takeout_bag_7.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag_7.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/blocks/takeout_bag_8.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag_8.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/blocks/takeout_bag_9.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag_9.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/blocks/takeout_bag_10.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag_10.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_idle.json",
@@ -1090,10 +1192,10 @@
       "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
     },
     {
-      "source": "common/src/main/resources/assets/ordertocook/models/block/clean_plate.json",
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/food_plate_placed.geo.json",
       "output": "RP/models/blocks/food_plate_display_0.geo.json",
-      "sha256": "6d4d5c4ad1189c7502c42e3225d66c752348342434821e47e10ac0cd9b3c89df",
-      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+      "sha256": "067b2b8dc2ca9ed0a708dcc2d048236e27fd6efcbfef6f3221b60854d3338f12",
+      "operation": "Original placed-meal renderer terminal pose for the static block display"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/1_1.json",
@@ -1339,1153 +1441,1741 @@
       "source": "common/src/main/resources/assets/ordertocook/blockstates/food_plate_display.json",
       "output": "BP/blocks/food_plate_display.json",
       "sha256": "3a36a70531958dd2eaa803588f43a9bf1cdf4e33a5e542c97914607b7cae8b8d",
-      "operation": "Original stage-to-model mapping with clean-plate stage zero adaptation"
+      "operation": "Original stage1..40 mapping with original placed-meal renderer geometry at stage zero"
     },
     {
-      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_idle.json",
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json",
       "output": "RP/models/blocks/order_machine_idle_0.geo.json",
-      "sha256": "ca71f250815fffaa3febefdcadb5b2ebfea9c027ac851f352398e780a5f6cbfc",
-      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+      "sha256": "8b6de1609098ebf4cf8a04a5e6041fe4969bc70311537c6fec9d4bc5622696cc",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
     },
     {
-      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_idle.json",
-      "output": "RP/models/blocks/order_machine_idle_1.geo.json",
-      "sha256": "ca71f250815fffaa3febefdcadb5b2ebfea9c027ac851f352398e780a5f6cbfc",
-      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+      "source": "common/src/main/resources/assets/ordertocook/animations/order_machine.animation.json",
+      "output": "RP/models/blocks/order_machine_idle_0.geo.json",
+      "sha256": "a315908ff0c2b16df728d8e2fe0413072a4ee1cbf31d71751a75781a6eb6e71f",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
     },
     {
-      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_idle.json",
-      "output": "RP/models/blocks/order_machine_idle_2.geo.json",
-      "sha256": "ca71f250815fffaa3febefdcadb5b2ebfea9c027ac851f352398e780a5f6cbfc",
-      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_idle.json",
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json",
       "output": "RP/models/blocks/order_machine_printing_0.geo.json",
-      "sha256": "ca71f250815fffaa3febefdcadb5b2ebfea9c027ac851f352398e780a5f6cbfc",
-      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+      "sha256": "8b6de1609098ebf4cf8a04a5e6041fe4969bc70311537c6fec9d4bc5622696cc",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
     },
     {
-      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_paper0.json",
+      "source": "common/src/main/resources/assets/ordertocook/animations/order_machine.animation.json",
       "output": "RP/models/blocks/order_machine_printing_0.geo.json",
-      "sha256": "bf5a0fe0c53e885956f3cfc3e3ca16c0ddf293ca8201c329d243b0965b63134d",
-      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+      "sha256": "a315908ff0c2b16df728d8e2fe0413072a4ee1cbf31d71751a75781a6eb6e71f",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
     },
     {
-      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_idle.json",
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json",
       "output": "RP/models/blocks/order_machine_printing_1.geo.json",
-      "sha256": "ca71f250815fffaa3febefdcadb5b2ebfea9c027ac851f352398e780a5f6cbfc",
-      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+      "sha256": "8b6de1609098ebf4cf8a04a5e6041fe4969bc70311537c6fec9d4bc5622696cc",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
     },
     {
-      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_paper1.json",
+      "source": "common/src/main/resources/assets/ordertocook/animations/order_machine.animation.json",
       "output": "RP/models/blocks/order_machine_printing_1.geo.json",
-      "sha256": "07e158402f428a49fe07af8930bd144a8fa933b2e5904f51faf3aac367590b39",
-      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+      "sha256": "a315908ff0c2b16df728d8e2fe0413072a4ee1cbf31d71751a75781a6eb6e71f",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
     },
     {
-      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_idle.json",
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json",
       "output": "RP/models/blocks/order_machine_printing_2.geo.json",
-      "sha256": "ca71f250815fffaa3febefdcadb5b2ebfea9c027ac851f352398e780a5f6cbfc",
-      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+      "sha256": "8b6de1609098ebf4cf8a04a5e6041fe4969bc70311537c6fec9d4bc5622696cc",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
     },
     {
-      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_paper2.json",
+      "source": "common/src/main/resources/assets/ordertocook/animations/order_machine.animation.json",
       "output": "RP/models/blocks/order_machine_printing_2.geo.json",
-      "sha256": "b469f5f40a4a6dc47e3ffddcb2706a4d0fdda03bc84fc8693b358a9bd4661d56",
-      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+      "sha256": "a315908ff0c2b16df728d8e2fe0413072a4ee1cbf31d71751a75781a6eb6e71f",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
     },
     {
-      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_idle.json",
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json",
+      "output": "RP/models/blocks/order_machine_printing_3.geo.json",
+      "sha256": "8b6de1609098ebf4cf8a04a5e6041fe4969bc70311537c6fec9d4bc5622696cc",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/order_machine.animation.json",
+      "output": "RP/models/blocks/order_machine_printing_3.geo.json",
+      "sha256": "a315908ff0c2b16df728d8e2fe0413072a4ee1cbf31d71751a75781a6eb6e71f",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json",
+      "output": "RP/models/blocks/order_machine_printing_4.geo.json",
+      "sha256": "8b6de1609098ebf4cf8a04a5e6041fe4969bc70311537c6fec9d4bc5622696cc",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/order_machine.animation.json",
+      "output": "RP/models/blocks/order_machine_printing_4.geo.json",
+      "sha256": "a315908ff0c2b16df728d8e2fe0413072a4ee1cbf31d71751a75781a6eb6e71f",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json",
+      "output": "RP/models/blocks/order_machine_printing_5.geo.json",
+      "sha256": "8b6de1609098ebf4cf8a04a5e6041fe4969bc70311537c6fec9d4bc5622696cc",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/order_machine.animation.json",
+      "output": "RP/models/blocks/order_machine_printing_5.geo.json",
+      "sha256": "a315908ff0c2b16df728d8e2fe0413072a4ee1cbf31d71751a75781a6eb6e71f",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json",
+      "output": "RP/models/blocks/order_machine_printing_6.geo.json",
+      "sha256": "8b6de1609098ebf4cf8a04a5e6041fe4969bc70311537c6fec9d4bc5622696cc",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/order_machine.animation.json",
+      "output": "RP/models/blocks/order_machine_printing_6.geo.json",
+      "sha256": "a315908ff0c2b16df728d8e2fe0413072a4ee1cbf31d71751a75781a6eb6e71f",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json",
+      "output": "RP/models/blocks/order_machine_printing_7.geo.json",
+      "sha256": "8b6de1609098ebf4cf8a04a5e6041fe4969bc70311537c6fec9d4bc5622696cc",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/order_machine.animation.json",
+      "output": "RP/models/blocks/order_machine_printing_7.geo.json",
+      "sha256": "a315908ff0c2b16df728d8e2fe0413072a4ee1cbf31d71751a75781a6eb6e71f",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json",
+      "output": "RP/models/blocks/order_machine_printing_8.geo.json",
+      "sha256": "8b6de1609098ebf4cf8a04a5e6041fe4969bc70311537c6fec9d4bc5622696cc",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/order_machine.animation.json",
+      "output": "RP/models/blocks/order_machine_printing_8.geo.json",
+      "sha256": "a315908ff0c2b16df728d8e2fe0413072a4ee1cbf31d71751a75781a6eb6e71f",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json",
+      "output": "RP/models/blocks/order_machine_printing_9.geo.json",
+      "sha256": "8b6de1609098ebf4cf8a04a5e6041fe4969bc70311537c6fec9d4bc5622696cc",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/order_machine.animation.json",
+      "output": "RP/models/blocks/order_machine_printing_9.geo.json",
+      "sha256": "a315908ff0c2b16df728d8e2fe0413072a4ee1cbf31d71751a75781a6eb6e71f",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json",
+      "output": "RP/models/blocks/order_machine_printing_10.geo.json",
+      "sha256": "8b6de1609098ebf4cf8a04a5e6041fe4969bc70311537c6fec9d4bc5622696cc",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/order_machine.animation.json",
+      "output": "RP/models/blocks/order_machine_printing_10.geo.json",
+      "sha256": "a315908ff0c2b16df728d8e2fe0413072a4ee1cbf31d71751a75781a6eb6e71f",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json",
+      "output": "RP/models/blocks/order_machine_printing_11.geo.json",
+      "sha256": "8b6de1609098ebf4cf8a04a5e6041fe4969bc70311537c6fec9d4bc5622696cc",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/order_machine.animation.json",
+      "output": "RP/models/blocks/order_machine_printing_11.geo.json",
+      "sha256": "a315908ff0c2b16df728d8e2fe0413072a4ee1cbf31d71751a75781a6eb6e71f",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json",
+      "output": "RP/models/blocks/order_machine_printing_12.geo.json",
+      "sha256": "8b6de1609098ebf4cf8a04a5e6041fe4969bc70311537c6fec9d4bc5622696cc",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/order_machine.animation.json",
+      "output": "RP/models/blocks/order_machine_printing_12.geo.json",
+      "sha256": "a315908ff0c2b16df728d8e2fe0413072a4ee1cbf31d71751a75781a6eb6e71f",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json",
+      "output": "RP/models/blocks/order_machine_printing_13.geo.json",
+      "sha256": "8b6de1609098ebf4cf8a04a5e6041fe4969bc70311537c6fec9d4bc5622696cc",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/order_machine.animation.json",
+      "output": "RP/models/blocks/order_machine_printing_13.geo.json",
+      "sha256": "a315908ff0c2b16df728d8e2fe0413072a4ee1cbf31d71751a75781a6eb6e71f",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json",
+      "output": "RP/models/blocks/order_machine_printing_14.geo.json",
+      "sha256": "8b6de1609098ebf4cf8a04a5e6041fe4969bc70311537c6fec9d4bc5622696cc",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/order_machine.animation.json",
+      "output": "RP/models/blocks/order_machine_printing_14.geo.json",
+      "sha256": "a315908ff0c2b16df728d8e2fe0413072a4ee1cbf31d71751a75781a6eb6e71f",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json",
+      "output": "RP/models/blocks/order_machine_printing_15.geo.json",
+      "sha256": "8b6de1609098ebf4cf8a04a5e6041fe4969bc70311537c6fec9d4bc5622696cc",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/order_machine.animation.json",
+      "output": "RP/models/blocks/order_machine_printing_15.geo.json",
+      "sha256": "a315908ff0c2b16df728d8e2fe0413072a4ee1cbf31d71751a75781a6eb6e71f",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json",
       "output": "RP/models/blocks/order_machine_waiting_0.geo.json",
-      "sha256": "ca71f250815fffaa3febefdcadb5b2ebfea9c027ac851f352398e780a5f6cbfc",
-      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+      "sha256": "8b6de1609098ebf4cf8a04a5e6041fe4969bc70311537c6fec9d4bc5622696cc",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
     },
     {
-      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_paper2.json",
+      "source": "common/src/main/resources/assets/ordertocook/animations/order_machine.animation.json",
       "output": "RP/models/blocks/order_machine_waiting_0.geo.json",
-      "sha256": "b469f5f40a4a6dc47e3ffddcb2706a4d0fdda03bc84fc8693b358a9bd4661d56",
-      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_idle.json",
-      "output": "RP/models/blocks/order_machine_waiting_1.geo.json",
-      "sha256": "ca71f250815fffaa3febefdcadb5b2ebfea9c027ac851f352398e780a5f6cbfc",
-      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_paper2.json",
-      "output": "RP/models/blocks/order_machine_waiting_1.geo.json",
-      "sha256": "b469f5f40a4a6dc47e3ffddcb2706a4d0fdda03bc84fc8693b358a9bd4661d56",
-      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_idle.json",
-      "output": "RP/models/blocks/order_machine_waiting_2.geo.json",
-      "sha256": "ca71f250815fffaa3febefdcadb5b2ebfea9c027ac851f352398e780a5f6cbfc",
-      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/models/block/order_machine_paper2.json",
-      "output": "RP/models/blocks/order_machine_waiting_2.geo.json",
-      "sha256": "b469f5f40a4a6dc47e3ffddcb2706a4d0fdda03bc84fc8693b358a9bd4661d56",
-      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+      "sha256": "a315908ff0c2b16df728d8e2fe0413072a4ee1cbf31d71751a75781a6eb6e71f",
+      "operation": "Complete original Geo printer; original neworder 1s rise/squash/wobble sampled into 16 poses; idle paper hidden and waiting endpoint held"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_lower_0.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_lower_0.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_lower_1.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_lower_1.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_lower_2.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_lower_2.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_lower_3.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_lower_3.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_lower_4.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_lower_4.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_lower_5.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_lower_5.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_lower_6.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_lower_6.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_lower_7.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_lower_7.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_lower_8.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_lower_8.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_lower_9.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_lower_9.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_lower_10.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_lower_10.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_0.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_0.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_1.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_1.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_2.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_2.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_3.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_3.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_4.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_4.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_5.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_5.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_6.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_6.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_7.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_7.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_8.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_8.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_9.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_9.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_10.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_lower_close_10.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_upper_0.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_upper_0.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_upper_1.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_upper_1.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_upper_2.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_upper_2.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_upper_3.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_upper_3.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_upper_4.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_upper_4.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_upper_5.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_upper_5.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_upper_6.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_upper_6.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_upper_7.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_upper_7.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_upper_8.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_upper_8.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_upper_9.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_upper_9.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
       "output": "RP/models/blocks/refrigerator_upper_10.geo.json",
       "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "RP/models/blocks/refrigerator_upper_10.geo.json",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
-      "operation": "Independent complete door; original 1s keyframe angles baked at 0.1s intervals; cabinet UVs cropped at Y=16; intermediate hinge sweep bounded by at most 0.125px translation"
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_0.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_0.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_1.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_1.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_2.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_2.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_3.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_3.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_4.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_4.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_5.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_5.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_6.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_6.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_7.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_7.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_8.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_8.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_9.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_9.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_10.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "RP/models/blocks/refrigerator_upper_close_10.geo.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "output": "BP/scripts/appliance_pose_data.js",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "operation": "Normalized source door angles shared with reversible runtime motion"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_0_0.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 0, frame 0; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 0, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_0_0.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 0, frame 0; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 0, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_0.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 0; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_0.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 0; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_1.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 1; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 1; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_1.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 1; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 1; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_2.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 2; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 2; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_2.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 2; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 2; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_3.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 3; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 3; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_3.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 3; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 3; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_4.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 4; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 4; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_4.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 4; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 4; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_5.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 5; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 5; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_5.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 5; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 5; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_6.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 6; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 6; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_6.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 6; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 6; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_7.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 7; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 7; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_7.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 7; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 7; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_8.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 8; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 8; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_8.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 8; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 8; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_9.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 9; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 9; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_9.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 9; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 9; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_10.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 10; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 10; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_10.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 10; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 10; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_11.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 11; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 11; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_11.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 11; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 11; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_12.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 12; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 12; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_12.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 12; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 12; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_13.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 13; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 13; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_13.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 13; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 13; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_14.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 14; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 14; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_14.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 14; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 14; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_15.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 15; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 15; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_15.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 1, frame 15; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 1, frame 15; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_0.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 0; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_0.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 0; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_1.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 1; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 1; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_1.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 1; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 1; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_2.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 2; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 2; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_2.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 2; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 2; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_3.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 3; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 3; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_3.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 3; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 3; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_4.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 4; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 4; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_4.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 4; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 4; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_5.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 5; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 5; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_5.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 5; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 5; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_6.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 6; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 6; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_6.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 6; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 6; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_7.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 7; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 7; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_7.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 7; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 7; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_8.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 8; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 8; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_8.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 8; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 8; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_9.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 9; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 9; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_9.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 9; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 9; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_10.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 10; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 10; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_10.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 10; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 10; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_11.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 11; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 11; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_11.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 11; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 11; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_12.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 12; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 12; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_12.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 12; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 12; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_13.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 13; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 13; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_13.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 13; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 13; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_14.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 14; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 14; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_14.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 14; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 14; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_15.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 15; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 15; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_15.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 2, frame 15; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 2, frame 15; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_0.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 0; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_0.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 0; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_1.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 1; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 1; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_1.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 1; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 1; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_2.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 2; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 2; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_2.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 2; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 2; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_3.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 3; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 3; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_3.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 3; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 3; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_4.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 4; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 4; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_4.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 4; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 4; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_5.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 5; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 5; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_5.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 5; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 5; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_6.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 6; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 6; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_6.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 6; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 6; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_7.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 7; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 7; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_7.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 7; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 7; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_8.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 8; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 8; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_8.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 8; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 8; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_9.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 9; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 9; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_9.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 9; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 9; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_10.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 10; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 10; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_10.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 10; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 10; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_11.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 11; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 11; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_11.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 11; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 11; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_12.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 12; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 12; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_12.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 12; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 12; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_13.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 13; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 13; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_13.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 13; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 13; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_14.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 14; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 14; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_14.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 14; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 14; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_15.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 15; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 15; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_15.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 3, frame 15; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 3, frame 15; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_0.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 0; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_0.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 0; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_1.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 1; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 1; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_1.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 1; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 1; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_2.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 2; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 2; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_2.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 2; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 2; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_3.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 3; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 3; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_3.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 3; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 3; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_4.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 4; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 4; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_4.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 4; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 4; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_5.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 5; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 5; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_5.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 5; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 5; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_6.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 6; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 6; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_6.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 6; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 6; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_7.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 7; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 7; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_7.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 7; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 7; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_8.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 8; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 8; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_8.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 8; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 8; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_9.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 9; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 9; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_9.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 9; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 9; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_10.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 10; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 10; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_10.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 10; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 10; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_11.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 11; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 11; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_11.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 11; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 11; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_12.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 12; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 12; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_12.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 12; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 12; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_13.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 13; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 13; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_13.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 13; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 13; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_14.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 14; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 14; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_14.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 14; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 14; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_15.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 15; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 15; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_15.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 4, frame 15; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 4, frame 15; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_5_0.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Bounded original rigid keyframe pose for phase 5, frame 0; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 5, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_5_0.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Bounded original rigid keyframe pose for phase 5, frame 0; uniform plate scale preserved, cabinet squash omitted"
+      "operation": "Source phase 5, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_6_0.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Source phase 6, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_6_0.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Source phase 6, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_6_1.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Source phase 6, frame 1; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_6_1.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Source phase 6, frame 1; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_6_2.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Source phase 6, frame 2; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_6_2.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Source phase 6, frame 2; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_6_3.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Source phase 6, frame 3; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_6_3.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Source phase 6, frame 3; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_6_4.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Source phase 6, frame 4; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_6_4.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Source phase 6, frame 4; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_6_5.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Source phase 6, frame 5; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_6_5.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Source phase 6, frame 5; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_6_6.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Source phase 6, frame 6; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_6_6.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Source phase 6, frame 6; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_6_7.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Source phase 6, frame 7; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_6_7.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Source phase 6, frame 7; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_6_8.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Source phase 6, frame 8; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_6_8.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Source phase 6, frame 8; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_6_9.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Source phase 6, frame 9; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_6_9.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Source phase 6, frame 9; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_6_10.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Source phase 6, frame 10; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_6_10.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Source phase 6, frame 10; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_6_11.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Source phase 6, frame 11; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_6_11.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Source phase 6, frame 11; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_6_12.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Source phase 6, frame 12; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_6_12.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Source phase 6, frame 12; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_6_13.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Source phase 6, frame 13; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_6_13.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Source phase 6, frame 13; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_6_14.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Source phase 6, frame 14; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_6_14.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Source phase 6, frame 14; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "output": "RP/models/blocks/dishwasher_6_15.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "operation": "Source phase 6, frame 15; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "output": "RP/models/blocks/dishwasher_6_15.geo.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "operation": "Source phase 6, frame 15; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/models/block/stove.json",
@@ -2560,27 +3250,27 @@
       "operation": "Geometry identifier and version normalization"
     },
     {
-      "source": "common/src/main/resources/assets/ordertocook/textures/item/clean_plate.png",
+      "source": "common/src/main/resources/assets/ordertocook/textures/block/food_plate_placed.png",
       "output": "RP/textures/ordertocook/entity/dining_plate_atlas.png",
-      "sha256": "2a7727c8f62e5b9ed7eacbc08ff0e778210e8f89189136d5d6ac9d5b0ecb94d5",
-      "operation": "Exact source pixels placed in a single entity atlas; x,y,UV scales=(166, 2, 4.0, 4.0)"
+      "sha256": "d7e566f83d24676b6b047018f6dd4302dba16ea0d1ea326fd5d2755946a0d27a",
+      "operation": "Exact source pixels placed in a single entity atlas; x,y,UV scales=(2, 2, 2.0, 2.0)"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/textures/block/food_plate_variants.png",
       "output": "RP/textures/ordertocook/entity/dining_plate_atlas.png",
       "sha256": "b233e3750f620834648f08386244ddeceeb6d0ce2f439315e02d424ed79eb2e1",
-      "operation": "Exact source pixels placed in a single entity atlas; x,y,UV scales=(2, 2, 10.0, 10.0)"
+      "operation": "Exact source pixels placed in a single entity atlas; x,y,UV scales=(38, 2, 10.0, 10.0)"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/blockstates/food_plate_display.json",
       "output": "RP/models/entity/dining_plate.geo.json",
       "sha256": "3a36a70531958dd2eaa803588f43a9bf1cdf4e33a5e542c97914607b7cae8b8d",
-      "operation": "Original stage0..40 mapping; stage0 is an empty clean plate as in the display adaptation"
+      "operation": "Original stage1..40 mapping; stage0 uses the original FoodPlatePlacedRenderer meal"
     },
     {
-      "source": "common/src/main/resources/assets/ordertocook/models/block/clean_plate.json",
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/food_plate_placed.geo.json",
       "output": "RP/models/entity/dining_plate.geo.json",
-      "sha256": "6d4d5c4ad1189c7502c42e3225d66c752348342434821e47e10ac0cd9b3c89df",
+      "sha256": "067b2b8dc2ca9ed0a708dcc2d048236e27fd6efcbfef6f3221b60854d3338f12",
       "operation": "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas"
     },
     {
@@ -2902,12 +3592,31 @@
       "operation": "Bedrock localization keys; additional port labels and Traditional Chinese translations"
     }
   ],
+  "port_assets": [
+    {
+      "source": "assets/guidebook/en_US.lang",
+      "sha256": "4a8486fb83820dba547b21d613666a46c27a0ec975a694e13b1ee91a32398075"
+    },
+    {
+      "source": "assets/guidebook/guide_book.png",
+      "sha256": "d379df463da63780960ac9d267e0ae7b1c04849f85cd95ade661ea2f857280f3"
+    },
+    {
+      "source": "assets/guidebook/zh_CN.lang",
+      "sha256": "dfc0a556e12aa52cfa02849db5c35097b0f39944eddafec78f31f4842f11c80f"
+    },
+    {
+      "source": "assets/guidebook/zh_TW.lang",
+      "sha256": "d7419752f61ecf44b3509f2c28555c83013c6c8b67402edea2f11958144da186"
+    }
+  ],
   "adaptations": [
-    "Two-part cabinet with each complete refrigerator door assigned to its own compartment and 11 reversible baked poses; at most 0.125px intermediate hinge translation keeps the sweep within 30px",
-    "GeckoLib easing replaced by linear interpolation; nonuniform appliance cabinet squash omitted",
-    "Dishwasher drawer, door, uniform dish scale and wash vibration sampled into at most 16 bounded poses per original phase",
-    "Dining plate entity uses all 41 original stage shapes and a single exact-pixel atlas; no inventory or automatic loot",
-    "Seven original customer actions and separate four-way weighted idle variation; action clip restarts on client reload while server finish time remains authoritative",
+    "Two-part refrigerator with complete independent doors; separate 11-pose open/close source clips; at most 0.126px intermediate hinge translation bounds the sweep",
+    "Original GeckoLib elastic/bounce easing and appliance squash retained in sampled static cuboids; residual descendant shear and unsynchronized cabinet halves remain documented",
+    "Stove uses six original textures selected by saved per-stove fire phases: 15-tick ignition delay, 5-tick burst and four 8-tick cycle frames; original ignition bone squash is not rendered",
+    "Dishwasher drawer, door, plate-count visibility and wash vibration sampled into 82 poses including look-target preview; preview geometry is shared rather than per-client",
+    "Dining plate entity uses original stage-zero placement geometry/animation plus 40 source food stages and an exact-pixel atlas; no inventory or automatic loot",
+    "Seven original customer actions seek from canonical elapsed time; weighted idle variation changes only between completed clips",
     "Default customer skins prebundled; runtime web skin lookup not available",
     "Source-model inventory thumbnails",
     "Early-game furniture recipes added for survival access"
