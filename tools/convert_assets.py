@@ -565,6 +565,28 @@ def convert_animations():
     return names
 
 
+def make_player_handwashing_animation():
+    """Adapt the two rigid player arms; keep the unsupported full rig separate."""
+    source = ASSETS / "animations/player_wash.animation.json"
+    original = unwrap_vectors(read_json(source)["animations"]["player_wash"])
+    bones = {}
+    for upstream, native in (("right_arm", "rightArm"), ("left_arm", "leftArm")):
+        channels = copy.deepcopy(original["bones"][upstream])
+        for name, values in channels.items():
+            if isinstance(values, dict):
+                # Two original 2-second cycles, bounded to the 80-tick wash.
+                channels[name] = {f"{float(time) + offset:g}": value
+                                  for offset in (0, 2) for time, value in values.items()}
+        bones[native] = channels
+    destination = RP / "animations/handwashing_player.animation.json"
+    write_json(destination, {"format_version": "1.8.0", "animations": {
+        f"animation.{NS}.player.handwash": {"animation_length": 4, "loop": False,
+            "override_previous_animation": True, "bones": bones},
+        f"animation.{NS}.player.handwash_stop": {"animation_length": 0.05}
+    }})
+    record(source, destination, "Original handwash arm channels; native rightArm/leftArm mapping; two bounded cycles, no player definition override")
+
+
 def emit_geo(name, g):
     dest = RP / "models" / "blocks" / (name + ".geo.json")
     write_json(dest, g)
@@ -1512,6 +1534,7 @@ def main():
             revision="unknown"
     make_textures_and_sounds()
     animations=convert_animations()
+    make_player_handwashing_animation()
     make_blocks()
     make_customer_names()
     make_items()

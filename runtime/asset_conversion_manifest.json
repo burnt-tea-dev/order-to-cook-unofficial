@@ -568,6 +568,12 @@
       "operation": "GeckoLib vector wrapper/identifier normalization; native interpolation"
     },
     {
+      "source": "common/src/main/resources/assets/ordertocook/animations/player_wash.animation.json",
+      "output": "RP/animations/handwashing_player.animation.json",
+      "sha256": "9d6dc7d3a50ed156d51e63123f9aa8425cbcabaa6b9a54a75f259384b3adc0d8",
+      "operation": "Original handwash arm channels; native rightArm/leftArm mapping; two bounded cycles, no player definition override"
+    },
+    {
       "source": "common/src/main/resources/assets/ordertocook/models/block/board.json",
       "output": "RP/models/blocks/board.geo.json",
       "sha256": "b927193fb20ba40a5e72f6630520a7a25988ab642215c165fe9a96d980669754",

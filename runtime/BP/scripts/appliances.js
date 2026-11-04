@@ -17,6 +17,7 @@ const FRIDGE = `${NS}refrigerator`;
 const STOVE = `${NS}stove`;
 const SINK = `${NS}washingtable`;
 const DISHWASHER = `${NS}dishwasher`;
+const WASH_ANIMATION_CONTROLLER = 'ordertocook_handwash';
 const STORAGE = `${NS}storage`;
 const DIRTY = `${NS}dirty_plate`;
 const CLEAN = `${NS}clean_plate`;
@@ -465,7 +466,7 @@ export function createApplianceService(ctx) {
     if (session) {
       try {
         const hit = player.getBlockFromViewDirection({ maxDistance: 4, includeLiquidBlocks: false });
-        if (!accessible(player, session.station) || !handEmpty(player) ||
+        if (!accessible(player, session.station) || !canHandwash(player) ||
             !hit || !sameLocation(hit.block.location, session.station.location) ||
             !(session.station.appliance?.plates > 0)) return undefined;
         const elapsed = Math.max(0, gameSystem.currentTick - session.start);
@@ -477,8 +478,21 @@ export function createApplianceService(ctx) {
   }
 
   function stopWashing(id, feedback = true) {
+    const session = washing.get(id);
     washing.delete(id);
+    if (session) playWashingAnimation(session.player, true);
     if (feedback) washingFeedback.set(id, { until: gameSystem.currentTick + 20, text: "§7洗碗已中止" });
+  }
+
+  function playWashingAnimation(player, stop = false) {
+    try {
+      player.playAnimation(`animation.ordertocook.player.${stop ? 'handwash_stop' : 'handwash'}`, {
+        controller: WASH_ANIMATION_CONTROLLER, blendOutTime: 0.1
+      });
+    } catch {
+      // Cosmetic failure cannot alter plate delivery. The start clip is bounded
+      // to four seconds, including when the player disconnects before a stop.
+    }
   }
 
   function fridgeBlock(station, half) {
@@ -594,6 +608,11 @@ export function createApplianceService(ctx) {
     return !player.getComponent("minecraft:equippable")?.getEquipment(EquipmentSlot.Offhand);
   }
 
+  function canHandwash(player) {
+    const mount = player.getComponent('minecraft:riding')?.entityRidingOn;
+    return handEmpty(player) && ![`${NS}seat`, `${NS}motorcycle`].includes(mount?.typeId);
+  }
+
   function interactSink(player, station) {
     const d = data(station);
     const inventory = playerInventory(player);
@@ -610,12 +629,13 @@ export function createApplianceService(ctx) {
     }
     if (washing.has(player.id)) { stopWashing(player.id); say(ctx, player, "已停止洗碗。"); return; }
     if (d.plates <= 0) { say(ctx, player, "手持髒盤子放入洗碗池；空手點擊後持續望著池子 4 秒清洗一個。"); return; }
-    if (!handEmpty(player)) { say(ctx, player, "請騰空雙手後再洗碗。"); return; }
+    if (!canHandwash(player)) { say(ctx, player, "請空出雙手並離開椅子／小電驢後再洗碗。"); return; }
     if ([...washing.values()].some(session => session.station.id === station.id)) {
       say(ctx, player, "已有玩家正在使用這個洗碗池。"); return;
     }
     washingFeedback.delete(player.id);
     washing.set(player.id, { player, station, start: gameSystem.currentTick, effectBeat: -1 });
+    playWashingAnimation(player);
     say(ctx, player, "清洗中：保持空手並望著洗碗池 4 秒；再次點擊可停止。");
   }
 
@@ -842,12 +862,12 @@ export function createApplianceService(ctx) {
       const { player, station, start } = session;
       try {
         const hit = player.isValid && player.getBlockFromViewDirection({ maxDistance: 4, includeLiquidBlocks: false });
-        if (!accessible(player, station) || !handEmpty(player) || !hit || !sameLocation(hit.block.location, station.location)) {
+        if (!accessible(player, station) || !canHandwash(player) || !hit || !sameLocation(hit.block.location, station.location)) {
           stopWashing(id, player.isValid);
           continue;
         }
         const d = data(station);
-        if (d.plates <= 0) { washing.delete(id); continue; }
+        if (d.plates <= 0) { stopWashing(id, false); continue; }
         const elapsed = gameSystem.currentTick - start;
         const effectBeat = washingEffectBeat(elapsed);
         if (effectBeat >= 0 && effectBeat > session.effectBeat) {
@@ -865,10 +885,10 @@ export function createApplianceService(ctx) {
             playEffects(player.dimension, plateSound(center(station.location)), MolangVariableMap);
             say(ctx, player, "已洗好 1 個盤子。");
           }
-          washing.delete(id);
+          stopWashing(id, false);
         }
       } catch {
-        washing.delete(id);
+        stopWashing(id, false);
       }
     }
   }
@@ -955,7 +975,7 @@ export function createApplianceService(ctx) {
       stoveControls.forgetStation(station.id);
       dishwasherPreviews.delete(station.id);
       resetFridgeSessions(station);
-      for (const [id, session] of washing) if (session.station.id === station.id) washing.delete(id);
+      for (const [id, session] of washing) if (session.station.id === station.id) stopWashing(id, false);
     }
     return true;
   }
@@ -1094,7 +1114,7 @@ export function createApplianceService(ctx) {
     gameWorld.afterEvents.blockContainerOpened.subscribe(onContainerOpened);
     gameWorld.afterEvents.blockContainerClosed.subscribe(onContainerClosed);
     gameWorld.afterEvents.playerLeave.subscribe(event => {
-      washing.delete(event.playerId);
+      stopWashing(event.playerId, false);
       washingFeedback.delete(event.playerId);
       storageForms.delete(event.playerId);
       stoveControls.forgetPlayer(event.playerId);
