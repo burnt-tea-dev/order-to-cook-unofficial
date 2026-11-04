@@ -12,7 +12,7 @@ import {
   NAMESPACE
 } from "./config.js";
 
-import { normalizeFoodIdentity, menuFoodsOverlap } from "./senluo_food.js";
+import { normalizeFoodIdentity, normalizeFoodAliases, menuFoodsOverlap } from "./senluo_food.js";
 
 const OPEN_STATUSES = new Set(["offered", "accepted", "packed"]);
 const WORK_STATUSES = new Set(["accepted", "packed"]);
@@ -74,20 +74,32 @@ export function normalizeMenu(menu, capacity = MENU_CAPACITY) {
     if (!entry || typeof entry !== "object") continue;
     const typeId = normalizeFoodId(entry.typeId);
     const foodIdentity = normalizeFoodIdentity(entry.foodIdentity);
-    if (!/^[a-z0-9_.-]+:[a-z0-9_./-]+$/.test(typeId) || foodIdentity === null) continue;
-    const variants = seen.get(typeId);
-    if (variants && (variants.has(undefined) || !foodIdentity || variants.has(foodIdentity.nativeVariant))) continue;
+    const aliases = normalizeFoodAliases(entry.aliases, typeId);
+    if (!/^[a-z0-9_.-]+:[a-z0-9_./-]+$/.test(typeId) || foodIdentity === null || aliases === null) continue;
+    const ids = [typeId, ...(aliases || [])];
+    if (ids.some(id => {
+      const variants = seen.get(id);
+      return variants && (variants.has(undefined) || !foodIdentity || variants.has(foodIdentity.nativeVariant));
+    })) continue;
     const vanilla = VANILLA_FOOD_BY_ID[typeId];
     const nutrition = integer(entry.nutrition ?? vanilla?.nutrition, 0, 0, 10000);
-    if (nutrition <= 0) continue;
-    result.push({
+    const drink = entry.servingKind === 'drink';
+    // A declared zero-nutrition drink can be served without increasing hunger
+    // points. Do not turn missing/invalid/negative values into a zero drink.
+    if (nutrition <= 0 && !(drink && entry.nutrition === 0)) continue;
+    const food = {
       typeId,
       nutrition,
       label: String(entry.label || vanilla?.label || typeId).slice(0, 100),
-      ...(foodIdentity ? { foodIdentity } : {})
-    });
-    if (!seen.has(typeId)) seen.set(typeId, new Set());
-    seen.get(typeId).add(foodIdentity?.nativeVariant);
+      ...(drink ? { servingKind: 'drink' } : {}),
+      ...(foodIdentity ? { foodIdentity } : {}),
+      ...(aliases?.length ? { aliases } : {})
+    };
+    result.push(food);
+    for (const id of ids) {
+      if (!seen.has(id)) seen.set(id, new Set());
+      seen.get(id).add(foodIdentity?.nativeVariant);
+    }
     if (result.length >= integer(capacity, MENU_CAPACITY, 1, MENU_CAPACITY)) break;
   }
   return result;
@@ -300,7 +312,9 @@ function makeOrder(restaurant, now, rng, walkIn) {
     amount: 1 + Math.floor(unit(rng) * TIER_MAX_COUNTS[tier]),
     nutrition: food.nutrition,
     label: food.label,
-    ...(food.foodIdentity ? { foodIdentity: { ...food.foodIdentity } } : {})
+    ...(food.servingKind === 'drink' ? { servingKind: 'drink' } : {}),
+    ...(food.foodIdentity ? { foodIdentity: { ...food.foodIdentity } } : {}),
+    ...(food.aliases ? { aliases: [...food.aliases] } : {})
   }));
   const duration = integer(rush ? cfg.rushDurationMs : cfg.normalDurationMs,
     rush ? DEFAULT_CONFIG.rushDurationMs : DEFAULT_CONFIG.normalDurationMs, 1);

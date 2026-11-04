@@ -72,9 +72,27 @@ export function menuFoodKey(food) {
   return JSON.stringify([food.typeId, identity?.nativeVariant ?? null]);
 }
 
+/** Optional snapshot of equivalent item IDs used for presentation by a provider.
+ * Old menus/orders omit this field and retain their exact item-ID requirement.
+ */
+export function normalizeFoodAliases(value, typeId) {
+  if (value === undefined) return undefined;
+  if (!Array.isArray(value) || value.some(id => typeof id !== 'string' ||
+      !/^[a-z0-9_.-]+:[a-z0-9_./-]+$/.test(id))) return null;
+  return [...new Set(value.filter(id => id !== typeId))].sort();
+}
+
+export function matchesFoodType(food, typeId) {
+  return food.typeId === typeId || !!food.aliases?.includes(typeId);
+}
+
 /** Generic and specific entries for the same item overlap; do not double-count them. */
 export function menuFoodsOverlap(left, right) {
-  if (typeof left?.typeId !== 'string' || left.typeId !== right?.typeId) return false;
+  if (typeof left?.typeId !== 'string' || typeof right?.typeId !== 'string') return false;
+  const leftAliases = normalizeFoodAliases(left.aliases, left.typeId);
+  const rightAliases = normalizeFoodAliases(right.aliases, right.typeId);
+  if (leftAliases === null || rightAliases === null ||
+      ![left.typeId, ...(leftAliases || [])].some(id => id === right.typeId || rightAliases?.includes(id))) return false;
   const a = normalizeFoodIdentity(left.foodIdentity), b = normalizeFoodIdentity(right.foodIdentity);
   return a !== null && b !== null && (!a || !b || a.nativeVariant === b.nativeVariant);
 }

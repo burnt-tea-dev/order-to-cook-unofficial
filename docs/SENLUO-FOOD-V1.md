@@ -3,6 +3,12 @@
 Status: implemented source candidate, not a released or client-accepted integration.
 This is the first runtime slice following [the proposed integration standard](SENLUO-INTEGRATION-STANDARD.md).
 
+Current continuation: merged PR #10 supplies variant-aware menu/order snapshots;
+the new optional [food provider contract](FOOD-PROVIDERS.md) and
+[audited catalog](FOOD-CATALOG.md) supply explicit nutrition and equivalent item
+IDs. The sections below retain the original reader/preflight scope and evidence.
+Core V1 itself still supplies no nutrition, and its vendored bytes are unchanged.
+
 ## Scope and corrections to the initial proposal
 
 Core SDK 0.1.0 publishes heat deadlines, seasoning IDs, optional native variant
@@ -89,8 +95,16 @@ and current release artifacts are unchanged; no candidate package is published.
 The existing asset-release HOLD remains in force. A new release identity must be
 assigned before packaging this runtime as a distributable candidate.
 
-Remaining work: explicit food catalog/nutrition registration; variant-aware menu
-and accepted-order snapshots; recipe ownership/station routing; beverage policy;
-any actual currency-provider integration; and safe guide extension only after
-inspecting the exact Cookery host contract and preserving its original hierarchy.
+Food catalog/nutrition registration is now implemented by the separate OTC-owned
+provider contract; PR #10's menu/order snapshots are extended with equivalent-ID
+and optional drink-kind snapshots. Secret skewers and plates use Java OTC's
+no-argument Item food properties (base nutrition 1), without interpreting private
+ingredient or plate payloads. The 72 audited drinks (282 physical IDs) can be
+served at nutrition 0 through an explicit Bedrock extension; they do not gain
+hunger bonuses or quality multipliers. See [FOOD-CATALOG.md](FOOD-CATALOG.md)
+and [FOOD-PROVIDERS.md](FOOD-PROVIDERS.md) for the completed supply wiring.
+Remaining work includes supplier-side handheld pepper eating, recipe
+ownership/station routing, any actual currency-provider integration, and safe
+guide extension only after inspecting the exact Cookery host contract and
+preserving its original hierarchy.
 Do not label the whole T1 phase, full Senluo interoperability or Java parity complete.

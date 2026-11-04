@@ -4,6 +4,8 @@ import { BlockPermutation, EquipmentSlot, ItemStack, MolangVariableMap, system, 
 import { ActionFormData } from "@minecraft/server-ui";
 import { advanceDoorMotion, dishwasherFrame, APPLIANCE_TICK_INTERVAL, FRIDGE_MOTION_TICKS, FRIDGE_LAST_FRAME } from "./appliance_motion.js";
 import { formatEquipmentInspection, INSPECTION_TYPES } from "./equipment_inspection.js";
+import { createNativeFridgeStorage, FRIDGE_UPPER, isFridge, isUpperFridge } from "./native_fridge.js";
+import { createStoveControls } from "./stove_controls.js";
 
 const NS = "ordertocook:";
 const FRIDGE = `${NS}refrigerator`;
@@ -13,7 +15,7 @@ const DISHWASHER = `${NS}dishwasher`;
 const STORAGE = `${NS}storage`;
 const DIRTY = `${NS}dirty_plate`;
 const CLEAN = `${NS}clean_plate`;
-const KINDS = new Set([FRIDGE, STOVE, SINK, DISHWASHER]);
+const KINDS = new Set([FRIDGE, FRIDGE_UPPER, STOVE, SINK, DISHWASHER]);
 const storageForms = new Set();
 
 /** Explicit baseline: Script API 2.0.0 cannot query the smoking recipe registry. */
@@ -57,17 +59,6 @@ export const FUEL_TICKS = Object.freeze({
   "minecraft:mangrove_log": 300,
   "minecraft:cherry_log": 300,
 });
-
-const KNOWN_FOOD = new Set([
-  ...Object.keys(SMOKING_RECIPES), ...Object.values(SMOKING_RECIPES),
-  "minecraft:apple", "minecraft:golden_apple", "minecraft:enchanted_golden_apple",
-  "minecraft:bread", "minecraft:carrot", "minecraft:golden_carrot", "minecraft:beetroot",
-  "minecraft:melon_slice", "minecraft:sweet_berries", "minecraft:glow_berries",
-  "minecraft:cookie", "minecraft:pumpkin_pie", "minecraft:mushroom_stew",
-  "minecraft:rabbit_stew", "minecraft:beetroot_soup", "minecraft:suspicious_stew",
-  "minecraft:honey_bottle", "minecraft:chorus_fruit", "minecraft:rotten_flesh",
-  "minecraft:spider_eye", "minecraft:poisonous_potato", "minecraft:tropical_fish", "minecraft:pufferfish",
-]);
 
 export function itemLabel(stack) {
   return stack?.nameTag || stack?.typeId?.replace(/^minecraft:/, "").replace(/^ordertocook:/, "").replace(/_/g, " ") || "空";
@@ -267,7 +258,7 @@ export async function openContainerForm(ctx, player, resolveContainer, title, op
 
 /** Map the upper half of a refrigerator to its single persistent lower station. */
 export function normalizeApplianceBlock(block) {
-  if (block.typeId === FRIDGE && block.permutation.getState(`${NS}half`) === "upper") {
+  if (isUpperFridge(block)) {
     const below = block.dimension.getBlock({ ...block.location, y: block.location.y - 1 });
     if (below?.typeId === FRIDGE) return below;
   }
@@ -286,10 +277,22 @@ export function createApplianceService(ctx) {
   let lastRecoveryTick = -100;
   const recipes = { ...SMOKING_RECIPES, ...(ctx.smokingRecipes ?? {}) };
   const fuelTicks = { ...FUEL_TICKS, ...(ctx.fuelTicks ?? {}) };
+  const nativeFridge = createNativeFridgeStorage({
+    loadedBlock: loadedStation, saveStation: ctx.saveStation,
+    placeUpper: placeFridgeUpper, findLegacy: station => ensureStorage(station, false),
+  });
+  const stoveControls = createStoveControls({
+    getStorage, isAccessible: accessible, playerInventory, transferStackToRange,
+    itemLabel, fingerprint: itemFingerprint,
+    isIngredient: stack => !!recipes[stack.typeId], isFuel: stack => fuelTicks[stack.typeId] > 0,
+    makeForm: () => new ActionFormData(), notify: (player, message) => say(ctx, player, message), getProgress: data,
+  });
 
-  function isFood(stack) {
-    if (ctx.food?.isFood) return !!ctx.food.isFood(stack);
-    return KNOWN_FOOD.has(stack.typeId) || !!stack.getComponent("minecraft:food");
+  function placeFridgeUpper(lower, upper) {
+    upper.setPermutation(BlockPermutation.resolve(FRIDGE_UPPER, {
+      "minecraft:cardinal_direction": lower.permutation.getState("minecraft:cardinal_direction") || "north",
+      [`${NS}half`]: "upper", [`${NS}open`]: false, [`${NS}frame`]: 0,
+    }));
   }
 
   function blockFor(station) {
@@ -330,6 +333,10 @@ export function createApplianceService(ctx) {
     let entity = findEntity(station.storageId);
     const block = loadedStation(station);
     if (!block) return undefined;
+    if (entity && (entity.typeId !== STORAGE || entity.getDynamicProperty(`${NS}station_id`) !== station.id ||
+        entity.dimension.id !== station.dimensionId || squaredDistance(entity.location, center(station.location, 0.1)) > 1.5 ** 2)) {
+      throw new Error("設備儲物身份不符；保留原引用及兩邊物品。");
+    }
     if (!entity) {
       const candidates = block.dimension.getEntities({ type: STORAGE, location: center(station.location), maxDistance: 1.5 });
       entity = candidates.find(candidate => candidate.getDynamicProperty(`${NS}station_id`) === station.id);
@@ -351,6 +358,7 @@ export function createApplianceService(ctx) {
   }
 
   function getStorage(station) {
+    if (station.typeId === FRIDGE) return nativeFridge.ensure(station);
     return ensureStorage(station)?.getComponent("minecraft:inventory")?.container;
   }
 
@@ -386,8 +394,8 @@ export function createApplianceService(ctx) {
    */
   function getInspection(player, block) {
     try {
-      if (!block?.isValid || !INSPECTION_TYPES.includes(block.typeId)) return undefined;
-      const upper = block.typeId === FRIDGE && block.permutation.getState(`${NS}half`) === "upper";
+      if (!block?.isValid || (!isFridge(block) && !INSPECTION_TYPES.includes(block.typeId))) return undefined;
+      const upper = isUpperFridge(block);
       const normalized = normalizeApplianceBlock(block);
       const station = (ctx.stations?.() ?? []).find(entry =>
         entry.dimensionId === normalized.dimension.id && entry.typeId === normalized.typeId &&
@@ -397,8 +405,8 @@ export function createApplianceService(ctx) {
         appliance: station.appliance ? { ...station.appliance } : undefined,
         occupied: undefined, storageLoaded: false };
       if (station.typeId === FRIDGE || station.typeId === STOVE) {
-        const helper = findEntity(station.storageId);
-        const inventory = helper?.typeId === STORAGE && helper.getDynamicProperty(`${NS}station_id`) === station.id &&
+        const helper = station.typeId === STOVE && findEntity(station.storageId);
+        const inventory = station.typeId === FRIDGE ? nativeFridge.peek(station) : helper?.typeId === STORAGE && helper.getDynamicProperty(`${NS}station_id`) === station.id &&
           helper.dimension.id === station.dimensionId && squaredDistance(helper.location, center(station.location, 0.1)) <= 1.5 ** 2
           ? helper.getComponent("minecraft:inventory")?.container : undefined;
         snapshot.storageLoaded = !!inventory?.isValid && inventory.size >= (station.typeId === FRIDGE ? 81 : 7);
@@ -444,7 +452,7 @@ export function createApplianceService(ctx) {
     if (!lower || half === "lower") return lower;
     try {
       const upper = lower.dimension.getBlock({ ...lower.location, y: lower.location.y + 1 });
-      return upper?.typeId === FRIDGE && upper.permutation.getState(`${NS}half`) === "upper" ? upper : undefined;
+      return isUpperFridge(upper) ? upper : undefined;
     } catch { return undefined; }
   }
 
@@ -457,8 +465,8 @@ export function createApplianceService(ctx) {
   }
 
   function resetFridgeSessions(station) {
-    // A stale async form must never regain access merely by reloading a chunk.
     viewers.delete(station.id);
+    nativeFridge.forget(station);
     for (const half of ["lower", "upper"]) doorPositions.delete(`${station.id}:${half}`);
   }
 
@@ -483,26 +491,39 @@ export function createApplianceService(ctx) {
     if (compartments && !compartments.lower.size && !compartments.upper.size) viewers.delete(station.id);
   }
 
-  async function openFridge(player, station, upper) {
-    if (storageForms.has(player.id) || !accessible(player, station)) return;
-    const half = upper ? "upper" : "lower";
+  function onContainerOpened(event) {
+    if (!isFridge(event.block)) return;
+    const player = event.openSource?.entity;
+    if (player?.typeId !== "minecraft:player") return;
+    const station = (ctx.stations?.() ?? []).find(value => value.dimensionId === event.block.dimension.id &&
+      sameLocation(value.location, normalizeApplianceBlock(event.block).location));
+    if (!station || !nativeFridge.peek(station) || !accessible(player, station)) return;
+    const half = isUpperFridge(event.block) ? "upper" : "lower";
     let compartments = viewers.get(station.id);
     if (!compartments) { compartments = { lower: new Map(), upper: new Map() }; viewers.set(station.id, compartments); }
-    const session = { player };
-    compartments[half].set(player.id, session);
+    compartments[half].set(player.id, { player });
     fridgeDoors(station, half, true);
-    const range = Array.from({ length: upper ? 27 : 54 }, (_, i) => i + (upper ? 0 : 27));
-    try {
-      await openContainerForm(ctx, player, () => getStorage(station), upper ? "冰箱 · 上層 27 格" : "冰箱 · 下層 54 格", {
-        slots: range, accept: isFood,
-        isAccessible: () => accessible(player, station) && viewers.get(station.id)?.[half].get(player.id) === session,
-      });
-    } finally {
-      const active = viewers.get(station.id);
-      if (active?.[half].get(player.id) === session) active[half].delete(player.id);
-      if (!active?.[half].size) fridgeDoors(station, half, false);
-      if (active && !active.lower.size && !active.upper.size) viewers.delete(station.id);
-    }
+  }
+
+  function onContainerClosed(event) {
+    if (!isFridge(event.block)) return;
+    const player = event.closeSource?.entity;
+    if (!player) return;
+    const normalized = normalizeApplianceBlock(event.block);
+    const station = (ctx.stations?.() ?? []).find(value => value.dimensionId === normalized.dimension.id && sameLocation(value.location, normalized.location));
+    if (!station) return;
+    const half = isUpperFridge(event.block) ? "upper" : "lower";
+    const active = viewers.get(station.id);
+    active?.[half].delete(player.id);
+    if (!active?.[half].size) fridgeDoors(station, half, false);
+    if (active && !active.lower.size && !active.upper.size) viewers.delete(station.id);
+  }
+
+  /** Read-only entry decision; the main before-event owns cancel and scheduling. */
+  function canOpenFridge(player, block) {
+    const normalized = normalizeApplianceBlock(block);
+    const station = (ctx.stations?.() ?? []).find(value => value.dimensionId === normalized.dimension.id && sameLocation(value.location, normalized.location));
+    return !!station && accessible(player, station) && !!nativeFridge.peek(station);
   }
 
   function consumeHeld(player, expectedId, count = 1) {
@@ -556,23 +577,36 @@ export function createApplianceService(ctx) {
 
   function interactDishwasher(player, station) {
     const d = data(station);
+    const inventory = playerInventory(player);
+    if (!inventory?.isValid) return;
     if (d.phase === 5 && d.plates > 0) {
+      if (!handEmpty(player)) { say(ctx, player, "請騰空雙手，再點擊一次取出整批乾淨盤子。"); return; }
       const clean = new ItemStack(CLEAN, d.plates);
-      if (!giveItem(player, clean)) { say(ctx, player, "背包空間不足；乾淨盤子仍保存在洗碗機。"); return; }
+      if (containerCapacity(inventory, clean) < clean.amount) { say(ctx, player, "背包空間不足；乾淨盤子仍保存在洗碗機。"); return; }
+      const beforeInventory = Array.from({ length: inventory.size }, (_, slot) => inventory.getItem(slot));
+      const beforeState = { ...d };
       const count = d.plates;
-      d.plates = 0;
-      d.phase = 1;
-      d.remainingTicks = 14;
-      ctx.saveStation(station);
+      try {
+        if (inventory.addItem(clean)) throw new Error("背包空間已改變，盤子保留在洗碗機。");
+        d.plates = 0;
+        d.phase = 1;
+        d.remainingTicks = 14;
+        ctx.saveStation(station);
+      } catch (error) {
+        for (let slot = 0; slot < beforeInventory.length; slot++) inventory.setItem(slot, beforeInventory[slot]);
+        Object.assign(d, beforeState);
+        throw error;
+      }
       updateVisual(station);
       safeSound(player.dimension, `${NS}dishwasher_in`, center(station.location));
       say(ctx, player, `已取出 ${count} 個乾淨盤子。`);
       return;
     }
     if (d.phase !== 0) { say(ctx, player, `洗碗機正在運作 · ${d.plates} 個盤子。`); return; }
-    const inventory = playerInventory(player);
-    if (!inventory) return;
+    const held = inventory.getItem(player.selectedSlotIndex);
+    if (held?.typeId !== DIRTY) { say(ctx, player, "手持髒盤點擊，一次放入背包內最多 16 個；完成後空手點擊取出。"); return; }
     const changes = [];
+    const beforeState = { ...d };
     let count = 0;
     for (let i = 0; i < inventory.size && count < 16; i++) {
       const stack = inventory.getItem(i);
@@ -594,6 +628,7 @@ export function createApplianceService(ctx) {
       ctx.saveStation(station);
     } catch (error) {
       for (const change of changes) inventory.setItem(change.i, change.stack);
+      Object.assign(d, beforeState);
       throw error;
     }
     updateVisual(station);
@@ -602,26 +637,7 @@ export function createApplianceService(ctx) {
   }
 
   async function openStove(player, station) {
-    const inventory = getStorage(station);
-    if (!inventory) { say(ctx, player, "爐灶儲物實體尚未載入，請稍後重試。"); return; }
-    const d = data(station);
-    const form = new ActionFormData().title("三槽爐灶").body(
-      `三份食材每 10 秒同步烹調一次，共用燃料。\n進度 ${Math.min(100, Math.floor(d.cookProgress / 2))}% · 剩餘燃燒 ${Math.ceil(d.litTime / 20)} 秒\n只接受已登記的煙燻配方及燃料。`
-    );
-    const labels = ["食材 1", "食材 2", "食材 3", "燃料", "成品 1", "成品 2", "成品 3"];
-    for (let i = 0; i < 7; i++) {
-      const stack = inventory.getItem(i);
-      form.button(`${labels[i]}\n${stack ? `${itemLabel(stack)} × ${stack.amount}` : "空"}`);
-    }
-    form.button("關閉");
-    const response = await form.show(player);
-    if (response.canceled || response.selection === undefined || response.selection > 6 || !accessible(player, station)) return;
-    const slot = response.selection;
-    await openContainerForm(ctx, player, () => getStorage(station), `爐灶 · ${labels[slot]}`, {
-      slots: [slot], allowDeposit: slot < 4,
-      accept: stack => slot === 3 ? fuelTicks[stack.typeId] > 0 : !!recipes[stack.typeId],
-      isAccessible: () => accessible(player, station),
-    });
+    return stoveControls.interact(player, station);
   }
 
   function canCook(container, lane) {
@@ -757,10 +773,10 @@ export function createApplianceService(ctx) {
 
   function onPlace(block) {
     if (!KINDS.has(block.typeId)) return false;
+    if (isUpperFridge(block)) return true;
     if (block.typeId === FRIDGE) {
-      if (block.permutation.getState(`${NS}half`) === "upper") return true;
       const upper = block.dimension.getBlock({ ...block.location, y: block.location.y + 1 });
-      const alreadyUpper = upper?.typeId === FRIDGE && upper.permutation.getState(`${NS}half`) === "upper";
+      const alreadyUpper = isUpperFridge(upper);
       if (!upper?.isAir && !alreadyUpper) {
         block.dimension.spawnItem(new ItemStack(FRIDGE), center(block.location));
         const rejected = (ctx.stations?.() ?? []).find(station => station.dimensionId === block.dimension.id && sameLocation(station.location, block.location));
@@ -768,23 +784,29 @@ export function createApplianceService(ctx) {
         block.setType("minecraft:air");
         return true;
       }
-      if (!alreadyUpper) upper.setPermutation(block.permutation.withState(`${NS}half`, "upper"));
+      if (!alreadyUpper) placeFridgeUpper(block, upper);
     }
     const station = ctx.getStation(block);
     data(station);
-    if (block.typeId === FRIDGE || block.typeId === STOVE) ensureStorage(station);
+    if (block.typeId === FRIDGE) nativeFridge.ensure(station);
+    if (block.typeId === STOVE) ensureStorage(station);
     updateVisual(station);
     return true;
   }
 
   function onInteract(player, block) {
     if (!KINDS.has(block.typeId)) return false;
-    const upper = block.typeId === FRIDGE && block.permutation.getState(`${NS}half`) === "upper";
     const normalized = normalizeApplianceBlock(block);
     const station = ctx.getStation(normalized);
+    if (!accessible(player, station)) return true;
     data(station);
     try {
-      if (block.typeId === FRIDGE) void openFridge(player, station, upper);
+      if (isFridge(block)) {
+        if (!nativeFridge.peek(station)) {
+          const inventory = nativeFridge.ensure(station);
+          say(ctx, player, inventory ? "冰箱庫存已就緒，請再次點擊開啟原生容器。" : "冰箱原生容器尚未就緒；需 Bedrock 26.60 並啟用 Upcoming Creator Features。舊庫存會保留，請稍後再試。");
+        }
+      }
       else if (block.typeId === STOVE) void openStove(player, station).catch(error => say(ctx, player, String(error)));
       else if (block.typeId === SINK) interactSink(player, station);
       else if (block.typeId === DISHWASHER) interactDishwasher(player, station);
@@ -796,7 +818,7 @@ export function createApplianceService(ctx) {
     const typeId = permutation?.type?.id ?? station?.typeId;
     if (!KINDS.has(typeId)) return false;
     let baseLocation = block.location;
-    const upperHalf = typeId === FRIDGE && permutation?.getState(`${NS}half`) === "upper";
+    const upperHalf = typeId === FRIDGE_UPPER || (typeId === FRIDGE && permutation?.getState(`${NS}half`) === "upper");
     if (upperHalf) {
       baseLocation = { ...block.location, y: block.location.y - 1 };
       const lower = block.dimension.getBlock(baseLocation);
@@ -808,7 +830,7 @@ export function createApplianceService(ctx) {
       }
     } else if (typeId === FRIDGE) {
       const upper = block.dimension.getBlock({ ...block.location, y: block.location.y + 1 });
-      if (upper?.typeId === FRIDGE && upper.permutation.getState(`${NS}half`) === "upper") upper.setType("minecraft:air");
+      if (isUpperFridge(upper)) upper.setType("minecraft:air");
     }
     if (!station) {
       station = (ctx.stations?.() ?? []).find(entry => entry.dimensionId === block.dimension.id && sameLocation(entry.location, baseLocation));
@@ -834,6 +856,26 @@ export function createApplianceService(ctx) {
   }
 
   function recoverOrphanStorage() {
+    // Native inventories already spill when a block is removed. Remove the other
+    // half after command/explosion removal too, without spawning its cargo again.
+    for (const station of ctx.stations?.() ?? []) {
+      if (station.typeId !== FRIDGE) continue;
+      try {
+        const dimension = gameWorld.getDimension(station.dimensionId);
+        const lower = dimension.getBlock(station.location);
+        const upper = dimension.getBlock({ ...station.location, y: station.location.y + 1 });
+        if (!lower || !upper) continue; // An unloaded half is not a removed half.
+        const lowerPresent = lower.typeId === FRIDGE && !isUpperFridge(lower);
+        const upperPresent = isUpperFridge(upper);
+        if (lowerPresent && upperPresent) continue;
+        if (lowerPresent) lower.setType("minecraft:air");
+        if (upperPresent) upper.setType("minecraft:air");
+        resetFridgeSessions(station);
+        // The existing legacy recovery below owns any old helper cargo, including
+        // a helper that is still unloaded. Native-only records can now be retired.
+        if (!station.storageId) ctx.deleteStation(station.id);
+      } catch { /* Wait for both positions to be loaded before removing either. */ }
+    }
     for (const dimensionId of ["overworld", "nether", "the_end"]) {
       const dimension = gameWorld.getDimension(dimensionId);
       for (const entity of dimension.getEntities({ type: STORAGE, tags: [`${NS}appliance_storage`] })) {
@@ -873,7 +915,7 @@ export function createApplianceService(ctx) {
       try {
         if (station.typeId === STOVE && delta) tickStove(station, delta);
         else if (station.typeId === DISHWASHER && delta) tickDishwasher(station, delta);
-        if (station.typeId === FRIDGE) tickFridge(station, delta);
+        if (station.typeId === FRIDGE) { nativeFridge.ensure(station); tickFridge(station, delta); }
         else if (!delta) updateVisual(station);
       } catch (error) {
         // Do not reset invalid state or erase missing inventories on recovery.
@@ -932,10 +974,13 @@ export function createApplianceService(ctx) {
     gameSystem.run(() => {
       gameSystem.runInterval(tick, APPLIANCE_TICK_INTERVAL);
     });
+    gameWorld.afterEvents.blockContainerOpened.subscribe(onContainerOpened);
+    gameWorld.afterEvents.blockContainerClosed.subscribe(onContainerClosed);
     gameWorld.afterEvents.playerLeave.subscribe(event => {
       washing.delete(event.playerId);
       washingFeedback.delete(event.playerId);
       storageForms.delete(event.playerId);
+      stoveControls.forgetPlayer(event.playerId);
       for (const compartments of viewers.values()) {
         compartments.lower.delete(event.playerId);
         compartments.upper.delete(event.playerId);
@@ -943,5 +988,6 @@ export function createApplianceService(ctx) {
     });
   }
 
-  return { init, tick, onPlace, onInteract, onBreak, getStorage, countFood, consumeFood, getInspection, getWashingProgress, normalizeBlock: normalizeApplianceBlock };
+  return { init, tick, onPlace, onInteract, onBreak, getStorage, countFood, consumeFood, getInspection, getWashingProgress,
+    canOpenFridge, onContainerOpened, onContainerClosed, normalizeBlock: normalizeApplianceBlock };
 }

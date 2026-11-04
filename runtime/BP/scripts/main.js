@@ -18,10 +18,12 @@ import {
   restoreExtraction, consumeHeld, giveStack, giveItems, coinBalance, giveCoins, payCoins
 } from './inventory.js';
 import { inspectSenluoFood, matchesSenluoFoodSnapshot, snapshotMenuFood, menuFoodKey, menuFoodsOverlap, menuFoodLabel } from './senluo_food.js';
+import { createFoodCatalog, connectFoodCatalog } from './food_catalog.js';
 import { guideBookScreen } from './guide_book.js';
 import { notify, choose, textInput, safely } from './ui.js';
 import { createEntityService } from './entities.js';
 import { createApplianceService } from './appliances.js';
+import { isFridge, isUpperFridge } from './native_fridge.js';
 import { createDiningService, DINING_ENTITY } from './dining.js';
 import { progressRows } from './progression.js';
 import { createProgressionService, creditCompletedOrder, queueProgressEvent } from './progression_service.js';
@@ -33,6 +35,8 @@ const ITEM_PROOF = 'ordertocook:proof';
 const liveStatus = new Set(['offered', 'accepted', 'packed']);
 const foods = new Map(VANILLA_FOODS.map(food => [food.typeId, food]));
 const foodOverrides = new Map();
+const foodCatalog = createFoodCatalog();
+const requestFoodCatalogs = connectFoodCatalog(system, foodCatalog);
 const weatherByDimension = new Map();
 let settings = { currencyItem: '', refreshMs: Number(DEFAULT_CONFIG.refreshMs), orderMachineUpgradeBoardHunger: [...DEFAULT_CONFIG.orderMachineUpgradeBoardHunger] };
 let ready = false;
@@ -81,15 +85,19 @@ function playAt(block, sound) {
 function foodFromStack(stack) {
   if (!stack) return undefined;
   const typeId = normalizeFoodId(stack.typeId);
-  const configured = foodOverrides.get(typeId) || foods.get(typeId);
+  const configured = foodOverrides.get(typeId);
   if (configured) return snapshotMenuFood(stack, configured);
+  const supplied = foodCatalog.resolve(stack);
+  if (supplied.known) return supplied.food;
+  const vanilla = foods.get(typeId);
+  if (vanilla) return snapshotMenuFood(stack, vanilla);
   try {
     const component = stack.getComponent('minecraft:food');
     if (Number.isFinite(component?.nutrition) && component.nutrition >= 1) return snapshotMenuFood(stack, { typeId, nutrition: Math.min(10000, Math.floor(component.nutrition)), label: stack.nameTag || typeId });
   } catch { /* Vanilla food properties are supplied by the pinned catalog. */ }
   return undefined;
 }
-function foodLabel(typeId) { return foodOverrides.get(typeId)?.label || foods.get(typeId)?.label || typeId; }
+function foodLabel(typeId) { return foodOverrides.get(typeId)?.label || foodCatalog.labelFor(typeId) || foods.get(typeId)?.label || typeId; }
 function syncMenu(restaurant) {
   const candidates = stations().filter(s => s.typeId === 'ordertocook:board' && s.dimensionId === restaurant.dimensionId &&
     (!s.ownerId || s.ownerId === restaurant.ownerId || restaurant.staff?.includes(s.ownerId)) &&
@@ -305,10 +313,10 @@ async function boardForm(player, block) {
   if (currentFood && !player.isSneaking) {
     const result = addMenuFood(station, currentFood);
     saveStation(station);
-    notify(player, result.ok ? `已加入 ${menuFoodLabel(currentFood)}，不消耗手中食品。菜單總營養 ${getMenuNutrition(station.menu)}。` : result.reason === 'duplicate_food' ? '菜單已有這道菜或同 ID 的通用菜品；要改用指定變體，請先移除通用菜品。' : reasonText(result.reason));
+    notify(player, result.ok ? `已加入 ${menuFoodLabel(currentFood)}，不消耗手中物品。菜單總營養 ${getMenuNutrition(station.menu)}。` : result.reason === 'duplicate_food' ? '菜單已有這道菜或同 ID 的通用菜品；要改用指定變體，請先移除通用菜品。' : reasonText(result.reason));
     return;
   }
-  const selection = await choose(player, '菜單立牌', `${station.menu.length}/150 道菜 · 總營養 ${getMenuNutrition(station.menu)}\n用食品點擊可直接加入，空手／蹲下點擊開啟管理。`, ['從背包新增菜品', '查看／移除菜品', '關閉']);
+  const selection = await choose(player, '菜單立牌', `${station.menu.length}/150 道菜 · 總營養 ${getMenuNutrition(station.menu)}\n用食品或飲品點擊可直接加入，空手／蹲下點擊開啟管理。`, ['從背包新增菜品', '查看／移除菜品', '關閉']);
   if (selection === undefined || !validStationAction(player, block, station)) return;
   if (selection === 0) {
     const inventory = containerOf(player);
@@ -318,18 +326,20 @@ async function boardForm(player, block) {
       const food = foodFromStack(stack);
       if (food && !station.menu.some(item => menuFoodsOverlap(item, food))) {
         const key = menuFoodKey(food);
-        if (!available.has(key)) available.set(key, { food, slot, snapshot: inspectSenluoFood(stack) });
+        if (!available.has(key)) available.set(key, { food, slot, typeId: stack.typeId, snapshot: inspectSenluoFood(stack) });
       }
     }
     const options = [...available.values()];
-    if (!options.length) { notify(player, '背包沒有新的可識別食品。特殊食品可由管理員註冊虛擬營養。'); return; }
-    const index = await choose(player, '新增菜品', '只建立菜單範本，不消耗物品。公開變體會分開辨識；不鎖定熱度、品質或調味。', options.map(({ food }) => `${menuFoodLabel(food)} · 營養 ${food.nutrition}`));
+    if (!options.length) { notify(player, '背包沒有新的可識別食品或飲品。'); return; }
+    const index = await choose(player, '新增菜品', '只建立菜單範本，不消耗物品。營養 0 的飲品也可供應訂單；不鎖定熱度、品質或調味。', options.map(({ food }) => `${menuFoodLabel(food)}${food.servingKind === 'drink' ? ' · 飲品' : ''} · 營養 ${food.nutrition}`));
     if (index === undefined || !validStationAction(player, block, station)) return;
     const selected = options[index];
     const stack = selected && inventory.getItem(selected.slot);
     const current = stack && foodFromStack(stack);
-    if (!selected || !current || menuFoodKey(current) !== menuFoodKey(selected.food) ||
+    if (!selected || !current || stack.typeId !== selected.typeId || menuFoodKey(current) !== menuFoodKey(selected.food) ||
         current.nutrition !== selected.food.nutrition || current.label !== selected.food.label ||
+        current.servingKind !== selected.food.servingKind ||
+        JSON.stringify(current.aliases) !== JSON.stringify(selected.food.aliases) ||
         !matchesSenluoFoodSnapshot(stack, selected.snapshot)) {
       notify(player, '選取的食品或資料已改變，請重新開啟菜單。'); return;
     }
@@ -376,9 +386,30 @@ async function countertopForm(player, block) {
   if (!restaurant || !canManage(player, restaurant)) { notify(player, '操作台需要在你可管理的打單機 24 格內。'); return; }
   expireOrders(restaurant);
   saveRestaurant(restaurant);
+  if (heldItem(player)?.typeId === 'ordertocook:order') {
+    const linked = itemOrder(heldItem(player));
+    if (!linked || linked.restaurant !== restaurant || linked.order.status !== 'accepted' ||
+        linked.proof !== linked.order.proof || Date.now() >= linked.order.expiresAt) {
+      notify(player, '手持訂單無效、已處理，或不屬於這個操作台的餐廳。'); return;
+    }
+    return prepareOrderAtCountertop(player, block, restaurant, linked.order);
+  }
   const orders = restaurant.orders.filter(order => order.status === 'accepted');
   if (!orders.length) { notify(player, '先在打單機接單；已備妥的成品不會重複製作。'); return; }
-  const index = await choose(player, '操作台 · 裝盤／打包', '會消耗背包及附近 24 格冰箱內的指定成品食品。\n外送用 5 格內包裝架的皮革，堂食用餐盤架的乾淨盤子。\n請保持操作台上方空置，成品會擺在台上。', orders.map(order => `${orderHeading(order)}\n${order.items.map(item => menuFoodLabel(item, foodLabel(item.typeId)) + ' ×' + item.amount).join('、')}`));
+  const ingredients = ingredientContainers(player, block);
+  const labels = orders.map(order => {
+    const plan = planExtraction(ingredients, order.items);
+    const shelfId = order.type === 'delivery' ? 'ordertocook:shelf' : 'ordertocook:plate_shelf';
+    const supplies = nearbyStations(block.dimension.id, block.location, 5, shelfId)
+      .some(station => station.supplies > 0 && canUseStation(player, station));
+    const problems = [];
+    if (!block.above()?.isAir) problems.push('台上已有成品／方塊');
+    if (!supplies) problems.push(order.type === 'delivery' ? '缺少包材' : '缺少乾淨餐盤');
+    if (!plan.ok) problems.push(plan.missingFoods.length ? `缺少 ${plan.missingFoods.map(item => `${menuFoodLabel(item, foodLabel(item.typeId))} ×${item.amount}`).join('、')}` : '食品資料無法讀取');
+    const dishes = order.items.map(item => `${menuFoodLabel(item, foodLabel(item.typeId))} ×${item.amount}`).join('、');
+    return `${orderHeading(order)}\n${dishes}\n${problems.length ? problems.join('；') : '可製作'} · ${order.type === 'delivery' ? '打包' : '裝盤'}`;
+  });
+  const index = await choose(player, '操作台 · 裝盤／打包', '點選訂單直接製作；手持訂單點台可直接處理該單。\n使用背包與附近 24 格冰箱的食品、5 格內架子的包材／乾淨盤。\n成品放在台上，請先保持上方空置。', labels);
   if (index === undefined || !nearBlock(player, block) || block.typeId !== 'ordertocook:countertop' || !canManage(player, restaurant)) return;
   const order = orders[index];
   return prepareOrderAtCountertop(player, block, restaurant, order);
@@ -755,7 +786,7 @@ function onUse(player, itemStack) {
 function onPlace(block) {
   if (!ready || !block?.isValid || !block.typeId.startsWith(PREFIX)) return;
   // The refrigerator's upper half is owned by the lower-half station.
-  if (block.typeId === 'ordertocook:refrigerator' && block.permutation.getState('ordertocook:half') === 'upper') return;
+  if (isUpperFridge(block)) return;
   const station = getStation(block);
   if (block.typeId === 'ordertocook:board' && !station.initialized) { station.menu = DEFAULT_MENU.map(food => ({ ...food })); station.initialized = true; saveStation(station); }
   appliances?.onPlace(block);
@@ -930,7 +961,7 @@ system.beforeEvents.startup.subscribe(event => {
 });
 
 world.beforeEvents.playerInteractWithBlock.subscribe(event => {
-  if (!ready) return;
+  if (!ready) { if (isFridge(event.block)) event.cancel = true; return; }
   const item = event.itemStack;
   const meal = dining?.atBlock(event.block);
   if (meal) {
@@ -942,6 +973,15 @@ world.beforeEvents.playerInteractWithBlock.subscribe(event => {
   if (parcel) {
     event.cancel = true;
     if (event.isFirstEvent) system.run(() => safely(event.player, () => placeParcel(event.player, event.block, event.blockFace)));
+    return;
+  }
+  if (isFridge(event.block) && item?.typeId !== 'ordertocook:otc_upgrade_box') {
+    // Native block interaction opens the actual container. Do not cancel an
+    // authorized ready fridge or dispatch the former paginated form adapter.
+    const station = findStation(appliances.normalizeBlock(event.block));
+    if (station?.ownerId && appliances.canOpenFridge(event.player, event.block)) return;
+    event.cancel = true;
+    if (event.isFirstEvent) system.run(() => safely(event.player, () => interactBlock(event.player, event.block)));
     return;
   }
   if (event.block.typeId.startsWith(PREFIX) || item?.typeId === 'ordertocook:otc_upgrade_box') {
@@ -1042,12 +1082,13 @@ world.afterEvents.worldLoad.subscribe(() => {
     system.runInterval(() => { if (ready) dining.tick(); }, 5);
     system.runInterval(updateHud, 10);
     registerConfiguration();
-    console.warn('[OrderToCook] Bedrock alpha loaded. Stable API 2.0; no experimental toggles required.');
+    requestFoodCatalogs();
+    console.warn('[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.');
   } catch (error) { console.error(`[OrderToCook] Initialization stopped; saved data was preserved. ${error}`); }
 });
 
 // Headless native-engine tests import these same adapters. No test hooks are
 // exposed through chat, commands, script events or a separately installable pack.
 export function getQaHooks() {
-  return { ready, entities, appliances, dining, progression, guideForm, boardForm, foodFromStack, syncMenu, orderBody, parcelFor, updateHud, progressForm, recordProgress, reconcileProgress, updateProgressRankings, reconcileStationProgress, upgradeForm, getMachine, acceptWithTicket, prepareOrderAtCountertop, pickupDisplay, placeParcel, customerInteract, collectDiningPlate, tickRestaurants, itemOrder, onPlace, onBreak, shelfInteract, upgradeAppliance, canUseStation };
+  return { ready, entities, appliances, dining, progression, guideForm, boardForm, foodFromStack, syncMenu, orderBody, parcelFor, updateHud, progressForm, recordProgress, reconcileProgress, updateProgressRankings, reconcileStationProgress, upgradeForm, getMachine, acceptWithTicket, countertopForm, prepareOrderAtCountertop, pickupDisplay, placeParcel, customerInteract, collectDiningPlate, tickRestaurants, itemOrder, onPlace, onBreak, shelfInteract, upgradeAppliance, canUseStation };
 }

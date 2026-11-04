@@ -37,12 +37,27 @@ export class FakeItem {
 export class FakeContainer {
   constructor(size) { this.size = size; this.slots = new Array(size); this.isValid = true; this.failNextSlot = undefined; }
   get emptySlotsCount() { return this.slots.filter(Boolean).length ? this.size - this.slots.filter(Boolean).length : this.size; }
-  getItem(i) { if (i < 0 || i >= this.size) throw Error('slot bounds'); return this.slots[i]?.clone(); }
+  getItem(i) { if (!this.isValid) throw Error('invalid container'); if (i < 0 || i >= this.size) throw Error('slot bounds'); return this.slots[i]?.clone(); }
   setItem(i, stack) {
+    if (!this.isValid) throw Error('invalid container');
     if (i < 0 || i >= this.size) throw Error('slot bounds');
     if (this.failNextSlot === i) { this.failNextSlot = undefined; throw Error('simulated container write failure'); }
     if (stack && (stack.amount < 1 || stack.amount > stack.maxAmount)) throw Error('stack bounds');
     this.slots[i] = stack?.clone();
+  }
+  // Adapter model of a single native move, not evidence of engine atomicity.
+  moveItem(fromSlot, toSlot, toContainer) {
+    if (this === toContainer && fromSlot === toSlot) return;
+    const source = this.getItem(fromSlot), previous = toContainer.getItem(toSlot);
+    if (!source) return;
+    try {
+      toContainer.setItem(toSlot, source);
+      this.setItem(fromSlot, undefined);
+    } catch (error) {
+      toContainer.setItem(toSlot, previous);
+      this.setItem(fromSlot, source);
+      throw error;
+    }
   }
   addItem(stack) {
     let remaining = stack.amount;
@@ -69,12 +84,34 @@ export class FakePermutation {
 export class FakeBlock {
   constructor(dimension, location, typeId = 'minecraft:air', states = {}) {
     this.dimension = dimension; this.location = { ...location }; this.permutation = new FakePermutation(typeId, states); this.isValid = true;
+    this.container = this.makeContainer(typeId);
+  }
+  makeContainer(typeId) {
+    return typeId === 'ordertocook:refrigerator' ? new FakeContainer(54)
+      : typeId === 'ordertocook:refrigerator_upper' ? new FakeContainer(27) : undefined;
   }
   get typeId() { return this.permutation.type.id; }
   get isAir() { return this.typeId === 'minecraft:air'; }
   get isLiquid() { return ['minecraft:water', 'minecraft:lava'].includes(this.typeId); }
-  setType(id) { this.permutation = new FakePermutation(id); }
-  setPermutation(permutation) { this.permutation = permutation; }
+  getComponent(id) {
+    return id === 'minecraft:inventory' && this.dimension.nativeContainers !== false && this.container?.isValid ? { container: this.container } : undefined;
+  }
+  setType(id) { this.setPermutation(new FakePermutation(id)); }
+  setPermutation(permutation) {
+    if (permutation.type.id !== this.typeId) {
+      // Explicitly model documented block-entity lifetime/drop semantics for the
+      // script tests. This does not exercise Bedrock saves, drops, or native GUI.
+      if (this.container?.isValid) {
+        for (let slot = 0; slot < this.container.size; slot++) {
+          const stack = this.container.getItem(slot);
+          if (stack) this.dimension.spawnItem(stack, this.location);
+        }
+        this.container.isValid = false;
+      }
+      this.container = this.makeContainer(permutation.type.id);
+    }
+    this.permutation = permutation;
+  }
 }
 
 let entitySequence = 0;
@@ -123,7 +160,7 @@ const signal = () => ({ subscriptions: [], subscribe(fn) { this.subscriptions.pu
 const signals = () => new Proxy({}, { get(target, key) { return target[key] ??= signal(); } });
 export function makeEnvironment() {
   const dimension = {
-    id: 'minecraft:overworld', blocks: new Map(), entities: new Map(), drops: [], sounds: [], spawnCount: 0,
+    id: 'minecraft:overworld', blocks: new Map(), entities: new Map(), drops: [], sounds: [], spawnCount: 0, nativeContainers: true,
     heightRange: { min: -64, max: 320 },
     getBlock(location) {
       const key = `${Math.floor(location.x)},${Math.floor(location.y)},${Math.floor(location.z)}`;
