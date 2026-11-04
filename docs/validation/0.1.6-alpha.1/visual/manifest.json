@@ -1,0 +1,2725 @@
+{
+  "kind": "offline-textured-model-render",
+  "is_game_screenshot": false,
+  "source_revision": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+  "baseline_commit": "ce8a45e6c7d7bc3e8d04ce92ae2529e2c9601e49",
+  "method": "CPU orthographic two-sided textured triangles; depth buffer; nearest texels; alpha cutout; signed source cubes; direct source bone affine evaluation",
+  "coordinate_reference": "https://github.com/bernie-g/geckolib/blob/7d6f32db9168a24e14b327c0ad9f8f87dfc204de/Forge/src/main/java/software/bernie/geckolib/loading/object/BakedModelFactory.java",
+  "two_sided_source_material_reference": "https://github.com/bernie-g/geckolib/blob/7d6f32db9168a24e14b327c0ad9f8f87dfc204de/Forge/src/main/java/software/bernie/geckolib/model/GeoModel.java",
+  "limitations": [
+    "Not Java or Bedrock game-client screenshots",
+    "Two-sided inspection: GPU material and face-culling behavior are not validated",
+    "No engine lighting, fog or mipmap validation",
+    "No multiplayer, input, audio or animation playback validation",
+    "Static block appliance poses may retain cuboid approximations of source shear; source column uses the full affine"
+  ],
+  "cells": [
+    {
+      "sheet": "focused-before-after.png",
+      "row": 0,
+      "column": 0,
+      "title": "Refrigerator / both doors open",
+      "camera": [
+        3,
+        2.2,
+        -5
+      ],
+      "pack": "PINNED JAVA ASSETS",
+      "model": "refrigerator",
+      "clip": [
+        "up_open",
+        "down_open"
+      ],
+      "seconds": 0.7,
+      "plate_count": 0,
+      "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json"
+    },
+    {
+      "sheet": "focused-before-after.png",
+      "row": 0,
+      "column": 1,
+      "title": "Refrigerator / both doors open",
+      "camera": [
+        3,
+        2.2,
+        -5
+      ],
+      "pack": "BASELINE main",
+      "block": "refrigerator",
+      "parts": [
+        {
+          "pack": "BASELINE main",
+          "block": "refrigerator",
+          "states": {
+            "ordertocook:half": "lower",
+            "ordertocook:open": false,
+            "ordertocook:frame": 7,
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:closing": false
+          },
+          "geometry": "runtime/RP/models/blocks/refrigerator_lower_7.geo.json",
+          "geometry_identifier": "geometry.ordertocook.refrigerator_lower_7"
+        },
+        {
+          "pack": "BASELINE main",
+          "block": "refrigerator",
+          "states": {
+            "ordertocook:half": "upper",
+            "ordertocook:open": false,
+            "ordertocook:frame": 7,
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:closing": false
+          },
+          "geometry": "runtime/RP/models/blocks/refrigerator_upper_7.geo.json",
+          "geometry_identifier": "geometry.ordertocook.refrigerator_upper_7"
+        }
+      ]
+    },
+    {
+      "sheet": "focused-before-after.png",
+      "row": 0,
+      "column": 2,
+      "title": "Refrigerator / both doors open",
+      "camera": [
+        3,
+        2.2,
+        -5
+      ],
+      "pack": "CANDIDATE",
+      "block": "refrigerator",
+      "parts": [
+        {
+          "pack": "CANDIDATE",
+          "block": "refrigerator",
+          "states": {
+            "ordertocook:half": "lower",
+            "ordertocook:open": false,
+            "ordertocook:closing": false,
+            "ordertocook:frame": 7,
+            "minecraft:cardinal_direction": "north"
+          },
+          "geometry": "runtime/RP/models/blocks/refrigerator_lower_7.geo.json",
+          "geometry_identifier": "geometry.ordertocook.refrigerator_lower_7"
+        },
+        {
+          "pack": "CANDIDATE",
+          "block": "refrigerator",
+          "states": {
+            "ordertocook:half": "upper",
+            "ordertocook:open": false,
+            "ordertocook:closing": false,
+            "ordertocook:frame": 7,
+            "minecraft:cardinal_direction": "north"
+          },
+          "geometry": "runtime/RP/models/blocks/refrigerator_upper_7.geo.json",
+          "geometry_identifier": "geometry.ordertocook.refrigerator_upper_7"
+        }
+      ]
+    },
+    {
+      "sheet": "focused-before-after.png",
+      "row": 1,
+      "column": 0,
+      "title": "Dishwasher / one clean plate",
+      "camera": [
+        -4,
+        8,
+        -2
+      ],
+      "pack": "PINNED JAVA ASSETS",
+      "model": "dishwasher",
+      "clip": "clear_out",
+      "seconds": 1.1667,
+      "plate_count": 1,
+      "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json"
+    },
+    {
+      "sheet": "focused-before-after.png",
+      "row": 1,
+      "column": 1,
+      "title": "Dishwasher / one clean plate",
+      "camera": [
+        -4,
+        8,
+        -2
+      ],
+      "pack": "BASELINE main",
+      "block": "dishwasher",
+      "states": {
+        "ordertocook:phase": 5,
+        "ordertocook:plates": 1,
+        "ordertocook:plates_high": false,
+        "ordertocook:frame": 0,
+        "minecraft:cardinal_direction": "north"
+      },
+      "geometry": "runtime/RP/models/blocks/dishwasher_5_0.geo.json",
+      "geometry_identifier": "geometry.ordertocook.dishwasher_5_0"
+    },
+    {
+      "sheet": "focused-before-after.png",
+      "row": 1,
+      "column": 2,
+      "title": "Dishwasher / one clean plate",
+      "camera": [
+        -4,
+        8,
+        -2
+      ],
+      "pack": "CANDIDATE",
+      "block": "dishwasher",
+      "states": {
+        "ordertocook:phase": 5,
+        "ordertocook:plates": 1,
+        "ordertocook:plates_high": false,
+        "ordertocook:frame": 0,
+        "minecraft:cardinal_direction": "north"
+      },
+      "geometry": "runtime/RP/models/blocks/dishwasher_5_0.geo.json",
+      "geometry_identifier": "geometry.ordertocook.dishwasher_5_0"
+    },
+    {
+      "sheet": "focused-before-after.png",
+      "row": 2,
+      "column": 0,
+      "title": "Dishwasher / two clean plates",
+      "camera": [
+        -4,
+        8,
+        -2
+      ],
+      "pack": "PINNED JAVA ASSETS",
+      "model": "dishwasher",
+      "clip": "clear_out",
+      "seconds": 1.1667,
+      "plate_count": 2,
+      "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json"
+    },
+    {
+      "sheet": "focused-before-after.png",
+      "row": 2,
+      "column": 1,
+      "title": "Dishwasher / two clean plates",
+      "camera": [
+        -4,
+        8,
+        -2
+      ],
+      "pack": "BASELINE main",
+      "block": "dishwasher",
+      "states": {
+        "ordertocook:phase": 5,
+        "ordertocook:plates": 2,
+        "ordertocook:plates_high": false,
+        "ordertocook:frame": 0,
+        "minecraft:cardinal_direction": "north"
+      },
+      "geometry": "runtime/RP/models/blocks/dishwasher_5_0.geo.json",
+      "geometry_identifier": "geometry.ordertocook.dishwasher_5_0"
+    },
+    {
+      "sheet": "focused-before-after.png",
+      "row": 2,
+      "column": 2,
+      "title": "Dishwasher / two clean plates",
+      "camera": [
+        -4,
+        8,
+        -2
+      ],
+      "pack": "CANDIDATE",
+      "block": "dishwasher",
+      "states": {
+        "ordertocook:phase": 5,
+        "ordertocook:plates": 2,
+        "ordertocook:plates_high": false,
+        "ordertocook:frame": 0,
+        "minecraft:cardinal_direction": "north"
+      },
+      "geometry": "runtime/RP/models/blocks/dishwasher_5_0.geo.json",
+      "geometry_identifier": "geometry.ordertocook.dishwasher_5_0"
+    },
+    {
+      "sheet": "focused-before-after.png",
+      "row": 3,
+      "column": 0,
+      "title": "Dishwasher / closing squash",
+      "camera": [
+        3,
+        2.4,
+        -4.2
+      ],
+      "pack": "PINNED JAVA ASSETS",
+      "model": "dishwasher",
+      "clip": "empty_in",
+      "seconds": 0.3555733333333333,
+      "plate_count": 0,
+      "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json"
+    },
+    {
+      "sheet": "focused-before-after.png",
+      "row": 3,
+      "column": 1,
+      "title": "Dishwasher / closing squash",
+      "camera": [
+        3,
+        2.4,
+        -4.2
+      ],
+      "pack": "BASELINE main",
+      "block": "dishwasher",
+      "states": {
+        "ordertocook:phase": 1,
+        "ordertocook:plates": 0,
+        "ordertocook:plates_high": false,
+        "ordertocook:frame": 8,
+        "minecraft:cardinal_direction": "north"
+      },
+      "geometry": "runtime/RP/models/blocks/dishwasher_1_8.geo.json",
+      "geometry_identifier": "geometry.ordertocook.dishwasher_1_8"
+    },
+    {
+      "sheet": "focused-before-after.png",
+      "row": 3,
+      "column": 2,
+      "title": "Dishwasher / closing squash",
+      "camera": [
+        3,
+        2.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "dishwasher",
+      "states": {
+        "ordertocook:phase": 1,
+        "ordertocook:plates": 0,
+        "ordertocook:plates_high": false,
+        "ordertocook:frame": 8,
+        "minecraft:cardinal_direction": "north"
+      },
+      "geometry": "runtime/RP/models/blocks/dishwasher_1_8.geo.json",
+      "geometry_identifier": "geometry.ordertocook.dishwasher_1_8"
+    },
+    {
+      "sheet": "focused-before-after.png",
+      "row": 4,
+      "column": 0,
+      "title": "Order printer / paper feed and body motion",
+      "camera": [
+        3,
+        2.7,
+        -4.2
+      ],
+      "pack": "PINNED JAVA ASSETS",
+      "model": "order_machine",
+      "clip": "neworder",
+      "seconds": 0.2,
+      "plate_count": 0,
+      "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json"
+    },
+    {
+      "sheet": "focused-before-after.png",
+      "row": 4,
+      "column": 1,
+      "title": "Order printer / paper feed and body motion",
+      "camera": [
+        3,
+        2.7,
+        -4.2
+      ],
+      "pack": "BASELINE main",
+      "block": "order_machine",
+      "states": {
+        "ordertocook:mode": "waiting",
+        "ordertocook:frame": 0,
+        "minecraft:cardinal_direction": "north"
+      },
+      "geometry": "runtime/RP/models/blocks/order_machine_waiting_0.geo.json",
+      "geometry_identifier": "geometry.ordertocook.order_machine_waiting_0"
+    },
+    {
+      "sheet": "focused-before-after.png",
+      "row": 4,
+      "column": 2,
+      "title": "Order printer / paper feed and body motion",
+      "camera": [
+        3,
+        2.7,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "order_machine",
+      "states": {
+        "ordertocook:mode": "printing",
+        "ordertocook:frame": 3,
+        "minecraft:cardinal_direction": "north"
+      },
+      "geometry": "runtime/RP/models/blocks/order_machine_printing_3.geo.json",
+      "geometry_identifier": "geometry.ordertocook.order_machine_printing_3"
+    },
+    {
+      "sheet": "focused-before-after.png",
+      "row": 5,
+      "column": 0,
+      "title": "Takeout bag / placed meal bag",
+      "camera": [
+        3,
+        3.5,
+        -4.2
+      ],
+      "pack": "PINNED JAVA ASSETS",
+      "model": "takeout_bag_placed",
+      "clip": "maked",
+      "seconds": 0.15,
+      "plate_count": 0,
+      "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json"
+    },
+    {
+      "sheet": "focused-before-after.png",
+      "row": 5,
+      "column": 1,
+      "title": "Takeout bag / placed meal bag",
+      "camera": [
+        3,
+        3.5,
+        -4.2
+      ],
+      "pack": "BASELINE main",
+      "block": "takeout_bag",
+      "states": {
+        "minecraft:cardinal_direction": "north"
+      },
+      "geometry": "runtime/RP/models/blocks/takeout_bag.geo.json",
+      "geometry_identifier": "geometry.ordertocook.takeout_bag"
+    },
+    {
+      "sheet": "focused-before-after.png",
+      "row": 5,
+      "column": 2,
+      "title": "Takeout bag / placed meal bag",
+      "camera": [
+        3,
+        3.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "takeout_bag",
+      "states": {
+        "ordertocook:frame": 4,
+        "minecraft:cardinal_direction": "north"
+      },
+      "geometry": "runtime/RP/models/blocks/takeout_bag_4.geo.json",
+      "geometry_identifier": "geometry.ordertocook.takeout_bag_4"
+    },
+    {
+      "sheet": "focused-before-after.png",
+      "row": 6,
+      "column": 0,
+      "title": "Meal placement / stage zero",
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "PINNED JAVA ASSETS",
+      "model": "food_plate_placed",
+      "clip": "maked",
+      "seconds": 0.1667,
+      "plate_count": 0,
+      "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/food_plate_placed.geo.json"
+    },
+    {
+      "sheet": "focused-before-after.png",
+      "row": 6,
+      "column": 1,
+      "title": "Meal placement / stage zero",
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "BASELINE main",
+      "entity": "dining_plate",
+      "stage": 0,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "focused-before-after.png",
+      "row": 6,
+      "column": 2,
+      "title": "Meal placement / stage zero",
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 0,
+      "seconds": 0.1667,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 0,
+      "column": 0,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 0,
+      "seconds": 0.1667,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 0,
+      "column": 1,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 1,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 0,
+      "column": 2,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 2,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 0,
+      "column": 3,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 3,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 0,
+      "column": 4,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 4,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 0,
+      "column": 5,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 5,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 0,
+      "column": 6,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 6,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 0,
+      "column": 7,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 7,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 1,
+      "column": 0,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 8,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 1,
+      "column": 1,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 9,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 1,
+      "column": 2,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 10,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 1,
+      "column": 3,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 11,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 1,
+      "column": 4,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 12,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 1,
+      "column": 5,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 13,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 1,
+      "column": 6,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 14,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 1,
+      "column": 7,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 15,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 2,
+      "column": 0,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 16,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 2,
+      "column": 1,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 17,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 2,
+      "column": 2,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 18,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 2,
+      "column": 3,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 19,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 2,
+      "column": 4,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 20,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 2,
+      "column": 5,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 21,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 2,
+      "column": 6,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 22,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 2,
+      "column": 7,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 23,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 3,
+      "column": 0,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 24,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 3,
+      "column": 1,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 25,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 3,
+      "column": 2,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 26,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 3,
+      "column": 3,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 27,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 3,
+      "column": 4,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 28,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 3,
+      "column": 5,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 29,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 3,
+      "column": 6,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 30,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 3,
+      "column": 7,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 31,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 4,
+      "column": 0,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 32,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 4,
+      "column": 1,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 33,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 4,
+      "column": 2,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 34,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 4,
+      "column": 3,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 35,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 4,
+      "column": 4,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 36,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 4,
+      "column": 5,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 37,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 4,
+      "column": 6,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 38,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 4,
+      "column": 7,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 39,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "plates-41-stages.png",
+      "row": 5,
+      "column": 0,
+      "camera": [
+        3,
+        4.4,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "entity": "dining_plate",
+      "stage": 40,
+      "seconds": 0,
+      "geometry": "runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 0,
+      "column": 0,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "board",
+      "states": {
+        "minecraft:cardinal_direction": "north"
+      },
+      "geometry": "runtime/RP/models/blocks/board.geo.json",
+      "geometry_identifier": "geometry.ordertocook.board"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 0,
+      "column": 1,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "board",
+      "states": {
+        "minecraft:cardinal_direction": "east"
+      },
+      "geometry": "runtime/RP/models/blocks/board.geo.json",
+      "geometry_identifier": "geometry.ordertocook.board"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 0,
+      "column": 2,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "board",
+      "states": {
+        "minecraft:cardinal_direction": "south"
+      },
+      "geometry": "runtime/RP/models/blocks/board.geo.json",
+      "geometry_identifier": "geometry.ordertocook.board"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 0,
+      "column": 3,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "board",
+      "states": {
+        "minecraft:cardinal_direction": "west"
+      },
+      "geometry": "runtime/RP/models/blocks/board.geo.json",
+      "geometry_identifier": "geometry.ordertocook.board"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 1,
+      "column": 0,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "countertop",
+      "states": {
+        "minecraft:cardinal_direction": "north"
+      },
+      "geometry": "runtime/RP/models/blocks/countertop.geo.json",
+      "geometry_identifier": "geometry.ordertocook.countertop"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 1,
+      "column": 1,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "countertop",
+      "states": {
+        "minecraft:cardinal_direction": "east"
+      },
+      "geometry": "runtime/RP/models/blocks/countertop.geo.json",
+      "geometry_identifier": "geometry.ordertocook.countertop"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 1,
+      "column": 2,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "countertop",
+      "states": {
+        "minecraft:cardinal_direction": "south"
+      },
+      "geometry": "runtime/RP/models/blocks/countertop.geo.json",
+      "geometry_identifier": "geometry.ordertocook.countertop"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 1,
+      "column": 3,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "countertop",
+      "states": {
+        "minecraft:cardinal_direction": "west"
+      },
+      "geometry": "runtime/RP/models/blocks/countertop.geo.json",
+      "geometry_identifier": "geometry.ordertocook.countertop"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 2,
+      "column": 0,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "chair",
+      "states": {
+        "minecraft:cardinal_direction": "north"
+      },
+      "geometry": "runtime/RP/models/blocks/chair.geo.json",
+      "geometry_identifier": "geometry.ordertocook.chair"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 2,
+      "column": 1,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "chair",
+      "states": {
+        "minecraft:cardinal_direction": "east"
+      },
+      "geometry": "runtime/RP/models/blocks/chair.geo.json",
+      "geometry_identifier": "geometry.ordertocook.chair"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 2,
+      "column": 2,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "chair",
+      "states": {
+        "minecraft:cardinal_direction": "south"
+      },
+      "geometry": "runtime/RP/models/blocks/chair.geo.json",
+      "geometry_identifier": "geometry.ordertocook.chair"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 2,
+      "column": 3,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "chair",
+      "states": {
+        "minecraft:cardinal_direction": "west"
+      },
+      "geometry": "runtime/RP/models/blocks/chair.geo.json",
+      "geometry_identifier": "geometry.ordertocook.chair"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 3,
+      "column": 0,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "shelf",
+      "states": {
+        "ordertocook:papers": 6,
+        "minecraft:cardinal_direction": "north"
+      },
+      "geometry": "runtime/RP/models/blocks/shelf_6.geo.json",
+      "geometry_identifier": "geometry.ordertocook.shelf_6"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 3,
+      "column": 1,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "shelf",
+      "states": {
+        "ordertocook:papers": 6,
+        "minecraft:cardinal_direction": "east"
+      },
+      "geometry": "runtime/RP/models/blocks/shelf_6.geo.json",
+      "geometry_identifier": "geometry.ordertocook.shelf_6"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 3,
+      "column": 2,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "shelf",
+      "states": {
+        "ordertocook:papers": 6,
+        "minecraft:cardinal_direction": "south"
+      },
+      "geometry": "runtime/RP/models/blocks/shelf_6.geo.json",
+      "geometry_identifier": "geometry.ordertocook.shelf_6"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 3,
+      "column": 3,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "shelf",
+      "states": {
+        "ordertocook:papers": 6,
+        "minecraft:cardinal_direction": "west"
+      },
+      "geometry": "runtime/RP/models/blocks/shelf_6.geo.json",
+      "geometry_identifier": "geometry.ordertocook.shelf_6"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 4,
+      "column": 0,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "plate_shelf",
+      "states": {
+        "ordertocook:plates": 6,
+        "ordertocook:plates_high": false,
+        "minecraft:cardinal_direction": "north"
+      },
+      "geometry": "runtime/RP/models/blocks/plate_shelf_6.geo.json",
+      "geometry_identifier": "geometry.ordertocook.plate_shelf_6"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 4,
+      "column": 1,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "plate_shelf",
+      "states": {
+        "ordertocook:plates": 6,
+        "ordertocook:plates_high": false,
+        "minecraft:cardinal_direction": "east"
+      },
+      "geometry": "runtime/RP/models/blocks/plate_shelf_6.geo.json",
+      "geometry_identifier": "geometry.ordertocook.plate_shelf_6"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 4,
+      "column": 2,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "plate_shelf",
+      "states": {
+        "ordertocook:plates": 6,
+        "ordertocook:plates_high": false,
+        "minecraft:cardinal_direction": "south"
+      },
+      "geometry": "runtime/RP/models/blocks/plate_shelf_6.geo.json",
+      "geometry_identifier": "geometry.ordertocook.plate_shelf_6"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 4,
+      "column": 3,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "plate_shelf",
+      "states": {
+        "ordertocook:plates": 6,
+        "ordertocook:plates_high": false,
+        "minecraft:cardinal_direction": "west"
+      },
+      "geometry": "runtime/RP/models/blocks/plate_shelf_6.geo.json",
+      "geometry_identifier": "geometry.ordertocook.plate_shelf_6"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 5,
+      "column": 0,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "washingtable",
+      "states": {
+        "ordertocook:plates": 3,
+        "minecraft:cardinal_direction": "north"
+      },
+      "geometry": "runtime/RP/models/blocks/washingtable_3.geo.json",
+      "geometry_identifier": "geometry.ordertocook.washingtable_3"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 5,
+      "column": 1,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "washingtable",
+      "states": {
+        "ordertocook:plates": 3,
+        "minecraft:cardinal_direction": "east"
+      },
+      "geometry": "runtime/RP/models/blocks/washingtable_3.geo.json",
+      "geometry_identifier": "geometry.ordertocook.washingtable_3"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 5,
+      "column": 2,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "washingtable",
+      "states": {
+        "ordertocook:plates": 3,
+        "minecraft:cardinal_direction": "south"
+      },
+      "geometry": "runtime/RP/models/blocks/washingtable_3.geo.json",
+      "geometry_identifier": "geometry.ordertocook.washingtable_3"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 5,
+      "column": 3,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "washingtable",
+      "states": {
+        "ordertocook:plates": 3,
+        "minecraft:cardinal_direction": "west"
+      },
+      "geometry": "runtime/RP/models/blocks/washingtable_3.geo.json",
+      "geometry_identifier": "geometry.ordertocook.washingtable_3"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 6,
+      "column": 0,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "order_machine",
+      "states": {
+        "ordertocook:mode": "waiting",
+        "ordertocook:frame": 0,
+        "minecraft:cardinal_direction": "north"
+      },
+      "geometry": "runtime/RP/models/blocks/order_machine_waiting_0.geo.json",
+      "geometry_identifier": "geometry.ordertocook.order_machine_waiting_0"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 6,
+      "column": 1,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "order_machine",
+      "states": {
+        "ordertocook:mode": "waiting",
+        "ordertocook:frame": 0,
+        "minecraft:cardinal_direction": "east"
+      },
+      "geometry": "runtime/RP/models/blocks/order_machine_waiting_0.geo.json",
+      "geometry_identifier": "geometry.ordertocook.order_machine_waiting_0"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 6,
+      "column": 2,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "order_machine",
+      "states": {
+        "ordertocook:mode": "waiting",
+        "ordertocook:frame": 0,
+        "minecraft:cardinal_direction": "south"
+      },
+      "geometry": "runtime/RP/models/blocks/order_machine_waiting_0.geo.json",
+      "geometry_identifier": "geometry.ordertocook.order_machine_waiting_0"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 6,
+      "column": 3,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "order_machine",
+      "states": {
+        "ordertocook:mode": "waiting",
+        "ordertocook:frame": 0,
+        "minecraft:cardinal_direction": "west"
+      },
+      "geometry": "runtime/RP/models/blocks/order_machine_waiting_0.geo.json",
+      "geometry_identifier": "geometry.ordertocook.order_machine_waiting_0"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 7,
+      "column": 0,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "refrigerator",
+      "parts": [
+        {
+          "pack": "CANDIDATE",
+          "block": "refrigerator",
+          "states": {
+            "ordertocook:half": "lower",
+            "ordertocook:open": false,
+            "ordertocook:closing": false,
+            "ordertocook:frame": 10,
+            "minecraft:cardinal_direction": "north"
+          },
+          "geometry": "runtime/RP/models/blocks/refrigerator_lower_10.geo.json",
+          "geometry_identifier": "geometry.ordertocook.refrigerator_lower_10"
+        },
+        {
+          "pack": "CANDIDATE",
+          "block": "refrigerator",
+          "states": {
+            "ordertocook:half": "upper",
+            "ordertocook:open": false,
+            "ordertocook:closing": false,
+            "ordertocook:frame": 10,
+            "minecraft:cardinal_direction": "north"
+          },
+          "geometry": "runtime/RP/models/blocks/refrigerator_upper_10.geo.json",
+          "geometry_identifier": "geometry.ordertocook.refrigerator_upper_10"
+        }
+      ]
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 7,
+      "column": 1,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "refrigerator",
+      "parts": [
+        {
+          "pack": "CANDIDATE",
+          "block": "refrigerator",
+          "states": {
+            "ordertocook:half": "lower",
+            "ordertocook:open": false,
+            "ordertocook:closing": false,
+            "ordertocook:frame": 10,
+            "minecraft:cardinal_direction": "east"
+          },
+          "geometry": "runtime/RP/models/blocks/refrigerator_lower_10.geo.json",
+          "geometry_identifier": "geometry.ordertocook.refrigerator_lower_10"
+        },
+        {
+          "pack": "CANDIDATE",
+          "block": "refrigerator",
+          "states": {
+            "ordertocook:half": "upper",
+            "ordertocook:open": false,
+            "ordertocook:closing": false,
+            "ordertocook:frame": 10,
+            "minecraft:cardinal_direction": "east"
+          },
+          "geometry": "runtime/RP/models/blocks/refrigerator_upper_10.geo.json",
+          "geometry_identifier": "geometry.ordertocook.refrigerator_upper_10"
+        }
+      ]
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 7,
+      "column": 2,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "refrigerator",
+      "parts": [
+        {
+          "pack": "CANDIDATE",
+          "block": "refrigerator",
+          "states": {
+            "ordertocook:half": "lower",
+            "ordertocook:open": false,
+            "ordertocook:closing": false,
+            "ordertocook:frame": 10,
+            "minecraft:cardinal_direction": "south"
+          },
+          "geometry": "runtime/RP/models/blocks/refrigerator_lower_10.geo.json",
+          "geometry_identifier": "geometry.ordertocook.refrigerator_lower_10"
+        },
+        {
+          "pack": "CANDIDATE",
+          "block": "refrigerator",
+          "states": {
+            "ordertocook:half": "upper",
+            "ordertocook:open": false,
+            "ordertocook:closing": false,
+            "ordertocook:frame": 10,
+            "minecraft:cardinal_direction": "south"
+          },
+          "geometry": "runtime/RP/models/blocks/refrigerator_upper_10.geo.json",
+          "geometry_identifier": "geometry.ordertocook.refrigerator_upper_10"
+        }
+      ]
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 7,
+      "column": 3,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "refrigerator",
+      "parts": [
+        {
+          "pack": "CANDIDATE",
+          "block": "refrigerator",
+          "states": {
+            "ordertocook:half": "lower",
+            "ordertocook:open": false,
+            "ordertocook:closing": false,
+            "ordertocook:frame": 10,
+            "minecraft:cardinal_direction": "west"
+          },
+          "geometry": "runtime/RP/models/blocks/refrigerator_lower_10.geo.json",
+          "geometry_identifier": "geometry.ordertocook.refrigerator_lower_10"
+        },
+        {
+          "pack": "CANDIDATE",
+          "block": "refrigerator",
+          "states": {
+            "ordertocook:half": "upper",
+            "ordertocook:open": false,
+            "ordertocook:closing": false,
+            "ordertocook:frame": 10,
+            "minecraft:cardinal_direction": "west"
+          },
+          "geometry": "runtime/RP/models/blocks/refrigerator_upper_10.geo.json",
+          "geometry_identifier": "geometry.ordertocook.refrigerator_upper_10"
+        }
+      ]
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 8,
+      "column": 0,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "dishwasher",
+      "states": {
+        "ordertocook:phase": 5,
+        "ordertocook:plates": 2,
+        "ordertocook:plates_high": false,
+        "ordertocook:frame": 0,
+        "minecraft:cardinal_direction": "north"
+      },
+      "geometry": "runtime/RP/models/blocks/dishwasher_5_0.geo.json",
+      "geometry_identifier": "geometry.ordertocook.dishwasher_5_0"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 8,
+      "column": 1,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "dishwasher",
+      "states": {
+        "ordertocook:phase": 5,
+        "ordertocook:plates": 2,
+        "ordertocook:plates_high": false,
+        "ordertocook:frame": 0,
+        "minecraft:cardinal_direction": "east"
+      },
+      "geometry": "runtime/RP/models/blocks/dishwasher_5_0.geo.json",
+      "geometry_identifier": "geometry.ordertocook.dishwasher_5_0"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 8,
+      "column": 2,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "dishwasher",
+      "states": {
+        "ordertocook:phase": 5,
+        "ordertocook:plates": 2,
+        "ordertocook:plates_high": false,
+        "ordertocook:frame": 0,
+        "minecraft:cardinal_direction": "south"
+      },
+      "geometry": "runtime/RP/models/blocks/dishwasher_5_0.geo.json",
+      "geometry_identifier": "geometry.ordertocook.dishwasher_5_0"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 8,
+      "column": 3,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "dishwasher",
+      "states": {
+        "ordertocook:phase": 5,
+        "ordertocook:plates": 2,
+        "ordertocook:plates_high": false,
+        "ordertocook:frame": 0,
+        "minecraft:cardinal_direction": "west"
+      },
+      "geometry": "runtime/RP/models/blocks/dishwasher_5_0.geo.json",
+      "geometry_identifier": "geometry.ordertocook.dishwasher_5_0"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 9,
+      "column": 0,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "stove",
+      "states": {
+        "ordertocook:lit": false,
+        "minecraft:cardinal_direction": "north"
+      },
+      "geometry": "runtime/RP/models/blocks/stove.geo.json",
+      "geometry_identifier": "geometry.ordertocook.stove"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 9,
+      "column": 1,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "stove",
+      "states": {
+        "ordertocook:lit": false,
+        "minecraft:cardinal_direction": "east"
+      },
+      "geometry": "runtime/RP/models/blocks/stove.geo.json",
+      "geometry_identifier": "geometry.ordertocook.stove"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 9,
+      "column": 2,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "stove",
+      "states": {
+        "ordertocook:lit": false,
+        "minecraft:cardinal_direction": "south"
+      },
+      "geometry": "runtime/RP/models/blocks/stove.geo.json",
+      "geometry_identifier": "geometry.ordertocook.stove"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 9,
+      "column": 3,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "stove",
+      "states": {
+        "ordertocook:lit": false,
+        "minecraft:cardinal_direction": "west"
+      },
+      "geometry": "runtime/RP/models/blocks/stove.geo.json",
+      "geometry_identifier": "geometry.ordertocook.stove"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 10,
+      "column": 0,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "takeout_bag",
+      "states": {
+        "ordertocook:frame": 0,
+        "minecraft:cardinal_direction": "north"
+      },
+      "geometry": "runtime/RP/models/blocks/takeout_bag.geo.json",
+      "geometry_identifier": "geometry.ordertocook.takeout_bag"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 10,
+      "column": 1,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "takeout_bag",
+      "states": {
+        "ordertocook:frame": 0,
+        "minecraft:cardinal_direction": "east"
+      },
+      "geometry": "runtime/RP/models/blocks/takeout_bag.geo.json",
+      "geometry_identifier": "geometry.ordertocook.takeout_bag"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 10,
+      "column": 2,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "takeout_bag",
+      "states": {
+        "ordertocook:frame": 0,
+        "minecraft:cardinal_direction": "south"
+      },
+      "geometry": "runtime/RP/models/blocks/takeout_bag.geo.json",
+      "geometry_identifier": "geometry.ordertocook.takeout_bag"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 10,
+      "column": 3,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "takeout_bag",
+      "states": {
+        "ordertocook:frame": 0,
+        "minecraft:cardinal_direction": "west"
+      },
+      "geometry": "runtime/RP/models/blocks/takeout_bag.geo.json",
+      "geometry_identifier": "geometry.ordertocook.takeout_bag"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 11,
+      "column": 0,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "food_plate_display",
+      "states": {
+        "ordertocook:stage": 1,
+        "ordertocook:stage_high": 0,
+        "minecraft:cardinal_direction": "north"
+      },
+      "geometry": "runtime/RP/models/blocks/food_plate_display_1.geo.json",
+      "geometry_identifier": "geometry.ordertocook.food_plate_display_1"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 11,
+      "column": 1,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "food_plate_display",
+      "states": {
+        "ordertocook:stage": 1,
+        "ordertocook:stage_high": 0,
+        "minecraft:cardinal_direction": "east"
+      },
+      "geometry": "runtime/RP/models/blocks/food_plate_display_1.geo.json",
+      "geometry_identifier": "geometry.ordertocook.food_plate_display_1"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 11,
+      "column": 2,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "food_plate_display",
+      "states": {
+        "ordertocook:stage": 1,
+        "ordertocook:stage_high": 0,
+        "minecraft:cardinal_direction": "south"
+      },
+      "geometry": "runtime/RP/models/blocks/food_plate_display_1.geo.json",
+      "geometry_identifier": "geometry.ordertocook.food_plate_display_1"
+    },
+    {
+      "sheet": "blocks-12-four-directions.png",
+      "row": 11,
+      "column": 3,
+      "camera": [
+        3,
+        2.5,
+        -4.2
+      ],
+      "pack": "CANDIDATE",
+      "block": "food_plate_display",
+      "states": {
+        "ordertocook:stage": 1,
+        "ordertocook:stage_high": 0,
+        "minecraft:cardinal_direction": "west"
+      },
+      "geometry": "runtime/RP/models/blocks/food_plate_display_1.geo.json",
+      "geometry_identifier": "geometry.ordertocook.food_plate_display_1"
+    },
+    {
+      "sheet": "customers-two-skins.png",
+      "row": 0,
+      "column": 0,
+      "title": "Standing idle",
+      "camera": [
+        3,
+        2,
+        -5
+      ],
+      "pack": "PINNED JAVA ASSETS",
+      "entity": "customer",
+      "skin": "wide",
+      "clip": "customer_wait_1",
+      "seconds": 0.75,
+      "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json"
+    },
+    {
+      "sheet": "customers-two-skins.png",
+      "row": 0,
+      "column": 1,
+      "title": "Standing idle",
+      "camera": [
+        3,
+        2,
+        -5
+      ],
+      "pack": "CANDIDATE",
+      "entity": "customer",
+      "skin": "wide",
+      "clip": "customer_wait_1",
+      "seconds": 0.75,
+      "geometry": "runtime/RP/models/entity/customer.geo.json"
+    },
+    {
+      "sheet": "customers-two-skins.png",
+      "row": 0,
+      "column": 2,
+      "title": "Standing idle",
+      "camera": [
+        3,
+        2,
+        -5
+      ],
+      "pack": "PINNED JAVA ASSETS",
+      "entity": "customer",
+      "skin": "slim",
+      "clip": "customer_wait_1",
+      "seconds": 0.75,
+      "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json"
+    },
+    {
+      "sheet": "customers-two-skins.png",
+      "row": 0,
+      "column": 3,
+      "title": "Standing idle",
+      "camera": [
+        3,
+        2,
+        -5
+      ],
+      "pack": "CANDIDATE",
+      "entity": "customer",
+      "skin": "slim",
+      "clip": "customer_wait_1",
+      "seconds": 0.75,
+      "geometry": "runtime/RP/models/entity/customer_slim.geo.json"
+    },
+    {
+      "sheet": "customers-two-skins.png",
+      "row": 1,
+      "column": 0,
+      "title": "Seated idle (chair omitted)",
+      "camera": [
+        3,
+        2,
+        -5
+      ],
+      "pack": "PINNED JAVA ASSETS",
+      "entity": "customer",
+      "skin": "wide",
+      "clip": "customer_sit_1",
+      "seconds": 0.75,
+      "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json"
+    },
+    {
+      "sheet": "customers-two-skins.png",
+      "row": 1,
+      "column": 1,
+      "title": "Seated idle (chair omitted)",
+      "camera": [
+        3,
+        2,
+        -5
+      ],
+      "pack": "CANDIDATE",
+      "entity": "customer",
+      "skin": "wide",
+      "clip": "customer_sit_1",
+      "seconds": 0.75,
+      "geometry": "runtime/RP/models/entity/customer.geo.json"
+    },
+    {
+      "sheet": "customers-two-skins.png",
+      "row": 1,
+      "column": 2,
+      "title": "Seated idle (chair omitted)",
+      "camera": [
+        3,
+        2,
+        -5
+      ],
+      "pack": "PINNED JAVA ASSETS",
+      "entity": "customer",
+      "skin": "slim",
+      "clip": "customer_sit_1",
+      "seconds": 0.75,
+      "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json"
+    },
+    {
+      "sheet": "customers-two-skins.png",
+      "row": 1,
+      "column": 3,
+      "title": "Seated idle (chair omitted)",
+      "camera": [
+        3,
+        2,
+        -5
+      ],
+      "pack": "CANDIDATE",
+      "entity": "customer",
+      "skin": "slim",
+      "clip": "customer_sit_1",
+      "seconds": 0.75,
+      "geometry": "runtime/RP/models/entity/customer_slim.geo.json"
+    },
+    {
+      "sheet": "customers-two-skins.png",
+      "row": 2,
+      "column": 0,
+      "title": "Standing idle / back view",
+      "camera": [
+        -3,
+        2,
+        5
+      ],
+      "pack": "PINNED JAVA ASSETS",
+      "entity": "customer",
+      "skin": "wide",
+      "clip": "customer_wait_1",
+      "seconds": 0.75,
+      "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json"
+    },
+    {
+      "sheet": "customers-two-skins.png",
+      "row": 2,
+      "column": 1,
+      "title": "Standing idle / back view",
+      "camera": [
+        -3,
+        2,
+        5
+      ],
+      "pack": "CANDIDATE",
+      "entity": "customer",
+      "skin": "wide",
+      "clip": "customer_wait_1",
+      "seconds": 0.75,
+      "geometry": "runtime/RP/models/entity/customer.geo.json"
+    },
+    {
+      "sheet": "customers-two-skins.png",
+      "row": 2,
+      "column": 2,
+      "title": "Standing idle / back view",
+      "camera": [
+        -3,
+        2,
+        5
+      ],
+      "pack": "PINNED JAVA ASSETS",
+      "entity": "customer",
+      "skin": "slim",
+      "clip": "customer_wait_1",
+      "seconds": 0.75,
+      "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json"
+    },
+    {
+      "sheet": "customers-two-skins.png",
+      "row": 2,
+      "column": 3,
+      "title": "Standing idle / back view",
+      "camera": [
+        -3,
+        2,
+        5
+      ],
+      "pack": "CANDIDATE",
+      "entity": "customer",
+      "skin": "slim",
+      "clip": "customer_wait_1",
+      "seconds": 0.75,
+      "geometry": "runtime/RP/models/entity/customer_slim.geo.json"
+    }
+  ],
+  "inputs": [
+    {
+      "role": "baseline",
+      "path": "runtime/BP/blocks/dishwasher.json",
+      "sha256": "1e0d16a54c77234a70b58dcf4f805ab133a4b22e6a72956372e2e5c3e5bcb70a"
+    },
+    {
+      "role": "baseline",
+      "path": "runtime/BP/blocks/order_machine.json",
+      "sha256": "909029dfc206a45b95b41061d6d951bd2ef27a58872fe0dc50c2729ca6211c97"
+    },
+    {
+      "role": "baseline",
+      "path": "runtime/BP/blocks/refrigerator.json",
+      "sha256": "aa86348091cbe2be50969a2f5c1b85504c9708cf0b4d884687e9df37a295a3a7"
+    },
+    {
+      "role": "baseline",
+      "path": "runtime/BP/blocks/takeout_bag.json",
+      "sha256": "4fad6841e973b054e75cabf0b150f69d6d8b158e531b1cc1574a2b964ee2a9d9"
+    },
+    {
+      "role": "baseline",
+      "path": "runtime/RP/models/blocks/dishwasher_1_8.geo.json",
+      "sha256": "8c0f0d82184f37be21a3ea45ab2b5a3233dadbf99013644728725813cb319128"
+    },
+    {
+      "role": "baseline",
+      "path": "runtime/RP/models/blocks/dishwasher_5_0.geo.json",
+      "sha256": "e7eb8af79e0704779942251a0a74b6ea1d1e245f46393d9b7440f6dbfa0ce42b"
+    },
+    {
+      "role": "baseline",
+      "path": "runtime/RP/models/blocks/order_machine_waiting_0.geo.json",
+      "sha256": "31e88a192844d4688f0bcb756a555ebe06307a04d481a105f03c55ff21f54273"
+    },
+    {
+      "role": "baseline",
+      "path": "runtime/RP/models/blocks/refrigerator_lower_7.geo.json",
+      "sha256": "169d35802e420539c9c011b9eddb32310b1cba5d2eca0ee26312a4de1ae201cd"
+    },
+    {
+      "role": "baseline",
+      "path": "runtime/RP/models/blocks/refrigerator_upper_7.geo.json",
+      "sha256": "1d886bf8e8cc4d702ab2f4929a3135d567f7b1790b821f02c951612f4c97379f"
+    },
+    {
+      "role": "baseline",
+      "path": "runtime/RP/models/blocks/takeout_bag.geo.json",
+      "sha256": "4641605dc2ba121cbcc124dcca49a845205b4912dddcbb50bd13cf59ebf8ab3e"
+    },
+    {
+      "role": "baseline",
+      "path": "runtime/RP/models/entity/dining_plate.geo.json",
+      "sha256": "ad7c0a27afbd7914f42a242321ca2b19f58fec071a411e0b539528dbc9b25660"
+    },
+    {
+      "role": "baseline",
+      "path": "runtime/RP/textures/ordertocook/block/dishwasher.png",
+      "sha256": "7c85e91a5fb2a8baff87528cec4512cf63dc4004ee209aad8ba169755eb97c90"
+    },
+    {
+      "role": "baseline",
+      "path": "runtime/RP/textures/ordertocook/block/order_machine.png",
+      "sha256": "8be71ae5e469cdc48c4d664598ab6c45d2ac20a195466aab6517e6b1832e07f7"
+    },
+    {
+      "role": "baseline",
+      "path": "runtime/RP/textures/ordertocook/block/refrigerator.png",
+      "sha256": "a545ea6a2c2ef3c25d48fd65051bf00e01382b01a97ef4f295b6d3b171e02039"
+    },
+    {
+      "role": "baseline",
+      "path": "runtime/RP/textures/ordertocook/block/takeout_bag.png",
+      "sha256": "5fed5b1272981d6b63587c30d66f903cb235e90e8ad85d1ef3a59fd527dd2952"
+    },
+    {
+      "role": "baseline",
+      "path": "runtime/RP/textures/ordertocook/entity/dining_plate_atlas.png",
+      "sha256": "7dc49aa056ff34be8265e1860e48b954faaa46d4633059b6618baa5d74cd4e82"
+    },
+    {
+      "role": "baseline",
+      "path": "runtime/RP/textures/terrain_texture.json",
+      "sha256": "b5d510ca47f04c5e1a2537f5dd62a45347322a6c5952736b3ab83c93a841ee3b"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/BP/blocks/board.json",
+      "sha256": "166648aa8e472668a815f78e279c1d88ddb5e3f0cd3e6ba352d7cbef44573a45"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/BP/blocks/chair.json",
+      "sha256": "b2738d12e2828a44093c7004e9dc6ac23db20e94c2afd155497f5dbb58717967"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/BP/blocks/countertop.json",
+      "sha256": "d6eaf1759da5357d1f8dfea401f1e60d3f0fdec3771bb983e395e386371d9c81"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/BP/blocks/dishwasher.json",
+      "sha256": "958fe872a0743e09e41f86c7182335cfa3c5c468fb0c5f886ff1cac4a2448197"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/BP/blocks/food_plate_display.json",
+      "sha256": "4c1b51c5daa85dd5d5ac41fabb706759bb0f097d22a8259f1852100a6a394568"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/BP/blocks/order_machine.json",
+      "sha256": "11bdba19b6ec5cc75e5c5971032f7f9d6431df19741d9718edc4516513437f70"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/BP/blocks/plate_shelf.json",
+      "sha256": "1f38efc0c5e04ec1b5e8f8140829a559af68d66c2f4b39bbdc7e8da31a6ab10a"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/BP/blocks/refrigerator.json",
+      "sha256": "e7fcf516b87f772f726f0f693a272281c1b8e1e5716e52766261209168701efc"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/BP/blocks/shelf.json",
+      "sha256": "73afc9a2b859fcd328fab878bcfed51c4f81f87956b86b4af4286c44684fac5c"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/BP/blocks/stove.json",
+      "sha256": "ce31cec44ccffbfa056f367cb0c7a7f6814fd18f33a53340f0d0ef852e8828ed"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/BP/blocks/takeout_bag.json",
+      "sha256": "c3948b5552aa8ce4f756f770355584cdaa42973091c385cd2a66a89029e2042c"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/BP/blocks/washingtable.json",
+      "sha256": "62ac8ff7535073bb62136130650ecba2737e84de1c209e085ec2d945e842be27"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/animations/food_plate_placed.animation.json",
+      "sha256": "ec7465ff7cbbd04cf5f0c8ae318823de76fc3968f7e7ceb2b2058a74dfd503a3"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/animations/npc.animation.json",
+      "sha256": "101a5507f2aa2d04ceae3e9ea84b8201fa69feb85baf46fb075980db63bc4b9e"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/models/blocks/board.geo.json",
+      "sha256": "4e2e176dc7561420f47c063abed94ddc13aa845e9ff6f7bea7568324a08b403d"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/models/blocks/chair.geo.json",
+      "sha256": "1fde7e3385f3cfec04af03c0e1c59f23c3f915b444f6ca8c9f9ced465f762938"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/models/blocks/countertop.geo.json",
+      "sha256": "5fefce27f9af5376f397687ef0c220ef09122e341fa0007a605ce8656b9beb81"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/models/blocks/dishwasher_1_8.geo.json",
+      "sha256": "7a4053cf2612417a344ca56afc39a8b05aa24cb8f2f39f02d9da00d68868e434"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/models/blocks/dishwasher_5_0.geo.json",
+      "sha256": "2c1090789a66f1b227554a96e3fed527862697d6fb222644b750f852c7002beb"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/models/blocks/food_plate_display_1.geo.json",
+      "sha256": "cc774fcbd23509dfa00578d7d1d436f31313f300724cb4f7e4135725de23c3ea"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/models/blocks/order_machine_printing_3.geo.json",
+      "sha256": "bd476f6c8507d9bb30b18f9be379e7b0cc8cfc31a0901452651f8cd56eb7c876"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/models/blocks/order_machine_waiting_0.geo.json",
+      "sha256": "ca1ace9553d70c770507bdb2939987bf04bfbabdfb4a9cd0774c3409cf4a95dc"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/models/blocks/plate_shelf_6.geo.json",
+      "sha256": "9626b9e2939038d4d0e64ec2a731bc58bf83074acfb032c2d8a976583c9e5e51"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/models/blocks/refrigerator_lower_10.geo.json",
+      "sha256": "ab8a12602a38c22bbe16e1cb950675bffcca04dc5e1bf1db03258d83b8486192"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/models/blocks/refrigerator_lower_7.geo.json",
+      "sha256": "c87c5b0bfc0f4cf581f4c4d35d61a7d5a861f5a94ce0526c1f2330cd6aedf1e4"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/models/blocks/refrigerator_upper_10.geo.json",
+      "sha256": "33bf0dd598248fb7f376683ffd0baa688640ca5a8283756b4dd3df26b5d73065"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/models/blocks/refrigerator_upper_7.geo.json",
+      "sha256": "af670a3445eb06d393817532043fd7dc5c2d9e40a1f0fd6bd8b0bc61fb08830f"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/models/blocks/shelf_6.geo.json",
+      "sha256": "333dae9ffcaf41f682fac937fc6d8ce0076327d0b245f2536a9eea94a1d49812"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/models/blocks/stove.geo.json",
+      "sha256": "28cf72875576ec2bbe530df42134a9957471a6237f7f4370821f76f2e422e59f"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/models/blocks/takeout_bag.geo.json",
+      "sha256": "d4a1501f9f89f645de4527f0b89671ad11327d17d756a9fa72d4ffb0ce9e4764"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/models/blocks/takeout_bag_4.geo.json",
+      "sha256": "8987862264630aa0c60dee9680c7c0bf417ab0d03b9094df6814509537b34406"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/models/blocks/washingtable_3.geo.json",
+      "sha256": "17301a541439513fb910e07ea46bac7fd6610ea9d06f34928e699129c99fe44f"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/models/entity/customer.geo.json",
+      "sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/models/entity/customer_slim.geo.json",
+      "sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/models/entity/dining_plate.geo.json",
+      "sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/textures/ordertocook/block/board.png",
+      "sha256": "e0026c3137b79f43bf7d27ae27d3456e63d979ea50d1ae49283109f67ae61f01"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/textures/ordertocook/block/chair.png",
+      "sha256": "ba7b3c247b3a13677e493d64cc7f04a1115d7a1bc077cdc8e6ca1178af56404b"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/textures/ordertocook/block/countertop.png",
+      "sha256": "ba902d6f1edbc81d1a616f597a5379a046fdd1b61af5aadb2a82b4ea30001317"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/textures/ordertocook/block/dishwasher.png",
+      "sha256": "7c85e91a5fb2a8baff87528cec4512cf63dc4004ee209aad8ba169755eb97c90"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/textures/ordertocook/block/food_plate_variants.png",
+      "sha256": "b233e3750f620834648f08386244ddeceeb6d0ce2f439315e02d424ed79eb2e1"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/textures/ordertocook/block/order_machine_geo.png",
+      "sha256": "52cd75a693d199455a6de9155c06a600557a99466c215d673145644b8c09cc68"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/textures/ordertocook/block/plate_shelf.png",
+      "sha256": "e38825e0ca7117dbb74494e418c787822500ea40cdff7b6dfe1db326e728ed1d"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/textures/ordertocook/block/refrigerator.png",
+      "sha256": "a545ea6a2c2ef3c25d48fd65051bf00e01382b01a97ef4f295b6d3b171e02039"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/textures/ordertocook/block/shelf.png",
+      "sha256": "17ef0ff2479aa2c4e104b59110019be83b611b1c58b0184ae083b4a32df5ed5c"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/textures/ordertocook/block/stove.png",
+      "sha256": "e0d4fed8d6140b32708c6a75b6f0aeb380191e06c3bcb3122c084d0ff8400f2b"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/textures/ordertocook/block/takeout_bag_placed.png",
+      "sha256": "de229103fba45284a4a9a30b08ce1e8d6b10929c697217b5693a3b42688ab167"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/textures/ordertocook/block/washingtable.png",
+      "sha256": "a989f3aa1efa69dcaa2128ffd7793943afb3336ac9304bd84288839237c4384d"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/textures/ordertocook/block/water.png",
+      "sha256": "f22fa4929726cd53ea4fa1d593425438c1634b1e34afd55cc0df43631c7a0485"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/textures/ordertocook/entity/dining_plate_atlas.png",
+      "sha256": "22d7bc1e10344538d11e1d764631b6b1c3c5f31a89ca2143e83fb6af006469f9"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+      "sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+      "sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249"
+    },
+    {
+      "role": "candidate",
+      "path": "runtime/RP/textures/terrain_texture.json",
+      "sha256": "b5d510ca47f04c5e1a2537f5dd62a45347322a6c5952736b3ab83c93a841ee3b"
+    },
+    {
+      "role": "candidate",
+      "path": "tools/render_visual_review.py",
+      "sha256": "f1543a6aa94723debc2d6c0163309c8331e15e802eadb95233b6e27edb140653"
+    },
+    {
+      "role": "candidate",
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5"
+    },
+    {
+      "role": "candidate",
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/animations/food_plate_placed.animation.json",
+      "sha256": "44339024ec51373f4e9e27663d33e2d2eba573248ceb23e1c97fc781c720ba63"
+    },
+    {
+      "role": "candidate",
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/animations/npc.animation.json",
+      "sha256": "19691dda1b484ca6a256a1dc5e306304a8e6b0e0cad6c9d60f7d0daf88588734"
+    },
+    {
+      "role": "candidate",
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/animations/order_machine.animation.json",
+      "sha256": "a315908ff0c2b16df728d8e2fe0413072a4ee1cbf31d71751a75781a6eb6e71f"
+    },
+    {
+      "role": "candidate",
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762"
+    },
+    {
+      "role": "candidate",
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d"
+    },
+    {
+      "role": "candidate",
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d"
+    },
+    {
+      "role": "candidate",
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/food_plate_placed.geo.json",
+      "sha256": "067b2b8dc2ca9ed0a708dcc2d048236e27fd6efcbfef6f3221b60854d3338f12"
+    },
+    {
+      "role": "candidate",
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json",
+      "sha256": "8b6de1609098ebf4cf8a04a5e6041fe4969bc70311537c6fec9d4bc5622696cc"
+    },
+    {
+      "role": "candidate",
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5"
+    },
+    {
+      "role": "candidate",
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3"
+    },
+    {
+      "role": "candidate",
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+      "sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973"
+    },
+    {
+      "role": "candidate",
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+      "sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f"
+    },
+    {
+      "role": "candidate",
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/dishwasher.png",
+      "sha256": "7c85e91a5fb2a8baff87528cec4512cf63dc4004ee209aad8ba169755eb97c90"
+    },
+    {
+      "role": "candidate",
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/food_plate_placed.png",
+      "sha256": "d7e566f83d24676b6b047018f6dd4302dba16ea0d1ea326fd5d2755946a0d27a"
+    },
+    {
+      "role": "candidate",
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/order_machine_geo.png",
+      "sha256": "52cd75a693d199455a6de9155c06a600557a99466c215d673145644b8c09cc68"
+    },
+    {
+      "role": "candidate",
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/refrigerator.png",
+      "sha256": "a545ea6a2c2ef3c25d48fd65051bf00e01382b01a97ef4f295b6d3b171e02039"
+    },
+    {
+      "role": "candidate",
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/takeout_bag_placed.png",
+      "sha256": "de229103fba45284a4a9a30b08ce1e8d6b10929c697217b5693a3b42688ab167"
+    },
+    {
+      "role": "candidate",
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+      "sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9"
+    },
+    {
+      "role": "candidate",
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+      "sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249"
+    },
+    {
+      "role": "candidate",
+      "path": "upstream/source.lock.json",
+      "sha256": "dcf4c8985e14be6caf810b2703609a07c6d89810956250db51117065e5bba531"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "blocks-12-four-directions.png",
+      "sha256": "7bbc505904ee7c10cbb4361c882b1fc4d2e05d09e34376e866446223e55ded1f",
+      "bytes": 201977
+    },
+    {
+      "path": "customers-two-skins.png",
+      "sha256": "4b3659cb86efdcfb6b4592f475bad93392f5df8a95a20322e23ecb315b744dba",
+      "bytes": 79131
+    },
+    {
+      "path": "focused-before-after.png",
+      "sha256": "cc2f2e7ceab4302728bf5e2947a13debcfe9e3c853688587156e92d8efc53be0",
+      "bytes": 152387
+    },
+    {
+      "path": "plates-41-stages.png",
+      "sha256": "46edad33d20fd569573573601a25adafc2ef280bcf1e4bd5451da70705996803",
+      "bytes": 109770
+    }
+  ]
+}

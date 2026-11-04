@@ -36,6 +36,15 @@
           "default": 0,
           "client_sync": true
         },
+        "ordertocook:action_elapsed": {
+          "type": "float",
+          "range": [
+            0.0,
+            6.0
+          ],
+          "default": 0.0,
+          "client_sync": true
+        },
         "ordertocook:animation_variant": {
           "type": "int",
           "range": [
@@ -90,6 +99,14 @@
       "minecraft:nameable": {
         "always_show": true,
         "allow_name_tag_renaming": false
+      },
+      "minecraft:behavior.look_at_player": {
+        "priority": 8,
+        "look_distance": 8,
+        "probability": 0.02
+      },
+      "minecraft:behavior.random_look_around": {
+        "priority": 9
       }
     },
     "component_groups": {

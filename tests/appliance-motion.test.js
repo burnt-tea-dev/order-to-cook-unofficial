@@ -12,13 +12,13 @@ const closed = (service, block, player) => service.onContainerClosed({ block, cl
 
 test('door motion takes 20 loaded ticks and reverses from its current angle', () => {
   let motion = advanceDoorMotion(0, true, 8);
-  assert.deepEqual(motion, { position: 8, frame: 4 });
-  motion = advanceDoorMotion(motion.position, false, 2);
-  assert.deepEqual(motion, { position: 6, frame: 3 });
-  motion = advanceDoorMotion(motion.position, true, 2);
-  assert.deepEqual(motion, { position: 8, frame: 4 });
-  assert.deepEqual(advanceDoorMotion(motion.position, true, 12), { position: 20, frame: 10 });
-  assert.deepEqual(advanceDoorMotion(20, false, 20), { position: 0, frame: 0 });
+  assert.deepEqual(motion, { position: 8, frame: 4, closing: false });
+  motion = advanceDoorMotion(motion, false, 2);
+  assert.deepEqual(motion, { position: 6, frame: 3, closing: false });
+  motion = advanceDoorMotion(motion, true, 2);
+  assert.deepEqual(motion, { position: 8, frame: 4, closing: false });
+  assert.deepEqual(advanceDoorMotion(motion, true, 12), { position: 20, frame: 10, closing: false });
+  assert.deepEqual(advanceDoorMotion(20, false, 20), { position: 0, frame: 0, closing: false });
   assert.equal(advanceDoorMotion(20, true, 10000).position, 20);
   assert.equal(advanceDoorMotion(0, false, 10000).position, 0);
 });
@@ -32,6 +32,17 @@ test('dishwasher frames derive from saved phase and timer including the second w
   assert.equal(dishwasherFrame({ phase: 5, remainingTicks: 0, plates: 16 }), 15);
   assert.equal(dishwasherFrame({ phase: 1, remainingTicks: 7, plates: 0 }), 7);
   assert.equal(dishwasherFrame({ phase: 0, remainingTicks: 0, plates: 0 }), 0);
+});
+
+test('a full close selects the original close clip and reopening reverses that same visible clip', () => {
+  let motion = advanceDoorMotion({ position: 20, closing: false }, false, 6);
+  assert.deepEqual(motion, { position: 14, frame: 3, closing: true });
+  assert.deepEqual(advanceDoorMotion(motion, true, 0), motion, 'Changing target alone never swaps curves.');
+  motion = advanceDoorMotion(motion, true, 2);
+  assert.deepEqual(motion, { position: 16, frame: 2, closing: true });
+  motion = advanceDoorMotion(motion, true, 4);
+  assert.deepEqual(motion, { position: 20, frame: 10, closing: false });
+  assert.deepEqual(advanceDoorMotion(motion, false, 20), { position: 0, frame: 0, closing: false });
 });
 
 test('separate native refrigerator events count all viewers and preserve both real containers', () => {
@@ -51,7 +62,7 @@ test('separate native refrigerator events count all viewers and preserve both re
   closed(service, lower, players[0]); advance(service, env, 10);
   assert.equal(state(lower, 'open'), true); assert.equal(state(lower, 'frame'), 10); assert.equal(state(upper, 'frame'), 10);
   closed(service, lower, players[1]); advance(service, env, 6);
-  assert.equal(state(lower, 'open'), false); assert.equal(state(lower, 'frame'), 7); assert.equal(state(upper, 'frame'), 10);
+  assert.equal(state(lower, 'open'), false); assert.equal(state(lower, 'closing'), true); assert.equal(state(lower, 'frame'), 3); assert.equal(state(upper, 'frame'), 10);
   closed(service, upper, players[2]); advance(service, env, 20);
   assert.equal(state(lower, 'frame'), 0); assert.equal(state(upper, 'frame'), 0);
   assert.equal(env.dimension.spawnCount, 0); assert.equal(station.storageId, undefined);

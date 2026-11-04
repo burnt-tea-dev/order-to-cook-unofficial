@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Bedrock adaptation of Order To Cook by breezeth-CN; see THIRD_PARTY_NOTICES.md.
-import { ButtonState, InputButton, ItemStack, system, world } from "@minecraft/server";
+import { ButtonState, InputButton, ItemStack, MolangVariableMap, system, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { containerCapacity, dropContainerContents, itemLabel, openContainerForm, playerInventory } from "./appliances.js";
+import { playEffects, customerCompletionEffects, customerPortalEffects, customerExplosionEffects, customerUnsuccessfulEffects, motorcycleHitEffects } from "./audiovisual.js";
 
 const NS = "ordertocook:";
 const CUSTOMER = `${NS}customer`;
@@ -18,7 +19,6 @@ const DYES = Object.freeze({ "minecraft:white_dye": 0, "minecraft:red_dye": 1, "
 const ACTION_TICKS = Object.freeze({ 1: 12, 2: 12, 3: 40, 4: 60, 5: 120, 6: 110, 7: 10 });
 const COMPLETION_ACTIONS = new Set([3, 4, 5, 6, 7]);
 const EATING_ACTIONS = new Set([5, 6, 7]);
-const IDLE_MILLISECONDS = Object.freeze({ 1: 4500, 2: 4500, 3: 4500, 4: 4695 });
 function needsCustomer(order) { return !!order && (LIVE_ORDER.has(order.status) || (order.status === "offered" && !!order.walkIn)); }
 
 function dist2(a, b) { return (a.x - b.x) ** 2 + (a.y - b.y) ** 2 + (a.z - b.z) ** 2; }
@@ -83,10 +83,6 @@ function playSound(entity, id, volume = 0.5, pitch = 1) {
   try { entity.dimension.playSound(id, entity.location, { volume, pitch }); } catch { /* Cosmetic only. */ }
 }
 
-function sparkle(entity, id = "minecraft:basic_smoke_particle") {
-  try { entity.dimension.spawnParticle(id, entity.location); } catch { /* Cosmetic only. */ }
-}
-
 /** Owns world-facing NPC/vehicle/seat behavior; core remains the only reward owner. */
 export function createEntityService(ctx) {
   const gameWorld = ctx.world ?? world;
@@ -105,10 +101,19 @@ export function createEntityService(ctx) {
 
   function clock() { return ctx.now?.() ?? Date.now(); }
 
-  function nextIdle(entity, at = clock()) {
+  function nextIdle(entity) {
     const variant = rollCustomerAnimationVariant(ctx.random?.() ?? Math.random());
     property(entity, "animation_variant", variant);
-    entity.setDynamicProperty(`${NS}idle_until`, at + IDLE_MILLISECONDS[variant]);
+    // Java chooses subsequent cycles in the client animation controller, when
+    // the actual 4.5/4.6944-second clip finishes. This is only its initial seed.
+  }
+
+  function syncActionElapsed(entity, at = clock()) {
+    const action = Number(currentProperty(entity, "action", 0));
+    const startedAt = entity.getDynamicProperty(`${NS}action_started_at`);
+    if (!ACTION_TICKS[action] || typeof startedAt !== "number") return;
+    const elapsed = Math.min(ACTION_TICKS[action] / 20, Math.max(0, (at - startedAt) / 1000));
+    if (currentProperty(entity, "action_elapsed", -1) !== elapsed) property(entity, "action_elapsed", elapsed);
   }
 
   function notify(player, text) {
@@ -324,7 +329,7 @@ export function createEntityService(ctx) {
       entity.setDynamicProperty(`${NS}restaurant_id`, restaurant.id);
       entity.setDynamicProperty(`${NS}order_id`, order.id);
       entity.addTag(`${NS}order_customer`);
-      property(entity, "variant", order.customerVariant === 1 ? 1 : stableVariant(order.id));
+      property(entity, "variant", [0, 1].includes(order.customerVariant) ? order.customerVariant : stableVariant(order.id));
       property(entity, "stage", "waiting");
       entity.nameTag = `${order.customerName || (order.type === "delivery" ? "外送顧客" : "堂食顧客")}\n§e${restaurant.name || "餐廳"} · ${String(order.id).slice(-6)}`;
       if (chair && !sitOnChair(entity, chair)) { entity.remove(); return undefined; }
@@ -335,7 +340,6 @@ export function createEntityService(ctx) {
         order.destination = { ...order.destination, x: Math.floor(location.x), y: Math.floor(location.y), z: Math.floor(location.z), dimensionId: dimension.id };
       }
       ctx.saveRestaurant?.(restaurant);
-      playSound(entity, `${NS}order_refresh`, 0.25);
       return entity;
     } catch (error) {
       if (entity?.isValid) removeCustomer(entity);
@@ -366,9 +370,10 @@ export function createEntityService(ctx) {
     const at = clock();
     const action = seated ? 1 : 2;
     property(entity, "action", action);
+    property(entity, "action_elapsed", 0);
     entity.setDynamicProperty(`${NS}action_started_at`, at);
     entity.setDynamicProperty(`${NS}spawn_until`, at + ACTION_TICKS[action] * 50);
-    nextIdle(entity, at + ACTION_TICKS[action] * 50);
+    nextIdle(entity);
     gameSystem.runTimeout(() => {
       if (!entity?.isValid || entity.getDynamicProperty(`${NS}depart_at`)) return;
       if (Number(currentProperty(entity, "action", 0)) !== action) return;
@@ -405,7 +410,7 @@ export function createEntityService(ctx) {
       if (unchanged && clock() - finishAt <= 250) completionEffects(entity, clock());
       removeCustomer(entity); return true;
     }
-    if (unchanged) return false;
+    if (unchanged) { syncActionElapsed(entity); return false; }
     entity.setDynamicProperty(`${NS}action_started_at`, at);
     entity.setDynamicProperty(`${NS}depart_at`, finishAt);
     entity.setDynamicProperty(`${NS}spawn_until`, undefined);
@@ -414,11 +419,13 @@ export function createEntityService(ctx) {
     entity.setDynamicProperty(`${NS}last_eat_beat`, -1);
     property(entity, "stage", EATING_ACTIONS.has(action) ? "eating" : "leaving");
     property(entity, "action", action);
+    // Reset the seek phase even when changing between two completion actions,
+    // e.g. interruption must start at zero after four seconds of normal eating.
+    syncActionElapsed(entity);
     // The order core owns every coin and dirty plate. These are visual effects,
     // including the boom: no explosion command, damage, or block destruction.
-    if (!resumed) {
-      sparkle(entity, "minecraft:villager_happy");
-      playSound(entity, "mob.villager.yes", 0.7);
+    if (!resumed && action !== 7) {
+      playEffects(entity.dimension, customerCompletionEffects(entity.location), MolangVariableMap);
     }
     return true;
   }
@@ -459,9 +466,12 @@ export function createEntityService(ctx) {
     return changed;
   }
 
-  function cleanupOrder(orderId) {
+  function cleanupOrder(orderId, unsuccessful = false) {
     retryTimes.delete(orderId);
-    for (const entity of loadedCustomers(orderId)) removeCustomer(entity);
+    for (const entity of loadedCustomers(orderId)) {
+      if (unsuccessful) playEffects(entity.dimension, customerUnsuccessfulEffects(entity.location), MolangVariableMap);
+      removeCustomer(entity);
+    }
   }
 
   function nearbyBike(player) {
@@ -526,6 +536,7 @@ export function createEntityService(ctx) {
       } else if (result.selection === 1) horn(entity);
       else if (result.selection === 2) {
         property(entity, "light", !currentProperty(entity, "light", true));
+        playSound(entity, "random.click", 0.8);
         notify(player, "已切換車燈。");
       } else if (result.selection === 3) recoverMotorcycle(player, entity);
     } catch (error) { if (player.isValid) notify(player, `車輛操作未完成：${String(error)}`); }
@@ -565,7 +576,6 @@ export function createEntityService(ctx) {
       entity.setDynamicProperty(`${NS}owner_id`, player.id);
       entity.setDynamicProperty(`${NS}hit_count`, 0);
       if (!consumeItem(player, MOTORCYCLE)) { entity.remove(); return undefined; }
-      playSound(entity, `${NS}bag_place`, 0.5);
       notify(player, "小電驢已放置：右鍵上車，蹲下右鍵開保溫箱及車輛面板。");
       return entity;
     } catch (error) {
@@ -666,7 +676,7 @@ export function createEntityService(ctx) {
     if (!entity?.isValid || entity.typeId !== MOTORCYCLE) return;
     const hits = Number(entity.getDynamicProperty(`${NS}hit_count`) ?? 0) + 1;
     entity.setDynamicProperty(`${NS}hit_count`, hits);
-    sparkle(entity);
+    playEffects(entity.dimension, motorcycleHitEffects(entity.location), MolangVariableMap);
     if (hits < 5) return;
     const dimension = entity.dimension;
     const location = entity.location;
@@ -731,19 +741,18 @@ export function createEntityService(ctx) {
       const beat = Math.floor((elapsed - 2450) / 350);
       if (Number(entity.getDynamicProperty(`${NS}last_eat_beat`) ?? -1) < beat) {
         entity.setDynamicProperty(`${NS}last_eat_beat`, beat);
-        playSound(entity, "random.eat", 0.7);
+        playSound(entity, "random.eat", 0.7, 0.9 + Math.random() * 0.2);
       }
     }
     const signalAt = ({ 3: 1750, 4: 2750, 5: 4850, 6: 5250, 7: 250 })[action];
     if (signalAt !== undefined && elapsed >= signalAt && !entity.getDynamicProperty(`${NS}action_signal`)) {
       entity.setDynamicProperty(`${NS}action_signal`, true);
       if (action === 5) playSound(entity, "random.fuse", 0.9);
-      else { playSound(entity, "mob.endermen.portal", 0.8); sparkle(entity, "minecraft:mob_portal"); }
+      else playEffects(entity.dimension, customerPortalEffects(entity.location), MolangVariableMap);
     }
     if (action === 5 && elapsed >= 5900 && !entity.getDynamicProperty(`${NS}action_finish_signal`)) {
       entity.setDynamicProperty(`${NS}action_finish_signal`, true);
-      playSound(entity, "random.explode", 0.7);
-      sparkle(entity, "minecraft:huge_explosion_emitter");
+      playEffects(entity.dimension, customerExplosionEffects(entity.location), MolangVariableMap);
     }
   }
 
@@ -790,6 +799,7 @@ export function createEntityService(ctx) {
           applyCompletion(entity, meal, true, true);
           if (!entity.isValid) continue;
         }
+        syncActionElapsed(entity, currentTime);
         const departure = entity.getDynamicProperty(`${NS}depart_at`);
         if (typeof departure === "number") {
           completionEffects(entity, currentTime);
@@ -797,14 +807,18 @@ export function createEntityService(ctx) {
           else restoreCustomerChair(entity);
           continue;
         }
-        if (!needsCustomer(order) || currentTime >= order.expiresAt) { removeCustomer(entity); continue; }
+        if (!needsCustomer(order) || currentTime >= order.expiresAt) {
+          if (order && (['cancelled', 'expired'].includes(order.status) || currentTime >= order.expiresAt)) {
+            playEffects(entity.dimension, customerUnsuccessfulEffects(entity.location), MolangVariableMap);
+          }
+          removeCustomer(entity); continue;
+        }
         restoreCustomerChair(entity);
         const spawnUntil = entity.getDynamicProperty(`${NS}spawn_until`);
         if (typeof spawnUntil === "number" && currentTime >= spawnUntil) {
           entity.setDynamicProperty(`${NS}spawn_until`, undefined);
           property(entity, "action", 0);
         }
-        if (!entity.getDynamicProperty(`${NS}spawn_until`) && currentTime >= Number(entity.getDynamicProperty(`${NS}idle_until`) ?? 0)) nextIdle(entity, currentTime);
       } catch { /* An actor can unload between the dimension query and this tick. */ }
     }
     if (refresh) {

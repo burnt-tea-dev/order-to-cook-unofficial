@@ -2,9 +2,12 @@
 
 [简体中文](README.zh-CN.md) · [繁體中文](README.md) · **English**
 
-**Current source version: `0.1.5-alpha.1` (unreleased). The refrigerator uses native upper 27-slot / lower 54-slot containers; stove and countertop controls take fewer steps, and dishwasher batch transfers have stronger recovery handling. Bedrock 26.60 and Upcoming Creator Features are required. Full Java parity and real-client acceptance remain incomplete.** [Current validation](docs/validation/0.1.5-alpha.1/CONTAINER_GUI.md) · [Native container capabilities and limits](docs/NATIVE-CONTAINERS.md)
+**Current source version: `0.1.7-alpha.1` (unreleased). The refrigerator uses native upper 27-slot / lower 54-slot containers; stove and countertop controls take fewer steps, and dishwasher batch transfers have stronger recovery handling. Bedrock 26.60 and Upcoming Creator Features are required. Full Java parity and real-client acceptance remain incomplete.** [Current validation](docs/validation/0.1.5-alpha.1/CONTAINER_GUI.md) · [Native container capabilities and limits](docs/NATIVE-CONTAINERS.md)
 
 Historical `0.1.2-alpha.3` client evidence includes refrigerator geometry, hand-washing particles and greyed progression text FAILs; it does not certify this version: [historical client record](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [button-contrast correction](docs/validation/UNRELEASED-button-contrast.md).
+
+**Current source: `0.1.7-alpha.1` visual/audio candidate.** It fixes refrigerator interior UVs and door curves, dishwasher deformation and preview, the initial meal model, customer timing, printer/bag animations, and confirmed sound/particle differences. See [VISUAL_AUDIO_PARITY.md](docs/VISUAL_AUDIO_PARITY.md) for fixes and reproducible evidence. Interactive Blockbench inspection and Java/Bedrock client comparisons have **not been run for this candidate**; offline comparisons do not replace the historical client results or establish complete parity.
+
 
 Original by **breezeth**: [CurseForge](https://www.curseforge.com/minecraft/mc-mods/order-to-cook) · [Java source](https://github.com/breezeth-CN/OrdertoCook). Maintained by `casama233` / `burnt-tea-dev`, retaining upstream GPLv3, author attribution and asset provenance. A request about supplementary asset scope has not received a response and is recorded as non-blocking; development continues, but actual licensing conflicts still require resolution.
 
@@ -64,19 +67,22 @@ Closing a stove or countertop form exits; reopening reads the latest state. Keyb
 | Crosshair HUD | Racks, basins, dishwashers, freezer tiers and stove readings; 10-tick refresh with washing/delivery display and renewed permission checks |
 | Menu | Up to 150 non-consuming templates per board; 40 vanilla foods, 67 optional Senluo foods, 72 zero-nutrition drinks, automatic provider declarations and existing admin overrides; presentation/quality aliases count as one dish |
 | Preparation counter | Consume from inventory and permitted refrigerators within 24 blocks, with supplies within 5 blocks; ticket shortcut and same-page readiness/shortages; physical plate/bag placement and pickup |
-| Plates | Ten staged dine-in meal animations, persistent dirty dishes, owner/employee collection, early pickup interruption, manual/automatic washing |
-| Appliances | Native upper 27-slot / lower 54-slot refrigerator, 11 door poses each; seven-slot stove controls on one page; up to 16 dishwasher plates and 66 poses, with batch-transfer rollback; toolbox upgrades |
+| Plates | Original placed meal and 0.5-second placement animation, ten staged meals, persistent dirty dishes, owner/employee collection, early pickup interruption, manual/automatic washing |
+| Appliances | Native upper 27-slot / lower 54-slot refrigerator, 11 opening and 11 closing poses each; seven-slot stove controls on one page; up to 16 dishwasher plates and 82 poses, with batch-transfer rollback; toolbox upgrades |
+| Printer and bag visuals | Complete original printer Geo, 16 printing poses and persistent waiting paper; original placed-bag material and 11-pose placement animation |
 | Customers | Two original looks, four idle variants, seven arrival/collection/dining actions; standing if no chair for standard customers, chairs mandatory for walk-ins; original surprise rewards |
 | Scooter | Original model, four dye colors, Bedrock riding, 54-slot insulated box, horn, emissive lights, remote control and retrieval |
 | Multiplayer | Owners/employees, supply permissions, script-operation rechecks and persistence; an already-open native refrigerator cannot be forcibly closed immediately after revocation (see limits below) |
-| Resources | 13 block definitions (including the hidden refrigerator upper half), 15 explicit custom items plus block items, 5 entities, 240 geometry and 38 animation definitions; 67 original PNG and 12 OGG retained |
+| Resources | 13 block definitions (including the hidden refrigerator upper half), 15 explicit custom items plus block items, 5 entities, 297 geometry and 38 animation definitions; 67 original PNG and 12 OGG retained |
 
 **Asset presence is not proof of complete gameplay-driven animations.** See the [parity matrix](docs/PARITY.md), [visual provenance](docs/ASSET_PROVENANCE.md) and [runtime adaptations](docs/RUNTIME_ADAPTATIONS.md).
 
 ## Deliberate adaptations and open gaps
 
 - Refrigerators use real native containers. Stove and countertop controls combine direct interaction with single-page forms; Java's specialized slot layouts and shortcuts are not identical.
-- The 26.60 native refrigerator has no food-only slots, Java sorting, 128-item stacks or internal food display. Bedrock item stack limits apply. Doors remain independent with sampled keyframes; dishwasher body squash remains omitted.
+- The refrigerator uses Bedrock stack limits and still lacks Java's 128 items per slot and interior food display. Original door curves and body scaling are sampled, but each compartment deforms separately instead of synchronizing the whole cabinet. Dishwasher nonuniform scaling is restored; finite poses and sampled shear residuals below 0.260 pixels remain.
+- Looking at an idle dishwasher while holding a dirty plate now triggers preview. Eligible players share its block pose; Java previews are per client. Bag placement pauses while unloaded, and the printer restores waiting paper after restart. Playback still needs client comparison.
+- Menu stands and printers still drop plain furniture items without the Java menu/restaurant NBT and machine ID. Their basic drops do not establish metadata parity.
 - 26.60 provides no usable native-container force-close API, so revocation cannot immediately terminate an already-open refrigerator screen. Whether the before-event entry cancellation reliably prevents a native window still needs a real Player test. The refrigerator is not a validated private vault; see [permission boundaries](docs/NATIVE-CONTAINERS.md).
 - Source review confirmed original customers spawn directly rather than navigating through a door. Standard dining prefers a chair within 24 blocks and stands within 5 if none exists; walk-ins require a chair. Easter-egg characters, downloaded skins and maid integration are unfinished.
 - Ordinary seated customers have an original **10% surprise** chance and a `1–4 + restaurant level` bonus. This port pays when food is delivered, rather than after the animation, and early plate collection does not reclaim the award. Old plates must be cleared, whereas Java replaces/drops them.
@@ -84,7 +90,7 @@ Closing a stove or countertop form exits; reopening reads the latest state. Keyb
 - The scooter uses Bedrock vehicle physics and a jump-key/control-panel horn. Light surfaces glow but do not cast dynamic world lighting.
 - The stove keeps **9 vanilla smoking recipes** and enables Grilling's roasted chicken wing and sweet potato when both real item IDs are installed. Other suppliers can publish explicit smoking recipes through the [recipe provider contract](docs/STOVE-RECIPES.md). The three lanes share a 200-tick batch and respect result counts and blocked outputs. Shakers, skewer grills and woks keep their own processes; menu catalogs never imply stove recipes.
 - Jade equipment data is replaced by addon action-bar text, not Jade itself. SDM Currency, Touhou Little Maid, Aeronautics/Sable APIs are not directly ported; installed Bedrock currency items and special food registrations can be configured.
-- Personal progression is an internal list and notifications, not official Xbox achievements or bonus currency. The original “eat expired delivery package” progression and local dishwasher preview-open when holding a dirty plate remain unported.
+- Personal progression is an internal list and notifications, not official Xbox achievements or bonus currency. The original “eat expired delivery package” progression remains unported.
 - Basic crafting and in-shop equipment acquisition are added so survival players can start. Shop prices are initial adaptation values.
 
 ## Menu and food variants (unreleased source fix)
@@ -105,6 +111,7 @@ Look at permitted appliances within **6 blocks** to see real plate counts, packi
 
 ## Validation completed and limitations
 
+- The `0.1.6-alpha.1` visual/audio candidate [retest report](docs/validation/0.1.6-alpha.1/VISUAL_RETEST.md) records 354 Node tests, 16 Python tests, and BDS 1.26.60.6 initial 138/138 and restart 15/15, with zero content errors in both runs. Offline images and native server checks do not certify client rendering or audio.
 - Historical alpha.3 recorded **254 automated tests**; newer source checks depend on the CI of their specific commits.
 - `npm run check` uses official stable `@minecraft/server 2.11.0` / `@minecraft/server-ui 2.0.0` type checking plus JSON, geometry, animation, icon, recipe and custom component checks.
 - `npm run build` produces BP, RP, combined pack and hashes. Ordinary validation does not publish packages; the separate candidate workflow verifies artifacts.

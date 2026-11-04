@@ -15,6 +15,15 @@
           ],
           "default": 0,
           "client_sync": true
+        },
+        "ordertocook:placement_age": {
+          "type": "float",
+          "range": [
+            0.0,
+            0.5
+          ],
+          "default": 0.0,
+          "client_sync": true
         }
       }
     },

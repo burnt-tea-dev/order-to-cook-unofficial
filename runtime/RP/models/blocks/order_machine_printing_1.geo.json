@@ -4,80 +4,90 @@
     {
       "description": {
         "identifier": "geometry.ordertocook.order_machine_printing_1",
-        "texture_width": 16,
-        "texture_height": 16,
-        "visible_bounds_width": 4,
-        "visible_bounds_height": 4,
+        "texture_width": 64,
+        "texture_height": 64,
+        "visible_bounds_width": 2,
+        "visible_bounds_height": 2.5,
         "visible_bounds_offset": [
           0,
-          1,
+          0.75,
           0
         ]
       },
       "bones": [
         {
-          "name": "root",
+          "name": "order",
           "pivot": [
-            0,
-            0,
-            0
+            0.0,
+            8.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            3.856566
+          ]
+        },
+        {
+          "name": "group2",
+          "parent": "order",
+          "pivot": [
+            0.0,
+            8.0,
+            0.0
           ],
           "cubes": [
             {
               "origin": [
-                -7,
-                0,
-                -7
+                -7.023333,
+                -0.026667,
+                -7.023333
               ],
               "size": [
-                14,
-                7,
-                14
+                14.046667,
+                7.023333,
+                14.046667
               ],
               "uv": {
                 "north": {
                   "uv": [
-                    3.75,
+                    15,
                     0
                   ],
                   "uv_size": [
-                    3.5,
-                    2.5
-                  ],
-                  "material_instance": "ordertocook_block_order_machine"
+                    14,
+                    10
+                  ]
                 },
                 "east": {
                   "uv": [
-                    3.75,
-                    2.75
+                    15,
+                    11
                   ],
                   "uv_size": [
-                    3.5,
-                    2.5
-                  ],
-                  "material_instance": "ordertocook_block_order_machine"
+                    14,
+                    10
+                  ]
                 },
                 "south": {
                   "uv": [
-                    3.75,
-                    5.5
+                    15,
+                    22
                   ],
                   "uv_size": [
-                    3.5,
-                    2.5
-                  ],
-                  "material_instance": "ordertocook_block_order_machine"
+                    14,
+                    10
+                  ]
                 },
                 "west": {
                   "uv": [
                     0,
-                    7.5
+                    30
                   ],
                   "uv_size": [
-                    3.5,
-                    2.5
-                  ],
-                  "material_instance": "ordertocook_block_order_machine"
+                    14,
+                    10
+                  ]
                 },
                 "up": {
                   "uv": [
@@ -85,160 +95,171 @@
                     0
                   ],
                   "uv_size": [
-                    3.5,
-                    3.5
-                  ],
-                  "material_instance": "ordertocook_block_order_machine"
+                    14,
+                    14
+                  ]
                 },
                 "down": {
                   "uv": [
                     0,
-                    7.25
+                    29
                   ],
                   "uv_size": [
-                    3.5,
-                    -3.5
-                  ],
-                  "material_instance": "ordertocook_block_order_machine"
+                    14,
+                    -14
+                  ]
                 }
               }
             },
             {
               "origin": [
-                -6,
-                7,
-                1
+                -6.02,
+                6.996667,
+                1.003333
               ],
               "size": [
-                12,
-                7,
-                2
+                12.04,
+                7.023333,
+                2.006667
+              ],
+              "pivot": [
+                0.0,
+                2.983333,
+                -1.003333
+              ],
+              "rotation": [
+                -22.5,
+                0,
+                0
               ],
               "uv": {
                 "north": {
                   "uv": [
                     0,
-                    10.25
+                    41
                   ],
                   "uv_size": [
-                    3,
-                    1.75
-                  ],
-                  "material_instance": "ordertocook_block_order_machine"
+                    12,
+                    7
+                  ]
                 },
                 "east": {
                   "uv": [
-                    10.25,
-                    3.5
+                    41,
+                    14
                   ],
                   "uv_size": [
-                    0.5,
-                    1.75
-                  ],
-                  "material_instance": "ordertocook_block_order_machine"
+                    2,
+                    7
+                  ]
                 },
                 "south": {
                   "uv": [
-                    10.25,
+                    41,
                     0
                   ],
                   "uv_size": [
-                    3.0,
-                    1.75
-                  ],
-                  "material_instance": "ordertocook_block_order_machine"
+                    12,
+                    7
+                  ]
                 },
                 "west": {
                   "uv": [
-                    10.25,
-                    5.5
+                    41,
+                    22
                   ],
                   "uv_size": [
-                    0.5,
-                    1.75
-                  ],
-                  "material_instance": "ordertocook_block_order_machine"
+                    2,
+                    7
+                  ]
                 },
                 "up": {
                   "uv": [
-                    10.25,
-                    2
+                    41,
+                    8
                   ],
                   "uv_size": [
-                    3.0,
-                    0.5
-                  ],
-                  "material_instance": "ordertocook_block_order_machine"
+                    12,
+                    2
+                  ]
                 },
                 "down": {
                   "uv": [
-                    10.25,
-                    3.25
+                    41,
+                    13
                   ],
                   "uv_size": [
-                    3.0,
-                    -0.5
-                  ],
-                  "material_instance": "ordertocook_block_order_machine"
+                    12,
+                    -2
+                  ]
                 }
-              },
+              }
+            }
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "group",
+          "parent": "order",
+          "pivot": [
+            0.0,
+            6.595333,
+            -0.501667
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -5.016667,
+                -1.682167,
+                -2.665104
+              ],
+              "size": [
+                10.033333,
+                11.036667,
+                0.062708
+              ],
               "pivot": [
-                0,
-                3,
-                -1
+                0.0,
+                -5.6955,
+                -4.515
               ],
               "rotation": [
                 -22.5,
                 0,
                 0
-              ]
-            },
-            {
-              "origin": [
-                -5,
-                3,
-                -0.90625
-              ],
-              "size": [
-                10,
-                11,
-                0.0625
               ],
               "uv": {
                 "north": {
                   "uv": [
-                    7.5,
+                    30,
                     0
                   ],
                   "uv_size": [
-                    2.5,
-                    2.75
-                  ],
-                  "material_instance": "ordertocook_block_order_machine"
+                    10,
+                    11
+                  ]
                 },
                 "south": {
                   "uv": [
-                    7.5,
-                    3
+                    30,
+                    12
                   ],
                   "uv_size": [
-                    2.5,
-                    2.75
-                  ],
-                  "material_instance": "ordertocook_block_order_machine"
+                    10,
+                    11
+                  ]
                 }
-              },
-              "pivot": [
-                0,
-                -1,
-                -2.75
-              ],
-              "rotation": [
-                -22.5,
-                0,
-                0
-              ]
+              }
             }
+          ],
+          "rotation": [
+            0,
+            0,
+            0
           ]
         }
       ]

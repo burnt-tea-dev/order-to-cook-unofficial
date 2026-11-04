@@ -126,7 +126,7 @@ test('chair eligibility uses the original circular radius instead of a square co
   assert.ok(service.spawnCustomer(fixture.restaurant, fixture.order));
 });
 
-test('idle variants use the upstream 55/15/15/15 distribution independently of action IDs', () => {
+test('idle seed uses upstream weights and the server never changes a client clip mid-cycle', () => {
   assert.deepEqual([0, .549999, .55, .699999, .70, .849999, .85, .999999].map(entityServices.rollCustomerAnimationVariant), [1, 1, 2, 2, 3, 3, 4, 4]);
   const env = makeEnvironment(), fixture = restaurantFixture(env), service = readyService(env), start = Date.now();
   const rolls = [0.1, 0.60, 0.80]; env.ctx.random = () => rolls.shift() ?? .9; env.ctx.now = () => start;
@@ -138,10 +138,39 @@ test('idle variants use the upstream 55/15/15/15 distribution independently of a
   tickAt(service, env, start + 600);
   assert.equal(customer.getProperty('ordertocook:action'), 0);
   tickAt(service, env, start + 5100);
-  assert.equal(customer.getProperty('ordertocook:animation_variant'), 2);
+  assert.equal(customer.getProperty('ordertocook:animation_variant'), 1);
   tickAt(service, env, start + 9600);
-  assert.equal(customer.getProperty('ordertocook:animation_variant'), 3);
+  assert.equal(customer.getProperty('ordertocook:animation_variant'), 1);
+  assert.equal(rolls.length, 2, 'subsequent cycles are selected at the client clip boundary');
   assert.equal(customer.getProperty('ordertocook:action'), 0);
+});
+
+test('both explicit customer skins are preserved instead of rehashing the wide skin', () => {
+  for (const variant of [0, 1]) {
+    const env = makeEnvironment(), fixture = restaurantFixture(env), service = readyService(env);
+    fixture.order.id = 'odd'; fixture.order.customerVariant = variant;
+    const customer = service.spawnCustomer(fixture.restaurant, fixture.order);
+    assert.equal(customer.getProperty('ordertocook:variant'), variant);
+  }
+});
+
+test('customer action seek phase restores elapsed time and resets for early interruption', () => {
+  const env = makeEnvironment(), fixture = restaurantFixture(env), service = readyService(env), start = Date.now();
+  env.ctx.now = () => start;
+  const customer = service.spawnCustomer(fixture.restaurant, fixture.order);
+  assert.equal(customer.getProperty('ordertocook:action_elapsed'), 0);
+  fixture.order.status = 'completed'; fixture.order.meal = { startedAt: start, finishAt: start + 5500, action: 6 };
+  service.finishCustomer(fixture.order.id, fixture.order.meal);
+  tickAt(service, env, start + 4000);
+  assert.equal(customer.getProperty('ordertocook:action_elapsed'), 4);
+  customer.setProperty('ordertocook:action_elapsed', 0);
+  const restarted = readyService(env); env.system.currentTick = 120;
+  tickAt(restarted, env, start + 4250);
+  assert.equal(customer.getProperty('ordertocook:action_elapsed'), 4.25);
+  assert.equal(customer.getDynamicProperty('ordertocook:depart_at'), start + 5500);
+  assert.equal(restarted.interruptCustomerMeal(fixture.order.id, { startedAt: start + 4250, finishAt: start + 4750 }), 1);
+  assert.equal(customer.getProperty('ordertocook:action'), 7);
+  assert.equal(customer.getProperty('ordertocook:action_elapsed'), 0);
 });
 
 test('standing delivery uses the original three-second take action and cannot be submitted again during departure', () => {

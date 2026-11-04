@@ -224,9 +224,10 @@ export class FakeForm {
   async show() { return { canceled: true }; }
 }
 
-class FakeMolangVariableMap {
-  constructor() { this.vectors = {}; }
+export class FakeMolangVariableMap {
+  constructor() { this.vectors = {}; this.floats = {}; }
   setVector3(name, vector) { this.vectors[name] = { ...vector }; }
+  setFloat(name, value) { this.floats[name] = value; }
 }
 
 globalThis.__otcApplianceMocks = { MolangVariableMap: FakeMolangVariableMap, ItemStack: FakeItem, EquipmentSlot: { Offhand: 'Offhand' }, BlockPermutation: FakePermutation, system: {}, world: {}, ActionFormData: FakeForm };
@@ -246,7 +247,7 @@ export const appliances = await import(`data:text/javascript;base64,${Buffer.fro
 globalThis.__otcEntityMocks = { ...appliances, ...globalThis.__otcApplianceMocks, ButtonState: { Pressed: 'Pressed' }, InputButton: { Jump: 'Jump' } };
 const entityUrl = new URL('../runtime/BP/scripts/entities.js', import.meta.url);
 let entitySource = await readFile(entityUrl, 'utf8');
-entitySource = entitySource.replace(/import \{[^}]+\} from "@minecraft\/server";/, 'const {ButtonState, InputButton, ItemStack, system, world} = globalThis.__otcEntityMocks;');
+entitySource = entitySource.replace(/import \{[^}]+\} from "@minecraft\/server";/, 'const {ButtonState, InputButton, ItemStack, MolangVariableMap, system, world} = globalThis.__otcEntityMocks;');
 entitySource = entitySource.replace(/import \{[^}]+\} from "@minecraft\/server-ui";/, 'const {ActionFormData} = globalThis.__otcEntityMocks;');
 entitySource = entitySource.replace(/import \{[^}]+\} from "\.\/appliances.js";/, 'const {containerCapacity, dropContainerContents, itemLabel, openContainerForm, playerInventory} = globalThis.__otcEntityMocks;');
 entitySource = resolveLocalImports(entitySource, entityUrl);

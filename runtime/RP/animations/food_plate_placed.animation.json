@@ -53,7 +53,8 @@
             ]
           }
         }
-      }
+      },
+      "anim_time_update": "math.min(0.5, math.max(q.anim_time + q.delta_time, q.property('ordertocook:placement_age')))"
     }
   }
 }
