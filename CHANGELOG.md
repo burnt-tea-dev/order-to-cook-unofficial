@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.11-alpha.1
+
+- Connect native Player handwashing arm-animation requests to the existing wash lifecycle, with the original two-second arm keys repeated twice in a bounded four-second clip. Use a dedicated controller and replacement stop; no player.json override or new global player loop.
+- Stop the visual on completion and every existing cancellation/cleanup path. Animation API failures do not alter plate delivery. Match Java by excluding the addon’s chair and motorcycle while starting or continuing a wash.
+- Preserve full-body, segmented forearm and first-person differences explicitly. Native QA SimulatedPlayer API acceptance and adapter-driven 80-tick/cancellation checks passed; client pose/stop appearance remains unverified.
+- Pair BP/RP/modules/dependency at 0.1.11, preserve UUIDs and append the new runtime trees. No persistent state format changed.
+
 ## 0.1.10-alpha.1
 
 - Fix the native BDS registration error introduced by 0.1.8: the shared use component attached `onConsume` to non-food items such as the guide and food plate. Register consumption on a separate bag-only component.

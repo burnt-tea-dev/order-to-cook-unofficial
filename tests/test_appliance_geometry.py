@@ -9,6 +9,8 @@ import itertools
 import re
 from pathlib import Path
 import unittest
+from tempfile import TemporaryDirectory
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location("converter", ROOT / "tools/convert_assets.py")
@@ -20,6 +22,25 @@ class ApplianceGeometryTests(unittest.TestCase):
     def setUp(self):
         self.source = converter.normalize_geo(converter.ASSETS / "geo/block/refrigerator.geo.json", "geometry.source")
         self.clips = converter.read_json(converter.ASSETS / "animations/refrigerator.animation.json")["animations"]
+
+    def test_player_handwash_retains_original_arm_keys_and_two_bounded_cycles(self):
+        with TemporaryDirectory() as temp:
+            output = Path(temp)
+            with patch.multiple(converter, create=True, SOURCE=ROOT / 'upstream/reference', OUT=output, RP=output, PROVENANCE=[]):
+                converter.make_player_handwashing_animation()
+            generated = json.loads((output / 'animations/handwashing_player.animation.json').read_text())
+        committed = json.loads((ROOT / 'runtime/RP/animations/handwashing_player.animation.json').read_text())
+        self.assertEqual(generated, committed)
+        clip = generated['animations']['animation.ordertocook.player.handwash']
+        self.assertEqual(clip['animation_length'], 4)
+        self.assertFalse(clip['loop'])
+        self.assertEqual(set(clip['bones']), {'rightArm', 'leftArm'})
+        source = converter.unwrap_vectors(converter.read_json(converter.ASSETS / 'animations/player_wash.animation.json')['animations']['player_wash'])
+        self.assertEqual(clip['bones']['rightArm']['rotation']['0'], source['bones']['right_arm']['rotation']['0.0'])
+        self.assertEqual(clip['bones']['rightArm']['rotation']['2'], source['bones']['right_arm']['rotation']['0.0'])
+        self.assertEqual(clip['bones']['leftArm']['rotation']['2.5'], source['bones']['left_arm']['rotation']['0.5'])
+        self.assertEqual(clip['bones']['leftArm']['rotation']['4'], source['bones']['left_arm']['rotation']['2.0'])
+        self.assertLessEqual(generated['animations']['animation.ordertocook.player.handwash_stop']['animation_length'], 0.1)
 
     def pose(self, half, frame, closing=False):
         clip = ("up_" if half == "upper" else "down_") + ("close" if closing else "open")

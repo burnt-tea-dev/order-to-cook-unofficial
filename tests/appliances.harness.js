@@ -148,9 +148,11 @@ export class FakePlayer extends FakeEntity {
   constructor(dimension, location = { x: 0.5, y: 0, z: 0.5 }) {
     super(dimension, 'minecraft:player', location); this.container = new FakeContainer(36); this.selectedSlotIndex = 0;
     this.messages = []; this.isSneaking = false; this.viewedBlock = undefined; this.name = 'Tester';
+    this.animations = [];
     this.onScreenDisplay = { setActionBar: message => this.messages.push(message) };
   }
   sendMessage(message) { this.messages.push(message); }
+  playAnimation(name, options) { this.animations.push({ name, options: { ...options } }); }
   getBlockFromViewDirection() { return this.viewedBlock ? { block: this.viewedBlock } : undefined; }
   getEntitiesFromViewDirection() { return []; }
   getViewDirection() { return { x: 0, y: 0, z: 1 }; }

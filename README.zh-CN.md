@@ -2,11 +2,11 @@
 
 **简体中文** · [繁體中文](README.md) · [English](README.en.md)
 
-**当前源码版本为 `0.1.10-alpha.1`（尚未发布）：冰箱改为上 27／下 54 格原生容器，炉灶和操作台减少操作步骤，洗碗机加强批次存取。需要 Bedrock 26.60 和 Upcoming Creator Features。完整 Java 等价及真实客户端验收尚未完成。** [本轮验证](docs/validation/0.1.5-alpha.1/CONTAINER_GUI.md) · [原生容器能力与限制](docs/NATIVE-CONTAINERS.md)
+**当前源码版本为 `0.1.11-alpha.1`（尚未发布）：冰箱改为上 27／下 54 格原生容器，炉灶和操作台减少操作步骤，洗碗机加强批次存取。需要 Bedrock 26.60 和 Upcoming Creator Features。完整 Java 等价及真实客户端验收尚未完成。** [本轮验证](docs/validation/0.1.5-alpha.1/CONTAINER_GUI.md) · [原生容器能力与限制](docs/NATIVE-CONTAINERS.md)
 
 历史 `0.1.2-alpha.3` 的限定客户端记录含冰箱几何、手洗粒子和进度灰字 FAIL，不能作为本版验收结果：[历史实机记录](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [按钮可读性修复](docs/validation/UNRELEASED-button-contrast.md)。
 
-**当前源码为 `0.1.10-alpha.1` 视觉／音效候选**：修正冰箱内壁与开关曲线、洗碗机变形及预览、餐盘初始食物、顾客时序、打单机／外卖袋动画，以及已确认的声音和粒子差异。修正与可复现证据见 [VISUAL_AUDIO_PARITY.md](docs/VISUAL_AUDIO_PARITY.md)。本轮尚未执行 Blockbench 交互检查或 Java／Bedrock 客户端画面复验；离线对照不改写上述历史实测结果，也不代表完整一比一完成。
+**当前源码为 `0.1.11-alpha.1` 视觉／音效候选**：修正冰箱内壁与开关曲线、洗碗机变形及预览、餐盘初始食物、顾客时序、打单机／外卖袋动画，以及已确认的声音和粒子差异。修正与可复现证据见 [VISUAL_AUDIO_PARITY.md](docs/VISUAL_AUDIO_PARITY.md)。本轮尚未执行 Blockbench 交互检查或 Java／Bedrock 客户端画面复验；离线对照不改写上述历史实测结果，也不代表完整一比一完成。
 
 
 原作作者：**breezeth** — [CurseForge](https://www.curseforge.com/minecraft/mc-mods/order-to-cook) · [Java 源代码](https://github.com/breezeth-CN/OrdertoCook)。本项目由 `casama233`／`burnt-tea-dev` 维护，保留上游 GPLv3、作者署名和素材来源。有关补充素材使用范围的询问尚未收到回复，作为非阻塞事项记录；作者未回复不阻止功能开发，但实际许可证冲突仍须处理。
@@ -82,11 +82,11 @@
 - 冰箱使用真实原生容器；炉灶和操作台采用直接操作及单页表单，没有完全相同的 Java 专用槽位布局和快捷键。
 - 冰箱堆叠上限遵守 Bedrock 物品规则，仍缺原版每格 128 件及内部食品陈列。开／关曲线和机身缩放已取样，关门变形只作用于各自分区，未同步整座柜体。洗碗机已补回非均匀缩放，仍有有限姿态和不足 0.260 像素的取样剪切残差。
 - 洗碗机持脏盘准星预览已接线，由合资格玩家共用方块姿态；Java 是每客户端独立预览。外卖袋放置动画在卸载时暂停，打单机重启后恢复待取纸张；实机播放节奏仍待比较。
-- 立牌与打单机掉落物尚未保留 Java 菜单／餐厅资料及机器 ID 的 NBT，不能将普通方块掉落视为元数据还原完成。
+- 立牌／打单机的掉落物已带菜单及原店主／等级／统计等持久资料；Bedrock 记录仍按放置坐标识别，不等于 Java 数字机器 ID。见 [原生资料证据](docs/validation/0.1.10-alpha.1/PORTABLE_NATIVE.md)。
 - 26.60 没有可用的原生容器强制关闭 API：撤权后不能保证立即终止已打开的冰箱界面。新开入口的 before-event 取消是否能拦截原生窗口仍待真 Player 验收；不能将当前冰箱当作已验证的私人保险箱。详见 [权限边界](docs/NATIVE-CONTAINERS.md)。
 - 源码核对确认原版顾客也是直接生成，并非从门口寻路。普通堂食优先使用 24 格内座椅，无椅则在 5 格内站立；到店顾客必须有座椅。七位彩蛋人物的姓名、身份、小费与反应已接线；线上玩家皮肤下载及女仆联动尚未完成。
 - 普通坐席顾客有原版 10% 惊喜反应和 `1–4＋餐厅等级` 加赏。本版交餐时就付款，不会延迟至动画结束；提前收盘不会扣回加赏。同位置旧盘须先收走，而 Java 会替换并掉落旧盘。
-- 洗碗改为点击开始并保持注视；没有覆盖 `player.json`，玩家洗碗、拍手及专属骑行动作尚未全部还原。
+- 手洗已接双臂 4 秒动画与开始／完成／取消请求，不覆盖 `player.json`；原生模拟玩家 API 受理已确认，客户端姿势未确认。全身／分段前臂／第一人称、拍手及专用骑车仍有差异。见 [手洗范围](docs/validation/0.1.11-alpha.1/PLAYER_HANDWASH.md)。
 - 小电驴使用 Bedrock 原生载具物理；跳跃键／控制面板触发喇叭。灯面发光，但不能动态照亮周围地形。
 - 炉灶保留 9 条原版烟熏配方，安装有效物品后再接入烟火的烤鸡翅、烤番薯；其他供应商可通过明确的烟熏配方接口接入。三路共用 200 tick，支持实际产量及成品堵塞。调酒、烤串、炒锅仍用原设备；食品目录不会自动变成炉灶配方。详见 [配方对照与供应契约](docs/STOVE-RECIPES.md)。
 - Jade 设备信息改用 addon action bar，并非 Jade 本身。SDM Currency、Touhou Little Maid、Aeronautics／Sable 等 API 未直接移植，可配置已有的 Bedrock 货币物品及登记特殊食物。
