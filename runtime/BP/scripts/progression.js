@@ -18,7 +18,7 @@ const definitions = [
   ["dishwasher", "全自動洗碗機", "親自用工具箱將洗碗池升級為洗碗機。", "goal", "root", true],
   ["eight_star_restaurant", "八星級餐廳", "親自將打單機升級至 Lv.8。", "challenge", "root", true],
   ["golden_restaurant", "金牌餐廳", "在同一維度擁有至少 4 間已放置餐廳，且其中一間的總利潤並列或獨佔該維度第一。", "challenge", "root", true],
-  ["expired_bag_eaten", "你的外賣員正在攻擊你的外賣！", "食用一個已逾時的外送包裹。", "goal", "minecraft:adventure/root", false]
+  ["expired_bag_eaten", "你的外賣員正在攻擊你的外賣！", "食用一個已逾時的外送包裹。", "goal", "minecraft:adventure/root", true]
 ];
 
 /** The original parent links arrange the display; they are not prerequisites. */
@@ -208,6 +208,9 @@ export function applyProgressEvent(progress, event, now = Date.now()) {
       break;
     case "dishwasher_upgraded":
       unlock("dishwasher");
+      break;
+    case "expired_bag_eaten":
+      unlock("expired_bag_eaten");
       break;
     case "restaurant_ranking":
       if (qualifiesGoldenRestaurant(event.playerId, event.restaurants)) unlock("golden_restaurant");

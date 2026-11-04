@@ -16,7 +16,7 @@ import { normalizeFoodIdentity, normalizeFoodAliases, menuFoodsOverlap } from ".
 
 const OPEN_STATUSES = new Set(["offered", "accepted", "packed"]);
 const WORK_STATUSES = new Set(["accepted", "packed"]);
-const STAT_KEYS = ["completed", "delivery", "longDistance", "earnings", "failed",
+export const STAT_KEYS = ["completed", "delivery", "longDistance", "earnings", "failed",
   "walkIn", "deliveryEarnings", "maxDeliveryDistance"];
 
 function integer(value, fallback = 0, min = 0, max = Number.MAX_SAFE_INTEGER) {

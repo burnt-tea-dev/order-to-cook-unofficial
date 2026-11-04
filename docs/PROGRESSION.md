@@ -18,11 +18,11 @@
 | `dishwasher` | 全自動洗碗機 | 玩家親自用工具箱把洗碗池成功升級為洗碗機。直接放置洗碗機、使用或完成一次清洗不會觸發。 |
 | `eight_star_restaurant` | 八星級餐廳 | 玩家親自成功將打單機由 Lv.7 升至原作上限 Lv.8。持有、查看或接手一台既有 Lv.8 機器不會補發。 |
 | `golden_restaurant` | 金牌餐廳 | 同一玩家在同一維度擁有至少 4 間已放置餐廳，其中至少一間的總利潤等於該維度的最高值；並列可，0 收益並列亦可。 |
-| `expired_bag_eaten` | 你的外賣員正在攻擊你的外賣！ | 原作需要真的食用一個已逾時的外送包裹。目前未移植食用行為，清單明確標示「尚未移植」，不以查看或丟棄包裹代替解鎖。 |
+| `expired_bag_eaten` | 你的外賣員正在攻擊你的外賣！ | 真的吃完已逾時的外送包裹才解鎖。原生 `onConsume` 觸發；只查看、開始使用或中止都不算。零營養／零飽和，依 Java 逾時分支不補飽食度。 |
 
 原作各 JSON 的 `parent` 只描述展示樹。它不是完成其他進度的前置條件：沒有親自放過打單機的員工，仍可透過交餐取得首單；取得首單不會自動補發 `root`。逾時包裹的原作父節點是 Minecraft 的 `adventure/root`。
 
-全部 11 個定義來自 [common advancement 目錄](https://github.com/breezeth-CN/OrdertoCook/tree/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/common/src/main/resources/data/ordertocook/advancements/ordertocook)。基岩版的固定清單在 [progression.js](../runtime/BP/scripts/progression.js)，每個定義保留完整 `sourceId` 與 `sourcePath`。10 個條件有執行層事件介面，1 個保留為未移植狀態。
+全部 11 個定義來自 [common advancement 目錄](https://github.com/breezeth-CN/OrdertoCook/tree/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/common/src/main/resources/data/ordertocook/advancements/ordertocook)。基岩版的固定清單在 [progression.js](../runtime/BP/scripts/progression.js)，每個定義保留完整 `sourceId` 與 `sourcePath`。11 個條件均有執行層事件介面。
 
 ## 收益屬於實際交餐的玩家
 
@@ -80,6 +80,7 @@
 | `order_completed` | `reward`、可選布林 `rush`、`longDistance` | 僅供可信的一次完成事件。執行層正式對帳使用 `order_totals`，不重播此增量事件。 |
 | `restaurant_upgraded` | `level` | 成功升級事件，只有 `level === 8` 解鎖。 |
 | `dishwasher_upgraded` | 無 | 成功的洗碗池轉換事件。 |
+| `expired_bag_eaten` | 無 | 原生食用完成且到期檢查通過；只有執行層消耗事件可送入。 |
 | `restaurant_ranking` | `playerId`、`restaurants` | 傳入所有已登記餐廳，模組自行按維度分組。 |
 
 訂單真實性、權限、物品消耗、一次結算及跨存檔對帳由執行層負責。個人 `state` 與每家餐廳已對帳 checkpoint 應分開保存；在原餐廳完成訂單的同一次保存內追加個人帳簿，再以絕對累積值更新個人進度。只有個人存檔成功後才顯示新進度通知；重啟後重試相同 checkpoint 不應再增加收益。移除餐廳前也需要完成該帳簿的對帳，避免拆店遺失尚未同步的個人收益。
@@ -90,17 +91,17 @@
 
 帳簿表示成功交單的**結算金額**。原有訂單保存與實物發幣之間不是跨服務原子交易，不能推論任意強制終止時點都與背包及地面實物幣完全相同；詳細界線見 [VALIDATION.md](VALIDATION.md)。
 
-## 驗證與 dot 的客戶端驗收
+## 驗證範圍
 
-純模組測試在 [progression.test.js](../tests/progression.test.js)，涵蓋收益門檻、絕對對帳重播／倒退、同一事件跨多門檻、玩家所有權、4 店數量、同維度／跨維度、並列與零收益、區塊卸載、升級事件、未知／逾時包裹事件、壞存檔及時鐘倒退。這些測試不等於客戶端驗收；本功能仍需隨整合版執行 `npm run verify`，以該次 CI 實際結果為準。
+純模組測試在 [progression.test.js](../tests/progression.test.js)，涵蓋收益門檻、絕對對帳重播／倒退、同一事件跨多門檻、玩家所有權、4 店數量、同維度／跨維度、並列與零收益、區塊卸載、升級事件、未知事件及逾時包裹完成／重播、壞存檔及時鐘倒退。這些測試不等於客戶端驗收；本功能仍需隨整合版執行 `npm run verify`，以該次 CI 實際結果為準。
 
-dot 需特別檢查：
+可選客戶端比較場景：
 
 - 同一筆交餐重點顧客、重開清單、離開再進入、重啟後，進度與通知都不重複。
 - 同一玩家跨店交餐可以累積；兩位玩家分工時，店主與交餐員工的個人收益分開。
 - 花幣、撿幣、測試給幣不改動訂單累積；普通訂單不誤觸加急／遠距。
 - 新放機器、工具箱成功升級、實際升至 Lv.8 的通知與清單一致；查看舊機器不冒領操作型進度。
 - 同維度 4 間、跨維度 2 + 2 間、並列 0 收益、遠處未載入店、拆店與同址重建，符合上述規則。
-- 11 項清單可讀，逾時包裹項明確標示未移植；使用觸控及手把時，詳情可返回個人清單；關閉或取消回遊戲，需要時重新使用指南／機器入口。
+- 11 項清單可讀，逾時包裹實際吃完才解鎖；使用觸控及手把時，詳情可返回個人清單；關閉或取消回遊戲，需要時重新使用指南／機器入口。
 
 客戶端的實際通過／失敗與裝置資訊由 dot 回報；此文件沒有聲稱任何客戶端測試已通過。

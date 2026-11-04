@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.8-alpha.1
+
+- Complete the expired-takeout advancement from native consumption, with no nutrition or saturation gain. New parcels retain their deadline after order-history trimming.
+- Carry complete menu snapshots and durable restaurant data in non-stackable board/machine items. Relocation keeps the original owner, staff, level, statistics; personal ledgers, live orders and customer/plate anchors stay in the world.
+- Preserve stable pack UUIDs; pair BP/RP/modules/dependency versions at 0.1.8. Record source trees in baseline.json and append-only release-history.json.
+- Source tests cover consumption, one drop per break, variant metadata, relocation, corrupted-item refusal and store reload. Native BDS/save rehearsal is coordinated separately; no client rendering or LIVE result is claimed.
+
 ## 0.1.2-alpha.3 — 2026-10-10
 
 ### Personal progression

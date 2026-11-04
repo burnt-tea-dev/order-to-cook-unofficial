@@ -320,7 +320,7 @@ test('personal progress form shows eleven entries and returns from details to th
   await env.hooks.progressForm(env.player);
   assert.equal(env.forms.length, 3);
   assert.equal(env.forms[0][3].length, 12);
-  assert.match(env.forms[1][2], /尚未移植/);
+  assert.match(env.forms[1][2], /吃完才解鎖/);
   assert.deepEqual(env.forms[1][3], ['返回個人進度', '關閉']);
   assert.equal(env.forms[2][1], '下單了 · 個人進度');
 });

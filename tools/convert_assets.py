@@ -620,7 +620,7 @@ def block_definition(name, base_geo, materials, states=None, variants=(), collis
     write_json(BP / "blocks" / (name + ".json"), result)
     drop = "dirty_plate" if name == "food_plate_display" else name
     loot = {"pools": [{"rolls": 1, "entries": [{"type": "item", "name": f"{NS}:{drop}", "weight": 1}]}]}
-    if name in ("food_plate_display", "takeout_bag"):
+    if name in ("food_plate_display", "takeout_bag", "board", "order_machine"):
         loot = {"pools": []}  # Script returns the unique signed stack, never an unbound duplicate.
     if loot_table is None:
         write_json(BP / "loot_tables" / "blocks" / (name + ".json"), loot)
@@ -969,10 +969,21 @@ def make_items():
             components["minecraft:use_modifiers"] = {"use_duration": .1, "movement_modifier": 1}
         if name == "takeout_bag":
             components["minecraft:block_placer"] = {"block": f"{NS}:takeout_bag", "replace_block_item": True}
+            # Java's expired branch shrinks the bag without applying food stats.
+            components["minecraft:food"] = {"nutrition": 0, "saturation_modifier": 0, "can_always_eat": True}
+            components["minecraft:use_animation"] = "eat"
+            components["minecraft:use_modifiers"] = {"use_duration": 1.6, "movement_modifier": .35}
         if name == "helmet":
             components["minecraft:wearable"] = {"slot": "slot.armor.head", "protection": 2}
         write_json(BP / "items" / (name + ".json"), {"format_version": BLOCK_VERSION, "minecraft:item": {
             "description": {"identifier": f"{NS}:{name}", "menu_category": {"category": "items"}}, "components": components}})
+    # Native ItemStack dynamic properties require a non-stackable item. Keep
+    # the block's native item rendering while carrying its saved device data.
+    for name in ("board", "order_machine"):
+        write_json(BP / "items" / (name + ".json"), {"format_version": BLOCK_VERSION, "minecraft:item": {
+            "description": {"identifier": f"{NS}:{name}", "menu_category": {"category": "construction"}},
+            "components": {"minecraft:display_name": {"value": f"item.{NS}:{name}.name"}, "minecraft:max_stack_size": 1,
+                "minecraft:block_placer": {"block": f"{NS}:{name}", "replace_block_item": True}}}})
     write_json(RP / "textures/item_texture.json", {"resource_pack_name": "Order To Cook Unofficial", "texture_name": "atlas.items", "texture_data": icon_map})
 
 
