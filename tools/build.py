@@ -9,6 +9,11 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 VERSION = json.loads((ROOT / 'package.json').read_text())['version']
+baseline = json.loads((ROOT / 'baseline.json').read_text())
+release_key = '.'.join(map(str, baseline['version']))
+history = json.loads((ROOT / 'release-history.json').read_text())
+if release_key != VERSION.split('-')[0] or history.get(release_key) != baseline['source_trees']:
+    raise SystemExit('Build identity must match baseline.json and append-only release-history.json')
 OUT = ROOT / 'dist'
 OUT.mkdir(exist_ok=True)
 # A branch QA package must name its real source commit, not direct reviewers to
@@ -35,6 +40,10 @@ packs = {}
 for short in ['BP', 'RP']:
     pack = ROOT / 'runtime' / short
     entries = {path.relative_to(pack).as_posix(): path.read_bytes() for path in pack.rglob('*') if path.is_file()}
+    rows = {name: hashlib.sha256(data).hexdigest() for name, data in entries.items()}
+    tree = {'sha256': hashlib.sha256(json.dumps(rows, sort_keys=True, separators=(',', ':')).encode()).hexdigest(), 'files': len(rows)}
+    if tree != baseline['source_trees'][short]:
+        raise SystemExit(f'{short} payload changed; freeze a fresh paired release identity before exporting')
     for filename in ['LICENSE', 'THIRD_PARTY_NOTICES.md']:
         entries[filename] = (ROOT / filename).read_bytes()
     for legal_doc in ['docs/ASSET_LICENSE_REGISTER.md', 'docs/RELEASE_COMPLIANCE.md']:

@@ -16,13 +16,13 @@ const restaurant = (id, ownerId, earnings = 0, extra = {}) => ({
 });
 const four = (ownerId = "cook") => [0, 1, 2, 3].map(index => restaurant("r" + index, ownerId));
 
-test("all eleven pinned advancements remain visible and the unported eat action is explicit", () => {
+test("all eleven pinned advancements have supported runtime triggers", () => {
   assert.equal(PROGRESSION_UPSTREAM, "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642");
   assert.equal(PROGRESSION_DEFINITIONS.length, 11);
   assert.equal(new Set(PROGRESSION_DEFINITIONS.map(value => value.id)).size, 11);
-  assert.equal(PROGRESSION_DEFINITIONS.filter(value => value.supported).length, 10);
+  assert.equal(PROGRESSION_DEFINITIONS.filter(value => value.supported).length, 11);
   const expired = PROGRESSION_DEFINITIONS.find(value => value.id === "expired_bag_eaten");
-  assert.equal(expired.supported, false);
+  assert.equal(expired.supported, true);
   assert.equal(expired.parent, "minecraft:adventure/root");
   assert.equal(expired.sourceId, "ordertocook:ordertocook/expired_bag_eaten");
   assert.ok(PROGRESSION_DEFINITIONS.every(value => value.sourcePath.endsWith("/" + value.id + ".json")));
@@ -200,8 +200,8 @@ test("golden advancement remains unlocked after ranking changes without awarding
   assert.equal(later.changed, false);
 });
 
-test("unknown and unimplemented triggers cannot claim expired-bag progress", () => {
-  for (const type of ["expired_bag_eaten", "item_used", "coin_received", "restaurant_owned", ""]) {
+test("unknown triggers cannot claim progress", () => {
+  for (const type of ["item_used", "coin_received", "restaurant_owned", ""]) {
     assert.throws(() => applyProgressEvent(createProgress(NOW), { type }, NOW + 1));
   }
   assert.throws(() => applyProgressEvent(createProgress(NOW), null, NOW + 1));
@@ -217,7 +217,6 @@ test("invalid persisted progress is rejected instead of silently resetting or ac
     JSON.stringify({ ...progress, unlocked: { root: NOW - 1 } }),
     JSON.stringify({ ...progress, unlocked: { root: NOW + 1 } }),
     JSON.stringify({ ...progress, unlocked: { mystery: NOW } }),
-    JSON.stringify({ ...progress, unlocked: { expired_bag_eaten: NOW } }),
     JSON.stringify({ ...progress, updatedAt: NOW - 1 })
   ];
   for (const raw of cases) assert.throws(() => parseProgress(raw, NOW + 20));
@@ -248,7 +247,7 @@ test("display rows expose bounded counters, source IDs and explicit unsupported 
   assert.equal(rows.find(row => row.id === "earn_1000").status, "未解鎖");
   const expired = rows.find(row => row.id === "expired_bag_eaten");
   assert.equal(expired.unlocked, false);
-  assert.match(expired.status, /尚未移植/);
+  assert.equal(expired.status, "未解鎖");
   assert.equal(JSON.stringify(progress), before);
 });
 
@@ -264,4 +263,12 @@ test("golden restaurant checks the pinned source's dimension-local persisted ran
   assert.equal(qualifiesGoldenRestaurant("cook", [...owned, rival]), false);
   owned[0].stats.earnings = 10000;
   assert.equal(qualifiesGoldenRestaurant("cook", [...owned, rival]), true);
+});
+
+test("completed expired-bag consumption unlocks once without economic progress", () => {
+  const first = applyProgressEvent(createProgress(NOW), { type: "expired_bag_eaten" }, NOW + 1);
+  assert.deepEqual(first.newlyUnlocked.map(row => row.id), ["expired_bag_eaten"]);
+  assert.deepEqual(first.state.totals, createProgress(NOW).totals);
+  const again = applyProgressEvent(parseProgress(JSON.stringify(first.state)), { type: "expired_bag_eaten" }, NOW + 2);
+  assert.equal(again.changed, false); assert.deepEqual(again.newlyUnlocked, []);
 });

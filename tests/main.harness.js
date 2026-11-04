@@ -9,9 +9,9 @@ const scripts = new URL('../runtime/BP/scripts/', import.meta.url);
 const signal = () => ({ subscriptions: [], subscribe(fn) { this.subscriptions.push(fn); return fn; } });
 const signals = () => new Proxy({}, { get(target, name) { return target[name] ||= signal(); } });
 
-export async function mainFixture() {
+export async function mainFixture(savedProperties = []) {
   const env = makeEnvironment();
-  const properties = new Map();
+  const properties = new Map(savedProperties);
   env.world.getDynamicPropertyIds = () => [...properties.keys()];
   env.world.getDynamicProperty = id => properties.get(id);
   let failProperty;
@@ -72,6 +72,11 @@ export async function mainFixture() {
     loaded.set(name, url); return url;
   }
   const main = await import(await moduleUrl('main.js'));
+  const blockComponents = new Map(), itemComponents = new Map();
+  for (const fn of env.system.beforeEvents.startup.subscriptions) fn({
+    blockComponentRegistry: { registerCustomComponent: (id, value) => blockComponents.set(id, value) },
+    itemComponentRegistry: { registerCustomComponent: (id, value) => itemComponents.set(id, value) }
+  });
   for (const fn of env.world.afterEvents.worldLoad.subscriptions) fn();
   const store = await import(await moduleUrl('store.js'));
   const core = await import(await moduleUrl('core.js'));
@@ -95,7 +100,7 @@ export async function mainFixture() {
   customer.setDynamicProperty('ordertocook:restaurant_id', restaurant.id);
   customer.setDynamicProperty('ordertocook:order_id', order.id);
   return { ...env, hooks, store, core, player, customer, chair, machine, restaurant, order, parcel, properties,
-    applianceContext, installedItems, scriptEvents,
+    applianceContext, installedItems, scriptEvents, blockComponents, itemComponents,
     endings, interruptions, forms, formResponses, failWrite: predicate => { failProperty = predicate; },
     linkage: { restaurantId: restaurant.id, orderId: order.id } };
 }
