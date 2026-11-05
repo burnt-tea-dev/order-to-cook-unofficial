@@ -20,6 +20,6 @@
 
 定向測試呼叫真 main／store／core／timing：牆鐘跳動、暫停、callback停止、同資料重新載入、partial tick的 legacy一次接續、刷新保存失敗重試、到店首次／設定間隔及卸載／重開 reset，以及counter清理／壞資料保留。printer、store及0.1.19訂單世界tick回歸沿本次涉及範圍一起執行。
 
-原生 observer 是 `tests/bedrock-machine-timing-checks.js`：同QA小世界先用3秒fixture間隔保存中途進度，正常停服超過3秒再開，檢查同counter／origin／metadata及實際區域停止／恢復。這只是短測設定，不改600秒預設。**本次來源交付時尚未執行此原生測試**；按共同時段在下一批整組部署／既定隊列後進行，不以舊訂單／餐盤測試冒充本次保存證據。沒有改LIVE選包。
+原生 observer 是 `tests/bedrock-machine-timing-checks.js`：同QA小世界先用3秒fixture間隔保存中途進度，正常停服超過3秒再開，檢查同counter／origin／metadata及實際區域停止／恢復。這只是短測設定，不改600秒預設。來源 PR37 合併後，主協調依既定隊列明示交槽，本輪實際完成 [seed4／同世界restart7，共11項](machine-timing-native.json)。兩次正常 stop／Quit correctly／exit0、players0，無引擎錯誤或OOM；unit inactive/dead/MainPID0後刪自己的世界／引擎，已交還時段。正式受測 runtime 四檔的內容與0.1.21來源相同；GameTest1.0.0-beta只在診斷副本，production仍為server2.11.0。沒有冒用舊訂單／餐盤結果或改LIVE選包。
 
 既有載入巡查每20tick；短於此間隔的完整卸載再載入是否仍能重起暫態到店等待，尚未確認。實際NPC到店呈現、聲畫與真人輸入未驗證，不新增真人等待門檻。舊0.1.19報告所寫的現實時間差異保留當時範圍，現況由本文件與當前程式負責。

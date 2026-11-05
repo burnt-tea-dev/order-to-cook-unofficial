@@ -164,7 +164,7 @@ Java 的 `TakeoutBagItem.prepareBoomBonus` 先選定加賞，`CustomerEntity.tic
 
 ## 七、有意的平台差異與驗證界線
 
-1. **時鐘與範圍**：0.1.19起，訂單期限依原生`system.currentTick`世界總tick保存，關服不倒數；伺服器運行時，即使離開區域，訂單仍會到期。新實物包裹另保存`ordertocook:expires_tick`，歷史裁剪後仍可獨立判斷食用；舊資料第一次接觸時接續舊剩餘時間。0.1.18起，餐盤／顧客反應按各自原生區域模擬tick，停服及區域停止模擬不補算。打單機刷新與到店間隔改由原生機器運作callback累計，刷新進度保存、到店等待保持暫態；其原生保存待本輪排程、短於20tick的卸載／重載仍未確認，見[機器計時](validation/0.1.21-alpha.1/MACHINE_TIMING.md)。見[訂單期限](validation/0.1.19-alpha.1/ORDER_DEADLINES.md)。
+1. **時鐘與範圍**：0.1.19起，訂單期限依原生`system.currentTick`世界總tick保存，關服不倒數；伺服器運行時，即使離開區域，訂單仍會到期。新實物包裹另保存`ordertocook:expires_tick`，歷史裁剪後仍可獨立判斷食用；舊資料第一次接觸時接續舊剩餘時間。0.1.18起，餐盤／顧客反應按各自原生區域模擬tick，停服及區域停止模擬不補算。打單機刷新與到店間隔改由原生機器運作callback累計，刷新進度保存、到店等待保持暫態；其同QA原生保存／重啟及離區停止／恢復11項已通過、短於20tick的卸載／重載仍未確認，見[機器計時](validation/0.1.21-alpha.1/MACHINE_TIMING.md)。見[訂單期限](validation/0.1.19-alpha.1/ORDER_DEADLINES.md)。
 2. **報價重算時機**：Java 在開啟打單界面時降低有效利益；核心在生成、接受及明確同步時處理，避免配接層忘記 UI 回調造成高報價。恢復菜單後可重新提高仍未接受的報價。這比上游只在低於實際等級時重算的 UI 行為更一致。
 3. **隨機序列**：選菜與機率分布相同，但 Java RandomSource 與 JavaScript RNG 不追求逐 seed 相同的序列。
 4. **虛擬營養**：每張單會快照菜品營養，已接受單不因之後修改註冊資料而變價。
