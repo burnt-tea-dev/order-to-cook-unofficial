@@ -55,13 +55,13 @@ Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedro
 
 舊展示只有訂單連結，首次載入或操作時可一次轉入原先會回傳的成品；先前已丟的額外名稱等資料無法補回。`nativeParcel` 表示物品已交給原生 inventory；此後空槽就是空槽，包括其他移物入口取走後，不再憑舊連結造物。舊展示尚未轉入就拆除時，保留原來一次回收路徑。這是舊存檔採用，不是物品 ID 相容鎖或退休登記表。原生庫存與 world dynamic properties 仍不是跨儲存層的原子交易。
 
-正常點取沿原腳本動作；before-event 取消原生容器介面。沿用冰箱已需的 [Upcoming Creator Features 與容器能力](NATIVE-CONTAINERS.md)，不新增模組依賴。Java FoodPlateBlockEntity 不公開普通 Inventory／ItemHandler，不能因此宣稱漏斗等價；adapter 測試也不能證明引擎漏斗或介面取消。
+正常點取沿原腳本動作；before-event 取消原生容器介面。沿用冰箱已需的 [Upcoming Creator Features 與容器能力](NATIVE-CONTAINERS.md)，不新增模組依賴。Java FoodPlateBlockEntity 不公開普通 Inventory／ItemHandler。BDS1.26.60.6下方漏斗觀察40tick未抽取展示物品，同場普通箱子→漏斗正向對照成功；這只證明本次入口與設定，不能推成所有方向／版本的自動化結論。fixture actor不證明真Player介面取消。
 
 原生容器所需的新方塊格式中，材質的 `ambient_occlusion` 必須用數字。生成器將原 false／true 等義轉為0／1，包含階段 permutations；[官方材質文件](https://learn.microsoft.com/en-us/minecraft/creator/reference/content/blockreference/examples/blockcomponents/minecraftblock_material_instances?view=minecraft-bedrock-stable) 明列1.26.20起不再接受布林值。0.1.24首次原生載入因此失敗，保留失敗證據；沒有改引擎或關掉檢查。
 
 原作分界：[Forge 操作台](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/TakeoutBoxBlockEntity.java) 存放待取的成品 copy；[FoodPlateBlock](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/FoodPlateBlock.java)／[BlockEntity](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/FoodPlateBlockEntity.java) 完整保存及回傳。顧客用餐後，提早回收／拆除及100tick完成都換新髒盤。[NeoForge1.21.1 Block](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/neoforge-1.21.1/src/main/java/cn/breezeth/ordertocook/block/FoodPlateBlock.java)及[BlockEntity](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/neoforge-1.21.1/src/main/java/cn/breezeth/ordertocook/block/entity/FoodPlateBlockEntity.java) 已分別核對相同分界。本次不改用餐髒盤流程，也不為原作本來就消耗的每件原料保存 metadata。
 
-2026-11-06 正式 adapter 反例：正常製作並取走成品，用 [ItemStack nameTag／setLore／非堆疊 setDynamicProperty](https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/itemstack?view=minecraft-bedrock-stable) 加資料，再正常擺放取回。修前名稱、lore、自訂資料全失，修後餐盤及共用 adapter 的外送袋都保留；並驗證失敗回復、掉落不重建、舊展示採用及移物後不重造。這不是任意 NBT 或手造 BlockEntity 反例。原生引擎與同世界重啟仍待共同時段實測，未宣稱真人介面或畫面驗收。
+2026-11-06 正式 adapter 反例：正常製作並取走成品，用 [ItemStack nameTag／setLore／非堆疊 setDynamicProperty](https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/itemstack?view=minecraft-bedrock-stable) 加資料，再正常擺放取回。修前名稱、lore、自訂資料全失，修後餐盤及共用 adapter 的外送袋都保留；並驗證失敗回復、掉落不重建、舊展示採用及移物後不重造。這不是任意 NBT 或手造 BlockEntity 反例。[0.1.25原生證據](validation/0.1.25-alpha.1/DISPLAY_STACKS.md) 已核真ItemStack／native container、正式adapter取放、真destroy／ID替換唯一掉落、同QA世界正常重啟、空槽不重造及舊link採用。真Player輸入／GUI與client畫面不在本次範圍。
 
 ## 手洗第一人稱左臂
 

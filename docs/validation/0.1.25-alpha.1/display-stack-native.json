@@ -1,0 +1,341 @@
+{
+  "observed_at": "2026-11-06T07:11:33+08:00",
+  "production_source": "65315a573137576a8bb1c54054fa00dd083eaa8f",
+  "runtime_version": "0.1.25-alpha.1",
+  "engine": {
+    "version": "1.26.60.6",
+    "archive_sha256": "cbbd5414fa6a310353ed1fc76a0ba691c3fd1ea852fd04bb76764ee4c1afdb98",
+    "executable_sha256": "ea16b541a448e07c337848d2c5f37321b706554b5216dd942f3f11e7a8ed2bad"
+  },
+  "api_modules": {
+    "@minecraft/server": "2.11.0",
+    "@minecraft/server-ui": "2.0.0"
+  },
+  "saved_experiments": {
+    "experiments_ever_used": 1,
+    "saved_with_toggled_experiments": 1,
+    "upcoming_creator_features": 1
+  },
+  "diagnostic_identity": {
+    "separate_pack_uuids": true,
+    "pack_version": [
+      1,
+      0,
+      0
+    ],
+    "gametest_dependency": false
+  },
+  "scope": {
+    "one_025_qa_world": true,
+    "same_world_resume_and_restart": true,
+    "production_adapters": true,
+    "native_itemstack_and_block_container": true,
+    "actor": "Fixture actor backed by a real native storage entity inventory",
+    "native_player_or_client_input": false,
+    "native_gui_cancellation_verified": false,
+    "live_modified": false,
+    "full_63_family_retested": false,
+    "family_023_candidate_modified": false
+  },
+  "reused_successful_partial_seed_checks": [
+    {
+      "name": "production startup ready",
+      "passed": true
+    },
+    {
+      "name": "native actor inventory exists",
+      "passed": true
+    },
+    {
+      "name": "native roundtrip dine_in preparation owns one native carrier",
+      "passed": true
+    },
+    {
+      "name": "dine_in placement and pickup preserve native metadata",
+      "passed": true
+    },
+    {
+      "name": "dine_in pickup does not also spill cargo",
+      "passed": true
+    },
+    {
+      "name": "native roundtrip delivery preparation owns one native carrier",
+      "passed": true
+    },
+    {
+      "name": "delivery placement and pickup preserve native metadata",
+      "passed": true
+    },
+    {
+      "name": "delivery pickup does not also spill cargo",
+      "passed": true
+    },
+    {
+      "name": "native destroy preparation owns one native carrier",
+      "passed": true
+    },
+    {
+      "name": "actual destruction drops exactly one complete carrier",
+      "passed": true
+    },
+    {
+      "name": "native replacement preparation owns one native carrier",
+      "passed": true
+    }
+  ],
+  "replacement_item_after_normal_restart": {
+    "expected": {
+      "typeId": "ordertocook:food_plate",
+      "amount": 1,
+      "maxAmount": 1,
+      "nameTag": "native replacement",
+      "lore": [
+        "正常成品的保存資料 🍵"
+      ],
+      "keepOnDeath": true,
+      "properties": {
+        "ordertocook:order_id": "overworld_0_5_0:mw45n4vg:4",
+        "ordertocook:proof": "4-mw45n4vi-hb0vs56lgx",
+        "ordertocook:qa_note": "native replacement",
+        "ordertocook:restaurant": "overworld_0_5_0"
+      }
+    },
+    "actual": [
+      {
+        "typeId": "ordertocook:food_plate",
+        "amount": 1,
+        "maxAmount": 1,
+        "nameTag": "native replacement",
+        "lore": [
+          "正常成品的保存資料 🍵"
+        ],
+        "keepOnDeath": true,
+        "properties": {
+          "ordertocook:order_id": "overworld_0_5_0:mw45n4vg:4",
+          "ordertocook:proof": "4-mw45n4vi-hb0vs56lgx",
+          "ordertocook:qa_note": "native replacement",
+          "ordertocook:restaurant": "overworld_0_5_0"
+        }
+      }
+    ]
+  },
+  "final_stages": {
+    "resume": {
+      "passed": true,
+      "reason": "complete",
+      "normal_stop_requested": true,
+      "quit_correctly": true,
+      "returncode": 0,
+      "report": {
+        "passed": true,
+        "phase": "resume",
+        "checks": [
+          {
+            "name": "production startup ready",
+            "passed": true
+          },
+          {
+            "name": "native actor inventory exists",
+            "passed": true
+          },
+          {
+            "name": "same-world displaced replacement retains one complete original carrier",
+            "passed": true
+          },
+          {
+            "name": "persisted dine_in preparation owns one native carrier",
+            "passed": true
+          },
+          {
+            "name": "persisted delivery preparation owns one native carrier",
+            "passed": true
+          },
+          {
+            "name": "native moved-out preparation owns one native carrier",
+            "passed": true
+          },
+          {
+            "name": "empty native slot never reconstructs a second carrier",
+            "passed": true
+          },
+          {
+            "name": "legacy fixture preparation owns one native carrier",
+            "passed": true
+          },
+          {
+            "name": "vanilla chest-to-hopper positive control extracts one bread",
+            "passed": true
+          },
+          {
+            "name": "hopper capability preparation owns one native carrier",
+            "passed": true
+          },
+          {
+            "name": "hopper observation retains exactly one original carrier",
+            "passed": true
+          }
+        ],
+        "playersAfter": 0,
+        "scope": "Real ItemStack/native block inventory, production preparation/place/pickup adapters with native-inventory fixture actor, engine destruction/replacement and same-world persistence. Hopper observation is not parity approval. No native Player/UI/client or LIVE verdict."
+      },
+      "errors": [],
+      "memory_events": {
+        "low": 0,
+        "high": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_kill": 0,
+        "oom_group_kill": 0,
+        "sock_throttled": 0
+      },
+      "memory_peak": 327024640,
+      "client": false,
+      "native_player": "No Player; fixture actor uses native entity inventory with production adapters",
+      "live_modified": false
+    },
+    "restart": {
+      "passed": true,
+      "reason": "complete",
+      "normal_stop_requested": true,
+      "quit_correctly": true,
+      "returncode": 0,
+      "report": {
+        "passed": true,
+        "phase": "restart",
+        "checks": [
+          {
+            "name": "production startup ready",
+            "passed": true
+          },
+          {
+            "name": "native actor inventory exists",
+            "passed": true
+          },
+          {
+            "name": "ordertocook:food_plate full native stack survives same-world restart",
+            "passed": true
+          },
+          {
+            "name": "ordertocook:food_plate restart pickup returns one original with no drop",
+            "passed": true
+          },
+          {
+            "name": "ordertocook:takeout_bag full native stack survives same-world restart",
+            "passed": true
+          },
+          {
+            "name": "ordertocook:takeout_bag restart pickup returns one original with no drop",
+            "passed": true
+          },
+          {
+            "name": "empty native slot stays empty after restart",
+            "passed": true
+          },
+          {
+            "name": "adopted legacy carrier survives reload exactly once",
+            "passed": true
+          },
+          {
+            "name": "legacy pickup has no additional world drop",
+            "passed": true
+          }
+        ],
+        "playersAfter": 0,
+        "capability": {
+          "hopperExtracts": false,
+          "javaInventoryExposed": false,
+          "parityApproved": false
+        },
+        "scope": "Real ItemStack/native block inventory, production preparation/place/pickup adapters with native-inventory fixture actor, engine destruction/replacement and same-world persistence. Hopper observation is not parity approval. No native Player/UI/client or LIVE verdict."
+      },
+      "errors": [],
+      "memory_events": {
+        "low": 0,
+        "high": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_kill": 0,
+        "oom_group_kill": 0,
+        "sock_throttled": 0
+      },
+      "memory_peak": 327024640,
+      "client": false,
+      "native_player": "No Player; fixture actor uses native entity inventory with production adapters",
+      "live_modified": false
+    }
+  },
+  "retained_failures": [
+    {
+      "candidate": "0.1.24",
+      "stage": "seed",
+      "reason": "New native format rejects boolean ambient_occlusion; fixed at generator source and exported under fresh 0.1.25 identity",
+      "original_errors": [
+        "[2026-11-06 07:02:08:811 ERROR] [Blocks] block_definitions | worlds/otc-display-stack-024/behavior_packs/otc-probe | blocks/takeout_bag.json |  -> components -> minecraft:material_instances -> *: invalid string",
+        "[2026-11-06 07:02:08:811 ERROR] [Blocks] block_definitions | worlds/otc-display-stack-024/behavior_packs/otc-probe | blocks/takeout_bag.json |  -> components -> minecraft:material_instances -> * -> ambient_occlusion: invalid numeric value",
+        "[2026-11-06 07:02:08:860 ERROR] [Blocks] block_definitions | worlds/otc-display-stack-024/behavior_packs/otc-probe | blocks/food_plate_display.json |  -> components -> minecraft:material_instances -> ordertocook_block_food_plate_variants: invalid string",
+        "[2026-11-06 07:02:08:860 ERROR] [Blocks] block_definitions | worlds/otc-display-stack-024/behavior_packs/otc-probe | blocks/food_plate_display.json |  -> components -> minecraft:material_instances -> ordertocook_block_food_plate_variants -> ambient_occlusion: invalid numeric value"
+      ]
+    },
+    {
+      "candidate": "0.1.25",
+      "stage": "seed",
+      "reason": "QA 1.3-block search missed the actual displaced item; real item observed about 1.8 blocks away in the same world",
+      "original_errors": [
+        "[2026-11-06 07:06:27:200 ERROR] [Scripting] OTC_DISPLAY_STACK_FATAL Error: actual ID replacement spills exactly one complete carrier     at check (native-display-probe.js:31)"
+      ]
+    },
+    {
+      "candidate": "0.1.25",
+      "stage": "continuation",
+      "reason": "QA expected item recreated from an order after worldLoad deadline adoption; the original physical item correctly lacked that newly added order deadline. Resume compares the original item baseline and logs expected plus actual.",
+      "original_errors": [
+        "[2026-11-06 07:09:53:357 ERROR] [Scripting] OTC_DISPLAY_STACK_FATAL Error: same-world displaced replacement retains one complete original carrier     at check (native-display-probe.js:31)"
+      ]
+    }
+  ],
+  "hopper_scope": {
+    "vanilla_chest_to_hopper_positive_control": true,
+    "observed_ticks": 40,
+    "display_extracted_by_lower_hopper": false,
+    "all_sides_or_versions_verified": false
+  },
+  "active_service_properties": "ActiveState=active\nSubState=running\nInvocationID=ab7ff021a30c43aa955887a98f074218\nMainPID=1642583\nMemoryHigh=2147483648\nMemoryMax=2684354560\nMemorySwapMax=0\nIPAddressDeny=::/0 0.0.0.0/0\nPrivateNetwork=yes\n",
+  "network": {
+    "host": "cary-ser",
+    "private_interfaces": [
+      "lo"
+    ],
+    "private_namespace": 4026533166,
+    "host_namespace": 4026531833
+  },
+  "all_stages_normal_stop": true,
+  "all_stages_no_oom": true,
+  "cleanup": {
+    "qa_engine_and_world_removed": true,
+    "normal_stop_all_stages": true,
+    "all_engine_exit_codes": {
+      "seed": 0,
+      "diagnose": 0,
+      "continuation": 0,
+      "resume": 0,
+      "restart": 0
+    },
+    "all_bds_pids_gone": true,
+    "shared_flock_available": true,
+    "raw_failures_and_successes_retained": true,
+    "live_modified": false,
+    "family_023_candidate_modified": false
+  },
+  "raw_evidence_directories": [
+    "java-parity-20261105/native/otc-display-stack-024",
+    "java-parity-20261105/native/otc-display-stack-025"
+  ],
+  "raw_report_files": [
+    "seed-report.json",
+    "diagnose-report.json",
+    "continuation-report.json",
+    "resume-report.json",
+    "restart-report.json"
+  ],
+  "runtime_ci": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/actions/runs/42126897550"
+}

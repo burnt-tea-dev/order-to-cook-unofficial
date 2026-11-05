@@ -42,7 +42,9 @@ async function run() {
     getComponent: id => id === 'minecraft:inventory' ? { container: inventory } : undefined,
     getTags: () => [], hasTag: () => false, getGameMode: () => GameMode.Survival, sendMessage() {} };
   const table = x => d.getBlock({ x, y: 5, z: 0 });
-  const drops = location => d.getEntities({ type: 'minecraft:item', location, maxDistance: 1.3 });
+  // Replacing a container with a solid block can eject its item sideways/down
+  // beyond 1.3 blocks. Keep each isolated case clear and compare its full stack.
+  const drops = location => d.getEntities({ type: 'minecraft:item', location, maxDistance: 3 });
   function annotate(stack, label) {
     stack.nameTag = label; stack.setLore(['正常成品的保存資料 🍵']); stack.keepOnDeath = true;
     stack.setDynamicProperty('ordertocook:qa_note', label);
@@ -132,7 +134,7 @@ async function run() {
     check('empty native slot stays empty after restart', !empty.getComponent('minecraft:inventory').container.getItem(0) && !inventory.getItem(0) && same(snapshot(inventory.getItem(5)), saved.empty));
     const old = table(16).above(); actor.location = { x: 16, y: 5, z: 0 };
     h.pickupDisplay(actor, old);
-    check('old link adopts one canonical carrier on reload', inventory.getItem(0)?.getDynamicProperty('ordertocook:proof') === saved.legacyProof);
+    check('adopted legacy carrier survives reload exactly once', inventory.getItem(0)?.getDynamicProperty('ordertocook:proof') === saved.legacyProof);
     check('legacy pickup has no additional world drop', drops(old.location).length === 0);
     world.setDynamicProperty(KEY, undefined);
   }
