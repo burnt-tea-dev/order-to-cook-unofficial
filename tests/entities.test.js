@@ -282,7 +282,7 @@ test('resuming an expired meal removes loaded visuals without creating a new NPC
   assert.equal(service.resumeCustomerMeal(fixture.restaurant, fixture.order, meal), 0);
 });
 
-test('early plate interruption switches only an eating actor to the original half-second action once', () => {
+test("another early plate pickup restarts an already-interrupted customer half-second action", () => {
   const env = makeEnvironment(), fixture = restaurantFixture(env), service = readyService(env), start = Date.now();
   env.ctx.now = () => start;
   const customer = service.spawnCustomer(fixture.restaurant, fixture.order);
@@ -291,10 +291,13 @@ test('early plate interruption switches only an eating actor to the original hal
   env.ctx.now = () => start + 2000;
   fixture.order.meal = { startedAt: start + 2000, finishAt: start + 2500, action: 7 };
   assert.equal(service.interruptCustomerMeal(fixture.order.id, fixture.order.meal), 1);
-  assert.equal(service.interruptCustomerMeal(fixture.order.id, { startedAt: start + 2400, finishAt: start + 2900 }), 0);
-  assert.equal(customer.getDynamicProperty('ordertocook:depart_at'), start + 2500);
+  fixture.order.meal = { startedAt: start + 2400, finishAt: start + 2900, action: 7 };
+  env.ctx.now = () => start + 2400;
+  assert.equal(service.interruptCustomerMeal(fixture.order.id, fixture.order.meal), 1);
+  assert.equal(customer.getDynamicProperty('ordertocook:depart_at'), start + 2900);
   assert.equal(customer.getProperty('ordertocook:action'), 7);
-  tickAt(service, env, start + 2500);
+  tickAt(service, env, start + 2899); assert.equal(customer.isValid, true);
+  tickAt(service, env, start + 2900);
   assert.equal(customer.isValid, false);
   assert.equal(env.dimension.sounds.includes('random.explode'), false);
 });

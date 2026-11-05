@@ -458,10 +458,10 @@ export function createEntityService(ctx) {
   /** Early plate pickup changes only the visual action, never payment state.
    * @param {{startedAt?: number, finishAt?: number, action?: number}} [options]
    */
-  function interruptCustomerMeal(orderId, options = {}) {
+  function interruptCustomerMeal(orderId, options = {}, target = undefined) {
     let changed = 0;
-    for (const entity of loadedCustomers(orderId)) {
-      if (![5, 6].includes(Number(currentProperty(entity, "action", 0)))) continue;
+    for (const entity of target ? [target] : loadedCustomers(orderId)) {
+      if (!target && ![5, 6, 7].includes(Number(currentProperty(entity, "action", 0)))) continue;
       if (applyCompletion(entity, { ...options, action: 7 }, true)) changed++;
     }
     return changed;

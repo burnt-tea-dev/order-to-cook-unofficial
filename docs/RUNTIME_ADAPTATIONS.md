@@ -179,7 +179,7 @@ Java stage 0 的 blockstate 為空，實際由 `FoodPlatePlacedRenderer` 顯示�
 
 站立堂食仍會放盤，但顧客使用 action 4，在約 3 秒離場；餐盤獨立到第 5 秒變髒。這是原 [TakeoutBagItem.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/item/TakeoutBagItem.java) 中 `submitDineInWithPlacedPlate`、`resolveCompletionAnimation` 與餐盤獨立 tick 組合出的行為。
 
-普通椅上堂食按原 10% 機率選 action 5，加賞為 1–4 加實際餐廳級別；只有明確標記彩蛋顧客才使用原 60%，目前來源會透過既有顧客選擇器生成彩蛋人物，皮膚限制見[PARITY.md](PARITY.md)。0.1.16起，加賞在約6秒用餐結束後另付，提前收盤取消；第5秒後取髒盤或直接打破方塊不取消待付加賞。離線者不收個人幣／收益，餐廳仍計入加賞。保存、重啟、舊版已付款與原生範圍由[用餐加賞](validation/0.1.16-alpha.1/MEAL_BONUS.md)負責。效果不產生傷害或破壞方塊。
+普通椅上堂食按原 10% 機率選 action 5，加賞為 1–4 加實際餐廳級別；只有明確標記彩蛋顧客才使用原 60%，目前來源會透過既有顧客選擇器生成彩蛋人物，皮膚限制見[PARITY.md](PARITY.md)。0.1.16起，加賞在約6秒用餐結束後另付，0.1.17提前收盤改依原作的附近方盒查找第一位進食者，取消該人的加賞，可能是另一桌；食品進度與顧客反應時間分開。第5秒後取髒盤或直接打破方塊不取消待付加賞。離線者不收個人幣／收益，餐廳仍計入加賞。保存、重啟、舊版已付款與原生範圍由[用餐加賞](validation/0.1.16-alpha.1/MEAL_BONUS.md)負責。效果不產生傷害或破壞方塊。
 
 收盤先持久化 claim，再把髒盤寫入背包或生成原生世界掉落。可堆疊髒盤不能寫ItemStack動態屬性；掉落失敗時以同一同步呼叫前後的原生物品實體識別已接受寫入，只有確認未生成才回退重試。可識別的同步失敗會回退；無法確認世界物品生成回執時保留已領狀態。原生 inventory 與世界動態屬性沒有共同原子提交：若程序恰在 claim 保存後、給物之前中止，可能損失該一個盤子，不能保證任意強制關服都零損失。拆除餐廳遇到未載入錨點時會保留「移除中」記錄並封鎖新交易，待舊盤清理後才移除餐廳。
 

@@ -46,9 +46,14 @@ export async function mainFixture(savedProperties = []) {
   let applianceContext;
   const stubs = {
     createEntityService: () => ({ init() {}, spawnCustomer() {}, cleanupOrder() {}, onBlockBreak() {},
-      finishCustomer: (...args) => endings.push(args), resumeCustomerMeal() {},
+      finishCustomer: (...args) => {
+        endings.push(args);
+        for (const entity of env.dimension.getEntities({ type: 'ordertocook:customer' })) {
+          if (entity.getDynamicProperty('ordertocook:order_id') === args[0]) entity.setProperty('ordertocook:action', args[1].action);
+        }
+      }, resumeCustomerMeal() {},
       interruptCustomerMeal: (...args) => interruptions.push(args),
-      getCustomerSeat: () => chair }),
+      getCustomerSeat: entity => entity?.qaChair || chair }),
     createApplianceService: context => { applianceContext = context; return { init() {}, onPlace() {}, onBreak() {}, getStorage() {}, normalizeBlock: block => block }; },
     notify: (who, text) => who.sendMessage(text),
     choose: async (...args) => { forms.push(args); const response = formResponses.shift(); return typeof response === 'function' ? response(...args) : response; }, textInput: async () => undefined,
