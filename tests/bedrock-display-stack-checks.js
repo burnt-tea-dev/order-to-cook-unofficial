@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Isolated QA only. Run qa_display_stack twice across a normal same-world restart.
 // The actor uses a real native entity inventory; it is not a native Player/UI test.
-import { world, system, ItemStack } from '@minecraft/server';
+import { world, system, ItemStack, GameMode } from '@minecraft/server';
 import { getQaHooks } from './main.js';
 import { generateOrder, acceptOrder } from './core.js';
 import { getStation, saveStation, saveRestaurant } from './store.js';
@@ -40,7 +40,7 @@ async function run() {
   const actor = { id: 'otc-display-qa-owner', name: 'Display stack QA', isValid: true, isSneaking: true,
     dimension: d, location: { x: 2, y: 5, z: 0 }, selectedSlotIndex: 0,
     getComponent: id => id === 'minecraft:inventory' ? { container: inventory } : undefined,
-    getTags: () => [], hasTag: () => false, sendMessage() {} };
+    getTags: () => [], hasTag: () => false, getGameMode: () => GameMode.Survival, sendMessage() {} };
   const table = x => d.getBlock({ x, y: 5, z: 0 });
   const drops = location => d.getEntities({ type: 'minecraft:item', location, maxDistance: 1.3 });
   function annotate(stack, label) {
@@ -51,6 +51,9 @@ async function run() {
   if (!saved) {
     const machine = table(0); machine.setType('ordertocook:order_machine');
     const r = h.getMachine(actor, machine); r.menu = [{ typeId: 'minecraft:bread', label: '麵包', nutrition: 5 }]; saveRestaurant(r);
+    const boardBlock = table(1); boardBlock.setType('ordertocook:board');
+    const board = getStation(boardBlock);
+    Object.assign(board, { ownerId: actor.id, initialized: true, menu: r.menu }); saveStation(board);
     const counter = table(2); counter.setType('ordertocook:countertop');
     for (const [x, id] of [[3, 'ordertocook:plate_shelf'], [4, 'ordertocook:shelf']]) {
       table(x).setType(id); const s = getStation(table(x)); s.ownerId = actor.id; s.supplies = 10; saveStation(s);
