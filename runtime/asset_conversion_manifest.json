@@ -3619,7 +3619,7 @@
   "port_assets": [
     {
       "source": "assets/guidebook/en_US.lang",
-      "sha256": "4be2d636950d43862b7f4c9230665c22610131d81030a7dba2a98c89651119a0"
+      "sha256": "97d908b48bbd076d81185662da861de9211c1c53d8aebe061cbedcea23144146"
     },
     {
       "source": "assets/guidebook/guide_book.png",
@@ -3627,11 +3627,11 @@
     },
     {
       "source": "assets/guidebook/zh_CN.lang",
-      "sha256": "3fd4223eb2d492d661007fb7d662dad2849b7e544105e4b8762c881d638ded1b"
+      "sha256": "1fa534d0e528dd9605ec718d9a4dffa1407e9ebe838163fa525e9719c236056e"
     },
     {
       "source": "assets/guidebook/zh_TW.lang",
-      "sha256": "0449f8c1b0fc0d83c2a869488d26149f17f07181d38dd4db72be4c146099b560"
+      "sha256": "9b282a56fea5617c05dad2e3913bebdfc0acaa9b91c4469d979e334276f2180c"
     }
   ],
   "adaptations": [
@@ -3639,7 +3639,7 @@
     "Original GeckoLib elastic/bounce easing and appliance squash retained in sampled static cuboids; residual descendant shear and unsynchronized cabinet halves remain documented",
     "Stove uses six original textures selected by saved per-stove fire phases: 15-tick ignition delay, 5-tick burst and four 8-tick cycle frames; original ignition bone squash is not rendered",
     "Dishwasher drawer, door, plate-count visibility and wash vibration sampled into 82 poses including look-target preview; preview geometry is shared rather than per-client",
-    "Dining plate entity uses original stage-zero placement geometry/animation plus 40 source food stages and an exact-pixel atlas; no inventory or automatic loot",
+    "Native dining plate uses the original two-part collision and forty block stages; the existing actor handles only stage-zero placement animation; canonical meal records own drops",
     "Seven original customer actions seek from canonical elapsed time; weighted idle variation changes only between completed clips",
     "Default customer skins prebundled; runtime web skin lookup not available",
     "Source-model inventory thumbnails",

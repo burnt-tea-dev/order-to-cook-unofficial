@@ -2,18 +2,18 @@
 
 [简体中文](README.zh-CN.md) · **繁體中文** · [English](README.en.md)
 
-**目前來源版本為 `0.1.14-alpha.1`（未發布）：冰箱改為上 27／下 54 格原生容器，爐灶與操作台縮短操作流程，洗碗機補強批次存取。需要 Bedrock 26.60 與 Upcoming Creator Features。完整 Java 等價及真實客戶端驗收尚未完成。** [本輪驗證](docs/validation/0.1.5-alpha.1/CONTAINER_GUI.md) · [原生容器能力與限制](docs/NATIVE-CONTAINERS.md)
+**目前來源版本為 `0.1.15-alpha.1`（未發布）：冰箱改為上 27／下 54 格原生容器，爐灶與操作台縮短操作流程，洗碗機補強批次存取。需要 Bedrock 26.60 與 Upcoming Creator Features。完整 Java 等價及真實客戶端驗收尚未完成。** [本輪驗證](docs/validation/0.1.5-alpha.1/CONTAINER_GUI.md) · [原生容器能力與限制](docs/NATIVE-CONTAINERS.md)
 
 歷史 `0.1.2-alpha.3` 的限定客戶端紀錄含冰箱幾何、手洗粒子及進度灰字 FAIL，不能當作本版驗收結果：[歷史實機紀錄](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [按鈕可讀性修正](docs/validation/UNRELEASED-button-contrast.md)。
 
-**目前來源為 `0.1.14-alpha.1` 視覺／音效候選**：修正冰箱內壁與開關曲線、洗碗機變形及預覽、餐盤起始食物、顧客時序、打單機／外賣袋動畫，以及已確認的聲音和粒子差異。修正與可重現證據見 [VISUAL_AUDIO_PARITY.md](docs/VISUAL_AUDIO_PARITY.md)。本輪尚未執行 Blockbench 互動檢視或 Java／Bedrock 客戶端畫面複驗，離線對照不改寫上述歷史實測結果，也不代表完整一比一完成。
+**目前來源為 `0.1.15-alpha.1` 視覺／音效候選**：修正冰箱內壁與開關曲線、洗碗機變形及預覽、餐盤起始食物、顧客時序、打單機／外賣袋動畫，以及已確認的聲音和粒子差異。修正與可重現證據見 [VISUAL_AUDIO_PARITY.md](docs/VISUAL_AUDIO_PARITY.md)。本輪尚未執行 Blockbench 互動檢視或 Java／Bedrock 客戶端畫面複驗，離線對照不改寫上述歷史實測結果，也不代表完整一比一完成。
 
 
 原作由 **breezeth** 製作：[CurseForge 官方頁面](https://www.curseforge.com/minecraft/mc-mods/order-to-cook) · [Java 原始碼](https://github.com/breezeth-CN/OrdertoCook)。本專案由 `casama233`／`burnt-tea-dev` 維護，保留上游 GPLv3、原作者署名及素材來源。補充素材範圍詢問尚未收到確認，現作非阻塞紀錄，不會因作者未回覆就停止功能開發；具體授權衝突仍須處理。
 
 椅上喝彩已接入原生攻擊／挖掘動作：三秒雙臂片段、三次聲音，離座即停止。來源測試與原生模擬玩家場景通過；完整前臂、第一人稱及實際畫面仍未確認。見[實作與原生範圍](docs/validation/0.1.13-alpha.1/CHAIR_CLAP.md)。
 
-餐盤回收已補上打破落地、滿包落地及拆機普通髒盤掉落；保留原收盤權限和唯一領取狀態。原作餐盤本身沒有重力，方塊碰撞仍是未完成差異。見[實作與原生重啟結果](docs/validation/0.1.14-alpha.1/PLATE_RECOVERY.md)。
+用餐餐盤改為原生方塊，保留原作兩層碰撞、40個進食階段與放盤短動畫；舊餐盤記錄自動恢復，不覆蓋玩家佔位方塊。點擊提前收盤才中斷顧客，打破只落地一盤。原作本來沒有餐盤重力；選取框仍採外接長方體。見[實作與驗證範圍](docs/validation/0.1.15-alpha.1/NATIVE_PLATE.md)。
 
 ## 下載與安裝
 

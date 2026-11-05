@@ -19,6 +19,6 @@
 - BDS1.26.60.6、stable server2.11.0／UI2.0.0，加QA專用gametest1.0.0-beta；gametest及upcoming_creator_features開啟。首次13項、同世界重啟7項通過，兩輪正常stop／exit0，無內容錯誤或OOM。
 - 原生首次：模擬玩家滿包回收落地一盤且所有格不變；真正attackEntity命中已註冊的事件回調，移除盤面並多掉一盤，手持名稱及數量不變；拆餐廳再掉一盤。三者皆為普通原生可堆疊髒盤，沒有ItemStack DP；重複呼叫不再發物。
 - 原生重啟：同一餐廳沒有未領盤重生，三份實際掉落物保留；再次同步不新增盤面或物品，物品仍可堆疊；最後清掉QA物品。
-- [觀察器](../../../tests/bedrock-plate-recovery-checks.js)使用測試專用完成訂單記錄及正式dining／store，不是完整接單至交餐的真人流程。獨立QA包只換診斷身份／entry及加入GameTest，正式玩法程式未重寫。
+- [當時觀察器](https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/84c1695db8f5baccc25052b8d78eda5e9e5fa93b/tests/bedrock-plate-recovery-checks.js)使用測試專用完成訂單記錄及正式dining／store，不是完整接單至交餐的真人流程。獨立QA包只換診斷身份／entry及加入GameTest，正式玩法程式未重寫。
 
 沒有變更保存格式、UUID或新設保存鎖。未首次安裝OTC至LIVE；沒有客戶端碰撞、觸控、聲畫或一般硬體輸入的完成聲明。

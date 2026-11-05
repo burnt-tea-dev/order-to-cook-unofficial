@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createDiningService, mealStage, resolveMealAnchor, DINING_ENTITY, MEAL_TOKEN } from '../runtime/BP/scripts/dining.js';
+import { createDiningService, mealStage, resolveMealAnchor, DINING_ENTITY, DINING_BLOCK, MEAL_TOKEN } from '../runtime/BP/scripts/dining.js';
 import { FakeItem, FakePlayer, makeEnvironment, place } from './appliances.harness.js';
 
 const NOW = 1800000000000;
@@ -37,6 +37,14 @@ function fixture() {
   env.ctx.saveRestaurant(restaurant);
   return { ...env, service, restaurant, order, meal, customer, player, chair, resumed, interrupted,
     snapshots, failNextSave: (offset = 1) => { failSave = offset; } };
+}
+
+function nativePlate(env) {
+  return env.dimension.getBlock({ x: Math.floor(env.meal.location.x), y: Math.floor(env.meal.location.y), z: Math.floor(env.meal.location.z) });
+}
+function nativeStage(env) {
+  const state = nativePlate(env).permutation;
+  return state.getState('ordertocook:stage') + 16 * state.getState('ordertocook:stage_high');
 }
 
 function dirtyCount(player) {
@@ -94,8 +102,9 @@ test('cosmetic meal progresses and remains dirty after the customer departure de
   for (const [elapsed, stage] of [[0, 0], [750, 29], [3000, 30], [4000, 31], [5000, 32], [10000, 32]]) {
     env.service.tick(NOW + elapsed);
     const plates = env.dimension.getEntities({ type: DINING_ENTITY });
-    assert.equal(plates.length, 1);
-    assert.equal(plates[0].getProperty('ordertocook:stage'), stage);
+    assert.equal(plates.length, stage === 0 ? 1 : 0);
+    assert.equal(nativePlate(env).typeId, DINING_BLOCK);
+    assert.equal(nativeStage(env), stage);
   }
   assert.equal(env.restaurant.pendingDishes[0].status, 'dirty');
   assert.equal(env.dimension.drops.length, 0);
@@ -114,7 +123,8 @@ test('late-loaded placement seeks the original half-second clip without restarti
   assert.equal(plate.getProperty('ordertocook:placement_age'), 0.5);
   assert.equal(plate.getProperty('ordertocook:stage'), 0);
   env.service.tick(NOW + 750);
-  assert.equal(plate.getProperty('ordertocook:stage'), 29);
+  assert.equal(plate.isValid, false);
+  assert.equal(nativeStage(env), 29);
   assert.equal(env.meal.startedAt, NOW);
   assert.equal(dirtyCount(env.player), 0);
 });
@@ -125,8 +135,8 @@ test('restart reconciles the persisted plate without resetting meal time or dupl
   const restored = structuredClone(env.snapshots.get('r'));
   env.restaurants.set('r', restored);
   const restarted = createDiningService(env.ctx); restarted.tick(NOW + 4000);
-  assert.equal(env.dimension.getEntities({ type: DINING_ENTITY }).length, 1);
-  assert.equal(env.dimension.getEntities({ type: DINING_ENTITY })[0].getProperty('ordertocook:stage'), 31);
+  assert.equal(env.dimension.getEntities({ type: DINING_ENTITY }).length, 0);
+  assert.equal(nativeStage(env), 31);
   assert.equal(restored.pendingDishes[0].startedAt, NOW);
 });
 
@@ -134,7 +144,8 @@ test('missing loaded cosmetic entity is reconstructed from canonical state witho
   const env = fixture(); env.service.tick(NOW);
   env.dimension.getEntities({ type: DINING_ENTITY })[0].remove();
   env.service.tick(NOW + 5000);
-  assert.equal(env.dimension.getEntities({ type: DINING_ENTITY }).length, 1);
+  assert.equal(env.dimension.getEntities({ type: DINING_ENTITY }).length, 0);
+  assert.equal(nativePlate(env).typeId, DINING_BLOCK);
   assert.equal(env.dimension.drops.length, 0);
 });
 
@@ -145,7 +156,8 @@ test('unloaded meal anchor neither spawns entities nor loses its canonical recor
   assert.equal(env.dimension.getEntities({ type: DINING_ENTITY }).length, 0);
   assert.equal(env.restaurant.pendingDishes.length, 1);
   env.dimension.getBlock = original; env.service.tick(NOW + 11000);
-  assert.equal(env.dimension.getEntities({ type: DINING_ENTITY }).length, 1);
+  assert.equal(env.dimension.getEntities({ type: DINING_ENTITY }).length, 0);
+  assert.equal(nativePlate(env).typeId, DINING_BLOCK);
 });
 
 test('normal pickup is exactly once and leaves no duplicate helper or pending row', () => {
@@ -372,15 +384,15 @@ test('supporting-table interaction resolves the oldest outstanding canonical pla
   assert.equal(env.service.atBlock(place(env, 'minecraft:stone', { x: 1, y: 0, z: 1 })), undefined);
 });
 
-test('breaking an eating plate drops once, keeps inventory and resumes only the interruption after restart', () => {
+test('native block removal drops once without the use-only early interruption or inventory writes', () => {
   const env = fixture(); env.service.tick(NOW + 1000);
-  assert.deepEqual(env.service.claim(env.player, env.restaurant, env.meal, NOW + 1000, { drop: true }), { ok: true, early: true, dropped: true });
+  const block = nativePlate(env); block.setType('minecraft:air');
+  assert.equal(env.service.removeBlock(block, NOW + 1000), true);
+  assert.equal(env.service.removeBlock(block, NOW + 1000), false);
   assert.equal(dirtyCount(env.player), 0); assert.equal(env.dimension.drops.length, 1);
-  assert.equal(env.dimension.drops[0].stack.amount, 1);
-  assert.equal(env.service.claim(env.player, env.restaurant, env.meal, NOW + 1000, { drop: true }).ok, false);
+  assert.equal(env.order.meal.action, 6); assert.equal(env.interrupted.length, 0);
   const restored = structuredClone(env.snapshots.get('r')); env.restaurants.set('r', restored);
-  const service = createDiningService(env.ctx); service.tick(NOW + 1200); service.tick(NOW + 1600);
-  assert.equal(env.resumed.at(-1)[2].action, 7);
+  createDiningService(env.ctx).tick(NOW + 1600);
   assert.equal(restored.pendingDishes.length, 0); assert.equal(env.dimension.drops.length, 1);
 });
 
@@ -388,12 +400,13 @@ test('dropped player claims retry only a verified failed spawn and retain state 
   for (const uncertain of [false, true]) {
     const env = fixture(), query = env.dimension.getEntities;
     let queries = 0;
+    for (let slot = 0; slot < env.player.container.size; slot++) env.player.container.setItem(slot, new FakeItem('minecraft:stone', 64));
     env.dimension.spawnItem = () => { throw Error('native spawn failure'); };
     env.dimension.getEntities = options => {
       if (options.type === 'minecraft:item' && ++queries > 1 && uncertain) throw Error('readback unavailable');
       return query.call(env.dimension, options);
     };
-    assert.throws(() => env.service.claim(env.player, env.restaurant, env.meal, NOW + 1000, { drop: true }));
+    assert.throws(() => env.service.claim(env.player, env.restaurant, env.meal, NOW + 1000));
     assert.equal(env.meal.status, uncertain ? 'claiming' : 'eating');
     assert.equal(env.dimension.drops.length, 0); assert.equal(env.interrupted.length, 0);
   }
@@ -407,4 +420,32 @@ test('native stackable-item restriction cannot prevent restaurant removal from r
   assert.equal(env.service.cleanupRestaurant(env.restaurant), true);
   assert.equal(env.dimension.drops.length, 1); assert.equal(env.dimension.drops[0].stack.amount, 1);
   assert.deepEqual(env.dimension.drops[0].stack.getDynamicPropertyIds(), []);
+});
+
+test('old helper-backed meals gain native blocks without changing identity or stored data', () => {
+  const env = fixture(); env.meal.extra = { marker: 'saved value' };
+  const old = env.dimension.spawnEntity(DINING_ENTITY, env.meal.location);
+  old.setDynamicProperty(MEAL_TOKEN, env.meal.token); env.meal.visualEntityId = old.id;
+  env.ctx.saveRestaurant(env.restaurant);
+  const saved = structuredClone(env.snapshots.get('r')); env.restaurants.set('r', saved);
+  createDiningService(env.ctx).tick(NOW + 6000);
+  assert.equal(old.isValid, false); assert.equal(nativePlate(env).typeId, DINING_BLOCK);
+  assert.equal(saved.pendingDishes[0].token, env.meal.token);
+  assert.deepEqual(saved.pendingDishes[0].extra, { marker: 'saved value' });
+  assert.equal(env.dimension.drops.length, 0);
+});
+
+test('native reconciliation preserves a replacement player block and waits for a clear anchor', () => {
+  const env = fixture(), block = nativePlate(env); block.setType('minecraft:chest');
+  env.service.tick(NOW + 6000); assert.equal(block.typeId, 'minecraft:chest');
+  assert.equal(env.restaurant.pendingDishes.length, 1); assert.equal(env.dimension.drops.length, 0);
+  block.setType('minecraft:air'); env.service.tick(NOW + 6100);
+  assert.equal(block.typeId, DINING_BLOCK);
+});
+
+test('a native plate occupied by another restaurant rejects a second meal at that anchor', () => {
+  const env = fixture(); env.service.tick(NOW + 1000);
+  const second = { ...env.restaurant, id: 'other', orders: [], pendingDishes: [] };
+  env.restaurants.set(second.id, second);
+  assert.equal(env.service.hasVacancy(second, env.customer), false);
 });

@@ -245,4 +245,4 @@
 
 固定來源[FoodPlateBlock.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/FoodPlateBlock.java)繼承BaseEntityBlock，沒有餐盤重力。`use`在背包放不下時生成ItemEntity；`onRemove`在移除餐盤且仍有內容時掉回一份，進食中轉為新髒盤，離地速度Y0.1。拆掉下方桌面不應被當作新增餐盤重力的理由。
 
-基岩版收盤與打破共用既有claim；滿包轉原生世界掉落，打破一律落地，保留店主／員工權限。拆餐廳同樣生成普通可堆疊髒盤，不寫入不受支援的ItemStack動態屬性。已生成後的未知失敗不盲目重試，仍有原來跨世界資料／物品原子提交的限制。[實際原生與重啟範圍](validation/0.1.14-alpha.1/PLATE_RECOVERY.md)不等於完整原方塊碰撞或客戶端驗收。
+原 `use` 的提前點取會中斷顧客；`onRemove` 只掉物，不觸發該中斷。基岩版點取與原生方塊移除共用不可重領的claim，但僅點取走提前中斷；滿包轉原生世界掉落，打破一律落地，保留店主／員工權限。拆餐廳同樣生成普通可堆疊髒盤，不寫入不受支援的ItemStack動態屬性。已生成後的未知失敗不盲目重試，仍有原來跨世界資料／物品原子提交的限制。原生方塊採原兩層碰撞與穩定階段模型；選取框用外接長方體。當前[原生與重啟範圍](validation/0.1.15-alpha.1/NATIVE_PLATE.md)不等於客戶端聲畫驗收；0.1.14的實體回收結果只作歷史。

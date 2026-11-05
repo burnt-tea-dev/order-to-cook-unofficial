@@ -25,7 +25,7 @@ import { createEntityService } from './entities.js';
 import { createApplianceService } from './appliances.js';
 import { isFridge, isUpperFridge } from './native_fridge.js';
 import { createSmokingRecipeRegistry } from './smoking_recipes.js';
-import { createDiningService, DINING_ENTITY } from './dining.js';
+import { createDiningService, DINING_ENTITY, DINING_BLOCK } from './dining.js';
 import { progressRows } from './progression.js';
 import { createProgressionService, creditCompletedOrder, queueProgressEvent } from './progression_service.js';
 import { playEffects, plateSound, freshMealEffects, newOrderEffects } from './audiovisual.js';
@@ -665,10 +665,10 @@ function customerInteract(player, entity, linkage, options = {}) {
   notify(player, `交付成功！獲得 ${result.reward} ${currencyLabel()}${result.tip ? `（含小費 ${result.tip}）` : ''}${result.boomBonus ? `（驚喜加賞 ${result.boomBonus}）` : ''}。${order.type === 'dine_in' ? '顧客用餐後會留下髒餐盤；點擊餐盤或下方桌面收回。' : ''}`);
 }
 
-function collectDiningPlate(player, value, options = {}) {
-  const linked = value?.meal ? value : dining?.resolveEntity(value);
+function collectDiningPlate(player, value) {
+  const linked = value?.meal ? value : value?.typeId === DINING_ENTITY ? dining?.resolveEntity(value) : dining?.atBlock(value);
   if (!linked) return false;
-  const result = dining.claim(player, linked.restaurant, linked.meal, Date.now(), options);
+  const result = dining.claim(player, linked.restaurant, linked.meal);
   if (result.ok) {
     const location = { x: Math.floor(linked.meal.location.x) + 0.5, y: Math.floor(linked.meal.location.y) + 0.5, z: Math.floor(linked.meal.location.z) + 0.5 };
     playEffects(player.dimension, result.early
@@ -834,6 +834,7 @@ function claimStation(player, block) {
 }
 async function interactBlock(player, block) {
   if (!ready || !nearBlock(player, block)) return;
+  if (block.typeId === DINING_BLOCK) { collectDiningPlate(player, block); return; }
   const tick = interactionTicks.get(player.id) ?? -100;
   if (system.currentTick - tick < 3) return;
   interactionTicks.set(player.id, system.currentTick);
@@ -897,6 +898,7 @@ function capturePortablePlacement(event) {
 }
 
 function onPlace(block) {
+  if (block.typeId === DINING_BLOCK) return;
   if (!ready || !block?.isValid || !block.typeId.startsWith(PREFIX)) return;
   // The refrigerator's upper half is owned by the lower-half station.
   if (isUpperFridge(block)) return;
@@ -908,6 +910,7 @@ function onBreak(event) {
   if (!ready) return;
   const block = event.block;
   const typeId = event.brokenBlockPermutation.type.id;
+  if (typeId === DINING_BLOCK) { dining.removeBlock(block); return; }
   const station = findStation(block);
   // Native loot is empty: emit one data-bearing item before record cleanup.
   if (['ordertocook:board', 'ordertocook:order_machine'].includes(typeId)) {
@@ -1082,12 +1085,12 @@ system.beforeEvents.startup.subscribe(event => {
     },
     onPlace: event => system.run(() => { try { onPlace(event.block); } catch (error) { console.warn(`[OrderToCook] Place: ${error}`); } }),
     onBreak: event => {
-      if (['ordertocook:board', 'ordertocook:order_machine'].includes(event.brokenBlockPermutation.type.id)) {
+      if (['ordertocook:board', 'ordertocook:order_machine', DINING_BLOCK].includes(event.brokenBlockPermutation.type.id)) {
         try { onBreak(event); } catch (error) { console.warn(`[OrderToCook] Device break: ${error}`); }
       }
     },
     onPlayerBreak: event => {
-      if (!['ordertocook:board', 'ordertocook:order_machine'].includes(event.brokenBlockPermutation.type.id)) {
+      if (!['ordertocook:board', 'ordertocook:order_machine', DINING_BLOCK].includes(event.brokenBlockPermutation.type.id)) {
         try { onBreak(event); } catch (error) { console.warn(`[OrderToCook] Break: ${error}`); }
       }
     },
@@ -1140,23 +1143,11 @@ world.beforeEvents.playerInteractWithBlock.subscribe(event => {
     if (event.isFirstEvent) system.run(() => safely(event.player, () => interactBlock(event.player, event.block)));
   }
 });
-world.beforeEvents.playerInteractWithEntity.subscribe(event => {
-  if (!ready || event.target?.typeId !== DINING_ENTITY) return;
-  event.cancel = true;
-  system.run(() => safely(event.player, () => collectDiningPlate(event.player, event.target)));
-});
-world.afterEvents.entityHitEntity.subscribe(event => {
-  if (!ready || event.hitEntity?.typeId !== DINING_ENTITY || event.damagingEntity?.typeId !== 'minecraft:player') return;
-  const player = event.damagingEntity;
-  // Java consumes attack input for chair clapping and motorcycle controls.
-  const mount = player.getComponent('minecraft:riding')?.entityRidingOn;
-  if (['ordertocook:seat', 'ordertocook:motorcycle'].includes(mount?.typeId)) return;
-  safely(player, () => collectDiningPlate(player, event.hitEntity, { drop: true }));
-});
 world.beforeEvents.playerBreakBlock.subscribe(event => {
   if (!ready || !event.block.typeId.startsWith(PREFIX)) return;
   const block = appliances?.normalizeBlock(event.block) || event.block;
-  const restaurant = event.block.typeId === 'ordertocook:order_machine' ? getRestaurant(locationId(block.dimension.id, block.location)) : nearestRestaurant(block);
+  const restaurant = event.block.typeId === DINING_BLOCK ? dining.atBlock(block)?.restaurant
+    : event.block.typeId === 'ordertocook:order_machine' ? getRestaurant(locationId(block.dimension.id, block.location)) : nearestRestaurant(block);
   const station = findStation(block);
   if ((restaurant && !canManage(event.player, restaurant)) || (!restaurant && station?.ownerId && station.ownerId !== event.player.id && !isAdmin(event.player))) {
     event.cancel = true; system.run(() => notify(event.player, '你不是這間餐廳的店主／員工。')); return;
