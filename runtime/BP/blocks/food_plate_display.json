@@ -1,5 +1,5 @@
 {
-  "format_version": "1.21.100",
+  "format_version": "1.26.60",
   "minecraft:block": {
     "description": {
       "identifier": "ordertocook:food_plate_display",
@@ -85,7 +85,13 @@
       "minecraft:movable": {
         "movement_type": "immovable"
       },
-      "ordertocook:interact": {}
+      "ordertocook:interact": {},
+      "minecraft:block_entity": {
+        "dynamic_properties": true,
+        "container": {
+          "slot_count": 1
+        }
+      }
     },
     "permutations": [
       {
