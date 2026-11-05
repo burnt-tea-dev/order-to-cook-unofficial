@@ -85,7 +85,8 @@
 配送額 = 外送 ? ceil(基礎額 × 配送倍率 × 等級倍率) : 基礎額
 營養額 = ceil(Σ(每菜營養 × 要求件數) × 有效等級營養獎勵率)
 訂單報價 = 配送額 + 營養額
-實際支付 = 訂單報價 + 本次小費 + 本次爆炸加賞
+交餐支付 = 訂單報價 + 本次小費
+用餐結束另付 = 本次爆炸加賞（未中斷且原交餐玩家在線）
 ```
 
 短途配送倍率為 1.8，超遠為 4。等級倍率在 Lv.0–4 為 1、Lv.5 為 1.3、Lv.6 為 1.4、Lv.7 為 1.5、Lv.8 為 2；**短途與超遠都會套用**。營養額在預設規則中最後加上，不參與配送倍率。上游另有預設關閉的 VanillaEraFaresChron 相容選項會改變此公式，本核心沒有實作那個 Java 相容模組。
@@ -96,7 +97,7 @@
 
 餐盤進食的原版額外效果：一般椅上顧客 10%、彩蛋顧客 60% 出現「好吃到爆炸」，並另加 **1–4＋實際餐廳等級**的金幣，不使用菜單不足時降低的有效收益等級。alpha.2 已在 `rollCustomerCompletion` 保留此機率、加賞及動作選擇；配接層提供已選定並保存的 `easterEgg` 身份以使用特殊機率；目前來源已接入顧客選擇器，皮膚差異見[PARITY.md](PARITY.md)。這與一般小費是兩筆不同的計算項。
 
-**付款時點為有意差異**：Java 的 `TakeoutBagItem.prepareBoomBonus` 先把資料交給顧客，`CustomerEntity` 在爆炸動作末尾給額外幣。基岩版把加賞記入 `order.boomBonus`，與報價、小費合併在交餐交易中一次支付，避免動畫回呼另開一筆付款。提前收盤不追回已付加賞，重啟或重播動作也不再付款。視覺效果不產生真正爆炸傷害或方塊破壞。
+Java 的 `TakeoutBagItem.prepareBoomBonus` 先選定加賞，`CustomerEntity.tickServerAction` 在120 tick動作結束時呼叫 `grantPendingBoomBonus`。0.1.16已移除舊版提前付款差異；付款與保存細節由[用餐加賞](validation/0.1.16-alpha.1/MEAL_BONUS.md)負責。視覺效果不產生真正爆炸傷害或方塊破壞。
 
 來源：[OrderGenerator.java L200–272、L323–427](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/core/OrderGenerator.java#L323)；[TakeoutBagItem.java L352–465、L512–596](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/item/TakeoutBagItem.java#L352)；[CustomerEntity.java L379–432](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/entity/CustomerEntity.java#L379)；[CoinUtils.java L29–48、L155–189](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/util/CoinUtils.java#L155)。
 
@@ -147,7 +148,7 @@
 | refreshOrders(r, now, rng) | 取消舊機器候選，保留工作中訂單及到店單，產生新的候選；回 {ok,orders,nextRefreshAt} |
 | acceptOrder(r, id, now) | 只接受 offered；接機器單會取消其他機器候選 |
 | packOrder(r, id, now) | 只接受 accepted；扣料、供應與承載物由配接層管理 |
-| completeOrder(r, id, now, options?) | 只接受 packed；回 {ok,order,reward,baseReward,tip,boomBonus,completion}；reward 含小費與爆炸加賞 |
+| completeOrder(r, id, now, options?) | 只接受 packed；回 {ok,order,reward,baseReward,tip,boomBonus,completion}；reward 僅含交餐報價與小費；boomBonus 是用餐結束前尚未支付的已選定加賞 |
 | cancelOrder(r, id, now) | 取消非終態訂單，不退款或重新發食材 |
 | expireOrders(r, now) | 回 {ok,orders,expired,failed}；orders 為本次過期清單、expired 為數量 |
 | getUpgradeQuote(r) | 只讀：{ok,reason?,level,nextLevel,cost,requiredNutrition,currentNutrition} |
@@ -157,7 +158,7 @@
 
 `completeOrder` 的可選參數為 `{rng,raining,easterEgg,customerSeated}`。未提供前三者時使用 Math.random、一般天氣與一般顧客；`customerSeated` 必須由遊戲配接層明確核對。提供此布林值時，核心保存 `completion = {startedAt,finishAt,action,boomBonus}`；堂食另保存 `order.meal` 供餐盤與顧客恢復。未提供 `customerSeated` 的純核心呼叫保留 alpha.1 的相容契約，不另抽顧客動作或爆炸加賞，不能以省略資訊推定坐姿堂食。
 
-成功後 `order.reward` 保留原報價，`order.paidReward` 記錄實付，`order.tip`、`order.boomBonus` 分別記錄小費與加賞。正式交餐配接在修改前確認目前 canonical 餐廳記錄、顧客、位置、有效承載物 proof 及餐盤位置空缺，並以可回退流程協調狀態與物品；不能在成功後因 UI 重試、動畫結束或重載再次發幣。接單、設備管理及收盤另有店主／員工權限；目前交付按有效實物身份允許持有人代交，不能把撤銷員工權限描述成自動作廢其持有的有效餐點。
+成功後 `order.reward` 保留原報價，`order.paidReward` 記錄實付，`order.tip`、`order.boomBonus` 分別記錄小費與加賞。正式交餐配接在修改前確認目前 canonical 餐廳記錄、顧客、位置、有效承載物 proof 及餐盤位置空缺，並以可回退流程協調狀態與物品；交餐不因 UI 重試或重載再次付款；用餐加賞的獨立待付狀態只可結清一次。接單、設備管理及收盤另有店主／員工權限；目前交付按有效實物身份允許持有人代交，不能把撤銷員工權限描述成自動作廢其持有的有效餐點。
 
 `restaurant.stats` 包含 completed、delivery、longDistance、earnings、failed，以及 walkIn、deliveryEarnings、maxDeliveryDistance。failed 是本移植新增的觀察值：已接受／已打包後取消或到期計一次；未接候選過期或刷新淘汰不算失敗。
 

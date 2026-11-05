@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.16-alpha.1
+
+- Restore Java meal-bonus timing: pay the quote and tip at handoff, then the selected boom bonus at the end of the six-second reaction. Early pickup cancels it; later dirty-plate pickup and native block removal preserve it.
+- Retain the unpaid bonus in the existing meal record through order-history trimming, plate claims and reload. Disconnected recipients receive no coins or personal earnings, while restaurant income still increases. Old already-paid meals have no pending marker and do not pay again.
+- Native BDS1.26.60.6 passed 14 first-load and 5 same-world restart checks using actual inventories and simulated Players. Exact scope and remaining timing/atomicity limits: [meal bonus](docs/validation/0.1.16-alpha.1/MEAL_BONUS.md).
+
 ## 0.1.12-alpha.1
 
 - Add native refrigerator compartment compaction through sneak-empty interaction. Merge only natively stackable item data, preserve first-seen order, and keep upper/lower cargo separate.

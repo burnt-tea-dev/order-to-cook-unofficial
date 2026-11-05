@@ -118,7 +118,7 @@ export function createDiningService(ctx) {
     return changed;
   }
 
-  function queueMeal(restaurant, order, customer, now = Date.now()) {
+  function queueMeal(restaurant, order, customer, now = Date.now(), playerId) {
     if (!canonical(restaurant) || order.status !== 'completed' || order.type !== 'dine_in') return undefined;
     restaurant.pendingDishes ||= [];
     const existing = restaurant.pendingDishes.find(meal => meal?.id === order.id);
@@ -128,6 +128,7 @@ export function createDiningService(ctx) {
     const meal = { id: order.id, orderId: order.id, restaurantId: restaurant.id, version: 2,
       ...timing, ...anchor, dueAt: timing.finishAt, variant: clampVariant(order.platedVariant),
       token: `${restaurant.id}|${order.id}`, status: 'eating' };
+    if (meal.boomBonus > 0 && playerId) meal.bonusPlayerId = playerId;
     restaurant.pendingDishes.push(meal);
     return meal; // The caller saves payment + meal in the same restaurant record.
   }
@@ -217,10 +218,16 @@ export function createDiningService(ctx) {
     if (!removeVisuals(meal)) return false;
     // Keep an interrupted meal's non-minting tombstone for the original 10
     // ticks. It remains the NPC's restart source if paid history was pruned.
-    if (meal.action === 7 && now < meal.finishAt) return false;
+    if ((meal.action === 7 && now < meal.finishAt) || meal.bonusPlayerId) return false;
     restaurant.pendingDishes = restaurant.pendingDishes.filter(value => value?.id !== meal.id);
     ctx.saveRestaurant(restaurant);
     return true;
+  }
+
+  function settleBonusIfDue(restaurant, meal, now) {
+    if (meal.bonusPlayerId && now >= meal.finishAt && loadedDimension(meal)) {
+      ctx.settleMealBonus(restaurant, meal, now);
+    }
   }
 
   function tick(now = Date.now()) {
@@ -230,8 +237,9 @@ export function createDiningService(ctx) {
         migrate(restaurant);
         for (const meal of [...(restaurant.pendingDishes || [])]) {
           if (!validMeal(meal) || !canonical(restaurant)) continue;
+          settleBonusIfDue(restaurant, meal, now);
           if (meal.status === 'claiming') {
-            if (meal.action === 7) {
+            if (meal.action === 7 || meal.bonusPlayerId) {
               const order = restaurant.orders?.find(order => order.id === meal.id);
               ctx.resumeCustomerMeal?.(restaurant, order || { id: meal.id, type: 'dine_in', status: 'completed', meal }, meal);
             }
@@ -349,8 +357,10 @@ export function createDiningService(ctx) {
     const early = now < meal.startedAt + DIRTY_AFTER;
     const order = restaurant.orders?.find(order => order.id === meal.id);
     const previousMeal = order?.meal;
+    const previousBonusPlayer = meal.bonusPlayerId;
     const previousTiming = { action: meal.action, startedAt: meal.startedAt, finishAt: meal.finishAt };
     if (early) {
+      delete meal.bonusPlayerId;
       Object.assign(meal, { action: 7, startedAt: now, finishAt: now + 500 });
       if (order) order.meal = { ...order.meal, action: 7, startedAt: now, finishAt: now + 500 };
     }
@@ -361,6 +371,7 @@ export function createDiningService(ctx) {
     function restoreClaim() {
       meal.status = previousStatus;
       Object.assign(meal, previousTiming);
+      if (previousBonusPlayer) meal.bonusPlayerId = previousBonusPlayer;
       delete meal.claimedAt; delete meal.claimedBy;
       if (order) order.meal = previousMeal;
       ctx.saveRestaurant(restaurant);
@@ -424,6 +435,7 @@ export function createDiningService(ctx) {
       if (!validMeal(meal)) return false;
       const dimension = loadedDimension(meal);
       if (!dimension) return false;
+      settleBonusIfDue(restaurant, meal, now);
       if (!releaseMeal(restaurant, meal, dimension, now, 'restaurant_removed')) return false;
     }
     return !(restaurant.pendingDishes || []).length;

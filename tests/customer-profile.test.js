@@ -53,6 +53,8 @@ test('production handoff reads the persisted special flag, pays the Java tip and
     env.hooks.customerInteract(env.player, env.customer, env.linkage, { rng });
     assert.equal(env.order.tip, expectedTip);
     assert.equal(env.order.completion.boomBonus, expectedBonus);
+    assert.equal(balance(env.player), base + expectedTip);
+    env.hooks.dining.tick(env.order.completion.finishAt);
     assert.equal(balance(env.player), base + expectedTip + expectedBonus);
     const paid = balance(env.player);
     env.hooks.customerInteract(env.player, env.customer, env.linkage, { rng: () => 0 });
