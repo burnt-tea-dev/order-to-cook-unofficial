@@ -665,18 +665,18 @@ function customerInteract(player, entity, linkage, options = {}) {
   notify(player, `交付成功！獲得 ${result.reward} ${currencyLabel()}${result.tip ? `（含小費 ${result.tip}）` : ''}${result.boomBonus ? `（驚喜加賞 ${result.boomBonus}）` : ''}。${order.type === 'dine_in' ? '顧客用餐後會留下髒餐盤；點擊餐盤或下方桌面收回。' : ''}`);
 }
 
-function collectDiningPlate(player, value) {
+function collectDiningPlate(player, value, options = {}) {
   const linked = value?.meal ? value : dining?.resolveEntity(value);
   if (!linked) return false;
-  const result = dining.claim(player, linked.restaurant, linked.meal);
+  const result = dining.claim(player, linked.restaurant, linked.meal, Date.now(), options);
   if (result.ok) {
     const location = { x: Math.floor(linked.meal.location.x) + 0.5, y: Math.floor(linked.meal.location.y) + 0.5, z: Math.floor(linked.meal.location.z) + 0.5 };
     playEffects(player.dimension, result.early
       ? [{ sound: 'ordertocook:food_plate_place', location, volume: 1, pitch: 1 }]
       : plateSound(location), MolangVariableMap);
-    notify(player, result.early ? '顧客還沒吃完就被收盤了；已收回髒餐盤，顧客提前離開。' : '已收回一個髒餐盤，可送去清洗。');
-  } else if (result.reason === 'inventory_full') notify(player, '請空出一格背包，或留出髒餐盤的堆疊空間。');
-  else if (result.reason === 'permission') notify(player, '只有餐廳店主或員工可收取餐盤。');
+    notify(player, (result.early ? '顧客還沒吃完就被收盤了；顧客提前離開。' : '') +
+      (result.dropped ? '髒餐盤已落地，可拾起清洗。' : '已收回一個髒餐盤，可送去清洗。'));
+  } else if (result.reason === 'permission') notify(player, '只有餐廳店主或員工可收取餐盤。');
   return true;
 }
 
@@ -1144,6 +1144,14 @@ world.beforeEvents.playerInteractWithEntity.subscribe(event => {
   if (!ready || event.target?.typeId !== DINING_ENTITY) return;
   event.cancel = true;
   system.run(() => safely(event.player, () => collectDiningPlate(event.player, event.target)));
+});
+world.afterEvents.entityHitEntity.subscribe(event => {
+  if (!ready || event.hitEntity?.typeId !== DINING_ENTITY || event.damagingEntity?.typeId !== 'minecraft:player') return;
+  const player = event.damagingEntity;
+  // Java consumes attack input for chair clapping and motorcycle controls.
+  const mount = player.getComponent('minecraft:riding')?.entityRidingOn;
+  if (['ordertocook:seat', 'ordertocook:motorcycle'].includes(mount?.typeId)) return;
+  safely(player, () => collectDiningPlate(player, event.hitEntity, { drop: true }));
 });
 world.beforeEvents.playerBreakBlock.subscribe(event => {
   if (!ready || !event.block.typeId.startsWith(PREFIX)) return;

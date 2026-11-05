@@ -94,7 +94,7 @@
 
 貨幣面額為 **1、5、20、100、10000**，對應 `ordertocook:chef_coin_N`。上游也支援自訂實物貨幣及額外的 SDM 數位貨幣相容功能；本核心提供金額及面額分解，不把累積收入當成可花費錢包。
 
-餐盤進食的原版額外效果：一般椅上顧客 10%、彩蛋顧客 60% 出現「好吃到爆炸」，並另加 **1–4＋實際餐廳等級**的金幣，不使用菜單不足時降低的有效收益等級。alpha.2 已在 `rollCustomerCompletion` 保留此機率、加賞及動作選擇；只有配接層明確提供 `easterEgg` 才使用特殊機率，本版不主動生成原彩蛋人物。這與一般小費是兩筆不同的計算項。
+餐盤進食的原版額外效果：一般椅上顧客 10%、彩蛋顧客 60% 出現「好吃到爆炸」，並另加 **1–4＋實際餐廳等級**的金幣，不使用菜單不足時降低的有效收益等級。alpha.2 已在 `rollCustomerCompletion` 保留此機率、加賞及動作選擇；配接層提供已選定並保存的 `easterEgg` 身份以使用特殊機率；目前來源已接入顧客選擇器，皮膚差異見[PARITY.md](PARITY.md)。這與一般小費是兩筆不同的計算項。
 
 **付款時點為有意差異**：Java 的 `TakeoutBagItem.prepareBoomBonus` 先把資料交給顧客，`CustomerEntity` 在爆炸動作末尾給額外幣。基岩版把加賞記入 `order.boomBonus`，與報價、小費合併在交餐交易中一次支付，避免動畫回呼另開一筆付款。提前收盤不追回已付加賞，重啟或重播動作也不再付款。視覺效果不產生真正爆炸傷害或方塊破壞。
 
@@ -229,7 +229,7 @@
 
 `TakeoutBagItem.submitDineInWithPlacedPlate` 只按 `FoodPlateItem` 判斷是否放盤，不要求已坐下；`resolveCompletionAnimation` 才讓站立顧客選 action 4。因此站立堂食顧客約 3 秒離場，盤子仍獨立到第 5 秒變髒，這也是原作呼叫鏈的結果。[TakeoutBagItem.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/item/TakeoutBagItem.java) 的 `placeSubmittedPlate` 則啟動獨立餐盤序列。
 
-基岩版保留這些名義時間，但以持久毫秒計時、每 5 tick 取樣；0–9 的內部型號映射為 `4 × v + phase`。stage 0 改成可見乾淨盤，未重現原短暫放盤動畫。用餐餐盤改為沒有庫存／自動掉落的 entity，41 個 geometry 共用原像素 atlas；`pendingDishes` 負責唯一領取。先清掉舊盤才能在同一錨點交下一餐，提前收盤立即給一個髒盤並設 action 7 約 500 毫秒，保留前述中斷記錄。
+基岩版保留這些名義時間，但以持久毫秒計時、每 5 tick 取樣；0–9 的內部型號映射為 `4 × v + phase`。stage 0 改成可見乾淨盤，未重現原短暫放盤動畫。用餐餐盤改用沒有等價方塊碰撞的輔助entity；打破與滿包回收時以原生物品掉落，41 個 geometry 共用原像素 atlas；`pendingDishes` 負責唯一領取。先清掉舊盤才能在同一錨點交下一餐，提前收盤立即給一個髒盤並設 action 7 約 500 毫秒，保留前述中斷記錄。
 
 ### 家電關鍵姿態
 
@@ -239,3 +239,10 @@
 
 來源：[refrigerator.animation.json](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json)、[dishwasher.animation.json](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json) 及 [DishwasherBlockEntity.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/DishwasherBlockEntity.java)。完整材質、geometry 與 helper 限制見 [ASSET_PROVENANCE.md](ASSET_PROVENANCE.md)，實際操作差異見 [RUNTIME_ADAPTATIONS.md](RUNTIME_ADAPTATIONS.md)。
 
+
+
+### 餐盤破壞與滿包回收
+
+固定來源[FoodPlateBlock.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/FoodPlateBlock.java)繼承BaseEntityBlock，沒有餐盤重力。`use`在背包放不下時生成ItemEntity；`onRemove`在移除餐盤且仍有內容時掉回一份，進食中轉為新髒盤，離地速度Y0.1。拆掉下方桌面不應被當作新增餐盤重力的理由。
+
+基岩版收盤與打破共用既有claim；滿包轉原生世界掉落，打破一律落地，保留店主／員工權限。拆餐廳同樣生成普通可堆疊髒盤，不寫入不受支援的ItemStack動態屬性。已生成後的未知失敗不盲目重試，仍有原來跨世界資料／物品原子提交的限制。[實際原生與重啟範圍](validation/0.1.14-alpha.1/PLATE_RECOVERY.md)不等於完整原方塊碰撞或客戶端驗收。

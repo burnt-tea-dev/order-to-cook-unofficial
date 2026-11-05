@@ -152,19 +152,24 @@ test('normal pickup is exactly once and leaves no duplicate helper or pending ro
   const env = fixture(); env.service.tick(NOW + 5000);
   const first = env.service.claim(env.player, env.restaurant, env.meal, NOW + 5100);
   const second = env.service.claim(env.player, env.restaurant, env.meal, NOW + 5100);
-  assert.deepEqual(first, { ok: true, early: false });
+  assert.deepEqual(first, { ok: true, early: false, dropped: false });
   assert.equal(second.reason, 'already_claimed');
   assert.equal(dirtyCount(env.player), 1);
   assert.equal(env.restaurant.pendingDishes.length, 0);
   assert.equal(env.dimension.getEntities({ type: DINING_ENTITY }).length, 0);
 });
 
-test('full inventory does not claim or remove a plate', () => {
+test('full inventory drops one plain plate without changing any full slot', () => {
   const env = fixture(); env.service.tick(NOW + 5000);
   for (let slot = 0; slot < env.player.container.size; slot++) env.player.container.setItem(slot, new FakeItem('minecraft:stone', 64));
-  assert.equal(env.service.claim(env.player, env.restaurant, env.meal, NOW + 5100).reason, 'inventory_full');
-  assert.equal(env.meal.status, 'dirty');
-  assert.equal(env.dimension.getEntities({ type: DINING_ENTITY }).length, 1);
+  const before = env.player.container.slots.map(item => item.clone());
+  assert.deepEqual(env.service.claim(env.player, env.restaurant, env.meal, NOW + 5100), { ok: true, early: false, dropped: true });
+  assert.deepEqual(env.player.container.slots, before);
+  assert.equal(env.restaurant.pendingDishes.length, 0);
+  assert.equal(env.dimension.getEntities({ type: DINING_ENTITY }).length, 0);
+  assert.equal(env.dimension.drops.length, 1);
+  assert.equal(env.dimension.drops[0].stack.typeId, 'ordertocook:dirty_plate');
+  assert.deepEqual(env.dimension.drops[0].stack.getDynamicPropertyIds(), []);
 });
 
 test('dirty pickup merges ordinary plates and preserves every unrelated full slot', () => {
@@ -186,7 +191,7 @@ test('wrong owner and distant player cannot claim the dirty plate', () => {
 
 test('early pickup leaves exactly one dirty plate and persists the original 10-tick interruption', () => {
   const env = fixture(); env.service.tick(NOW + 750);
-  assert.deepEqual(env.service.claim(env.player, env.restaurant, env.meal, NOW + 1000), { ok: true, early: true });
+  assert.deepEqual(env.service.claim(env.player, env.restaurant, env.meal, NOW + 1000), { ok: true, early: true, dropped: false });
   assert.equal(dirtyCount(env.player), 1);
   assert.equal(env.order.meal.action, 7);
   assert.equal(env.order.meal.finishAt, NOW + 1500);
@@ -365,4 +370,41 @@ test('supporting-table interaction resolves the oldest outstanding canonical pla
   const support = place(env, 'minecraft:stone', { x: 0, y: 0, z: 1 });
   assert.equal(env.service.atBlock(support).meal, env.meal);
   assert.equal(env.service.atBlock(place(env, 'minecraft:stone', { x: 1, y: 0, z: 1 })), undefined);
+});
+
+test('breaking an eating plate drops once, keeps inventory and resumes only the interruption after restart', () => {
+  const env = fixture(); env.service.tick(NOW + 1000);
+  assert.deepEqual(env.service.claim(env.player, env.restaurant, env.meal, NOW + 1000, { drop: true }), { ok: true, early: true, dropped: true });
+  assert.equal(dirtyCount(env.player), 0); assert.equal(env.dimension.drops.length, 1);
+  assert.equal(env.dimension.drops[0].stack.amount, 1);
+  assert.equal(env.service.claim(env.player, env.restaurant, env.meal, NOW + 1000, { drop: true }).ok, false);
+  const restored = structuredClone(env.snapshots.get('r')); env.restaurants.set('r', restored);
+  const service = createDiningService(env.ctx); service.tick(NOW + 1200); service.tick(NOW + 1600);
+  assert.equal(env.resumed.at(-1)[2].action, 7);
+  assert.equal(restored.pendingDishes.length, 0); assert.equal(env.dimension.drops.length, 1);
+});
+
+test('dropped player claims retry only a verified failed spawn and retain state if writing is uncertain', () => {
+  for (const uncertain of [false, true]) {
+    const env = fixture(), query = env.dimension.getEntities;
+    let queries = 0;
+    env.dimension.spawnItem = () => { throw Error('native spawn failure'); };
+    env.dimension.getEntities = options => {
+      if (options.type === 'minecraft:item' && ++queries > 1 && uncertain) throw Error('readback unavailable');
+      return query.call(env.dimension, options);
+    };
+    assert.throws(() => env.service.claim(env.player, env.restaurant, env.meal, NOW + 1000, { drop: true }));
+    assert.equal(env.meal.status, uncertain ? 'claiming' : 'eating');
+    assert.equal(env.dimension.drops.length, 0); assert.equal(env.interrupted.length, 0);
+  }
+});
+
+test('native stackable-item restriction cannot prevent restaurant removal from returning a plain plate', () => {
+  const env = fixture();
+  env.ctx.ItemStack = class extends FakeItem {
+    setDynamicProperty() { throw Error('stackable item cannot carry dynamic properties'); }
+  };
+  assert.equal(env.service.cleanupRestaurant(env.restaurant), true);
+  assert.equal(env.dimension.drops.length, 1); assert.equal(env.dimension.drops[0].stack.amount, 1);
+  assert.deepEqual(env.dimension.drops[0].stack.getDynamicPropertyIds(), []);
 });

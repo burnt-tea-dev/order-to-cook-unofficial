@@ -272,18 +272,47 @@ export function createDiningService(ctx) {
     return empty < 0 ? undefined : { container, slot: empty, before: undefined, after: item };
   }
 
+  /** A plain stackable plate cannot hold ItemStack dynamic properties. If a
+   * native spawn throws, compare loaded item-actor identities in the same call
+   * before deciding whether retrying could duplicate its physical output.
+   */
+  function dropPlate(dimension, location) {
+    const item = new ctx.ItemStack(DIRTY_PLATE);
+    const at = { ...location, y: Math.floor(location.y) + 0.2 };
+    const items = () => dimension.getEntities({ type: 'minecraft:item', location: at, maxDistance: 2 });
+    let before;
+    try { before = new Set(items().map(entity => entity.id)); } catch { /* A normal successful spawn needs no readback. */ }
+    let dropped;
+    try { dropped = dimension.spawnItem(item, at); }
+    catch (error) {
+      if (!before) return { ok: false, retryable: false, error };
+      try {
+        const added = items().filter(entity => !before.has(entity.id));
+        const matching = added.filter(entity => {
+          const stack = entity.getComponent('minecraft:item')?.itemStack;
+          return stack?.amount === 1 && stack.isStackableWith(item);
+        });
+        if (added.length === 1 && matching.length === 1) dropped = matching[0];
+        else return { ok: false, retryable: added.length === 0, error };
+      } catch { return { ok: false, retryable: false, error }; }
+    }
+    try { dropped?.clearVelocity(); dropped?.applyImpulse({ x: 0, y: 0.1, z: 0 }); }
+    catch { /* The delivered item remains valid if its cosmetic toss fails. */ }
+    return { ok: true };
+  }
+
   /** Claim is durable before touching native inventory. Retries and restart
    * cannot issue twice, even if visual removal/the final cleanup save fails.
    * Bedrock cannot atomically commit world DPs and inventory: an abrupt process
    * kill between the durable claim and native write can lose this one plate.
    * We prefer that bounded loss to a replayable duplication path.
    */
-  function claim(player, restaurant, meal, now = Date.now()) {
+  function claim(player, restaurant, meal, now = Date.now(), { drop = false } = {}) {
     if (!canonical(restaurant) || !restaurant.pendingDishes?.includes(meal) || !validMeal(meal) || meal.status === 'claiming') return { ok: false, reason: 'already_claimed' };
     if (!player?.isValid || player.dimension.id !== meal.dimensionId || distance2(player.location, meal.location) > 36) return { ok: false, reason: 'too_far' };
     if (ctx.canManage && !ctx.canManage(player, restaurant)) return { ok: false, reason: 'permission' };
-    const reservation = reservePlateSlot(player);
-    if (!reservation) return { ok: false, reason: 'inventory_full' };
+    const reservation = drop ? undefined : reservePlateSlot(player);
+    const dropped = !reservation;
     const previousStatus = meal.status;
     const early = now < meal.startedAt + DIRTY_AFTER;
     const order = restaurant.orders?.find(order => order.id === meal.id);
@@ -297,18 +326,27 @@ export function createDiningService(ctx) {
     meal.claimedAt = now;
     meal.claimedBy = player.id;
     ctx.saveRestaurant(restaurant);
-    try {
+    function restoreClaim() {
+      meal.status = previousStatus;
+      Object.assign(meal, previousTiming);
+      delete meal.claimedAt; delete meal.claimedBy;
+      if (order) order.meal = previousMeal;
+      ctx.saveRestaurant(restaurant);
+    }
+    if (dropped) {
+      const outcome = dropPlate(player.dimension, meal.location);
+      if (!outcome.ok) {
+        if (outcome.retryable) restoreClaim();
+        throw outcome.error;
+      }
+    } else try {
       reservation.container.setItem(reservation.slot, reservation.after);
     } catch (error) {
       // Native setItem can throw before OR after accepting the value. Roll back
       // the exact reserved slot before making its saved claim retryable.
       try {
         reservation.container.setItem(reservation.slot, reservation.before);
-        meal.status = previousStatus;
-        Object.assign(meal, previousTiming);
-        delete meal.claimedAt; delete meal.claimedBy;
-        if (order) order.meal = previousMeal;
-        ctx.saveRestaurant(restaurant);
+        restoreClaim();
       } catch (rollbackError) {
         console.warn(`[OrderToCook] Dirty plate claim retained after uncertain inventory write: ${String(rollbackError)}`);
       }
@@ -317,7 +355,7 @@ export function createDiningService(ctx) {
     if (early) ctx.interruptCustomerMeal?.(meal.id, { startedAt: now, finishAt: now + 500, action: 7 });
     try { finishClaim(restaurant, meal, now); }
     catch (error) { console.warn(`[OrderToCook] Claimed plate cleanup deferred: ${String(error)}`); }
-    return { ok: true, early };
+    return { ok: true, early, dropped };
   }
 
   /** Machine removal returns each outstanding plate once at its own anchor. */
@@ -332,25 +370,13 @@ export function createDiningService(ctx) {
         const previousStatus = meal.status;
         meal.status = 'claiming'; meal.claimedAt = now; meal.claimedBy = 'restaurant_removed';
         ctx.saveRestaurant(restaurant);
-        const item = new ctx.ItemStack(DIRTY_PLATE);
-        item.setDynamicProperty(MEAL_TOKEN, meal.token);
-        // Like a player claim, the persisted marker is the authority. A crash
-        // never turns this into an endlessly retryable item-spawn instruction.
-        try { dimension.spawnItem(item, meal.location); }
-        catch (error) {
-          let receiptKnown = false, receiptExists = false;
-          try {
-            receiptExists = dimension.getEntities({ type: 'minecraft:item', location: meal.location, maxDistance: 2 })
-              .some(entity => entity.getComponent('minecraft:item')?.itemStack?.getDynamicProperty(MEAL_TOKEN) === meal.token);
-            receiptKnown = true;
-          } catch { /* An uncertain write stays claimed; never replay it blindly. */ }
-          if (!receiptExists) {
-            if (receiptKnown && canonical(restaurant)) {
-              meal.status = previousStatus; delete meal.claimedAt; delete meal.claimedBy;
-              ctx.saveRestaurant(restaurant);
-            }
-            throw error;
+        const outcome = dropPlate(dimension, meal.location);
+        if (!outcome.ok) {
+          if (outcome.retryable && canonical(restaurant)) {
+            meal.status = previousStatus; delete meal.claimedAt; delete meal.claimedBy;
+            ctx.saveRestaurant(restaurant);
           }
+          throw outcome.error;
         }
       }
       if (!finishClaim(restaurant, meal, now)) return false;
