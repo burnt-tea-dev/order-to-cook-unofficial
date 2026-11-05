@@ -1,0 +1,95 @@
+{
+  "passed": true,
+  "reason": "complete",
+  "normal_stop_requested": true,
+  "quit_correctly": true,
+  "returncode": 0,
+  "report": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "production entry initialized",
+        "passed": true
+      },
+      {
+        "name": "native Player exposes playAnimation",
+        "passed": true
+      },
+      {
+        "name": "native Player accepts both perspective start and replacement-stop requests",
+        "passed": true
+      },
+      {
+        "name": "native sight ray reaches the sink",
+        "passed": true
+      },
+      {
+        "name": "production wash session remains active",
+        "passed": true
+      },
+      {
+        "name": "production session completes one native plate",
+        "passed": true
+      },
+      {
+        "name": "completed session leaves no running progress",
+        "passed": true
+      },
+      {
+        "name": "native look-away cancels without issuing a clean plate",
+        "passed": true
+      },
+      {
+        "name": "QA simulated Player disconnected",
+        "passed": true
+      }
+    ],
+    "playersAfter": 0,
+    "scope": "Native simulated Player playAnimation acceptance and adapter-driven wash lifecycle over native inventory/ray. No client geometry, pose, first-person, hardware input or audiovisual verdict."
+  },
+  "errors": [],
+  "memory_events": {
+    "low": 0,
+    "high": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_kill": 0,
+    "oom_group_kill": 0,
+    "sock_throttled": 0
+  },
+  "memory_peak": 340443136,
+  "client": false,
+  "native_player": "QA SimulatedPlayer; interactions are adapter-driven",
+  "live_modified": false,
+  "runtime_module": "@minecraft/server 2.11.0",
+  "qa_only_module": "@minecraft/server-gametest 1.0.0-beta",
+  "engine": "1.26.60.6",
+  "source_base": "85c87d827f6e5c1a23d5bd7664f87e011fc29e63",
+  "tested_source_files": {
+    "runtime/BP/scripts/appliances.js": "683a9284f3a7b1ef78aba6e0b29c4188e51018ceb8773d3f564cec7cb4351cd9",
+    "runtime/RP/animations/handwashing_player.animation.json": "dabcf460c9416b25d3c86022cc9d985c51c826009899e2390b396f8fc5e70cb8"
+  },
+  "diagnostic_pair_version": [
+    1,
+    0,
+    0
+  ],
+  "experiments": {
+    "gametest": 1,
+    "upcoming_creator_features": 1,
+    "experiments_ever_used": 1,
+    "saved_with_toggled_experiments": 1
+  },
+  "stop_status": {
+    "ActiveState": "inactive",
+    "SubState": "dead",
+    "MainPID": "0",
+    "Result": "success",
+    "ExecMainStatus": "0"
+  },
+  "qa_world_and_engine_deleted_after_stop": true,
+  "rendered_client": false,
+  "player_definition_or_geometry_override": false,
+  "observed_at": "2026-11-05T16:25:37.363882+00:00",
+  "probe_sha256": "ac6fdb63d6fded24462a05c99528a47d4c590549d615ea8fcba4b8058511c22c"
+}

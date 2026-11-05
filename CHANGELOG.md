@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.20-alpha.1
+
+- Retarget the original washing body scale, torso lean, head and legs to the native hierarchy without letting the new torso parent rotate the head/arms twice. Include source forearm rotation/translation in a rigid-arm shoulder-to-hand endpoint fit; an actual elbow joint remains unavailable.
+- Separate third-person body animation from a native first-person right-arm relative stroke. Start/stop both finite controllers through the existing wash session; either animation failure leaves plate delivery unchanged. Empty-hand left-arm visibility, Java ACTION dual-arm calibration and visible playback remain unverified or incomplete; VR retains the native pose.
+- Preserve player definitions, equipment, stable API dependencies, UUIDs and persisted state. Pair the new BP/RP identity at 0.1.20 and append its payload history. Scope and original sources are in [player poses](docs/validation/0.1.20-alpha.1/PLAYER_POSES.md).
+
 ## 0.1.17-alpha.1
 
 - Match Java early plate pickup: interrupt the first eating customer in the inflated block box, potentially at another table, and cancel only that customer’s pending bonus. Keep native query order and permit another pickup to restart action7.

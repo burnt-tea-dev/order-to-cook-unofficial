@@ -23,24 +23,63 @@ class ApplianceGeometryTests(unittest.TestCase):
         self.source = converter.normalize_geo(converter.ASSETS / "geo/block/refrigerator.geo.json", "geometry.source")
         self.clips = converter.read_json(converter.ASSETS / "animations/refrigerator.animation.json")["animations"]
 
-    def test_player_handwash_retains_original_arm_keys_and_two_bounded_cycles(self):
+    def test_player_handwash_reproduces_both_bounded_perspectives(self):
         with TemporaryDirectory() as temp:
             output = Path(temp)
             with patch.multiple(converter, create=True, SOURCE=ROOT / 'upstream/reference', OUT=output, RP=output, PROVENANCE=[]):
                 converter.make_player_handwashing_animation()
             generated = json.loads((output / 'animations/handwashing_player.animation.json').read_text())
-        committed = json.loads((ROOT / 'runtime/RP/animations/handwashing_player.animation.json').read_text())
-        self.assertEqual(generated, committed)
-        clip = generated['animations']['animation.ordertocook.player.handwash']
-        self.assertEqual(clip['animation_length'], 4)
-        self.assertFalse(clip['loop'])
-        self.assertEqual(set(clip['bones']), {'rightArm', 'leftArm'})
-        source = converter.unwrap_vectors(converter.read_json(converter.ASSETS / 'animations/player_wash.animation.json')['animations']['player_wash'])
-        self.assertEqual(clip['bones']['rightArm']['rotation']['0'], source['bones']['right_arm']['rotation']['0.0'])
-        self.assertEqual(clip['bones']['rightArm']['rotation']['2'], source['bones']['right_arm']['rotation']['0.0'])
-        self.assertEqual(clip['bones']['leftArm']['rotation']['2.5'], source['bones']['left_arm']['rotation']['0.5'])
-        self.assertEqual(clip['bones']['leftArm']['rotation']['4'], source['bones']['left_arm']['rotation']['2.0'])
-        self.assertLessEqual(generated['animations']['animation.ordertocook.player.handwash_stop']['animation_length'], 0.1)
+        self.assertEqual(generated, json.loads((ROOT / 'runtime/RP/animations/handwashing_player.animation.json').read_text()))
+        clips = generated['animations']
+        third = clips['animation.ordertocook.player.handwash']
+        first = clips['animation.ordertocook.player.handwash_first_person']
+        for clip in (third, first):
+            self.assertEqual(clip['animation_length'], 4)
+            self.assertFalse(clip['loop'])
+        self.assertEqual(third['blend_weight'], '!query.is_first_person')
+        self.assertEqual(first['blend_weight'], 'query.is_first_person && !variable.is_using_vr')
+        self.assertEqual(set(first['bones']), {'rightArm'})
+        arm = first['bones']['rightArm']
+        self.assertEqual(arm['rotation']['0'], [95, -45, 115])
+        self.assertEqual(arm['position']['0'], [13.5, -10, 12])
+        self.assertEqual(arm['rotation']['0'], arm['rotation']['4'])
+        self.assertNotEqual(arm['rotation']['0'], arm['rotation']['0.5'])
+        self.assertLessEqual(clips['animation.ordertocook.player.handwash_stop']['animation_length'], 0.1)
+
+    def test_player_handwash_preserves_source_body_and_arm_endpoints(self):
+        # Forward-evaluate the actual source and generated animation. This does
+        # not repeat the retargeter's direction fit or inverse-parent algorithm.
+        source = converter.read_json(converter.ASSETS / 'geo/drive_idle.geo.json')['minecraft:geometry'][0]['bones']
+        original = converter.unwrap_vectors(converter.read_json(converter.ASSETS / 'animations/player_wash.animation.json')['animations']['player_wash'])
+        native = [{'name': 'root', 'pivot': [0, 0, 0]},
+                  {'name': 'waist', 'parent': 'root', 'pivot': [0, 12, 0]},
+                  {'name': 'body', 'parent': 'waist', 'pivot': [0, 24, 0]},
+                  {'name': 'head', 'parent': 'body', 'pivot': [0, 24, 0]}]
+        for side, sign in [('right', -1), ('left', 1)]:
+            native.extend([{'name': side+'Arm', 'parent': 'body', 'pivot': [sign*5, 22, 0]},
+                           {'name': side+'Leg', 'parent': 'root', 'pivot': [sign*1.9, 12, 0]}])
+        clip = converter.read_json(ROOT / 'runtime/RP/animations/handwashing_player.animation.json')['animations']['animation.ordertocook.player.handwash']
+        def point(bones, animation, seconds, name, value):
+            lookup = {bone['name']: bone for bone in bones}
+            while name:
+                bone = lookup[name]; channels = animation.get('bones', {}).get(name, {})
+                pivot = bone['pivot']
+                scale = converter.sample_channel(channels.get('scale'), seconds, [1]*3)
+                value = [pivot[i]+(value[i]-pivot[i])*scale[i] for i in range(3)]
+                value = converter.geometry_transform3(value, converter.sample_channel(channels.get('rotation'), seconds, [0]*3), pivot)
+                value = [a+b for a,b in zip(value, converter.sample_channel(channels.get('position'), seconds, [0]*3))]
+                name = bone.get('parent')
+            return value
+        cases = [('torso', 'body', [0, 18, -2]), ('head', 'head', [0, 28, -4]),
+                 ('right_leg', 'rightLeg', [-2, 0, 0]), ('left_leg', 'leftLeg', [2, 0, 0])]
+        for side, sign in [('right', -1), ('left', 1)]:
+            cases += [(side+'_arm', side+'Arm', [sign*6, 24, 0]),
+                      (side+'_hand', side+'Arm', [sign*6, 12, 0])]
+        for seconds in (0, .025, .25, .5, .75, 1, 1.975, 2, 2.025, 3.975, 4):
+            for old, new, vertex in cases:
+                expected = point(source, original, seconds % 2, old, vertex)
+                actual = point(native, clip, seconds, new, vertex)
+                self.assertLess(math.dist(expected, actual), .02, (seconds, old, expected, actual))
 
     def test_player_chair_clap_reproduces_the_original_arm_channels(self):
         with TemporaryDirectory() as temp:
