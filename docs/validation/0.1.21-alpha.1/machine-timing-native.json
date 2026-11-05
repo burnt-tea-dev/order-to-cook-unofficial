@@ -1,0 +1,134 @@
+{
+  "passed": true,
+  "observed_at": "2026-11-05T18:35:28.797794+00:00",
+  "engine": "1.26.60.6",
+  "runtime_module": "@minecraft/server 2.11.0",
+  "qa_only_module": "@minecraft/server-gametest 1.0.0-beta",
+  "source_commit": "b52aef1c4712d9fd5e93824ca4d0a48a2667a240",
+  "tested_source_files": {
+    "runtime/BP/scripts/main.js": "3a236989dd513c5c0410d5e34695f65946000e51f5849d9fbb5a5a724dfaa0d5",
+    "runtime/BP/scripts/store.js": "d60b41b3eea3b4e290b3841d622c9d738c9786ab3b236145bd22b68757ac59bd",
+    "runtime/BP/scripts/machine_timing.js": "4cd14ff8686afe4f2583a442b561973337493dd596780765eb058395e9aed5cb",
+    "runtime/BP/blocks/order_machine.json": "5e11f5ae3cc815c5a875610fd2615b13f0e1e2ec29edd628f86c4bfea86c73b7"
+  },
+  "probe_sha256": "0713ba2f20d9d9e47417b952af701ad98e82362a5f3b0e132ff97e7d807384ca",
+  "diagnostic_pair_version": [
+    1,
+    0,
+    0
+  ],
+  "phases": {
+    "seed": {
+      "passed": true,
+      "reason": "complete",
+      "normal_stop_requested": true,
+      "quit_correctly": true,
+      "returncode": 0,
+      "report": {
+        "passed": true,
+        "phase": "seed",
+        "checks": [
+          {
+            "name": "production startup ready",
+            "passed": true
+          },
+          {
+            "name": "native block callbacks advance active machine progress",
+            "passed": true
+          },
+          {
+            "name": "native callbacks while closed do not consume saved progress",
+            "passed": true
+          },
+          {
+            "name": "runtime no longer retains wall refresh or arrival deadlines",
+            "passed": true
+          }
+        ],
+        "playersAfter": 0,
+        "scope": "Native block callback persistence/pause, same-world restart and real region stop/resume. Short QA refresh interval only. No client visual or LIVE verdict."
+      },
+      "errors": [],
+      "memory_events": {
+        "low": 0,
+        "high": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_kill": 0,
+        "oom_group_kill": 0,
+        "sock_throttled": 0
+      },
+      "memory_peak": 340418560,
+      "client": false,
+      "native_player": "QA SimulatedPlayer; interactions are adapter-driven",
+      "live_modified": false
+    },
+    "restart": {
+      "passed": true,
+      "reason": "complete",
+      "normal_stop_requested": true,
+      "quit_correctly": true,
+      "returncode": 0,
+      "report": {
+        "passed": true,
+        "phase": "restart",
+        "checks": [
+          {
+            "name": "production startup ready",
+            "passed": true
+          },
+          {
+            "name": "same world retains progress counter and refresh origin after offline wall time",
+            "passed": true
+          },
+          {
+            "name": "restaurant metadata survives clock persistence",
+            "passed": true
+          },
+          {
+            "name": "opening after restart does not immediately catch up offline refreshes",
+            "passed": true
+          },
+          {
+            "name": "remaining native callbacks generate exactly one configured refresh",
+            "passed": true
+          },
+          {
+            "name": "actual machine region stop freezes its persisted active-block counter",
+            "passed": true
+          },
+          {
+            "name": "reloaded region resumes a few native callbacks without catchup",
+            "passed": true
+          }
+        ],
+        "playersAfter": 0,
+        "scope": "Native block callback persistence/pause, same-world restart and real region stop/resume. Short QA refresh interval only. No client visual or LIVE verdict."
+      },
+      "errors": [],
+      "memory_events": {
+        "low": 0,
+        "high": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_kill": 0,
+        "oom_group_kill": 0,
+        "sock_throttled": 0
+      },
+      "memory_peak": 344813568,
+      "client": false,
+      "native_player": "QA SimulatedPlayer; interactions are adapter-driven",
+      "live_modified": false
+    }
+  },
+  "stop_status": {
+    "ActiveState": "inactive",
+    "SubState": "dead",
+    "MainPID": "0",
+    "Result": "success",
+    "ExecMainStatus": "0"
+  },
+  "qa_world_and_engine_deleted_after_stop": true,
+  "live_modified": false,
+  "rendered_client": false
+}
