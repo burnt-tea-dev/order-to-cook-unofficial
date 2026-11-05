@@ -28,6 +28,43 @@ export function joinedFridgeInventory(upper, lower) {
   };
 }
 
+/** Java compaction keeps first-seen groups; native equality preserves opaque item data. */
+export function compactFridgeInventory(container) {
+  const before = Array.from({ length: container.size }, (_, slot) => container.getItem(slot));
+  const groups = [];
+  for (const stack of before) {
+    if (!stack) continue;
+    const group = groups.find(row => row.stack.isStackableWith(stack));
+    if (group) group.amount += stack.amount;
+    else groups.push({ stack, amount: stack.amount });
+  }
+  const compacted = [];
+  for (const { stack, amount } of groups) {
+    for (let remaining = amount; remaining > 0;) {
+      const next = stack.clone();
+      next.amount = Math.min(remaining, stack.maxAmount);
+      compacted.push(next);
+      remaining -= next.amount;
+    }
+  }
+  let attempted = -1;
+  try {
+    for (let slot = 0; slot < container.size; slot++) {
+      attempted = slot;
+      container.setItem(slot, compacted[slot]);
+    }
+  } catch (error) {
+    // A native write can throw after accepting it; restore that slot as well.
+    let rollbackError;
+    for (let slot = attempted; slot >= 0; slot--) {
+      try { container.setItem(slot, before[slot]); }
+      catch (failure) { rollbackError ??= failure; }
+    }
+    if (rollbackError) throw new Error('冰箱整理回復未完成，請保留原處物品並回報。', { cause: rollbackError });
+    throw error;
+  }
+}
+
 export function createNativeFridgeStorage(ctx) {
   const joined = new Map();
 

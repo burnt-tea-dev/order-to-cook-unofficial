@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.12-alpha.1
+
+- Add native refrigerator compartment compaction through sneak-empty interaction. Merge only natively stackable item data, preserve first-seen order, and keep upper/lower cargo separate.
+- Recheck access in the existing deferred interaction and restore complete touched-slot snapshots after a failed write. Ordinary use still opens the native container.
+- Preserve Bedrock stack limits; food-only slots and Java 128-item stacks remain differences. No saved-state schema or pack UUID changes.
+- Validation: 481 functional tests and repository verify passed; real BDS 1.26.60.6 compaction passed 7 initial and 4 same-world restart checks. Client input/rendering was not tested.
+
 ## 0.1.11-alpha.1
 
 - Connect native Player handwashing arm-animation requests to the existing wash lifecycle, with the original two-second arm keys repeated twice in a bounded four-second clip. Use a dedicated controller and replacement stop; no player.json override or new global player loop.

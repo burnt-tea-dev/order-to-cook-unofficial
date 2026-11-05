@@ -4,7 +4,7 @@ import { BlockPermutation, EquipmentSlot, ItemStack, MolangVariableMap, system, 
 import { ActionFormData } from "@minecraft/server-ui";
 import { advanceDoorMotion, dishwasherFrame, APPLIANCE_TICK_INTERVAL, FRIDGE_MOTION_TICKS, FRIDGE_LAST_FRAME } from "./appliance_motion.js";
 import { formatEquipmentInspection, INSPECTION_TYPES } from "./equipment_inspection.js";
-import { createNativeFridgeStorage, FRIDGE_UPPER, isFridge, isUpperFridge } from "./native_fridge.js";
+import { createNativeFridgeStorage, compactFridgeInventory, FRIDGE_UPPER, isFridge, isUpperFridge } from "./native_fridge.js";
 import { createStoveControls } from "./stove_controls.js";
 import { SMOKING_RECIPES } from "./smoking_recipes.js";
 import { initializeStoveFire, igniteStoveFire, advanceStoveFire, stoveFireFrame } from "./stove_fire.js";
@@ -927,6 +927,10 @@ export function createApplianceService(ctx) {
         if (!nativeFridge.peek(station)) {
           const inventory = nativeFridge.ensure(station);
           say(ctx, player, inventory ? "冰箱庫存已就緒，請再次點擊開啟原生容器。" : "冰箱原生容器尚未就緒；需 Bedrock 26.60 並啟用 Upcoming Creator Features。舊庫存會保留，請稍後再試。");
+        } else if (player.isSneaking && !playerInventory(player)?.getItem(player.selectedSlotIndex)) {
+          const half = isUpperFridge(block) ? "upper" : "lower";
+          const container = fridgeBlock(station, half)?.getComponent("minecraft:inventory")?.container;
+          if (container?.isValid) compactFridgeInventory(container);
         }
       }
       else if (block.typeId === STOVE) void openStove(player, station).catch(error => say(ctx, player, String(error)));
