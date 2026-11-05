@@ -89,7 +89,15 @@
       "minecraft:movable": {
         "movement_type": "immovable"
       },
-      "ordertocook:interact": {}
+      "ordertocook:interact": {},
+      "minecraft:tick": {
+        "interval_range": [
+          1,
+          1
+        ],
+        "looping": true
+      },
+      "ordertocook:machine_timing": {}
     },
     "permutations": [
       {

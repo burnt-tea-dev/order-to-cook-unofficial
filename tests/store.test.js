@@ -6,7 +6,8 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createRestaurant } from '../runtime/BP/scripts/core.js';
 
-const storeSource = await readFile(new URL('../runtime/BP/scripts/store.js', import.meta.url), 'utf8');
+const storeUrl = new URL('../runtime/BP/scripts/store.js', import.meta.url);
+const storeSource = (await readFile(storeUrl, 'utf8')).replace(/from '(\.[^']+)'/g, (_match, path) => `from '${new URL(path, storeUrl).href}'`);
 const importLine = /^import \{ world \} from '@minecraft\/server';$/m;
 assert.match(storeSource, importLine, 'update the explicit world adapter if the production import changes');
 const worldAdapter = `

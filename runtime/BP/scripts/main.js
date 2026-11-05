@@ -31,6 +31,7 @@ import { progressRows } from './progression.js';
 import { createProgressionService, creditBonusEarnings, creditCompletedOrder, queueProgressEvent } from './progression_service.js';
 import { playEffects, plateSound, freshMealEffects, newOrderEffects } from './audiovisual.js';
 import { writePortableBlock, readPortableBlock } from './portable_blocks.js';
+import { createMachineTiming } from './machine_timing.js';
 
 const PREFIX = 'ordertocook:';
 const ITEM_RESTAURANT = 'ordertocook:restaurant';
@@ -52,6 +53,7 @@ let ready = false;
 /** @type {any} */ let appliances;
 /** @type {any} */ let dining;
 /** @type {any} */ let progression;
+/** @type {any} */ let machineTiming;
 const activeHudPlayers = new Set();
 const interactionTicks = new Map();
 // Cosmetic playback only: the restaurant/order store remains authoritative.
@@ -132,6 +134,7 @@ function syncPrinter(restaurant, block = loadedBlock(restaurant)) {
 }
 function refreshMachineOrders(restaurant, block = loadedBlock(restaurant), now = orderTime()) {
   refreshOrders(restaurant, now);
+  machineTiming.refreshed(restaurant);
   printerStarts.set(restaurant.id, system.currentTick);
   if (block?.typeId === 'ordertocook:order_machine') {
     playEffects(block.dimension, newOrderEffects(block.location), MolangVariableMap);
@@ -183,6 +186,7 @@ function getMachine(player, block, placedByPlayer = false) {
     restaurant = createRestaurant({ id, name: `${player.name} 的餐廳`, ownerId: player.id, ownerName: player.name, dimensionId: block.dimension.id, location: block.location, menu: [], config: { refreshMs: settings.refreshMs, orderMachineUpgradeBoardHunger: settings.orderMachineUpgradeBoardHunger } });
     restaurant.staff = [];
     restaurant.pendingDishes = [];
+    machineTiming.adopt(restaurant, orderTime());
     if (placedByPlayer) queueProgressEvent(restaurant, player.id, { type: 'order_machine_placed' });
     saveRestaurant(restaurant);
   } else if (placedByPlayer) {
@@ -247,7 +251,7 @@ async function machineForm(player, block) {
   saveRestaurant(restaurant);
   const available = restaurant.orders.filter(order => order.status === 'offered');
   const working = restaurant.orders.filter(order => ['accepted', 'packed'].includes(order.status));
-  const next = Math.max(0, Math.ceil((restaurant.nextRefreshAt - Date.now()) / 1000));
+  const next = Math.ceil(machineTiming.remaining(restaurant) / 20);
   const selection = await choose(player, `${restaurant.name} · Lv.${restaurant.level}`,
     `${restaurant.active ? '§a營業中' : '§7休息中'}§r\n菜單 ${restaurant.menu.length} 道 · 總營養 ${getMenuNutrition(restaurant)}\n完成 ${restaurant.stats.completed} 單 · 總營業額 ${restaurant.stats.earnings}\n候選 ${available.length} 單 · 處理中 ${working.length} 單\n下次刷新 ${next} 秒 · 隨身餘額 ${balance(player)} ${currencyLabel()}`,
     [restaurant.active ? '暫停接新單' : '開始營業', `候選訂單（${available.length}）`, `處理中的訂單（${working.length}）`, '升級餐廳', '設備商店', '餐廳排行榜', '餐廳設定／員工', '個人進度', '玩法指南']);
@@ -260,7 +264,7 @@ async function machineForm(player, block) {
       refreshMachineOrders(restaurant, block);
     }
     saveRestaurant(restaurant);
-    notify(player, restaurant.active ? '開始營業；打單機每 10 分鐘刷新一輪候選單。' : '已暫停新單，已接訂單仍需按時完成。');
+    notify(player, restaurant.active ? `開始營業；打單機每 ${Math.ceil((restaurant.config?.refreshMs ?? DEFAULT_CONFIG.refreshMs) / 1000)} 秒運作時間刷新候選單，暫停或區域未載入時停計。` : '已暫停新單，已接訂單仍需按時完成。');
   } else if (selection === 1) await orderList(player, block, restaurant, 'offered');
   else if (selection === 2) await orderList(player, block, restaurant, 'working');
   else if (selection === 3) await upgradeForm(player, block, restaurant);
@@ -999,6 +1003,7 @@ function onBreak(event) {
     const restaurant = getRestaurant(locationId(block.dimension.id, block.location));
     if (restaurant) {
       printerStarts.delete(restaurant.id);
+      machineTiming.forget(restaurant.id);
       restaurant.removing = true;
       saveRestaurant(restaurant);
       for (const order of restaurant.orders) entities.cleanupOrder(order.id);
@@ -1015,6 +1020,12 @@ function onBreak(event) {
     }
     deleteStation(station);
   }
+}
+
+function tickMachine(block) {
+  if (!ready || block.typeId !== 'ordertocook:order_machine') return;
+  const restaurant = getRestaurant(locationId(block.dimension.id, block.location));
+  if (restaurant) machineTiming.tick(restaurant, block);
 }
 
 function tickRestaurants() {
@@ -1034,21 +1045,8 @@ function tickRestaurants() {
       const machine = loadedBlock(restaurant);
       if (machine?.typeId === 'ordertocook:order_machine') {
         syncMenu(restaurant);
-        const living = restaurant.orders.filter(order => liveStatus.has(order.status)).length;
-        if (restaurant.active && restaurant.menu.length && living < 32 && now >= restaurant.nextRefreshAt) {
-          refreshMachineOrders(restaurant, machine, time);
-          changed = true;
-        }
-        if (restaurant.active && restaurant.menu.length && living < 32 && now >= restaurant.nextWalkInAt) {
-          restaurant.nextWalkInAt = now + DEFAULT_CONFIG.walkInIntervalMs;
-          if (Math.random() < getWalkInChance(restaurant) && nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:chair').length) {
-            const order = generateWalkInOrder(restaurant, time);
-            if (entities.spawnCustomer(restaurant, order)) playAt(machine, 'order_refresh');
-          }
-          changed = true;
-        }
         syncPrinter(restaurant, machine);
-      }
+      } else machineTiming.forget(restaurant.id);
       if (changed) saveRestaurant(restaurant);
       reconcileProgress(restaurant);
     } catch (error) { console.warn(`[OrderToCook] Restaurant ${restaurant.id}: ${error}`); }
@@ -1174,6 +1172,9 @@ system.beforeEvents.startup.subscribe(event => {
     },
     onPlayerInteract: event => { if (event.player) safely(event.player, () => interactBlock(event.player, event.block)); }
   });
+  event.blockComponentRegistry.registerCustomComponent('ordertocook:machine_timing', {
+    onTick: event => tickMachine(event.block)
+  });
   event.itemComponentRegistry.registerCustomComponent('ordertocook:use', {
     onUse: event => onUse(event.source, event.itemStack)
   });
@@ -1258,6 +1259,7 @@ function onPlayerPlace(event) {
     if (block.typeId === 'ordertocook:order_machine') {
       if (portable) {
         const restaurant = createRestaurant({ ...portable, id, dimensionId: block.dimension.id, location: block.location, config: { refreshMs: settings.refreshMs, orderMachineUpgradeBoardHunger: settings.orderMachineUpgradeBoardHunger } });
+        machineTiming.adopt(restaurant, orderTime());
         Object.assign(restaurant, portable, { pendingDishes: [] });
         queueProgressEvent(restaurant, event.player.id, { type: 'order_machine_placed' });
         saveRestaurant(restaurant);
@@ -1299,9 +1301,25 @@ world.afterEvents.weatherChange.subscribe(event => {
 world.afterEvents.worldLoad.subscribe(() => {
   try {
     initStore();
+    machineTiming = createMachineTiming({ world, saveRestaurant,
+      refresh: (restaurant, block) => {
+        syncMenu(restaurant);
+        if (!restaurant.menu.length || restaurant.orders.filter(order => liveStatus.has(order.status)).length >= 32) return false;
+        refreshMachineOrders(restaurant, block);
+        return true;
+      },
+      arrive: (restaurant, block) => {
+        syncMenu(restaurant);
+        if (!restaurant.menu.length || restaurant.orders.filter(order => liveStatus.has(order.status)).length >= 32 ||
+            Math.random() >= getWalkInChance(restaurant) || !nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:chair').length) return false;
+        const order = generateWalkInOrder(restaurant, orderTime());
+        if (entities.spawnCustomer(restaurant, order)) playAt(block, 'order_refresh');
+        return true;
+      }
+    });
     const time = orderTime();
     for (const restaurant of restaurants()) {
-      let changed = false;
+      let changed = machineTiming.adopt(restaurant, time);
       for (const order of restaurant.orders || []) changed = adoptOrderDeadline(order, time) || changed;
       if (changed) saveRestaurant(restaurant);
     }
@@ -1360,5 +1378,5 @@ world.afterEvents.worldLoad.subscribe(() => {
 // Headless native-engine tests import these same adapters. No test hooks are
 // exposed through chat, commands, script events or a separately installable pack.
 export function getQaHooks() {
-  return { ready, capturePortablePlacement, onPlayerPlace, entities, appliances, dining, progression, guideForm, boardForm, foodFromStack, syncMenu, orderBody, parcelFor, updateHud, progressForm, recordProgress, reconcileProgress, updateProgressRankings, reconcileStationProgress, upgradeForm, getMachine, acceptWithTicket, countertopForm, prepareOrderAtCountertop, pickupDisplay, placeParcel, customerInteract, collectDiningPlate, tickRestaurants, refreshMachineOrders, syncPrinter, tickPrinters, itemOrder, onPlace, onBreak, shelfInteract, upgradeAppliance, canUseStation };
+  return { ready, capturePortablePlacement, onPlayerPlace, entities, appliances, dining, progression, guideForm, boardForm, foodFromStack, syncMenu, orderBody, parcelFor, updateHud, progressForm, recordProgress, reconcileProgress, updateProgressRankings, reconcileStationProgress, upgradeForm, getMachine, acceptWithTicket, countertopForm, prepareOrderAtCountertop, pickupDisplay, placeParcel, customerInteract, collectDiningPlate, tickRestaurants, tickMachine, machineTiming, refreshMachineOrders, syncPrinter, tickPrinters, itemOrder, onPlace, onBreak, shelfInteract, upgradeAppliance, canUseStation };
 }

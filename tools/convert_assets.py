@@ -834,6 +834,11 @@ def make_blocks():
     block_definition("order_machine", f"geometry.{NS}.order_machine_idle_0", mats,
                      {"mode": ["idle", "printing", "waiting"], "frame": list(range(16))}, variants,
                      {"origin": [-7, 0, -7], "size": [14, 14, 14]})
+    machine_path = BP / 'blocks/order_machine.json'
+    machine = read_json(machine_path)
+    machine['minecraft:block']['components'].update({
+        'minecraft:tick': {'interval_range': [1, 1], 'looping': True}, f'{NS}:machine_timing': {}})
+    write_json(machine_path, machine)
     # Separate source open/close curves; each complete door belongs to one
     # compartment. Root squash uses each half's closing phase (see adaptations).
     fridge_source = ASSETS / "geo/block/refrigerator.geo.json"
