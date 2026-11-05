@@ -1,0 +1,116 @@
+{
+  "engine": "BDS 1.26.60.6",
+  "productionAPI": "@minecraft/server 2.11.0",
+  "clock": "system.currentTick; saved native level.dat currentTick",
+  "diagnosticOnlyAPI": "@minecraft/server-gametest 1.0.0-beta",
+  "liveModified": false,
+  "successfulBehaviorChecks": 20,
+  "first": {
+    "passed": true,
+    "phase": "seed",
+    "checks": [
+      {
+        "name": "production refresh gives normal orders 36000 world ticks",
+        "passed": true
+      },
+      {
+        "name": "production urgent refresh gives 12000 world ticks",
+        "passed": true
+      },
+      {
+        "name": "production acceptance ignores an obsolete wall deadline",
+        "passed": true
+      },
+      {
+        "name": "production customer can spawn for its still-live tick deadline",
+        "passed": true
+      },
+      {
+        "name": "physical bag has its own world tick deadline",
+        "passed": true
+      },
+      {
+        "name": "order time continues when the daylight clock is stopped",
+        "passed": true
+      },
+      {
+        "name": "time command does not consume the order deadline",
+        "passed": true
+      },
+      {
+        "name": "native world is saved with usable order time remaining",
+        "passed": true
+      }
+    ],
+    "playersAfter": 0,
+    "scope": "Real native items, saved customer/chest and production refresh/accept/handoff/expiry/consumption. Five-second and 12-tick QA deadlines are fixture configuration, not changed defaults. LIVE unchanged."
+  },
+  "restartPartial": {
+    "checks": [
+      {
+        "name": "offline wall duration exceeds the configured five-second order",
+        "passed": true
+      },
+      {
+        "name": "world total tick resumes near its saved value without offline catchup",
+        "passed": true
+      },
+      {
+        "name": "same canonical order stays packed after disk restart",
+        "passed": true
+      },
+      {
+        "name": "old timestamp-only record adopts a tick exactly once",
+        "passed": true
+      },
+      {
+        "name": "same native chest bag preserves proof and tick deadline",
+        "passed": true
+      },
+      {
+        "name": "same saved customer remains available for its live order",
+        "passed": true
+      },
+      {
+        "name": "production handoff pays once despite the passed wall deadline",
+        "passed": true
+      },
+      {
+        "name": "replayed handoff cannot pay twice",
+        "passed": true
+      },
+      {
+        "name": "exact world-tick expiry refuses payment and keeps native bag",
+        "passed": false
+      }
+    ],
+    "completed": false,
+    "reason": "Observer wrote the next test bag into the previously paid coin slot. Original failed check retained; the succeeding edge phase uses an empty slot."
+  },
+  "edgeContinuation": {
+    "passed": true,
+    "phase": "edge",
+    "checks": [
+      {
+        "name": "exact world-tick expiry refuses payment and keeps native bag",
+        "passed": true
+      },
+      {
+        "name": "native simulated Player can begin eating the expired orphan bag",
+        "passed": true
+      },
+      {
+        "name": "native consume event grants expired-bag progress after history pruning",
+        "passed": true
+      },
+      {
+        "name": "native legacy orphan adopts a tick deadline and keeps full metadata",
+        "passed": true
+      }
+    ],
+    "playersAfter": 0,
+    "scope": "Real native items, saved customer/chest and production refresh/accept/handoff/expiry/consumption. Five-second and 12-tick QA deadlines are fixture configuration, not changed defaults. LIVE unchanged."
+  },
+  "normalStops": true,
+  "scope": "Native world ticks, saved native chest/parcel/customer, production refresh/accept/handoff/expiry and real SimulatedPlayer consumption. Successful unchanged phases reused. No client image/audio verdict."
+}

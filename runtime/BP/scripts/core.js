@@ -28,6 +28,8 @@ export const EASTER_EGG_CUSTOMERS = Object.freeze([
   ['zsdr', 'N44(美术)', '5a33e9b0-35bc-44ed-9b4e-03e3e180a3d2']
 ]);
 
+/** @typedef {number | {wall: number, tick: number}} OrderTime */
+
 const OPEN_STATUSES = new Set(["offered", "accepted", "packed"]);
 const WORK_STATUSES = new Set(["accepted", "packed"]);
 export const STAT_KEYS = ["completed", "delivery", "longDistance", "earnings", "failed",
@@ -40,10 +42,40 @@ function integer(value, fallback = 0, min = 0, max = Number.MAX_SAFE_INTEGER) {
 function levelOf(value) {
   return integer(typeof value === "object" ? value?.level : value, 0, 0, MAX_LEVEL);
 }
+/** @param {OrderTime} now */
 function clock(now) {
+  if (typeof now === "object") {
+    if (!Number.isSafeInteger(now.tick) || now.tick < 0) throw new RangeError("invalid world tick");
+    now = now.wall;
+  }
   if (!Number.isFinite(now) || now < 0) throw new RangeError("now must be a non-negative millisecond timestamp");
   return Math.floor(now);
 }
+/** Remaining time uses the saved world tick whenever a tick deadline exists.
+ * Numeric timestamps remain the compatibility input for old pure-core callers.
+ * @param {OrderTime} [now]
+ */
+export function orderRemainingMs(order, now = Date.now()) {
+  const wall = clock(now);
+  if (order.expiresTick !== undefined) {
+    if (typeof now !== "object" || !Number.isSafeInteger(order.expiresTick) || order.expiresTick < 0) {
+      throw new RangeError("tick deadline requires a non-negative world tick");
+    }
+    return Math.max(0, (order.expiresTick - now.tick) * 50);
+  }
+  return Number.isFinite(order.expiresAt) ? Math.max(0, order.expiresAt - wall) : 0;
+}
+
+/** Adopt timestamp-only saves once, retaining their remaining legacy time.
+ * @param {{wall: number, tick: number}} now
+ */
+export function adoptOrderDeadline(order, now) {
+  if (order.expiresTick !== undefined || !Number.isFinite(order.expiresAt)) return false;
+  const wall = clock(now);
+  order.expiresTick = now.tick + Math.max(0, Math.ceil((order.expiresAt - wall) / 50));
+  return true;
+}
+
 function unit(rng) {
   const n = Number(rng());
   return Number.isFinite(n) ? Math.min(1 - Number.EPSILON, Math.max(0, n)) : 0;
@@ -159,6 +191,7 @@ export function removeMenuFood(restaurant, typeId, foodIdentity = undefined) {
   return { ok: true, nutrition: getMenuNutrition(restaurant) };
 }
 
+/** @param {OrderTime} [now] */
 export function createRestaurant(spec = {}, now = Date.now()) {
   const at = clock(now);
   const location = {
@@ -222,6 +255,7 @@ export function getUpgradeQuote(restaurant) {
  * before this mutation. The domain never treats lifetime earnings as a wallet.
  * Upgrading does not generate free orders or reset the refresh timer.
  */
+/** @param {OrderTime} [now] */
 export function upgradeRestaurant(restaurant, now = Date.now()) {
   const quote = getUpgradeQuote(restaurant);
   if (!quote.ok) return quote;
@@ -317,6 +351,7 @@ function nextOrderId(restaurant, now) {
   return id;
 }
 
+/** @param {OrderTime} now */
 function makeOrder(restaurant, now, rng, walkIn) {
   const at = clock(now);
   const cfg = configFor(restaurant);
@@ -359,9 +394,10 @@ function makeOrder(restaurant, now, rng, walkIn) {
     benefitLevel: getEffectiveBenefitLevel(restaurant),
     createdAt: at,
     expiresAt: at + duration,
-    status: "offered"
+    ...(typeof now === "object" ? { expiresTick: now.tick + Math.ceil(duration / 50) } : {}),
+    status: "offered",
+    ...(destination ? { destination } : {})
   };
-  if (destination) order.destination = destination;
   order.reward = calculateReward(order, order.benefitLevel, cfg);
   Object.assign(order, createCustomerProfile(cfg, rng));
   ordersOf(restaurant).push(order);
@@ -370,11 +406,13 @@ function makeOrder(restaurant, now, rng, walkIn) {
 }
 
 /** Returns the new order and appends it to restaurant.orders. */
+/** @param {OrderTime} [now] */
 export function generateOrder(restaurant, now = Date.now(), rng = Math.random) {
   return makeOrder(restaurant, now, rng, false);
 }
 
 /** Walk-ins have independent offers, are always dine-in/rush, and expire from arrival. */
+/** @param {OrderTime} [now] */
 export function generateWalkInOrder(restaurant, now = Date.now(), rng = Math.random) {
   return makeOrder(restaurant, now, rng, true);
 }
@@ -402,15 +440,16 @@ function cancelOffer(order, now, reason) {
 }
 
 /** Accepted/packed orders survive machine refreshes. Only the remaining offers change. */
+/** @param {OrderTime} [now] */
 export function refreshOrders(restaurant, now = Date.now(), rng = Math.random) {
   const at = clock(now);
-  expireOrders(restaurant, at);
+  expireOrders(restaurant, now);
   for (const order of ordersOf(restaurant)) {
     if (order.status === "offered" && order.source !== "walk_in") cancelOffer(order, at, "refresh");
   }
   const fresh = [];
   for (let index = 0; index < getUnlockedSlots(restaurant); index++) {
-    fresh.push(generateOrder(restaurant, at, rng));
+    fresh.push(generateOrder(restaurant, now, rng));
   }
   restaurant.nextRefreshAt = at + integer(configFor(restaurant).refreshMs, DEFAULT_CONFIG.refreshMs, 1);
   restaurant.updatedAt = at;
@@ -418,13 +457,14 @@ export function refreshOrders(restaurant, now = Date.now(), rng = Math.random) {
 }
 
 /** Expiry is inclusive: an order cannot be packed/paid at exactly expiresAt. */
+/** @param {OrderTime} [now] */
 export function expireOrders(restaurant, now = Date.now()) {
   const at = clock(now);
   const expired = [];
   let failed = 0;
   for (const order of ordersOf(restaurant)) {
     if (!OPEN_STATUSES.has(order.status)) continue;
-    if (Number.isFinite(order.expiresAt) && at < order.expiresAt) continue;
+    if (orderRemainingMs(order, now) > 0) continue;
     if (WORK_STATUSES.has(order.status)) failed++;
     order.status = "expired";
     order.expiredAt = at;
@@ -447,9 +487,10 @@ function lookup(restaurant, orderId, now) {
   return { ok: true, order };
 }
 
+/** @param {OrderTime} [now] */
 export function acceptOrder(restaurant, orderId, now = Date.now()) {
   const at = clock(now);
-  const found = lookup(restaurant, orderId, at);
+  const found = lookup(restaurant, orderId, now);
   if (!found.ok) return found;
   const order = found.order;
   if (order.status !== "offered") return { ok: false, reason: "already_accepted", order };
@@ -470,9 +511,10 @@ export function acceptOrder(restaurant, orderId, now = Date.now()) {
 }
 
 /** Ingredient and packaging transactions belong to the Minecraft adapter. */
+/** @param {OrderTime} [now] */
 export function packOrder(restaurant, orderId, now = Date.now()) {
   const at = clock(now);
-  const found = lookup(restaurant, orderId, at);
+  const found = lookup(restaurant, orderId, now);
   if (!found.ok) return found;
   const order = found.order;
   if (order.status === "packed") return { ok: false, reason: "already_packed", order };
@@ -517,9 +559,10 @@ export function rollCustomerCompletion(restaurant, order, now, options = {}) {
  * callers retain the alpha.1 pure-core contract (no customer animation roll).
  * The selected boom bonus remains pending until the customer finishes eating.
  */
+/** @param {OrderTime} [now] */
 export function completeOrder(restaurant, orderId, now = Date.now(), options = {}) {
   const at = clock(now);
-  const found = lookup(restaurant, orderId, at);
+  const found = lookup(restaurant, orderId, now);
   if (!found.ok) return found;
   const order = found.order;
   if (order.status !== "packed") return { ok: false, reason: "not_packed", order };
@@ -552,9 +595,10 @@ export function completeOrder(restaurant, orderId, now = Date.now(), options = {
   return { ok: true, order, reward, baseReward, tip, boomBonus, completion };
 }
 
+/** @param {OrderTime} [now] */
 export function cancelOrder(restaurant, orderId, now = Date.now()) {
   const at = clock(now);
-  const found = lookup(restaurant, orderId, at);
+  const found = lookup(restaurant, orderId, now);
   if (!found.ok) return found;
   const order = found.order;
   if (!OPEN_STATUSES.has(order.status)) return { ok: false, reason: "invalid_state", order };

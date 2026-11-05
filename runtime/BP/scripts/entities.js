@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Bedrock adaptation of Order To Cook by breezeth-CN; see THIRD_PARTY_NOTICES.md.
 import { ButtonState, EntityDamageCause, EntitySwingSource, InputButton, ItemStack, MolangVariableMap, system, world } from "@minecraft/server";
+import { orderRemainingMs } from './core.js';
 import { ActionFormData } from "@minecraft/server-ui";
 import { containerCapacity, dropContainerContents, itemLabel, openContainerForm, playerInventory } from "./appliances.js";
 import { playEffects, customerCompletionEffects, customerPortalEffects, customerExplosionEffects, customerUnsuccessfulEffects, motorcycleHitEffects } from "./audiovisual.js";
@@ -870,8 +871,8 @@ export function createEntityService(ctx) {
           restoreCustomerChair(entity);
           continue;
         }
-        if (!needsCustomer(order) || currentTime >= order.expiresAt) {
-          if (order && (['cancelled', 'expired'].includes(order.status) || currentTime >= order.expiresAt)) {
+        if (!needsCustomer(order) || orderRemainingMs(order, ctx.orderTime?.() ?? currentTime) <= 0) {
+          if (order && (['cancelled', 'expired'].includes(order.status) || orderRemainingMs(order, ctx.orderTime?.() ?? currentTime) <= 0)) {
             playEffects(entity.dimension, customerUnsuccessfulEffects(entity.location), MolangVariableMap);
           }
           removeCustomer(entity); continue;
@@ -883,7 +884,7 @@ export function createEntityService(ctx) {
       const candidates = [];
       for (const restaurant of ctx.restaurants?.() ?? []) {
         for (const order of restaurant.orders ?? []) {
-          if (!needsCustomer(order) || currentTime >= order.expiresAt) continue;
+          if (!needsCustomer(order) || orderRemainingMs(order, ctx.orderTime?.() ?? currentTime) <= 0) continue;
           if ((retryTimes.get(order.id) ?? -100) + 40 > now) continue;
           if (entities.some(entity => entity.isValid && entity.getDynamicProperty(`${NS}order_id`) === order.id)) continue;
           candidates.push({ restaurant, order });

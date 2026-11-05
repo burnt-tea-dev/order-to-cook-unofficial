@@ -6,7 +6,7 @@
 
 授權基線為上游 [LICENSE.txt](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/LICENSE.txt) 的 GNU GPL v3。上游 README 也聲明程式碼使用 GPL v3；檢查目錄後未發現另外的素材授權排除文件。本移植保留上游作者 breezeth、來源及修改聲明，派生程式使用 GPL-3.0-only。發行包不含上游 Java JAR。這是非官方基岩版移植，與上游 Java 模組分別維護。
 
-本文件對應 **0.1.1-alpha.2**。領域規則由 `runtime/BP/scripts/core.js`、`config.js` 實作，世界配接由 `main.js`、`entities.js`、`dining.js` 及 `appliances.js` 處理。下文區分上游規則與有意適配；原版 GUI、玩家動畫、家電畫面、實體物理及模組聯動不能由純邏輯測試推定完成。實際驗證範圍以 [VALIDATION.md](VALIDATION.md) 為準，真實客戶端、表單與觸控仍待驗收。
+本文件描述目前[配對manifest](../runtime/BP/manifest.json)所對應來源。領域規則由 `runtime/BP/scripts/core.js`、`config.js` 實作，世界配接由 `main.js`、`entities.js`、`dining.js` 及 `appliances.js` 處理。下文區分上游規則與有意適配；原版 GUI、玩家動畫、家電畫面、實體物理及模組聯動不能由純邏輯測試推定完成。實際驗證範圍以 [VALIDATION.md](VALIDATION.md) 為準，真實客戶端、表單與觸控仍待驗收。
 
 ## 一、餐廳與立牌
 
@@ -138,7 +138,7 @@ Java 的 `TakeoutBagItem.prepareBoomBonus` 先選定加賞，`CustomerEntity.tic
 
 ## 六、核心呼叫契約
 
-所有時刻均為 Unix 毫秒；正式配接層使用 `Date.now()`，測試傳入固定值。餐廳與訂單都是可 JSON 序列化的資料，核心不持有 Minecraft 物件。
+事件紀錄仍使用Unix毫秒。正式期限輸入為`{wall: Date.now(), tick: system.currentTick}`，核心以保存的`expiresTick`判斷剩餘時間；其餘建立／完成時間仍記wall。純核心舊呼叫可傳毫秒，但含tick期限的訂單必須提供上述時鐘。餐廳與訂單均可JSON保存，核心不持有Minecraft物件。`orderRemainingMs`是唯一剩餘時間算法；`adoptOrderDeadline`只轉換尚無tick期限的舊單，按原剩餘毫秒向上取整至tick。
 
 | 匯出 | 結果及副作用 |
 |---|---|
@@ -156,7 +156,7 @@ Java 的 `TakeoutBagItem.prepareBoomBonus` 先選定加賞，`CustomerEntity.tic
 | synchronizeOfferRewards(r) | 依目前菜單重算尚未接受單的有效獎勵 |
 | splitCoins(amount) | 回 [{typeId,amount,value}]，配接層處理物品最大堆疊 |
 
-`completeOrder` 的可選參數為 `{rng,raining,easterEgg,customerSeated}`。未提供前三者時使用 Math.random、一般天氣與一般顧客；`customerSeated` 必須由遊戲配接層明確核對。提供此布林值時，核心保存 `completion = {startedAt,finishAt,action,boomBonus}`；堂食另保存 `order.meal` 供餐盤與顧客恢復。未提供 `customerSeated` 的純核心呼叫保留 alpha.1 的相容契約，不另抽顧客動作或爆炸加賞，不能以省略資訊推定坐姿堂食。
+`completeOrder` 的可選參數為 `{rng,raining,easterEgg,customerSeated}`。未提供前三者時使用 Math.random、一般天氣與一般顧客；`customerSeated` 必須由遊戲配接層明確核對。提供此布林值時，核心保存 `completion = {startedAt,finishAt,action,boomBonus,clock:"loaded"}`；堂食另保存 `order.meal` 供餐盤與顧客恢復。未提供 `customerSeated` 的純核心呼叫保留 alpha.1 的相容契約，不另抽顧客動作或爆炸加賞，不能以省略資訊推定坐姿堂食。
 
 成功後 `order.reward` 保留原報價，`order.paidReward` 記錄實付，`order.tip`、`order.boomBonus` 分別記錄小費與加賞。正式交餐配接在修改前確認目前 canonical 餐廳記錄、顧客、位置、有效承載物 proof 及餐盤位置空缺，並以可回退流程協調狀態與物品；交餐不因 UI 重試或重載再次付款；用餐加賞的獨立待付狀態只可結清一次。接單、設備管理及收盤另有店主／員工權限；目前交付按有效實物身份允許持有人代交，不能把撤銷員工權限描述成自動作廢其持有的有效餐點。
 
@@ -164,7 +164,7 @@ Java 的 `TakeoutBagItem.prepareBoomBonus` 先選定加賞，`CustomerEntity.tic
 
 ## 七、有意的平台差異與驗證界線
 
-1. **時鐘差異**：Java 優先使用世界 tick，系統時間只作兼容。這份基岩版的訂單期限仍使用Unix毫秒，停止期間仍會到期。0.1.18起，餐盤與顧客反應改為原生方塊／實體tick；停止模擬及關服不補算，重開接續保存進度。設備烹調／清洗同樣只在載入時累計tick。
+1. **時鐘與範圍**：0.1.19起，訂單期限依原生`system.currentTick`世界總tick保存，關服不倒數；伺服器運行時，即使離開區域，訂單仍會到期。新實物包裹另保存`ordertocook:expires_tick`，歷史裁剪後仍可獨立判斷食用；舊資料第一次接觸時接續舊剩餘時間。0.1.18起，餐盤／顧客反應按各自原生區域模擬tick，停服及區域停止模擬不補算。打單機刷新與到店判定間隔仍有現實時間適配，沒有藉本修正宣稱全時鐘等價。見[訂單期限](validation/0.1.19-alpha.1/ORDER_DEADLINES.md)。
 2. **報價重算時機**：Java 在開啟打單界面時降低有效利益；核心在生成、接受及明確同步時處理，避免配接層忘記 UI 回調造成高報價。恢復菜單後可重新提高仍未接受的報價。這比上游只在低於實際等級時重算的 UI 行為更一致。
 3. **隨機序列**：選菜與機率分布相同，但 Java RandomSource 與 JavaScript RNG 不追求逐 seed 相同的序列。
 4. **虛擬營養**：每張單會快照菜品營養，已接受單不因之後修改註冊資料而變價。
@@ -247,3 +247,8 @@ Java 的 `TakeoutBagItem.prepareBoomBonus` 先選定加賞，`CustomerEntity.tic
 固定來源[FoodPlateBlock.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/FoodPlateBlock.java)繼承BaseEntityBlock，沒有餐盤重力。`use`在背包放不下時生成ItemEntity；`onRemove`在移除餐盤且仍有內容時掉回一份，進食中轉為新髒盤，離地速度Y0.1。拆掉下方桌面不應被當作新增餐盤重力的理由。
 
 原 `use` 的提前點取會中斷顧客；`onRemove` 只掉物，不觸發該中斷。基岩版點取與原生方塊移除共用不可重領的claim，但僅點取走提前中斷；滿包轉原生世界掉落，打破一律落地，保留店主／員工權限。拆餐廳同樣生成普通可堆疊髒盤，不寫入不受支援的ItemStack動態屬性。已生成後的未知失敗不盲目重試，仍有原來跨世界資料／物品原子提交的限制。原生方塊採原兩層碰撞與穩定階段模型；選取框用外接長方體。當前[原生與重啟範圍](validation/0.1.15-alpha.1/NATIVE_PLATE.md)不等於客戶端聲畫驗收；0.1.14的實體回收結果只作歷史。
+
+
+### 訂單期限的原作依據
+
+固定提交的`OrderGenerator.java`以`world.getGameTime()`加上36000／12000 tick產生`ExpiryTick`，保留Unix毫秒欄位作相容。`OrderItem.java`的tooltip與inventoryTick優先使用世界tick，舊資料的`ensureExpiryTick`按剩餘毫秒向上取整轉換。基岩版對應`expiresTick`與`ordertocook:expires_tick`；完整原生及保存範圍見[訂單期限](validation/0.1.19-alpha.1/ORDER_DEADLINES.md)。
