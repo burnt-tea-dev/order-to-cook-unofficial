@@ -3,6 +3,7 @@
 // its actual requests; these checks do not certify a client-rendered pose.
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { appliances, FakeItem, FakePlayer, makeEnvironment, place, advance } from './appliances.harness.js';
 
 function fixture() {
@@ -15,6 +16,43 @@ function fixture() {
 const names = player => player.animations.map(row => row.name);
 const START = 'animation.ordertocook.player.handwash', FP = START + '_first_person', STOP = START + '_stop';
 const STARTS = [START, FP], FINISHED = [START, FP, STOP, STOP];
+const clips = JSON.parse(readFileSync(new URL('../runtime/RP/animations/handwashing_player.animation.json', import.meta.url))).animations;
+
+// The emitted request expressions use the shared JS/Molang boolean-assignment
+// subset. Execute those actual expressions; this is not a native Molang or
+// same-frame render-order test.
+const evaluateBlend = (name, query, variable) => new Function('query', 'variable', clips[name].blend_weight)(query, variable);
+const checkedVariables = initial => new Proxy(initial, {
+  get(target, key) { assert.ok(key in target, `read before assignment: ${key}`); return target[key]; }
+});
+
+test('first-person pose and shared request use the same bounded empty-hand gate', () => {
+  for (const [overrides, requested, blend] of [
+    [{}, true, true], [{ time: 3.99 }, true, true],
+    [{ first: 0 }, false, false], [{ vr: 1 }, false, false],
+    [{ ui: 1 }, false, false], [{ main: 1 }, false, false], [{ off: 1 }, false, false],
+    [{ time: -0.01 }, false, false], [{ time: 4 }, false, false], [{ time: 4.01 }, false, false]
+  ]) {
+    const state = { first: 1, vr: 0, ui: 0, main: 0, off: 0, time: 0, ...overrides };
+    const variable = checkedVariables({ is_using_vr: state.vr });
+    const query = { is_first_person: state.first, is_in_ui: state.ui, anim_time: state.time,
+      is_item_equipped: hand => {
+        assert.equal(state.ui, 0, 'UI previews must not inspect a gameplay inventory');
+        assert.ok(['main_hand', 'off_hand'].includes(hand), hand);
+        return hand === 'main_hand' ? state.main : state.off;
+      } };
+    assert.equal(Boolean(evaluateBlend(FP, query, variable)), blend, JSON.stringify(overrides));
+    assert.equal(Boolean(variable.senluo_fp_left_arm_request), requested, JSON.stringify(overrides));
+  }
+});
+
+test('the existing replacement-stop clip clears a previous or initially missing shared request', () => {
+  for (const initial of [{}, { senluo_fp_left_arm_request: 1 }]) {
+    const variable = checkedVariables(initial);
+    assert.equal(evaluateBlend(STOP, {}, variable), 1);
+    assert.equal(variable.senluo_fp_left_arm_request, 0);
+  }
+});
 
 test('washing starts synchronized bounded perspectives and stops both controllers after 80 ticks', () => {
   const env = fixture(); env.service.onInteract(env.player, env.block);

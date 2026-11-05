@@ -45,9 +45,21 @@ Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedro
 | 三槽爐灶 | 3輸入＋1燃料＋3配對輸出、共用200 tick；實際產量、堵塞、換料重置與保存；15／5／8 tick獨立爐火 | 原版9條＋有效安裝時煙火2條，其他供應商以明確smoking契約接入；單頁控制與直接存取，點火骨骼與粒子分布仍有適配，客戶端待驗收。 |
 | 顧客 | 兩款原皮膚／骨架、等待與坐姿各 4 變體、7 個 action | idle 權重 55／15／15／15，完成片段後再選變體；action 按原生實體已模擬的tick定位，保留12／40／60／120／110／10 tick時長及保存進度；完成通知下一tick處理，原生測試中10 tick中斷至移除共13 tick；不下載網路皮膚。 |
 | 用餐餐盤 | 原生方塊、原兩層碰撞、40個進食模型；stage 0沿用原食物與放盤短動畫 | 舊記錄及token保留，穩定階段舊helper會移除；原生點取／打破及替換方塊走唯一領取記錄。選取框是兩層形狀的外接長方體；尚未等價保存原BlockEntity任意ItemStack資料。原作沒有重力。實際範圍見[原生餐盤](validation/0.1.15-alpha.1/NATIVE_PLATE.md)，不由服務端推定客戶端聲畫。 |
-| 椅子／玩家動作 | 玩家可坐、手洗身體／端點轉換、獨立第一人稱右臂節拍、顧客原姿勢 | 手洗身體縮放／前傾、頭／腿及肩膀／手端已轉換，前臂資料不再丟棄；原生仍無真肘關節，空手第一人稱左臂由原生 renderer 隱藏，Java ACTION 雙臂校準未移植。客製玩家骨架、實際姿勢／可見停止未確認，沒有 player.json 或全域 geometry／renderer 覆寫。見 [本輪動作範圍](validation/0.1.20-alpha.1/PLAYER_POSES.md)。椅上喝彩的既有起停與聲音接線不變，見 [喝彩範圍](validation/0.1.13-alpha.1/CHAIR_CLAP.md)。 |
+| 椅子／玩家動作 | 玩家可坐、手洗身體／端點轉換、獨立第一人稱左右臂節拍、顧客原姿勢 | 手洗身體／前臂端點沿用原適配，0.1.22 補第一人稱左臂資料及共用顯示請求；可見性須由有效共享 player/controller 接線，單包不保證空手左臂。真肘關節、Java ACTION 校準、客製玩家骨架及可見姿勢／停止仍未完成或未確認。沒有 player.json 或 renderer 覆寫；目前範圍見[下節](#手洗第一人稱左臂)，[0.1.20 原生證據](validation/0.1.20-alpha.1/PLAYER_POSES.md)保留原範圍。椅上喝彩起停及聲音不變，見[喝彩範圍](validation/0.1.13-alpha.1/CHAIR_CLAP.md)。 |
 | 小電驢 | 原Java模型、四車色、保溫箱、燈面、喇叭 | 原生載具物理及按鍵；燈面發光但不照亮地形。原騎車自動頭盔屬玩家渲染層，本版未重建該層及完整玩家姿勢。 |
 | 原始美術 | 67原PNG、12原OGG原樣保留；原geo／動畫正規化存档 | 保存未使用片段不等於其在玩法中已被觸發；動畫清單詳見ASSET_PROVENANCE。 |
+
+## 手洗第一人稱左臂
+
+0.1.22 由 `tools/convert_assets.py::make_player_handwashing_animation` 生成真正的 FP `leftArm` channel，使用原 `left_arm`／`left_hand` 的相對節拍。右臂的官方空手基準與曲線、第三人稱 clip 保持原資料；左臂攝影機基準採右側的左右鏡射。這是明列的適配，尚未等價 Java ACTION 雙臂校準或其分段肘關節。
+
+有限四秒 FP clip 先直接寫入 `variable.senluo_fp_left_arm_request`，再回傳已賦值的同一條件作為實際 blend：第一人稱、非 VR、非 UI 預覽、主副手皆空，且 `0 <= query.anim_time < 4`。因此拿起地圖／副手物品到既有 server cancel 到達前，洗盤姿勢也會收回，不只關閉顯示請求。這擴充了 FP blend 條件，不能稱整個 FP 行為未變。既有 stop replacement／0.1 秒退場保留，stop clip 直接清零，不先讀取可能尚未定義的共用變量。
+
+可見性由公共 [Core 共用 contract](https://github.com/burnt-tea-dev/senluo-bedrock-core/blob/7e8185177d7a8d58991bccd76d32bce2276e5f57/docs/PORT-ADAPTERS.md#shared-first-person-left-arm-request)擁有：`compose_first_person_arm_request` 同時處理有效 client-player 與 FP controller。OTC 不包含該兩個 owner 檔案，不新增 player 屬性、保存資料或輪詢；只有姿勢與短暫請求。未接入 helper 的獨立安裝不能宣稱空手左臂可見，來源合併也不會自動為既有安裝接線。
+
+測試執行真生成器並擾動原左臂來源，確認左臂跟隨自己的資料、右側與其他骨骼不變；既有身體／端點正向計算仍保留。實際生成的 boolean／assignment expression 亦以相同 JavaScript 子集執行，驗證 FP／TP／VR／UI、兩手持物、時間邊界、未定義旗標及停止清除。這是來源與條件測試，並非原生 Molang 執行或 renderer 求值順序的證明。
+
+`appliances.js`、洗盤取物／數量／取消／付款及 BP API 請求均未改，沿用 [0.1.20 原生 API 接受與 session 證據](validation/0.1.20-alpha.1/player-poses-native.json)，不為新 bone／Molang 字串重開同一 headless BDS。所選 client 對注入 clip → part visibility 的同幀傳遞、左臂落點、換視角與可見停止仍未觀察，不新增真人等待門檻。
 
 ## 互通與資料
 

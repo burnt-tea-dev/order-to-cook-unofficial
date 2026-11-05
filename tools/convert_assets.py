@@ -612,17 +612,20 @@ def make_player_handwashing_animation():
              'leftLeg': copy.deepcopy(original['bones']['left_leg'])}
     for side in ('right', 'left'):
         bones[f'{side}Arm'] = {'rotation': {}, 'position': {}, 'scale': {}}
-    first_person = {'rightArm': {'rotation': {}, 'position': {}}}
-    # Mojang 1.26.60.5 player_firstperson: native empty-hand pose. Only the
-    # right arm is visible with both hands empty; animations cannot unhide left.
-    fp_rotation, fp_position = [95, -45, 115], [13.5, -10, 12]
-    initial_rotation, initial_shoulder, _ = handwash_arm_pose(original, rig, 'right', 0)
+    first_person = {side+'Arm': {'rotation': {}, 'position': {}} for side in ('right', 'left')}
+    # The right basis is Mojang1.26.60.5 empty_hand. Mirror that camera basis
+    # for the left arm, then apply each source arm's own stroke. This is an
+    # adaptation, not Java ACTION calibration or proof of client visibility.
+    fp_bases = {'right': ([95, -45, 115], [13.5, -10, 12]),
+                'left': ([95, 45, -115], [-13.5, -10, 12])}
+    initial = {side: handwash_arm_pose(original, rig, side, 0) for side in ('right', 'left')}
 
-    def into_fp(vector):
+    def into_fp(vector, side):
+        initial_rotation = initial[side][0]
         for axis in (2, 1, 0):
             undo = [0]*3; undo[axis] = -initial_rotation[axis]
             vector = geometry_transform3(vector, undo)
-        return geometry_transform3(vector, fp_rotation)
+        return geometry_transform3(vector, fp_bases[side][0])
 
     for tick in range(81):
         seconds, key = (tick % 40)/20, f'{tick/20:g}'
@@ -642,25 +645,33 @@ def make_player_handwashing_animation():
             bone['rotation'][key] = local_rotation
             bone['position'][key] = [a-b for a,b in zip(shoulder, transformed)]
             bone['scale'][key] = [1, stretch, 1]
-            if side == 'right':
-                # Apply the source stroke relative to its first frame in the
-                # native first-person basis, keeping camera/VR base pose native.
-                axes = [into_fp(geometry_transform3([int(i == j) for i in range(3)], rotation)) for j in range(3)]
-                fp_angles, _ = closest_cuboid_axes([[axes[j][i] for j in range(3)] for i in range(3)])
-                first_person['rightArm']['rotation'][key] = fp_angles
-                delta = into_fp([a-b for a,b in zip(source_shoulder, initial_shoulder)])
-                base_top = geometry_transform3(top, fp_rotation, pivot)
-                moved_top = geometry_transform3(top, fp_angles, pivot)
-                first_person['rightArm']['position'][key] = [a+b+c-d for a,b,c,d in zip(fp_position, delta, base_top, moved_top)]
+            fp_rotation, fp_position = fp_bases[side]
+            axes = [into_fp(geometry_transform3([int(i == j) for i in range(3)], rotation), side) for j in range(3)]
+            fp_angles, _ = closest_cuboid_axes([[axes[j][i] for j in range(3)] for i in range(3)])
+            fp_arm = first_person[side+'Arm']
+            fp_arm['rotation'][key] = fp_angles
+            delta = into_fp([a-b for a,b in zip(source_shoulder, initial[side][1])], side)
+            base_top = geometry_transform3(top, fp_rotation, pivot)
+            moved_top = geometry_transform3(top, fp_angles, pivot)
+            fp_arm['position'][key] = [a+b+c-d for a,b,c,d in zip(fp_position, delta, base_top, moved_top)]
     destination = RP / "animations/handwashing_player.animation.json"
     write_json(destination, {"format_version": "1.8.0", "animations": {
         f"animation.{NS}.player.handwash": {"animation_length": 4, "loop": False,
             "blend_weight": "!query.is_first_person", "override_previous_animation": True, "bones": rounded(bones)},
         f"animation.{NS}.player.handwash_first_person": {"animation_length": 4, "loop": False,
-            "blend_weight": "query.is_first_person && !variable.is_using_vr", "override_previous_animation": True, "bones": rounded(first_person)},
-        f"animation.{NS}.player.handwash_stop": {"animation_length": 0.05}
+            # Publish only this frame's request. A shared player owner resets
+            # it in pre_animation and ORs it into the two left-part conditions.
+            # Gate the pose too: a newly held map/offhand item may already show
+            # its arm before the server's existing cancellation reaches client.
+            # Assign before reading so standalone clients need no flag setup.
+            "blend_weight": ("variable.senluo_fp_left_arm_request = query.is_first_person && !variable.is_using_vr && "
+                             "!query.is_in_ui && !query.is_item_equipped('main_hand') && !query.is_item_equipped('off_hand') && "
+                             "query.anim_time >= 0 && query.anim_time < 4; return variable.senluo_fp_left_arm_request;"),
+            "override_previous_animation": True, "bones": rounded(first_person)},
+        f"animation.{NS}.player.handwash_stop": {"animation_length": 0.05,
+            "blend_weight": "variable.senluo_fp_left_arm_request = 0; return 1;"}
     }})
-    record(source, destination, "Original body hierarchy and shoulder/hand-tip retarget; rigid elbow approximation; native first-person relative right-arm stroke; bounded four seconds, no player definition override")
+    record(source, destination, "Original body hierarchy and shoulder/hand-tip retarget; rigid elbow approximation; independent first-person arm strokes with mirrored native left basis and bounded shared visibility request; no player definition override")
     record(ASSETS / 'geo/drive_idle.geo.json', destination, "Original active player rig pivots and upper/lower-arm endpoints")
 
 

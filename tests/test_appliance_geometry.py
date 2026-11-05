@@ -37,14 +37,37 @@ class ApplianceGeometryTests(unittest.TestCase):
             self.assertEqual(clip['animation_length'], 4)
             self.assertFalse(clip['loop'])
         self.assertEqual(third['blend_weight'], '!query.is_first_person')
-        self.assertEqual(first['blend_weight'], 'query.is_first_person && !variable.is_using_vr')
-        self.assertEqual(set(first['bones']), {'rightArm'})
-        arm = first['bones']['rightArm']
-        self.assertEqual(arm['rotation']['0'], [95, -45, 115])
-        self.assertEqual(arm['position']['0'], [13.5, -10, 12])
-        self.assertEqual(arm['rotation']['0'], arm['rotation']['4'])
-        self.assertNotEqual(arm['rotation']['0'], arm['rotation']['0.5'])
+        self.assertEqual(set(first['bones']), {'rightArm', 'leftArm'})
+        for side, rotation, position in [('right', [95, -45, 115], [13.5, -10, 12]),
+                                          ('left', [95, 45, -115], [-13.5, -10, 12])]:
+            arm = first['bones'][side+'Arm']
+            self.assertEqual(arm['rotation']['0'], rotation)
+            self.assertEqual(arm['position']['0'], position)
+            self.assertEqual(arm['rotation']['0'], arm['rotation']['4'])
+            self.assertNotEqual(arm['rotation']['0'], arm['rotation']['0.5'])
         self.assertLessEqual(clips['animation.ordertocook.player.handwash_stop']['animation_length'], 0.1)
+
+    def test_first_person_left_stroke_uses_its_own_source_and_leaves_other_actions_unchanged(self):
+        expected = converter.read_json(ROOT / 'runtime/RP/animations/handwashing_player.animation.json')['animations']
+        with TemporaryDirectory() as temp:
+            source = Path(temp) / 'source'
+            assets = source / converter.ASSET_REL
+            for relative in ('animations/player_wash.animation.json', 'geo/drive_idle.geo.json'):
+                document = converter.read_json(converter.ASSETS / relative)
+                if relative.startswith('animations/'):
+                    document['animations']['player_wash']['bones']['left_arm']['rotation']['0.5']['vector'][0] += 12
+                converter.write_json(assets / relative, document)
+            output = Path(temp) / 'output'
+            with patch.multiple(converter, create=True, SOURCE=source, ASSETS=assets, OUT=output, RP=output, PROVENANCE=[]):
+                converter.make_player_handwashing_animation()
+            actual = converter.read_json(output / 'animations/handwashing_player.animation.json')['animations']
+        fp = 'animation.ordertocook.player.handwash_first_person'
+        self.assertNotEqual(actual[fp]['bones']['leftArm'], expected[fp]['bones']['leftArm'])
+        self.assertEqual(actual[fp]['bones']['rightArm'], expected[fp]['bones']['rightArm'])
+        for name, clip in expected.items():
+            for bone, channels in clip.get('bones', {}).items():
+                if bone != 'leftArm':
+                    self.assertEqual(actual[name]['bones'][bone], channels, (name, bone))
 
     def test_player_handwash_preserves_source_body_and_arm_endpoints(self):
         # Forward-evaluate the actual source and generated animation. This does
