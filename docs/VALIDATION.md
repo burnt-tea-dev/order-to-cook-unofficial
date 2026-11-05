@@ -1,5 +1,10 @@
 # 0.1.2-alpha.3 驗證紀錄
 
+## 0.1.18-alpha.1 原生料理計時
+
+完整 `npm run verify`：511項來源測試、型別、367 JSON與配對打包通過。原生交餐／同世界重開／停止模擬／舊資料轉換共37項通過；範圍與排程延遲見[原生料理計時](validation/0.1.18-alpha.1/LOADED_MEALS.md)。未首次安裝至LIVE。
+
+
 驗證日期：2026-10-10。**本輪 254／254 項回歸、stable API 型別、靜態資源檢查及可重現建置通過；原生 BDS 與真實客戶端未執行。** 客戶端測試交接文件已為 dot 準備，尚無其實機回報。
 
 [本輪 CI 工作](https://github.com/casama233/order-to-cook-unofficial/actions/runs/38016889591) · [機器可讀紀錄](validation/0.1.2-alpha.3/ci.json) · [dot 交接](DOT_HANDOFF.md) · [客戶端回報模板](validation/DOT_REPORT_TEMPLATE.md)

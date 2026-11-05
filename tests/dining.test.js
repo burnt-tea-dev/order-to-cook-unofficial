@@ -35,8 +35,12 @@ function fixture() {
   const restaurant = { id: 'r', ownerId: player.id, dimensionId: env.dimension.id,
     location: { x: 0, y: 0, z: 0 }, orders: [order], pendingDishes: [] };
   env.ctx.saveRestaurant(restaurant);
+  env.ctx.settleMealBonus = (restaurant, meal) => { delete meal.reactionPending; env.ctx.saveRestaurant(restaurant); return true; };
   const service = createDiningService(env.ctx);
   const meal = service.queueMeal(restaurant, order, customer, NOW);
+  // These existing fixtures represent timestamp-only saves; current native
+  // meals are exercised separately below.
+  delete meal.reactionPending;
   env.ctx.saveRestaurant(restaurant);
   return { ...env, service, restaurant, order, meal, customer, player, chair, resumed, interrupted,
     snapshots, failNextSave: (offset = 1) => { failSave = offset; } };
@@ -59,13 +63,17 @@ function dirtyCount(player) {
   return count;
 }
 
+function advanceFood(env, ticks) {
+  for (let i = 0; i < ticks; i++) env.service.tickFood(nativePlate(env), NOW);
+}
+
 test('all ten original plate variants use exact 15/60/80/100-tick stage thresholds', () => {
   for (let variant = 0; variant < 10; variant++) {
     const meal = { variant, startedAt: NOW };
-    const expected = [[-1, 0], [0, 0], [749, 0], [750, variant * 4 + 1], [2999, variant * 4 + 1],
-      [3000, variant * 4 + 2], [3999, variant * 4 + 2], [4000, variant * 4 + 3], [4999, variant * 4 + 3],
-      [5000, variant * 4 + 4], [500000, variant * 4 + 4]];
-    for (const [elapsed, stage] of expected) assert.equal(mealStage(meal, NOW + elapsed), stage);
+    const expected = [[0, 0], [14, 0], [15, variant * 4 + 1], [59, variant * 4 + 1],
+      [60, variant * 4 + 2], [79, variant * 4 + 2], [80, variant * 4 + 3], [99, variant * 4 + 3],
+      [100, variant * 4 + 4], [10000, variant * 4 + 4]];
+    for (const [elapsed, stage] of expected) assert.equal(mealStage(meal, elapsed), stage);
   }
 });
 
@@ -101,8 +109,9 @@ test('only completed dine-in orders can queue a recoverable dirty plate', () => 
 });
 
 test('cosmetic meal progresses and remains dirty after the customer departure deadline', () => {
-  const env = fixture();
+  const env = fixture(); let previous = 0; env.service.tick(NOW);
   for (const [elapsed, stage] of [[0, 0], [750, 29], [3000, 30], [4000, 31], [5000, 32], [10000, 32]]) {
+    advanceFood(env, (elapsed - previous) / 50); previous = elapsed;
     env.service.tick(NOW + elapsed);
     const plates = env.dimension.getEntities({ type: DINING_ENTITY });
     assert.equal(plates.length, stage === 0 ? 1 : 0);
@@ -121,11 +130,11 @@ test('late-loaded placement seeks the original half-second clip without restarti
   assert.equal(plate.getProperty('ordertocook:stage'), 0);
   assert.equal(plate.getProperty('ordertocook:placement_age'), 0.35);
   plate.remove();
-  env.service.tick(NOW + 700);
+  advanceFood(env, 7); env.service.tick(NOW + 700);
   plate = env.dimension.getEntities({ type: DINING_ENTITY })[0];
   assert.equal(plate.getProperty('ordertocook:placement_age'), 0.5);
   assert.equal(plate.getProperty('ordertocook:stage'), 0);
-  env.service.tick(NOW + 750);
+  advanceFood(env, 1); env.service.tick(NOW + 750);
   assert.equal(plate.isValid, false);
   assert.equal(nativeStage(env), 29);
   assert.equal(env.meal.startedAt, NOW);
@@ -139,6 +148,8 @@ test('restart reconciles the persisted plate without resetting meal time or dupl
   env.restaurants.set('r', restored);
   const restarted = createDiningService(env.ctx); restarted.tick(NOW + 4000);
   assert.equal(env.dimension.getEntities({ type: DINING_ENTITY }).length, 0);
+  assert.equal(nativeStage(env), 30, 'offline wall time does not advance an adopted meal');
+  for (let i = 0; i < 20; i++) restarted.tickFood(nativePlate(env), NOW + 4000);
   assert.equal(nativeStage(env), 31);
   assert.equal(restored.pendingDishes[0].startedAt, NOW);
 });
@@ -146,7 +157,7 @@ test('restart reconciles the persisted plate without resetting meal time or dupl
 test('missing loaded cosmetic entity is reconstructed from canonical state without creating an item', () => {
   const env = fixture(); env.service.tick(NOW);
   env.dimension.getEntities({ type: DINING_ENTITY })[0].remove();
-  env.service.tick(NOW + 5000);
+  advanceFood(env, 100); env.service.tick(NOW + 5000);
   assert.equal(env.dimension.getEntities({ type: DINING_ENTITY }).length, 0);
   assert.equal(nativePlate(env).typeId, DINING_BLOCK);
   assert.equal(env.dimension.drops.length, 0);
@@ -223,6 +234,7 @@ test('early pickup retains a pruned-order interruption checkpoint across restart
   const restarted = createDiningService(env.ctx); restarted.tick(NOW + 1100);
   assert.equal(env.resumed.at(-1)[2].action, 7);
   assert.equal(restored.pendingDishes.length, 1);
+  restarted.finishReaction('r', env.order.id, NOW + 1500);
   restarted.tick(NOW + 1500);
   assert.equal(restored.pendingDishes.length, 0); assert.equal(dirtyCount(env.player), 1);
 });
@@ -230,6 +242,8 @@ test('early pickup retains a pruned-order interruption checkpoint across restart
 test('failed interruption tombstone cleanup cannot resume a pruned order as the original eating action', () => {
   const env = fixture(); env.restaurant.orders = []; env.ctx.saveRestaurant(env.restaurant);
   env.service.claim(env.player, env.restaurant, env.meal, NOW + 1000);
+  env.service.tick(NOW + 1100);
+  env.service.finishReaction('r', env.order.id, NOW + 1499);
   env.failNextSave(); env.service.tick(NOW + 1500);
   const restored = env.restaurants.get('r'), pending = restored.pendingDishes[0];
   assert.equal(pending.action, 7); assert.equal(pending.finishAt, NOW + 1500);
@@ -293,7 +307,7 @@ test('alpha.1 dueAt and duplicate pending rows migrate without creating two clai
   const migrated = env.restaurant.pendingDishes[0];
   assert.equal(migrated.version, 2); assert.equal(migrated.finishAt, legacy.dueAt);
   assert.equal(migrated.startedAt, NOW + 4500);
-  assert.equal(mealStage(migrated, NOW + 6000), 29);
+  assert.equal(mealStage(migrated, 30), 29);
 });
 
 test('paid order history pruning does not erase its dirty-plate lifecycle', () => {
@@ -451,4 +465,21 @@ test('a native plate occupied by another restaurant rejects a second meal at tha
   const second = { ...env.restaurant, id: 'other', orders: [], pendingDishes: [] };
   env.restaurants.set(second.id, second);
   assert.equal(env.service.hasVacancy(second, env.customer), false);
+});
+
+test('native food callbacks, not wall time or restaurant scans, own the saved 100-tick clock', () => {
+  const env = fixture(); env.meal.clock = 'loaded'; env.meal.reactionPending = true;
+  env.service.tick(NOW); const block = nativePlate(env);
+  env.service.tick(NOW + 600000); assert.equal(nativeStage(env), 0);
+  for (let i = 0; i < 15; i++) env.service.tickFood(block, NOW + 600000);
+  assert.equal(nativeStage(env), 29);
+  const restarted = createDiningService(env.ctx); restarted.tick(NOW + 1200000);
+  assert.equal(nativeStage(env), 29);
+  for (let i = 15; i < 100; i++) restarted.tickFood(block, NOW + 1200000);
+  assert.equal(nativeStage(env), 32); assert.equal(env.meal.status, 'dirty');
+  assert.equal(env.meal.reactionPending, true);
+  restarted.finishReaction('r', env.order.id);
+  assert.equal(restarted.claim(env.player, env.restaurant, env.meal).early, false);
+  assert.equal(env.world.getDynamicProperty('ordertocook:food_tick:' + env.meal.token), undefined);
+  assert.equal(dirtyCount(env.player), 1); assert.equal(env.restaurant.pendingDishes.length, 0);
 });

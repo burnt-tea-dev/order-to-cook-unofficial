@@ -507,7 +507,7 @@ export function rollCustomerCompletion(restaurant, order, now, options = {}) {
     if (action === 5) boomBonus = 1 + Math.floor(unit(rng) * 4) + levelOf(restaurant);
   }
   const duration = { 3: 2000, 4: 3000, 5: 6000, 6: 5500 }[action];
-  return { startedAt: clock(now), finishAt: clock(now) + duration, action, boomBonus };
+  return { startedAt: clock(now), finishAt: clock(now) + duration, action, boomBonus, clock: "loaded" };
 }
 
 /**

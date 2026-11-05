@@ -164,7 +164,7 @@ Java 的 `TakeoutBagItem.prepareBoomBonus` 先選定加賞，`CustomerEntity.tic
 
 ## 七、有意的平台差異與驗證界線
 
-1. **時鐘差異**：Java 優先使用世界 tick，系統時間只作兼容。這份基岩版的訂單期限、餐盤與顧客完成時間使用 Unix 毫秒，因此伺服器停止或玩家離線期間仍會推進。原版 20 TPS 的 10／30 分鐘及進食門檻保留名義時長，卡頓與暫停語義不同；設備烹調／清洗則只在載入時累計 tick。
+1. **時鐘差異**：Java 優先使用世界 tick，系統時間只作兼容。這份基岩版的訂單期限仍使用Unix毫秒，停止期間仍會到期。0.1.18起，餐盤與顧客反應改為原生方塊／實體tick；停止模擬及關服不補算，重開接續保存進度。設備烹調／清洗同樣只在載入時累計tick。
 2. **報價重算時機**：Java 在開啟打單界面時降低有效利益；核心在生成、接受及明確同步時處理，避免配接層忘記 UI 回調造成高報價。恢復菜單後可重新提高仍未接受的報價。這比上游只在低於實際等級時重算的 UI 行為更一致。
 3. **隨機序列**：選菜與機率分布相同，但 Java RandomSource 與 JavaScript RNG 不追求逐 seed 相同的序列。
 4. **虛擬營養**：每張單會快照菜品營養，已接受單不因之後修改註冊資料而變價。
@@ -192,7 +192,7 @@ Java 的 `TakeoutBagItem.prepareBoomBonus` 先選定加賞，`CustomerEntity.tic
 
 若新快照尚未提交就出錯，canonical Map 會以最近一次成功保存的 JSON 重建物件，避免未保存的變更繼續影響遊戲。持有舊物件的非同步選單必須重新確認 `getRestaurant(id)`／工作站記錄的物件身分。無法解析、manifest 不完整或身分不一致的根記錄會保留原始資料並拒絕保存及刪除，交由恢復程序處理。
 
-餐盤的 `pendingDishes` 與終態訂單歷史分開保存。即使完成單超過保留上限，未領髒盤仍存在；提前收盤時，已 claim 的短暫記錄保留 action 7 的新開始／結束時間至約 500 毫秒後，期間只恢復顧客中斷動作，不能再次給盤。收盤同樣重驗 canonical 物件身分，保存失败後的舊 UI／舊餐廳引用不可再操作。
+餐盤的 `pendingDishes` 與終態訂單歷史分開保存。即使完成單超過保留上限，未領髒盤仍存在；提前收盤時，已claim記錄保留至原生action 7完成其10 tick計數，期間只恢復顧客中斷動作，不能再次給盤。收盤同樣重驗 canonical 物件身分，保存失败後的舊 UI／舊餐廳引用不可再操作。
 
 餐盤 helper 的 entity ID 只是顯示索引，唯一 token 與持久記錄才是領取依據。載入後清理多餘／無主顯示實體，未載入的錨點先等待。餐廳拆除若需等待舊盤位置載入，保留移除中狀態，期間拒絕重開、取得新餐廳操作及新交易，直到清理完成。
 
@@ -230,7 +230,7 @@ Java 的 `TakeoutBagItem.prepareBoomBonus` 先選定加賞，`CustomerEntity.tic
 
 `TakeoutBagItem.submitDineInWithPlacedPlate` 只按 `FoodPlateItem` 判斷是否放盤，不要求已坐下；`resolveCompletionAnimation` 才讓站立顧客選 action 4。因此站立堂食顧客約 3 秒離場，盤子仍獨立到第 5 秒變髒，這也是原作呼叫鏈的結果。[TakeoutBagItem.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/item/TakeoutBagItem.java) 的 `placeSubmittedPlate` 則啟動獨立餐盤序列。
 
-基岩版仍沿用持久毫秒時間與每5tick取樣。0.1.17以獨立 `foodStartedAt` 保留餐盤食品進度；中斷其他桌的顧客只改其反應時間，沒有重播或延長該盤食品階段。附近查找及原生端點語義由[鄰桌收盤](validation/0.1.17-alpha.1/NEARBY_PICKUP.md)負責；方塊兩層碰撞與階段資源由[原生餐盤](validation/0.1.15-alpha.1/NATIVE_PLATE.md)負責。`pendingDishes`仍是唯一領盤來源。
+0.1.18以原生實體timer／保存property計顧客反應，以餐盤原生onTick及`ordertocook:food_tick:<meal token>`保存食品進度。餐廳記錄的`reactionPending`維持已領餐盤的未完反應；完成回呼才結算及清理。舊毫秒記錄第一次讀取時接續舊進度，之後只用保存計數；原本已到期的舊中斷claim可直接清理。中斷另一桌不改其食品計數。見[計時範圍](validation/0.1.18-alpha.1/LOADED_MEALS.md)。附近查找及原生端點語義由[鄰桌收盤](validation/0.1.17-alpha.1/NEARBY_PICKUP.md)負責；方塊兩層碰撞與階段資源由[原生餐盤](validation/0.1.15-alpha.1/NATIVE_PLATE.md)負責。`pendingDishes`仍是唯一領盤來源。
 
 ### 家電關鍵姿態
 

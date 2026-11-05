@@ -26,6 +26,14 @@ function tickAt(service, env, milliseconds) {
   service.tick();
 }
 
+// These values are inputs from the native entity properties. Native timer
+// stepping itself is exercised by the isolated BDS test, not reimplemented here.
+function nativePhase(entity, ticks, done = false) {
+  entity.setProperty('ordertocook:reaction_tick', ticks);
+  entity.setProperty('ordertocook:reaction_done', done);
+  entity.setProperty('ordertocook:action_elapsed', ticks / 20);
+}
+
 test('offered walk-in creates a seated NPC before the player accepts it', () => {
   const env = makeEnvironment(), fixture = restaurantFixture(env, 'offered', true); const service = entityServices.createEntityService(env.ctx);
   const customer = service.spawnCustomer(fixture.restaurant, fixture.order);
@@ -135,7 +143,7 @@ test('idle seed uses upstream weights and the server never changes a client clip
   assert.equal(customer.getProperty('ordertocook:action'), 1);
   tickAt(service, env, start + 550);
   assert.equal(customer.getProperty('ordertocook:action'), 1);
-  tickAt(service, env, start + 600);
+  nativePhase(customer, 12, true); tickAt(service, env, start + 600);
   assert.equal(customer.getProperty('ordertocook:action'), 0);
   tickAt(service, env, start + 5100);
   assert.equal(customer.getProperty('ordertocook:animation_variant'), 1);
@@ -166,140 +174,90 @@ test('named special customer is red and reuses the saved identity on actor respa
   assert.equal(fixture.order.skinAccount, 'Breezeth');
 });
 
-test('customer action seek phase restores elapsed time and resets for early interruption', () => {
+test('loaded reaction preserves native progress through wall-time jumps and service restart', () => {
   const env = makeEnvironment(), fixture = restaurantFixture(env), service = readyService(env), start = Date.now();
   env.ctx.now = () => start;
   const customer = service.spawnCustomer(fixture.restaurant, fixture.order);
-  assert.equal(customer.getProperty('ordertocook:action_elapsed'), 0);
-  fixture.order.status = 'completed'; fixture.order.meal = { startedAt: start, finishAt: start + 5500, action: 6 };
+  fixture.order.status = 'completed'; fixture.order.meal = { startedAt: start, finishAt: start + 5500, action: 6, clock: 'loaded' };
   service.finishCustomer(fixture.order.id, fixture.order.meal);
-  tickAt(service, env, start + 4000);
-  assert.equal(customer.getProperty('ordertocook:action_elapsed'), 4);
-  customer.setProperty('ordertocook:action_elapsed', 0);
-  const restarted = readyService(env); env.system.currentTick = 120;
-  tickAt(restarted, env, start + 4250);
-  assert.equal(customer.getProperty('ordertocook:action_elapsed'), 4.25);
-  assert.equal(customer.getDynamicProperty('ordertocook:depart_at'), start + 5500);
-  assert.equal(restarted.interruptCustomerMeal(fixture.order.id, { startedAt: start + 4250, finishAt: start + 4750 }), 1);
-  assert.equal(customer.getProperty('ordertocook:action'), 7);
-  assert.equal(customer.getProperty('ordertocook:action_elapsed'), 0);
+  nativePhase(customer, 80);
+  tickAt(service, env, start + 60000);
+  assert.equal(customer.getProperty('ordertocook:action_elapsed'), 4); assert.equal(customer.isValid, true);
+  const events = customer.events.length, restarted = readyService(env);
+  tickAt(restarted, env, start + 120000);
+  assert.equal(customer.events.length, events); assert.equal(customer.getProperty('ordertocook:reaction_tick'), 80);
+  assert.equal(restarted.interruptCustomerMeal(fixture.order.id, { startedAt: start + 120000, finishAt: start + 120500, clock: 'loaded' }), 1);
+  assert.equal(customer.getProperty('ordertocook:action'), 7); assert.equal(customer.getProperty('ordertocook:reaction_tick'), 0);
 });
 
-test('standing delivery uses the original three-second take action and cannot be submitted again during departure', () => {
-  const env = makeEnvironment(), fixture = restaurantFixture(env), service = readyService(env), start = Date.now();
-  fixture.order.type = 'delivery'; fixture.order.destination = { x: 0, y: 0, z: 0, dimensionId: env.dimension.id };
-  place(env, 'minecraft:stone', { x: 0, y: -1, z: 0 }); env.ctx.now = () => start;
-  const customer = service.spawnCustomer(fixture.restaurant, fixture.order);
-  let interactions = 0; env.ctx.onCustomerInteract = () => { interactions++; };
-  assert.equal(service.finishCustomer(fixture.order.id), 1);
-  assert.equal(customer.getProperty('ordertocook:action'), 4);
-  assert.equal(customer.getProperty('ordertocook:stage'), 'leaving');
-  assert.equal(customer.getDynamicProperty('ordertocook:depart_at'), start + 3000);
-  service.onEntityInteract(fixture.player, customer);
-  assert.equal(interactions, 0);
-  tickAt(service, env, start + 1000); service.finishCustomer(fixture.order.id);
-  assert.equal(customer.getDynamicProperty('ordertocook:depart_at'), start + 3000);
-  tickAt(service, env, start + 2999); assert.equal(customer.isValid, true);
-  fixture.order.status = 'completed';
-  tickAt(service, env, start + 3000); assert.equal(customer.isValid, false);
-  assert.equal(env.dimension.drops.length, 0);
-});
-
-test('seated takeaway uses two seconds and each eating branch keeps its distinct original duration', () => {
-  for (const [action, duration] of [[3, 2000], [5, 6000], [6, 5500]]) {
+test('each completion branch waits for native done, never wall time, and duplicate handoffs keep progress', () => {
+  for (const [action, ticks] of [[3, 40], [4, 60], [5, 120], [6, 110]]) {
     const env = makeEnvironment(), fixture = restaurantFixture(env), service = readyService(env), start = Date.now();
-    env.ctx.now = () => start;
     const customer = service.spawnCustomer(fixture.restaurant, fixture.order);
-    fixture.order.status = 'completed'; fixture.order.meal = { startedAt: start, finishAt: start + duration, action };
+    fixture.order.status = 'completed'; fixture.order.meal = { startedAt: start, finishAt: start + ticks * 50, action, clock: 'loaded' };
     service.finishCustomer(fixture.order.id, fixture.order.meal);
-    assert.equal(customer.getProperty('ordertocook:action'), action);
-    tickAt(service, env, start + duration - 1); assert.equal(customer.isValid, true);
-    tickAt(service, env, start + duration); assert.equal(customer.isValid, false);
-    assert.equal(env.dimension.getEntities({ type: 'ordertocook:seat' }).length, 0);
-    assert.equal(env.dimension.drops.length, 0);
-    assert.equal(fixture.player.container.emptySlotsCount, 36);
+    nativePhase(customer, ticks - 1); tickAt(service, env, start + 60000);
+    const events = customer.events.length;
+    service.finishCustomer(fixture.order.id, fixture.order.meal);
+    assert.equal(customer.isValid, true); assert.equal(customer.events.length, events);
+    nativePhase(customer, ticks, true); tickAt(service, env, start + 60001);
+    assert.equal(customer.isValid, false); assert.equal(env.dimension.getEntities({ type: 'ordertocook:seat' }).length, 0);
+    assert.equal(env.dimension.drops.length, 0); assert.equal(fixture.player.container.emptySlotsCount, 36);
   }
 });
 
-test('boom and teleport cues are cosmetic, fire once, and include the final crossed five-tick cue', () => {
+test('native boom cues remain cosmetic and fire once at their counted phases', () => {
   const env = makeEnvironment(), fixture = restaurantFixture(env), service = readyService(env), start = Date.now();
-  env.ctx.now = () => start;
   const customer = service.spawnCustomer(fixture.restaurant, fixture.order);
-  fixture.order.status = 'completed'; fixture.order.meal = { startedAt: start, finishAt: start + 6000, action: 5 };
+  fixture.order.status = 'completed'; fixture.order.meal = { startedAt: start, finishAt: start + 6000, action: 5, clock: 'loaded' };
   service.finishCustomer(fixture.order.id, fixture.order.meal);
-  tickAt(service, env, start + 5000); tickAt(service, env, start + 5750);
+  nativePhase(customer, 100); tickAt(service, env, start + 50000);
+  nativePhase(customer, 115); tickAt(service, env, start + 60000);
   assert.equal(env.dimension.sounds.filter(id => id === 'random.fuse').length, 1);
   assert.equal(env.dimension.sounds.filter(id => id === 'random.explode').length, 0);
-  tickAt(service, env, start + 6000);
+  nativePhase(customer, 120, true); tickAt(service, env, start + 60001);
   assert.equal(env.dimension.sounds.filter(id => id === 'random.explode').length, 1);
-  assert.equal(customer.isValid, false);
-  assert.equal(env.dimension.drops.length, 0);
-  assert.equal(fixture.chair.typeId, 'ordertocook:chair');
+  assert.equal(customer.isValid, false); assert.equal(fixture.chair.typeId, 'ordertocook:chair');
 });
 
-test('canonical meal timing restores a loaded actor after service restart without restarting its deadline', () => {
-  const env = makeEnvironment(), fixture = restaurantFixture(env), first = entityServices.createEntityService(env.ctx), start = Date.now();
-  env.ctx.now = () => start;
-  const customer = first.spawnCustomer(fixture.restaurant, fixture.order);
+test('old timestamp-only completion adopts its saved phase once and then uses native ticks', () => {
+  const env = makeEnvironment(), fixture = restaurantFixture(env), service = readyService(env), start = Date.now();
+  const customer = service.spawnCustomer(fixture.restaurant, fixture.order);
   fixture.order.status = 'completed'; fixture.order.meal = { startedAt: start, finishAt: start + 5500, action: 6 };
-  first.finishCustomer(fixture.order.id, fixture.order.meal);
-  customer.setDynamicProperty('ordertocook:depart_at', undefined); customer.setProperty('ordertocook:action', 0);
-  const second = readyService(env);
-  tickAt(second, env, start + 4000);
-  assert.equal(customer.isValid, true);
-  assert.equal(customer.getDynamicProperty('ordertocook:depart_at'), start + 5500);
-  assert.equal(customer.getProperty('ordertocook:action'), 6);
-  tickAt(second, env, start + 5500);
-  assert.equal(customer.isValid, false);
-  assert.equal(env.dimension.spawnCount, 2, 'only the original customer and seat were ever spawned');
+  tickAt(service, env, start + 4000);
+  assert.equal(customer.getProperty('ordertocook:reaction_tick'), 80);
+  tickAt(service, env, start + 100000);
+  assert.equal(customer.getProperty('ordertocook:reaction_tick'), 80); assert.equal(customer.isValid, true);
+  nativePhase(customer, 110, true); tickAt(service, env, start + 100001);
+  assert.equal(customer.isValid, false); assert.equal(env.dimension.spawnCount, 2);
 });
 
-test('pending meal state retains the actor when completed order history has already been pruned', () => {
+test('pending meal preserves a pruned order and a failed native finish can retry its payment', () => {
   const env = makeEnvironment(), fixture = restaurantFixture(env), service = readyService(env), start = Date.now();
-  env.ctx.now = () => start;
   const customer = service.spawnCustomer(fixture.restaurant, fixture.order);
-  fixture.restaurant.pendingDishes = [{ id: fixture.order.id, orderId: fixture.order.id, startedAt: start, finishAt: start + 6000, action: 5, status: 'dirty' }];
+  fixture.restaurant.pendingDishes = [{ id: fixture.order.id, startedAt: start, finishAt: start + 6000, action: 5, clock: 'loaded', status: 'dirty' }];
   fixture.restaurant.orders = [];
-  tickAt(service, env, start + 5250);
-  assert.equal(customer.isValid, true);
-  assert.equal(customer.getProperty('ordertocook:action'), 5);
-  tickAt(service, env, start + 6000);
-  assert.equal(customer.isValid, false);
-  assert.equal(fixture.restaurant.pendingDishes.length, 1, 'customer lifecycle never owns dish cleanup');
+  tickAt(service, env, start + 60000);
+  assert.equal(customer.getProperty('ordertocook:action'), 5); assert.equal(customer.isValid, true);
+  nativePhase(customer, 120, true); env.ctx.onCustomerReactionFinished = () => false;
+  tickAt(service, env, start + 60001); assert.equal(customer.isValid, true);
+  env.ctx.onCustomerReactionFinished = () => true;
+  tickAt(service, env, start + 60002); assert.equal(customer.isValid, false);
+  assert.equal(fixture.restaurant.pendingDishes.length, 1);
 });
 
-test('resuming an expired meal removes loaded visuals without creating a new NPC or replaying old effects', () => {
-  const env = makeEnvironment(), fixture = restaurantFixture(env), service = entityServices.createEntityService(env.ctx), start = Date.now();
-  env.ctx.now = () => start;
-  const customer = service.spawnCustomer(fixture.restaurant, fixture.order);
-  const meal = { startedAt: start, finishAt: start + 6000, action: 5 };
-  service.finishCustomer(fixture.order.id, meal);
-  env.ctx.now = () => start + 60000;
-  service.resumeCustomerMeal(fixture.restaurant, fixture.order, meal);
-  assert.equal(customer.isValid, false);
-  assert.equal(env.dimension.sounds.includes('random.explode'), false);
-  assert.equal(env.dimension.spawnCount, 2);
-  assert.equal(service.resumeCustomerMeal(fixture.restaurant, fixture.order, meal), 0);
-});
-
-test("another early plate pickup restarts an already-interrupted customer half-second action", () => {
+test('another early pickup restarts the native ten-tick interruption without extending duplicate callbacks', () => {
   const env = makeEnvironment(), fixture = restaurantFixture(env), service = readyService(env), start = Date.now();
-  env.ctx.now = () => start;
   const customer = service.spawnCustomer(fixture.restaurant, fixture.order);
-  fixture.order.status = 'completed'; fixture.order.meal = { startedAt: start, finishAt: start + 6000, action: 5 };
+  fixture.order.status = 'completed'; fixture.order.meal = { startedAt: start, finishAt: start + 6000, action: 5, clock: 'loaded' };
   service.finishCustomer(fixture.order.id, fixture.order.meal);
-  env.ctx.now = () => start + 2000;
-  fixture.order.meal = { startedAt: start + 2000, finishAt: start + 2500, action: 7 };
-  assert.equal(service.interruptCustomerMeal(fixture.order.id, fixture.order.meal), 1);
-  fixture.order.meal = { startedAt: start + 2400, finishAt: start + 2900, action: 7 };
-  env.ctx.now = () => start + 2400;
-  assert.equal(service.interruptCustomerMeal(fixture.order.id, fixture.order.meal), 1);
-  assert.equal(customer.getDynamicProperty('ordertocook:depart_at'), start + 2900);
-  assert.equal(customer.getProperty('ordertocook:action'), 7);
-  tickAt(service, env, start + 2899); assert.equal(customer.isValid, true);
-  tickAt(service, env, start + 2900);
-  assert.equal(customer.isValid, false);
-  assert.equal(env.dimension.sounds.includes('random.explode'), false);
+  fixture.order.meal = { startedAt: start + 2000, finishAt: start + 2500, action: 7, clock: 'loaded' };
+  service.interruptCustomerMeal(fixture.order.id, fixture.order.meal); nativePhase(customer, 8);
+  fixture.order.meal = { startedAt: start + 2400, finishAt: start + 2900, action: 7, clock: 'loaded' };
+  service.interruptCustomerMeal(fixture.order.id, fixture.order.meal);
+  assert.equal(customer.getProperty('ordertocook:reaction_tick'), 0);
+  nativePhase(customer, 9); tickAt(service, env, start + 90000); assert.equal(customer.isValid, true);
+  nativePhase(customer, 10, true); tickAt(service, env, start + 90001); assert.equal(customer.isValid, false);
 });
 
 test('breaking a chair during eating preserves the canonical completion action and independent dish', () => {
@@ -314,7 +272,7 @@ test('breaking a chair during eating preserves the canonical completion action a
   assert.equal(customer.getProperty('ordertocook:stage'), 'eating');
   assert.equal(customer.getComponent('minecraft:riding'), undefined);
   assert.equal(service.getCustomerSeat(customer), undefined);
-  tickAt(service, env, start + 5500);
+  nativePhase(customer, 110, true); tickAt(service, env, start + 5500);
   assert.equal(customer.isValid, false);
   assert.equal(fixture.restaurant.pendingDishes.length, 1);
 });
@@ -400,8 +358,7 @@ test('delivery completion saved before NPC notification restores its original ta
   tickAt(service, env, start + 1000);
   assert.equal(customer.getProperty('ordertocook:action'), 4);
   assert.equal(customer.getDynamicProperty('ordertocook:depart_at'), start + 3000);
-  env.ctx.now = () => start + 3000;
-  service.resumeCustomerMeal(fixture.restaurant, fixture.order);
+  nativePhase(customer, 60, true); tickAt(service, env, start + 3000);
   assert.equal(customer.isValid, false);
 });
 
@@ -561,4 +518,30 @@ test('missing animation capability never changes seating, rewards or sound lifec
   assert.equal(env.dimension.sounds.length, 3);
   assert.equal(env.player.riding.typeId, 'ordertocook:seat');
   assert.equal(env.order.status, 'accepted'); assert.equal(env.player.container.emptySlotsCount, 36);
+});
+
+ test('the old native done flag cannot finish a new action in its property-update tick', () => {
+  const env = makeEnvironment(), fixture = restaurantFixture(env), service = readyService(env), start = Date.now();
+  const customer = service.spawnCustomer(fixture.restaurant, fixture.order);
+  fixture.order.status = 'completed'; fixture.order.meal = { startedAt: start, finishAt: start + 6000, action: 5, clock: 'loaded' };
+  service.finishCustomer(fixture.order.id, fixture.order.meal);
+  customer.setProperty('ordertocook:reaction_done', true);
+  service.tick(); assert.equal(customer.isValid, true);
+  customer.setProperty('ordertocook:reaction_done', false);
+  tickAt(service, env, start + 60000); assert.equal(customer.isValid, true);
+});
+
+ test('alpha.1 departure-only actor adopts generic eating even after order history was pruned', () => {
+  const env = makeEnvironment(), fixture = restaurantFixture(env), service = readyService(env), start = Date.now();
+  const customer = service.spawnCustomer(fixture.restaurant, fixture.order);
+  fixture.restaurant.orders = [];
+  customer.setDynamicProperty('ordertocook:reaction_action', undefined);
+  customer.setDynamicProperty('ordertocook:action_started_at', undefined);
+  customer.setDynamicProperty('ordertocook:depart_at', start + 5500);
+  customer.setProperty('ordertocook:action', 0);
+  tickAt(service, env, start + 2000);
+  assert.equal(customer.getProperty('ordertocook:action'), 6);
+  assert.equal(customer.getProperty('ordertocook:reaction_tick'), 40);
+  nativePhase(customer, 110, true); tickAt(service, env, start + 60000);
+  assert.equal(customer.isValid, false);
 });

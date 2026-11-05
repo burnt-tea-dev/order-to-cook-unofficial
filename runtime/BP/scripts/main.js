@@ -670,7 +670,14 @@ function customerInteract(player, entity, linkage, options = {}) {
  */
 function settleMealBonus(restaurant, meal, now) {
   const playerId = meal.bonusPlayerId;
-  if (!playerId || getRestaurant(restaurant.id) !== restaurant || !restaurant.pendingDishes.includes(meal)) return;
+  if (getRestaurant(restaurant.id) !== restaurant || !restaurant.pendingDishes.includes(meal)) return false;
+  if (!playerId) {
+    if (meal.reactionPending) {
+      meal.reactionPending = false;
+      try { saveRestaurant(restaurant); } catch (error) { meal.reactionPending = true; throw error; }
+    }
+    return true;
+  }
   const player = world.getAllPlayers().find(value => value.isValid && value.id === playerId);
   const amount = meal.boomBonus;
   const before = JSON.stringify(restaurant);
@@ -678,6 +685,7 @@ function settleMealBonus(restaurant, meal, now) {
     // The existing restaurant save claims this payment before native output.
     // Replayed ticks and trimmed order history cannot mint it again.
     delete meal.bonusPlayerId;
+    meal.reactionPending = false;
     restaurant.stats.earnings += amount;
     restaurant.updatedAt = now;
     if (player) {
@@ -693,6 +701,7 @@ function settleMealBonus(restaurant, meal, now) {
   if (player) reward(player, amount);
   reconcileProgress(restaurant);
   world.sendMessage(`「${restaurant.name}」的顧客好吃到爆炸！驚喜加賞 ${amount} ${currencyLabel()}。`);
+  return true;
 }
 
 function collectDiningPlate(player, value) {
@@ -1094,6 +1103,9 @@ system.beforeEvents.startup.subscribe(event => {
   event.blockComponentRegistry.registerCustomComponent('ordertocook:bag_motion', {
     onTick: event => tickBagPlacement(event.block)
   });
+  event.blockComponentRegistry.registerCustomComponent('ordertocook:meal_tick', {
+    onTick: event => { if (ready) dining.tickFood(event.block); }
+  });
   event.blockComponentRegistry.registerCustomComponent('ordertocook:interact', {
     beforeOnPlayerPlace: event => {
       if (!ready) { event.cancel = true; return; }
@@ -1265,7 +1277,8 @@ world.afterEvents.worldLoad.subscribe(() => {
     const rawWeather = world.getDynamicProperty('ordertocook:weather');
     if (typeof rawWeather === 'string') for (const [id, weather] of JSON.parse(rawWeather)) if (!weatherByDimension.has(id)) weatherByDimension.set(id, weather);
     const smoking = createSmokingRecipeRegistry({ hasItem: id => !!ItemTypes.get(id) });
-    const context = { world, system, getStation, saveStation, deleteStation, stations, getRestaurant, restaurants, saveRestaurant, notify, canUseStation, smokingRecipes: smoking.recipes, food: { isFood: stack => !!foodFromStack(stack) }, onCustomerInteract: customerInteract };
+    const context = { world, system, getStation, saveStation, deleteStation, stations, getRestaurant, restaurants, saveRestaurant, notify, canUseStation, smokingRecipes: smoking.recipes, food: { isFood: stack => !!foodFromStack(stack) }, onCustomerInteract: customerInteract,
+      onCustomerReactionFinished: (restaurantId, orderId) => dining?.finishReaction(restaurantId, orderId) };
     progression = createProgressionService({ getProfile, saveProfile, restaurants, saveRestaurant, saveStation,
       onUnlock: (playerId, definitions) => {
         const player = world.getAllPlayers().find(value => value.id === playerId);

@@ -53,6 +53,18 @@
           ],
           "default": 1,
           "client_sync": true
+        },
+        "ordertocook:reaction_tick": {
+          "type": "int",
+          "range": [
+            0,
+            120
+          ],
+          "default": 0
+        },
+        "ordertocook:reaction_done": {
+          "type": "bool",
+          "default": false
         }
       }
     },
@@ -112,6 +124,76 @@
     "component_groups": {
       "ordertocook:despawn": {
         "minecraft:instant_despawn": {}
+      },
+      "ordertocook:reaction_clock_1": {
+        "minecraft:timer": {
+          "looping": true,
+          "time": 0.05,
+          "time_down_event": {
+            "event": "ordertocook:reaction_tick_1",
+            "target": "self"
+          }
+        }
+      },
+      "ordertocook:reaction_clock_2": {
+        "minecraft:timer": {
+          "looping": true,
+          "time": 0.05,
+          "time_down_event": {
+            "event": "ordertocook:reaction_tick_2",
+            "target": "self"
+          }
+        }
+      },
+      "ordertocook:reaction_clock_3": {
+        "minecraft:timer": {
+          "looping": true,
+          "time": 0.05,
+          "time_down_event": {
+            "event": "ordertocook:reaction_tick_3",
+            "target": "self"
+          }
+        }
+      },
+      "ordertocook:reaction_clock_4": {
+        "minecraft:timer": {
+          "looping": true,
+          "time": 0.05,
+          "time_down_event": {
+            "event": "ordertocook:reaction_tick_4",
+            "target": "self"
+          }
+        }
+      },
+      "ordertocook:reaction_clock_5": {
+        "minecraft:timer": {
+          "looping": true,
+          "time": 0.05,
+          "time_down_event": {
+            "event": "ordertocook:reaction_tick_5",
+            "target": "self"
+          }
+        }
+      },
+      "ordertocook:reaction_clock_6": {
+        "minecraft:timer": {
+          "looping": true,
+          "time": 0.05,
+          "time_down_event": {
+            "event": "ordertocook:reaction_tick_6",
+            "target": "self"
+          }
+        }
+      },
+      "ordertocook:reaction_clock_7": {
+        "minecraft:timer": {
+          "looping": true,
+          "time": 0.05,
+          "time_down_event": {
+            "event": "ordertocook:reaction_tick_7",
+            "target": "self"
+          }
+        }
       }
     },
     "events": {
@@ -121,6 +203,650 @@
             "ordertocook:despawn"
           ]
         }
+      },
+      "ordertocook:reaction_start_1": {
+        "sequence": [
+          {
+            "remove": {
+              "component_groups": [
+                "ordertocook:reaction_clock_1",
+                "ordertocook:reaction_clock_2",
+                "ordertocook:reaction_clock_3",
+                "ordertocook:reaction_clock_4",
+                "ordertocook:reaction_clock_5",
+                "ordertocook:reaction_clock_6",
+                "ordertocook:reaction_clock_7"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "ordertocook:reaction_clock_1"
+              ]
+            }
+          },
+          {
+            "set_property": {
+              "ordertocook:reaction_tick": 0,
+              "ordertocook:reaction_done": false,
+              "ordertocook:action_elapsed": 0
+            }
+          }
+        ]
+      },
+      "ordertocook:reaction_resume_1": {
+        "sequence": [
+          {
+            "remove": {
+              "component_groups": [
+                "ordertocook:reaction_clock_1",
+                "ordertocook:reaction_clock_2",
+                "ordertocook:reaction_clock_3",
+                "ordertocook:reaction_clock_4",
+                "ordertocook:reaction_clock_5",
+                "ordertocook:reaction_clock_6",
+                "ordertocook:reaction_clock_7"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "ordertocook:reaction_clock_1"
+              ]
+            }
+          }
+        ]
+      },
+      "ordertocook:reaction_tick_1": {
+        "sequence": [
+          {
+            "filters": {
+              "test": "int_property",
+              "domain": "ordertocook:reaction_tick",
+              "operator": ">=",
+              "value": 11
+            },
+            "remove": {
+              "component_groups": [
+                "ordertocook:reaction_clock_1"
+              ]
+            },
+            "set_property": {
+              "ordertocook:reaction_tick": 12,
+              "ordertocook:reaction_done": true,
+              "ordertocook:action_elapsed": 0.6
+            },
+            "queue_command": {
+              "command": "scriptevent ordertocook:reaction_finished 1"
+            }
+          },
+          {
+            "filters": {
+              "test": "int_property",
+              "domain": "ordertocook:reaction_tick",
+              "operator": "<",
+              "value": 11
+            },
+            "set_property": {
+              "ordertocook:reaction_tick": "q.property('ordertocook:reaction_tick') + 1",
+              "ordertocook:action_elapsed": "(q.property('ordertocook:reaction_tick') + 1) / 20"
+            }
+          }
+        ]
+      },
+      "ordertocook:reaction_start_2": {
+        "sequence": [
+          {
+            "remove": {
+              "component_groups": [
+                "ordertocook:reaction_clock_1",
+                "ordertocook:reaction_clock_2",
+                "ordertocook:reaction_clock_3",
+                "ordertocook:reaction_clock_4",
+                "ordertocook:reaction_clock_5",
+                "ordertocook:reaction_clock_6",
+                "ordertocook:reaction_clock_7"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "ordertocook:reaction_clock_2"
+              ]
+            }
+          },
+          {
+            "set_property": {
+              "ordertocook:reaction_tick": 0,
+              "ordertocook:reaction_done": false,
+              "ordertocook:action_elapsed": 0
+            }
+          }
+        ]
+      },
+      "ordertocook:reaction_resume_2": {
+        "sequence": [
+          {
+            "remove": {
+              "component_groups": [
+                "ordertocook:reaction_clock_1",
+                "ordertocook:reaction_clock_2",
+                "ordertocook:reaction_clock_3",
+                "ordertocook:reaction_clock_4",
+                "ordertocook:reaction_clock_5",
+                "ordertocook:reaction_clock_6",
+                "ordertocook:reaction_clock_7"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "ordertocook:reaction_clock_2"
+              ]
+            }
+          }
+        ]
+      },
+      "ordertocook:reaction_tick_2": {
+        "sequence": [
+          {
+            "filters": {
+              "test": "int_property",
+              "domain": "ordertocook:reaction_tick",
+              "operator": ">=",
+              "value": 11
+            },
+            "remove": {
+              "component_groups": [
+                "ordertocook:reaction_clock_2"
+              ]
+            },
+            "set_property": {
+              "ordertocook:reaction_tick": 12,
+              "ordertocook:reaction_done": true,
+              "ordertocook:action_elapsed": 0.6
+            },
+            "queue_command": {
+              "command": "scriptevent ordertocook:reaction_finished 2"
+            }
+          },
+          {
+            "filters": {
+              "test": "int_property",
+              "domain": "ordertocook:reaction_tick",
+              "operator": "<",
+              "value": 11
+            },
+            "set_property": {
+              "ordertocook:reaction_tick": "q.property('ordertocook:reaction_tick') + 1",
+              "ordertocook:action_elapsed": "(q.property('ordertocook:reaction_tick') + 1) / 20"
+            }
+          }
+        ]
+      },
+      "ordertocook:reaction_start_3": {
+        "sequence": [
+          {
+            "remove": {
+              "component_groups": [
+                "ordertocook:reaction_clock_1",
+                "ordertocook:reaction_clock_2",
+                "ordertocook:reaction_clock_3",
+                "ordertocook:reaction_clock_4",
+                "ordertocook:reaction_clock_5",
+                "ordertocook:reaction_clock_6",
+                "ordertocook:reaction_clock_7"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "ordertocook:reaction_clock_3"
+              ]
+            }
+          },
+          {
+            "set_property": {
+              "ordertocook:reaction_tick": 0,
+              "ordertocook:reaction_done": false,
+              "ordertocook:action_elapsed": 0
+            }
+          }
+        ]
+      },
+      "ordertocook:reaction_resume_3": {
+        "sequence": [
+          {
+            "remove": {
+              "component_groups": [
+                "ordertocook:reaction_clock_1",
+                "ordertocook:reaction_clock_2",
+                "ordertocook:reaction_clock_3",
+                "ordertocook:reaction_clock_4",
+                "ordertocook:reaction_clock_5",
+                "ordertocook:reaction_clock_6",
+                "ordertocook:reaction_clock_7"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "ordertocook:reaction_clock_3"
+              ]
+            }
+          }
+        ]
+      },
+      "ordertocook:reaction_tick_3": {
+        "sequence": [
+          {
+            "filters": {
+              "test": "int_property",
+              "domain": "ordertocook:reaction_tick",
+              "operator": ">=",
+              "value": 39
+            },
+            "remove": {
+              "component_groups": [
+                "ordertocook:reaction_clock_3"
+              ]
+            },
+            "set_property": {
+              "ordertocook:reaction_tick": 40,
+              "ordertocook:reaction_done": true,
+              "ordertocook:action_elapsed": 2.0
+            },
+            "queue_command": {
+              "command": "scriptevent ordertocook:reaction_finished 3"
+            }
+          },
+          {
+            "filters": {
+              "test": "int_property",
+              "domain": "ordertocook:reaction_tick",
+              "operator": "<",
+              "value": 39
+            },
+            "set_property": {
+              "ordertocook:reaction_tick": "q.property('ordertocook:reaction_tick') + 1",
+              "ordertocook:action_elapsed": "(q.property('ordertocook:reaction_tick') + 1) / 20"
+            }
+          }
+        ]
+      },
+      "ordertocook:reaction_start_4": {
+        "sequence": [
+          {
+            "remove": {
+              "component_groups": [
+                "ordertocook:reaction_clock_1",
+                "ordertocook:reaction_clock_2",
+                "ordertocook:reaction_clock_3",
+                "ordertocook:reaction_clock_4",
+                "ordertocook:reaction_clock_5",
+                "ordertocook:reaction_clock_6",
+                "ordertocook:reaction_clock_7"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "ordertocook:reaction_clock_4"
+              ]
+            }
+          },
+          {
+            "set_property": {
+              "ordertocook:reaction_tick": 0,
+              "ordertocook:reaction_done": false,
+              "ordertocook:action_elapsed": 0
+            }
+          }
+        ]
+      },
+      "ordertocook:reaction_resume_4": {
+        "sequence": [
+          {
+            "remove": {
+              "component_groups": [
+                "ordertocook:reaction_clock_1",
+                "ordertocook:reaction_clock_2",
+                "ordertocook:reaction_clock_3",
+                "ordertocook:reaction_clock_4",
+                "ordertocook:reaction_clock_5",
+                "ordertocook:reaction_clock_6",
+                "ordertocook:reaction_clock_7"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "ordertocook:reaction_clock_4"
+              ]
+            }
+          }
+        ]
+      },
+      "ordertocook:reaction_tick_4": {
+        "sequence": [
+          {
+            "filters": {
+              "test": "int_property",
+              "domain": "ordertocook:reaction_tick",
+              "operator": ">=",
+              "value": 59
+            },
+            "remove": {
+              "component_groups": [
+                "ordertocook:reaction_clock_4"
+              ]
+            },
+            "set_property": {
+              "ordertocook:reaction_tick": 60,
+              "ordertocook:reaction_done": true,
+              "ordertocook:action_elapsed": 3.0
+            },
+            "queue_command": {
+              "command": "scriptevent ordertocook:reaction_finished 4"
+            }
+          },
+          {
+            "filters": {
+              "test": "int_property",
+              "domain": "ordertocook:reaction_tick",
+              "operator": "<",
+              "value": 59
+            },
+            "set_property": {
+              "ordertocook:reaction_tick": "q.property('ordertocook:reaction_tick') + 1",
+              "ordertocook:action_elapsed": "(q.property('ordertocook:reaction_tick') + 1) / 20"
+            }
+          }
+        ]
+      },
+      "ordertocook:reaction_start_5": {
+        "sequence": [
+          {
+            "remove": {
+              "component_groups": [
+                "ordertocook:reaction_clock_1",
+                "ordertocook:reaction_clock_2",
+                "ordertocook:reaction_clock_3",
+                "ordertocook:reaction_clock_4",
+                "ordertocook:reaction_clock_5",
+                "ordertocook:reaction_clock_6",
+                "ordertocook:reaction_clock_7"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "ordertocook:reaction_clock_5"
+              ]
+            }
+          },
+          {
+            "set_property": {
+              "ordertocook:reaction_tick": 0,
+              "ordertocook:reaction_done": false,
+              "ordertocook:action_elapsed": 0
+            }
+          }
+        ]
+      },
+      "ordertocook:reaction_resume_5": {
+        "sequence": [
+          {
+            "remove": {
+              "component_groups": [
+                "ordertocook:reaction_clock_1",
+                "ordertocook:reaction_clock_2",
+                "ordertocook:reaction_clock_3",
+                "ordertocook:reaction_clock_4",
+                "ordertocook:reaction_clock_5",
+                "ordertocook:reaction_clock_6",
+                "ordertocook:reaction_clock_7"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "ordertocook:reaction_clock_5"
+              ]
+            }
+          }
+        ]
+      },
+      "ordertocook:reaction_tick_5": {
+        "sequence": [
+          {
+            "filters": {
+              "test": "int_property",
+              "domain": "ordertocook:reaction_tick",
+              "operator": ">=",
+              "value": 119
+            },
+            "remove": {
+              "component_groups": [
+                "ordertocook:reaction_clock_5"
+              ]
+            },
+            "set_property": {
+              "ordertocook:reaction_tick": 120,
+              "ordertocook:reaction_done": true,
+              "ordertocook:action_elapsed": 6.0
+            },
+            "queue_command": {
+              "command": "scriptevent ordertocook:reaction_finished 5"
+            }
+          },
+          {
+            "filters": {
+              "test": "int_property",
+              "domain": "ordertocook:reaction_tick",
+              "operator": "<",
+              "value": 119
+            },
+            "set_property": {
+              "ordertocook:reaction_tick": "q.property('ordertocook:reaction_tick') + 1",
+              "ordertocook:action_elapsed": "(q.property('ordertocook:reaction_tick') + 1) / 20"
+            }
+          }
+        ]
+      },
+      "ordertocook:reaction_start_6": {
+        "sequence": [
+          {
+            "remove": {
+              "component_groups": [
+                "ordertocook:reaction_clock_1",
+                "ordertocook:reaction_clock_2",
+                "ordertocook:reaction_clock_3",
+                "ordertocook:reaction_clock_4",
+                "ordertocook:reaction_clock_5",
+                "ordertocook:reaction_clock_6",
+                "ordertocook:reaction_clock_7"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "ordertocook:reaction_clock_6"
+              ]
+            }
+          },
+          {
+            "set_property": {
+              "ordertocook:reaction_tick": 0,
+              "ordertocook:reaction_done": false,
+              "ordertocook:action_elapsed": 0
+            }
+          }
+        ]
+      },
+      "ordertocook:reaction_resume_6": {
+        "sequence": [
+          {
+            "remove": {
+              "component_groups": [
+                "ordertocook:reaction_clock_1",
+                "ordertocook:reaction_clock_2",
+                "ordertocook:reaction_clock_3",
+                "ordertocook:reaction_clock_4",
+                "ordertocook:reaction_clock_5",
+                "ordertocook:reaction_clock_6",
+                "ordertocook:reaction_clock_7"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "ordertocook:reaction_clock_6"
+              ]
+            }
+          }
+        ]
+      },
+      "ordertocook:reaction_tick_6": {
+        "sequence": [
+          {
+            "filters": {
+              "test": "int_property",
+              "domain": "ordertocook:reaction_tick",
+              "operator": ">=",
+              "value": 109
+            },
+            "remove": {
+              "component_groups": [
+                "ordertocook:reaction_clock_6"
+              ]
+            },
+            "set_property": {
+              "ordertocook:reaction_tick": 110,
+              "ordertocook:reaction_done": true,
+              "ordertocook:action_elapsed": 5.5
+            },
+            "queue_command": {
+              "command": "scriptevent ordertocook:reaction_finished 6"
+            }
+          },
+          {
+            "filters": {
+              "test": "int_property",
+              "domain": "ordertocook:reaction_tick",
+              "operator": "<",
+              "value": 109
+            },
+            "set_property": {
+              "ordertocook:reaction_tick": "q.property('ordertocook:reaction_tick') + 1",
+              "ordertocook:action_elapsed": "(q.property('ordertocook:reaction_tick') + 1) / 20"
+            }
+          }
+        ]
+      },
+      "ordertocook:reaction_start_7": {
+        "sequence": [
+          {
+            "remove": {
+              "component_groups": [
+                "ordertocook:reaction_clock_1",
+                "ordertocook:reaction_clock_2",
+                "ordertocook:reaction_clock_3",
+                "ordertocook:reaction_clock_4",
+                "ordertocook:reaction_clock_5",
+                "ordertocook:reaction_clock_6",
+                "ordertocook:reaction_clock_7"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "ordertocook:reaction_clock_7"
+              ]
+            }
+          },
+          {
+            "set_property": {
+              "ordertocook:reaction_tick": 0,
+              "ordertocook:reaction_done": false,
+              "ordertocook:action_elapsed": 0
+            }
+          }
+        ]
+      },
+      "ordertocook:reaction_resume_7": {
+        "sequence": [
+          {
+            "remove": {
+              "component_groups": [
+                "ordertocook:reaction_clock_1",
+                "ordertocook:reaction_clock_2",
+                "ordertocook:reaction_clock_3",
+                "ordertocook:reaction_clock_4",
+                "ordertocook:reaction_clock_5",
+                "ordertocook:reaction_clock_6",
+                "ordertocook:reaction_clock_7"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "ordertocook:reaction_clock_7"
+              ]
+            }
+          }
+        ]
+      },
+      "ordertocook:reaction_tick_7": {
+        "sequence": [
+          {
+            "filters": {
+              "test": "int_property",
+              "domain": "ordertocook:reaction_tick",
+              "operator": ">=",
+              "value": 9
+            },
+            "remove": {
+              "component_groups": [
+                "ordertocook:reaction_clock_7"
+              ]
+            },
+            "set_property": {
+              "ordertocook:reaction_tick": 10,
+              "ordertocook:reaction_done": true,
+              "ordertocook:action_elapsed": 0.5
+            },
+            "queue_command": {
+              "command": "scriptevent ordertocook:reaction_finished 7"
+            }
+          },
+          {
+            "filters": {
+              "test": "int_property",
+              "domain": "ordertocook:reaction_tick",
+              "operator": "<",
+              "value": 9
+            },
+            "set_property": {
+              "ordertocook:reaction_tick": "q.property('ordertocook:reaction_tick') + 1",
+              "ordertocook:action_elapsed": "(q.property('ordertocook:reaction_tick') + 1) / 20"
+            }
+          }
+        ]
       }
     }
   }

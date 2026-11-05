@@ -1083,10 +1083,10 @@ def entity_base(family, gravity=False, collision=False):
         "minecraft:pushable": {"is_pushable": False, "is_pushable_by_piston": False}}
 
 
-def write_entity(name, components, properties=None, events=None):
+def write_entity(name, components, properties=None, events=None, groups=None):
     write_json(BP / "entities" / (name + ".json"), {"format_version": BLOCK_VERSION, "minecraft:entity": {
         "description": entity_description(name, properties), "components": components,
-        "component_groups": {f"{NS}:despawn": {"minecraft:instant_despawn": {}}},
+        "component_groups": {f"{NS}:despawn": {"minecraft:instant_despawn": {}}, **(groups or {})},
         "events": {f"{NS}:despawn": {"add": {"component_groups": [f"{NS}:despawn"]}}, **(events or {})}}})
 
 
@@ -1200,7 +1200,8 @@ def make_dining_plate():
     write_json(RP / "models/blocks/dining_plate_empty.geo.json",
                geometry(empty, [{"name": "root", "pivot": [0, 0, 0], "cubes": []}]))
     variants = [{"condition": f"q.block_state('{NS}:stage') == {stage}",
-                 "components": {"minecraft:geometry": f"geometry.{NS}.dining_plate_{stage}"}}
+                 "components": {"minecraft:geometry": f"geometry.{NS}.dining_plate_{stage}",
+                                **({"minecraft:tick": {"interval_range": [1, 1], "looping": False}} if stage % 4 == 0 else {})}}
                 for stage in range(1, 41)]
     block_definition('dining_plate_block', empty,
                      {"*": {"texture": f"{NS}_dining_plate", "render_method": "alpha_test"}},
@@ -1213,6 +1214,8 @@ def make_dining_plate():
     definition = read_json(path)
     definition['format_version'] = NATIVE_CONTAINER_VERSION
     component = definition['minecraft:block']['components']
+    component[f'{NS}:meal_tick'] = {}
+    component['minecraft:tick'] = {'interval_range': [1, 1], 'looping': True}
     component['minecraft:destructible_by_mining'] = {'seconds_to_destroy': 0.1}
     component['minecraft:destruction_particles']['particle_count'] = 0
     write_json(path, definition)
@@ -1253,6 +1256,42 @@ def make_motorcycle_geo():
     record(source, dest, "CubeListBuilder hierarchy, PartPose and box-UV conversion")
 
 
+def customer_reaction_clock(durations=None):
+    """Native one-tick event counter; entity properties retain progress on disk."""
+    durations = durations or {1: 12, 2: 12, 3: 40, 4: 60, 5: 120, 6: 110, 7: 10}
+    age, done, elapsed = (f"{NS}:reaction_tick", f"{NS}:reaction_done", f"{NS}:action_elapsed")
+    properties = {
+        age: {"type": "int", "range": [0, max(durations.values())], "default": 0},
+        done: {"type": "bool", "default": False},
+        elapsed: {"type": "float", "range": [0.0, max(durations.values()) / 20], "default": 0.0, "client_sync": True},
+    }
+    groups = {}; events = {}
+    group_names = [f"{NS}:reaction_clock_{action}" for action in durations]
+    for action, ticks in durations.items():
+        group = f"{NS}:reaction_clock_{action}"
+        tick = f"{NS}:reaction_tick_{action}"
+        groups[group] = {"minecraft:timer": {"looping": True, "time": 0.05,
+            "time_down_event": {"event": tick, "target": "self"}}}
+        events[f"{NS}:reaction_start_{action}"] = {"sequence": [
+            {"remove": {"component_groups": group_names}},
+            {"add": {"component_groups": [group]}},
+            {"set_property": {age: 0, done: False, elapsed: 0}},
+        ]}
+        events[f"{NS}:reaction_resume_{action}"] = {"sequence": [
+            {"remove": {"component_groups": group_names}},
+            {"add": {"component_groups": [group]}},
+        ]}
+        events[tick] = {"sequence": [
+            {"filters": {"test": "int_property", "domain": age, "operator": ">=", "value": ticks - 1},
+             "remove": {"component_groups": [group]},
+             "set_property": {age: ticks, done: True, elapsed: ticks / 20},
+             "queue_command": {"command": f"scriptevent {NS}:reaction_finished {action}"}},
+            {"filters": {"test": "int_property", "domain": age, "operator": "<", "value": ticks - 1},
+             "set_property": {age: f"q.property('{age}') + 1", elapsed: f"(q.property('{age}') + 1) / 20"}},
+        ]}
+    return properties, groups, events
+
+
 def make_entities(animation_names):
     customer = entity_base("ordertocook_customer", True, True)
     customer.update({"minecraft:collision_box": {"width": .6, "height": 1.8}, "minecraft:movement": {"value": 0},
@@ -1265,7 +1304,9 @@ def make_entities(animation_names):
              f"{NS}:action": {"type": "int", "range": [0,7], "default": 0, "client_sync": True},
              f"{NS}:action_elapsed": {"type": "float", "range": [0.0,6.0], "default": 0.0, "client_sync": True},
              f"{NS}:animation_variant": {"type": "int", "range": [1,4], "default": 1, "client_sync": True}}
-    write_entity("customer", customer, props)
+    clock_props, clock_groups, clock_events = customer_reaction_clock()
+    props.update(clock_props)
+    write_entity("customer", customer, props, clock_events, clock_groups)
     for name in ("storage", "seat"):
         components = entity_base(f"ordertocook_{name}")
         components["minecraft:collision_box"] = {"width": .01, "height": .01}
