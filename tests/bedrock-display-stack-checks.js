@@ -103,6 +103,12 @@ async function run() {
     // Reproduce the old supported saved format: only its real order link, no
     // physical carrier. This is a migration fixture, not the metadata counterexample.
     old.getComponent('minecraft:inventory').container.setItem(0, undefined); delete s.nativeParcel; saveStation(s);
+    table(18).setType('minecraft:hopper'); table(18).above().setType('minecraft:chest');
+    table(18).above().getComponent('minecraft:inventory').container.setItem(0, new ItemStack('minecraft:bread', 1));
+    await wait(40);
+    const controlInventory = table(18).getComponent('minecraft:inventory').container;
+    const controlItems = Array.from({ length: controlInventory.size }, (_, slot) => controlInventory.getItem(slot)).filter(Boolean);
+    check('vanilla chest-to-hopper positive control extracts one bread', controlItems.length === 1 && controlItems[0].typeId === 'minecraft:bread' && controlItems[0].amount === 1);
     const hopper = prepare('dine_in', 'hopper capability');
     table(14).setType('minecraft:hopper'); actor.location = { x: 14, y: 5, z: 0 };
     h.placeParcel(actor, table(14), 'Up'); await wait(40);

@@ -55,6 +55,11 @@ for display in ['food_plate_display', 'takeout_bag']:
     check(storage.get('slot_count') == 1, display + ' must retain the complete carrier in its native slot')
     loot = documents.get(BP / 'loot_tables/blocks' / (display + '.json'), {})
     check(loot.get('pools') == [], display + ' must not duplicate native cargo through block loot')
+    material_sets = [block.get('components', {}).get('minecraft:material_instances', {}),
+                     *(row.get('components', {}).get('minecraft:material_instances', {}) for row in block.get('permutations', []))]
+    for entries in material_sets:
+        for material in entries.values():
+            check(type(material.get('ambient_occlusion')) in (int, float), display + ' native format requires numeric material occlusion')
 
 geometries, animations, controllers = {}, set(), set()
 for path, obj in documents.items():

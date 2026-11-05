@@ -706,6 +706,15 @@ def state_condition(states):
 
 def block_definition(name, base_geo, materials, states=None, variants=(), collision=True, selection=None,
                      native_container=None, hidden=False, loot_table=None):
+    if native_container is not None:
+        materials, variants = copy.deepcopy(materials), copy.deepcopy(variants)
+        # Native containers require 1.26.60; since 1.26.20 material occlusion is
+        # numeric. Preserve the old false/true lighting meaning as 0/1.
+        material_sets = [materials, *(variant.get("components", {}).get("minecraft:material_instances", {}) for variant in variants)]
+        for entries in material_sets:
+            for material in entries.values():
+                if isinstance(material.get("ambient_occlusion"), bool):
+                    material["ambient_occlusion"] = int(material["ambient_occlusion"])
     description = {"identifier": f"{NS}:{name}", "menu_category": {"category": "construction"},
                    "traits": {"minecraft:placement_direction": {"enabled_states": ["minecraft:cardinal_direction"], "y_rotation_offset": 180}}}
     if hidden:
