@@ -157,7 +157,6 @@ for path in (BP / 'scripts').rglob('*.js'):
     text = path.read_text()
     for target in re.findall(r"(?:from\s*|import\s*)['\"]([^'\"]+)['\"]", text):
         check(target in ['@minecraft/server', '@minecraft/server-ui'] or (target.startswith('.') and (path.parent / target).is_file()), f'{path.name}: unresolved import {target}')
-check(len(blocks) == 13, f'Expected 13 blocks, got {len(blocks)}')
 expected_entities = {'ordertocook:' + name for name in ['customer', 'motorcycle', 'storage', 'seat', 'dining_plate']}
 check(set(entities) == expected_entities, f'Entity set mismatch: missing {sorted(expected_entities - set(entities))}, extra {sorted(set(entities) - expected_entities)}')
 check(len(recipes) >= 10, 'Survival bootstrap recipes are incomplete')

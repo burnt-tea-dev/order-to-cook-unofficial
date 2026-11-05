@@ -3,6 +3,7 @@
 // Entity geometry is cosmetic. Only restaurant.pendingDishes can mint a plate.
 
 export const DINING_ENTITY = 'ordertocook:dining_plate';
+export const DINING_BLOCK = 'ordertocook:dining_plate_block';
 export const MEAL_TOKEN = 'ordertocook:meal_token';
 const RESTAURANT = 'ordertocook:restaurant_id';
 const ORDER = 'ordertocook:order_id';
@@ -36,7 +37,7 @@ export function resolveMealAnchor(entity, chair) {
   const base = floorLocation(chair?.location || entity.location);
   const front = { x: base.x + forward[0], y: base.y + 1, z: base.z + forward[1] };
   const clear = location => {
-    try { const block = dimension.getBlock(location); return !!block?.isAir; } catch { return false; }
+    try { const block = dimension.getBlock(location); return !!block && (block.isAir || block.typeId === DINING_BLOCK); } catch { return false; }
   };
   const center = location => ({ x: location.x + 0.5, y: location.y + 0.0125, z: location.z + 0.5 });
   if (clear(front)) return { dimensionId: dimension.id, location: center(front), rotationY: yaw + 180 };
@@ -54,9 +55,9 @@ export function resolveMealAnchor(entity, chair) {
   for (const candidate of candidates) if (clear(candidate)) {
     return { dimensionId: dimension.id, location: center(candidate), rotationY: yaw + 180 };
   }
-  // An unobstructed point on the customer's lap still has a stable saved anchor.
-  const lap = { x: entity.location.x + forward[0] * 0.35, y: base.y + 1.0125, z: entity.location.z + forward[1] * 0.35 };
-  return { dimensionId: dimension.id, location: clear(lap) ? lap : center(front), rotationY: yaw + 180 };
+  // A native plate occupies one grid cell. Admission rejects an occupied
+  // final candidate rather than replacing a player's block.
+  return { dimensionId: dimension.id, location: center(front), rotationY: yaw + 180 };
 }
 
 /** Dependency injection lets tests exercise state and failed native writes.
@@ -66,6 +67,7 @@ export function resolveMealAnchor(entity, chair) {
 export function createDiningService(ctx) {
   const gameWorld = ctx.world;
   const lastStages = new Map();
+  const blockMeals = new Set();
   let lastSweepAt = -Infinity;
 
   function canonical(restaurant) { return ctx.getRestaurant(restaurant.id) === restaurant; }
@@ -132,14 +134,17 @@ export function createDiningService(ctx) {
 
   function hasVacancy(restaurant, customer) {
     const anchor = resolveMealAnchor(customer, ctx.getCustomerSeat?.(customer));
-    return !(restaurant.pendingDishes || []).some(meal => meal && meal.status !== 'claiming' &&
-      meal.dimensionId === anchor.dimensionId && validLocation(meal.location) && distance2(meal.location, anchor.location) < 0.64);
+    const dimension = loadedDimension(anchor);
+    const block = dimension?.getBlock(floorLocation(anchor.location));
+    if (!block || (!block.isAir && block.typeId !== DINING_BLOCK)) return false;
+    return !ctx.restaurants().some(owner => (owner.pendingDishes || []).some(meal => meal && meal.status !== 'claiming' &&
+      meal.dimensionId === anchor.dimensionId && validLocation(meal.location) && distance2(meal.location, anchor.location) < 0.64));
   }
 
   function queryVisuals(dimension, token) {
     return dimension.getEntities({ type: DINING_ENTITY }).filter(entity => entity.isValid && entity.getDynamicProperty(MEAL_TOKEN) === token);
   }
-  function removeVisuals(meal, dimension = loadedDimension(meal)) {
+  function removeActors(meal, dimension = loadedDimension(meal)) {
     if (!dimension) return false;
     let complete = true;
     for (const entity of queryVisuals(dimension, meal.token)) {
@@ -147,9 +152,38 @@ export function createDiningService(ctx) {
     }
     return complete;
   }
+  function removeVisuals(meal, dimension = loadedDimension(meal)) {
+    if (!dimension) return false;
+    let complete = removeActors(meal, dimension);
+    const block = dimension.getBlock(floorLocation(meal.location));
+    const retained = ctx.restaurants().some(owner => (owner.pendingDishes || []).some(other => other !== meal &&
+      other.status !== 'claiming' && other.dimensionId === meal.dimensionId && validLocation(other.location) &&
+      distance2(floorLocation(other.location), floorLocation(meal.location)) === 0));
+    if (block?.typeId === DINING_BLOCK && !retained) {
+      try { block.setType('minecraft:air'); } catch { complete = false; }
+    }
+    blockMeals.delete(meal.token);
+    return complete;
+  }
+
   function syncVisual(restaurant, meal, now) {
     const dimension = loadedDimension(meal);
     if (!dimension) return;
+    const block = dimension.getBlock(floorLocation(meal.location));
+    if (!block.isAir && block.typeId !== DINING_BLOCK) return;
+    if (block.isAir) block.setType(DINING_BLOCK);
+    const stage = mealStage(meal, now);
+    const facing = ['south', 'west', 'north', 'east'][((Math.round((Number(meal.rotationY) || 0) / 90) % 4) + 4) % 4];
+    if (block.permutation.getState(STAGE) !== stage % 16 || block.permutation.getState(`${STAGE}_high`) !== Math.floor(stage / 16) ||
+        block.permutation.getState('minecraft:cardinal_direction') !== facing) {
+      block.setPermutation(block.permutation.withState(STAGE, stage % 16).withState(`${STAGE}_high`, Math.floor(stage / 16))
+        .withState('minecraft:cardinal_direction', facing));
+    }
+    if (stage > 0) {
+      if (!blockMeals.has(meal.token)) { if (removeActors(meal, dimension)) blockMeals.add(meal.token); }
+      delete meal.visualEntityId;
+      return;
+    }
     let entity;
     try { entity = meal.visualEntityId ? gameWorld.getEntity(meal.visualEntityId) : undefined; } catch { /* Query a loaded anchor below. */ }
     if (!entity?.isValid || entity.typeId !== DINING_ENTITY || entity.getDynamicProperty(MEAL_TOKEN) !== meal.token) {
@@ -170,7 +204,6 @@ export function createDiningService(ctx) {
       meal.visualEntityId = entity.id;
       // Entity ID is a cache. A stale/missing ID never decides plate ownership.
     }
-    const stage = mealStage(meal, now);
     // Stage zero uses Java's placed-food model and half-second maked clip.
     // A helper restored partway through placement seeks to the saved meal age.
     if (stage === 0) entity.setProperty(PLACEMENT_AGE, Math.min(0.5, Math.max(0, (now - meal.startedAt) / 1000)));
@@ -242,15 +275,14 @@ export function createDiningService(ctx) {
     return meal ? { restaurant, meal } : undefined;
   }
 
-  /** Also lets a player click the supporting table where custom entity hit
-   * testing is unavailable on a particular input device/client. */
-  function atBlock(block) {
+  /** Native plate lookup, with the existing supporting-table pickup shortcut. */
+  function atBlock(block, includeSupport = block.typeId !== DINING_BLOCK) {
     const candidates = [];
     for (const restaurant of ctx.restaurants()) for (const meal of restaurant.pendingDishes || []) {
       if (!validMeal(meal) || meal.status === 'claiming' || meal.dimensionId !== block.dimension.id) continue;
       const anchor = floorLocation(meal.location);
       if (anchor.x === block.location.x && anchor.z === block.location.z &&
-          (anchor.y === block.location.y || anchor.y === block.location.y + 1)) candidates.push({ restaurant, meal });
+          (anchor.y === block.location.y || (includeSupport && anchor.y === block.location.y + 1))) candidates.push({ restaurant, meal });
     }
     candidates.sort((a, b) => a.meal.startedAt - b.meal.startedAt);
     return candidates[0];
@@ -307,11 +339,11 @@ export function createDiningService(ctx) {
    * kill between the durable claim and native write can lose this one plate.
    * We prefer that bounded loss to a replayable duplication path.
    */
-  function claim(player, restaurant, meal, now = Date.now(), { drop = false } = {}) {
+  function claim(player, restaurant, meal, now = Date.now()) {
     if (!canonical(restaurant) || !restaurant.pendingDishes?.includes(meal) || !validMeal(meal) || meal.status === 'claiming') return { ok: false, reason: 'already_claimed' };
     if (!player?.isValid || player.dimension.id !== meal.dimensionId || distance2(player.location, meal.location) > 36) return { ok: false, reason: 'too_far' };
     if (ctx.canManage && !ctx.canManage(player, restaurant)) return { ok: false, reason: 'permission' };
-    const reservation = drop ? undefined : reservePlateSlot(player);
+    const reservation = reservePlateSlot(player);
     const dropped = !reservation;
     const previousStatus = meal.status;
     const early = now < meal.startedAt + DIRTY_AFTER;
@@ -358,6 +390,32 @@ export function createDiningService(ctx) {
     return { ok: true, early, dropped };
   }
 
+  function releaseMeal(restaurant, meal, dimension, now, reason) {
+    if (meal.status !== 'claiming') {
+      const previousStatus = meal.status;
+      meal.status = 'claiming'; meal.claimedAt = now; meal.claimedBy = reason;
+      ctx.saveRestaurant(restaurant);
+      const outcome = dropPlate(dimension, meal.location);
+      if (!outcome.ok) {
+        if (outcome.retryable && canonical(restaurant)) {
+          meal.status = previousStatus; delete meal.claimedAt; delete meal.claimedBy;
+          ctx.saveRestaurant(restaurant);
+        }
+        throw outcome.error;
+      }
+    }
+    return finishClaim(restaurant, meal, now);
+  }
+
+  /** Native block removal returns its contents. Java onRemove does not run
+   * the early-pickup penalty from use; the customer keeps its original action.
+   */
+  function removeBlock(block, now = Date.now()) {
+    const linked = atBlock(block, false);
+    if (!linked || !canonical(linked.restaurant)) return false;
+    return releaseMeal(linked.restaurant, linked.meal, block.dimension, now, 'block_removed');
+  }
+
   /** Machine removal returns each outstanding plate once at its own anchor. */
   function cleanupRestaurant(restaurant, now = Date.now()) {
     if (!canonical(restaurant)) return false;
@@ -366,23 +424,10 @@ export function createDiningService(ctx) {
       if (!validMeal(meal)) return false;
       const dimension = loadedDimension(meal);
       if (!dimension) return false;
-      if (meal.status !== 'claiming') {
-        const previousStatus = meal.status;
-        meal.status = 'claiming'; meal.claimedAt = now; meal.claimedBy = 'restaurant_removed';
-        ctx.saveRestaurant(restaurant);
-        const outcome = dropPlate(dimension, meal.location);
-        if (!outcome.ok) {
-          if (outcome.retryable && canonical(restaurant)) {
-            meal.status = previousStatus; delete meal.claimedAt; delete meal.claimedBy;
-            ctx.saveRestaurant(restaurant);
-          }
-          throw outcome.error;
-        }
-      }
-      if (!finishClaim(restaurant, meal, now)) return false;
+      if (!releaseMeal(restaurant, meal, dimension, now, 'restaurant_removed')) return false;
     }
     return !(restaurant.pendingDishes || []).length;
   }
 
-  return { queueMeal, hasVacancy, tick, migrate, claim, resolveEntity, atBlock, cleanupRestaurant, sweepOrphans };
+  return { queueMeal, hasVacancy, tick, migrate, claim, resolveEntity, atBlock, cleanupRestaurant, removeBlock, sweepOrphans };
 }

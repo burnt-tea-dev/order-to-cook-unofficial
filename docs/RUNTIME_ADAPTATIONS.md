@@ -159,9 +159,9 @@ Java 這兩種方塊的 blockstate 是空模型，由完整 Geo renderer 顯示�
 
 ## 餐盤進食、收盤與付款
 
-`dining.js` 的用餐餐盤是 `ordertocook:dining_plate` 輔助實體，依原 [FoodPlateBlockEntity.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/FoodPlateBlockEntity.java) 的 15／60／80／100 tick 門檻切換外形。型號 `v` 為 0–9，實體的單一 `ordertocook:stage` 整數範圍為 0–40：
+`dining.js` 的用餐餐盤是 `ordertocook:dining_plate_block` 原生方塊，依原 [FoodPlateBlockEntity.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/FoodPlateBlockEntity.java) 的 15／60／80／100 tick 門檻切換外形。型號 `v` 為 0–9，階段範圍為 0–40；方塊使用 `stage + 16 * stage_high`，避免單一方塊狀態超過16值：
 
-| 交餐後經過時間 | 本型進食階段 | 實體 stage |
+| 交餐後經過時間 | 本型進食階段 | 合成 stage |
 | --- | --- | --- |
 | 0 至不足 0.75 秒 | 原放置食物模型及短動畫 | 0 |
 | 0.75 至不足 3 秒 | 第 1 階段 | 4 × v + 1 |
@@ -169,11 +169,13 @@ Java 這兩種方塊的 blockstate 是空模型，由完整 Geo renderer 顯示�
 | 4 至不足 5 秒 | 第 3 階段 | 4 × v + 3 |
 | 5 秒起，直到收盤 | 第 4 階段，髒盤 | 4 × v + 4 |
 
-Java stage 0 的 blockstate 為空，實際由 `FoodPlatePlacedRenderer` 顯示食物。候選使用其原 Geo、32×32 材質及 0.5 秒 `maked`，並按 `placement_age` 恢復動畫位置；其餘 40 個階段取原 food stage 模型，全部映射至一張 256×256 原像素 atlas。靜態展示方塊保留原放盤完成姿態，用餐實體播放短動畫。原作餐盤是固定的FoodPlateBlock，不是有重力的FallingBlock；本版輔助實體仍沒有等價方塊碰撞及原BlockEntity的完整ItemStack保存。回收與打破的掉落路徑見下節。實體 hit test 已定義，但官方元件說明只描述命中範圍，不能由此推定右鍵／觸控已可用；另有點下方支撐桌面收盤的入口。材質、高度、各朝向 UV 與兩種操作都待客戶端驗收。
+Java stage 0 的 blockstate 為空，實際由 `FoodPlatePlacedRenderer` 顯示食物。本版在空模型方塊上沿用原 `ordertocook:dining_plate` helper、32×32材質與0.5秒 `maked`，按 `placement_age` 恢復；stage 1–40由方塊直接顯示原模型及256×256原像素atlas，移除舊helper。原實體ID與屬性保留以讀取舊世界，已不用實體命中／互動元件收盤。
 
-用餐位置優先選椅前方，受阻時嘗試相鄰可用桌面／空位，最後使用顧客附近的固定錨點；不沿用 Java 為放盤直接破壞佔位方塊的行為。餐盤保存維度、位置、方向、型號、開始時間及唯一 token。區塊未載入時等待，重新載入後從記錄恢復顯示；重複或失去對應記錄的顯示實體會清理。**同一位置尚有未收餐盤時，下一餐在扣除承載物、改訂單及付款之前便拒絕交付。**
+碰撞保留 `FoodPlateBlock.SHAPE` 的兩部分：底盤14×2×14像素、中央10×3×10像素（中央頂部高5像素）。26.60原生collision array承載兩層；選取框元件只用一個外接長方體14×5×14，因此角落的游標框不是Java的聯集形狀。原作沒有重力，本版亦不因下方桌面拆掉而下墜。餐盤內容權威仍在原餐廳記錄，沒有新增可領取的helper庫存；原BlockEntity任意ItemStack資料仍未等價保存。客戶端畫面、UV朝向及硬體輸入仍不由服務端探針推定。
 
-髒盤在第 5 秒起持續留在原處，由店主／員工點盤或其支撐桌面領取一個髒盤，沒有定時向玩家背包自動補盤。打破餐盤會在原處掉出一盤；普通回收若背包已滿亦落地，保持普通可堆疊物品，不改背包其他格子。椅上喝彩及載具攻擊輸入不會拆盤。提前收盤也只給一個髒盤，並把顧客改成 action 7，再過約 0.5 秒離場。中斷時序同步保存在訂單及 pending meal，已領盤記錄會作為不可再次發盤的短暫 tombstone 保留至中斷完成；因此訂單歷史被裁剪或重啟不會把顧客改回舊進食動作。
+用餐位置優先選椅前方，受阻時嘗試相鄰可用桌面／空位，最後保留椅前的整格錨點；若仍被佔用便拒絕新交餐；不沿用 Java 為放盤直接破壞佔位方塊的行為。餐盤保存維度、位置、方向、型號、開始時間及唯一 token。區塊未載入時等待，重新載入後從記錄恢復方塊；遇到玩家其他方塊會等待，不覆蓋；重複或失去對應記錄的顯示實體會清理。所有餐廳共用位置佔用判斷，避免互相蓋盤。**同一位置尚有未收餐盤時，下一餐在扣除承載物、改訂單及付款之前便拒絕交付。**
+
+髒盤在第 5 秒起持續留在原處，由店主／員工點盤或其支撐桌面領取一個髒盤，沒有定時向玩家背包自動補盤。打破或命令替換餐盤會在原處掉出一盤，沿原作 `onRemove` 保留顧客原動作及時間；普通回收若背包已滿亦落地，保持普通可堆疊物品，不改背包其他格子。椅上喝彩及載具攻擊輸入不會拆盤。提前收盤也只給一個髒盤，並把顧客改成 action 7，再過約 0.5 秒離場。中斷時序同步保存在訂單及 pending meal，已領盤記錄會作為不可再次發盤的短暫 tombstone 保留至中斷完成；因此訂單歷史被裁剪或重啟不會把顧客改回舊進食動作。
 
 站立堂食仍會放盤，但顧客使用 action 4，在約 3 秒離場；餐盤獨立到第 5 秒變髒。這是原 [TakeoutBagItem.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/item/TakeoutBagItem.java) 中 `submitDineInWithPlacedPlate`、`resolveCompletionAnimation` 與餐盤獨立 tick 組合出的行為。
 

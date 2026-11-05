@@ -1173,15 +1173,12 @@ def make_dining_plate():
     components = entity_base("ordertocook_dining_plate")
     components.update({
         "minecraft:collision_box": {"width": 0.01, "height": 0.01},
-        "minecraft:custom_hit_test": {"hitboxes": [{"width": 0.8, "height": 0.2, "pivot": [0, 0.1, 0]}]},
         "minecraft:loot": {"table": "loot_tables/empty.json"},
-        "minecraft:interact": {"interactions": [{"on_interact": {"event": f"{NS}:plate_interact", "target": "self"},
-            "interact_text": f"action.interact.{NS}.plate"}]},
     })
     write_entity("dining_plate", components, {
         f"{NS}:stage": {"type": "int", "range": [0, 40], "default": 0, "client_sync": True},
         f"{NS}:placement_age": {"type": "float", "range": [0.0, 0.5], "default": 0.0, "client_sync": True},
-    }, {f"{NS}:plate_interact": {}})
+    }, {})
     write_json(RP / "entity/dining_plate.entity.json", {"format_version": "1.10.0", "minecraft:client_entity": {"description": {
         "identifier": f"{NS}:dining_plate", "materials": {"default": "entity_alphatest"},
         "textures": {"default": f"textures/{NS}/entity/dining_plate_atlas"},
@@ -1196,6 +1193,29 @@ def make_dining_plate():
             "geometry": f"Array.stages[q.property('{NS}:stage')]", "materials": [{"*": "Material.default"}], "textures": ["Texture.default"],
         },
     }})
+
+    # FoodPlateBlock.SHAPE: the rim and raised food are separate colliders.
+    # The existing visual actor is needed only for the stage-zero maked clip.
+    empty = f"geometry.{NS}.dining_plate_empty"
+    write_json(RP / "models/blocks/dining_plate_empty.geo.json",
+               geometry(empty, [{"name": "root", "pivot": [0, 0, 0], "cubes": []}]))
+    variants = [{"condition": f"q.block_state('{NS}:stage') == {stage}",
+                 "components": {"minecraft:geometry": f"geometry.{NS}.dining_plate_{stage}"}}
+                for stage in range(1, 41)]
+    block_definition('dining_plate_block', empty,
+                     {"*": {"texture": f"{NS}_dining_plate", "render_method": "alpha_test"}},
+                     states={"stage": list(range(41))}, variants=variants,
+                     collision=[{"origin": [-7, 0, -7], "size": [14, 2, 14]},
+                                {"origin": [-5, 2, -5], "size": [10, 3, 10]}],
+                     selection={"origin": [-7, 0, -7], "size": [14, 5, 14]},
+                     hidden=True, loot_table="loot_tables/empty.json")
+    path = BP / "blocks/dining_plate_block.json"
+    definition = read_json(path)
+    definition['format_version'] = NATIVE_CONTAINER_VERSION
+    component = definition['minecraft:block']['components']
+    component['minecraft:destructible_by_mining'] = {'seconds_to_destroy': 0.1}
+    component['minecraft:destruction_particles']['particle_count'] = 0
+    write_json(path, definition)
 
 
 def make_motorcycle_geo():
@@ -1449,6 +1469,7 @@ def make_textures_and_sounds():
     # Original stove.png, stove_fire.png and stove_fire_0..3.png are already
     # copied above and selected by each stove's explicit fire_frame block state.
     (RP / "textures" / NS / "block/stove_fire_flipbook.png").unlink(missing_ok=True)
+    terrain[f"{NS}_dining_plate"] = {"textures": f"textures/{NS}/entity/dining_plate_atlas"}
     write_json(RP / "textures/terrain_texture.json", {"resource_pack_name":"Order To Cook Unofficial","texture_name":"atlas.terrain","padding":8,"num_mip_levels":4,"texture_data":terrain})
     write_json(RP / "textures/flipbook_textures.json", [])
     for source in sorted((ASSETS / "sounds").rglob("*.ogg")):
@@ -1481,7 +1502,7 @@ def preserve_imported_geometry():
 
 def make_languages():
     traditional = {"order_machine":"訂單機","countertop":"料理檯","washingtable":"洗碗檯","chair":"椅子","shelf":"包裝架",
-        "plate_shelf":"餐盤架","takeout_bag":"外賣袋","food_plate_display":"已擺放的餐盤","board":"菜單板","dishwasher":"洗碗機",
+        "plate_shelf":"餐盤架","takeout_bag":"外賣袋","food_plate_display":"已擺放的餐盤","dining_plate_block":"用餐餐盤","board":"菜單板","dishwasher":"洗碗機",
         "refrigerator":"冰箱","refrigerator_upper":"冰箱上層","stove":"爐灶","clean_plate":"乾淨餐盤","dirty_plate":"髒餐盤","food_plate":"裝盤料理",
         "motorcycle":"外賣電單車","helmet":"外賣頭盔","order":"訂單","otc_upgrade_box":"設備升級工具箱","guide":"Order To Cook 使用指南","controller":"餐廳控制器"}
     for value in (1,5,20,100,10000):
@@ -1498,6 +1519,8 @@ def make_languages():
         for path in sorted((BP / "blocks").glob("*.json")):
             name=path.stem
             value=traditional[name] if out_name == "zh_TW" else lang.get(f"block.{NS}.{name}", name.replace("_"," ").title())
+            if name == "dining_plate_block":
+                value = "Dining Plate" if out_name == "en_US" else "用餐餐盤" if out_name == "zh_TW" else "用餐餐盘"
             if name == "refrigerator_upper":
                 value = fridge_labels[out_name]["block"]
             lines.append(f"tile.{NS}:{name}.name={value}")
@@ -1567,7 +1590,7 @@ def main():
             "Original GeckoLib elastic/bounce easing and appliance squash retained in sampled static cuboids; residual descendant shear and unsynchronized cabinet halves remain documented",
             "Stove uses six original textures selected by saved per-stove fire phases: 15-tick ignition delay, 5-tick burst and four 8-tick cycle frames; original ignition bone squash is not rendered",
             "Dishwasher drawer, door, plate-count visibility and wash vibration sampled into 82 poses including look-target preview; preview geometry is shared rather than per-client",
-            "Dining plate entity uses original stage-zero placement geometry/animation plus 40 source food stages and an exact-pixel atlas; no inventory or automatic loot",
+            "Native dining plate uses the original two-part collision and forty block stages; the existing actor handles only stage-zero placement animation; canonical meal records own drops",
             "Seven original customer actions seek from canonical elapsed time; weighted idle variation changes only between completed clips",
             "Default customer skins prebundled; runtime web skin lookup not available", "Source-model inventory thumbnails", "Early-game furniture recipes added for survival access"]})
     print(f"Converted {len(PROVENANCE)} source resource references; {len(list(BP.rglob('*.json')))} BP JSON, {len(list(RP.rglob('*.json')))} RP JSON")

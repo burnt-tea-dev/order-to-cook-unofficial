@@ -33,6 +33,21 @@ class DiningAssetTests(unittest.TestCase):
                 for bound in prop["range"]:
                     self.assertIs(type(bound), float)
 
+    def test_native_plate_keeps_java_collision_and_all_stable_models(self):
+        block = read(ROOT / "runtime/BP/blocks/dining_plate_block.json")["minecraft:block"]
+        components = block["components"]
+        # FoodPlateBlock.SHAPE: box(1,0,1,15,2,15) + box(3,2,3,13,5,13).
+        self.assertEqual(components["minecraft:collision_box"], [
+            {"origin": [-7, 0, -7], "size": [14, 2, 14]},
+            {"origin": [-5, 2, -5], "size": [10, 3, 10]},
+        ])
+        self.assertEqual(components["minecraft:selection_box"],
+                         {"origin": [-7, 0, -7], "size": [14, 5, 14]})
+        self.assertEqual(components["minecraft:geometry"], "geometry.ordertocook.dining_plate_empty")
+        stages = {p["components"]["minecraft:geometry"] for p in block["permutations"]
+                  if "minecraft:geometry" in p["components"]}
+        self.assertEqual(stages, {f"geometry.ordertocook.dining_plate_{i}" for i in range(1, 41)})
+
     def test_all_food_stage_shapes_and_uvs_retain_the_java_source(self):
         variants = read(ASSETS / "blockstates/food_plate_display.json")["variants"]
         meshes = read(ROOT / "runtime/RP/models/entity/dining_plate.geo.json")["minecraft:geometry"]
