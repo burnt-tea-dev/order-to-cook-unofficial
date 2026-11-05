@@ -168,6 +168,8 @@ npm run verify
 python tools/check_compliance.py
 ```
 
+CI 依 [tools/ci_scope.py](tools/ci_scope.py) 判斷改動範圍。只有已確認不參與建置的說明文件與 `docs/validation/` 文字觀察紀錄，才省略玩法測試、型別檢查與模型幾何重現；打包、署名、素材來源及發布規則檢查仍會執行。程式、資源、工具、工作流、版本或未知改動，以及 tag、手動執行或缺少比較基準時，均跑完整檢查；流程見 [build.yml](.github/workflows/build.yml)。
+
 輸出位於 `dist/`，包含 `.mcaddon`、獨立 `.mcpack`、`SHA256SUMS.txt` 及 runtime 指紋。若修改來源模型或轉換器：
 
 ```sh
