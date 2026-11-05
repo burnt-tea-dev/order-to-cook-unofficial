@@ -474,3 +474,88 @@ test('an upper-half slab is rejected even if a native ray hits its top at y=1', 
   env.dimension.getBlockFromRay = () => ({ block: slab, face: 'Up', faceLocation: { x: .5, y: 1, z: .5 } });
   assert.equal(entityServices.hasFullStandingSupport(env.dimension, { x: 0, y: 0, z: 0 }), false);
 });
+
+function chairClapFixture() {
+  const env = makeEnvironment(), fixture = restaurantFixture(env), scheduled = [];
+  env.system.runTimeout = (fn, ticks) => scheduled.push({ fn, at: env.system.currentTick + ticks });
+  const service = readyService(env);
+  assert.equal(service.sitOnChair(fixture.player, fixture.chair), true);
+  function step(ticks) {
+    for (let i = 0; i < ticks; i++) {
+      env.system.currentTick++;
+      for (const task of scheduled.filter(task => task.at === env.system.currentTick)) task.fn();
+      service.tick();
+    }
+  }
+  const swing = (source = 'Attack') => {
+    for (const fn of env.world.afterEvents.playerSwingStart.subscriptions) fn({ player: fixture.player, swingSource: source });
+  };
+  return { ...env, ...fixture, service, step, swing };
+}
+
+test('chair attack starts one three-second clap and sounds at original ticks 0, 12 and 20', () => {
+  const env = chairClapFixture(); env.swing();
+  assert.deepEqual(env.player.animations.map(x => x.name), ['animation.ordertocook.player.chair_clap']);
+  assert.equal(env.dimension.sounds.length, 1);
+  env.swing(); env.swing('Mine'); env.swing('UseItem'); env.step(11);
+  assert.equal(env.dimension.sounds.length, 1); assert.equal(env.player.animations.length, 1);
+  env.step(1); assert.equal(env.dimension.sounds.length, 2);
+  env.step(8); assert.equal(env.dimension.sounds.length, 3);
+  env.step(39); assert.equal(env.player.animations.length, 1);
+  env.step(1); assert.equal(env.player.animations.at(-1).name, 'animation.ordertocook.player.chair_clap_stop');
+  assert.equal(env.player.animations[0].options.controller, env.player.animations[1].options.controller);
+  env.swing(); assert.equal(env.player.animations.length, 3);
+  assert.equal(env.dimension.sounds.length, 4);
+  assert.equal(env.player.container.emptySlotsCount, 36); assert.equal(env.order.status, 'accepted');
+});
+
+test('clap consumes only own-chair melee and mining; other actions and mounts stay native', () => {
+  const env = chairClapFixture();
+  const hurt = { damageSource: { cause: 'entityAttack', damagingEntity: env.player }, cancel: false };
+  const mining = { player: env.player, cancel: false };
+  for (const fn of env.world.beforeEvents.entityHurt.subscriptions) fn(hurt);
+  for (const fn of env.world.beforeEvents.playerBreakBlock.subscriptions) fn(mining);
+  assert.equal(hurt.cancel, true); assert.equal(mining.cancel, true);
+  for (const fn of [...env.system.callbacks].slice(1)) fn();
+  assert.equal(env.player.animations.length, 1);
+  for (const mount of [undefined, env.dimension.spawnEntity('ordertocook:motorcycle', env.player.location), env.dimension.spawnEntity('ordertocook:seat', env.player.location)]) {
+    env.player.riding = mount; env.step(1);
+    const before = env.player.animations.length;
+    env.swing(); env.swing('Mine');
+    const attack = { damageSource: { cause: 'entityAttack', damagingEntity: env.player }, cancel: false };
+    const block = { player: env.player, cancel: false };
+    for (const fn of env.world.beforeEvents.entityHurt.subscriptions) fn(attack);
+    for (const fn of env.world.beforeEvents.playerBreakBlock.subscriptions) fn(block);
+    assert.equal(attack.cancel, false); assert.equal(block.cancel, false);
+    assert.equal(env.player.animations.length, before);
+  }
+  const other = chairClapFixture(); other.swing('UseItem'); other.swing('Interact'); other.swing('DropItem');
+  assert.equal(other.player.animations.length, 0);
+  const projectile = { damageSource: { cause: 'projectile', damagingEntity: other.player }, cancel: false };
+  for (const fn of other.world.beforeEvents.entityHurt.subscriptions) fn(projectile);
+  assert.equal(projectile.cancel, false);
+});
+
+test('dismount, chair change and leave stop clap and discard delayed voices', () => {
+  for (const reason of ['dismount', 'chair', 'leave']) {
+    const env = chairClapFixture(); env.swing(); env.step(5);
+    if (reason === 'dismount') env.player.riding = undefined;
+    if (reason === 'chair') {
+      env.player.riding = undefined;
+      const next = place(env, 'ordertocook:chair', { x: 4, y: 0, z: 0 });
+      assert.equal(env.service.sitOnChair(env.player, next), true);
+    }
+    if (reason === 'leave') for (const fn of env.world.afterEvents.playerLeave.subscriptions) fn({ playerId: env.player.id });
+    env.step(60);
+    assert.equal(env.dimension.sounds.length, 1, reason);
+    assert.deepEqual(env.player.animations.map(x => x.name), ['animation.ordertocook.player.chair_clap', 'animation.ordertocook.player.chair_clap_stop'], reason);
+  }
+});
+
+test('missing animation capability never changes seating, rewards or sound lifecycle', () => {
+  const env = chairClapFixture(); env.player.playAnimation = () => { throw Error('animation unavailable'); };
+  assert.doesNotThrow(() => env.swing()); env.step(60);
+  assert.equal(env.dimension.sounds.length, 3);
+  assert.equal(env.player.riding.typeId, 'ordertocook:seat');
+  assert.equal(env.order.status, 'accepted'); assert.equal(env.player.container.emptySlotsCount, 36);
+});

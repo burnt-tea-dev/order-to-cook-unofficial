@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Bedrock adaptation of Order To Cook by breezeth-CN; see THIRD_PARTY_NOTICES.md.
-import { ButtonState, InputButton, ItemStack, MolangVariableMap, system, world } from "@minecraft/server";
+import { ButtonState, EntityDamageCause, EntitySwingSource, InputButton, ItemStack, MolangVariableMap, system, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { containerCapacity, dropContainerContents, itemLabel, openContainerForm, playerInventory } from "./appliances.js";
 import { playEffects, customerCompletionEffects, customerPortalEffects, customerExplosionEffects, customerUnsuccessfulEffects, motorcycleHitEffects } from "./audiovisual.js";
@@ -90,6 +90,7 @@ export function createEntityService(ctx) {
   const activeForms = new Set();
   const lastUse = new Map();
   const hornTimes = new Map();
+  const chairClaps = new Map();
   const retryTimes = new Map();
   const entityInteractions = new Map();
   const chairClaims = new Set();
@@ -488,6 +489,49 @@ export function createEntityService(ctx) {
     return player.isValid && entity?.isValid && player.dimension.id === entity.dimension.id && dist2(player.location, entity.location) <= range * range;
   }
 
+  function playerChair(player) {
+    if (!player?.isValid || player.typeId !== "minecraft:player") return undefined;
+    const seat = player.getComponent("minecraft:riding")?.entityRidingOn;
+    return seat?.isValid && seat.typeId === SEAT && seat.hasTag(`${NS}chair_seat`) ? seat : undefined;
+  }
+
+  function chairClapAnimation(player, stop = false) {
+    try {
+      player.playAnimation(`animation.ordertocook.player.${stop ? 'chair_clap_stop' : 'chair_clap'}`, {
+        controller: 'ordertocook_chair_clap', blendOutTime: 0.1
+      });
+    } catch { /* Cosmetic failure cannot affect seating or order transactions. */ }
+  }
+
+  function stopChairClap(id) {
+    const session = chairClaps.get(id);
+    chairClaps.delete(id);
+    if (session?.player.isValid) chairClapAnimation(session.player, true);
+  }
+
+  /** Original RiderAnimatable: 60 ticks, voices at 0/12/20; no restart mid-clap. */
+  function clapOnChair(player) {
+    const seat = playerChair(player), now = gameSystem.currentTick;
+    if (!seat || (chairClaps.get(player.id)?.until ?? -1) > now) return false;
+    const session = { player, seatId: seat.id, until: now + 60 };
+    chairClaps.set(player.id, session);
+    chairClapAnimation(player);
+    function voice() {
+      if (chairClaps.get(player.id) !== session) return;
+      if (playerChair(player)?.id !== session.seatId) { stopChairClap(player.id); return; }
+      const rng = ctx.random ?? Math.random;
+      // Java celebrate uses the same yes samples; trade maps to Bedrock yes.
+      const sound = ['mob.villager.idle', 'mob.villager.yes', 'mob.villager.yes'][Math.floor(rng() * 3)];
+      const band = Math.floor(rng() * 3);
+      const pitch = [0.82, 1, 1.18][band] + rng() * [0.08, 0.1, 0.08][band];
+      playSound(player, sound, 0.9, pitch);
+    }
+    voice();
+    gameSystem.runTimeout(voice, 12);
+    gameSystem.runTimeout(voice, 20);
+    return true;
+  }
+
   function horn(entity) {
     const now = gameSystem.currentTick;
     if ((hornTimes.get(entity.id) ?? -100) + 12 > now) return;
@@ -780,6 +824,9 @@ export function createEntityService(ctx) {
     const now = gameSystem.currentTick;
     if (now === lastTick || now < readyTick) return;
     lastTick = now;
+    for (const [id, session] of chairClaps) {
+      if (now >= session.until || playerChair(session.player)?.id !== session.seatId) stopChairClap(id);
+    }
     const refresh = now - scanTick >= 20;
     if (refresh) {
       entities = queryAll(CUSTOMER);
@@ -853,6 +900,22 @@ export function createEntityService(ctx) {
       if (gameSystem.currentTick - previous < 6) return;
       gameSystem.run(() => { if (player.isValid && target.isValid) onEntityInteract(player, target); });
     });
+    // Java consumes attack input while seated. Cancel only this package's
+    // chair gestures; ordinary combat, mining and vehicle input remain native.
+    gameWorld.beforeEvents.entityHurt.subscribe(event => {
+      const player = event.damageSource.damagingEntity;
+      if (event.damageSource.cause !== EntityDamageCause.entityAttack || !playerChair(player)) return;
+      event.cancel = true;
+      gameSystem.run(() => clapOnChair(player));
+    });
+    gameWorld.beforeEvents.playerBreakBlock.subscribe(event => {
+      if (!playerChair(event.player)) return;
+      event.cancel = true;
+      gameSystem.run(() => clapOnChair(event.player));
+    });
+    gameWorld.afterEvents.playerSwingStart.subscribe(event => {
+      if (event.swingSource === EntitySwingSource.Attack || event.swingSource === EntitySwingSource.Mine) clapOnChair(event.player);
+    });
     gameWorld.afterEvents.entityHitEntity.subscribe(onMotorcycleHit);
     gameWorld.afterEvents.playerButtonInput.subscribe(event => {
       if (event.button !== InputButton.Jump || event.newButtonState !== ButtonState.Pressed) return;
@@ -860,6 +923,7 @@ export function createEntityService(ctx) {
       if (bike?.typeId === MOTORCYCLE) horn(bike);
     });
     gameWorld.afterEvents.playerLeave.subscribe(event => {
+      stopChairClap(event.playerId);
       activeForms.delete(event.playerId);
       lastUse.delete(event.playerId);
       for (const key of entityInteractions.keys()) if (key.startsWith(`${event.playerId}:`)) entityInteractions.delete(key);
@@ -872,6 +936,6 @@ export function createEntityService(ctx) {
 
   return {
     init, tick, spawnCustomer, finishCustomer, resumeCustomerMeal, interruptCustomerMeal, cleanupOrder, getCustomerSeat, spawnMotorcycle, openMotorcycle,
-    onItemUse, onEntityInteract, onBlockInteract, onBlockBreak, sitOnChair,
+    onItemUse, onEntityInteract, onBlockInteract, onBlockBreak, sitOnChair, clapOnChair,
   };
 }

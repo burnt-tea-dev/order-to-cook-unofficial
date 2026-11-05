@@ -42,6 +42,20 @@ class ApplianceGeometryTests(unittest.TestCase):
         self.assertEqual(clip['bones']['leftArm']['rotation']['4'], source['bones']['left_arm']['rotation']['2.0'])
         self.assertLessEqual(generated['animations']['animation.ordertocook.player.handwash_stop']['animation_length'], 0.1)
 
+    def test_player_chair_clap_reproduces_the_original_arm_channels(self):
+        with TemporaryDirectory() as temp:
+            output = Path(temp)
+            with patch.multiple(converter, create=True, SOURCE=ROOT / 'upstream/reference', OUT=output, RP=output, PROVENANCE=[]):
+                converter.make_player_chair_clap_animation()
+            generated = json.loads((output / 'animations/chair_clap_player.animation.json').read_text())
+        self.assertEqual(generated, json.loads((ROOT / 'runtime/RP/animations/chair_clap_player.animation.json').read_text()))
+        clip = generated['animations']['animation.ordertocook.player.chair_clap']
+        self.assertEqual(clip['animation_length'], 3)
+        self.assertFalse(clip['loop'])
+        source = converter.unwrap_vectors(converter.read_json(converter.ASSETS / 'animations/player.animation.json')['animations']['player_sit&clap'])
+        self.assertEqual(clip['bones'], {native: source['bones'][original] for original, native in [('right_arm', 'rightArm'), ('left_arm', 'leftArm')]})
+        self.assertLessEqual(generated['animations']['animation.ordertocook.player.chair_clap_stop']['animation_length'], 0.1)
+
     def pose(self, half, frame, closing=False):
         clip = ("up_" if half == "upper" else "down_") + ("close" if closing else "open")
         return converter.bake_pose(converter.split_fridge_geo(self.source, half),

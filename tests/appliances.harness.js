@@ -246,10 +246,10 @@ applianceSource = applianceSource.replace(/import \{[^}]+\} from "@minecraft\/se
 applianceSource = resolveLocalImports(applianceSource, applianceUrl);
 export const appliances = await import(`data:text/javascript;base64,${Buffer.from(applianceSource).toString('base64')}`);
 
-globalThis.__otcEntityMocks = { ...appliances, ...globalThis.__otcApplianceMocks, ButtonState: { Pressed: 'Pressed' }, InputButton: { Jump: 'Jump' } };
+globalThis.__otcEntityMocks = { ...appliances, ...globalThis.__otcApplianceMocks, ButtonState: { Pressed: 'Pressed' }, EntityDamageCause: { entityAttack: 'entityAttack' }, EntitySwingSource: { Attack: 'Attack', Mine: 'Mine' }, InputButton: { Jump: 'Jump' } };
 const entityUrl = new URL('../runtime/BP/scripts/entities.js', import.meta.url);
 let entitySource = await readFile(entityUrl, 'utf8');
-entitySource = entitySource.replace(/import \{[^}]+\} from "@minecraft\/server";/, 'const {ButtonState, InputButton, ItemStack, MolangVariableMap, system, world} = globalThis.__otcEntityMocks;');
+entitySource = entitySource.replace(/import \{[^}]+\} from "@minecraft\/server";/, 'const {ButtonState, EntityDamageCause, EntitySwingSource, InputButton, ItemStack, MolangVariableMap, system, world} = globalThis.__otcEntityMocks;');
 entitySource = entitySource.replace(/import \{[^}]+\} from "@minecraft\/server-ui";/, 'const {ActionFormData} = globalThis.__otcEntityMocks;');
 entitySource = entitySource.replace(/import \{[^}]+\} from "\.\/appliances.js";/, 'const {containerCapacity, dropContainerContents, itemLabel, openContainerForm, playerInventory} = globalThis.__otcEntityMocks;');
 entitySource = resolveLocalImports(entitySource, entityUrl);
