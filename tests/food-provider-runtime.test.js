@@ -249,7 +249,8 @@ for (const packed of [false, true]) test(`cancelling ${packed ? 'a packed' : 'an
 
 let reloadNumber = 0;
 async function readSavedStore(properties) {
-  const original = await readFile(new URL('../runtime/BP/scripts/store.js', import.meta.url), 'utf8');
+  const storeUrl = new URL('../runtime/BP/scripts/store.js', import.meta.url);
+  const original = (await readFile(storeUrl, 'utf8')).replace(/from '(\.[^']+)'/g, (_match, path) => `from '${new URL(path, storeUrl).href}'`);
   const source = original.replace("import { world } from '@minecraft/server';", `
     const properties = new Map(${JSON.stringify([...properties])});
     const world = {

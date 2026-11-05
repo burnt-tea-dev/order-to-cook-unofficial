@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Stable pack UUID + an atomic manifest per station/restaurant. Never erase bad data.
 import { world } from '@minecraft/server';
+import { MACHINE_TICKS } from './machine_timing.js';
 
 const REST = 'ordertocook:r:';
 const STATION = 'ordertocook:s:';
@@ -190,7 +191,10 @@ export function saveRestaurant(value) {
     value.orders = [...history, ...live];
   });
 }
-export function deleteRestaurant(id) { remove(REST, restaurantsById, id); }
+export function deleteRestaurant(id) {
+  remove(REST, restaurantsById, id);
+  world.setDynamicProperty(MACHINE_TICKS + id, undefined);
+}
 
 export function stations() { return [...stationsById.values()]; }
 export function findStation(block) { return stationsById.get(locationId(block.dimension.id, block.location)); }

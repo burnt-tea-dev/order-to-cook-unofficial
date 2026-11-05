@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.21-alpha.1
+
+- Count printer refresh progress only through active native block callbacks. Closed, unsimulated and offline machines cannot catch up wall time. Save a compact cumulative work count and commit each refresh origin with its new offers, retaining a due retry after a failed restaurant save.
+- Keep the Java walk-in wait transient: pause with operation, reset on world load or an observed missing machine, and use the configured subsequent interval. Preserve the existing loaded-block scan instead of adding a global clock or polling loop. Very short unload/reload between scans remains unverified.
+- Adopt remaining legacy refresh time once, retain metadata and remove obsolete runtime wall deadlines. Update the displayed interval and remaining time, preserve the pure-core timestamp contract, and clear only the deleted machine's own counter.
+- Pair BP/RP/modules/dependency at 0.1.21 with preserved UUIDs and append-only runtime trees. Targeted persistence/clock regressions pass; same-world native persistence/region probe is prepared for the shared slot after the next family deployment. See [machine timing](docs/validation/0.1.21-alpha.1/MACHINE_TIMING.md).
+
 ## 0.1.20-alpha.1
 
 - Retarget the original washing body scale, torso lean, head and legs to the native hierarchy without letting the new torso parent rotate the head/arms twice. Include source forearm rotation/translation in a rigid-arm shoulder-to-hand endpoint fit; an actual elbow joint remains unavailable.
