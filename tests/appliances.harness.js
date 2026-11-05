@@ -88,7 +88,8 @@ export class FakeBlock {
   }
   makeContainer(typeId) {
     return typeId === 'ordertocook:refrigerator' ? new FakeContainer(54)
-      : typeId === 'ordertocook:refrigerator_upper' ? new FakeContainer(27) : undefined;
+      : typeId === 'ordertocook:refrigerator_upper' ? new FakeContainer(27)
+      : ['ordertocook:food_plate_display', 'ordertocook:takeout_bag'].includes(typeId) ? new FakeContainer(1) : undefined;
   }
   get typeId() { return this.permutation.type.id; }
   get isAir() { return this.typeId === 'minecraft:air'; }

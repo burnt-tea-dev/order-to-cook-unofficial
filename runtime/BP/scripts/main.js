@@ -523,8 +523,9 @@ function prepareOrderAtCountertop(player, block, restaurant, order) {
     saveRestaurant(restaurant);
     output.setPermutation(BlockPermutation.resolve(order.type === 'delivery' ? 'ordertocook:takeout_bag' : 'ordertocook:food_plate_display'));
     const display = getStation(output);
-    Object.assign(display, { restaurantId: restaurant.id, orderId: order.id, proof: order.proof, ownerId: restaurant.ownerId });
+    Object.assign(display, { restaurantId: restaurant.id, orderId: order.id, proof: order.proof, ownerId: restaurant.ownerId, nativeParcel: true });
     saveStation(display);
+    parcelInventory(output, display).setItem(0, parcelFor(restaurant, order));
     if (order.type === 'dine_in') setBlockState(output, 'ordertocook:stage', order.platedVariant * 4 + 1);
     const supplyBlock = loadedBlock(supply);
     if (supplyBlock) setBlockState(supplyBlock, order.type === 'delivery' ? 'ordertocook:papers' : 'ordertocook:plates', supply.supplies);
@@ -537,7 +538,10 @@ function prepareOrderAtCountertop(player, block, restaurant, order) {
     supply.supplies = supplyBefore;
     saveStation(supply);
     saveRestaurant(JSON.parse(before));
-    if (output.typeId.startsWith(PREFIX)) output.setType('minecraft:air');
+    if (isParcelDisplay(output)) {
+      containerOf(output)?.setItem(0, undefined);
+      output.setType('minecraft:air');
+    }
     const display = findStation(output);
     if (display) deleteStation(display);
     throw error;
@@ -545,30 +549,72 @@ function prepareOrderAtCountertop(player, block, restaurant, order) {
   beginBagPlacement(output);
 }
 
-function displayStack(station) {
+function isParcelDisplay(block) {
+  return ['ordertocook:takeout_bag', 'ordertocook:food_plate_display'].includes(block?.typeId);
+}
+
+// Only pre-native displays lack a physical carrier. This one-time adoption
+// cannot recover annotations already discarded by the former implementation.
+function legacyDisplayStack(station) {
   const restaurant = getRestaurant(station.restaurantId);
   const order = restaurant?.orders.find(entry => entry.id === station.orderId);
   if (!order || order.status !== 'packed' || station.proof !== order.proof) return undefined;
   return parcelFor(restaurant, order);
 }
+
+function parcelInventory(block, station) {
+  const inventory = containerOf(block);
+  if (!inventory?.isValid || inventory.size !== 1) throw new Error('餐點原生儲存格尚未就緒，請保留展示稍後再試。');
+  if (!station.nativeParcel) {
+    const stored = inventory.getItem(0);
+    const stack = stored || legacyDisplayStack(station);
+    // Commit ownership before adding cargo: a failed record save must not leave
+    // a legacy reconstruction path alongside a native item that will spill.
+    station.nativeParcel = true;
+    saveStation(station);
+    try { if (!stored && stack) inventory.setItem(0, stack); }
+    catch (error) {
+      if (!inventory.getItem(0)) {
+        delete station.nativeParcel;
+        saveStation(station);
+      }
+      throw error;
+    }
+  }
+  return inventory;
+}
+
+function adoptLegacyDisplays() {
+  for (const station of stations()) {
+    if (station.nativeParcel || !isParcelDisplay(station)) continue;
+    const block = loadedBlock(station);
+    if (!isParcelDisplay(block)) continue;
+    try { parcelInventory(block, station); }
+    catch (error) { console.warn(`[OrderToCook] Display adoption deferred: ${error}`); }
+  }
+}
+
 function pickupDisplay(player, block) {
   const station = getStation(block);
-  const stack = displayStack(station);
+  const storage = parcelInventory(block, station);
+  const stack = storage.getItem(0);
   if (!stack) { notify(player, '這是空／已失效的展示，沒有可交付的餐點。可直接拆除。'); return; }
   const inventory = containerOf(player);
   const slot = freeSlot(inventory);
   if (slot < 0) { notify(player, '請空出一格背包。'); return; }
   const before = block.permutation;
   try {
-    inventory.setItem(slot, stack);
+    storage.moveItem(0, slot, inventory);
     block.setType('minecraft:air');
     deleteStation(station);
   } catch (error) {
-    // The reserved slot was empty. Remove only the exact parcel issued by this
-    // attempt, then restore its physical display if a later write failed.
+    // The reserved slot was empty. Move this attempt's complete carrier back
+    // into its restored display if a later write failed.
     const issued = inventory.getItem(slot);
-    if (issued?.typeId === stack.typeId && issued.getDynamicProperty(ITEM_PROOF) === station.proof) inventory.setItem(slot, undefined);
     block.setPermutation(before);
+    if (issued && !containerOf(block).getItem(0)) {
+      inventory.moveItem(slot, 0, containerOf(block));
+    }
     saveStation(station);
     throw error;
   }
@@ -590,13 +636,18 @@ function placeParcel(player, clickedBlock, face) {
   try {
     output.setPermutation(BlockPermutation.resolve(linked.order.type === 'delivery' ? 'ordertocook:takeout_bag' : 'ordertocook:food_plate_display'));
     station = getStation(output);
-    Object.assign(station, { restaurantId: linked.restaurant.id, orderId: linked.order.id, proof: linked.proof, ownerId: player.id });
+    Object.assign(station, { restaurantId: linked.restaurant.id, orderId: linked.order.id, proof: linked.proof, ownerId: player.id, nativeParcel: true });
     saveStation(station);
     if (linked.order.type === 'dine_in') setBlockState(output, 'ordertocook:stage', (linked.order.platedVariant || 0) * 4 + 1);
-    if (!consumeHeld(player, stack.typeId, 1)) throw new Error('餐點已被移動，未完成擺放');
+    inventory.moveItem(slot, 0, parcelInventory(output, station));
   } catch (error) {
     // A native write may throw after consuming the item; keep exactly one
     // carrier by removing the failed display before restoring its source slot.
+    const storage = containerOf(output);
+    if (storage?.getItem(0)) {
+      if (!inventory.getItem(slot)) storage.moveItem(0, slot, inventory);
+      else storage.setItem(0, undefined);
+    }
     output.setType('minecraft:air');
     const failed = station || findStation(output);
     if (failed) deleteStation(failed);
@@ -1014,8 +1065,10 @@ function onBreak(event) {
     if (['ordertocook:shelf', 'ordertocook:plate_shelf'].includes(typeId) && station.supplies > 0) {
       block.dimension.spawnItem(new ItemStack(typeId === 'ordertocook:shelf' ? 'minecraft:leather' : 'ordertocook:clean_plate', station.supplies), { ...block.location, y: block.location.y + 0.5 });
     }
-    if (['ordertocook:takeout_bag', 'ordertocook:food_plate_display'].includes(typeId)) {
-      const stack = displayStack(station);
+    if (['ordertocook:takeout_bag', 'ordertocook:food_plate_display'].includes(typeId) && !station.nativeParcel) {
+      // Old records never had native cargo. Retain their former single drop
+      // until adoption; native displays already spill their actual full stack.
+      const stack = legacyDisplayStack(station);
       if (stack) block.dimension.spawnItem(stack, { ...block.location, y: block.location.y + 0.5 });
     }
     deleteStation(station);
@@ -1030,6 +1083,7 @@ function tickMachine(block) {
 
 function tickRestaurants() {
   if (!ready) return;
+  adoptLegacyDisplays();
   const now = Date.now();
   for (const restaurant of restaurants()) {
     try {
@@ -1161,12 +1215,12 @@ system.beforeEvents.startup.subscribe(event => {
     },
     onPlace: event => system.run(() => { try { onPlace(event.block); } catch (error) { console.warn(`[OrderToCook] Place: ${error}`); } }),
     onBreak: event => {
-      if (['ordertocook:board', 'ordertocook:order_machine', DINING_BLOCK].includes(event.brokenBlockPermutation.type.id)) {
+      if (['ordertocook:board', 'ordertocook:order_machine', DINING_BLOCK, 'ordertocook:food_plate_display', 'ordertocook:takeout_bag'].includes(event.brokenBlockPermutation.type.id)) {
         try { onBreak(event); } catch (error) { console.warn(`[OrderToCook] Device break: ${error}`); }
       }
     },
     onPlayerBreak: event => {
-      if (!['ordertocook:board', 'ordertocook:order_machine', DINING_BLOCK].includes(event.brokenBlockPermutation.type.id)) {
+      if (!['ordertocook:board', 'ordertocook:order_machine', DINING_BLOCK, 'ordertocook:food_plate_display', 'ordertocook:takeout_bag'].includes(event.brokenBlockPermutation.type.id)) {
         try { onBreak(event); } catch (error) { console.warn(`[OrderToCook] Break: ${error}`); }
       }
     },
@@ -1193,7 +1247,7 @@ world.beforeEvents.itemUse.subscribe(event => {
 });
 
 world.beforeEvents.playerInteractWithBlock.subscribe(event => {
-  if (!ready) { if (isFridge(event.block)) event.cancel = true; return; }
+  if (!ready) { if (isFridge(event.block) || isParcelDisplay(event.block)) event.cancel = true; return; }
   const item = event.itemStack;
   const meal = dining?.atBlock(event.block);
   if (meal) {
@@ -1353,6 +1407,7 @@ world.afterEvents.worldLoad.subscribe(() => {
       interruptCustomerMeal: (...args) => entities.interruptCustomerMeal?.(...args)
     });
     ready = true;
+    adoptLegacyDisplays();
     appliances.init?.();
     entities.init?.();
     system.runInterval(tickRestaurants, 20);

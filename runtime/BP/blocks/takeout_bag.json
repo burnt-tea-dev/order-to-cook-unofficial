@@ -1,5 +1,5 @@
 {
-  "format_version": "1.21.100",
+  "format_version": "1.26.60",
   "minecraft:block": {
     "description": {
       "identifier": "ordertocook:takeout_bag",
@@ -36,7 +36,7 @@
         "*": {
           "texture": "ordertocook_block_takeout_bag_placed",
           "render_method": "alpha_test",
-          "ambient_occlusion": false
+          "ambient_occlusion": 0
         }
       },
       "minecraft:collision_box": false,
@@ -68,7 +68,13 @@
       "minecraft:movable": {
         "movement_type": "immovable"
       },
-      "ordertocook:interact": {}
+      "ordertocook:interact": {},
+      "minecraft:block_entity": {
+        "dynamic_properties": true,
+        "container": {
+          "slot_count": 1
+        }
+      }
     },
     "permutations": [
       {

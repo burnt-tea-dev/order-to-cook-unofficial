@@ -49,6 +49,17 @@ for module, version in [('@minecraft/server', '2.11.0'), ('@minecraft/server-ui'
     check(any(d.get('module_name') == module and d.get('version') == version for d in dependencies), module + ' must be stable ' + version)
 check(any(d.get('uuid') == manifests[1].get('header', {}).get('uuid') and d.get('version') == PACK_VERSION for d in dependencies), 'BP must depend on the matching RP version')
 check((BP / 'scripts/main.js').is_file(), 'Missing script entry')
+for display in ['food_plate_display', 'takeout_bag']:
+    block = documents.get(BP / 'blocks' / (display + '.json'), {}).get('minecraft:block', {})
+    storage = block.get('components', {}).get('minecraft:block_entity', {}).get('container', {})
+    check(storage.get('slot_count') == 1, display + ' must retain the complete carrier in its native slot')
+    loot = documents.get(BP / 'loot_tables/blocks' / (display + '.json'), {})
+    check(loot.get('pools') == [], display + ' must not duplicate native cargo through block loot')
+    material_sets = [block.get('components', {}).get('minecraft:material_instances', {}),
+                     *(row.get('components', {}).get('minecraft:material_instances', {}) for row in block.get('permutations', []))]
+    for entries in material_sets:
+        for material in entries.values():
+            check(type(material.get('ambient_occlusion')) in (int, float), display + ' native format requires numeric material occlusion')
 
 geometries, animations, controllers = {}, set(), set()
 for path, obj in documents.items():

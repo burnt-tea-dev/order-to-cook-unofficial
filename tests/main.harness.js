@@ -31,7 +31,6 @@ export async function mainFixture(savedProperties = []) {
   env.dimension.getBlock = location => {
     const block = originalGetBlock(location);
     block.above = (amount = 1) => env.dimension.getBlock({ ...block.location, y: block.location.y + amount });
-    block.getComponent = () => undefined;
     return block;
   };
   const player = new FakePlayer(env.dimension, { x: 1.5, y: 0, z: 1.5 });

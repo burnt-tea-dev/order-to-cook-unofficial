@@ -164,6 +164,92 @@ test('parcel-placement consume exception after writing restores one carrier and 
   assert.equal(env.store.findStation(table.above()), undefined);
 });
 
+test('native display destruction spills the complete carrier once; registered callbacks never reconstruct it', async () => {
+  const env = await mainFixture();
+  const plate = env.player.container.getItem(0);
+  plate.nameTag = '保留完整餐盤'; plate.setLore(['拆除後保留']); plate.setDynamicProperty('test:batch', 'native-drop');
+  env.player.container.setItem(0, plate); env.player.isSneaking = true;
+  env.hooks.placeParcel(env.player, env.chair, 'Up');
+  const block = env.chair.above(), brokenBlockPermutation = block.permutation;
+  block.setType('minecraft:air');
+  const component = env.blockComponents.get('ordertocook:interact');
+  component.onBreak({ block, brokenBlockPermutation });
+  component.onPlayerBreak({ block, brokenBlockPermutation });
+  component.onBreak({ block, brokenBlockPermutation });
+  assert.deepEqual(env.dimension.drops.map(row => structuredClone(row.stack)), [structuredClone(plate)]);
+  assert.equal(itemCount(env.player, 'ordertocook:food_plate'), 0);
+  assert.equal(env.store.findStation(block), undefined);
+});
+
+test('a native display emptied by another inventory move cannot mint a replacement from its order link', async () => {
+  const env = await mainFixture(); env.player.isSneaking = true;
+  env.hooks.placeParcel(env.player, env.chair, 'Up');
+  const block = env.chair.above();
+  block.getComponent('minecraft:inventory').container.moveItem(0, 3, env.player.container);
+  env.hooks.pickupDisplay(env.player, block);
+  env.hooks.tickRestaurants();
+  const brokenBlockPermutation = block.permutation;
+  block.setType('minecraft:air');
+  env.hooks.onBreak({ block, brokenBlockPermutation });
+  assert.equal(itemCount(env.player, 'ordertocook:food_plate'), 1);
+  assert.equal(env.dimension.drops.length, 0);
+});
+
+test('failed pickup record cleanup restores the exact native carrier without a duplicate drop', async () => {
+  const env = await mainFixture(); env.player.isSneaking = true;
+  env.parcel.nameTag = '回復原物'; env.parcel.setLore(['原備註']); env.parcel.setDynamicProperty('test:batch', 'rollback');
+  env.player.container.setItem(0, env.parcel);
+  env.hooks.placeParcel(env.player, env.chair, 'Up');
+  const block = env.chair.above();
+  env.failWrite((id, value) => id.startsWith('ordertocook:s:') && value === undefined);
+  assert.throws(() => env.hooks.pickupDisplay(env.player, block), /persistence failure/);
+  assert.deepEqual(structuredClone(block.getComponent('minecraft:inventory').container.getItem(0)), structuredClone(env.parcel));
+  assert.equal(itemCount(env.player, 'ordertocook:food_plate'), 0);
+  assert.equal(env.dimension.drops.length, 0);
+  env.hooks.pickupDisplay(env.player, block);
+  assert.deepEqual(structuredClone(env.player.container.getItem(0)), structuredClone(env.parcel));
+});
+
+test('a pre-native link adopts once and never rebuilds after the adopted carrier leaves its slot', async () => {
+  const env = await mainFixture(); env.player.container.setItem(0, undefined);
+  const block = place(env, 'ordertocook:food_plate_display', { x: 1, y: 1, z: 0 });
+  const station = env.store.getStation(block);
+  Object.assign(station, { restaurantId: env.restaurant.id, orderId: env.order.id, proof: env.order.proof, ownerId: env.player.id });
+  env.store.saveStation(station);
+  env.hooks.tickRestaurants();
+  assert.equal(station.nativeParcel, true);
+  const storage = block.getComponent('minecraft:inventory').container;
+  assert.equal(storage.getItem(0).getDynamicProperty('ordertocook:proof'), env.order.proof);
+  storage.moveItem(0, 4, env.player.container);
+  env.hooks.tickRestaurants(); env.hooks.pickupDisplay(env.player, block);
+  assert.equal(storage.getItem(0), undefined);
+  assert.equal(itemCount(env.player, 'ordertocook:food_plate'), 1);
+  assert.equal(env.dimension.drops.length, 0);
+});
+
+test('a failed old-display ownership save never adds native cargo beside its legacy recovery path', async () => {
+  const env = await mainFixture(); env.player.container.setItem(0, undefined);
+  const block = place(env, 'ordertocook:food_plate_display', { x: 1, y: 1, z: 0 });
+  const station = env.store.getStation(block);
+  Object.assign(station, { restaurantId: env.restaurant.id, orderId: env.order.id, proof: env.order.proof, ownerId: env.player.id });
+  env.store.saveStation(station);
+  env.failWrite(id => id.startsWith('ordertocook:s:'));
+  assert.throws(() => env.hooks.pickupDisplay(env.player, block), /persistence failure/);
+  assert.equal(block.getComponent('minecraft:inventory').container.getItem(0), undefined);
+  assert.equal(env.store.findStation(block).nativeParcel, undefined);
+  env.hooks.pickupDisplay(env.player, block);
+  assert.equal(itemCount(env.player, 'ordertocook:food_plate'), 1);
+  assert.equal(env.dimension.drops.length, 0);
+});
+
+test('display use cancels native container UI and retains the existing deferred pickup action', async () => {
+  const env = await mainFixture(); env.player.isSneaking = true;
+  env.hooks.placeParcel(env.player, env.chair, 'Up');
+  const event = { player: env.player, block: env.chair.above(), isFirstEvent: true, cancel: false };
+  for (const fn of env.world.beforeEvents.playerInteractWithBlock.subscriptions) fn(event);
+  assert.equal(event.cancel, true);
+});
+
 test('production handoff commits personal earnings with the canonical completed order', async () => {
   const env = await mainFixture();
   env.hooks.customerInteract(env.player, env.customer, env.linkage, { rng: () => 0.9999 });

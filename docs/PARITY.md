@@ -44,10 +44,24 @@ Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedro
 | 洗碗機 | 16 盤容量、原 phase／時間、82 個門／抽屜姿態 | 批次存取失敗保留物品，補回非均勻機身變形、原盤數可見規則與 `empty_out` 預覽。預覽由合資格玩家共用方塊狀態，與 Java 每客戶端獨立預覽不同；旋轉子部件的剩餘剪切誤差與有限取樣詳見素材說明。 |
 | 三槽爐灶 | 3輸入＋1燃料＋3配對輸出、共用200 tick；實際產量、堵塞、換料重置與保存；15／5／8 tick獨立爐火 | 原版9條＋有效安裝時煙火2條，其他供應商以明確smoking契約接入；單頁控制與直接存取，點火骨骼與粒子分布仍有適配，客戶端待驗收。 |
 | 顧客 | 兩款原皮膚／骨架、等待與坐姿各 4 變體、7 個 action | idle 權重 55／15／15／15，完成片段後再選變體；action 按原生實體已模擬的tick定位，保留12／40／60／120／110／10 tick時長及保存進度；完成通知下一tick處理，原生測試中10 tick中斷至移除共13 tick；不下載網路皮膚。 |
-| 用餐餐盤 | 原生方塊、原兩層碰撞、40個進食模型；stage 0沿用原食物與放盤短動畫 | 舊記錄及token保留，穩定階段舊helper會移除；原生點取／打破及替換方塊走唯一領取記錄。選取框是兩層形狀的外接長方體；尚未等價保存原BlockEntity任意ItemStack資料。原作沒有重力。實際範圍見[原生餐盤](validation/0.1.15-alpha.1/NATIVE_PLATE.md)，不由服務端推定客戶端聲畫。 |
+| 用餐餐盤 | 原生方塊、原兩層碰撞、40個進食模型；stage 0沿用原食物與放盤短動畫 | 舊記錄及token保留，穩定階段舊helper會移除；點取／拆除走唯一領取記錄。Java 用餐中或完成後刻意回傳新髒盤；未交付成品的完整物品另見[展示餐點保存](#未交付的展示餐點)。選取框是兩層形狀的外接長方體，原作沒有重力。用餐部分見[原生餐盤](validation/0.1.15-alpha.1/NATIVE_PLATE.md)，不由服務端推定客戶端聲畫。 |
 | 椅子／玩家動作 | 玩家可坐、手洗身體／端點轉換、獨立第一人稱左右臂節拍、顧客原姿勢 | 手洗身體／前臂端點沿用原適配，0.1.22 補第一人稱左臂資料及共用顯示請求；可見性須由有效共享 player/controller 接線，單包不保證空手左臂。真肘關節、Java ACTION 校準、客製玩家骨架及可見姿勢／停止仍未完成或未確認。沒有 player.json 或 renderer 覆寫；目前範圍見[下節](#手洗第一人稱左臂)，[0.1.20 原生證據](validation/0.1.20-alpha.1/PLAYER_POSES.md)保留原範圍。椅上喝彩起停及聲音不變，見[喝彩範圍](validation/0.1.13-alpha.1/CHAIR_CLAP.md)。 |
 | 小電驢 | 原Java模型、四車色、保溫箱、燈面、喇叭 | 原生載具物理及按鍵；燈面發光但不照亮地形。原騎車自動頭盔屬玩家渲染層，本版未重建該層及完整玩家姿勢。 |
 | 原始美術 | 67原PNG、12原OGG原樣保留；原geo／動畫正規化存档 | 保存未使用片段不等於其在玩法中已被觸發；動畫清單詳見ASSET_PROVENANCE。 |
+
+## 未交付的展示餐點
+
+操作台做好的餐盤／外送袋，以及玩家蹲下擺放的同一件成品，直接保存在展示方塊的一格原生 inventory。準備時只建立一次成品；擺放與取回使用 `Container.moveItem` 搬動完整 ItemStack，保留名稱、lore、自訂資料與原訂單 proof，不列舉欄位重建。訂單後來失效也可取回格子中的實物，交付仍由原訂單檢查決定。滿包保留原處；拆除／替換由原生容器掉出真物品，腳本不另造副本。
+
+舊展示只有訂單連結，首次載入或操作時可一次轉入原先會回傳的成品；先前已丟的額外名稱等資料無法補回。`nativeParcel` 表示物品已交給原生 inventory；此後空槽就是空槽，包括其他移物入口取走後，不再憑舊連結造物。舊展示尚未轉入就拆除時，保留原來一次回收路徑。這是舊存檔採用，不是物品 ID 相容鎖或退休登記表。原生庫存與 world dynamic properties 仍不是跨儲存層的原子交易。
+
+正常點取沿原腳本動作；before-event 取消原生容器介面。沿用冰箱已需的 [Upcoming Creator Features 與容器能力](NATIVE-CONTAINERS.md)，不新增模組依賴。Java FoodPlateBlockEntity 不公開普通 Inventory／ItemHandler。BDS1.26.60.6下方漏斗觀察40tick未抽取展示物品，同場普通箱子→漏斗正向對照成功；這只證明本次入口與設定，不能推成所有方向／版本的自動化結論。fixture actor不證明真Player介面取消。
+
+原生容器所需的新方塊格式中，材質的 `ambient_occlusion` 必須用數字。生成器將原 false／true 等義轉為0／1，包含階段 permutations；[官方材質文件](https://learn.microsoft.com/en-us/minecraft/creator/reference/content/blockreference/examples/blockcomponents/minecraftblock_material_instances?view=minecraft-bedrock-stable) 明列1.26.20起不再接受布林值。0.1.24首次原生載入因此失敗，保留失敗證據；沒有改引擎或關掉檢查。
+
+原作分界：[Forge 操作台](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/TakeoutBoxBlockEntity.java) 存放待取的成品 copy；[FoodPlateBlock](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/FoodPlateBlock.java)／[BlockEntity](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/FoodPlateBlockEntity.java) 完整保存及回傳。顧客用餐後，提早回收／拆除及100tick完成都換新髒盤。[NeoForge1.21.1 Block](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/neoforge-1.21.1/src/main/java/cn/breezeth/ordertocook/block/FoodPlateBlock.java)及[BlockEntity](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/neoforge-1.21.1/src/main/java/cn/breezeth/ordertocook/block/entity/FoodPlateBlockEntity.java) 已分別核對相同分界。本次不改用餐髒盤流程，也不為原作本來就消耗的每件原料保存 metadata。
+
+2026-11-06 正式 adapter 反例：正常製作並取走成品，用 [ItemStack nameTag／setLore／非堆疊 setDynamicProperty](https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/itemstack?view=minecraft-bedrock-stable) 加資料，再正常擺放取回。修前名稱、lore、自訂資料全失，修後餐盤及共用 adapter 的外送袋都保留；並驗證失敗回復、掉落不重建、舊展示採用及移物後不重造。這不是任意 NBT 或手造 BlockEntity 反例。[0.1.25原生證據](validation/0.1.25-alpha.1/DISPLAY_STACKS.md) 已核真ItemStack／native container、正式adapter取放、真destroy／ID替換唯一掉落、同QA世界正常重啟、空槽不重造及舊link採用。真Player輸入／GUI與client畫面不在本次範圍。
 
 ## 手洗第一人稱左臂
 

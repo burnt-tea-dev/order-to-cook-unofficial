@@ -23,6 +23,23 @@ class ApplianceGeometryTests(unittest.TestCase):
         self.source = converter.normalize_geo(converter.ASSETS / "geo/block/refrigerator.geo.json", "geometry.source")
         self.clips = converter.read_json(converter.ASSETS / "animations/refrigerator.animation.json")["animations"]
 
+    def test_native_block_factory_converts_legacy_material_occlusion_in_base_and_permutations(self):
+        materials = {"*": {"texture": "test", "render_method": "alpha_test", "ambient_occlusion": False}}
+        variants = [{"condition": "1", "components": {"minecraft:material_instances": copy.deepcopy(materials)}}]
+        with TemporaryDirectory() as temp:
+            with patch.object(converter, "BP", Path(temp), create=True):
+                converter.block_definition("native_material_probe", "geometry.test", materials, variants=variants,
+                                           native_container={"slot_count": 1})
+            doc = converter.read_json(Path(temp) / "blocks/native_material_probe.json")
+        self.assertEqual(doc["format_version"], "1.26.60")
+        block = doc["minecraft:block"]
+        self.assertEqual(block["components"]["minecraft:block_entity"]["container"]["slot_count"], 1)
+        values = [block["components"]["minecraft:material_instances"]["*"]["ambient_occlusion"],
+                  block["permutations"][-1]["components"]["minecraft:material_instances"]["*"]["ambient_occlusion"]]
+        self.assertEqual(values, [0, 0])
+        self.assertTrue(all(type(value) is int for value in values))
+        self.assertIs(materials["*"]["ambient_occlusion"], False)
+
     def test_player_handwash_reproduces_both_bounded_perspectives(self):
         with TemporaryDirectory() as temp:
             output = Path(temp)

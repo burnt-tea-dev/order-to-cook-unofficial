@@ -706,6 +706,15 @@ def state_condition(states):
 
 def block_definition(name, base_geo, materials, states=None, variants=(), collision=True, selection=None,
                      native_container=None, hidden=False, loot_table=None):
+    if native_container is not None:
+        materials, variants = copy.deepcopy(materials), copy.deepcopy(variants)
+        # Native containers require 1.26.60; since 1.26.20 material occlusion is
+        # numeric. Preserve the old false/true lighting meaning as 0/1.
+        material_sets = [materials, *(variant.get("components", {}).get("minecraft:material_instances", {}) for variant in variants)]
+        for entries in material_sets:
+            for material in entries.values():
+                if isinstance(material.get("ambient_occlusion"), bool):
+                    material["ambient_occlusion"] = int(material["ambient_occlusion"])
     description = {"identifier": f"{NS}:{name}", "menu_category": {"category": "construction"},
                    "traits": {"minecraft:placement_direction": {"enabled_states": ["minecraft:cardinal_direction"], "y_rotation_offset": 180}}}
     if hidden:
@@ -782,7 +791,7 @@ def make_blocks():
     variants.append({"condition": f"q.block_state('{NS}:frame') > 0", "components": {
         "minecraft:tick": {"interval_range": [1, 1], "looping": True}, f"{NS}:bag_motion": {}}})
     block_definition("takeout_bag", f"geometry.{NS}.takeout_bag", mats, {"frame": list(range(11))}, variants,
-                     False, {"origin": [-5, 0, -5], "size": [10, 10, 10]})
+                     False, {"origin": [-5, 0, -5], "size": [10, 10, 10]}, native_container={"slot_count": 1})
     for name, state, maximum in (("shelf", "papers", 10), ("plate_shelf", "plates", 18), ("washingtable", "plates", 10)):
         variants = []
         for count in range(maximum+1):
@@ -813,7 +822,7 @@ def make_blocks():
         identifier = emit_geo(f"food_plate_display_{stage}", g)
         variants.append({"condition": state_condition({"stage": stage}), "components": {"minecraft:geometry": identifier, "minecraft:material_instances": mats}})
     block_definition("food_plate_display", f"geometry.{NS}.food_plate_display_0", mats, {"stage": list(range(41))}, variants,
-                     False, {"origin": [-6, 0, -6], "size": [12, 5, 12]})
+                     False, {"origin": [-6, 0, -6], "size": [12, 5, 12]}, native_container={"slot_count": 1})
     record(blockstates_source, BP / "blocks/food_plate_display.json", "Original stage1..40 mapping with original placed-meal renderer geometry at stage zero")
     # Fixed Java blockstates are empty; the Geo renderer owns the entire
     # printer. Sample its real 1s neworder rise/squash/wobble, then hold the

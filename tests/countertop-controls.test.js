@@ -14,12 +14,13 @@ function acceptedOrder(env, restaurant = env.restaurant, typeId = 'minecraft:bre
   return order;
 }
 
-async function countertopFixture() {
+async function countertopFixture(type = 'dine_in') {
   const env = await mainFixture();
   env.restaurant.orders = [];
   const order = acceptedOrder(env);
+  order.type = type;
   const counter = place(env, 'ordertocook:countertop', { x: 1, y: 0, z: 0 });
-  const shelf = env.store.getStation(place(env, 'ordertocook:plate_shelf', { x: 1, y: 0, z: 1 }));
+  const shelf = env.store.getStation(place(env, type === 'delivery' ? 'ordertocook:shelf' : 'ordertocook:plate_shelf', { x: 1, y: 0, z: 1 }));
   shelf.supplies = 3;
   env.store.saveStation(shelf);
   env.player.container.setItem(0, undefined);
@@ -54,6 +55,56 @@ test('held accepted order prepares that order directly and preserves remaining f
   expected.amount = 3;
   assert.deepEqual(structuredClone(env.player.container.getItem(1)), structuredClone(expected));
   assert.equal(env.counter.above().typeId, 'ordertocook:food_plate_display');
+});
+
+test('a normally prepared plate keeps its full ItemStack through placement and pickup', async () => {
+  const env = await countertopFixture();
+  env.player.container.setItem(0, env.hooks.parcelFor(env.restaurant, env.order, 'ordertocook:order'));
+  await env.hooks.countertopForm(env.player, env.counter);
+  env.hooks.pickupDisplay(env.player, env.counter.above());
+  // Annotate the real prepared carrier through supported ItemStack APIs. The
+  // restaurant/order/proof come from preparation, not a forged display fixture.
+  const plate = env.player.container.getItem(0);
+  assert.equal(plate.typeId, 'ordertocook:food_plate');
+  plate.nameTag = '小白的晚餐';
+  plate.setLore(['請保留這份餐點的備註']);
+  plate.setDynamicProperty('test:batch', 'dinner-7');
+  env.player.container.setItem(0, plate);
+  env.player.isSneaking = true;
+  env.hooks.placeParcel(env.player, env.counter, 'Up');
+  assert.equal(env.player.container.getItem(0), undefined);
+  env.hooks.pickupDisplay(env.player, env.counter.above());
+  assert.deepEqual(structuredClone(env.player.container.getItem(0)), structuredClone(plate));
+  assert.equal(env.dimension.drops.length, 0, 'pickup moves the native carrier instead of also spilling it');
+});
+
+test('the shared display adapter also preserves a normally prepared takeout bag', async () => {
+  const env = await countertopFixture('delivery');
+  env.player.container.setItem(0, env.hooks.parcelFor(env.restaurant, env.order, 'ordertocook:order'));
+  await env.hooks.countertopForm(env.player, env.counter);
+  env.hooks.pickupDisplay(env.player, env.counter.above());
+  const bag = env.player.container.getItem(0);
+  assert.equal(bag.typeId, 'ordertocook:takeout_bag');
+  bag.nameTag = '外送請留在門口';
+  bag.setLore(['保留外送備註']);
+  bag.setDynamicProperty('test:batch', 'delivery-7');
+  env.player.container.setItem(0, bag);
+  env.player.isSneaking = true;
+  env.hooks.placeParcel(env.player, env.counter, 'Up');
+  env.hooks.pickupDisplay(env.player, env.counter.above());
+  assert.deepEqual(structuredClone(env.player.container.getItem(0)), structuredClone(bag));
+  assert.equal(env.dimension.drops.length, 0);
+});
+
+test('preparation restores food and supplies when its native display inventory is unavailable', async () => {
+  const env = await countertopFixture();
+  env.player.container.setItem(0, env.hooks.parcelFor(env.restaurant, env.order, 'ordertocook:order'));
+  const before = inventorySnapshot(env.player);
+  env.dimension.nativeContainers = false;
+  await assert.rejects(env.hooks.countertopForm(env.player, env.counter), /原生儲存格/);
+  assertStockUnchanged(env, before);
+  assert.equal(env.store.getRestaurant(env.restaurant.id).orders.find(order => order.id === env.order.id).status, 'accepted');
+  assert.equal(env.dimension.drops.length, 0);
 });
 
 test('invalid held tickets never fall back to another accepted order', async t => {
