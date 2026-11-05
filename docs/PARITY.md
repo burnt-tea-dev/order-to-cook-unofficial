@@ -61,6 +61,12 @@ Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedro
 
 `appliances.js`、洗盤取物／數量／取消／付款及 BP API 請求均未改，沿用 [0.1.20 原生 API 接受與 session 證據](validation/0.1.20-alpha.1/player-poses-native.json)，不為新 bone／Molang 字串重開同一 headless BDS。所選 client 對注入 clip → part visibility 的同幀傳遞、左臂落點、換視角與可見停止仍未觀察，不新增真人等待門檻。
 
+## 可選光影模式的相容宣告
+
+0.1.23 的 RP manifest 加入 `capabilities: ["pbr"]`，保留原最低版本 1.26.60，符合官方 [Vibrant Visuals 宣告要求](https://learn.microsoft.com/en-us/minecraft/creator/documents/vibrantvisuals/vvresourcepacks?view=minecraft-bedrock-stable)的 1.21.120 以上門檻。這讓要求所有 RP 明確宣告該模式的組合通過相容檢查，並非聲稱所有普通資源包都必須採用它。
+
+本包保留原紋理，沒有新增 Texture Set、材質圖或全域光影設定；官方[反射／fallback 說明](https://learn.microsoft.com/en-us/minecraft/creator/documents/vibrantvisuals/reflectionscustomization?view=minecraft-bedrock-stable)允許沒有 Texture Set 的物件使用所選模式的預設值。實際反射、皮膚／物品與第一人稱畫面仍未驗證；這不是 PBR 美術完成或 client PASS。
+
 ## 互通與資料
 
 | 原作能力 | Bedrock 路線 |

@@ -43,6 +43,7 @@ for manifest in manifests:
         except Exception:
             errors.append('Invalid pack/module UUID')
 check(len(uuids) == len(set(uuids)), 'Pack/module UUID collision')
+check('pbr' in manifests[1].get('capabilities', []), 'RP must retain its optional PBR compatibility declaration')
 dependencies = manifests[0].get('dependencies', [])
 for module, version in [('@minecraft/server', '2.11.0'), ('@minecraft/server-ui', '2.0.0')]:
     check(any(d.get('module_name') == module and d.get('version') == version for d in dependencies), module + ' must be stable ' + version)

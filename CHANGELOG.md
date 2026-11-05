@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.23-alpha.1
+
+- Declare `pbr` in the canonical RP manifest so a resource-pack stack requiring the optional Vibrant Visuals mode can admit it. Keep the existing 1.26.60 minimum, which exceeds the documented 1.21.120 requirement. No texture sets, material maps, global lighting overrides or artwork are added; missing texture sets use the selected mode's fallbacks. This is a compatibility declaration, not verified PBR artwork or client rendering.
+- Advance the matching BP/RP/module/dependency identity to 0.1.23 and append payload history. Preserve all non-manifest runtime bytes, including the 0.1.22 first-person pose/request gate, gameplay quantities, APIs and UUIDs.
+
 ## 0.1.22-alpha.1
 
 - Generate an independent first-person left-arm stroke from the original left upper/forearm data. Its camera basis mirrors the native empty right hand; Java ACTION calibration and actual client rendering remain unverified. Third-person poses and the existing first-person right-arm curves are unchanged.
