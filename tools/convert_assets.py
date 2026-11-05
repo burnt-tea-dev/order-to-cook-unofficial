@@ -587,6 +587,20 @@ def make_player_handwashing_animation():
     record(source, destination, "Original handwash arm channels; native rightArm/leftArm mapping; two bounded cycles, no player definition override")
 
 
+def make_player_chair_clap_animation():
+    source = ASSETS / "animations/player.animation.json"
+    original = unwrap_vectors(read_json(source)["animations"]["player_sit&clap"])
+    bones = {native: copy.deepcopy(original["bones"][upstream])
+             for upstream, native in (("right_arm", "rightArm"), ("left_arm", "leftArm"))}
+    destination = RP / "animations/chair_clap_player.animation.json"
+    write_json(destination, {"format_version": "1.8.0", "animations": {
+        f"animation.{NS}.player.chair_clap": {"animation_length": 3, "loop": False,
+            "override_previous_animation": True, "bones": bones},
+        f"animation.{NS}.player.chair_clap_stop": {"animation_length": 0.05}
+    }})
+    record(source, destination, "Original seated clap arm channels; bounded three-second native-arm clip, no player definition override")
+
+
 def emit_geo(name, g):
     dest = RP / "models" / "blocks" / (name + ".geo.json")
     write_json(dest, g)
@@ -1535,6 +1549,7 @@ def main():
     make_textures_and_sounds()
     animations=convert_animations()
     make_player_handwashing_animation()
+    make_player_chair_clap_animation()
     make_blocks()
     make_customer_names()
     make_items()

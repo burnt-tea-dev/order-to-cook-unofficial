@@ -4,7 +4,7 @@
 
 Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedrock 行為包、資源包及穩定 Script API 重寫；本輪原生冰箱另需啟用 Upcoming Creator Features。原作已有 GeckoLib／Blockbench 格式資源，因此能保留大量原模型、UV、紋理及聲音；跨平台主要成本在程式、介面與動畫驅動。
 
-本文件對應 **0.1.11-alpha.1（整合來源）**。冰箱改用 Bedrock 26.60 的上下獨立原生容器；爐灶改為直接存入及單頁七槽控制，操作台支援持訂單直接製作與同頁缺料，洗碗機沿用批次操作並補強寫入失敗回退。使用 stable `@minecraft/server 2.11.0`／`@minecraft/server-ui 2.0.0`，不要求 Beta APIs。**完整一比一仍未達成**，尤其原生冰箱已開介面的即時撤權沒有可用 API；入口攔截、鍵鼠／觸控／手把及真實多人 GUI 仍需客戶端驗收。官方能力核對見 [NATIVE-CONTAINERS.md](NATIVE-CONTAINERS.md)，本輪實際結果見 [驗證報告](validation/0.1.5-alpha.1/CONTAINER_GUI.md)。
+本文件對應 **0.1.13-alpha.1（整合來源）**。冰箱改用 Bedrock 26.60 的上下獨立原生容器；爐灶改為直接存入及單頁七槽控制，操作台支援持訂單直接製作與同頁缺料，洗碗機沿用批次操作並補強寫入失敗回退。使用 stable `@minecraft/server 2.11.0`／`@minecraft/server-ui 2.0.0`，不要求 Beta APIs。**完整一比一仍未達成**，尤其原生冰箱已開介面的即時撤權沒有可用 API；入口攔截、鍵鼠／觸控／手把及真實多人 GUI 仍需客戶端驗收。官方能力核對見 [NATIVE-CONTAINERS.md](NATIVE-CONTAINERS.md)，本輪實際結果見 [驗證報告](validation/0.1.5-alpha.1/CONTAINER_GUI.md)。
 
 2026-11-05 原生 BDS 1.26.60.6 載入抓到 0.1.8／0.1.9 共用物品元件的 `onConsume` 註冊錯誤；兩版不適用遊戲交付。0.1.10 將此回呼只掛到具有 `minecraft:food` 的包裹；修正後固定來源已通過原生命令破壞、完整metadata及同一QA世界正常保存／重啟；具體範圍與原失敗見 [原生報告](validation/0.1.10-alpha.1/PORTABLE_NATIVE.md)，不以來源CI或fixture actor冒稱真人輸入。
 
@@ -45,7 +45,7 @@ Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedro
 | 三槽爐灶 | 3輸入＋1燃料＋3配對輸出、共用200 tick；實際產量、堵塞、換料重置與保存；15／5／8 tick獨立爐火 | 原版9條＋有效安裝時煙火2條，其他供應商以明確smoking契約接入；單頁控制與直接存取，點火骨骼與粒子分布仍有適配，客戶端待驗收。 |
 | 顧客 | 兩款原皮膚／骨架、等待與坐姿各 4 變體、7 個 action | idle 權重 55／15／15／15，完成片段後再選變體；action 按服務端已過時間定位並保留末幀消失。服務每 5 tick 同步；不下載網路皮膚。 |
 | 用餐餐盤 | 41 階段形狀、單張原像素 atlas、原生 entity 顯示 | 無庫存、物理碰撞、重力或自動掉落；領盤權威在餐廳記錄。entity hit test 的右鍵／觸控效果未驗收，支援下方桌面點取。 |
-| 椅子／玩家動作 | 玩家可坐、手洗雙臂接線、顧客原姿勢 | 手洗以原雙臂關鍵幀生成有限4秒clip，開始／完成／取消對專屬controller送起停請求；原生QA SimulatedPlayer受理及adapter流程通過，客戶端姿勢／可見停止未確認。全身／分段前臂／第一人稱、喝彩與專用騎車未完整；沒有player.json覆寫。見 [手洗範圍與原生證據](validation/0.1.11-alpha.1/PLAYER_HANDWASH.md)。 |
+| 椅子／玩家動作 | 玩家可坐、手洗雙臂接線、顧客原姿勢 | 手洗以原雙臂關鍵幀生成有限4秒clip，開始／完成／取消對專屬controller送起停請求；原生QA SimulatedPlayer受理及adapter流程通過，客戶端姿勢／可見停止未確認。椅上喝彩已接入攻擊／挖掘動作，三秒雙臂及0／12／20tick聲音、離座停止；原生模擬玩家的傷害／挖掘取消通過。全身／分段前臂／第一人稱與專用騎車仍未完整；沒有player.json覆寫。見[喝彩範圍](validation/0.1.13-alpha.1/CHAIR_CLAP.md)。見 [手洗範圍與原生證據](validation/0.1.11-alpha.1/PLAYER_HANDWASH.md)。 |
 | 小電驢 | 原Java模型、四車色、保溫箱、燈面、喇叭 | 原生載具物理及按鍵；燈面發光但不照亮地形。原騎車自動頭盔屬玩家渲染層，本版未重建該層及完整玩家姿勢。 |
 | 原始美術 | 67原PNG、12原OGG原樣保留；原geo／動畫正規化存档 | 保存未使用片段不等於其在玩法中已被觸發；動畫清單詳見ASSET_PROVENANCE。 |
 
