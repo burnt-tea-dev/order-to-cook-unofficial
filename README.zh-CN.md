@@ -2,11 +2,11 @@
 
 **简体中文** · [繁體中文](README.md) · [English](README.en.md)
 
-**当前源码版本为 `0.1.11-alpha.1`（尚未发布）：冰箱改为上 27／下 54 格原生容器，炉灶和操作台减少操作步骤，洗碗机加强批次存取。需要 Bedrock 26.60 和 Upcoming Creator Features。完整 Java 等价及真实客户端验收尚未完成。** [本轮验证](docs/validation/0.1.5-alpha.1/CONTAINER_GUI.md) · [原生容器能力与限制](docs/NATIVE-CONTAINERS.md)
+**当前源码版本为 `0.1.12-alpha.1`（尚未发布）：冰箱改为上 27／下 54 格原生容器，炉灶和操作台减少操作步骤，洗碗机加强批次存取。需要 Bedrock 26.60 和 Upcoming Creator Features。完整 Java 等价及真实客户端验收尚未完成。** [本轮验证](docs/validation/0.1.5-alpha.1/CONTAINER_GUI.md) · [原生容器能力与限制](docs/NATIVE-CONTAINERS.md)
 
 历史 `0.1.2-alpha.3` 的限定客户端记录含冰箱几何、手洗粒子和进度灰字 FAIL，不能作为本版验收结果：[历史实机记录](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [按钮可读性修复](docs/validation/UNRELEASED-button-contrast.md)。
 
-**当前源码为 `0.1.11-alpha.1` 视觉／音效候选**：修正冰箱内壁与开关曲线、洗碗机变形及预览、餐盘初始食物、顾客时序、打单机／外卖袋动画，以及已确认的声音和粒子差异。修正与可复现证据见 [VISUAL_AUDIO_PARITY.md](docs/VISUAL_AUDIO_PARITY.md)。本轮尚未执行 Blockbench 交互检查或 Java／Bedrock 客户端画面复验；离线对照不改写上述历史实测结果，也不代表完整一比一完成。
+**当前源码为 `0.1.12-alpha.1` 视觉／音效候选**：修正冰箱内壁与开关曲线、洗碗机变形及预览、餐盘初始食物、顾客时序、打单机／外卖袋动画，以及已确认的声音和粒子差异。修正与可复现证据见 [VISUAL_AUDIO_PARITY.md](docs/VISUAL_AUDIO_PARITY.md)。本轮尚未执行 Blockbench 交互检查或 Java／Bedrock 客户端画面复验；离线对照不改写上述历史实测结果，也不代表完整一比一完成。
 
 
 原作作者：**breezeth** — [CurseForge](https://www.curseforge.com/minecraft/mc-mods/order-to-cook) · [Java 源代码](https://github.com/breezeth-CN/OrdertoCook)。本项目由 `casama233`／`burnt-tea-dev` 维护，保留上游 GPLv3、作者署名和素材来源。有关补充素材使用范围的询问尚未收到回复，作为非阻塞事项记录；作者未回复不阻止功能开发，但实际许可证冲突仍须处理。
@@ -80,7 +80,7 @@
 ## 明确改编和未完成项
 
 - 冰箱使用真实原生容器；炉灶和操作台采用直接操作及单页表单，没有完全相同的 Java 专用槽位布局和快捷键。
-- 冰箱堆叠上限遵守 Bedrock 物品规则，仍缺原版每格 128 件及内部食品陈列。开／关曲线和机身缩放已取样，关门变形只作用于各自分区，未同步整座柜体。洗碗机已补回非均匀缩放，仍有有限姿态和不足 0.260 像素的取样剪切残差。
+- 蹲下空手点击冰箱上／下层可整理当前那层：同数据合并，按原先出现顺序收拢；保留名称和 metadata。原生堆叠上限不变，仍无食品限定和每格 128 件。
 - 洗碗机持脏盘准星预览已接线，由合资格玩家共用方块姿态；Java 是每客户端独立预览。外卖袋放置动画在卸载时暂停，打单机重启后恢复待取纸张；实机播放节奏仍待比较。
 - 立牌／打单机的掉落物已带菜单及原店主／等级／统计等持久资料；Bedrock 记录仍按放置坐标识别，不等于 Java 数字机器 ID。见 [原生资料证据](docs/validation/0.1.10-alpha.1/PORTABLE_NATIVE.md)。
 - 26.60 没有可用的原生容器强制关闭 API：撤权后不能保证立即终止已打开的冰箱界面。新开入口的 before-event 取消是否能拦截原生窗口仍待真 Player 验收；不能将当前冰箱当作已验证的私人保险箱。详见 [权限边界](docs/NATIVE-CONTAINERS.md)。

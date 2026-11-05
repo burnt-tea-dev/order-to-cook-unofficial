@@ -222,3 +222,60 @@ test('command removal cleans the remaining half without replaying automatic nati
     advance(f.service, f, 101); assert.equal(f.dimension.drops.length, 2); assert.equal(f.dimension.spawnCount, 0);
   }
 });
+
+
+test('sneak-empty compaction merges matching metadata in first-seen order within one compartment', () => {
+  const f = setup(), player = new FakePlayer(f.dimension); player.isSneaking = true;
+  const apple = new FakeItem('minecraft:apple', 40); apple.nameTag = 'A'; apple.setLore(['saved']);
+  const later = apple.clone(); later.amount = 30;
+  const other = new FakeItem('minecraft:apple', 4); other.nameTag = 'B';
+  const sword = new MetadataItem('minecraft:diamond_sword', 1, 'opaque'); sword.maxAmount = 1;
+  f.lower.container.setItem(3, apple); f.lower.container.setItem(7, new FakeItem('minecraft:bread', 2));
+  f.lower.container.setItem(9, later); f.lower.container.setItem(11, other); f.lower.container.setItem(53, sword);
+  f.upper.container.setItem(26, new FakeItem('minecraft:apple', 8));
+  f.service.onInteract(player, f.lower);
+  assert.deepEqual(f.lower.container.slots.filter(Boolean).map(item => [item.typeId, item.amount, item.nameTag]), [
+    ['minecraft:apple', 64, 'A'], ['minecraft:apple', 6, 'A'], ['minecraft:bread', 2, undefined],
+    ['minecraft:apple', 4, 'B'], ['minecraft:diamond_sword', 1, sword.nameTag],
+  ]);
+  assert.equal(fingerprint(f.lower.container.getItem(4)), fingerprint(sword));
+  assert.deepEqual(f.lower.container.getItem(0).getLore(), ['saved']);
+  assert.equal(f.upper.container.getItem(26).amount, 8);
+  f.service.onInteract(player, f.upper);
+  assert.equal(f.upper.container.getItem(0).amount, 8); assert.equal(f.upper.container.getItem(26), undefined);
+  assert.equal(f.lower.container.getItem(1).amount, 6); assert.equal(f.dimension.drops.length, 0);
+});
+
+test('ordinary use, holding an item and denied access cannot compact fridge cargo', () => {
+  for (const reason of ['ordinary', 'held', 'permission']) {
+    const f = setup(), player = new FakePlayer(f.dimension);
+    f.lower.container.setItem(8, new FakeItem('minecraft:apple', 3));
+    player.isSneaking = reason !== 'ordinary';
+    if (reason === 'held') player.container.setItem(0, new FakeItem('minecraft:stick'));
+    if (reason === 'permission') f.ctx.canUseStation = () => false;
+    f.service.onInteract(player, f.lower);
+    assert.equal(f.lower.container.getItem(0), undefined, reason);
+    assert.equal(f.lower.container.getItem(8).amount, 3, reason);
+  }
+});
+
+test('compaction restores full slot snapshots when a write throws before or after acceptance', () => {
+  for (const accepted of [false, true]) {
+    const f = setup(), player = new FakePlayer(f.dimension); player.isSneaking = true;
+    f.lower.container.setItem(8, new MetadataItem('minecraft:apple', 3, 'restore'));
+    f.lower.container.setItem(9, new FakeItem('minecraft:bread', 2));
+    const snapshot = () => Array.from({ length: f.lower.container.size }, (_, slot) => fingerprint(f.lower.container.getItem(slot)));
+    const before = snapshot(), write = f.lower.container.setItem.bind(f.lower.container);
+    let failed = false;
+    f.lower.container.setItem = (slot, stack) => {
+      if (!failed && slot === 1) {
+        failed = true; if (accepted) write(slot, stack);
+        throw Error('injected sort write failure');
+      }
+      write(slot, stack);
+    };
+    f.service.onInteract(player, f.lower);
+    assert.equal(failed, true); assert.deepEqual(snapshot(), before);
+    assert.equal(f.dimension.drops.length, 0);
+  }
+});

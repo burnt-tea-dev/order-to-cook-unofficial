@@ -1126,10 +1126,11 @@ world.beforeEvents.playerInteractWithBlock.subscribe(event => {
     return;
   }
   if (isFridge(event.block) && item?.typeId !== 'ordertocook:otc_upgrade_box') {
-    // Native block interaction opens the actual container. Do not cancel an
-    // authorized ready fridge or dispatch the former paginated form adapter.
+    // Ordinary use opens the native container; sneak-empty use compacts this
+    // compartment through the same deferred permission check as other actions.
     const station = findStation(appliances.normalizeBlock(event.block));
-    if (station?.ownerId && appliances.canOpenFridge(event.player, event.block)) return;
+    const compact = event.player.isSneaking && !item;
+    if (!compact && station?.ownerId && appliances.canOpenFridge(event.player, event.block)) return;
     event.cancel = true;
     if (event.isFirstEvent) system.run(() => safely(event.player, () => interactBlock(event.player, event.block)));
     return;

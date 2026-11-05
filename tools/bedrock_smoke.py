@@ -11,6 +11,7 @@ import hashlib
 import json
 import os
 import selectors
+import socket
 import shutil
 import subprocess
 import time
@@ -19,10 +20,15 @@ ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser()
 parser.add_argument('--server-dir', type=Path, required=True)
 parser.add_argument('--mode', choices=['initial', 'reload', 'upgrade'], default='initial')
-parser.add_argument('--suite', choices=['full', 'stove'], default='full')
+parser.add_argument('--suite', choices=['full', 'stove', 'fridge'], default='full')
 parser.add_argument('--output-dir', type=Path, help='Report directory; stove defaults to docs/validation/stove-integration, without replacing historical reports.')
 parser.add_argument('--timeout', type=int, default=75)
+parser.add_argument('--offline', action='store_true', help='Loopback-only isolated network namespace required')
+parser.add_argument('--world-metadata', type=Path, help='Initial QA level.dat only; no world DB is copied')
 args = parser.parse_args()
+if args.offline:
+    if os.readlink('/proc/self/ns/net') == os.readlink('/proc/1/ns/net') or {name for _, name in socket.if_nameindex()} != {'lo'}:
+        raise SystemExit('Offline QA requires a loopback-only network namespace')
 if args.suite == 'stove' and args.mode == 'upgrade':
     raise SystemExit('The stove probe supports initial and reload; it has no historical upgrade fixture.')
 runtime = args.server_dir.resolve()
@@ -41,6 +47,8 @@ if args.mode == 'initial' and world.exists():
     shutil.rmtree(world)
 marker.write_text('Disposable Order To Cook QA runtime.\n')
 world.mkdir(parents=True, exist_ok=True)
+if args.mode == 'initial' and args.world_metadata is not None:
+    shutil.copy2(args.world_metadata, world / 'level.dat')
 for short, kind in [('BP', 'behavior_packs'), ('RP', 'resource_packs')]:
     destination = runtime / kind / 'otc'
     if destination.exists():
@@ -48,7 +56,8 @@ for short, kind in [('BP', 'behavior_packs'), ('RP', 'resource_packs')]:
     shutil.copytree(ROOT / 'runtime' / short, destination)
     manifest = json.loads((destination / 'manifest.json').read_text())
     if short == 'BP':
-        probes = ['bedrock-stove-smoke.js'] if args.suite == 'stove' else ['bedrock-smoke.js', 'bedrock-customer-checks.js']
+        probes = (['bedrock-fridge-compaction-checks.js'] if args.suite == 'fridge' else
+                  ['bedrock-stove-smoke.js'] if args.suite == 'stove' else ['bedrock-smoke.js', 'bedrock-customer-checks.js'])
         for probe in probes:
             shutil.copyfile(ROOT / 'tests' / probe, destination / 'scripts' / probe)
         (destination / 'scripts/qa-entry.js').write_text(f"import './main.js';\nimport './{probes[0]}';\n")
@@ -65,15 +74,16 @@ for short, kind in [('BP', 'behavior_packs'), ('RP', 'resource_packs')]:
         next(module for module in manifest['modules'] if module['type'] == 'script')['entry'] = 'scripts/qa-entry.js'
         (destination / 'manifest.json').write_text(json.dumps(manifest, indent=2))
     (world / ('world_' + kind + '.json')).write_text(json.dumps([{'pack_id': manifest['header']['uuid'], 'version': manifest['header']['version']}]))
-(runtime / 'server.properties').write_text('''server-name=OrderToCook isolated QA
+authentication = 'false' if args.offline else 'true'
+(runtime / 'server.properties').write_text(f'''server-name=OrderToCook isolated QA
 level-name=otc-qa
 gamemode=creative
 force-gamemode=true
 difficulty=peaceful
 allow-cheats=true
 max-players=1
-online-mode=true
-allow-list=true
+online-mode={authentication}
+allow-list={authentication}
 server-port=24981
 server-portv6=24982
 enable-lan-visibility=false
@@ -151,7 +161,7 @@ finally:
     if process.poll() is None:
         process.kill()
     selector.close()
-report_name = f'native-stove-{args.mode}' if args.suite == 'stove' else f'native-{args.mode}'
+report_name = f'native-{args.suite}-{args.mode}' if args.suite != 'full' else f'native-{args.mode}'
 (runtime / (report_name + '.log')).write_text('\n'.join(lines) + '\n', encoding='utf-8')
 if report is None:
     print('\n'.join(lines[-35:]))
@@ -164,7 +174,7 @@ if args.suite == 'stove':
                    for name in ['tools/bedrock_smoke.py', 'tests/bedrock-stove-smoke.js']},
                    'scope': 'Real BDS ItemStacks, inventories, block states, main scheduling and supplier script-event ingress. Most edge cases use a controlled service clock over native objects. Initial/reload are separate server processes with real disk persistence. Two synthetic QA item IDs only; this does not certify an installed Grilling pack, real Player forms, client rendering/sound, or physical chunk unload.'})
 report['passed'] = report['passed'] and not addon_errors
-output = args.output_dir.resolve() if args.output_dir else ROOT / 'docs/validation' / ('stove-integration' if args.suite == 'stove' else pack_version)
+output = args.output_dir.resolve() if args.output_dir else ROOT / 'docs/validation' / (args.suite + '-integration' if args.suite != 'full' else pack_version)
 output.mkdir(exist_ok=True, parents=True)
 (output / (report_name + '.json')).write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 if not report['passed']:
