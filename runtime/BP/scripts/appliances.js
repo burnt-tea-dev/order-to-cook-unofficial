@@ -485,13 +485,17 @@ export function createApplianceService(ctx) {
   }
 
   function playWashingAnimation(player, stop = false) {
-    try {
-      player.playAnimation(`animation.ordertocook.player.${stop ? 'handwash_stop' : 'handwash'}`, {
-        controller: WASH_ANIMATION_CONTROLLER, blendOutTime: 0.1
-      });
-    } catch {
-      // Cosmetic failure cannot alter plate delivery. The start clip is bounded
-      // to four seconds, including when the player disconnects before a stop.
+    // Both clips share a start tick; the client selects its current perspective.
+    // Keep the first-person arm independent of third-person body transforms.
+    for (const suffix of ['', '_first_person']) {
+      try {
+        player.playAnimation(`animation.ordertocook.player.${stop ? 'handwash_stop' : 'handwash' + suffix}`, {
+          controller: WASH_ANIMATION_CONTROLLER + suffix, blendOutTime: 0.1
+        });
+      } catch {
+        // Each cosmetic request is independent; neither can change plate delivery.
+        // The clips are finite even if a disconnected Player rejects the stop.
+      }
     }
   }
 

@@ -41,9 +41,11 @@ async function run() {
     check('native Player exposes playAnimation', player.typeId === 'minecraft:player' && typeof player.playAnimation === 'function');
     // Explicit native calls surface errors that production rightly treats as
     // cosmetic. No wrapper replaces the native Player method in this probe.
-    player.playAnimation('animation.ordertocook.player.handwash', { controller: 'ordertocook_handwash', blendOutTime: 0.1 });
-    player.playAnimation('animation.ordertocook.player.handwash_stop', { controller: 'ordertocook_handwash', blendOutTime: 0.1 });
-    check('native Player accepts start and replacement-stop requests', true);
+    for (const suffix of ['', '_first_person']) {
+      player.playAnimation('animation.ordertocook.player.handwash' + suffix, { controller: 'ordertocook_handwash' + suffix, blendOutTime: 0.1 });
+      player.playAnimation('animation.ordertocook.player.handwash_stop', { controller: 'ordertocook_handwash' + suffix, blendOutTime: 0.1 });
+    }
+    check('native Player accepts both perspective start and replacement-stop requests', true);
     inventory.setItem(0, new ItemStack('ordertocook:dirty_plate'));
     hooks.appliances.onInteract(player, block);
     player.lookAtLocation({ x: 0.5, y: 5.8, z: 0.5 }); await wait(3);

@@ -565,26 +565,103 @@ def convert_animations():
     return names
 
 
+def handwash_arm_pose(original, rig, side, seconds):
+    """Fit the native rigid arm between the source shoulder and hand tip.
+
+    This preserves both endpoints, not the source elbow or skin deformation.
+    The fixed lower-arm bend/translation must participate in the target: simply
+    copying the upper-arm angles discards half of the original arm animation.
+    """
+    arm, hand = rig[f"{side}_arm"], rig[f"{side}_hand"]
+    arm_channels = original["bones"][arm["name"]]
+    hand_channels = original["bones"][hand["name"]]
+    rotation = sample_channel(arm_channels.get("rotation"), seconds, [0]*3)
+    position = sample_channel(arm_channels.get("position"), seconds, [0]*3)
+    cube = arm["cubes"][0]
+    top = [cube['origin'][0]+cube['size'][0]/2, 24, 0]
+    tip = [top[0], 12, 0]
+    tip = geometry_transform3(tip, sample_channel(hand_channels.get("rotation"), seconds, [0]*3), hand['pivot'])
+    tip = [a+b for a,b in zip(tip, sample_channel(hand_channels.get("position"), seconds, [0]*3))]
+    direction = [a-b for a,b in zip(tip, top)]
+    length = math.sqrt(sum(v*v for v in direction))
+    # Minimal local swing of the downward arm axis toward the source hand.
+    x, y, z = [v/length for v in direction]
+    correction = [[1-x*x/(1-y), -x, -x*z/(1-y)],
+                  [x, -y, z], [-x*z/(1-y), -z, 1-z*z/(1-y)]]
+    axes = [geometry_transform3([correction[i][j] for i in range(3)], rotation) for j in range(3)]
+    fitted, _ = closest_cuboid_axes([[axes[j][i] for j in range(3)] for i in range(3)])
+    shoulder = [a+b for a,b in zip(geometry_transform3(top, rotation, arm['pivot']), position)]
+    return fitted, shoulder, length/12
+
+
 def make_player_handwashing_animation():
-    """Adapt the two rigid player arms; keep the unsupported full rig separate."""
+    """Retarget body hierarchy and rigid-arm endpoints; isolate first person."""
     source = ASSETS / "animations/player_wash.animation.json"
     original = unwrap_vectors(read_json(source)["animations"]["player_wash"])
-    bones = {}
-    for upstream, native in (("right_arm", "rightArm"), ("left_arm", "leftArm")):
-        channels = copy.deepcopy(original["bones"][upstream])
-        for name, values in channels.items():
-            if isinstance(values, dict):
-                # Two original 2-second cycles, bounded to the 80-tick wash.
-                channels[name] = {f"{float(time) + offset:g}": value
-                                  for offset in (0, 2) for time, value in values.items()}
-        bones[native] = channels
+    rig = {b['name']: b for b in read_json(ASSETS / 'geo/drive_idle.geo.json')['minecraft:geometry'][0]['bones']}
+    torso = original['bones']['torso']
+    torso_rotation, torso_position = torso['rotation'], torso['position']
+    inverse_torso = [-v for v in torso_rotation]  # This clip rotates only X.
+    scale = original['bones']['body']['scale']
+    head_pivot = [a+b-c for a,b,c in zip(rig['head']['pivot'], original['bones']['head']['position'], torso_position)]
+    head_pivot = geometry_transform3(head_pivot, inverse_torso, rig['torso']['pivot'])
+    bones = {'root': {'scale': scale, 'position': [0, 12*(1-scale[1]), 0]},
+             'waist': {'rotation': [0, 0, 0]}, 'body': copy.deepcopy(torso),
+             'head': {'rotation': {}, 'position': [a-b for a,b in zip(head_pivot, rig['head']['pivot'])]},
+             'rightLeg': copy.deepcopy(original['bones']['right_leg']),
+             'leftLeg': copy.deepcopy(original['bones']['left_leg'])}
+    for side in ('right', 'left'):
+        bones[f'{side}Arm'] = {'rotation': {}, 'position': {}, 'scale': {}}
+    first_person = {'rightArm': {'rotation': {}, 'position': {}}}
+    # Mojang 1.26.60.5 player_firstperson: native empty-hand pose. Only the
+    # right arm is visible with both hands empty; animations cannot unhide left.
+    fp_rotation, fp_position = [95, -45, 115], [13.5, -10, 12]
+    initial_rotation, initial_shoulder, _ = handwash_arm_pose(original, rig, 'right', 0)
+
+    def into_fp(vector):
+        for axis in (2, 1, 0):
+            undo = [0]*3; undo[axis] = -initial_rotation[axis]
+            vector = geometry_transform3(vector, undo)
+        return geometry_transform3(vector, fp_rotation)
+
+    for tick in range(81):
+        seconds, key = (tick % 40)/20, f'{tick/20:g}'
+        head = sample_channel(original['bones']['head']['rotation'], seconds, [0]*3)
+        bones['head']['rotation'][key] = [head[0]-torso_rotation[0], head[1], head[2]]
+        for side in ('right', 'left'):
+            rotation, shoulder, stretch = handwash_arm_pose(original, rig, side, seconds)
+            source_shoulder = shoulder
+            shoulder = geometry_transform3([a-b for a,b in zip(shoulder, torso_position)], inverse_torso, rig['torso']['pivot'])
+            axes = [geometry_transform3(geometry_transform3([int(i == j) for i in range(3)], rotation), inverse_torso) for j in range(3)]
+            local_rotation, _ = closest_cuboid_axes([[axes[j][i] for j in range(3)] for i in range(3)])
+            pivot = [-5 if side == 'right' else 5, 22, 0]
+            top = [-6 if side == 'right' else 6, 24, 0]
+            scaled_top = [pivot[i]+(top[i]-pivot[i])*([1, stretch, 1][i]) for i in range(3)]
+            transformed = geometry_transform3(scaled_top, local_rotation, pivot)
+            bone = bones[f'{side}Arm']
+            bone['rotation'][key] = local_rotation
+            bone['position'][key] = [a-b for a,b in zip(shoulder, transformed)]
+            bone['scale'][key] = [1, stretch, 1]
+            if side == 'right':
+                # Apply the source stroke relative to its first frame in the
+                # native first-person basis, keeping camera/VR base pose native.
+                axes = [into_fp(geometry_transform3([int(i == j) for i in range(3)], rotation)) for j in range(3)]
+                fp_angles, _ = closest_cuboid_axes([[axes[j][i] for j in range(3)] for i in range(3)])
+                first_person['rightArm']['rotation'][key] = fp_angles
+                delta = into_fp([a-b for a,b in zip(source_shoulder, initial_shoulder)])
+                base_top = geometry_transform3(top, fp_rotation, pivot)
+                moved_top = geometry_transform3(top, fp_angles, pivot)
+                first_person['rightArm']['position'][key] = [a+b+c-d for a,b,c,d in zip(fp_position, delta, base_top, moved_top)]
     destination = RP / "animations/handwashing_player.animation.json"
     write_json(destination, {"format_version": "1.8.0", "animations": {
         f"animation.{NS}.player.handwash": {"animation_length": 4, "loop": False,
-            "override_previous_animation": True, "bones": bones},
+            "blend_weight": "!query.is_first_person", "override_previous_animation": True, "bones": rounded(bones)},
+        f"animation.{NS}.player.handwash_first_person": {"animation_length": 4, "loop": False,
+            "blend_weight": "query.is_first_person && !variable.is_using_vr", "override_previous_animation": True, "bones": rounded(first_person)},
         f"animation.{NS}.player.handwash_stop": {"animation_length": 0.05}
     }})
-    record(source, destination, "Original handwash arm channels; native rightArm/leftArm mapping; two bounded cycles, no player definition override")
+    record(source, destination, "Original body hierarchy and shoulder/hand-tip retarget; rigid elbow approximation; native first-person relative right-arm stroke; bounded four seconds, no player definition override")
+    record(ASSETS / 'geo/drive_idle.geo.json', destination, "Original active player rig pivots and upper/lower-arm endpoints")
 
 
 def make_player_chair_clap_animation():
