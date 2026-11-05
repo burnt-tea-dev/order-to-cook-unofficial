@@ -1,0 +1,274 @@
+{
+  "engine": "BDS1.26.60.6",
+  "server_module": "2.11.0",
+  "ui_module": "2.0.0",
+  "qa_module": "gametest1.0.0-beta",
+  "experiments": [
+    "gametest",
+    "upcoming_creator_features"
+  ],
+  "client": false,
+  "live_modified": false,
+  "runs": {
+    "first": {
+      "passed": true,
+      "normal_stop_requested": true,
+      "quit_correctly": true,
+      "returncode": 0,
+      "errors": [],
+      "memory_events": {
+        "low": 0,
+        "high": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_kill": 0,
+        "oom_group_kill": 0,
+        "sock_throttled": 0
+      },
+      "report": {
+        "passed": true,
+        "phase": "first",
+        "mode": "refine",
+        "checks": [
+          {
+            "name": "production entry initialized",
+            "passed": true
+          },
+          {
+            "name": "AdjacentA17 selected its original reaction and paid only the base",
+            "passed": true
+          },
+          {
+            "name": "AdjacentB17 selected its original reaction and paid only the base",
+            "passed": true
+          },
+          {
+            "name": "native query selects one of two adjacent eating customers",
+            "passed": true
+          },
+          {
+            "name": "other plate query has the same first native target",
+            "passed": true
+          },
+          {
+            "name": "early pickup of the other plate succeeds",
+            "passed": true
+          },
+          {
+            "name": "only native-selected customer loses its pending bonus",
+            "passed": true
+          },
+          {
+            "name": "targeted interruption does not alter the other native actor",
+            "passed": true
+          },
+          {
+            "name": "the other plate retains its original food age and stage",
+            "passed": true
+          },
+          {
+            "name": "only the un-interrupted customer pays its selected native bonus",
+            "passed": true
+          },
+          {
+            "name": "native cuboid includes the diagonal corner beyond a three-block sphere",
+            "passed": true
+          },
+          {
+            "name": "native query uses body intersection at the inflated-box edge",
+            "passed": true
+          },
+          {
+            "name": "CollectedPlate17 selected its original reaction and paid only the base",
+            "passed": true
+          },
+          {
+            "name": "dirty pickup removes a non-bonus plate while its customer still eats",
+            "passed": true
+          },
+          {
+            "name": "StandingNeighbor17 selected its original reaction and paid only the base",
+            "passed": true
+          },
+          {
+            "name": "a nearby customer without a pending plate still saves its interruption",
+            "passed": true
+          },
+          {
+            "name": "selected plate-less native customer enters interruption",
+            "passed": true
+          },
+          {
+            "name": "BonusRestart selected its original reaction and paid only the base",
+            "passed": true
+          },
+          {
+            "name": "unpaid bonus is saved before shutdown",
+            "passed": true
+          },
+          {
+            "name": "QA players disconnected",
+            "passed": true
+          }
+        ],
+        "playersAfter": 0,
+        "scope": "Native cuboid/body bounds, two adjacent restaurant customers and real coin inventories; production handoff/plate adapters and same-world restart. No client rendering or hardware-input verdict; existing wall-clock timing remains."
+      }
+    },
+    "restart": {
+      "passed": true,
+      "normal_stop_requested": true,
+      "quit_correctly": true,
+      "returncode": 0,
+      "errors": [],
+      "memory_events": {
+        "low": 0,
+        "high": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_kill": 0,
+        "oom_group_kill": 0,
+        "sock_throttled": 0
+      },
+      "report": {
+        "passed": true,
+        "phase": "restart",
+        "mode": "refine",
+        "checks": [
+          {
+            "name": "production entry initialized",
+            "passed": true
+          },
+          {
+            "name": "pending restaurant bonus survives disk restart and settles once",
+            "passed": true
+          },
+          {
+            "name": "offline restart does not credit personal progress",
+            "passed": true
+          },
+          {
+            "name": "restart payment cannot repeat",
+            "passed": true
+          },
+          {
+            "name": "QA players disconnected",
+            "passed": true
+          }
+        ],
+        "playersAfter": 0,
+        "scope": "Native cuboid/body bounds, two adjacent restaurant customers and real coin inventories; production handoff/plate adapters and same-world restart. No client rendering or hardware-input verdict; existing wall-clock timing remains."
+      }
+    }
+  },
+  "volume_observations": [
+    {
+      "requestedX": 46.6,
+      "location": {
+        "z": 0,
+        "y": 5,
+        "x": 46.599998474121094
+      },
+      "selected": {
+        "6": false,
+        "7": false,
+        "6.999": false
+      }
+    },
+    {
+      "requestedX": 46.8,
+      "location": {
+        "z": 0,
+        "y": 5,
+        "x": 46.79999923706055
+      },
+      "selected": {
+        "6": true,
+        "7": true,
+        "6.999": true
+      }
+    },
+    {
+      "requestedX": 53.8,
+      "location": {
+        "z": 0,
+        "y": 5,
+        "x": 53.79999923706055
+      },
+      "selected": {
+        "6": true,
+        "7": true,
+        "6.999": true
+      }
+    },
+    {
+      "requestedX": 54.2,
+      "location": {
+        "z": 0,
+        "y": 5,
+        "x": 54.20000076293945
+      },
+      "selected": {
+        "6": true,
+        "7": true,
+        "6.999": true
+      }
+    },
+    {
+      "requestedX": 54.4,
+      "location": {
+        "z": 0,
+        "y": 5,
+        "x": 54.400001525878906
+      },
+      "selected": {
+        "6": false,
+        "7": true,
+        "6.999": true
+      }
+    },
+    {
+      "requestedX": 54.8,
+      "location": {
+        "z": 0,
+        "y": 5,
+        "x": 54.79999923706055
+      },
+      "selected": {
+        "6": false,
+        "7": true,
+        "6.999": true
+      }
+    },
+    {
+      "requestedX": 55.2,
+      "location": {
+        "z": 0,
+        "y": 5,
+        "x": 55.20000076293945
+      },
+      "selected": {
+        "6": false,
+        "7": true,
+        "6.999": true
+      }
+    }
+  ],
+  "earlier_attempts": [
+    {
+      "scope": "initial immediate pickup",
+      "passed": false,
+      "reason": "same-tick native visual action0 while committed reaction5; interrupted reward still paid"
+    },
+    {
+      "scope": "second QA configuration",
+      "passed": false,
+      "reason": "level-name pointed at an unpackaged vanilla QA world; no functional conclusion"
+    },
+    {
+      "scope": "configured same-world query",
+      "passed": false,
+      "reason": "volume7 included a body completely outside the intended Java box; preceding adjacency and food-age assertions passed"
+    }
+  ]
+}

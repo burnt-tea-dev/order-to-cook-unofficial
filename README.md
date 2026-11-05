@@ -2,11 +2,11 @@
 
 [简体中文](README.zh-CN.md) · **繁體中文** · [English](README.en.md)
 
-**目前來源版本為 `0.1.16-alpha.1`（未發布）：冰箱改為上 27／下 54 格原生容器，爐灶與操作台縮短操作流程，洗碗機補強批次存取。需要 Bedrock 26.60 與 Upcoming Creator Features。完整 Java 等價及真實客戶端驗收尚未完成。** [本輪驗證](docs/validation/0.1.5-alpha.1/CONTAINER_GUI.md) · [原生容器能力與限制](docs/NATIVE-CONTAINERS.md)
+**目前來源版本為 `0.1.17-alpha.1`（未發布）：冰箱改為上 27／下 54 格原生容器，爐灶與操作台縮短操作流程，洗碗機補強批次存取。需要 Bedrock 26.60 與 Upcoming Creator Features。完整 Java 等價及真實客戶端驗收尚未完成。** [本輪驗證](docs/validation/0.1.5-alpha.1/CONTAINER_GUI.md) · [原生容器能力與限制](docs/NATIVE-CONTAINERS.md)
 
 歷史 `0.1.2-alpha.3` 的限定客戶端紀錄含冰箱幾何、手洗粒子及進度灰字 FAIL，不能當作本版驗收結果：[歷史實機紀錄](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [按鈕可讀性修正](docs/validation/UNRELEASED-button-contrast.md)。
 
-**目前來源為 `0.1.16-alpha.1` 視覺／音效候選**：修正冰箱內壁與開關曲線、洗碗機變形及預覽、餐盤起始食物、顧客時序、打單機／外賣袋動畫，以及已確認的聲音和粒子差異。修正與可重現證據見 [VISUAL_AUDIO_PARITY.md](docs/VISUAL_AUDIO_PARITY.md)。本輪尚未執行 Blockbench 互動檢視或 Java／Bedrock 客戶端畫面複驗，離線對照不改寫上述歷史實測結果，也不代表完整一比一完成。
+**目前來源為 `0.1.17-alpha.1` 視覺／音效候選**：修正冰箱內壁與開關曲線、洗碗機變形及預覽、餐盤起始食物、顧客時序、打單機／外賣袋動畫，以及已確認的聲音和粒子差異。修正與可重現證據見 [VISUAL_AUDIO_PARITY.md](docs/VISUAL_AUDIO_PARITY.md)。本輪尚未執行 Blockbench 互動檢視或 Java／Bedrock 客戶端畫面複驗，離線對照不改寫上述歷史實測結果，也不代表完整一比一完成。
 
 
 原作由 **breezeth** 製作：[CurseForge 官方頁面](https://www.curseforge.com/minecraft/mc-mods/order-to-cook) · [Java 原始碼](https://github.com/breezeth-CN/OrdertoCook)。本專案由 `casama233`／`burnt-tea-dev` 維護，保留上游 GPLv3、原作者署名及素材來源。補充素材範圍詢問尚未收到確認，現作非阻塞紀錄，不會因作者未回覆就停止功能開發；具體授權衝突仍須處理。
@@ -89,7 +89,7 @@
 - 立牌／打單機的掉落物已帶菜單及原店主／等級／統計等持久資料；Bedrock記錄仍按放置座標識別，不等於Java數字機器ID。見 [原生資料證據](docs/validation/0.1.10-alpha.1/PORTABLE_NATIVE.md)。
 - 26.60 沒有可用的原生容器強制關閉 API：撤權後不能保證立即終止已開的冰箱介面。新開入口的 before-event 取消是否能攔截原生視窗仍待真 Player 驗收；不能把目前冰箱當作已驗證的私人保險箱。詳見 [權限界線](docs/NATIVE-CONTAINERS.md)。
 - 核對源碼後確認原作顧客也是直接生成，並非進門尋路。普通堂食優先安排 24 格內的椅子，無椅才在 5 格內站立；到店顧客必須有椅子。七位彩蛋人物的姓名、身份、小費與反應已接線；線上玩家皮膚下載及女僕聯動仍未完成。
-- 一般坐席堂食顧客有原作 10% 驚喜反應及 `1–4＋餐廳等級` 加賞；加賞在約6秒動畫結束後支付；提前收盤取消待付加賞。第5秒後取髒盤及打破餐盤不取消。離線者不補發個人幣，餐廳仍計入加賞。同位置的舊盘需先收走，Java 則會替換並掉落舊盘。
+- 一般坐席堂食顧客有原作 10% 驚喜反應及 `1–4＋餐廳等級` 加賞；加賞在約6秒動畫結束後支付；提前收盤會中斷原生查詢順序中的第一位附近進食者，取消該人的待付加賞，可能影響另一桌。第5秒後取髒盤及打破餐盤不取消。離線者不補發個人幣，餐廳仍計入加賞。同位置的舊盘需先收走，Java 則會替換並掉落舊盘。
 - 手洗已接雙臂 4 秒動畫與開始／完成／取消請求，不覆寫 `player.json`；原生模擬玩家 API 受理已確認，客戶端姿勢未確認。全身／分段前臂／第一人稱、拍手及專用騎車仍有差異。見 [手洗範圍](docs/validation/0.1.11-alpha.1/PLAYER_HANDWASH.md)。
 - 小電驢採基岩原生載具物理；跳躍鍵／控制面板鳴笛。燈面會發光，沒有照亮周圍地形的動態投射光。
 - 爐灶保留 9 條原版煙燻配方，安裝有效物品後再接入煙火的烤雞翅、烤番薯；其他供應商可用明確的煙燻配方介面接入。三路共用 200 tick，支援實際產量及成品堵塞。調酒、烤串、炒鍋仍用原設備；食品目錄不會自動變成爐灶配方。詳見 [配方對照與供應契約](docs/STOVE-RECIPES.md)。

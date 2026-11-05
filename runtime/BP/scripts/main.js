@@ -704,7 +704,7 @@ function collectDiningPlate(player, value) {
     playEffects(player.dimension, result.early
       ? [{ sound: 'ordertocook:food_plate_place', location, volume: 1, pitch: 1 }]
       : plateSound(location), MolangVariableMap);
-    notify(player, (result.early ? '顧客還沒吃完就被收盤了；顧客提前離開。' : '') +
+    notify(player, (result.interruptedCustomer ? `${result.interruptedCustomer}還沒吃完就被收盤了；顧客提前離開。` : '') +
       (result.dropped ? '髒餐盤已落地，可拾起清洗。' : '已收回一個髒餐盤，可送去清洗。'));
   } else if (result.reason === 'permission') notify(player, '只有餐廳店主或員工可收取餐盤。');
   return true;

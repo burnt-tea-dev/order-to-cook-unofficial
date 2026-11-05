@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.17-alpha.1
+
+- Match Java early plate pickup: interrupt the first eating customer in the inflated block box, potentially at another table, and cancel only that customer’s pending bonus. Keep native query order and permit another pickup to restart action7.
+- Separate the food’s start time from the customer reaction. A nearby interruption cannot restart another plate’s food stages; an already-collected plate’s still-eating customer also keeps its new reaction. Pickup feedback names the actual affected customer.
+- Read the committed reaction rather than the same-tick stale visual property. Native volume extent6 reproduces the Java seven-unit box, including body intersection at its edge.
+- BDS1.26.60.6 final refinement20 and same-world restart5 passed. Initial visual-state, QA configuration and query-edge failures are retained separately; exact scope is in [nearby pickup](docs/validation/0.1.17-alpha.1/NEARBY_PICKUP.md).
+
 ## 0.1.16-alpha.1
 
 - Restore Java meal-bonus timing: pay the quote and tip at handoff, then the selected boom bonus at the end of the six-second reaction. Early pickup cancels it; later dirty-plate pickup and native block removal preserve it.

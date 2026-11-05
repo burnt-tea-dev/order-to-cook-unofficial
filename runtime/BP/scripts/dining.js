@@ -20,7 +20,7 @@ function floorLocation(value) { return { x: Math.floor(value.x), y: Math.floor(v
 
 /** Ten food variants each have four stages; stage zero is the shared placement. */
 export function mealStage(meal, now) {
-  const elapsed = Math.max(0, Number(now) - Number(meal.startedAt));
+  const elapsed = Math.max(0, Number(now) - Number(meal.foodStartedAt ?? meal.startedAt));
   const phase = elapsed < 750 ? 0 : elapsed < 3000 ? 1 : elapsed < 4000 ? 2 : elapsed < DIRTY_AFTER ? 3 : 4;
   return phase ? clampVariant(meal.variant) * 4 + phase : 0;
 }
@@ -126,7 +126,7 @@ export function createDiningService(ctx) {
     const timing = order.meal || { startedAt: now, finishAt: now + 5500, action: 6, boomBonus: 0 };
     const anchor = resolveMealAnchor(customer, ctx.getCustomerSeat?.(customer));
     const meal = { id: order.id, orderId: order.id, restaurantId: restaurant.id, version: 2,
-      ...timing, ...anchor, dueAt: timing.finishAt, variant: clampVariant(order.platedVariant),
+      ...timing, ...anchor, foodStartedAt: timing.startedAt, dueAt: timing.finishAt, variant: clampVariant(order.platedVariant),
       token: `${restaurant.id}|${order.id}`, status: 'eating' };
     if (meal.boomBonus > 0 && playerId) meal.bonusPlayerId = playerId;
     restaurant.pendingDishes.push(meal);
@@ -245,7 +245,7 @@ export function createDiningService(ctx) {
             }
             finishClaim(restaurant, meal, now); continue;
           }
-          if (now >= meal.startedAt + DIRTY_AFTER && meal.status !== 'dirty') {
+          if (now >= (meal.foodStartedAt ?? meal.startedAt) + DIRTY_AFTER && meal.status !== 'dirty') {
             meal.status = 'dirty'; ctx.saveRestaurant(restaurant);
           }
           const order = restaurant.orders?.find(order => order.id === meal.id);
@@ -341,6 +341,38 @@ export function createDiningService(ctx) {
     return { ok: true };
   }
 
+  /** Java FoodPlateBlock queries the inflated block box in native iteration
+   * order. The affected customer can belong to a different nearby plate.
+   */
+  function interruptNearbyMeal(dimension, location, now) {
+    const block = floorLocation(location);
+    // Bedrock volume includes its endpoint block: extent 6 spans Java's 7 units.
+    for (const customer of dimension.getEntities({ type: 'ordertocook:customer',
+      location: { x: block.x - 3, y: block.y - 3, z: block.z - 3 },
+      volume: { x: 6, y: 6, z: 6 }
+    })) {
+      const orderId = customer.getDynamicProperty(ORDER);
+      const restaurant = ctx.getRestaurant(customer.getDynamicProperty(RESTAURANT));
+      const meal = restaurant?.pendingDishes?.find(value => value?.id === orderId);
+      const order = restaurant?.orders?.find(value => value.id === orderId);
+      // Native visual properties apply on the next tick; the just-committed
+      // meal already owns the reaction selected by the handoff.
+      const action = meal?.action ?? order?.meal?.action ?? order?.completion?.action ?? customer.getProperty('ordertocook:action');
+      if (![5, 6, 7].includes(Number(action))) continue;
+      const timing = { startedAt: now, finishAt: now + 500, action: 7 };
+      if (meal) {
+        // Customer reaction and food consumption have independent Java clocks.
+        meal.foodStartedAt ??= meal.startedAt;
+        Object.assign(meal, timing);
+        delete meal.bonusPlayerId;
+      }
+      if (order) order.meal = { ...order.meal, ...timing };
+      if (meal || order) ctx.saveRestaurant(restaurant);
+      ctx.interruptCustomerMeal?.(orderId, timing, customer);
+      return customer.nameTag || '顧客';
+    }
+  }
+
   /** Claim is durable before touching native inventory. Retries and restart
    * cannot issue twice, even if visual removal/the final cleanup save fails.
    * Bedrock cannot atomically commit world DPs and inventory: an abrupt process
@@ -354,26 +386,14 @@ export function createDiningService(ctx) {
     const reservation = reservePlateSlot(player);
     const dropped = !reservation;
     const previousStatus = meal.status;
-    const early = now < meal.startedAt + DIRTY_AFTER;
-    const order = restaurant.orders?.find(order => order.id === meal.id);
-    const previousMeal = order?.meal;
-    const previousBonusPlayer = meal.bonusPlayerId;
-    const previousTiming = { action: meal.action, startedAt: meal.startedAt, finishAt: meal.finishAt };
-    if (early) {
-      delete meal.bonusPlayerId;
-      Object.assign(meal, { action: 7, startedAt: now, finishAt: now + 500 });
-      if (order) order.meal = { ...order.meal, action: 7, startedAt: now, finishAt: now + 500 };
-    }
+    const early = now < (meal.foodStartedAt ?? meal.startedAt) + DIRTY_AFTER;
     meal.status = 'claiming';
     meal.claimedAt = now;
     meal.claimedBy = player.id;
     ctx.saveRestaurant(restaurant);
     function restoreClaim() {
       meal.status = previousStatus;
-      Object.assign(meal, previousTiming);
-      if (previousBonusPlayer) meal.bonusPlayerId = previousBonusPlayer;
       delete meal.claimedAt; delete meal.claimedBy;
-      if (order) order.meal = previousMeal;
       ctx.saveRestaurant(restaurant);
     }
     if (dropped) {
@@ -395,10 +415,10 @@ export function createDiningService(ctx) {
       }
       throw error;
     }
-    if (early) ctx.interruptCustomerMeal?.(meal.id, { startedAt: now, finishAt: now + 500, action: 7 });
+    const interruptedCustomer = early ? interruptNearbyMeal(player.dimension, meal.location, now) : undefined;
     try { finishClaim(restaurant, meal, now); }
     catch (error) { console.warn(`[OrderToCook] Claimed plate cleanup deferred: ${String(error)}`); }
-    return { ok: true, early, dropped };
+    return { ok: true, early, dropped, interruptedCustomer };
   }
 
   function releaseMeal(restaurant, meal, dimension, now, reason) {

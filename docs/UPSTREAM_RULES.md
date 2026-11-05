@@ -224,13 +224,13 @@ Java 的 `TakeoutBagItem.prepareBoomBonus` 先選定加賞，`CustomerEntity.tic
 
 ### 餐盤進食與提前收盤
 
-`FoodPlateBlockEntity` 的門檻為 15／60／80／100 tick，即正常 20 TPS 下 0.75／3／4／5 秒。前段是共用 stage 0，之後十種型號各有 1–4 階段，實際 state 為 `(型號 − 1) × 4 + 階段`。到 100 tick 時內部 stack 改為髒盤、停止進食計數並留在原位置，沒有定時自動返還背包。`FoodPlateBlock` 的取盤／破壞流程若發現仍在進食，改給髒盤並中斷附近顧客。
+`FoodPlateBlockEntity` 的門檻為 15／60／80／100 tick，即正常 20 TPS 下 0.75／3／4／5 秒。前段是共用 stage 0，之後十種型號各有 1–4 階段，實際 state 為 `(型號 − 1) × 4 + 階段`。到 100 tick 時內部 stack 改為髒盤、停止進食計數並留在原位置，沒有定時自動返還背包。`FoodPlateBlock.use` 提前點取改給髒盤，並在 `new AABB(platePos).inflate(3)` 中按原查詢順序找到第一位 action5／6／7 顧客重新開始10tick中斷；不限定為該盤訂單。`onRemove`只掉盤，不中斷。
 
 來源：[FoodPlateBlockEntity.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/FoodPlateBlockEntity.java) 的 `startEatingSequence`、`tick`、`stageForPhase`；[FoodPlateBlock.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/FoodPlateBlock.java) 的取盤／中斷處理。
 
 `TakeoutBagItem.submitDineInWithPlacedPlate` 只按 `FoodPlateItem` 判斷是否放盤，不要求已坐下；`resolveCompletionAnimation` 才讓站立顧客選 action 4。因此站立堂食顧客約 3 秒離場，盤子仍獨立到第 5 秒變髒，這也是原作呼叫鏈的結果。[TakeoutBagItem.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/item/TakeoutBagItem.java) 的 `placeSubmittedPlate` 則啟動獨立餐盤序列。
 
-基岩版保留這些名義時間，但以持久毫秒計時、每 5 tick 取樣；0–9 的內部型號映射為 `4 × v + phase`。stage 0 改成可見乾淨盤，未重現原短暫放盤動畫。用餐餐盤改用沒有等價方塊碰撞的輔助entity；打破與滿包回收時以原生物品掉落，41 個 geometry 共用原像素 atlas；`pendingDishes` 負責唯一領取。先清掉舊盤才能在同一錨點交下一餐，提前收盤立即給一個髒盤並設 action 7 約 500 毫秒，保留前述中斷記錄。
+基岩版仍沿用持久毫秒時間與每5tick取樣。0.1.17以獨立 `foodStartedAt` 保留餐盤食品進度；中斷其他桌的顧客只改其反應時間，沒有重播或延長該盤食品階段。附近查找及原生端點語義由[鄰桌收盤](validation/0.1.17-alpha.1/NEARBY_PICKUP.md)負責；方塊兩層碰撞與階段資源由[原生餐盤](validation/0.1.15-alpha.1/NATIVE_PLATE.md)負責。`pendingDishes`仍是唯一領盤來源。
 
 ### 家電關鍵姿態
 

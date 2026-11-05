@@ -186,7 +186,8 @@ export function makeEnvironment() {
     getEntities(options = {}) {
       return [...this.entities.values()].filter(entity => entity.isValid && (!options.type || entity.typeId === options.type) &&
         (!options.tags || options.tags.every(tag => entity.tags.has(tag))) &&
-        (!options.location || (entity.location.x - options.location.x) ** 2 + (entity.location.y - options.location.y) ** 2 + (entity.location.z - options.location.z) ** 2 <= options.maxDistance ** 2));
+        (!options.location || options.maxDistance === undefined || (entity.location.x - options.location.x) ** 2 + (entity.location.y - options.location.y) ** 2 + (entity.location.z - options.location.z) ** 2 <= options.maxDistance ** 2) &&
+        (!options.volume || ['x', 'y', 'z'].every(axis => entity.location[axis] >= options.location[axis] && entity.location[axis] < options.location[axis] + options.volume[axis] + 1)));
     },
     spawnEntity(typeId, location) { const entity = new FakeEntity(this, typeId, location); this.entities.set(entity.id, entity); this.spawnCount++; return entity; },
     spawnItem(stack, location) { this.drops.push({ stack: stack.clone(), location: { ...location } }); },

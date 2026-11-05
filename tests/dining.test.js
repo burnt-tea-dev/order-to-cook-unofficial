@@ -23,6 +23,9 @@ function fixture() {
   const player = new FakePlayer(env.dimension, { x: 0.5, y: 0, z: 0.5 });
   const chair = place(env, 'ordertocook:chair', { x: 0, y: 0, z: 0 }, { 'minecraft:cardinal_direction': 'south' });
   const customer = env.dimension.spawnEntity('ordertocook:customer', { x: 0.5, y: 0.5625, z: 0.5 });
+  customer.setProperty('ordertocook:action', 6);
+  customer.setDynamicProperty('ordertocook:restaurant_id', 'r');
+  customer.setDynamicProperty('ordertocook:order_id', 'r:one');
   const resumed = [], interrupted = [];
   env.ctx.getCustomerSeat = () => chair;
   env.ctx.resumeCustomerMeal = (...args) => resumed.push(args);
@@ -164,7 +167,7 @@ test('normal pickup is exactly once and leaves no duplicate helper or pending ro
   const env = fixture(); env.service.tick(NOW + 5000);
   const first = env.service.claim(env.player, env.restaurant, env.meal, NOW + 5100);
   const second = env.service.claim(env.player, env.restaurant, env.meal, NOW + 5100);
-  assert.deepEqual(first, { ok: true, early: false, dropped: false });
+  assert.deepEqual(first, { ok: true, early: false, dropped: false, interruptedCustomer: undefined });
   assert.equal(second.reason, 'already_claimed');
   assert.equal(dirtyCount(env.player), 1);
   assert.equal(env.restaurant.pendingDishes.length, 0);
@@ -175,7 +178,7 @@ test('full inventory drops one plain plate without changing any full slot', () =
   const env = fixture(); env.service.tick(NOW + 5000);
   for (let slot = 0; slot < env.player.container.size; slot++) env.player.container.setItem(slot, new FakeItem('minecraft:stone', 64));
   const before = env.player.container.slots.map(item => item.clone());
-  assert.deepEqual(env.service.claim(env.player, env.restaurant, env.meal, NOW + 5100), { ok: true, early: false, dropped: true });
+  assert.deepEqual(env.service.claim(env.player, env.restaurant, env.meal, NOW + 5100), { ok: true, early: false, dropped: true, interruptedCustomer: undefined });
   assert.deepEqual(env.player.container.slots, before);
   assert.equal(env.restaurant.pendingDishes.length, 0);
   assert.equal(env.dimension.getEntities({ type: DINING_ENTITY }).length, 0);
@@ -203,7 +206,7 @@ test('wrong owner and distant player cannot claim the dirty plate', () => {
 
 test('early pickup leaves exactly one dirty plate and persists the original 10-tick interruption', () => {
   const env = fixture(); env.service.tick(NOW + 750);
-  assert.deepEqual(env.service.claim(env.player, env.restaurant, env.meal, NOW + 1000), { ok: true, early: true, dropped: false });
+  assert.deepEqual(env.service.claim(env.player, env.restaurant, env.meal, NOW + 1000), { ok: true, early: true, dropped: false, interruptedCustomer: '顧客' });
   assert.equal(dirtyCount(env.player), 1);
   assert.equal(env.order.meal.action, 7);
   assert.equal(env.order.meal.finishAt, NOW + 1500);
