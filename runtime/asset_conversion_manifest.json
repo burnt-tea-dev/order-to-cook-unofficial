@@ -571,7 +571,7 @@
       "source": "common/src/main/resources/assets/ordertocook/animations/player_wash.animation.json",
       "output": "RP/animations/handwashing_player.animation.json",
       "sha256": "9d6dc7d3a50ed156d51e63123f9aa8425cbcabaa6b9a54a75f259384b3adc0d8",
-      "operation": "Original body hierarchy and shoulder/hand-tip retarget; rigid elbow approximation; native first-person relative right-arm stroke; bounded four seconds, no player definition override"
+      "operation": "Original body hierarchy and shoulder/hand-tip retarget; rigid elbow approximation; independent first-person arm strokes with mirrored native left basis and bounded shared visibility request; no player definition override"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",

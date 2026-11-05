@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.22-alpha.1
+
+- Generate an independent first-person left-arm stroke from the original left upper/forearm data. Its camera basis mirrors the native empty right hand; Java ACTION calibration and actual client rendering remain unverified. Third-person poses and the existing first-person right-arm curves are unchanged.
+- Write `variable.senluo_fp_left_arm_request` only within the finite first-person, non-VR/UI, empty-hand animation window, and return that same gate as the pose blend. Taking a map/item therefore releases this pose while the existing server cancellation catches up. The existing replacement-stop clip clears the request without reading an undefined flag.
+- Use the optional public [Core player/controller contract](https://github.com/burnt-tea-dev/senluo-bedrock-core/blob/7e8185177d7a8d58991bccd76d32bce2276e5f57/docs/PORT-ADAPTERS.md#shared-first-person-left-arm-request) for visibility; this pack does not replace a player or renderer. A standalone pack without that connection does not promise an empty-hand left arm. Same-frame transfer, pose and visible stopping remain unobserved.
+- Pair BP/RP/modules/dependency at 0.1.22 with preserved UUIDs and append-only payload history. Server wash/session/storage behavior and APIs are unchanged; reuse the existing 0.1.20 API-acceptance evidence rather than repeating a headless test that cannot show the new arm. Current scope: [first-person arms](docs/PARITY.md#手洗第一人稱左臂).
+
 ## 0.1.21-alpha.1
 
 - Count printer refresh progress only through active native block callbacks. Closed, unsimulated and offline machines cannot catch up wall time. Save a compact cumulative work count and commit each refresh origin with its new offers, retaining a due retry after a failed restaurant save.
