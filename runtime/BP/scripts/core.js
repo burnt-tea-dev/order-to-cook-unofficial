@@ -515,8 +515,7 @@ export function rollCustomerCompletion(restaurant, order, now, options = {}) {
  * A successful transition can occur once; it returns the exact coins to pay.
  * Options: {rng, raining, easterEgg, customerSeated}. Without customerSeated,
  * callers retain the alpha.1 pure-core contract (no customer animation roll).
- * Bedrock pays a recorded boom bonus with the main payment, instead of a second
- * physical-inventory payment after the animation; see RUNTIME_ADAPTATIONS.md.
+ * The selected boom bonus remains pending until the customer finishes eating.
  */
 export function completeOrder(restaurant, orderId, now = Date.now(), options = {}) {
   const at = clock(now);
@@ -529,7 +528,7 @@ export function completeOrder(restaurant, orderId, now = Date.now(), options = {
   const completion = typeof options.customerSeated === "boolean"
     ? rollCustomerCompletion(restaurant, order, at, options) : undefined;
   const boomBonus = completion?.boomBonus || 0;
-  const reward = baseReward + tip + boomBonus;
+  const reward = baseReward + tip;
   order.status = "completed";
   order.completedAt = at;
   order.tip = tip;

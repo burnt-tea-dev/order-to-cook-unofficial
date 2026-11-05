@@ -12,6 +12,8 @@ const signals = () => new Proxy({}, { get(target, name) { return target[name] ||
 export async function mainFixture(savedProperties = []) {
   const env = makeEnvironment();
   const properties = new Map(savedProperties);
+  env.world.messages = [];
+  env.world.sendMessage = message => env.world.messages.push(message);
   env.world.getDynamicPropertyIds = () => [...properties.keys()];
   env.world.getDynamicProperty = id => properties.get(id);
   let failProperty;

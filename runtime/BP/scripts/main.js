@@ -27,7 +27,7 @@ import { isFridge, isUpperFridge } from './native_fridge.js';
 import { createSmokingRecipeRegistry } from './smoking_recipes.js';
 import { createDiningService, DINING_ENTITY, DINING_BLOCK } from './dining.js';
 import { progressRows } from './progression.js';
-import { createProgressionService, creditCompletedOrder, queueProgressEvent } from './progression_service.js';
+import { createProgressionService, creditBonusEarnings, creditCompletedOrder, queueProgressEvent } from './progression_service.js';
 import { playEffects, plateSound, freshMealEffects, newOrderEffects } from './audiovisual.js';
 import { writePortableBlock, readPortableBlock } from './portable_blocks.js';
 
@@ -645,7 +645,7 @@ function customerInteract(player, entity, linkage, options = {}) {
       saveRestaurant(restaurant);
       notify(player, reasonText(result.reason)); return;
     }
-    if (order.type === 'dine_in') dining.queueMeal(restaurant, order, entity, now);
+    if (order.type === 'dine_in') dining.queueMeal(restaurant, order, entity, now, player.id);
     creditCompletedOrder(restaurant, player.id, order);
     saveRestaurant(restaurant);
   } catch (error) {
@@ -662,7 +662,37 @@ function customerInteract(player, entity, linkage, options = {}) {
     [{ sound: 'ordertocook:food_plate_place', location: entity.location, volume: 1, pitch: 1 }], MolangVariableMap);
   entities.finishCustomer(order.id, result.completion);
   dining.tick(now);
-  notify(player, `交付成功！獲得 ${result.reward} ${currencyLabel()}${result.tip ? `（含小費 ${result.tip}）` : ''}${result.boomBonus ? `（驚喜加賞 ${result.boomBonus}）` : ''}。${order.type === 'dine_in' ? '顧客用餐後會留下髒餐盤；點擊餐盤或下方桌面收回。' : ''}`);
+  notify(player, `交付成功！獲得 ${result.reward} ${currencyLabel()}${result.tip ? `（含小費 ${result.tip}）` : ''}。${order.type === 'dine_in' ? '顧客用餐後會留下髒餐盤；點擊餐盤或下方桌面收回。' : ''}`);
+}
+
+/** Java grants the extra coins at the end of the boom action. A disconnected
+ * player receives no coins/prestige, but the restaurant still earns the bonus.
+ */
+function settleMealBonus(restaurant, meal, now) {
+  const playerId = meal.bonusPlayerId;
+  if (!playerId || getRestaurant(restaurant.id) !== restaurant || !restaurant.pendingDishes.includes(meal)) return;
+  const player = world.getAllPlayers().find(value => value.isValid && value.id === playerId);
+  const amount = meal.boomBonus;
+  const before = JSON.stringify(restaurant);
+  try {
+    // The existing restaurant save claims this payment before native output.
+    // Replayed ticks and trimmed order history cannot mint it again.
+    delete meal.bonusPlayerId;
+    restaurant.stats.earnings += amount;
+    restaurant.updatedAt = now;
+    if (player) {
+      creditBonusEarnings(restaurant, playerId, amount);
+      const order = restaurant.orders.find(value => value.id === meal.id);
+      if (order) order.paidReward += amount;
+    }
+    saveRestaurant(restaurant);
+  } catch (error) {
+    saveRestaurant(JSON.parse(before));
+    throw error;
+  }
+  if (player) reward(player, amount);
+  reconcileProgress(restaurant);
+  world.sendMessage(`「${restaurant.name}」的顧客好吃到爆炸！驚喜加賞 ${amount} ${currencyLabel()}。`);
 }
 
 function collectDiningPlate(player, value) {
@@ -1244,7 +1274,7 @@ world.afterEvents.worldLoad.subscribe(() => {
     });
     appliances = createApplianceService(context);
     entities = createEntityService(context);
-    dining = createDiningService({ ...context, ItemStack, canManage,
+    dining = createDiningService({ ...context, ItemStack, canManage, settleMealBonus,
       getCustomerSeat: entity => entities.getCustomerSeat?.(entity),
       resumeCustomerMeal: (...args) => entities.resumeCustomerMeal?.(...args),
       interruptCustomerMeal: (...args) => entities.interruptCustomerMeal?.(...args)

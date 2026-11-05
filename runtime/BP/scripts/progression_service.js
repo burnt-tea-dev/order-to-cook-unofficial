@@ -2,7 +2,7 @@
 // Personal progress uses the same chunked world store as restaurants. Successful
 // handoffs save a cumulative per-player ledger WITH the completed order. Profiles
 // reconcile monotonic checkpoints, so retries, history trimming, and offline
-// players do not need a second economic transaction or duplicate rewards.
+// handoff and later meal-bonus totals reconcile without duplicate progress.
 import { createProgress, parseProgress, applyProgressEvent } from './progression.js';
 
 const FIELDS = Object.freeze(['earned', 'completed', 'urgent', 'longDistance']);
@@ -59,6 +59,14 @@ export function creditCompletedOrder(restaurant, playerId, order) {
   restaurant.progressLedger = ledger;
   order.progressionReceipt = { version: 1, playerId };
   return true;
+}
+
+/** The meal claim owns replay protection; this updates only the existing totals. */
+export function creditBonusEarnings(restaurant, playerId, amount) {
+  const ledger = clone(ledgerOf(restaurant));
+  const before = checkedTotals(ledger.players[playerId]);
+  ledger.players[playerId] = { ...before, earned: add(before.earned, amount) };
+  restaurant.progressLedger = ledger;
 }
 
 function checkedOperation(event) {

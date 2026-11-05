@@ -48,12 +48,12 @@ test('production handoff records one animation/plate and pays the canonical rewa
   assert.equal(env.restaurant.pendingDishes.length, 1); assert.equal(env.endings.length, 1);
 });
 
-test('production boom selection is persisted with one bounded bonus payment', async () => {
+test('production boom selection persists the bonus separately from the initial payment', async () => {
   const env = await mainFixture(); env.restaurant.level = 2; env.store.saveRestaurant(env.restaurant);
   let at = 0; const values = [0.9999, 0.05, 0.9999];
   env.hooks.customerInteract(env.player, env.customer, env.linkage, { rng: () => values[at++] });
   assert.equal(env.order.meal.action, 5); assert.equal(env.order.boomBonus, 6);
-  assert.equal(env.order.paidReward, env.order.reward + 6);
+  assert.equal(env.order.paidReward, env.order.reward);
   assert.equal(env.restaurant.stats.completed, 1); assert.equal(balance(env.player), env.order.paidReward);
   assert.equal(env.endings[0][1].finishAt - env.endings[0][1].startedAt, 6000);
 });

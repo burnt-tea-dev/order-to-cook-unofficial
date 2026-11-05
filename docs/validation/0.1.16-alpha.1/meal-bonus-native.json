@@ -1,0 +1,139 @@
+{
+  "engine": "BDS1.26.60.6",
+  "server_module": "2.11.0",
+  "ui_module": "2.0.0",
+  "qa_module": "gametest1.0.0-beta",
+  "experiments": [
+    "gametest",
+    "upcoming_creator_features"
+  ],
+  "player_override": false,
+  "client": false,
+  "live_modified": false,
+  "runs": {
+    "first": {
+      "passed": true,
+      "normal_stop_requested": true,
+      "quit_correctly": true,
+      "returncode": 0,
+      "errors": [],
+      "memory_events": {
+        "low": 0,
+        "high": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_kill": 0,
+        "oom_group_kill": 0,
+        "sock_throttled": 0
+      },
+      "report": {
+        "passed": true,
+        "phase": "first",
+        "checks": [
+          {
+            "name": "production entry initialized",
+            "passed": true
+          },
+          {
+            "name": "BonusOnline selected one six-second bonus and paid only the base",
+            "passed": true
+          },
+          {
+            "name": "five seconds do not pay the bonus",
+            "passed": true
+          },
+          {
+            "name": "dirty plate pickup preserves the pending extra payment",
+            "passed": true
+          },
+          {
+            "name": "six-second completion pays native coins and personal earnings once",
+            "passed": true
+          },
+          {
+            "name": "completed payment is not replayed",
+            "passed": true
+          },
+          {
+            "name": "BonusInterrupted selected one six-second bonus and paid only the base",
+            "passed": true
+          },
+          {
+            "name": "early native plate output interrupts the meal",
+            "passed": true
+          },
+          {
+            "name": "interrupted meal gives no extra coins or income",
+            "passed": true
+          },
+          {
+            "name": "BonusOffline selected one six-second bonus and paid only the base",
+            "passed": true
+          },
+          {
+            "name": "offline recipient still credits restaurant income",
+            "passed": true
+          },
+          {
+            "name": "BonusRestart selected one six-second bonus and paid only the base",
+            "passed": true
+          },
+          {
+            "name": "unpaid bonus is saved before shutdown",
+            "passed": true
+          },
+          {
+            "name": "QA players disconnected",
+            "passed": true
+          }
+        ],
+        "playersAfter": 0,
+        "scope": "Real native inventories and simulated Player recipients; production handoff/plate adapters and same-world restart. No client rendering or hardware-input verdict; existing wall-clock timing remains."
+      }
+    },
+    "restart": {
+      "passed": true,
+      "normal_stop_requested": true,
+      "quit_correctly": true,
+      "returncode": 0,
+      "errors": [],
+      "memory_events": {
+        "low": 0,
+        "high": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_kill": 0,
+        "oom_group_kill": 0,
+        "sock_throttled": 0
+      },
+      "report": {
+        "passed": true,
+        "phase": "restart",
+        "checks": [
+          {
+            "name": "production entry initialized",
+            "passed": true
+          },
+          {
+            "name": "pending restaurant bonus survives disk restart and settles once",
+            "passed": true
+          },
+          {
+            "name": "offline restart does not credit personal progress",
+            "passed": true
+          },
+          {
+            "name": "restart payment cannot repeat",
+            "passed": true
+          },
+          {
+            "name": "QA players disconnected",
+            "passed": true
+          }
+        ],
+        "playersAfter": 0,
+        "scope": "Real native inventories and simulated Player recipients; production handoff/plate adapters and same-world restart. No client rendering or hardware-input verdict; existing wall-clock timing remains."
+      }
+    }
+  }
+}

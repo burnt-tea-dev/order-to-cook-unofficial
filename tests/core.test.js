@@ -254,7 +254,7 @@ test("one canonical completion records its bonus and animation and cannot reroll
   const sequence = [0.99999, 0.05, 0.99999];
   const result = completeOrder(r, order.id, NOW + 3, { customerSeated: true, rng: () => sequence[calls++] });
   assert.equal(result.boomBonus, 8); assert.equal(result.completion.action, 5);
-  assert.equal(result.reward, order.reward + 8); assert.equal(order.paidReward, result.reward);
+  assert.equal(result.reward, order.reward); assert.equal(order.paidReward, result.reward);
   assert.equal(r.stats.completed, 1); assert.equal(r.stats.earnings, result.reward);
   const restored = JSON.parse(JSON.stringify(r));
   assert.equal(completeOrder(restored, order.id, NOW + 4, { customerSeated: true, rng: () => { throw Error('replay rolled'); } }).reason, 'already_completed');
