@@ -102,7 +102,9 @@ test('failed canonical completion save rolls back the physical parcel before ret
 test('dirty plate claim through production hook stays independent from order payout', async () => {
   const env = await mainFixture(); env.hooks.customerInteract(env.player, env.customer, env.linkage, { rng: () => 0.9999 });
   const meal = env.restaurant.pendingDishes[0], paid = balance(env.player);
-  meal.foodStartedAt -= 6000; env.store.saveRestaurant(env.restaurant); env.hooks.dining.tick();
+  const foodBlock = env.dimension.getBlock(meal.location);
+  for (let i = 0; i < 100; i++) env.hooks.dining.tickFood(foodBlock);
+  env.finishNativeReaction();
   const block = env.dimension.getBlock({ x: Math.floor(meal.location.x), y: Math.floor(meal.location.y), z: Math.floor(meal.location.z) });
   env.hooks.collectDiningPlate(env.player, block); env.hooks.collectDiningPlate(env.player, block);
   assert.equal(itemCount(env.player, 'ordertocook:dirty_plate'), 1);

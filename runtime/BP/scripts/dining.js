@@ -10,7 +10,8 @@ const ORDER = 'ordertocook:order_id';
 const STAGE = 'ordertocook:stage';
 const PLACEMENT_AGE = 'ordertocook:placement_age';
 const DIRTY_PLATE = 'ordertocook:dirty_plate';
-const DIRTY_AFTER = 5000;
+const FOOD_TICKS = 100;
+const FOOD_CLOCK = 'ordertocook:food_tick:';
 const DIRECTIONS = { north: [0, -1], east: [1, 0], south: [0, 1], west: [-1, 0] };
 
 function distance2(a, b) { return (a.x - b.x) ** 2 + (a.y - b.y) ** 2 + (a.z - b.z) ** 2; }
@@ -19,9 +20,8 @@ function clampVariant(value) { return Math.min(9, Math.max(0, Math.floor(Number(
 function floorLocation(value) { return { x: Math.floor(value.x), y: Math.floor(value.y), z: Math.floor(value.z) }; }
 
 /** Ten food variants each have four stages; stage zero is the shared placement. */
-export function mealStage(meal, now) {
-  const elapsed = Math.max(0, Number(now) - Number(meal.foodStartedAt ?? meal.startedAt));
-  const phase = elapsed < 750 ? 0 : elapsed < 3000 ? 1 : elapsed < 4000 ? 2 : elapsed < DIRTY_AFTER ? 3 : 4;
+export function mealStage(meal, ticks) {
+  const phase = ticks < 15 ? 0 : ticks < 60 ? 1 : ticks < 80 ? 2 : ticks < FOOD_TICKS ? 3 : 4;
   return phase ? clampVariant(meal.variant) * 4 + phase : 0;
 }
 
@@ -70,6 +70,15 @@ export function createDiningService(ctx) {
   const blockMeals = new Set();
   let lastSweepAt = -Infinity;
 
+  function foodTicks(meal, now) {
+    const saved = gameWorld.getDynamicProperty(FOOD_CLOCK + meal.token);
+    if (typeof saved === 'number') return saved;
+    // Old saves contain wall timestamps only. Adopt their visible progress
+    // once; every subsequent native block tick persists the real counter.
+    return meal.clock === 'loaded' ? 0 : Math.min(FOOD_TICKS,
+      Math.max(0, Math.floor((now - (meal.foodStartedAt ?? meal.startedAt)) / 50)));
+  }
+
   function canonical(restaurant) { return ctx.getRestaurant(restaurant.id) === restaurant; }
   function loadedDimension(meal) {
     try {
@@ -103,6 +112,12 @@ export function createDiningService(ctx) {
           token: `${restaurant.id}|${old.id}` };
         changed = true;
       }
+      if (meal.action === 7 && meal.clock !== 'loaded' && meal.reactionPending === undefined) {
+        // Old claimed interruptions used a wall deadline. Adopt that contract
+        // once; a finished legacy tombstone must not wait for a missing actor.
+        meal = { ...meal, reactionPending: Date.now() < meal.finishAt };
+        changed = true;
+      }
       const previous = unique.get(meal.id);
       if (previous) {
         // A claimed copy dominates an eating copy, so a duplicated legacy row
@@ -127,7 +142,7 @@ export function createDiningService(ctx) {
     const anchor = resolveMealAnchor(customer, ctx.getCustomerSeat?.(customer));
     const meal = { id: order.id, orderId: order.id, restaurantId: restaurant.id, version: 2,
       ...timing, ...anchor, foodStartedAt: timing.startedAt, dueAt: timing.finishAt, variant: clampVariant(order.platedVariant),
-      token: `${restaurant.id}|${order.id}`, status: 'eating' };
+      token: `${restaurant.id}|${order.id}`, status: 'eating', reactionPending: true };
     if (meal.boomBonus > 0 && playerId) meal.bonusPlayerId = playerId;
     restaurant.pendingDishes.push(meal);
     return meal; // The caller saves payment + meal in the same restaurant record.
@@ -164,6 +179,7 @@ export function createDiningService(ctx) {
       try { block.setType('minecraft:air'); } catch { complete = false; }
     }
     blockMeals.delete(meal.token);
+    if (complete) gameWorld.setDynamicProperty(FOOD_CLOCK + meal.token, undefined);
     return complete;
   }
 
@@ -173,7 +189,11 @@ export function createDiningService(ctx) {
     const block = dimension.getBlock(floorLocation(meal.location));
     if (!block.isAir && block.typeId !== DINING_BLOCK) return;
     if (block.isAir) block.setType(DINING_BLOCK);
-    const stage = mealStage(meal, now);
+    const ticks = foodTicks(meal, now);
+    if (gameWorld.getDynamicProperty(FOOD_CLOCK + meal.token) === undefined) {
+      gameWorld.setDynamicProperty(FOOD_CLOCK + meal.token, ticks);
+    }
+    const stage = mealStage(meal, ticks);
     const facing = ['south', 'west', 'north', 'east'][((Math.round((Number(meal.rotationY) || 0) / 90) % 4) + 4) % 4];
     if (block.permutation.getState(STAGE) !== stage % 16 || block.permutation.getState(`${STAGE}_high`) !== Math.floor(stage / 16) ||
         block.permutation.getState('minecraft:cardinal_direction') !== facing) {
@@ -207,7 +227,7 @@ export function createDiningService(ctx) {
     }
     // Stage zero uses Java's placed-food model and half-second maked clip.
     // A helper restored partway through placement seeks to the saved meal age.
-    if (stage === 0) entity.setProperty(PLACEMENT_AGE, Math.min(0.5, Math.max(0, (now - meal.startedAt) / 1000)));
+    if (stage === 0) entity.setProperty(PLACEMENT_AGE, Math.min(0.5, Math.max(0, ticks / 20)));
     if (lastStages.get(entity.id) !== stage) {
       entity.setProperty(STAGE, stage);
       lastStages.set(entity.id, stage);
@@ -216,18 +236,35 @@ export function createDiningService(ctx) {
 
   function finishClaim(restaurant, meal, now = Date.now()) {
     if (!removeVisuals(meal)) return false;
-    // Keep an interrupted meal's non-minting tombstone for the original 10
-    // ticks. It remains the NPC's restart source if paid history was pruned.
-    if ((meal.action === 7 && now < meal.finishAt) || meal.bonusPlayerId) return false;
+    // A claimed plate remains the restart source for its unfinished reaction,
+    // including when completed order history has already been pruned.
+    if (meal.reactionPending || meal.bonusPlayerId) return false;
     restaurant.pendingDishes = restaurant.pendingDishes.filter(value => value?.id !== meal.id);
     ctx.saveRestaurant(restaurant);
     return true;
   }
 
-  function settleBonusIfDue(restaurant, meal, now) {
-    if (meal.bonusPlayerId && now >= meal.finishAt && loadedDimension(meal)) {
-      ctx.settleMealBonus(restaurant, meal, now);
+  /** Called only after the original native customer counter has finished. */
+  function finishReaction(restaurantId, orderId, now = Date.now()) {
+    const restaurant = ctx.getRestaurant(restaurantId);
+    const meal = restaurant?.pendingDishes?.find(value => value?.id === orderId);
+    if (!meal) return true;
+    return ctx.settleMealBonus(restaurant, meal, now) !== false;
+  }
+
+  /** Native block callbacks stop with the region. Saving a small numeric
+   * counter avoids rewriting the full restaurant record on every game tick.
+   */
+  function tickFood(block, now = Date.now()) {
+    const linked = atBlock(block, false);
+    if (!linked || linked.restaurant.removing || block.typeId !== DINING_BLOCK) return;
+    const { restaurant, meal } = linked;
+    const ticks = foodTicks(meal, now);
+    if (ticks < FOOD_TICKS) gameWorld.setDynamicProperty(FOOD_CLOCK + meal.token, ticks + 1);
+    if (ticks + 1 >= FOOD_TICKS && meal.status !== 'dirty') {
+      meal.status = 'dirty'; ctx.saveRestaurant(restaurant);
     }
+    syncVisual(restaurant, meal, now);
   }
 
   function tick(now = Date.now()) {
@@ -237,15 +274,14 @@ export function createDiningService(ctx) {
         migrate(restaurant);
         for (const meal of [...(restaurant.pendingDishes || [])]) {
           if (!validMeal(meal) || !canonical(restaurant)) continue;
-          settleBonusIfDue(restaurant, meal, now);
           if (meal.status === 'claiming') {
-            if (meal.action === 7 || meal.bonusPlayerId) {
+            if (meal.reactionPending || meal.bonusPlayerId) {
               const order = restaurant.orders?.find(order => order.id === meal.id);
               ctx.resumeCustomerMeal?.(restaurant, order || { id: meal.id, type: 'dine_in', status: 'completed', meal }, meal);
             }
             finishClaim(restaurant, meal, now); continue;
           }
-          if (now >= (meal.foodStartedAt ?? meal.startedAt) + DIRTY_AFTER && meal.status !== 'dirty') {
+          if (foodTicks(meal, now) >= FOOD_TICKS && meal.status !== 'dirty') {
             meal.status = 'dirty'; ctx.saveRestaurant(restaurant);
           }
           const order = restaurant.orders?.find(order => order.id === meal.id);
@@ -359,11 +395,14 @@ export function createDiningService(ctx) {
       // meal already owns the reaction selected by the handoff.
       const action = meal?.action ?? order?.meal?.action ?? order?.completion?.action ?? customer.getProperty('ordertocook:action');
       if (![5, 6, 7].includes(Number(action))) continue;
-      const timing = { startedAt: now, finishAt: now + 500, action: 7 };
+      const timing = { startedAt: now, finishAt: now + 500, action: 7, clock: 'loaded' };
       if (meal) {
         // Customer reaction and food consumption have independent Java clocks.
         meal.foodStartedAt ??= meal.startedAt;
-        Object.assign(meal, timing);
+        // Adopting an old reaction must not restart the independent food.
+        const ticks = foodTicks(meal, now);
+        if (meal.status !== 'claiming') gameWorld.setDynamicProperty(FOOD_CLOCK + meal.token, ticks);
+        Object.assign(meal, timing, { reactionPending: true });
         delete meal.bonusPlayerId;
       }
       if (order) order.meal = { ...order.meal, ...timing };
@@ -386,7 +425,7 @@ export function createDiningService(ctx) {
     const reservation = reservePlateSlot(player);
     const dropped = !reservation;
     const previousStatus = meal.status;
-    const early = now < (meal.foodStartedAt ?? meal.startedAt) + DIRTY_AFTER;
+    const early = foodTicks(meal, now) < FOOD_TICKS;
     meal.status = 'claiming';
     meal.claimedAt = now;
     meal.claimedBy = player.id;
@@ -455,11 +494,15 @@ export function createDiningService(ctx) {
       if (!validMeal(meal)) return false;
       const dimension = loadedDimension(meal);
       if (!dimension) return false;
-      settleBonusIfDue(restaurant, meal, now);
+      // Machine removal also removes its customers. No future boom can pay.
+      if (meal.reactionPending || meal.bonusPlayerId) {
+        meal.reactionPending = false; delete meal.bonusPlayerId;
+        ctx.saveRestaurant(restaurant);
+      }
       if (!releaseMeal(restaurant, meal, dimension, now, 'restaurant_removed')) return false;
     }
     return !(restaurant.pendingDishes || []).length;
   }
 
-  return { queueMeal, hasVacancy, tick, migrate, claim, resolveEntity, atBlock, cleanupRestaurant, removeBlock, sweepOrphans };
+  return { queueMeal, hasVacancy, tick, tickFood, finishReaction, migrate, claim, resolveEntity, atBlock, cleanupRestaurant, removeBlock, sweepOrphans };
 }

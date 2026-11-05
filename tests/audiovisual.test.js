@@ -44,6 +44,7 @@ test('customer runtime emits each portal burst once, with its explicit count and
   env.dimension.spawnParticle = (id, location, variables) => emissions.push({ id, location, variables });
   order.status = 'completed'; order.meal = { startedAt: 10000, finishAt: 15500, action: 6 };
   service.finishCustomer(order.id, order.meal);
+  customer.setProperty('ordertocook:reaction_tick', 105);
   env.ctx.now = () => 15250; env.system.currentTick = 105; service.tick();
   env.ctx.now = () => 15300; env.system.currentTick = 106; service.tick();
   const portals = emissions.filter(e => e.id === 'ordertocook:portal');

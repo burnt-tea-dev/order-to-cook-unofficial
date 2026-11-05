@@ -1,0 +1,194 @@
+{
+  "engine": "BDS 1.26.60.6",
+  "productionApis": {
+    "@minecraft/server": "2.11.0",
+    "@minecraft/server-ui": "2.0.0"
+  },
+  "diagnosticOnly": {
+    "@minecraft/server-gametest": "1.0.0-beta",
+    "gametest": true
+  },
+  "upcomingCreatorFeatures": true,
+  "liveModified": false,
+  "phases": {
+    "handoff": {
+      "checks": [
+        {
+          "name": "production loaded with native clock components",
+          "passed": true
+        },
+        {
+          "name": "ClockOnline18 commits the loaded-tick meal and base payment",
+          "passed": true
+        },
+        {
+          "name": "native food block advances through the 15-tick boundary",
+          "passed": true
+        },
+        {
+          "name": "native customer and food each advance at one tick per game tick",
+          "passed": true
+        },
+        {
+          "name": "food is dirty at 100 while the 120-tick bonus stays unpaid",
+          "passed": true
+        },
+        {
+          "name": "dirty plate claim keeps the unfinished reaction",
+          "passed": true
+        },
+        {
+          "name": "native completion pays the bonus once",
+          "passed": true
+        },
+        {
+          "name": "completed plate and clock state retire without replay",
+          "passed": true
+        },
+        {
+          "name": "ClockEarly18 commits the loaded-tick meal and base payment",
+          "passed": true
+        },
+        {
+          "name": "early plate interrupts the native reaction",
+          "passed": true
+        },
+        {
+          "name": "interruption uses ten simulation ticks and cancels bonus",
+          "passed": true
+        },
+        {
+          "name": "ClockRestart18 commits the loaded-tick meal and base payment",
+          "passed": true
+        },
+        {
+          "name": "both partially consumed clocks are saved before shutdown",
+          "passed": true
+        }
+      ],
+      "normalStop": true,
+      "quitCorrectly": true,
+      "returncode": 0
+    },
+    "restart": {
+      "checks": [
+        {
+          "name": "production loaded with native clock components",
+          "passed": true
+        },
+        {
+          "name": "offline period exceeds both nominal durations",
+          "passed": true
+        },
+        {
+          "name": "same saved NPC and food retain partial progress",
+          "passed": true
+        },
+        {
+          "name": "both saved clocks resume through actual native ticks",
+          "passed": true
+        },
+        {
+          "name": "restored native completion credits restaurant once for offline recipient",
+          "passed": true
+        },
+        {
+          "name": "restart cannot repeat bonus",
+          "passed": true
+        }
+      ],
+      "normalStop": true,
+      "quitCorrectly": true,
+      "returncode": 0
+    },
+    "simulation": {
+      "checks": [
+        {
+          "name": "production loaded with native clock components",
+          "passed": true
+        },
+        {
+          "name": "native idle action leaves its real completed flag",
+          "passed": true
+        },
+        {
+          "name": "ClockIdle18 commits the loaded-tick meal and base payment",
+          "passed": true
+        },
+        {
+          "name": "same-tick old done flag cannot finish the newly committed meal",
+          "passed": true
+        },
+        {
+          "name": "new native action clears the previous completion state",
+          "passed": true
+        },
+        {
+          "name": "ClockArea18 commits the loaded-tick meal and base payment",
+          "passed": true
+        },
+        {
+          "name": "actual customer and plate clocks pause outside simulation",
+          "passed": true
+        },
+        {
+          "name": "both actual saved native clocks resume",
+          "passed": true
+        },
+        {
+          "name": "paused food remains an early pickup after long wall time",
+          "passed": true
+        },
+        {
+          "name": "resumed interruption completes without bonus or duplicate clock state",
+          "passed": true
+        }
+      ],
+      "normalStop": true,
+      "quitCorrectly": true,
+      "returncode": 0
+    },
+    "legacy": {
+      "checks": [
+        {
+          "name": "production loaded with native clock components",
+          "passed": true
+        },
+        {
+          "name": "ClockLegacy18 commits the loaded-tick meal and base payment",
+          "passed": true
+        },
+        {
+          "name": "timestamp-only native actor and plate adopt their existing phases",
+          "passed": true
+        },
+        {
+          "name": "adopted state advances from the saved counters once per native tick",
+          "passed": true
+        },
+        {
+          "name": "adoption retains unpaid bonus and stable plate identity",
+          "passed": true
+        },
+        {
+          "name": "adopted plate can use the normal early pickup",
+          "passed": true
+        },
+        {
+          "name": "adopted interruption clears without duplicated payment or counter",
+          "passed": true
+        },
+        {
+          "name": "expired legacy claim does not wait for a nonexistent customer",
+          "passed": true
+        }
+      ],
+      "normalStop": true,
+      "quitCorrectly": true,
+      "returncode": 0
+    }
+  },
+  "checksPassed": 37,
+  "observedInterruptionTicksThroughAdapterRemoval": 13,
+  "scope": "Native inventories, entity/block simulation and production adapters; no hardware input or client image/audio verdict. Tests ran while building this candidate; unchanged successful phases were reused."
+}

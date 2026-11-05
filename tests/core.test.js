@@ -221,8 +221,8 @@ test("seated dining preserves the original 10 percent boom boundary and 110/120-
   const r = restaurant({ level: 3 }), order = { type: 'dine_in' };
   const boom = rollCustomerCompletion(r, order, NOW, { customerSeated: true, rng: rolls(0.099999, 0) });
   const ordinary = rollCustomerCompletion(r, order, NOW, { customerSeated: true, rng: rolls(0.1) });
-  assert.deepEqual(boom, { startedAt: NOW, finishAt: NOW + 6000, action: 5, boomBonus: 4 });
-  assert.deepEqual(ordinary, { startedAt: NOW, finishAt: NOW + 5500, action: 6, boomBonus: 0 });
+  assert.deepEqual(boom, { startedAt: NOW, finishAt: NOW + 6000, action: 5, boomBonus: 4, clock: "loaded" });
+  assert.deepEqual(ordinary, { startedAt: NOW, finishAt: NOW + 5500, action: 6, boomBonus: 0, clock: "loaded" });
 });
 
 test("boom award uses actual restaurant level plus an inclusive one-to-four random bonus", () => {

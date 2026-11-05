@@ -118,7 +118,7 @@ let entitySequence = 0;
 export class FakeEntity {
   constructor(dimension, typeId, location) {
     this.id = `entity${++entitySequence}`; this.dimension = dimension; this.typeId = typeId; this.location = { ...location };
-    this.isValid = true; this.dynamic = {}; this.properties = {}; this.tags = new Set(); this.riders = [];
+    this.events = []; this.isValid = true; this.dynamic = {}; this.properties = {}; this.tags = new Set(); this.riders = [];
     this.container = typeId === 'ordertocook:storage' ? new FakeContainer(81) : typeId === 'ordertocook:motorcycle' ? new FakeContainer(54) : undefined;
     this.rotation = { x: 0, y: 0 }; this.riding = undefined;
   }
@@ -135,6 +135,7 @@ export class FakeEntity {
   }
   getDynamicProperty(key) { return this.dynamic[key]; }
   setDynamicProperty(key, value) { if (value === undefined) delete this.dynamic[key]; else this.dynamic[key] = value; }
+  triggerEvent(event) { this.events.push(event); }
   getProperty(key) { return this.properties[key]; }
   setProperty(key, value) { this.properties[key] = value; }
   setRotation(value) { this.rotation = { ...value }; }
@@ -194,13 +195,15 @@ export function makeEnvironment() {
     playSound(id) { this.sounds.push(id); }, spawnParticle() {},
   };
   const gameSystem = {
-    currentTick: 0, callbacks: [], intervals: [],
+    currentTick: 0, callbacks: [], intervals: [], afterEvents: signals(),
     run(fn) { this.callbacks.push(fn); return this.callbacks.length; },
     runInterval(fn, ticks) { this.intervals.push({ fn, ticks }); return this.intervals.length; },
     runTimeout(fn, ticks) { this.callbacks.push(fn); return this.callbacks.length; },
   };
   const gameWorld = {
-    afterEvents: signals(), beforeEvents: signals(), players: [],
+    afterEvents: signals(), beforeEvents: signals(), players: [], dynamic: new Map(),
+    getDynamicProperty(key) { return this.dynamic.get(key); },
+    setDynamicProperty(key, value) { if (value === undefined) this.dynamic.delete(key); else this.dynamic.set(key, value); },
     getDimension(id) { if (!['overworld', 'minecraft:overworld'].includes(id)) return { ...dimension, id, getEntities: () => [] }; return dimension; },
     getEntity(id) { return dimension.entities.get(id); },
     getAllPlayers() { return this.players; },

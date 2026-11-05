@@ -43,9 +43,9 @@ export async function mainFixture(savedProperties = []) {
   const key = `__otcMainTests${++sequence}`;
   const endings = [], interruptions = [];
   const formResponses = [], forms = [];
-  let applianceContext;
+  let applianceContext, entityContext;
   const stubs = {
-    createEntityService: () => ({ init() {}, spawnCustomer() {}, cleanupOrder() {}, onBlockBreak() {},
+    createEntityService: context => { entityContext = context; return { init() {}, spawnCustomer() {}, cleanupOrder() {}, onBlockBreak() {},
       finishCustomer: (...args) => {
         endings.push(args);
         for (const entity of env.dimension.getEntities({ type: 'ordertocook:customer' })) {
@@ -53,7 +53,7 @@ export async function mainFixture(savedProperties = []) {
         }
       }, resumeCustomerMeal() {},
       interruptCustomerMeal: (...args) => interruptions.push(args),
-      getCustomerSeat: entity => entity?.qaChair || chair }),
+      getCustomerSeat: entity => entity?.qaChair || chair }; },
     createApplianceService: context => { applianceContext = context; return { init() {}, onPlace() {}, onBreak() {}, getStorage() {}, normalizeBlock: block => block }; },
     notify: (who, text) => who.sendMessage(text),
     choose: async (...args) => { forms.push(args); const response = formResponses.shift(); return typeof response === 'function' ? response(...args) : response; }, textInput: async () => undefined,
@@ -107,7 +107,7 @@ export async function mainFixture(savedProperties = []) {
   customer.setDynamicProperty('ordertocook:restaurant_id', restaurant.id);
   customer.setDynamicProperty('ordertocook:order_id', order.id);
   return { ...env, hooks, store, core, player, customer, chair, machine, restaurant, order, parcel, properties,
-    applianceContext, installedItems, scriptEvents, blockComponents, itemComponents,
+    applianceContext, finishNativeReaction: (restaurantId = restaurant.id, orderId = order.id) => entityContext.onCustomerReactionFinished(restaurantId, orderId), installedItems, scriptEvents, blockComponents, itemComponents,
     endings, interruptions, forms, formResponses, failWrite: predicate => { failProperty = predicate; },
     linkage: { restaurantId: restaurant.id, orderId: order.id } };
 }

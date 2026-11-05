@@ -94,6 +94,7 @@ export function createEntityService(ctx) {
   const retryTimes = new Map();
   const entityInteractions = new Map();
   const chairClaims = new Set();
+  const reactionStarts = new Map();
   let lastTick = -1;
   let readyTick = Infinity;
   let scanTick = -100;
@@ -109,12 +110,42 @@ export function createEntityService(ctx) {
     // the actual 4.5/4.6944-second clip finishes. This is only its initial seed.
   }
 
-  function syncActionElapsed(entity, at = clock()) {
-    const action = Number(currentProperty(entity, "action", 0));
-    const startedAt = entity.getDynamicProperty(`${NS}action_started_at`);
-    if (!ACTION_TICKS[action] || typeof startedAt !== "number") return;
-    const elapsed = Math.min(ACTION_TICKS[action] / 20, Math.max(0, (at - startedAt) / 1000));
-    if (currentProperty(entity, "action_elapsed", -1) !== elapsed) property(entity, "action_elapsed", elapsed);
+  function reactionAction(entity) {
+    return Number(entity.getDynamicProperty(`${NS}reaction_action`) ?? currentProperty(entity, "action", 0));
+  }
+
+  function startReaction(entity, action, elapsedTicks = 0) {
+    reactionStarts.set(entity.id, gameSystem.currentTick);
+    entity.setDynamicProperty(`${NS}reaction_action`, action);
+    property(entity, "action", action);
+    // A resume event leaves the persisted property alone. This also adopts
+    // pre-clock actors once, without resetting an in-progress native timer.
+    property(entity, "reaction_tick", elapsedTicks);
+    property(entity, "reaction_done", elapsedTicks >= ACTION_TICKS[action]);
+    property(entity, "action_elapsed", elapsedTicks / 20);
+    entity.triggerEvent(`${NS}reaction_resume_${action}`);
+  }
+
+  function finishReaction(entity) {
+    if (!entity?.isValid) return;
+    // Native property reads still expose the previous action in its start tick.
+    // This short in-memory guard is intentionally not persisted across reload.
+    const start = reactionStarts.get(entity.id);
+    if (start !== undefined && gameSystem.currentTick <= start + 1) return;
+    reactionStarts.delete(entity.id);
+    if (!currentProperty(entity, "reaction_done", false)) return;
+    const action = reactionAction(entity);
+    if ([1, 2].includes(action)) {
+      property(entity, "action", 0);
+      entity.setDynamicProperty(`${NS}reaction_action`, 0);
+      entity.setDynamicProperty(`${NS}spawn_until`, undefined);
+    } else if (COMPLETION_ACTIONS.has(action)) {
+      completionEffects(entity);
+      const association = customerOrder(entity);
+      // A failed restaurant save leaves the completed actor available to retry.
+      if (ctx.onCustomerReactionFinished?.(association.restaurantId, association.orderId) === false) return;
+      removeCustomer(entity);
+    }
   }
 
   function notify(player, text) {
@@ -362,25 +393,16 @@ export function createEntityService(ctx) {
     const candidate = riding?.typeId === SEAT ? riding : findEntity(entity.getDynamicProperty(`${NS}seat_id`));
     const seat = candidate?.typeId === SEAT ? candidate : undefined;
     if (seat) seat.getComponent("minecraft:rideable")?.ejectRider(entity);
+    reactionStarts.delete(entity.id);
     entity.remove();
     if (seat) clearSeat(seat);
     for (const key of entityInteractions.keys()) if (key.endsWith(`:${entity.id}`)) entityInteractions.delete(key);
   }
 
   function startSpawnAction(entity, seated) {
-    const at = clock();
-    const action = seated ? 1 : 2;
-    property(entity, "action", action);
-    property(entity, "action_elapsed", 0);
-    entity.setDynamicProperty(`${NS}action_started_at`, at);
-    entity.setDynamicProperty(`${NS}spawn_until`, at + ACTION_TICKS[action] * 50);
+    entity.setDynamicProperty(`${NS}action_started_at`, clock());
+    startReaction(entity, seated ? 1 : 2);
     nextIdle(entity);
-    gameSystem.runTimeout(() => {
-      if (!entity?.isValid || entity.getDynamicProperty(`${NS}depart_at`)) return;
-      if (Number(currentProperty(entity, "action", 0)) !== action) return;
-      property(entity, "action", 0);
-      entity.setDynamicProperty(`${NS}spawn_until`, undefined);
-    }, ACTION_TICKS[action]);
   }
 
   function defaultCompletionAction(entity) {
@@ -392,7 +414,7 @@ export function createEntityService(ctx) {
   }
 
   /**
-   * @param {{startedAt?: number, finishAt?: number, action?: number}} options
+   * @param {{startedAt?: number, finishAt?: number, action?: number, clock?: string}} options
    */
   function applyCompletion(entity, options, replace = false, resumed = false) {
     const priorFinish = entity.getDynamicProperty(`${NS}depart_at`);
@@ -402,16 +424,11 @@ export function createEntityService(ctx) {
     const at = Number.isFinite(options.startedAt) ? Number(options.startedAt) : clock();
     const finishAt = Number.isFinite(options.finishAt) && Number(options.finishAt) >= at
       ? Number(options.finishAt) : at + ACTION_TICKS[action] * 50;
-    const previousAction = Number(currentProperty(entity, "action", 0));
+    const previousAction = reactionAction(entity);
     const unchanged = priorFinish === finishAt && entity.getDynamicProperty(`${NS}action_started_at`) === at && previousAction === action;
-    if (clock() >= finishAt) {
-      // The boom cue is at tick 118 and the service runs every five ticks.
-      // Emit that final crossed cue before removal, but never replay old cues
-      // when a world is reopened long after its completion deadline.
-      if (unchanged && clock() - finishAt <= 250) completionEffects(entity, clock());
-      removeCustomer(entity); return true;
-    }
-    if (unchanged) { syncActionElapsed(entity); return false; }
+    if (unchanged && entity.getDynamicProperty(`${NS}reaction_action`) !== undefined) return false;
+    const elapsed = resumed && options.clock !== "loaded"
+      ? Math.min(ACTION_TICKS[action], Math.max(0, Math.floor((clock() - at) / 50))) : 0;
     entity.setDynamicProperty(`${NS}action_started_at`, at);
     entity.setDynamicProperty(`${NS}depart_at`, finishAt);
     entity.setDynamicProperty(`${NS}spawn_until`, undefined);
@@ -419,10 +436,7 @@ export function createEntityService(ctx) {
     entity.setDynamicProperty(`${NS}action_finish_signal`, false);
     entity.setDynamicProperty(`${NS}last_eat_beat`, -1);
     property(entity, "stage", EATING_ACTIONS.has(action) ? "eating" : "leaving");
-    property(entity, "action", action);
-    // Reset the seek phase even when changing between two completion actions,
-    // e.g. interruption must start at zero after four seconds of normal eating.
-    syncActionElapsed(entity);
+    startReaction(entity, action, elapsed);
     // The order core owns every coin and dirty plate. These are visual effects,
     // including the boom: no explosion command, damage, or block destruction.
     if (!resumed && action !== 7) {
@@ -432,7 +446,7 @@ export function createEntityService(ctx) {
   }
 
   /** Starts one original completion action; repeats cannot extend its lifetime.
-   * @param {{startedAt?: number, finishAt?: number, action?: number}} [options]
+   * @param {{startedAt?: number, finishAt?: number, action?: number, clock?: string}} [options]
    */
   function finishCustomer(orderId, options = {}) {
     retryTimes.delete(orderId);
@@ -444,7 +458,7 @@ export function createEntityService(ctx) {
   }
 
   /** Reconciles canonical timing after reload; never spawns a completed actor.
-   * @param {{startedAt?: number, finishAt?: number, action?: number}} [options]
+   * @param {{startedAt?: number, finishAt?: number, action?: number, clock?: string}} [options]
    */
   function resumeCustomerMeal(restaurant, order, options = order?.meal ?? order?.completion) {
     if (!restaurant || !order || !options) return 0;
@@ -456,7 +470,7 @@ export function createEntityService(ctx) {
   }
 
   /** Early plate pickup changes only the visual action, never payment state.
-   * @param {{startedAt?: number, finishAt?: number, action?: number}} [options]
+   * @param {{startedAt?: number, finishAt?: number, action?: number, clock?: string}} [options]
    */
   function interruptCustomerMeal(orderId, options = {}, target = undefined) {
     let changed = 0;
@@ -764,23 +778,14 @@ export function createEntityService(ctx) {
   }
 
   function canonicalMeal(restaurant, order, orderId) {
-    const source = order?.meal ?? order?.completion ?? restaurant?.pendingDishes?.find(entry => (entry.orderId ?? entry.id) === orderId);
+    const source = order?.meal ?? order?.completion ?? restaurant?.pendingDishes?.find(entry => (entry?.orderId ?? entry?.id) === orderId);
     if (!source || !Number.isFinite(source.startedAt) || !Number.isFinite(source.finishAt) || !COMPLETION_ACTIONS.has(source.action)) return undefined;
     return source;
   }
 
-  function completionEffects(entity, currentTime) {
-    let action = Number(currentProperty(entity, "action", 0));
-    const finishAt = Number(entity.getDynamicProperty(`${NS}depart_at`));
-    let at = entity.getDynamicProperty(`${NS}action_started_at`);
-    if (typeof at !== "number") {
-      // alpha.1 persisted only depart_at and used the generic eating clip.
-      property(entity, "action", 6);
-      action = 6;
-      at = finishAt - ACTION_TICKS[6] * 50;
-      entity.setDynamicProperty(`${NS}action_started_at`, at);
-    }
-    const elapsed = currentTime - Number(at);
+  function completionEffects(entity) {
+    const action = reactionAction(entity);
+    const elapsed = Number(currentProperty(entity, "reaction_tick", 0)) * 50;
     if ([5, 6].includes(action) && elapsed >= 2450 && elapsed < 4750) {
       const beat = Math.floor((elapsed - 2450) / 350);
       if (Number(entity.getDynamicProperty(`${NS}last_eat_beat`) ?? -1) < beat) {
@@ -846,12 +851,23 @@ export function createEntityService(ctx) {
           applyCompletion(entity, meal, true, true);
           if (!entity.isValid) continue;
         }
-        syncActionElapsed(entity, currentTime);
+        if (entity.getDynamicProperty(`${NS}reaction_action`) === undefined) {
+          let action = Number(currentProperty(entity, "action", 0));
+          // alpha.1 persisted only depart_at; its completion was generic eating.
+          if (!ACTION_TICKS[action] && typeof entity.getDynamicProperty(`${NS}depart_at`) === "number") action = 6;
+          if (ACTION_TICKS[action]) {
+            const savedStart = entity.getDynamicProperty(`${NS}action_started_at`);
+            const at = typeof savedStart === "number" ? savedStart :
+              Number(entity.getDynamicProperty(`${NS}depart_at`)) - ACTION_TICKS[action] * 50;
+            startReaction(entity, action, Math.min(ACTION_TICKS[action], Math.max(0, Math.floor((currentTime - at) / 50)) || 0));
+          }
+        }
+        finishReaction(entity);
+        if (!entity.isValid) continue;
         const departure = entity.getDynamicProperty(`${NS}depart_at`);
         if (typeof departure === "number") {
-          completionEffects(entity, currentTime);
-          if (currentTime >= departure) removeCustomer(entity);
-          else restoreCustomerChair(entity);
+          completionEffects(entity);
+          restoreCustomerChair(entity);
           continue;
         }
         if (!needsCustomer(order) || currentTime >= order.expiresAt) {
@@ -861,11 +877,6 @@ export function createEntityService(ctx) {
           removeCustomer(entity); continue;
         }
         restoreCustomerChair(entity);
-        const spawnUntil = entity.getDynamicProperty(`${NS}spawn_until`);
-        if (typeof spawnUntil === "number" && currentTime >= spawnUntil) {
-          entity.setDynamicProperty(`${NS}spawn_until`, undefined);
-          property(entity, "action", 0);
-        }
       } catch { /* An actor can unload between the dimension query and this tick. */ }
     }
     if (refresh) {
@@ -890,6 +901,14 @@ export function createEntityService(ctx) {
   }
 
   function init() {
+    gameSystem.afterEvents.scriptEventReceive.subscribe(event => {
+      if (event.id !== `${NS}reaction_finished` || event.sourceEntity?.typeId !== CUSTOMER) return;
+      const entity = event.sourceEntity, action = Number(event.message);
+      gameSystem.runTimeout(() => {
+        if (!entity.isValid || reactionAction(entity) !== action) return;
+        try { finishReaction(entity); } catch (error) { console.warn(`[OrderToCook] Customer reaction: ${String(error)}`); }
+      }, 1);
+    });
     gameWorld.beforeEvents.playerInteractWithEntity.subscribe(event => {
       if (![CUSTOMER, MOTORCYCLE, SEAT].includes(event.target.typeId)) return;
       event.cancel = true;
