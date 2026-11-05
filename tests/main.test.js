@@ -356,3 +356,30 @@ test('the existing guide opens chapter, topic and lesson forms with reversible n
   assert.ok(JSON.stringify(env.forms[5][2]).includes('otc.guide.page.placing_station.step2'));
   assert.ok(JSON.stringify(env.forms[7][2]).includes('otc.guide.ui.choose_chapter'));
 });
+
+test('registered native hit callback breaks a plate once without paying or adding it to inventory', async () => {
+  const env = await mainFixture(); env.hooks.customerInteract(env.player, env.customer, env.linkage, { rng: () => 0.9999 });
+  env.hooks.dining.tick();
+  const visual = env.dimension.getEntities({ type: 'ordertocook:dining_plate' })[0];
+  const paid = balance(env.player);
+  for (let repeat = 0; repeat < 2; repeat++) for (const callback of env.world.afterEvents.entityHitEntity.subscriptions) {
+    callback({ damagingEntity: env.player, hitEntity: visual });
+  }
+  await Promise.resolve();
+  assert.equal(env.dimension.drops.filter(row => row.stack.typeId === 'ordertocook:dirty_plate').length, 1);
+  assert.equal(itemCount(env.player, 'ordertocook:dirty_plate'), 0); assert.equal(balance(env.player), paid);
+  assert.equal(visual.isValid, false);
+});
+
+test('plate hit callback preserves access restrictions and chair/vehicle input ownership', async () => {
+  for (const mount of ['ordertocook:seat', 'ordertocook:motorcycle', 'intruder']) {
+    const env = await mainFixture(); env.hooks.customerInteract(env.player, env.customer, env.linkage, { rng: () => 0.9999 }); env.hooks.dining.tick();
+    const visual = env.dimension.getEntities({ type: 'ordertocook:dining_plate' })[0];
+    if (mount === 'intruder') env.restaurant.ownerId = 'someone-else';
+    else env.player.riding = env.dimension.spawnEntity(mount, env.player.location);
+    for (const callback of env.world.afterEvents.entityHitEntity.subscriptions) callback({ damagingEntity: env.player, hitEntity: visual });
+    await Promise.resolve();
+    assert.equal(visual.isValid, true, mount);
+    assert.equal(env.dimension.drops.filter(row => row.stack.typeId === 'ordertocook:dirty_plate').length, 0, mount);
+  }
+});
