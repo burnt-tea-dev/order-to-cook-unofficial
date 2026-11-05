@@ -94,7 +94,7 @@ export async function mainFixture(savedProperties = []) {
   restaurant.menu = [{ typeId: 'minecraft:bread', label: '麵包', nutrition: 5 }];
   restaurant.config = { ...restaurant.config, deliveryRate: 0, tipNormalChance: 0, tipUrgentChance: 0 };
   const now = Date.now(), order = core.generateOrder(restaurant, now, () => 0.9999);
-  core.acceptOrder(restaurant, order.id, now + 1); core.packOrder(restaurant, order.id, now + 2);
+  core.acceptOrder(restaurant, order.id, { wall: now + 1, tick: env.system.currentTick }); core.packOrder(restaurant, order.id, { wall: now + 2, tick: env.system.currentTick });
   order.proof = 'native-like-order-proof'; order.platedVariant = 3; store.saveRestaurant(restaurant);
   const parcel = new FakeItem('ordertocook:food_plate');
   parcel.setDynamicProperty('ordertocook:restaurant', restaurant.id);

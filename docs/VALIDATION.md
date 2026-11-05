@@ -1,5 +1,10 @@
 # 0.1.2-alpha.3 驗證紀錄
 
+## 0.1.19-alpha.1 世界tick訂單期限
+
+完整`npm run verify`518項、型別／JSON／配對打包通過。原生首次8項、同世界重開主流程8項、期限與食用續測4項通過；原observer槽位誤判保留，詳見[訂單期限範圍](validation/0.1.19-alpha.1/ORDER_DEADLINES.md)。未首次安裝LIVE。
+
+
 ## 0.1.18-alpha.1 原生料理計時
 
 完整 `npm run verify`：511項來源測試、型別、367 JSON與配對打包通過。原生交餐／同世界重開／停止模擬／舊資料轉換共37項通過；範圍與排程延遲見[原生料理計時](validation/0.1.18-alpha.1/LOADED_MEALS.md)。未首次安裝至LIVE。

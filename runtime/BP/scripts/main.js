@@ -5,7 +5,8 @@ import {
   createRestaurant, refreshOrders, acceptOrder, packOrder, completeOrder,
   cancelOrder, expireOrders, upgradeRestaurant, getUpgradeQuote,
   getMenuNutrition, addMenuFood, removeMenuFood, generateWalkInOrder,
-  getWalkInChance, synchronizeOfferRewards, normalizeFoodId, normalizeMenu
+  getWalkInChance, synchronizeOfferRewards, normalizeFoodId, normalizeMenu,
+  orderRemainingMs, adoptOrderDeadline
 } from './core.js';
 import { VANILLA_FOODS, DEFAULT_MENU, DEFAULT_CONFIG, TIER_LABELS, TIER_COLORS } from './config.js';
 import {
@@ -36,6 +37,8 @@ const ITEM_RESTAURANT = 'ordertocook:restaurant';
 const ITEM_ORDER = 'ordertocook:order_id';
 const ITEM_PROOF = 'ordertocook:proof';
 const ITEM_EXPIRY = 'ordertocook:expires_at';
+const ITEM_EXPIRY_TICK = 'ordertocook:expires_tick';
+function orderTime() { return { wall: Date.now(), tick: system.currentTick }; }
 const pendingPlacements = new Map();
 const liveStatus = new Set(['offered', 'accepted', 'packed']);
 const foods = new Map(VANILLA_FOODS.map(food => [food.typeId, food]));
@@ -127,7 +130,7 @@ function syncPrinter(restaurant, block = loadedBlock(restaurant)) {
     }
   } catch { /* A cosmetic permutation must never undo a valid order transaction. */ }
 }
-function refreshMachineOrders(restaurant, block = loadedBlock(restaurant), now = Date.now()) {
+function refreshMachineOrders(restaurant, block = loadedBlock(restaurant), now = orderTime()) {
   refreshOrders(restaurant, now);
   printerStarts.set(restaurant.id, system.currentTick);
   if (block?.typeId === 'ordertocook:order_machine') {
@@ -202,7 +205,7 @@ function orderHeading(order) {
   return `${TIER_COLORS[order.tier] || '§f'}${TIER_LABELS[order.tier] || '訂單'}§r ${order.walkIn ? '到店' : order.type === 'delivery' ? (order.longDistance ? '遠距外送' : '外送') : '堂食'}${order.rush ? ' §c加急§r' : ''}`;
 }
 function orderBody(order) {
-  const minutes = Math.max(0, Math.ceil((order.expiresAt - Date.now()) / 60000));
+  const minutes = Math.ceil(orderRemainingMs(order, orderTime()) / 60000);
   const destination = order.destination ? `\n目的地：${order.destination.x}, ${order.destination.y}, ${order.destination.z}（${order.destination.distance} 格）` : '';
   return `${orderHeading(order)}\n${order.items.map(item => `${menuFoodLabel(item, foodLabel(item.typeId))} ×${item.amount}`).join('\n')}\n報酬：${order.reward} ${currencyLabel()} + 可能的小費\n剩餘：${minutes} 分鐘${destination}`;
 }
@@ -216,7 +219,8 @@ function parcelFor(restaurant, order, typeId) {
   stack.setDynamicProperty(ITEM_ORDER, order.id);
   if (order.proof) stack.setDynamicProperty(ITEM_PROOF, order.proof);
   if (stack.typeId === 'ordertocook:takeout_bag') stack.setDynamicProperty(ITEM_EXPIRY, order.expiresAt);
-  stack.setLore([orderHeading(order), ...order.items.map(item => `${menuFoodLabel(item, foodLabel(item.typeId))} ×${item.amount}`), `報酬 ${order.reward} · ${new Date(order.expiresAt).toISOString().slice(11, 16)} UTC 到期`, ...(order.destination ? [`目的地 X:${order.destination.x} Z:${order.destination.z}`] : []), '使用查看詳情；蹲下點擊方塊頂面可擺放']);
+  if (order.expiresTick !== undefined) stack.setDynamicProperty(ITEM_EXPIRY_TICK, order.expiresTick);
+  stack.setLore([orderHeading(order), ...order.items.map(item => `${menuFoodLabel(item, foodLabel(item.typeId))} ×${item.amount}`), `報酬 ${order.reward} · 期限見訂單詳情`, ...(order.destination ? [`目的地 X:${order.destination.x} Z:${order.destination.z}`] : []), '使用查看詳情；蹲下點擊方塊頂面可擺放']);
   return stack;
 }
 function itemOrder(stack) {
@@ -239,7 +243,7 @@ async function machineForm(player, block) {
   const restaurant = getMachine(player, block);
   if (restaurant.removing) { notify(player, '原餐廳正在收回餐盤或保存個人進度；請載入原桌面並等候清理完成，再開店。'); return; }
   if (!canManage(player, restaurant)) { notify(player, `這間餐廳由 ${restaurant.ownerName} 經營；店主可在「設定」加入員工。`); return; }
-  expireOrders(restaurant);
+  expireOrders(restaurant, orderTime());
   saveRestaurant(restaurant);
   const available = restaurant.orders.filter(order => order.status === 'offered');
   const working = restaurant.orders.filter(order => ['accepted', 'packed'].includes(order.status));
@@ -288,7 +292,7 @@ async function orderList(player, block, restaurant, kind) {
     } else if (action === 1) {
       const confirm = await choose(player, '取消訂單', '已消耗的食品與包材不會退回；此單會計入失敗統計。', ['保留訂單', '確認取消']);
       if (confirm !== 1 || !validRestaurant(player, restaurant, block)) return;
-      const result = cancelOrder(restaurant, order.id);
+      const result = cancelOrder(restaurant, order.id, orderTime());
       saveRestaurant(restaurant);
       if (result.ok) { entities.cleanupOrder(order.id, true); removeTickets(player, order.id); notify(player, '訂單已取消。'); }
       else notify(player, reasonText(result.reason));
@@ -306,7 +310,7 @@ function acceptWithTicket(player, restaurant, order) {
   if (order.walkIn && order.type === 'dine_in' && !nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:chair').length) {
     notify(player, '到店顧客需要餐廳 24 格內有椅子。'); return;
   }
-  const result = acceptOrder(restaurant, order.id);
+  const result = acceptOrder(restaurant, order.id, orderTime());
   saveRestaurant(restaurant);
   if (!result.ok) { notify(player, reasonText(result.reason)); return; }
   syncPrinter(restaurant);
@@ -453,12 +457,12 @@ function ingredientContainers(player, block) {
 async function countertopForm(player, block) {
   const restaurant = nearestRestaurant(block);
   if (!restaurant || !canManage(player, restaurant)) { notify(player, '操作台需要在你可管理的打單機 24 格內。'); return; }
-  expireOrders(restaurant);
+  expireOrders(restaurant, orderTime());
   saveRestaurant(restaurant);
   if (heldItem(player)?.typeId === 'ordertocook:order') {
     const linked = itemOrder(heldItem(player));
     if (!linked || linked.restaurant !== restaurant || linked.order.status !== 'accepted' ||
-        linked.proof !== linked.order.proof || Date.now() >= linked.order.expiresAt) {
+        linked.proof !== linked.order.proof || orderRemainingMs(linked.order, orderTime()) <= 0) {
       notify(player, '手持訂單無效、已處理，或不屬於這個操作台的餐廳。'); return;
     }
     return prepareOrderAtCountertop(player, block, restaurant, linked.order);
@@ -487,7 +491,7 @@ async function countertopForm(player, block) {
 function prepareOrderAtCountertop(player, block, restaurant, order) {
   if (!nearBlock(player, block) || block.typeId !== 'ordertocook:countertop' || !canManage(player, restaurant) || getRestaurant(restaurant.id) !== restaurant || loadedBlock(restaurant)?.typeId !== 'ordertocook:order_machine' || nearestRestaurant(block)?.id !== restaurant.id) return;
   if (!restaurant.orders.includes(order)) return;
-  if (order.status !== 'accepted' || Date.now() >= order.expiresAt) { notify(player, '訂單狀態已改變或已逾時。'); return; }
+  if (order.status !== 'accepted' || orderRemainingMs(order, orderTime()) <= 0) { notify(player, '訂單狀態已改變或已逾時。'); return; }
   const output = block.above();
   if (!output?.isAir) { notify(player, '先取走操作台上方的成品／方塊。'); return; }
   const shelfId = order.type === 'delivery' ? 'ordertocook:shelf' : 'ordertocook:plate_shelf';
@@ -505,7 +509,7 @@ function prepareOrderAtCountertop(player, block, restaurant, order) {
   const supplyBefore = supply.supplies;
   if (!applyExtraction(plan)) { notify(player, '食品格子已改變，請重新操作。'); return; }
   try {
-    const result = packOrder(restaurant, order.id);
+    const result = packOrder(restaurant, order.id, orderTime());
     if (!result.ok) throw new Error(reasonText(result.reason));
     order.proof = `${restaurant.orderSequence.toString(36)}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
     order.outputLocation = { ...output.location };
@@ -635,7 +639,7 @@ function customerInteract(player, entity, linkage, options = {}) {
     // Consume the already-verified physical carrier before committing payment.
     // No await or form callback may interleave this synchronous transaction.
     if (!consumeHeld(player, stack.typeId, 1)) { notify(player, '餐點已被移動，請重新交付。'); return; }
-    result = completeOrder(restaurant, order.id, now, {
+    result = completeOrder(restaurant, order.id, orderTime(), {
       raining: weather === 'Rain' || weather === 'Thunder', easterEgg: !!order.easterEgg,
       customerSeated: !!entity.getComponent('minecraft:riding')?.entityRidingOn,
       rng: typeof options.rng === 'function' ? options.rng : Math.random
@@ -894,18 +898,49 @@ async function interactBlock(player, block) {
 
 function onUse(player, itemStack) {
   if (!ready || !player?.isValid) return;
+  itemStack = adoptHeldBag(player, itemStack);
   if (['ordertocook:motorcycle', 'ordertocook:controller'].includes(itemStack?.typeId)) { entities?.onItemUse?.(player, itemStack); return; }
   if (itemStack?.typeId === 'ordertocook:guide') { safely(player, () => guideForm(player)); return; }
   if (itemStack?.typeId === 'ordertocook:otc_upgrade_box') { notify(player, '使用工具箱點擊：兩個空木桶的下方木桶、空煙燻爐、或沒有餐盤的洗碗池。'); return; }
   const linked = itemOrder(itemStack);
   if (linked) notify(player, orderBody(linked.order));
+  else {
+    const remaining = bagRemainingMs(itemStack);
+    if (remaining !== undefined) notify(player, `外送包裹剩餘：${Math.ceil(remaining / 60000)} 分鐘遊戲時間。`);
+  }
 }
 
-function expiredBag(stack, now = Date.now()) {
-  if (stack?.typeId !== 'ordertocook:takeout_bag') return false;
-  // The parcel carries its deadline even after restaurant history is trimmed.
-  const expiry = stack.getDynamicProperty(ITEM_EXPIRY) ?? itemOrder(stack)?.order.expiresAt;
-  return Number.isSafeInteger(expiry) && expiry >= 0 && now >= expiry;
+function bagRemainingMs(stack, time = orderTime()) {
+  if (stack?.typeId !== 'ordertocook:takeout_bag') return undefined;
+  // New parcels keep their deadline even after restaurant history is trimmed.
+  const linked = itemOrder(stack)?.order;
+  const tick = stack.getDynamicProperty(ITEM_EXPIRY_TICK) ?? linked?.expiresTick;
+  if (tick !== undefined) return Number.isSafeInteger(tick) && tick >= 0
+    ? orderRemainingMs({ expiresTick: tick }, time) : undefined;
+  const expiry = stack.getDynamicProperty(ITEM_EXPIRY) ?? linked?.expiresAt;
+  return Number.isSafeInteger(expiry) && expiry >= 0 ? orderRemainingMs({ expiresAt: expiry }, time) : undefined;
+}
+
+function expiredBag(stack) {
+  return bagRemainingMs(stack) === 0;
+}
+
+/** An old held bag is rewritten only in read/write mode, preserving its full
+ * ItemStack. Unloaded legacy bags retain Java's timestamp adoption contract.
+ */
+function adoptHeldBag(player, requested) {
+  const stack = heldItem(player);
+  if (stack?.typeId !== 'ordertocook:takeout_bag' || requested?.typeId !== stack.typeId ||
+      [ITEM_RESTAURANT, ITEM_ORDER, ITEM_PROOF].some(key => stack.getDynamicProperty(key) !== requested.getDynamicProperty(key)) ||
+      stack.getDynamicProperty(ITEM_EXPIRY_TICK) !== undefined) return requested;
+  const linked = itemOrder(stack)?.order;
+  const time = orderTime();
+  const expiry = stack.getDynamicProperty(ITEM_EXPIRY) ?? linked?.expiresAt;
+  if (!Number.isSafeInteger(expiry) || expiry < 0) return requested;
+  const tick = linked?.expiresTick ?? time.tick + Math.max(0, Math.ceil((expiry - time.wall) / 50));
+  stack.setDynamicProperty(ITEM_EXPIRY_TICK, tick);
+  containerOf(player).setItem(player.selectedSlotIndex, stack);
+  return stack;
 }
 
 function consumeBag(player, stack) {
@@ -992,7 +1027,8 @@ function tickRestaurants() {
         if (reconcileProgress(restaurant) && dining.cleanupRestaurant(restaurant, now)) deleteRestaurant(restaurant.id);
         continue;
       }
-      const expired = expireOrders(restaurant, now);
+      const time = orderTime();
+      const expired = expireOrders(restaurant, time);
       for (const order of expired.orders) entities.cleanupOrder(order.id, true);
       let changed = expired.expired > 0;
       const machine = loadedBlock(restaurant);
@@ -1000,13 +1036,13 @@ function tickRestaurants() {
         syncMenu(restaurant);
         const living = restaurant.orders.filter(order => liveStatus.has(order.status)).length;
         if (restaurant.active && restaurant.menu.length && living < 32 && now >= restaurant.nextRefreshAt) {
-          refreshMachineOrders(restaurant, machine, now);
+          refreshMachineOrders(restaurant, machine, time);
           changed = true;
         }
         if (restaurant.active && restaurant.menu.length && living < 32 && now >= restaurant.nextWalkInAt) {
           restaurant.nextWalkInAt = now + DEFAULT_CONFIG.walkInIntervalMs;
           if (Math.random() < getWalkInChance(restaurant) && nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:chair').length) {
-            const order = generateWalkInOrder(restaurant, now);
+            const order = generateWalkInOrder(restaurant, time);
             if (entities.spawnCustomer(restaurant, order)) playAt(machine, 'order_refresh');
           }
           changed = true;
@@ -1024,12 +1060,12 @@ function tickRestaurants() {
 function deliveryHint(player) {
   const linked = itemOrder(heldItem(player));
   const destination = linked?.order.destination;
-  if (!destination || !['accepted', 'packed'].includes(linked.order.status) || linked.order.expiresAt <= Date.now()) return undefined;
+  if (!destination || !['accepted', 'packed'].includes(linked.order.status) || orderRemainingMs(linked.order, orderTime()) <= 0) return undefined;
   if (player.dimension.id !== destination.dimensionId) return '§e外送目的地位於另一個維度';
   const dx = destination.x - player.location.x, dz = destination.z - player.location.z;
   const distance = Math.round(Math.sqrt(dx * dx + dz * dz));
   const cardinal = `${dz < -5 ? '北' : dz > 5 ? '南' : ''}${dx < -5 ? '西' : dx > 5 ? '東' : ''}` || '已到達';
-  return `§6外送 ${cardinal} · ${distance} 格 §fX:${destination.x} Z:${destination.z} · ${Math.max(0, Math.ceil((linked.order.expiresAt - Date.now()) / 60000))} 分`;
+  return `§6外送 ${cardinal} · ${distance} 格 §fX:${destination.x} Z:${destination.z} · ${Math.ceil(orderRemainingMs(linked.order, orderTime()) / 60000)} 分`;
 }
 
 function updateHud() {
@@ -1151,7 +1187,7 @@ world.beforeEvents.itemUse.subscribe(event => {
   if (event.itemStack?.typeId !== 'ordertocook:takeout_bag') return;
   if (!ready || !expiredBag(event.itemStack)) {
     event.cancel = true;
-    system.run(() => onUse(event.source, event.itemStack));
+    system.run(() => safely(event.source, () => onUse(event.source, event.itemStack)));
   }
 });
 
@@ -1263,6 +1299,12 @@ world.afterEvents.weatherChange.subscribe(event => {
 world.afterEvents.worldLoad.subscribe(() => {
   try {
     initStore();
+    const time = orderTime();
+    for (const restaurant of restaurants()) {
+      let changed = false;
+      for (const order of restaurant.orders || []) changed = adoptOrderDeadline(order, time) || changed;
+      if (changed) saveRestaurant(restaurant);
+    }
     const rawSettings = world.getDynamicProperty('ordertocook:settings');
     if (typeof rawSettings === 'string') settings = { ...settings, ...JSON.parse(rawSettings) };
     const rawFoods = world.getDynamicProperty('ordertocook:food_overrides');
@@ -1277,7 +1319,7 @@ world.afterEvents.worldLoad.subscribe(() => {
     const rawWeather = world.getDynamicProperty('ordertocook:weather');
     if (typeof rawWeather === 'string') for (const [id, weather] of JSON.parse(rawWeather)) if (!weatherByDimension.has(id)) weatherByDimension.set(id, weather);
     const smoking = createSmokingRecipeRegistry({ hasItem: id => !!ItemTypes.get(id) });
-    const context = { world, system, getStation, saveStation, deleteStation, stations, getRestaurant, restaurants, saveRestaurant, notify, canUseStation, smokingRecipes: smoking.recipes, food: { isFood: stack => !!foodFromStack(stack) }, onCustomerInteract: customerInteract,
+    const context = { world, system, getStation, saveStation, deleteStation, stations, getRestaurant, restaurants, saveRestaurant, notify, canUseStation, smokingRecipes: smoking.recipes, food: { isFood: stack => !!foodFromStack(stack) }, onCustomerInteract: customerInteract, orderTime,
       onCustomerReactionFinished: (restaurantId, orderId) => dining?.finishReaction(restaurantId, orderId) };
     progression = createProgressionService({ getProfile, saveProfile, restaurants, saveRestaurant, saveStation,
       onUnlock: (playerId, definitions) => {
