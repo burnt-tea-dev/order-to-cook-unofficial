@@ -16,7 +16,10 @@ export function playEffects(dimension, cues, VariableMap) {
       else {
         const variables = new VariableMap();
         variables.setFloat("variable.count", cue.count);
-        variables.setVector3("variable.spread", { x: cue.spread[0], y: cue.spread[1], z: cue.spread[2] });
+        // Particle defaults use direct scalars: struct members cannot be ?? operands.
+        variables.setFloat("variable.spread_x", cue.spread[0]);
+        variables.setFloat("variable.spread_y", cue.spread[1]);
+        variables.setFloat("variable.spread_z", cue.spread[2]);
         // Java packets give blocks/tick; Bedrock particle velocity is blocks/s.
         variables.setFloat("variable.speed", cue.speed * 20);
         dimension.spawnParticle(cue.particle, cue.location, variables);

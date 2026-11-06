@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.29-alpha.1
+
+- Fix the shared initialization of nine particle emitters: default direct scalar spread variables instead of putting vector members on the left of `??`, which the client rejects. Pass the same three scalars from the real `MolangVariableMap` caller and update the native smoke fixture. Burst counts, spread values, velocity conversion, timing and artwork are unchanged.
+- Pair BP/RP/modules/dependency at 0.1.29 with preserved UUIDs and append-only payload history. Actual generator-output and caller regressions cover the repaired contract; this source validation does not claim a fresh client ContentLog or FPS result. See [particle repair](docs/validation/0.1.29-alpha.1/PARTICLES.md).
+
 ## 0.1.28-alpha.1
 
 - Deliver the canonical guide-icon and invisible dining-plate fixes under a fresh paired identity. A temporary installation already used RP 0.1.27 with a different geometry payload; 0.1.28 avoids reusing that UUID/version for different bytes. The 027 source history and all gameplay/resource content are preserved; only paired manifests advance.
