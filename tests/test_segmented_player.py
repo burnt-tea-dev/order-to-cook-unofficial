@@ -2,14 +2,17 @@
 # SPDX-License-Identifier: GPL-3.0-only
 """Local prototype checks, using the explicitly supplied pinned Mojang input.
 
-CI fetches that one input into external temporary storage. No native input,
+CI fetches both fixed inputs into external temporary storage. No native input,
 generated player, selector or pose is part of the exported runtime.
 """
 import copy
 import itertools
+import json
 import math
 import os
 from pathlib import Path
+import subprocess
+import sys
 import unittest
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
@@ -28,15 +31,17 @@ def corners(cube):
 class SegmentedPlayerTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.native = converter.read_json(Path(os.environ['OTC_NATIVE_PLAYER_GEOMETRY']))
-        cls.original_bones = cls.native['minecraft:geometry'][0]['bones']
+        cls.classic_input = converter.read_json(Path(os.environ['OTC_NATIVE_PLAYER_GEOMETRY']))
+        cls.slim_input = converter.read_json(Path(os.environ['OTC_NATIVE_SLIM_GEOMETRY']))
+        cls.natives = converter.native_player_variants(cls.classic_input, cls.slim_input)
+        cls.original_bones = {variant: model['minecraft:geometry'][0]['bones'] for variant, model in cls.natives.items()}
         cls.variants = {}
         for variant, filename in [('classic', 'drive_idle'), ('slim', 'drive_idle_alex')]:
             rig = converter.read_json(converter.ASSETS / f'geo/{filename}.geo.json')['minecraft:geometry'][0]['bones']
             cls.variants[variant] = {bone['name']: bone for bone in rig}
 
     def geometry(self, variant):
-        return converter.segmented_player_geometry(self.native, self.variants[variant],
+        return converter.segmented_player_geometry(self.natives[variant], self.variants[variant],
             f'geometry.ordertocook.prototype.segmented_{variant}')
 
     def source_actions(self):
@@ -44,6 +49,34 @@ class SegmentedPlayerTests(unittest.TestCase):
                 ('player', 'player_sit', 4.5, None), ('player', 'player_sit&clap', 3, None)]:
             original = converter.unwrap_vectors(converter.read_json(converter.ASSETS / f'animations/{file}.animation.json')['animations'][name])
             yield name, original, duration, period
+
+    def test_variants_retain_the_two_real_native_definitions_without_inventing_inheritance(self):
+        self.assertEqual(self.natives['classic'], self.classic_input)
+        self.assertEqual(self.original_bones['slim'], self.slim_input['geometry.humanoid.customSlim']['bones'])
+        for variant, shoulder, hand, cape_z in [('classic', 22, 15, 3), ('slim', 21.5, 14.5, -3)]:
+            native = {bone['name']: bone for bone in self.original_bones[variant]}
+            model = {bone['name']: bone for bone in self.geometry(variant)['minecraft:geometry'][0]['bones']}
+            self.assertEqual(native['cape']['pivot'][2], cape_z)
+            for side in ('right', 'left'):
+                self.assertEqual(model[side+'Arm']['pivot'][1], shoulder)
+                self.assertEqual(model[f'ordertocook_{side}_forearm']['pivot'][1], shoulder-4)
+                self.assertEqual(model[side+'Item']['pivot'][1], hand)
+            self.assertEqual(model['rightItem']['locators']['lead_hold'][1], hand)
+
+    def test_native_slim_mirrored_left_leg_keeps_explicit_side_texels_on_both_segments(self):
+        native = {bone['name']: bone for bone in self.original_bones['slim']}
+        self.assertIs(native['leftLeg']['mirror'], True)
+        bones = {bone['name']: bone for bone in self.geometry('slim')['minecraft:geometry'][0]['bones']}
+        # Fixed UV references from the selected native left-leg box [16,48],
+        # with its documented X mirror (including exchanged east/west faces).
+        references = {'north': 24, 'south': 32, 'east': 28, 'west': 20}
+        for name, top_v in [('leftLeg', 52), ('ordertocook_left_shin', 58)]:
+            self.assertNotIn('mirror', bones[name])
+            cube = bones[name]['cubes'][0]
+            for face, u in references.items():
+                self.assertEqual(cube['uv'][face], {'uv': [u, top_v], 'uv_size': [-4, 6]})
+        # Pants are a separate native bone without that skin mirror.
+        self.assertEqual(bones['leftPants']['cubes'][0]['uv']['north'], {'uv': [4,52], 'uv_size': [4,6]})
 
     def test_neutral_native_bounds_seams_and_source_side_texels_are_preserved(self):
         # Source side UVs are an independent reference. Some author cap UVs and
@@ -53,7 +86,7 @@ class SegmentedPlayerTests(unittest.TestCase):
             geometry = self.geometry(variant)['minecraft:geometry'][0]
             self.assertEqual([geometry['description'][key] for key in ('texture_width', 'texture_height')], [64, 64])
             target = {bone['name']: bone for bone in geometry['bones']}
-            native = {bone['name']: bone for bone in self.original_bones}
+            native = {bone['name']: bone for bone in self.original_bones[variant]}
             for side in ('right', 'left'):
                 for limb, overlay, joint, upper, lower in [('Arm', 'Sleeve', 'forearm', 'arm', 'hand'),
                                                          ('Leg', 'Pants', 'shin', 'leg', 'foot')]:
@@ -63,11 +96,6 @@ class SegmentedPlayerTests(unittest.TestCase):
                         before = corners(native[parent]['cubes'][0])
                         expected_min = [min(p[i] for p in before) for i in range(3)]
                         expected_max = [max(p[i] for p in before) for i in range(3)]
-                        if variant == 'slim' and limb == 'Arm':
-                            # Explicit 3px source variant; not an inferred client
-                            # skin or an assertion about native customSlim pivots.
-                            if side == 'right': expected_min[0] += 1
-                            else: expected_max[0] -= 1
                         after = [p for name in (parent, child) for p in corners(target[name]['cubes'][0])]
                         self.assertLess(math.dist([min(p[i] for p in after) for i in range(3)], expected_min), 1e-6)
                         self.assertLess(math.dist([max(p[i] for p in after) for i in range(3)], expected_max), 1e-6)
@@ -77,7 +105,7 @@ class SegmentedPlayerTests(unittest.TestCase):
                         for original_name, new_name in [(upper, parent), (lower, child)]:
                             old = source[side+'_'+original_name]['cubes'][skin_index]
                             new = target[new_name]['cubes'][0]
-                            for face in ('north', 'south', 'east', 'west'):
+                            for face in (() if variant == 'slim' and parent == 'leftLeg' else ('north', 'south', 'east', 'west')):
                                 self.assertEqual(new['uv'][face], old['uv'][face], (variant, new_name, face))
 
     def test_native_box_external_caps_keep_their_original_uv_orientation(self):
@@ -100,8 +128,11 @@ class SegmentedPlayerTests(unittest.TestCase):
                 child = f'ordertocook_{side}_{joint}'
                 if name.endswith('Sleeve'): child += '_sleeve'
                 if name.endswith('Pants'): child += '_pants'
-                self.assertEqual(bones[name]['cubes'][0]['uv']['up'], {'uv': top, 'uv_size': [width, 4]})
-                self.assertEqual(bones[child]['cubes'][0]['uv']['down'], {'uv': bottom, 'uv_size': [width, -4]})
+                mirrored = variant == 'slim' and name == 'leftLeg'
+                expected_top = [top[0]+width, top[1]] if mirrored else top
+                expected_bottom = [bottom[0]+width, bottom[1]] if mirrored else bottom
+                self.assertEqual(bones[name]['cubes'][0]['uv']['up'], {'uv': expected_top, 'uv_size': [-width if mirrored else width, 4]})
+                self.assertEqual(bones[child]['cubes'][0]['uv']['down'], {'uv': expected_bottom, 'uv_size': [-width if mirrored else width, -4]})
 
     def test_original_controls_and_neutral_item_locator_routes_are_preserved(self):
         animation = {'bones': {'root': {'rotation': [0, 23, 0], 'position': [1, 2, 3]},
@@ -111,7 +142,7 @@ class SegmentedPlayerTests(unittest.TestCase):
         for variant in self.variants:
             bones = self.geometry(variant)['minecraft:geometry'][0]['bones']
             lookup = {bone['name']: bone for bone in bones}
-            for original in self.original_bones:
+            for original in self.original_bones[variant]:
                 name = original['name']; current = lookup[name]
                 self.assertEqual(current['pivot'], original['pivot'])
                 if name.endswith('Arm'):
@@ -122,7 +153,7 @@ class SegmentedPlayerTests(unittest.TestCase):
                     self.assertEqual(current, original)
                 points = [original['pivot'], *original.get('locators', {}).values()]
                 for point in points:
-                    expected = posed_point(self.original_bones, animation, 0, name, point)
+                    expected = posed_point(self.original_bones[variant], animation, 0, name, point)
                     actual = posed_point(bones, animation, 0, name, point)
                     self.assertLess(math.dist(actual, expected), 1e-6, (variant, name))
                 if name.endswith('Item'):
@@ -145,9 +176,10 @@ class SegmentedPlayerTests(unittest.TestCase):
                                   (side+'_leg', side+'Pants'), (side+'_foot', f'ordertocook_{side}_shin_pants')])
                 for seconds in times:
                     for old, new in pairs:
-                        offset = (source[old]['pivot'][0]-target[new]['pivot'][0]) if old.endswith(('_leg', '_foot')) else 0
+                        offset = ([-.1 if old.startswith('right') else .1, 0, 0] if old.endswith(('_leg', '_foot'))
+                                  else [0, .5 if variant == 'slim' and old.endswith(('_arm', '_hand')) else 0, 0])
                         for vertex in corners(target[new]['cubes'][0]):
-                            point = [vertex[0]+offset, vertex[1], vertex[2]]
+                            point = [a+b for a,b in zip(vertex, offset)]
                             expected = posed_point(list(source.values()), original, seconds % period if period else seconds, old, point)
                             actual = posed_point(bones, clip, seconds, new, vertex)
                             self.assertLess(math.dist(actual, expected), .02, (variant, action, seconds, old, vertex, expected, actual))
@@ -172,7 +204,8 @@ class SegmentedPlayerTests(unittest.TestCase):
                 self.assertGreater(math.dist(a,b), 1, (variant, name))
             item = lookup['rightItem']
             for point in [item['pivot'], *item.get('locators', {}).values()]:
-                expected = posed_point(list(source.values()), changed, .5, 'right_hand', point)
+                source_point = [point[0], point[1]+(.5 if variant == 'slim' else 0), point[2]]
+                expected = posed_point(list(source.values()), changed, .5, 'right_hand', source_point)
                 actual = posed_point(bones, bent, .5, 'rightItem', point)
                 self.assertLess(math.dist(expected, actual), .002)
                 self.assertGreater(math.dist(actual, posed_point(bones, base, .5, 'rightItem', point)), .1)
@@ -195,7 +228,8 @@ class SegmentedPlayerTests(unittest.TestCase):
                                          (side+'_hand', f'ordertocook_{side}_forearm'),
                                          (side+'_hand', f'ordertocook_{side}_forearm_sleeve')]:
                             for point in corners(lookup[new]['cubes'][0]):
-                                expected = posed_point(list(source.values()), original, time % period if period else time, old, point)
+                                source_point = [point[0], point[1]+(.5 if variant == 'slim' else 0), point[2]]
+                                expected = posed_point(list(source.values()), original, time % period if period else time, old, source_point)
                                 expected = converter.geometry_transform3(expected, views[side]['rotation'])
                                 expected = [a+b for a,b in zip(expected, views[side]['position'])]
                                 actual = posed_point(bones, clip, time, new, point)
@@ -221,13 +255,14 @@ class SegmentedPlayerTests(unittest.TestCase):
                                              posed_point(bones, bent, .5, name, point)), .1, name)
             item = lookup['rightItem']
             for point in [item['pivot'], *item.get('locators', {}).values()]:
-                expected = posed_point(list(source.values()), changed, .5, 'right_hand', point)
+                source_point = [point[0], point[1]+(.5 if variant == 'slim' else 0), point[2]]
+                expected = posed_point(list(source.values()), changed, .5, 'right_hand', source_point)
                 expected = converter.geometry_transform3(expected, views['right']['rotation'])
                 expected = [a+b for a,b in zip(expected, views['right']['position'])]
                 self.assertLess(math.dist(posed_point(bones, bent, .5, 'rightItem', point), expected), .002)
 
     def test_prototype_does_not_mutate_native_or_author_inputs(self):
-        native = copy.deepcopy(self.native)
+        native = copy.deepcopy(self.natives)
         for variant, source in self.variants.items():
             before = copy.deepcopy(source)
             geometry = self.geometry(variant)
@@ -236,14 +271,14 @@ class SegmentedPlayerTests(unittest.TestCase):
                 converter.segmented_player_action_pose(action, source, geometry, duration, period)
                 self.assertEqual(action, original)
             self.assertEqual(source, before)
-        self.assertEqual(self.native, native)
+        self.assertEqual(self.natives, native)
 
     def test_source_generator_writes_linked_poses_visibility_and_complete_new_bone_reset(self):
         views = {side: {'rotation': [0, 0, 0], 'position': [0, 0, 0]} for side in ('right', 'left')}
         before = copy.deepcopy(views)
         with TemporaryDirectory() as temp, patch.object(converter, 'SOURCE', ROOT / 'upstream/reference', create=True):
             output = Path(temp)
-            converter.make_segmented_player_source(self.native, views, output)
+            converter.make_segmented_player_source(self.natives, views, output)
             contract = converter.read_json(output / 'player-rig-source.json')
             for variant, references in contract['variants'].items():
                 model = converter.read_json(output / references['geometry'])['minecraft:geometry'][0]
@@ -251,7 +286,7 @@ class SegmentedPlayerTests(unittest.TestCase):
                 names = {bone['name'] for bone in model['bones']}
                 for clip in poses.values():
                     self.assertTrue(set(clip['bones']) <= names)
-                additions = names - {bone['name'] for bone in self.original_bones}
+                additions = names - {bone['name'] for bone in self.original_bones[variant]}
                 reset = poses[f'animation.ordertocook.prototype.{variant}.reset']['bones']
                 self.assertEqual(set(reset), additions)
                 for channels in reset.values():
@@ -260,6 +295,10 @@ class SegmentedPlayerTests(unittest.TestCase):
                     self.assertIn(child, names)
                     self.assertIn(parent, names)
                 self.assertIn(f'animation.ordertocook.prototype.{variant}.handwash.first_person', poses)
+                self.assertEqual(references['native_geometry'], 'geometry.humanoid.custom' + ('Slim' if variant == 'slim' else ''))
+                self.assertEqual(references['native_inheritance'], [])
+                for side in ('right', 'left'):
+                    self.assertEqual(references['source_frame_offsets'][side+'Arm'], [0, .5 if variant == 'slim' else 0, 0])
             self.assertEqual(contract['status'], 'prototype_no_selector')
         self.assertEqual(views, before)
 
@@ -269,8 +308,29 @@ class SegmentedPlayerTests(unittest.TestCase):
             views = {side: {'rotation': [0, 0, 0], 'position': [0, 0, 0]} for side in ('right', 'left')}
             views['left']['position'][2] = float('nan')
             with self.assertRaisesRegex(ValueError, 'finite three-number'):
-                converter.make_segmented_player_source(self.native, views, output)
+                converter.make_segmented_player_source(self.natives, views, output)
             self.assertEqual(list(output.iterdir()), [])
+
+    def test_cli_requires_and_uses_the_separate_external_slim_input(self):
+        with TemporaryDirectory() as temp:
+            directory = Path(temp)
+            frames = directory / 'frames.json'
+            frames.write_text(json.dumps({side: {'rotation': [0]*3, 'position': [0]*3} for side in ('right', 'left')}))
+            output = directory / 'source'
+            command = [sys.executable, str(ROOT / 'tools/convert_assets.py'),
+                '--segmented-player-native', os.environ['OTC_NATIVE_PLAYER_GEOMETRY'],
+                '--segmented-camera-frames', str(frames), '--output', str(output)]
+            missing = subprocess.run(command, capture_output=True, text=True)
+            self.assertEqual(missing.returncode, 2)
+            self.assertIn('separate native classic/slim', missing.stderr)
+            self.assertFalse(output.exists())
+            complete = subprocess.run([*command, '--segmented-player-slim', os.environ['OTC_NATIVE_SLIM_GEOMETRY']],
+                                      capture_output=True, text=True)
+            self.assertEqual(complete.returncode, 0, complete.stderr)
+            slim = converter.read_json(output / 'slim.geometry.json')['minecraft:geometry'][0]
+            bones = {bone['name']: bone for bone in slim['bones']}
+            self.assertEqual(bones['rightArm']['pivot'], [-5, 21.5, 0])
+            self.assertEqual(bones['rightItem']['locators']['lead_hold'], [-6, 14.5, 1])
 
 
 if __name__ == '__main__':
