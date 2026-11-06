@@ -598,6 +598,143 @@ def player_limb_pose(original, rig, side, limb, seconds):
     return fitted, anchor, length/12
 
 
+def player_action_times(original, duration, period=None):
+    """Keep source knots alongside tick samples, including non-looping ends."""
+    times = {tick/20 for tick in range(round(duration*20)+1)}
+    cycles = range(math.ceil(duration/period)+1) if period else (0,)
+    for channels in original['bones'].values():
+        for channel in channels.values():
+            if isinstance(channel, dict):
+                for time in map(float, channel):
+                    for cycle in cycles:
+                        point = time + cycle*(period or 0)
+                        if 0 <= point <= duration:
+                            times.add(point)
+    return sorted(times)
+
+
+def _split_native_limb_cube(cube, height):
+    """Cut a selected native box without changing its exterior texel mapping."""
+    x, y, z = cube['size']
+    u, v = cube['uv']
+    faces = {
+        'east': {'uv': [u, v+z], 'uv_size': [z, y]},
+        'north': {'uv': [u+z, v+z], 'uv_size': [x, y]},
+        'west': {'uv': [u+z+x, v+z], 'uv_size': [z, y]},
+        'south': {'uv': [u+2*z+x, v+z], 'uv_size': [x, y]},
+        'up': {'uv': [u+z, v], 'uv_size': [x, z]},
+        'down': {'uv': [u+z+x, v+z], 'uv_size': [x, -z]}}
+    # Splitting two inflated cubes would overlap at the seam and stretch each
+    # half's texels. Bake inflation first, then crop the physical exterior.
+    inflated = copy.deepcopy(cube)
+    inflate = inflated.pop('inflate', 0)
+    inflated['origin'] = [value-inflate for value in cube['origin']]
+    inflated['size'] = [value+2*inflate for value in cube['size']]
+    bottom = inflated['origin'][1]
+    top = bottom + inflated['size'][1]
+    halves = []
+    for low, high in ((height, top), (bottom, height)):
+        half = copy.deepcopy(inflated)
+        half['origin'][1] = low
+        half['size'][1] = high-low
+        half['uv'] = {face: uv_crop_y(uv, top, bottom, high, low)
+                      if face not in ('up', 'down') else copy.deepcopy(uv)
+                      for face, uv in faces.items()}
+        halves.append(half)
+    return halves
+
+
+def segmented_player_geometry(native, source_rig, identifier):
+    """Local prototype only: native controls with independent elbows/knees.
+
+    The caller explicitly selects the author's classic or slim source rig.
+    This neither detects a client skin nor claims the native slim skeleton.
+    No runtime exporter calls this function until the shared selector exists.
+    """
+    result = copy.deepcopy(native)
+    entry = result['minecraft:geometry'][0]
+    entry['description'].update(identifier=identifier, texture_width=64, texture_height=64)
+    bones = {bone['name']: bone for bone in entry['bones']}
+    additions = []
+    for side in ('right', 'left'):
+        for limb, overlay, joint, height in (('Arm', 'Sleeve', 'forearm', 18), ('Leg', 'Pants', 'shin', 6)):
+            lower = f'ordertocook_{side}_{joint}'
+            # Arm bends use the actual source elbow, including slim's offset
+            # from its mesh center. Leg bends keep the native +/-1.9 mesh axis.
+            pivot = (source_rig[side+'_hand']['pivot'] if limb == 'Arm'
+                     else [bones[side+'Leg']['pivot'][0], height, 0])
+            for name, target in ((side+limb, lower), (side+overlay, lower+'_'+overlay.lower())):
+                bone = bones[name]
+                if limb == 'Arm':
+                    for cube in bone['cubes']:
+                        cube['origin'][0] = source_rig[side+'_arm']['cubes'][0]['origin'][0]
+                        cube['size'][0] = source_rig[side+'_arm']['cubes'][0]['size'][0]
+                halves = [_split_native_limb_cube(cube, height) for cube in bone['cubes']]
+                bone['cubes'] = [pair[0] for pair in halves]
+                additions.append({'name': target, 'parent': name, 'pivot': list(pivot),
+                                  'cubes': [pair[1] for pair in halves]})
+            if limb == 'Arm':
+                # Keep the original Item name/pivot/locators and default route;
+                # a new neutral parent is inert until its own elbow bends.
+                bones[side+'Item']['parent'] = lower
+    entry['bones'].extend(additions)
+    return rounded(result)
+
+
+def _player_bone_below_torso(channels, pivot, native_pivot, torso, torso_pivot, seconds):
+    """Retarget a source body sibling under the native torso (selected clips)."""
+    rotation = sample_channel(channels.get('rotation'), seconds, [0]*3)
+    position = sample_channel(channels.get('position'), seconds, [0]*3)
+    torso_position = sample_channel(torso.get('position'), seconds, [0]*3)
+    inverse_torso = [-v for v in sample_channel(torso.get('rotation'), seconds, [0]*3)]
+    # The selected source torso is a fixed X rotation or identity. Its inverse
+    # is exact here; this is not a general inverse-Euler implementation.
+    axes = [geometry_transform3(geometry_transform3([int(i == j) for i in range(3)], rotation), inverse_torso) for j in range(3)]
+    angles, _ = closest_cuboid_axes([[axes[j][i] for j in range(3)] for i in range(3)])
+    anchor = [a+b-c for a,b,c in zip(geometry_transform3(native_pivot, rotation, pivot), position, torso_position)]
+    anchor = geometry_transform3(anchor, inverse_torso, torso_pivot)
+    return angles, [a-b for a,b in zip(anchor, native_pivot)]
+
+
+def segmented_player_action_pose(original, source_rig, native, duration, period=None):
+    """Prototype model-local matrices; no camera calibration or selector."""
+    native_rig = {bone['name']: bone for bone in native['minecraft:geometry'][0]['bones']}
+    source = original['bones']
+    scale = sample_channel(source.get('body', {}).get('scale'), 0, [1]*3)
+    position = sample_channel(source.get('body', {}).get('position'), 0, [0]*3)
+    torso = source.get('torso', {})
+    bones = {'root': {'scale': scale, 'position': [a+p*(1-s) for a,p,s in zip(position, source_rig['body']['pivot'], scale)]},
+             'waist': {'rotation': [0]*3}, 'body': copy.deepcopy(torso)}
+    targets = [('head', 'head')]
+    for side in ('right', 'left'):
+        targets.append((side+'_arm', side+'Arm'))
+    for old, new in targets:
+        channels = {'rotation': {}, 'position': {}, 'scale': [1]*3}
+        for time in player_action_times(original, duration, period):
+            seconds = time % period if period else time
+            angles, offset = _player_bone_below_torso(source.get(old, {}), source_rig[old]['pivot'],
+                native_rig[new]['pivot'], torso, source_rig['torso']['pivot'], seconds)
+            channels['rotation'][f'{time:g}'] = angles
+            channels['position'][f'{time:g}'] = offset
+        bones[new] = channels
+    for side in ('right', 'left'):
+        # Move the native leg's whole coordinate frame by 0.1px, keeping both
+        # segments' matrices rather than fitting one rigid hip-to-foot chord.
+        delta = [a-b for a,b in zip(source_rig[side+'_leg']['pivot'], native_rig[side+'Leg']['pivot'])]
+        leg = copy.deepcopy(source.get(side+'_leg', {}))
+        leg['position'] = {f'{time:g}': [a+b for a,b in zip(
+            sample_channel(source.get(side+'_leg', {}).get('position'), time % period if period else time, [0]*3), delta)]
+            for time in player_action_times(original, duration, period)}
+        leg['scale'] = [1]*3
+        bones[side+'Leg'] = leg
+        for joint, suffix, lower in (('forearm', 'sleeve', 'hand'), ('shin', 'pants', 'foot')):
+            name = f'ordertocook_{side}_{joint}'
+            channels = copy.deepcopy(source.get(side+'_'+lower, {}))
+            bones[name] = channels
+            bones[name+'_'+suffix] = copy.deepcopy(channels)
+    return rounded(bones)
+
+
 def player_action_pose(original, rig, duration, period=None):
     """Retarget the selected source clips into native TP and camera rigs."""
     torso = original['bones'].get('torso', {'rotation': [0]*3, 'position': [0]*3})
@@ -630,19 +767,9 @@ def player_action_pose(original, rig, duration, period=None):
             vector = geometry_transform3(vector, undo)
         return geometry_transform3(vector, fp_bases[side][0])
 
-    times = {tick/20 for tick in range(round(duration*20)+1)}
-    cycles = range(math.ceil(duration/period)+1) if period else (0,)
     # Clap's source knots are not all tick-aligned. Preserve the knots as well
     # as tick samples, including the distinct final (non-looping) foot pose.
-    for channels in original['bones'].values():
-        for channel in channels.values():
-            if isinstance(channel, dict):
-                for time in map(float, channel):
-                    for cycle in cycles:
-                        point = time + cycle*(period or 0)
-                        if 0 <= point <= duration:
-                            times.add(point)
-    for time in sorted(times):
+    for time in player_action_times(original, duration, period):
         seconds = time % period if period else time
         key = f'{time:g}'
         head = sample_channel(original['bones'].get('head', {}).get('rotation'), seconds, [0]*3)
