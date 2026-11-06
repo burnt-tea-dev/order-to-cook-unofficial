@@ -173,7 +173,7 @@ Java 這兩種方塊的 blockstate 是空模型，由完整 Geo renderer 顯示�
 | 4 至不足 5 秒 | 第 3 階段 | 4 × v + 3 |
 | 5 秒起，直到收盤 | 第 4 階段，髒盤 | 4 × v + 4 |
 
-Java stage 0 的 blockstate 為空，實際由 `FoodPlatePlacedRenderer` 顯示食物。本版在空模型方塊上沿用原 `ordertocook:dining_plate` helper、32×32材質與0.5秒 `maked`，按 `placement_age` 恢復；stage 1–40由方塊直接顯示原模型及256×256原像素atlas，移除舊helper。原實體ID與屬性保留以讀取舊世界，已不用實體命中／互動元件收盤。
+Java stage 0 的 blockstate 為空，實際由 `FoodPlatePlacedRenderer` 顯示食物。本版stage 0沿用原 `ordertocook:dining_plate` helper、32×32材質與0.5秒 `maked`，按 `placement_age` 恢復；stage 1–40由方塊直接顯示原模型及256×256原像素atlas，移除舊helper。027把零cube的方塊空模型改成unit內有合法邊界的mesh，透過原生geometry bone_visibility隱藏，仍只讓helper顯示stage 0；可見階段與未用編碼值的範圍、客戶端限制見 [027來源驗證](validation/0.1.27-alpha.1/CLIENT_ASSETS.md)。原實體ID與屬性保留以讀取舊世界，已不用實體命中／互動元件收盤。
 
 碰撞保留 `FoodPlateBlock.SHAPE` 的兩部分：底盤14×2×14像素、中央10×3×10像素（中央頂部高5像素）。26.60原生collision array承載兩層；選取框元件只用一個外接長方體14×5×14，因此角落的游標框不是Java的聯集形狀。原作沒有重力，本版亦不因下方桌面拆掉而下墜。用餐餐盤仍由餐廳記錄核准一次新髒盤，沒有新增可領取的helper庫存；未交付展示成品的完整ItemStack已由025原生庫存保存，分界見 [PARITY](PARITY.md#未交付的展示餐點)。客戶端畫面、UV朝向及硬體輸入仍不由服務端探針推定。
 

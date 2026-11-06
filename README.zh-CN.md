@@ -17,7 +17,7 @@
 
 本地测试请使用可丢弃世界，同时启用对应行为包和资源包。声明的最低目标为 **Bedrock 26.60（manifest：1.26.60）**，依赖稳定版 `@minecraft/server 2.11.0` 和 `@minecraft/server-ui 2.0.0`。**必须开启 Upcoming Creator Features**，供冰箱使用原生方块容器；不要求 Beta APIs 或 POI 实验功能。版本依据见 [容器能力核对](docs/NATIVE-CONTAINERS.md)。这并不意味着所有版本／设备都已实测。首次加入会获得指南，也可在工作台合成指南及基础设备。
 
-**指南书（尚未发布的源码改进）：** Order To Cook 保留自己的 `ordertocook:guide`，不是 Cookery 的章节，也无需安装 Cookery 才能使用。其组织方式参考 Cookery 三级分类，包含 6 大章、13 个主题组与 26 篇教程，支持图标、前一页／后一页、返回目录及繁中／简中／英文。物品与合成配方不变。基岩版仍使用原生表单，**没有复制 Cookery 的书本外观**。详见[独立指南结构](docs/GUIDEBOOK.md)；真实客户端界面尚未完成验收。
+**指南书：** Order To Cook 保留自己的 `ordertocook:guide`，不是 Cookery 的章节，也无需安装 Cookery 才能使用。其组织方式参考 Cookery 三级分类，包含 6 大章、13 个主题组与 26 篇教程，支持图标、前一页／后一页、返回目录及繁中／简中／英文。物品与合成配方不变。基岩版仍使用原生表单，**没有复制 Cookery 的书本外观**。图标来源与目前客户端观察范围见[独立指南结构](docs/GUIDEBOOK.md)。
 
 原作者补充确认不再是全面发布门槛，但原署名、GPL、对应源代码、来源哈希和实际品质检查仍须保留。依据见[素材登记](docs/ASSET_LICENSE_REGISTER.md)、[第三方声明](THIRD_PARTY_NOTICES.md)和[发布检查](docs/RELEASE_COMPLIANCE.md)。本项目未获原作者或 Mojang／Microsoft 背书。
 

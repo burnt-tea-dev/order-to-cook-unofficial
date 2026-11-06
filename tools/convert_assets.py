@@ -1127,6 +1127,12 @@ def render_item_icon(model_name, dest):
     record(model_path(model_name), dest, "Orthographic thumbnail rendered from original model and texture pixels")
 
 
+def make_guide_icons():
+    """Forms need a rendered item view, not the model's unfolded UV atlas."""
+    for name in ('countertop', 'refrigerator', 'stove'):
+        render_item_icon(f'{NS}:block/{name}', RP / 'textures/guide' / (name+'.png'))
+
+
 def make_customer_names():
     """NpcNames.java trims and deduplicates each locale in insertion order."""
     destination = BP / "scripts/customer_names.js"
@@ -1346,8 +1352,11 @@ def make_dining_plate():
     # FoodPlateBlock.SHAPE: the rim and raised food are separate colliders.
     # The existing visual actor is needed only for the stage-zero maked clip.
     empty = f"geometry.{NS}.dining_plate_empty"
+    # A zero-cube model has no finite mesh bounds in the client block loader.
+    # Keep a legal in-unit mesh and hide its bone through the native component.
     write_json(RP / "models/blocks/dining_plate_empty.geo.json",
-               geometry(empty, [{"name": "root", "pivot": [0, 0, 0], "cubes": []}]))
+               geometry(empty, [{"name": "root", "pivot": [0, 0, 0],
+                                  "cubes": [{"origin": [-.5, 0, -.5], "size": [1, 1, 1], "uv": [0, 0]}]}]))
     variants = [{"condition": f"q.block_state('{NS}:stage') == {stage}",
                  "components": {"minecraft:geometry": f"geometry.{NS}.dining_plate_{stage}",
                                 **({"minecraft:tick": {"interval_range": [1, 1], "looping": False}} if stage % 4 == 0 else {})}}
@@ -1363,6 +1372,7 @@ def make_dining_plate():
     definition = read_json(path)
     definition['format_version'] = NATIVE_CONTAINER_VERSION
     component = definition['minecraft:block']['components']
+    component['minecraft:geometry'] = {'identifier': empty, 'bone_visibility': {'root': False}}
     component[f'{NS}:meal_tick'] = {}
     component['minecraft:tick'] = {'interval_range': [1, 1], 'looping': True}
     component['minecraft:destructible_by_mining'] = {'seconds_to_destroy': 0.1}
@@ -1766,6 +1776,7 @@ def main():
     make_blocks()
     make_customer_names()
     make_items()
+    make_guide_icons()
     make_helmet_attachable()
     make_entities(animations)
     make_dining_plate()

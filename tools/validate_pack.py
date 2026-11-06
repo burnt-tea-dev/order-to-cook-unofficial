@@ -126,6 +126,9 @@ for path, obj in documents.items():
             if geo:
                 geo_id = geo if isinstance(geo, str) else geo.get('identifier')
                 check(geo_id in geometries, f'{ident}: missing geometry {geo_id}')
+                if kind == 'minecraft:block' and geo_id in geometries:
+                    check(any(bone.get('cubes') for bone in geometries[geo_id].get('bones', [])),
+                          f'{ident}: block geometry {geo_id} has no cubes and no finite mesh bounds')
             for material in components.get('minecraft:material_instances', {}).values():
                 check(material.get('texture') in terrain, f'{ident}: unknown material texture {material.get("texture")}')
             loot = components.get('minecraft:loot')

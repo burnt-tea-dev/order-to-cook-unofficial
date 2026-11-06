@@ -48,6 +48,11 @@ test-kit flows, with the same admin check as before.
   using the existing shared busy-form handling and supported icon-path API.
 - No global UI JSON override, extra pack, player model, experimental API,
   or dependency on Cookery is needed.
+- Plate and helmet buttons use their rendered inventory thumbnails. Equipment
+  thumbnails come from the original models through `make_guide_icons`; unfolded
+  model UV atlases are not button artwork. The reported screenshot failure,
+  source correction and current validation scope are recorded in
+  [0.1.27 client assets](validation/0.1.27-alpha.1/CLIENT_ASSETS.md).
 - The Book GUI is **not visually pixel-identical** to the author's own
   renderer. A custom skinned book would be a separate visual effort, with
   dedicated Windows, touch, controller and other-client acceptance.
@@ -70,8 +75,7 @@ existing item/recipe identity. The main harness exercises a complete
 cover→chapter→topic→lesson→next→previous→back→home navigation path.
 Run `npm run verify` before merging.
 
-Native client validation remains **NOT RUN** until a fresh versioned
-candidate is used. Check mobile/Windows fonts, bilingual line breaks,
-icon visibility, touch/controller form navigation, parent/next/previous
-continuity, permission changes and close/reopen behavior. Do not relabel
-historical client test results as evidence for this source change.
+The user's 2026-11-06 client screenshot exposed the incorrect atlas icons.
+The corrected source assets and navigation checks are verified; a fresh client
+view of the fix has not been observed. This is not a claim of complete
+font, touch/controller or cross-device validation, or a new acceptance gate.

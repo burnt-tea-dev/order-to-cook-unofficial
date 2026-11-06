@@ -6,14 +6,14 @@ const I = Object.freeze({
   order: 'textures/ordertocook/item/order',
   money: 'textures/ordertocook/item/chef_coin_100',
   upgrade: 'textures/ordertocook/item/otc_upgrade_box',
-  food: 'textures/ordertocook/item/food_plate',
-  clean: 'textures/ordertocook/item/clean_plate',
+  food: 'textures/items/food_plate',
+  clean: 'textures/items/clean_plate',
   bag: 'textures/items/takeout_bag',
   bike: 'textures/items/motorcycle',
-  helmet: 'textures/ordertocook/item/delivery_helmet',
-  fridge: 'textures/ordertocook/block/refrigerator',
-  stove: 'textures/ordertocook/block/stove',
-  counter: 'textures/ordertocook/block/countertop64'
+  helmet: 'textures/items/helmet',
+  fridge: 'textures/guide/refrigerator',
+  stove: 'textures/guide/stove',
+  counter: 'textures/guide/countertop'
 });
 
 export const GUIDE_CHAPTERS = Object.freeze([

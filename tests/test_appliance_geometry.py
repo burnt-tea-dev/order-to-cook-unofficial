@@ -10,6 +10,7 @@ import re
 from pathlib import Path
 import unittest
 from tempfile import TemporaryDirectory
+from types import SimpleNamespace
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -49,6 +50,43 @@ class ApplianceGeometryTests(unittest.TestCase):
     def setUp(self):
         self.source = converter.normalize_geo(converter.ASSETS / "geo/block/refrigerator.geo.json", "geometry.source")
         self.clips = converter.read_json(converter.ASSETS / "animations/refrigerator.animation.json")["animations"]
+
+    def test_dining_plate_all_encoded_states_have_bounded_meshes_and_only_visible_food_stages(self):
+        with TemporaryDirectory() as temp:
+            output = Path(temp)
+            with patch.multiple(converter, create=True, SOURCE=ROOT / 'upstream/reference', OUT=output,
+                                BP=output/'BP', RP=output/'RP', PROVENANCE=[], GEOMETRY_SOURCES={}):
+                converter.make_dining_plate()
+            block = converter.read_json(output/'BP/blocks/dining_plate_block.json')['minecraft:block']
+            geometries = {entry['description']['identifier']: entry
+                          for name in ('blocks/dining_plate_empty', 'entity/dining_plate')
+                          for entry in converter.read_json(output/f'RP/models/{name}.geo.json')['minecraft:geometry']}
+        # Bedrock compiles all 16x3 encoded values, including 41..47. Execute
+        # the emitted constant-state predicate subset, not a second stage map.
+        states = block['description']['states']
+        for low, high, direction in itertools.product(states['ordertocook:stage'], states['ordertocook:stage_high'],
+                                                     ('north','south','east','west')):
+            values={'ordertocook:stage':low,'ordertocook:stage_high':high,'minecraft:cardinal_direction':direction}
+            query=SimpleNamespace(block_state=values.__getitem__)
+            components=copy.deepcopy(block['components'])
+            for row in block['permutations']:
+                if eval(row['condition'], {'__builtins__': {}}, {'q': query}):
+                    components.update(row['components'])
+            reference=components['minecraft:geometry']
+            identifier=reference if isinstance(reference,str) else reference['identifier']
+            geometry=geometries[identifier]
+            self.assertTrue(any(b.get('cubes') for b in geometry['bones']), 'empty block geometry has no finite mesh bounds')
+            stage=low+16*high
+            if stage == 0 or stage > 40:
+                self.assertEqual(reference['bone_visibility'], {'root': False})
+            else:
+                self.assertEqual(identifier, f'geometry.ordertocook.dining_plate_{stage}')
+            rotation=components['minecraft:transformation']['rotation']
+            bounds=converter.geometry_bounds({'minecraft:geometry':[geometry]})
+            for point in itertools.product(*zip(*bounds)):
+                x,y,z=converter.geometry_transform3(point,rotation)
+                self.assertTrue(-8-1e-6<=x<=8+1e-6 and -8-1e-6<=z<=8+1e-6 and 0<=y<=16,
+                                (stage,direction,identifier,(x,y,z)))
 
     def test_native_block_factory_converts_legacy_material_occlusion_in_base_and_permutations(self):
         materials = {"*": {"texture": "test", "render_method": "alpha_test", "ambient_occlusion": False}}

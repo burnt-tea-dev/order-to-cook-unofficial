@@ -42,7 +42,12 @@
       }
     },
     "components": {
-      "minecraft:geometry": "geometry.ordertocook.dining_plate_empty",
+      "minecraft:geometry": {
+        "identifier": "geometry.ordertocook.dining_plate_empty",
+        "bone_visibility": {
+          "root": false
+        }
+      },
       "minecraft:material_instances": {
         "*": {
           "texture": "ordertocook_dining_plate",
