@@ -54,6 +54,29 @@ class ApplianceGeometryTests(unittest.TestCase):
         self.source = converter.normalize_geo(converter.ASSETS / "geo/block/refrigerator.geo.json", "geometry.source")
         self.clips = converter.read_json(converter.ASSETS / "animations/refrigerator.animation.json")["animations"]
 
+    def test_feedback_factory_emits_scalar_defaults_and_matches_shipped_particles(self):
+        defaults = ("variable.count = variable.count ?? 1; "
+                    "variable.spread_x = variable.spread_x ?? 0; "
+                    "variable.spread_y = variable.spread_y ?? 0; "
+                    "variable.spread_z = variable.spread_z ?? 0; "
+                    "variable.speed = variable.speed ?? 0;")
+        with TemporaryDirectory() as temp:
+            output = Path(temp)
+            with patch.object(converter, 'RP', output, create=True):
+                converter.make_feedback_particles()
+            for path in sorted((output / 'particles').glob('*.json')):
+                with self.subTest(particle=path.name):
+                    generated = converter.read_json(path)
+                    self.assertEqual(generated, converter.read_json(ROOT / 'runtime/RP/particles' / path.name))
+                    components = generated['particle_effect']['components']
+                    if path.stem == 'explosion':
+                        continue  # This fixed emitter has no caller-provided spread or defaults.
+                    # The client rejects a struct member on the left of ??.
+                    # Assert the actual factory output, not extracted Python source.
+                    self.assertEqual(components['minecraft:emitter_initialization']['creation_expression'], defaults)
+                    for axis, expression in zip('xyz', components['minecraft:emitter_shape_point']['offset']):
+                        self.assertTrue(expression.startswith(f'variable.spread_{axis} * '), expression)
+
     def test_resource_checker_rejects_the_observed_zero_size_block_cube(self):
         target = ROOT / 'runtime/RP/models/blocks/dining_plate_empty.geo.json'
         broken = converter.read_json(target)

@@ -83,7 +83,7 @@ test('sixteen-plate dishwasher repeats original wash sound and emits white spark
   assert.deepEqual(sparks.map(e => [e.tick, amount(e)]), [[14, 10], [30, 12], [40, 4], [50, 4], [60, 4], [70, 12], [80, 4], [90, 4], [100, 4], [110, 4], [110, 12]]);
   const cloud = emissions.find(e => e.id === 'ordertocook:cloud');
   assert.equal(amount(cloud), 18); assert.deepEqual(cloud.location, { x: 1.06, y: 0.62, z: 0.5 });
-  assert.deepEqual(cloud.variables.vectors['variable.spread'], { x: 0.18, y: 0.15, z: 0.18 });
+  assert.deepEqual(['x', 'y', 'z'].map(axis => cloud.variables.floats[`variable.spread_${axis}`]), [0.18, 0.15, 0.18]);
   assert.equal(cloud.variables.floats['variable.speed'], 0.5);
   const poof = emissions.find(e => e.id === 'ordertocook:poof');
   assert.equal(amount(poof), 8); assert.equal(poof.location.y, 0.67);

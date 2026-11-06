@@ -106,7 +106,7 @@ async function run(mode) {
   visualCustomer.remove();
   const variables = new MolangVariableMap();
   variables.setFloat('variable.count', 2); variables.setFloat('variable.speed', 0.3);
-  variables.setVector3('variable.spread', { x: 0.1, y: 0.1, z: 0.1 });
+  for (const axis of ['x', 'y', 'z']) variables.setFloat('variable.spread_' + axis, 0.1);
   let particleCalls = 0;
   for (const id of ['sparkle', 'cloud', 'poof', 'happy', 'portal', 'bubble_pop', 'splash', 'smoke', 'large_smoke', 'explosion']) {
     try { dim.spawnParticle('ordertocook:' + id, { x: 14.5, y: 5, z: 12.5 }, variables); particleCalls++; }

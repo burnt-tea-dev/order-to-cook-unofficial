@@ -1615,13 +1615,15 @@ def make_feedback_particles():
         "bubble_pop": {"uv":{"texture_width":128,"texture_height":128,"uv":[0,16],"uv_size":[8,8]},"size":"0.06 * (1 - variable.particle_age / variable.particle_lifetime)","life":0.2,"color":[1,1,1,1],"gravity":0},
         "splash": {"uv":{"texture_width":128,"texture_height":128,"uv":["24 + math.floor(variable.particle_random_1 * 4) * 8",8],"uv_size":[8,8]},"size":0.1,"life":"math.random(0.2, 0.5)","color":[1,1,1,1],"gravity":-4},
     }
-    defaults = "variable.count = variable.count ?? 1; variable.spread.x = variable.spread.x ?? 0; variable.spread.y = variable.spread.y ?? 0; variable.spread.z = variable.spread.z ?? 0; variable.speed = variable.speed ?? 0;"
+    # The client only accepts direct variables on the left of ??. Keep this
+    # scalar contract in sync with audiovisual.playEffects' MolangVariableMap.
+    defaults = "variable.count = variable.count ?? 1; variable.spread_x = variable.spread_x ?? 0; variable.spread_y = variable.spread_y ?? 0; variable.spread_z = variable.spread_z ?? 0; variable.speed = variable.speed ?? 0;"
     for name, spec in specs.items():
         components = {
             "minecraft:emitter_initialization":{"creation_expression":defaults},
             "minecraft:emitter_lifetime_once":{"active_time":0.05},
             "minecraft:emitter_rate_instant":{"num_particles":"variable.count"},
-            "minecraft:emitter_shape_point":{"offset":[f"variable.spread.{axis} * {gaussian}" for axis in "xyz"]},
+            "minecraft:emitter_shape_point":{"offset":[f"variable.spread_{axis} * {gaussian}" for axis in "xyz"]},
             "minecraft:particle_initial_speed":[f"variable.speed * {gaussian}" for _ in range(3)],
             "minecraft:particle_lifetime_expression":{"max_lifetime":spec["life"]},
             "minecraft:particle_motion_dynamic":{"linear_acceleration":[0,spec["gravity"],0],"linear_drag_coefficient":0.49},

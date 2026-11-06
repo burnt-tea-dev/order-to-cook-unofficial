@@ -10,7 +10,7 @@
     },
     "components": {
       "minecraft:emitter_initialization": {
-        "creation_expression": "variable.count = variable.count ?? 1; variable.spread.x = variable.spread.x ?? 0; variable.spread.y = variable.spread.y ?? 0; variable.spread.z = variable.spread.z ?? 0; variable.speed = variable.speed ?? 0;"
+        "creation_expression": "variable.count = variable.count ?? 1; variable.spread_x = variable.spread_x ?? 0; variable.spread_y = variable.spread_y ?? 0; variable.spread_z = variable.spread_z ?? 0; variable.speed = variable.speed ?? 0;"
       },
       "minecraft:emitter_lifetime_once": {
         "active_time": 0.05
@@ -20,9 +20,9 @@
       },
       "minecraft:emitter_shape_point": {
         "offset": [
-          "variable.spread.x * (math.sqrt(-2 * math.ln(math.max(0.000001, math.random(0, 1)))) * math.cos(360 * math.random(0, 1)))",
-          "variable.spread.y * (math.sqrt(-2 * math.ln(math.max(0.000001, math.random(0, 1)))) * math.cos(360 * math.random(0, 1)))",
-          "variable.spread.z * (math.sqrt(-2 * math.ln(math.max(0.000001, math.random(0, 1)))) * math.cos(360 * math.random(0, 1)))"
+          "variable.spread_x * (math.sqrt(-2 * math.ln(math.max(0.000001, math.random(0, 1)))) * math.cos(360 * math.random(0, 1)))",
+          "variable.spread_y * (math.sqrt(-2 * math.ln(math.max(0.000001, math.random(0, 1)))) * math.cos(360 * math.random(0, 1)))",
+          "variable.spread_z * (math.sqrt(-2 * math.ln(math.max(0.000001, math.random(0, 1)))) * math.cos(360 * math.random(0, 1)))"
         ]
       },
       "minecraft:particle_initial_speed": [
