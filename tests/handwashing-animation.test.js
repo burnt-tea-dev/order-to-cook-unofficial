@@ -16,7 +16,9 @@ function fixture() {
 const names = player => player.animations.map(row => row.name);
 const START = 'animation.ordertocook.player.handwash', FP = START + '_first_person', STOP = START + '_stop';
 const STARTS = [START, FP], FINISHED = [START, FP, STOP, STOP];
-const clips = JSON.parse(readFileSync(new URL('../runtime/RP/animations/handwashing_player.animation.json', import.meta.url))).animations;
+const clips = Object.assign({}, ...['handwashing', 'chair_clap'].map(name =>
+  JSON.parse(readFileSync(new URL(`../runtime/RP/animations/${name}_player.animation.json`, import.meta.url))).animations));
+const requests = JSON.parse(readFileSync(new URL('../player-presentation.json', import.meta.url))).first_person_arm_requests;
 
 // The emitted request expressions use the shared JS/Molang boolean-assignment
 // subset. Execute those actual expressions; this is not a native Molang or
@@ -52,6 +54,35 @@ test('the existing replacement-stop clip clears a previous or initially missing 
     assert.equal(evaluateBlend(STOP, {}, variable), 1);
     assert.equal(variable.senluo_fp_left_arm_request, 0);
   }
+});
+
+test('clap camera gate is bounded independently from its gameplay session', () => {
+  const request = requests.chair_clap.replace('variable.', '');
+  for (const [overrides, expected] of [[{}, true], [{ time: 2.99 }, true], [{ time: 3 }, false],
+    [{ first: 0 }, false], [{ vr: 1 }, false], [{ ui: 1 }, false], [{ main: 1 }, false], [{ off: 1 }, false]]) {
+    const state = { first: 1, vr: 0, ui: 0, main: 0, off: 0, time: 0, ...overrides };
+    const variable = checkedVariables({ is_using_vr: state.vr });
+    const query = { is_first_person: state.first, is_in_ui: state.ui, anim_time: state.time,
+      is_item_equipped: hand => {
+        assert.equal(state.ui, 0, 'UI previews must not inspect a gameplay inventory');
+        return hand === 'main_hand' ? state.main : state.off;
+      } };
+    assert.equal(Boolean(evaluateBlend('animation.ordertocook.player.chair_clap_first_person', query, variable)), expected);
+    assert.equal(Boolean(variable[request]), expected);
+  }
+});
+
+test('stopping either action clears only its own actual request producer', () => {
+  const wash = requests.handwash.replace('variable.', ''), clap = requests.chair_clap.replace('variable.', '');
+  const query = { is_first_person: 1, is_in_ui: 0, anim_time: 1, is_item_equipped: () => 0 };
+  const variable = checkedVariables({ is_using_vr: 0 });
+  evaluateBlend(FP, query, variable);
+  evaluateBlend('animation.ordertocook.player.chair_clap_first_person', query, variable);
+  evaluateBlend('animation.ordertocook.player.chair_clap_stop', {}, variable);
+  assert.equal(Boolean(variable[wash]), true); assert.equal(variable[clap], 0);
+  evaluateBlend('animation.ordertocook.player.chair_clap_first_person', query, variable);
+  evaluateBlend(STOP, {}, variable);
+  assert.equal(variable[wash], 0); assert.equal(Boolean(variable[clap]), true);
 });
 
 test('washing starts synchronized bounded perspectives and stops both controllers after 80 ticks', () => {

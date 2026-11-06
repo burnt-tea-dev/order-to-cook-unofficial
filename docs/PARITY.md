@@ -45,7 +45,7 @@ Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedro
 | 三槽爐灶 | 3輸入＋1燃料＋3配對輸出、共用200 tick；實際產量、堵塞、換料重置與保存；15／5／8 tick獨立爐火 | 原版9條＋有效安裝時煙火2條，其他供應商以明確smoking契約接入；單頁控制與直接存取，點火骨骼與粒子分布仍有適配，客戶端待驗收。 |
 | 顧客 | 兩款原皮膚／骨架、等待與坐姿各 4 變體、7 個 action | idle 權重 55／15／15／15，完成片段後再選變體；action 按原生實體已模擬的tick定位，保留12／40／60／120／110／10 tick時長及保存進度；完成通知下一tick處理，原生測試中10 tick中斷至移除共13 tick；不下載網路皮膚。 |
 | 用餐餐盤 | 原生方塊、原兩層碰撞、40個進食模型；stage 0沿用原食物與放盤短動畫 | 舊記錄及token保留，穩定階段舊helper會移除；點取／拆除走唯一領取記錄。Java 用餐中或完成後刻意回傳新髒盤；未交付成品的完整物品另見[展示餐點保存](#未交付的展示餐點)。選取框是兩層形狀的外接長方體，原作沒有重力。用餐部分見[原生餐盤](validation/0.1.15-alpha.1/NATIVE_PLATE.md)，不由服務端推定客戶端聲畫。 |
-| 椅子／玩家動作 | 玩家可坐、手洗身體／端點轉換、獨立第一人稱左右臂節拍、顧客原姿勢 | 手洗身體／前臂端點沿用原適配，0.1.22 補第一人稱左臂資料及共用顯示請求；可見性須由有效共享 player/controller 接線，單包不保證空手左臂。真肘關節、Java ACTION 校準、客製玩家骨架及可見姿勢／停止仍未完成或未確認。沒有 player.json 或 renderer 覆寫；目前範圍見[下節](#手洗第一人稱左臂)，[0.1.20 原生證據](validation/0.1.20-alpha.1/PLAYER_POSES.md)保留原範圍。椅上喝彩起停及聲音不變，見[喝彩範圍](validation/0.1.13-alpha.1/CHAIR_CLAP.md)。 |
+| 椅子／玩家動作 | 原安坐循環、拍手全身／前臂／足端轉換、手洗身體及獨立FP雙臂 | 原生整臂／整腿匹配分段來源的兩端；手洗FP補回臂長及肩端補位，拍手TP／FP分開，安坐保持同一身體高度。可見性仍須共享player/controller接線；單包不保證空手左臂。真肘／膝、Java ACTION絕對校準、Slim／客製骨架及可見姿勢／停止仍未完成或未確認。沒有player.json覆寫；目前範圍見[玩家來源與骨架](#玩家動作的來源與骨架)、[手洗FP](#手洗第一人稱左臂)及[安坐與拍手](#安坐與拍手)。[020](validation/0.1.20-alpha.1/PLAYER_POSES.md)／[013](validation/0.1.13-alpha.1/CHAIR_CLAP.md)原生證據保留原範圍，不回填新畫面結論。 |
 | 小電驢 | 原Java模型、四車色、保溫箱、燈面、喇叭 | 原生載具物理及按鍵；燈面發光但不照亮地形。原騎車自動頭盔屬玩家渲染層，本版未重建該層及完整玩家姿勢。 |
 | 原始美術 | 67原PNG、12原OGG原樣保留；原geo／動畫正規化存档 | 保存未使用片段不等於其在玩法中已被觸發；動畫清單詳見ASSET_PROVENANCE。 |
 
@@ -63,17 +63,39 @@ Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedro
 
 2026-11-06 正式 adapter 反例：正常製作並取走成品，用 [ItemStack nameTag／setLore／非堆疊 setDynamicProperty](https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/itemstack?view=minecraft-bedrock-stable) 加資料，再正常擺放取回。修前名稱、lore、自訂資料全失，修後餐盤及共用 adapter 的外送袋都保留；並驗證失敗回復、掉落不重建、舊展示採用及移物後不重造。這不是任意 NBT 或手造 BlockEntity 反例。[0.1.25原生證據](validation/0.1.25-alpha.1/DISPLAY_STACKS.md) 已核真ItemStack／native container、正式adapter取放、真destroy／ID替換唯一掉落、同QA世界正常重啟、空槽不重造及舊link採用。真Player輸入／GUI與client畫面不在本次範圍。
 
+## 玩家動作的來源與骨架
+
+本批反例、執行版本與來源檢查結果見 [0.1.26 驗證](validation/0.1.26-alpha.1/PLAYER_ACTIONS.md)。
+
+目前共用 `tools/convert_assets.py::player_action_pose`／`player_limb_pose` 轉換洗盤、安坐與拍手。body根位移／縮放轉到native root；原head、手臂是torso的同級，native則在body下面，因此手洗先消除父torso變換，避免重算一次。native腿在root下；腿網格／pivot中心為±1.9，原rig為±2，已修正原先0.1像素的中心差。拍手／安坐使用原body下移2像素，前臂與foot的旋轉／位移參與末端目標。這是模型局部位置的轉換；沒有改玩家碰撞、椅子世界錨點或直接照抄Java世界高度。
+
+兩組完整原rig一直保留在 `player-presentation.json.rig_references` 指向的RP檔案，由 `preserve_imported_geometry` 生成；classic與slim都是64×64皮膚UV，手臂寬分別4／3像素。兩者都有 `body → upper arm → hand` 與 `body → leg → foot`；其中 `hand` 是分段前臂。native參考骨架為 `root → waist → body → Arm/head`、`root → Leg`。因此不能直接替換Geometry.default：原rig的body是根，現native clip的body是胸部。保留rig檔案不代表它已成為玩家有效geometry；本次沒有切換geometry，rigid轉換仍以經核對的classic native骨架為準。
+
+Java選定source與API版本查 [upstream鎖](../upstream/source.lock.json)。Forge1.20.1的實際全身入口是[LivingEntityRendererMixin](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/mixin/client/vehicle/LivingEntityRendererMixin.java)，在已完成vanilla父矩陣的model renderToBuffer處替換；其[RiderGeoRenderer.preRender](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/gecko/RiderGeoRenderer.java)另含X180／Y180、super、中心抵銷及依玩家身高／模式下移。NeoForge1.21.1則由[PlayerRenderer HEAD](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/neoforge-1.21.1/src/client/java/cn/breezeth/ordertocook/mixin/client/vehicle/PlayerEntityRendererMixin.java)進[Bridge.renderIfAnimated](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/neoforge-1.21.1/src/client/java/cn/breezeth/ordertocook/client/gecko/RiderRenderBridge.java)，洗盤先下移0.58、拍手／安坐下移1.125再作yaw／中心變換，其GeoRenderer沒有Forge的該preRender。兩分支已分別核對，不能把單一數字套到Bedrock來聲稱世界或鏡頭等價。
+
+第一人稱兩分支皆由HeldItemRendererMixin按手別先做ACTION平移與X/Y/Z旋轉，再由RiderFirstPersonArmRenderer加ROOT_Y（−27/16）且只畫body及該手的兩節骨。校準值來源為[Forge FirstPersonArmCalibration](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/gecko/FirstPersonArmCalibration.java)及[NeoForge同類別](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/neoforge-1.21.1/src/client/java/cn/breezeth/ordertocook/client/gecko/FirstPersonArmCalibration.java)。本版仍用既有native空手鏡頭基準，不將這些Java常數假裝成已驗證的Bedrock投影。
+
+共享顯示producer的唯一資料源是 [player-presentation.json](../player-presentation.json) 的 `first_person_arm_requests`；生成器由它取得各動作的旗標名。公共Core的[多request contract](https://github.com/burnt-tea-dev/senluo-bedrock-core/blob/e8dbc451d307625d1859ac863b4299665449eb52/docs/PORT-ADAPTERS.md#shared-first-person-left-arm-request)接收這些values，每幀各自reset並OR入有效FP的leftArm／leftSleeve。各動作只清自己的旗標，不能用拍手stop抹掉另一個尚有效的request。整批producer何時採用新Core／descriptor由共享owner決定；來源合併不自動改既有候選或LIVE。
+
 ## 手洗第一人稱左臂
 
-0.1.22 由 `tools/convert_assets.py::make_player_handwashing_animation` 生成真正的 FP `leftArm` channel，使用原 `left_arm`／`left_hand` 的相對節拍。右臂的官方空手基準與曲線、第三人稱 clip 保持原資料；左臂攝影機基準採右側的左右鏡射。這是明列的適配，尚未等價 Java ACTION 雙臂校準或其分段肘關節。
+`make_player_handwashing_animation` 使用原left／right arm與hand的相對節拍。0.1.26修正FP原只旋轉／移位而未套臂長的差異：原右肩到手端11.183676像素、左11.161967像素，native整臂卻仍12。現在FP也套來源長度比例，並補償頂端位移以維持原鏡頭肩端。既有native空手旋轉基準、左右鏡射、blend gate與stop不變；TP只另修真native腿網格中心差。這仍不是Java ACTION絕對校準或分段肘關節。
 
 有限四秒 FP clip 先直接寫入 `variable.senluo_fp_left_arm_request`，再回傳已賦值的同一條件作為實際 blend：第一人稱、非 VR、非 UI 預覽、主副手皆空，且 `0 <= query.anim_time < 4`。因此拿起地圖／副手物品到既有 server cancel 到達前，洗盤姿勢也會收回，不只關閉顯示請求。這擴充了 FP blend 條件，不能稱整個 FP 行為未變。既有 stop replacement／0.1 秒退場保留，stop clip 直接清零，不先讀取可能尚未定義的共用變量。
 
-可見性由公共 [Core 共用 contract](https://github.com/burnt-tea-dev/senluo-bedrock-core/blob/7e8185177d7a8d58991bccd76d32bce2276e5f57/docs/PORT-ADAPTERS.md#shared-first-person-left-arm-request)擁有：`compose_first_person_arm_request` 同時處理有效 client-player 與 FP controller。OTC 不包含該兩個 owner 檔案，不新增 player 屬性、保存資料或輪詢；只有姿勢與短暫請求。未接入 helper 的獨立安裝不能宣稱空手左臂可見，來源合併也不會自動為既有安裝接線。
+可見性由上節公共Core contract擁有：`compose_first_person_arm_request` 同時處理有效client-player與FP controller。OTC不包含該兩個owner檔案，不新增player屬性、保存資料或輪詢；只有姿勢與短暫請求。未接入helper的獨立安裝不能宣稱空手左臂可見。
 
 測試執行真生成器並擾動原左臂來源，確認左臂跟隨自己的資料、右側與其他骨骼不變；既有身體／端點正向計算仍保留。實際生成的 boolean／assignment expression 亦以相同 JavaScript 子集執行，驗證 FP／TP／VR／UI、兩手持物、時間邊界、未定義旗標及停止清除。這是來源與條件測試，並非原生 Molang 執行或 renderer 求值順序的證明。
 
 `appliances.js`、洗盤取物／數量／取消／付款及 BP API 請求均未改，沿用 [0.1.20 原生 API 接受與 session 證據](validation/0.1.20-alpha.1/player-poses-native.json)，不為新 bone／Molang 字串重開同一 headless BDS。所選 client 對注入 clip → part visibility 的同幀傳遞、左臂落點、換視角與可見停止仍未觀察，不新增真人等待門檻。
+
+## 安坐與拍手
+
+安坐沿原 `player_sit` 的4.5秒TP循環，拍手沿 `player_sit&clap` 的3秒片段。source body兩者都下移2像素；先接回安坐基底，再由拍手暫時覆蓋，結束重起安坐，避免只在拍手期間換身體高度。共用姿勢生成器保留source knot及20TPS取樣，包含不落在整tick的拍手轉折與非循環末幀；原foot移動也參與native整腿的端點近似。手洗／拍手都以完整肩手距修FP長度；真肘膝的輪廓仍未重建。
+
+安坐loop只在自有chair啟動；同一既有服務tick清理離座／換成非chair seat的短暫外觀狀態。native stopExpression另在離開seat類型時停止。script重載及playerSpawn恢復已有安坐，不新增world DP、玩家property、持久ID登記或輪詢服務。拍手仍60tick、聲音仍0／12／20tick，不改顧客、交易、庫存或動作輸入規則；一個視角的動畫API失敗不阻止另一個視角或正常遊戲。
+
+Java拍手可持物，兩分支HeldItemRendererMixin會取消原held-item繪製並畫ACTION雙臂。本版BP同樣不要求空手；目前只對FP姿勢使用「雙空手、非VR／UI、0≤時間<3」render gate，持物時保留native held-item畫面，TP／拍手session及聲音照常。這是尚未完全等價的渲染適配，不能寫成Java也要求空手。各視角各自的controller起停，拍手只清自己的request；空手左臂仍需上節多producer共享接線。新循環、圖層優先與可見停止尚未由真client觀察；原013服務端證據不冒充本批畫面證明。
 
 ## 可選光影模式的相容宣告
 
