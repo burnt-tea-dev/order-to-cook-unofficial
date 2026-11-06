@@ -34,9 +34,7 @@ function validateScreen(screen) {
     translationsFrom(entry.label);
     if (!entry.icon) continue;
     assert.match(entry.icon, /^textures\//);
-    if (entry.icon.startsWith('textures/ordertocook/')) {
-      assert.ok(existsSync(new URL(entry.icon + '.png', paths)), `Missing icon ${entry.icon}`);
-    }
+    assert.ok(existsSync(new URL(entry.icon + '.png', paths)), `Missing icon ${entry.icon}`);
   }
 }
 function chapterRoute(chapter) {return {kind:'chapter',chapter:chapter.id};}
@@ -117,6 +115,15 @@ test('book menu opens in its own item and icon; never adds a second Cookery guid
     "itemStack?.typeId === 'ordertocook:guide'"),true);
   const combined=JSON.stringify(GUIDE_CHAPTERS);
   assert.doesNotMatch(combined,/kaleidoscope_cookery|cookery:guide|guidebook_extension/);
+});
+
+test('plate and helmet navigation uses the same rendered thumbnails as the inventory', () => {
+  const textures=JSON.parse(readFileSync(new URL('textures/item_texture.json',paths),'utf8')).texture_data;
+  const chapters = new Map(GUIDE_CHAPTERS.map(chapter => [chapter.id, chapter]));
+  assert.equal(chapters.get('dining').icon, textures.ordertocook_clean_plate.textures);
+  assert.equal(chapters.get('delivery').icon, textures.ordertocook_helmet.textures);
+  const menu=chapters.get('restaurant').groups.find(group=>group.id==='order_management');
+  assert.equal(menu.icon, textures.ordertocook_food_plate.textures);
 });
 
 test('administrator actions are contextual and never exposed to regular players', () => {

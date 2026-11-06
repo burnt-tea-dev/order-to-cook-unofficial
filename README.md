@@ -21,7 +21,7 @@
 
 本地測試請使用可棄置世界，同時啟用對應的行為包與資源包。宣告最低目標為 **Bedrock 26.60（manifest：1.26.60）**，依賴穩定版 `@minecraft/server 2.11.0`、`@minecraft/server-ui 2.0.0`。**必須啟用 Upcoming Creator Features**，供冰箱使用原生方塊容器；不要求 Beta APIs 或 POI 實驗功能。版本依據見 [容器能力核對](docs/NATIVE-CONTAINERS.md)。這不是所有版本／裝置均已實測的聲明。首次加入會收到指南；也可用工作台合成指南及基本設備。
 
-**指南書（未發布來源改進）**：Order To Cook 沿用自己的 `ordertocook:guide`，不是 Cookery 內的章節，也不要求安裝 Cookery 才能閱讀。指南參照 Cookery 的三級分類，提供六大章、十三個主題組與二十六篇教程，包含圖示、上一頁／下一頁、返回目錄及繁中／簡中／英文。既有物品與合成配方不變；基岩版仍以原生表單呈現，並非直接複製 Cookery 書本外觀。詳見 [獨立指南結構](docs/GUIDEBOOK.md)。真實客戶端介面驗收尚未完成。
+**指南書**：Order To Cook 沿用自己的 `ordertocook:guide`，不是 Cookery 內的章節，也不要求安裝 Cookery 才能閱讀。指南參照 Cookery 的三級分類，提供六大章、十三個主題組與二十六篇教程，包含圖示、上一頁／下一頁、返回目錄及繁中／簡中／英文。既有物品與合成配方不變；基岩版仍以原生表單呈現，並非直接複製 Cookery 書本外觀。圖示來源與目前客戶端觀察範圍見 [獨立指南結構](docs/GUIDEBOOK.md)。
 
 原作者補充確認不再是全面發布門檻；原署名、GPL、對應源碼、來源雜湊與實際品質檢查仍保留。證據及政策見 [素材登記](docs/ASSET_LICENSE_REGISTER.md)、[第三方聲明](THIRD_PARTY_NOTICES.md) 與 [發布檢查](docs/RELEASE_COMPLIANCE.md)。本作品不代表原作者或 Mojang/Microsoft 背書。
 
