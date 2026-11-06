@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: GPL-3.0-only
 """Local prototype checks, using the explicitly supplied pinned Mojang input.
 
-Not part of exported runtime or the existing 026 release workflow. See the
-prototype source notes for the exact native input and invocation.
+CI fetches that one input into external temporary storage. No native input,
+generated player, selector or pose is part of the exported runtime.
 """
 import copy
 import itertools
@@ -11,6 +11,8 @@ import math
 import os
 from pathlib import Path
 import unittest
+from tempfile import TemporaryDirectory
+from unittest.mock import patch
 
 from test_appliance_geometry import converter, posed_point
 
@@ -112,7 +114,9 @@ class SegmentedPlayerTests(unittest.TestCase):
             for original in self.original_bones:
                 name = original['name']; current = lookup[name]
                 self.assertEqual(current['pivot'], original['pivot'])
-                if name not in ('rightItem', 'leftItem'):
+                if name.endswith('Arm'):
+                    self.assertEqual(current['parent'], f'ordertocook_{name[:-3]}_arm_body')
+                elif name not in ('rightItem', 'leftItem'):
                     self.assertEqual(current.get('parent'), original.get('parent'))
                 if name not in [side+part for side in ('right', 'left') for part in ('Arm', 'Leg', 'Sleeve', 'Pants', 'Item')]:
                     self.assertEqual(current, original)
@@ -173,6 +177,55 @@ class SegmentedPlayerTests(unittest.TestCase):
                 self.assertLess(math.dist(expected, actual), .002)
                 self.assertGreater(math.dist(actual, posed_point(bones, base, .5, 'rightItem', point)), .1)
 
+    def test_first_person_keeps_full_source_body_upper_and_forearm_matrices_in_each_explicit_view(self):
+        # Two deliberately different camera frames are supplied by the caller.
+        # These are reference model-space frames, not measured Bedrock cameras.
+        views = {'right': {'rotation': [90.5, 25.5, -9], 'position': [-6, -7, -13.5]},
+                 'left': {'rotation': [69.5, -18.5, -11], 'position': [-8, 0, -15.5]}}
+        for variant, source in self.variants.items():
+            geometry = self.geometry(variant)
+            bones = geometry['minecraft:geometry'][0]['bones']
+            lookup = {bone['name']: bone for bone in bones}
+            for action, original, duration, period in self.source_actions():
+                clip = {'bones': converter.segmented_player_first_person_pose(original, source, geometry,
+                    duration, views, period)}
+                for time in sorted(set(converter.player_action_times(original, duration, period)) | {.025, .3056, .3889}):
+                    for side in ('right', 'left'):
+                        for old, new in [(side+'_arm', side+'Arm'), (side+'_arm', side+'Sleeve'),
+                                         (side+'_hand', f'ordertocook_{side}_forearm'),
+                                         (side+'_hand', f'ordertocook_{side}_forearm_sleeve')]:
+                            for point in corners(lookup[new]['cubes'][0]):
+                                expected = posed_point(list(source.values()), original, time % period if period else time, old, point)
+                                expected = converter.geometry_transform3(expected, views[side]['rotation'])
+                                expected = [a+b for a,b in zip(expected, views[side]['position'])]
+                                actual = posed_point(bones, clip, time, new, point)
+                                self.assertLess(math.dist(actual, expected), .02, (variant, action, time, new))
+
+    def test_first_person_distal_bend_moves_its_skin_sleeve_and_item_but_not_upper_or_other_arm(self):
+        _, original, duration, period = next(self.source_actions())
+        changed = copy.deepcopy(original)
+        changed['bones']['right_hand']['rotation'][2] += 35
+        views = {'right': {'rotation': [95, -45, 115], 'position': [13.5, -10, 12]},
+                 'left': {'rotation': [95, 45, -115], 'position': [-13.5, -10, 12]}}
+        for variant, source in self.variants.items():
+            geometry = self.geometry(variant)
+            bones = geometry['minecraft:geometry'][0]['bones']
+            lookup = {bone['name']: bone for bone in bones}
+            base = {'bones': converter.segmented_player_first_person_pose(original, source, geometry, duration, views, period)}
+            bent = {'bones': converter.segmented_player_first_person_pose(changed, source, geometry, duration, views, period)}
+            for name in ('root', 'waist', 'body', 'rightArm', 'leftArm', 'ordertocook_left_forearm'):
+                self.assertEqual(base['bones'][name], bent['bones'][name], name)
+            for name in ('ordertocook_right_forearm', 'ordertocook_right_forearm_sleeve', 'rightItem'):
+                point = lookup[name]['pivot'] if name.endswith('Item') else lookup[name]['cubes'][0]['origin']
+                self.assertGreater(math.dist(posed_point(bones, base, .5, name, point),
+                                             posed_point(bones, bent, .5, name, point)), .1, name)
+            item = lookup['rightItem']
+            for point in [item['pivot'], *item.get('locators', {}).values()]:
+                expected = posed_point(list(source.values()), changed, .5, 'right_hand', point)
+                expected = converter.geometry_transform3(expected, views['right']['rotation'])
+                expected = [a+b for a,b in zip(expected, views['right']['position'])]
+                self.assertLess(math.dist(posed_point(bones, bent, .5, 'rightItem', point), expected), .002)
+
     def test_prototype_does_not_mutate_native_or_author_inputs(self):
         native = copy.deepcopy(self.native)
         for variant, source in self.variants.items():
@@ -184,6 +237,40 @@ class SegmentedPlayerTests(unittest.TestCase):
                 self.assertEqual(action, original)
             self.assertEqual(source, before)
         self.assertEqual(self.native, native)
+
+    def test_source_generator_writes_linked_poses_visibility_and_complete_new_bone_reset(self):
+        views = {side: {'rotation': [0, 0, 0], 'position': [0, 0, 0]} for side in ('right', 'left')}
+        before = copy.deepcopy(views)
+        with TemporaryDirectory() as temp, patch.object(converter, 'SOURCE', ROOT / 'upstream/reference', create=True):
+            output = Path(temp)
+            converter.make_segmented_player_source(self.native, views, output)
+            contract = converter.read_json(output / 'player-rig-source.json')
+            for variant, references in contract['variants'].items():
+                model = converter.read_json(output / references['geometry'])['minecraft:geometry'][0]
+                poses = converter.read_json(output / references['poses'])['animations']
+                names = {bone['name'] for bone in model['bones']}
+                for clip in poses.values():
+                    self.assertTrue(set(clip['bones']) <= names)
+                additions = names - {bone['name'] for bone in self.original_bones}
+                reset = poses[f'animation.ordertocook.prototype.{variant}.reset']['bones']
+                self.assertEqual(set(reset), additions)
+                for channels in reset.values():
+                    self.assertEqual(channels, {'rotation': [0]*3, 'position': [0]*3, 'scale': [1]*3})
+                for child, parent in contract['part_visibility'].items():
+                    self.assertIn(child, names)
+                    self.assertIn(parent, names)
+                self.assertIn(f'animation.ordertocook.prototype.{variant}.handwash.first_person', poses)
+            self.assertEqual(contract['status'], 'prototype_no_selector')
+        self.assertEqual(views, before)
+
+    def test_source_generator_rejects_invalid_external_camera_frames_before_writing(self):
+        with TemporaryDirectory() as temp:
+            output = Path(temp)
+            views = {side: {'rotation': [0, 0, 0], 'position': [0, 0, 0]} for side in ('right', 'left')}
+            views['left']['position'][2] = float('nan')
+            with self.assertRaisesRegex(ValueError, 'finite three-number'):
+                converter.make_segmented_player_source(self.native, views, output)
+            self.assertEqual(list(output.iterdir()), [])
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
-# 分段玩家骨架：本地來源原型
+# 分段玩家骨架與第一人稱：來源原型
 
-2026-11-06 HKT。本地分支 `prototype/segmented-player-rig-20261106`，基底為已合併 `d69992b43577da8629178b0f984f0556b976334c`。這是後續有效owner接線的來源原型；`convert_assets.py::main` 沒有呼叫新函式，runtime、026配對版本、descriptor、baseline及release-history均不變。現在可用的玩法與仍未完成項繼續由 [PARITY](PARITY.md#玩家動作的來源與骨架) 負責。
+2026-11-06 HKT。沿原本地c84分段原型補全獨立第一人稱矩陣及可重現的來源輸出。這仍是後續有效owner接線的來源原型：普通資源轉換不呼叫它；只有明確指定外部native輸入、相機框架及runtime外的輸出目錄才生成。runtime、目前配對版本、descriptor、baseline及release-history不變。來源合併不代表已接通玩家或安裝；現在可用的玩法與仍未完成項由 [PARITY](PARITY.md#玩家動作的來源與骨架) 負責。
 
 ## 輸入與重現
 
@@ -14,7 +14,16 @@ OTC_NATIVE_PLAYER_GEOMETRY=/root/senluo-baseline-20260930/java-parity-20261105/s
 python3 -m unittest discover -s tests -p test_appliance_geometry.py
 ```
 
-第一行需提供上述固定版本的外部原生檔。這六項原型測試不加入026既有workflow；第二行是原026的二十項生成檢查。兩者本機通過（Python3.14.4／Pillow12.1.1）。沒有再跑未變的Node540項、BDS或客戶端；這裡沒有native Player或skin query結果。
+第一行需提供上述固定版本的外部原生檔。原型測試已進必要CI，CI僅將這份固定原生檔下載至臨時目錄，不加入倉庫或打包輸出。第二行的完整既有生成回歸沿必要CI執行，本機只重跑受影響原型。本機Python3.14.4／Pillow12.1.1通過；沒有新BDS、客戶端、native Player或skin query結果。原c84的六項／026二十項結果保留其歷史範圍。
+
+重現整套全身與第一人稱來源：
+
+```sh
+python3 tools/convert_assets.py --segmented-player-native /path/native-humanoid.geo.json \
+  --segmented-camera-frames /path/camera-frames.json --output /path/outside-runtime
+```
+
+相機框架必須明確提供左右兩邊的 `rotation`／`position`，使用JSON模型座標軸及像素，例如 `{"right":{"rotation":[0,0,0],"position":[0,0,0]},"left":{"rotation":[0,0,0],"position":[0,0,0]}}`。這是呼叫者選定的模型空間參考框架，不是自動取得的客戶端相機。輸出兩寬度geometry／pose及 `player-rig-source.json`，沒有manifest、player、selector或新遊戲身份；工具拒絕將原型寫入runtime。
 
 本地主機的原始失敗、最終結果、原生輸入及classic／slim生成結果位於 `/root/senluo-baseline-20260930/java-parity-20261105/source/otc-player-actions-026/segmented-prototype/`。`*.geometry.json`／`*.model-poses.json` 只供來源比較，不是可安裝的runtime或候選包。
 
@@ -24,6 +33,7 @@ python3 -m unittest discover -s tests -p test_appliance_geometry.py
 
 | 原控制骨／來源骨 | 新網格與動畫目標 | 保留的連接 |
 | --- | --- | --- |
+| `body` → `rightArm` | 中間插入 `ordertocook_right_arm_view`／`ordertocook_right_arm_body` | TP及中性時均為單位變換；FP分開承接該手相機框架與原body矩陣 |
 | `rightArm`／`right_arm` | 上臂仍在 `rightArm`；下臂為 `ordertocook_right_forearm` | 下臂在上臂下 |
 | `rightSleeve` | 上袖仍在 `rightSleeve`；下袖為 `ordertocook_right_forearm_sleeve` | 下袖在原袖控制骨下，沿同一前臂矩陣 |
 | `rightLeg`／`right_leg` | 大腿仍在 `rightLeg`；小腿為 `ordertocook_right_shin` | 小腿在大腿下 |
@@ -32,7 +42,17 @@ python3 -m unittest discover -s tests -p test_appliance_geometry.py
 
 left側名稱直接對稱。原 `rightItem.locators.lead_hold` 原值保留。測試對原生root、waist、body及上臂加旋轉／位移／縮放後，正向計算原Item與locator位置；插入中性前臂不改其值。這是模型矩陣證據，沒有把它稱為遊戲內slot binding或牽繩畫面已驗證。
 
-`segmented_player_action_pose` 轉換原洗盤、安坐及拍手的模型局部矩陣。source body移到native root；waist中性；source torso映到body。head／上臂原是torso同級，轉到native body下時消除該父變換。此處只處理已選片段的固定X／零torso旋轉，不是通用Euler逆矩陣。前臂保留原hand關節完整旋轉／位移；原生腿中心±1.9對原±2的0.1px差由整個腿座標框補償，小腿仍保留原foot矩陣。skin與overlay分別對照來源父鏈，涵蓋兩個寬度、三個動作、來源轉折、整tick及中間時間的實際網格角點。單側前臂／足部擾動會改下節及Item，保持上節與另一側。
+`segmented_player_action_pose` 轉換原洗盤、安坐及拍手的模型局部矩陣。source body移到native root；waist中性；source torso映到body。head／上臂原是torso同級，轉到native body下時消除該父變換；兩個新相機／body骨明確歸零。此處只處理已選片段的固定X／零torso旋轉，不是通用Euler逆矩陣。前臂保留原hand關節完整旋轉／位移；原生腿中心±1.9對原±2的0.1px差由整個腿座標框補償，小腿仍保留原foot矩陣。skin與overlay分別對照來源父鏈，涵蓋兩個寬度、三個動作、來源轉折、整tick及中間時間的實際網格角點。單側前臂／足部擾動會改下節及Item，保持上節與另一側。
+
+## 真分段第一人稱矩陣及交接契約
+
+`segmented_player_first_person_pose` 對每手依序保留「明確傳入的view → 原body縮放／位移 → 上臂 → 前臂 → Item／locator」，不是把肘彎曲擬合回一條整臂。左右相機獨立，避免用同一root移動兩手；native root／waist／body在FP明確中性。測試以原來源各網格角點先走完整父鏈，再投影至各自參考框架，比對生成骨架；另擾動單側肘關節，確認只改該前臂、下袖及持物，保留上臂及另一手。
+
+`player-rig-source.json` 列出兩寬度geometry／pose及新下半肢體需跟隨的原控制骨可見條件。前臂跟Arm、下袖跟Sleeve、小腿跟Leg、下褲跟Pants；不得用Arm條件取代衣物條件。每個variant同時輸出只重設新增骨的reset片段。有效owner仍需沿原排程選擇TP／FP、動作窗口、停止及切回default；本原型不新增共用旗標或覆寫現行controller。
+
+這些pose沒有自行接進現行 `player-presentation.json`。接入者需保留現有獨立動作request、FP／非VR／非UI／主副手皆空的條件及停止清除；原拍手與手洗不能互相抹除request。不能僅將geometry alias寫進低優先player，就宣稱實際renderer已採用。
+
+skin仍需沿該有效owner的 `Texture.default`，不是改用Steve貼圖。原native Item／lead定位資料不變，彎曲後跟前臂；這是矩陣證據，未證明client slot／attachable實景。原生armor獨立幾何與骨名保持，沒有聲稱也有分段手肘。classic使用選定native底座；slim仍只是按作者明確選定的3px參考。固定Mojang舊 `models/mobs.json` 的customSlim臂pivot Y=21.5與此底座22不同，不能把3px參考冒充真native slim選取／中性外表已驗證。
 
 ## 中性外表與UV
 
@@ -42,6 +62,6 @@ left側名稱直接對稱。原 `rightItem.locators.lead_hold` 原值保留。�
 
 ## 共享selector仍缺的證據
 
-有效owner需保留原default／皮膚／普通FP、TP及持槍副手路由，再按實際動作選新幾何。新增下半骨也需有明確skin／overlay可見條件；目前未假設「顯示原Arm／Sleeve就一定覆蓋新的子骨」。原有026的rigid FP曲線不能當成已完成分段FP，Java ACTION攝影機矩陣亦未在本原型校準。原生armor依原骨名與自身幾何保留，不把所有armor分節。
+有效owner需保留原default／皮膚／普通FP、TP及持槍副手路由，再按實際動作選新幾何。新增下半骨的顯示對應已由來源contract列明，並非假設「顯示原Arm／Sleeve就一定覆蓋新的子骨」。本原型已完成分段FP的模型空間矩陣，原026的rigid FP仍是當前runtime；Java ACTION到Bedrock絕對攝影機的投影未校準。原生armor依原骨名與自身幾何保留，不把所有armor分節。
 
 目前仍缺真player的classic／slim／客製avatar選擇值與查詢時機、實際skin／slot binding、FP投影、可見子骨與切回default的client證據。有效025輸入沒有queryable_geometry或slim偵測；官方欄位／bone查詢的存在不能當作這些值已成立，也不構成不支援的結論。下一步由同一effective owner核定最小selector與動作接口；此原型不新增全域geometry替換、第二player、持久狀態或機器專屬開關。

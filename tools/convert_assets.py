@@ -657,6 +657,14 @@ def segmented_player_geometry(native, source_rig, identifier):
     bones = {bone['name']: bone for bone in entry['bones']}
     additions = []
     for side in ('right', 'left'):
+        # Neutral wrappers preserve the native arm/skin/item route in TP.
+        # FP needs an independent camera frame and source body transform per
+        # arm: moving the common root cannot represent two calibrated views.
+        view = f'ordertocook_{side}_arm_view'
+        action_body = f'ordertocook_{side}_arm_body'
+        additions.extend([{'name': view, 'parent': 'body', 'pivot': [0, 0, 0]},
+                          {'name': action_body, 'parent': view, 'pivot': list(source_rig['body']['pivot'])}])
+        bones[side+'Arm']['parent'] = action_body
         for limb, overlay, joint, height in (('Arm', 'Sleeve', 'forearm', 18), ('Leg', 'Pants', 'shin', 6)):
             lower = f'ordertocook_{side}_{joint}'
             # Arm bends use the actual source elbow, including slim's offset
@@ -705,6 +713,9 @@ def segmented_player_action_pose(original, source_rig, native, duration, period=
     torso = source.get('torso', {})
     bones = {'root': {'scale': scale, 'position': [a+p*(1-s) for a,p,s in zip(position, source_rig['body']['pivot'], scale)]},
              'waist': {'rotation': [0]*3}, 'body': copy.deepcopy(torso)}
+    for side in ('right', 'left'):
+        for suffix in ('view', 'body'):
+            bones[f'ordertocook_{side}_arm_{suffix}'] = {'rotation': [0]*3, 'position': [0]*3, 'scale': [1]*3}
     targets = [('head', 'head')]
     for side in ('right', 'left'):
         targets.append((side+'_arm', side+'Arm'))
@@ -733,6 +744,78 @@ def segmented_player_action_pose(original, source_rig, native, duration, period=
             bones[name] = channels
             bones[name+'_'+suffix] = copy.deepcopy(channels)
     return rounded(bones)
+
+
+def segmented_player_first_person_pose(original, source_rig, native, duration, camera_frames, period=None):
+    """Project two genuinely segmented arms into explicit model-space views.
+
+    Frames are selected by the effective player owner, in pixels and the same
+    JSON rotation axes as geometry_transform3. This function does not guess a
+    native skin, a camera basis or Java-to-Bedrock renderer calibration.
+    """
+    native_rig = {bone['name']: bone for bone in native['minecraft:geometry'][0]['bones']}
+    neutral = {'rotation': [0]*3, 'position': [0]*3, 'scale': [1]*3}
+    bones = {name: copy.deepcopy(neutral) for name in ('root', 'waist', 'body')}
+    for side in ('right', 'left'):
+        view = f'ordertocook_{side}_arm_view'
+        action_body = f'ordertocook_{side}_arm_body'
+        bones[view] = copy.deepcopy(camera_frames[side])
+        bones[action_body] = copy.deepcopy(original['bones'].get('body', {}))
+        channels = {'rotation': {}, 'position': {}, 'scale': [1]*3}
+        for time in player_action_times(original, duration, period):
+            seconds = time % period if period else time
+            angles, offset = _player_bone_below_torso(original['bones'].get(side+'_arm', {}),
+                source_rig[side+'_arm']['pivot'], native_rig[side+'Arm']['pivot'], {},
+                source_rig['torso']['pivot'], seconds)
+            channels['rotation'][f'{time:g}'] = angles
+            channels['position'][f'{time:g}'] = offset
+        bones[side+'Arm'] = channels
+        lower = copy.deepcopy(original['bones'].get(side+'_hand', {}))
+        bones[f'ordertocook_{side}_forearm'] = lower
+        bones[f'ordertocook_{side}_forearm_sleeve'] = copy.deepcopy(lower)
+    return rounded(bones)
+
+
+def make_segmented_player_source(native, camera_frames, output):
+    """Write local model/pose references, never an installed player or pack."""
+    if not isinstance(camera_frames, dict) or set(camera_frames) != {'right', 'left'}:
+        raise ValueError('Camera frames need explicit right and left views')
+    for frame in camera_frames.values():
+        if (not isinstance(frame, dict) or set(frame) != {'rotation', 'position'}
+                or any(not isinstance(vector, list) or len(vector) != 3
+                       or any(type(value) not in (int, float) or not math.isfinite(value) for value in vector)
+                       for vector in frame.values())):
+            raise ValueError('Each camera view needs finite three-number rotation and pixel position vectors')
+    actions = [('handwash', 'player_wash', 'player_wash', 4, 2),
+               ('chair_idle', 'player', 'player_sit', 4.5, None),
+               ('chair_clap', 'player', 'player_sit&clap', 3, None)]
+    contract = {'schema': 1, 'status': 'prototype_no_selector', 'variants': {}, 'part_visibility': {}}
+    for variant, filename in (('classic', 'drive_idle'), ('slim', 'drive_idle_alex')):
+        source_path = ASSETS / f'geo/{filename}.geo.json'
+        rig = {bone['name']: bone for bone in read_json(source_path)['minecraft:geometry'][0]['bones']}
+        model = segmented_player_geometry(native, rig, f'geometry.{NS}.prototype.segmented_{variant}')
+        clips = {}
+        for short, family, name, duration, period in actions:
+            original = unwrap_vectors(read_json(ASSETS / f'animations/{family}.animation.json')['animations'][name])
+            poses = {'third_person': segmented_player_action_pose(original, rig, model, duration, period),
+                     'first_person': segmented_player_first_person_pose(original, rig, model, duration, camera_frames, period)}
+            for view, bones in poses.items():
+                identifier = f'animation.{NS}.prototype.{variant}.{short}.{view}'
+                clips[identifier] = {'animation_length': duration, 'loop': False, 'bones': bones}
+        additions = {bone['name'] for bone in model['minecraft:geometry'][0]['bones']} - {
+            bone['name'] for bone in native['minecraft:geometry'][0]['bones']}
+        clips[f'animation.{NS}.prototype.{variant}.reset'] = {'animation_length': .05,
+            'bones': {name: {'rotation': [0]*3, 'position': [0]*3, 'scale': [1]*3} for name in sorted(additions)}}
+        geometry_file, animation_file = f'{variant}.geometry.json', f'{variant}.poses.json'
+        write_json(output / geometry_file, model)
+        write_json(output / animation_file, {'format_version': '1.8.0', 'animations': clips})
+        contract['variants'][variant] = {'geometry': geometry_file, 'poses': animation_file,
+                                         'source_rig': str(source_path.relative_to(SOURCE))}
+    for side in ('right', 'left'):
+        for joint, parent, overlay in (('forearm', 'Arm', 'Sleeve'), ('shin', 'Leg', 'Pants')):
+            contract['part_visibility'][f'ordertocook_{side}_{joint}'] = side+parent
+            contract['part_visibility'][f'ordertocook_{side}_{joint}_{overlay.lower()}'] = side+overlay
+    write_json(output / 'player-rig-source.json', contract)
 
 
 def player_action_pose(original, rig, duration, period=None):
@@ -1884,10 +1967,20 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source",type=Path,default=ROOT / "upstream/reference",help="Bundled upstream/reference source subset (default), or a local OrdertoCook checkout")
     parser.add_argument("--output",type=Path,default=ROOT / "runtime")
+    parser.add_argument("--segmented-player-native", type=Path, help="External native input for local model-source prototypes only")
+    parser.add_argument("--segmented-camera-frames", type=Path, help="Explicit right/left model-space camera frames for that prototype")
     args=parser.parse_args()
     SOURCE=args.source.resolve(); ASSETS=SOURCE / ASSET_REL; OUT=args.output.resolve(); BP=OUT / "BP"; RP=OUT / "RP"
     if not (SOURCE / "LICENSE.txt").is_file() or not ASSETS.is_dir():
         parser.error("Expected OrdertoCook source inputs with LICENSE.txt and common resources")
+    if args.segmented_player_native or args.segmented_camera_frames:
+        if not (args.segmented_player_native and args.segmented_camera_frames):
+            parser.error("Segmented prototypes need both native geometry and explicit camera frames")
+        if OUT.is_relative_to(ROOT / 'runtime'):
+            parser.error("Segmented prototype output must be outside runtime; no player selector is installed")
+        make_segmented_player_source(read_json(args.segmented_player_native), read_json(args.segmented_camera_frames), OUT)
+        print('Generated local model-source prototype; no player, selector, pack or release identity')
+        return
     metadata = SOURCE / "UPSTREAM.json"
     if metadata.is_file():
         revision = read_json(metadata).get("commit")
