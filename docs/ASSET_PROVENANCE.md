@@ -54,7 +54,9 @@ Pillow 用於把四張原始爐火畫格縱向拼接、車燈的 alpha 編碼轉
 | 物品圖示 | 原硬幣、訂單與升級工具箱圖示直接引用；盤、袋、車、頭盔使用原模型渲染的縮圖；指南用自有像素書圖示，控制器引用訂單圖示；指南設備縮圖沿原料理檯／冰箱／爐灶模型生成，不用UV展開圖 |
 | 語言 | 保留英語及簡體原名稱，轉為 Bedrock 鍵名，另加繁體中文及移植新增物品名稱 |
 
-物品 JSON 共 15 個；其餘家具物品由 Bedrock 方塊自動產生。候選共有 297 個 geometry 識別碼，包括 241 個方塊 geometry、41 個用餐餐盤 geometry、顧客／車輛／頭盔、隱形輔助實體與上游 geometry 存檔。原 67 張 PNG 與 12 個 OGG 仍逐檔保留，衍生 atlas、flipbook、縮圖及 TGA 不計入這些原檔數量。
+物品JSON與geometry識別碼的目前數量由 [資源檢查器](../tools/validate_pack.py) 從實際定義輸出；其餘家具物品由Bedrock方塊自動產生。逐檔來源與生成操作查 [轉換清單](../runtime/asset_conversion_manifest.json)。原始PNG與OGG保留；衍生atlas、flipbook、縮圖及TGA不當作原檔。
+
+`tools/validate_pack.py` 對方塊引用的geometry檢查實際非零面積，不以cube數量當成有效網格；零尺寸cube雖可解析且有一筆資料，仍沒有面。這保留可有面積的薄片，並攔截本次客戶端回報的全零模型。原生實體故意不可見的骨架沿原用途保留。回歸直接把實際全零輸入送進真正的檢查器，確認它拒絕，而不修改生成產物或LIVE。
 
 Java 模型中的 item display transform、predicate override，以及未綁定的頭盔顏色／騎行變體不會被 Bedrock 自動解讀。保留相關原始紋理不代表所有 Java 物品顯示方式均已重現。
 

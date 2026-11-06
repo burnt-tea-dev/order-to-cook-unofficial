@@ -7,6 +7,11 @@ import {
 } from '../runtime/BP/scripts/guide_book.js';
 
 const paths = new URL('../runtime/RP/', import.meta.url);
+const inventoryIcons = new Set(Object.values(JSON.parse(readFileSync(new URL('textures/item_texture.json', paths), 'utf8')).texture_data)
+  .map(entry => entry.textures));
+const renderedIcons = new Set(JSON.parse(readFileSync(new URL('../runtime/asset_conversion_manifest.json', import.meta.url), 'utf8')).assets
+  .filter(entry => /\/models\/.*\.json$/.test(entry.source) && /^RP\/textures\/(items|guide)\/.*\.png$/.test(entry.output))
+  .map(entry => entry.output.replace(/^RP\//, '').replace(/\.png$/, '')));
 const parseLanguage = language => {
   const file = new URL('texts/' + language + '.lang', paths);
   const result = new Map();
@@ -35,6 +40,8 @@ function validateScreen(screen) {
     if (!entry.icon) continue;
     assert.match(entry.icon, /^textures\//);
     assert.ok(existsSync(new URL(entry.icon + '.png', paths)), `Missing icon ${entry.icon}`);
+    assert.ok(inventoryIcons.has(entry.icon) || renderedIcons.has(entry.icon),
+      `Guide must use an inventory sprite or rendered model thumbnail, not a model UV atlas: ${entry.icon}`);
   }
 }
 function chapterRoute(chapter) {return {kind:'chapter',chapter:chapter.id};}
