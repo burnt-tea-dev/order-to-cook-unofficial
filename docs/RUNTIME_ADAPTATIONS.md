@@ -136,6 +136,8 @@ Java 這兩種方塊的 blockstate 是空模型，由完整 Geo renderer 顯示�
 
 ## 顧客及椅子
 
+玩家安坐循環及拍手的全身／前臂／足端、TP／FP起停與持物分界統一見 [PARITY 安坐與拍手](PARITY.md#安坐與拍手)。沿既有seat服務的短暫外觀狀態恢復／停止，不增玩家屬性或保存格式；client圖層／可見動作尚未觀察，舊013原生報告保留原範圍。
+
 `entities.js` 在已載入區域生成顧客，並把 `restaurant_id`、`order_id` 保存在實體動態屬性。普通機器候選單尚未接取時不產生顧客；**到店單在 offered 階段便生成顧客**，玩家可直接點顧客接單。空椅搜尋採水平半徑 24 格、垂直 ±8 格，座位上方需兩格空間。普通餐廳顧客無椅時會在打單機 5 格內尋找可站立位置；walk-in 到店顧客必須有空椅才生成。玩家也可以點椅子坐下。
 
 這個直接安排位置的流程符合上游。[OrderNpcManager.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/core/OrderNpcManager.java) 的 `spawnPreparedNpc` 直接定位並入座，`findSpawnPosNormal` 包含 5 格無椅 fallback；[WalkInNpcManager.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/core/WalkInNpcManager.java) 無椅即返回失敗。[CustomerEntity.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/entity/CustomerEntity.java) 的 movement speed 為 0，僅有看向玩家／隨機看向目標的 goals；原作預設並沒有入店尋路可供移植。
@@ -173,7 +175,7 @@ Java 這兩種方塊的 blockstate 是空模型，由完整 Geo renderer 顯示�
 
 Java stage 0 的 blockstate 為空，實際由 `FoodPlatePlacedRenderer` 顯示食物。本版在空模型方塊上沿用原 `ordertocook:dining_plate` helper、32×32材質與0.5秒 `maked`，按 `placement_age` 恢復；stage 1–40由方塊直接顯示原模型及256×256原像素atlas，移除舊helper。原實體ID與屬性保留以讀取舊世界，已不用實體命中／互動元件收盤。
 
-碰撞保留 `FoodPlateBlock.SHAPE` 的兩部分：底盤14×2×14像素、中央10×3×10像素（中央頂部高5像素）。26.60原生collision array承載兩層；選取框元件只用一個外接長方體14×5×14，因此角落的游標框不是Java的聯集形狀。原作沒有重力，本版亦不因下方桌面拆掉而下墜。餐盤內容權威仍在原餐廳記錄，沒有新增可領取的helper庫存；原BlockEntity任意ItemStack資料仍未等價保存。客戶端畫面、UV朝向及硬體輸入仍不由服務端探針推定。
+碰撞保留 `FoodPlateBlock.SHAPE` 的兩部分：底盤14×2×14像素、中央10×3×10像素（中央頂部高5像素）。26.60原生collision array承載兩層；選取框元件只用一個外接長方體14×5×14，因此角落的游標框不是Java的聯集形狀。原作沒有重力，本版亦不因下方桌面拆掉而下墜。用餐餐盤仍由餐廳記錄核准一次新髒盤，沒有新增可領取的helper庫存；未交付展示成品的完整ItemStack已由025原生庫存保存，分界見 [PARITY](PARITY.md#未交付的展示餐點)。客戶端畫面、UV朝向及硬體輸入仍不由服務端探針推定。
 
 用餐位置優先選椅前方，受阻時嘗試相鄰可用桌面／空位，最後保留椅前的整格錨點；若仍被佔用便拒絕新交餐；不沿用 Java 為放盤直接破壞佔位方塊的行為。餐盤保存維度、位置、方向、型號、開始時間及唯一 token。區塊未載入時等待，重新載入後從記錄恢復方塊；遇到玩家其他方塊會等待，不覆蓋；重複或失去對應記錄的顯示實體會清理。所有餐廳共用位置佔用判斷，避免互相蓋盤。**同一位置尚有未收餐盤時，下一餐在扣除承載物、改訂單及付款之前便拒絕交付。**
 

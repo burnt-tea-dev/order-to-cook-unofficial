@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "first_person_arm_requests": {
+    "handwash": "variable.senluo_fp_left_arm_request",
+    "chair_clap": "variable.ordertocook_clap_fp_left_arm_request"
+  },
+  "rig_references": {
+    "classic": "runtime/RP/models/entity/imported/drive_idle.geo.json",
+    "slim": "runtime/RP/models/entity/imported/drive_idle_alex.geo.json"
+  }
+}

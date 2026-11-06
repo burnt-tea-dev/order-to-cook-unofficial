@@ -435,8 +435,9 @@ test('an upper-half slab is rejected even if a native ray hits its top at y=1', 
   assert.equal(entityServices.hasFullStandingSupport(env.dimension, { x: 0, y: 0, z: 0 }), false);
 });
 
-function chairClapFixture() {
+function chairClapFixture(configurePlayer = () => {}) {
   const env = makeEnvironment(), fixture = restaurantFixture(env), scheduled = [];
+  configurePlayer(fixture.player);
   env.system.runTimeout = (fn, ticks) => scheduled.push({ fn, at: env.system.currentTick + ticks });
   const service = readyService(env);
   assert.equal(service.sitOnChair(fixture.player, fixture.chair), true);
@@ -455,16 +456,18 @@ function chairClapFixture() {
 
 test('chair attack starts one three-second clap and sounds at original ticks 0, 12 and 20', () => {
   const env = chairClapFixture(); env.swing();
-  assert.deepEqual(env.player.animations.map(x => x.name), ['animation.ordertocook.player.chair_clap']);
+  assert.deepEqual(env.player.animations.map(x => x.name), ['animation.ordertocook.player.chair_idle', 'animation.ordertocook.player.chair_clap', 'animation.ordertocook.player.chair_clap_first_person']);
   assert.equal(env.dimension.sounds.length, 1);
   env.swing(); env.swing('Mine'); env.swing('UseItem'); env.step(11);
-  assert.equal(env.dimension.sounds.length, 1); assert.equal(env.player.animations.length, 1);
+  assert.equal(env.dimension.sounds.length, 1); assert.equal(env.player.animations.length, 3);
   env.step(1); assert.equal(env.dimension.sounds.length, 2);
   env.step(8); assert.equal(env.dimension.sounds.length, 3);
-  env.step(39); assert.equal(env.player.animations.length, 1);
-  env.step(1); assert.equal(env.player.animations.at(-1).name, 'animation.ordertocook.player.chair_clap_stop');
-  assert.equal(env.player.animations[0].options.controller, env.player.animations[1].options.controller);
-  env.swing(); assert.equal(env.player.animations.length, 3);
+  env.step(39); assert.equal(env.player.animations.length, 3);
+  env.step(1); assert.equal(env.player.animations.at(-1).name, 'animation.ordertocook.player.chair_idle');
+  assert.equal(env.player.animations[1].options.controller, env.player.animations[3].options.controller);
+  assert.equal(env.player.animations[2].options.controller, env.player.animations[4].options.controller);
+  assert.equal(env.player.animations[0].options.controller, env.player.animations[5].options.controller);
+  env.swing(); assert.equal(env.player.animations.length, 8);
   assert.equal(env.dimension.sounds.length, 4);
   assert.equal(env.player.container.emptySlotsCount, 36); assert.equal(env.order.status, 'accepted');
 });
@@ -477,7 +480,7 @@ test('clap consumes only own-chair melee and mining; other actions and mounts st
   for (const fn of env.world.beforeEvents.playerBreakBlock.subscriptions) fn(mining);
   assert.equal(hurt.cancel, true); assert.equal(mining.cancel, true);
   for (const fn of [...env.system.callbacks].slice(1)) fn();
-  assert.equal(env.player.animations.length, 1);
+  assert.equal(env.player.animations.length, 3);
   for (const mount of [undefined, env.dimension.spawnEntity('ordertocook:motorcycle', env.player.location), env.dimension.spawnEntity('ordertocook:seat', env.player.location)]) {
     env.player.riding = mount; env.step(1);
     const before = env.player.animations.length;
@@ -490,7 +493,7 @@ test('clap consumes only own-chair melee and mining; other actions and mounts st
     assert.equal(env.player.animations.length, before);
   }
   const other = chairClapFixture(); other.swing('UseItem'); other.swing('Interact'); other.swing('DropItem');
-  assert.equal(other.player.animations.length, 0);
+  assert.deepEqual(other.player.animations.map(row => row.name), ['animation.ordertocook.player.chair_idle']);
   const projectile = { damageSource: { cause: 'projectile', damagingEntity: other.player }, cancel: false };
   for (const fn of other.world.beforeEvents.entityHurt.subscriptions) fn(projectile);
   assert.equal(projectile.cancel, false);
@@ -508,16 +511,65 @@ test('dismount, chair change and leave stop clap and discard delayed voices', ()
     if (reason === 'leave') for (const fn of env.world.afterEvents.playerLeave.subscriptions) fn({ playerId: env.player.id });
     env.step(60);
     assert.equal(env.dimension.sounds.length, 1, reason);
-    assert.deepEqual(env.player.animations.map(x => x.name), ['animation.ordertocook.player.chair_clap', 'animation.ordertocook.player.chair_clap_stop'], reason);
+    const expected = ['animation.ordertocook.player.chair_idle', 'animation.ordertocook.player.chair_clap', 'animation.ordertocook.player.chair_clap_first_person', 'animation.ordertocook.player.chair_clap_stop', 'animation.ordertocook.player.chair_clap_stop'];
+    if (reason === 'chair') expected.push('animation.ordertocook.player.chair_idle');
+    else expected.push('animation.ordertocook.player.chair_idle_stop');
+    assert.deepEqual(env.player.animations.map(x => x.name), expected, reason);
   }
 });
 
 test('missing animation capability never changes seating, rewards or sound lifecycle', () => {
-  const env = chairClapFixture(); env.player.playAnimation = () => { throw Error('animation unavailable'); };
+  const env = chairClapFixture(player => { player.playAnimation = () => { throw Error('animation unavailable'); }; });
   assert.doesNotThrow(() => env.swing()); env.step(60);
   assert.equal(env.dimension.sounds.length, 3);
   assert.equal(env.player.riding.typeId, 'ordertocook:seat');
   assert.equal(env.order.status, 'accepted'); assert.equal(env.player.container.emptySlotsCount, 36);
+});
+
+test('seated idle has an immediate native mount guard and stops once when ownership of the seat changes', () => {
+  const env = chairClapFixture(), idle = env.player.animations[0];
+  assert.equal(idle.name, 'animation.ordertocook.player.chair_idle');
+  const stop = new Function('query', 'return ' + idle.options.stopExpression);
+  assert.equal(stop({ is_riding_any_entity_of_type: (...types) => types.includes('ordertocook:seat') }), false);
+  assert.equal(stop({ is_riding_any_entity_of_type: (...types) => types.includes('ordertocook:motorcycle') }), true);
+  // The native type check alone cannot distinguish an unowned helper seat.
+  // The real service still checks its existing chair tag/id and clears idle.
+  env.player.riding = env.dimension.spawnEntity('ordertocook:seat', env.player.location);
+  env.step(1);
+  assert.equal(env.player.animations.at(-1).name, 'animation.ordertocook.player.chair_idle_stop');
+  const after = env.player.animations.length; env.step(60);
+  assert.equal(env.player.animations.length, after);
+  assert.equal(env.dimension.sounds.length, 0); assert.equal(env.order.status, 'accepted');
+});
+
+test('script reload and player spawn restore the chair idle without repeating requests on later ticks', () => {
+  const env = chairClapFixture(), before = env.player.animations.length;
+  const restored = readyService(env);
+  assert.equal(env.player.animations.length, before + 1);
+  for (let tick = 0; tick < 20; tick++) { env.system.currentTick++; restored.tick(); }
+  assert.equal(env.player.animations.length, before + 1);
+  const leave = env.world.afterEvents.playerLeave.subscriptions.at(-1);
+  leave({ playerId: env.player.id });
+  const count = env.player.animations.length;
+  const spawn = env.world.afterEvents.playerSpawn.subscriptions.at(-1);
+  const queued = env.system.callbacks.length;
+  spawn({ player: env.player }); env.system.callbacks[queued]();
+  assert.equal(env.player.animations.length, count + 1);
+  assert.equal(env.player.animations.at(-1).name, 'animation.ordertocook.player.chair_idle');
+  const queuedAgain = env.system.callbacks.length;
+  spawn({ player: env.player }); env.system.callbacks[queuedAgain]();
+  assert.equal(env.player.animations.length, count + 1);
+});
+
+test('held items do not prevent the existing chair clap or change its sound/session lifecycle', () => {
+  const env = chairClapFixture(), held = new FakeItem('minecraft:stick', 3);
+  held.nameTag = '仍在手中的物品'; env.player.container.setItem(0, held);
+  env.swing();
+  assert.deepEqual(env.player.animations.map(row => row.name), ['animation.ordertocook.player.chair_idle', 'animation.ordertocook.player.chair_clap', 'animation.ordertocook.player.chair_clap_first_person']);
+  env.step(60);
+  assert.equal(env.dimension.sounds.length, 3);
+  assert.deepEqual(structuredClone(env.player.container.getItem(0)), structuredClone(held));
+  assert.equal(env.order.status, 'accepted');
 });
 
  test('the old native done flag cannot finish a new action in its property-update tick', () => {

@@ -18,6 +18,33 @@ converter = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(converter)
 converter.ASSETS = ROOT / "upstream/reference" / converter.ASSET_REL
 
+
+def posed_point(bones, animation, seconds, name, value):
+    """Forward-render a source/native point; no inverse retargeting or arm fit."""
+    lookup = {bone['name']: bone for bone in bones}
+    while name:
+        bone = lookup[name]; channels = animation.get('bones', {}).get(name, {})
+        pivot = bone['pivot']
+        scale = converter.sample_channel(channels.get('scale'), seconds, [1]*3)
+        value = [pivot[i]+(value[i]-pivot[i])*scale[i] for i in range(3)]
+        value = converter.geometry_transform3(value, converter.sample_channel(channels.get('rotation'), seconds, [0]*3), pivot)
+        value = [a+b for a,b in zip(value, converter.sample_channel(channels.get('position'), seconds, [0]*3))]
+        name = bone.get('parent')
+    return value
+
+
+def native_player_rig():
+    # Mojang 1.26.60.5 humanoid.custom: legs have +/-1.9 pivots and cube centers.
+    bones = [{'name': 'root', 'pivot': [0, 0, 0]},
+             {'name': 'waist', 'parent': 'root', 'pivot': [0, 12, 0]},
+             {'name': 'body', 'parent': 'waist', 'pivot': [0, 24, 0]},
+             {'name': 'head', 'parent': 'body', 'pivot': [0, 24, 0]}]
+    for side, sign in [('right', -1), ('left', 1)]:
+        bones.extend([{'name': side+'Arm', 'parent': 'body', 'pivot': [sign*5, 22, 0]},
+                      {'name': side+'Leg', 'parent': 'root', 'pivot': [sign*1.9, 12, 0]}])
+    return bones
+
+
 class ApplianceGeometryTests(unittest.TestCase):
     def setUp(self):
         self.source = converter.normalize_geo(converter.ASSETS / "geo/block/refrigerator.geo.json", "geometry.source")
@@ -55,11 +82,9 @@ class ApplianceGeometryTests(unittest.TestCase):
             self.assertFalse(clip['loop'])
         self.assertEqual(third['blend_weight'], '!query.is_first_person')
         self.assertEqual(set(first['bones']), {'rightArm', 'leftArm'})
-        for side, rotation, position in [('right', [95, -45, 115], [13.5, -10, 12]),
-                                          ('left', [95, 45, -115], [-13.5, -10, 12])]:
+        for side, rotation in [('right', [95, -45, 115]), ('left', [95, 45, -115])]:
             arm = first['bones'][side+'Arm']
             self.assertEqual(arm['rotation']['0'], rotation)
-            self.assertEqual(arm['position']['0'], position)
             self.assertEqual(arm['rotation']['0'], arm['rotation']['4'])
             self.assertNotEqual(arm['rotation']['0'], arm['rotation']['0.5'])
         self.assertLessEqual(clips['animation.ordertocook.player.handwash_stop']['animation_length'], 0.1)
@@ -91,37 +116,52 @@ class ApplianceGeometryTests(unittest.TestCase):
         # not repeat the retargeter's direction fit or inverse-parent algorithm.
         source = converter.read_json(converter.ASSETS / 'geo/drive_idle.geo.json')['minecraft:geometry'][0]['bones']
         original = converter.unwrap_vectors(converter.read_json(converter.ASSETS / 'animations/player_wash.animation.json')['animations']['player_wash'])
-        native = [{'name': 'root', 'pivot': [0, 0, 0]},
-                  {'name': 'waist', 'parent': 'root', 'pivot': [0, 12, 0]},
-                  {'name': 'body', 'parent': 'waist', 'pivot': [0, 24, 0]},
-                  {'name': 'head', 'parent': 'body', 'pivot': [0, 24, 0]}]
-        for side, sign in [('right', -1), ('left', 1)]:
-            native.extend([{'name': side+'Arm', 'parent': 'body', 'pivot': [sign*5, 22, 0]},
-                           {'name': side+'Leg', 'parent': 'root', 'pivot': [sign*1.9, 12, 0]}])
+        native = native_player_rig()
         clip = converter.read_json(ROOT / 'runtime/RP/animations/handwashing_player.animation.json')['animations']['animation.ordertocook.player.handwash']
-        def point(bones, animation, seconds, name, value):
-            lookup = {bone['name']: bone for bone in bones}
-            while name:
-                bone = lookup[name]; channels = animation.get('bones', {}).get(name, {})
-                pivot = bone['pivot']
-                scale = converter.sample_channel(channels.get('scale'), seconds, [1]*3)
-                value = [pivot[i]+(value[i]-pivot[i])*scale[i] for i in range(3)]
-                value = converter.geometry_transform3(value, converter.sample_channel(channels.get('rotation'), seconds, [0]*3), pivot)
-                value = [a+b for a,b in zip(value, converter.sample_channel(channels.get('position'), seconds, [0]*3))]
-                name = bone.get('parent')
-            return value
-        cases = [('torso', 'body', [0, 18, -2]), ('head', 'head', [0, 28, -4]),
-                 ('right_leg', 'rightLeg', [-2, 0, 0]), ('left_leg', 'leftLeg', [2, 0, 0])]
+        cases = [('torso', 'body', [0, 18, -2], [0, 18, -2]), ('head', 'head', [0, 28, -4], [0, 28, -4]),
+                 ('right_leg', 'rightLeg', [-2, 0, 0], [-1.9, 0, 0]), ('left_leg', 'leftLeg', [2, 0, 0], [1.9, 0, 0])]
         for side, sign in [('right', -1), ('left', 1)]:
-            cases += [(side+'_arm', side+'Arm', [sign*6, 24, 0]),
-                      (side+'_hand', side+'Arm', [sign*6, 12, 0])]
+            cases += [(side+'_arm', side+'Arm', [sign*6, 24, 0], [sign*6, 24, 0]),
+                      (side+'_hand', side+'Arm', [sign*6, 12, 0], [sign*6, 12, 0])]
         for seconds in (0, .025, .25, .5, .75, 1, 1.975, 2, 2.025, 3.975, 4):
-            for old, new, vertex in cases:
-                expected = point(source, original, seconds % 2, old, vertex)
-                actual = point(native, clip, seconds, new, vertex)
+            for old, new, vertex, native_vertex in cases:
+                expected = posed_point(source, original, seconds % 2, old, vertex)
+                actual = posed_point(native, clip, seconds, new, native_vertex)
                 self.assertLess(math.dist(expected, actual), .02, (seconds, old, expected, actual))
 
-    def test_player_chair_clap_reproduces_the_original_arm_channels(self):
+    def test_first_person_actions_keep_source_arm_length_and_native_shoulder_anchor(self):
+        source = converter.read_json(converter.ASSETS / 'geo/drive_idle.geo.json')['minecraft:geometry'][0]['bones']
+        for filename, action, generate, output_name, clip_name, period in [
+            ('player_wash', 'player_wash', converter.make_player_handwashing_animation, 'handwashing', 'handwash', 2),
+            ('player', 'player_sit&clap', converter.make_player_chair_clap_animation, 'chair_clap', 'chair_clap', None)
+        ]:
+            original = converter.unwrap_vectors(converter.read_json(converter.ASSETS / f'animations/{filename}.animation.json')['animations'][action])
+            # First person deliberately excludes the torso/root camera transform.
+            arms = {'bones': {name: channel for name, channel in original['bones'].items()
+                              if name in ('right_arm', 'right_hand', 'left_arm', 'left_hand')}}
+            with TemporaryDirectory() as temp:
+                output = Path(temp)
+                with patch.multiple(converter, create=True, SOURCE=ROOT / 'upstream/reference', OUT=output, RP=output, PROVENANCE=[]):
+                    generate()
+                clip = converter.read_json(output / f'animations/{output_name}_player.animation.json')['animations'][f'animation.ordertocook.player.{clip_name}_first_person']
+            for side, sign in [('right', -1), ('left', 1)]:
+                name = side + 'Arm'
+                native = [{'name': name, 'pivot': [sign*5, 22, 0]}]
+                shoulder, tip = [sign*6, 24, 0], [sign*6, 12, 0]
+                for key in clip['bones'][name]['rotation']:
+                    seconds = float(key)
+                    original_time = seconds % period if period else seconds
+                    source_top = posed_point(source, arms, original_time, side+'_arm', shoulder)
+                    source_tip = posed_point(source, arms, original_time, side+'_hand', tip)
+                    actual_top = posed_point(native, clip, seconds, name, shoulder)
+                    actual_tip = posed_point(native, clip, seconds, name, tip)
+                    self.assertAlmostEqual(math.dist(actual_top, actual_tip), math.dist(source_top, source_tip), delta=.002,
+                                           msg=(action, side, seconds, source_top, source_tip, actual_top, actual_tip))
+                basis = {'bones': {name: {'rotation': [95, sign*45, -sign*115], 'position': [-sign*13.5, -10, 12]}}}
+                expected_top = posed_point(native, basis, 0, name, shoulder)
+                self.assertLess(math.dist(posed_point(native, clip, 0, name, shoulder), expected_top), .002)
+
+    def test_player_chair_clap_reproduces_bounded_perspective_clips(self):
         with TemporaryDirectory() as temp:
             output = Path(temp)
             with patch.multiple(converter, create=True, SOURCE=ROOT / 'upstream/reference', OUT=output, RP=output, PROVENANCE=[]):
@@ -131,9 +171,41 @@ class ApplianceGeometryTests(unittest.TestCase):
         clip = generated['animations']['animation.ordertocook.player.chair_clap']
         self.assertEqual(clip['animation_length'], 3)
         self.assertFalse(clip['loop'])
-        source = converter.unwrap_vectors(converter.read_json(converter.ASSETS / 'animations/player.animation.json')['animations']['player_sit&clap'])
-        self.assertEqual(clip['bones'], {native: source['bones'][original] for original, native in [('right_arm', 'rightArm'), ('left_arm', 'leftArm')]})
+        self.assertEqual(clip['blend_weight'], '!query.is_first_person')
+        first = generated['animations']['animation.ordertocook.player.chair_clap_first_person']
+        self.assertEqual(first['animation_length'], 3)
+        self.assertFalse(first['loop'])
         self.assertLessEqual(generated['animations']['animation.ordertocook.player.chair_clap_stop']['animation_length'], 0.1)
+
+    def test_chair_actions_preserve_source_body_shoulders_hands_and_foot_endpoints(self):
+        source = converter.read_json(converter.ASSETS / 'geo/drive_idle.geo.json')['minecraft:geometry'][0]['bones']
+        native = native_player_rig()
+        cases = [('body', 'root', [0, 12, 0], [0, 12, 0])]
+        for side, sign in [('right', -1), ('left', 1)]:
+            cases += [(side+'_arm', side+'Arm', [sign*6, 24, 0], [sign*6, 24, 0]),
+                      (side+'_hand', side+'Arm', [sign*6, 12, 0], [sign*6, 12, 0]),
+                      (side+'_leg', side+'Leg', [sign*2, 12, 0], [sign*1.9, 12, 0]),
+                      (side+'_foot', side+'Leg', [sign*2, 0, 0], [sign*1.9, 0, 0])]
+        with TemporaryDirectory() as temp:
+            output = Path(temp)
+            with patch.multiple(converter, create=True, SOURCE=ROOT / 'upstream/reference', OUT=output, RP=output, PROVENANCE=[]):
+                converter.make_player_chair_clap_animation()
+            clips = converter.read_json(output / 'animations/chair_clap_player.animation.json')['animations']
+        for action, clip_name, duration in [('player_sit&clap', 'chair_clap', 3), ('player_sit', 'chair_idle', 4.5)]:
+            original = converter.unwrap_vectors(converter.read_json(converter.ASSETS / 'animations/player.animation.json')['animations'][action])
+            # These source leg channels have constant post values. Evaluate the
+            # data directly rather than copying the inverse limb fit.
+            for name in ('right_leg', 'left_leg'):
+                values = [key['post'] for key in original['bones'][name]['rotation'].values()]
+                self.assertTrue(all(value == values[0] for value in values))
+                original['bones'][name]['rotation'] = values[0]
+            clip = clips[f'animation.ordertocook.player.{clip_name}']
+            times = [t for t in (0, .1, .2222, .3056, .3889, .5556, .7, 1, 1.5, 2.975, 3, 3.75, 4.45, 4.5) if t <= duration]
+            for seconds in times:
+                for old, new, old_point, new_point in cases:
+                    expected = posed_point(source, original, seconds, old, old_point)
+                    actual = posed_point(native, clip, seconds, new, new_point)
+                    self.assertLess(math.dist(expected, actual), .02, (action, seconds, old, expected, actual))
 
     def pose(self, half, frame, closing=False):
         clip = ("up_" if half == "upper" else "down_") + ("close" if closing else "open")

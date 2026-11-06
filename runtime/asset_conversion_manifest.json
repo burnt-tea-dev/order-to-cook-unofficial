@@ -583,7 +583,13 @@
       "source": "common/src/main/resources/assets/ordertocook/animations/player.animation.json",
       "output": "RP/animations/chair_clap_player.animation.json",
       "sha256": "4689f815ec15e8c2903486a465d81318094d62050c6a7e24a3064cae7dd59de5",
-      "operation": "Original seated clap arm channels; bounded three-second native-arm clip, no player definition override"
+      "operation": "Original seated idle/clap body and limb endpoints; bounded clap TP/FP and chair-limited idle, no player definition override; rigid elbow/knee approximation"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+      "output": "RP/animations/chair_clap_player.animation.json",
+      "sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+      "operation": "Original active player rig pivots and segmented limb endpoints"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/models/block/board.json",

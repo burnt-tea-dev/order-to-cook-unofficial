@@ -92,6 +92,7 @@ export function createEntityService(ctx) {
   const lastUse = new Map();
   const hornTimes = new Map();
   const chairClaps = new Map();
+  const chairIdles = new Map();
   const retryTimes = new Map();
   const entityInteractions = new Map();
   const chairClaims = new Set();
@@ -261,6 +262,9 @@ export function createEntityService(ctx) {
       rider.setDynamicProperty(`${NS}seat_id`, seat.id);
       rider.setDynamicProperty(`${NS}chair_anchor`, JSON.stringify({ dimensionId: block.dimension.id, location: block.location }));
       if (!rider.getDynamicProperty(`${NS}depart_at`)) property(rider, "stage", "seated");
+    } else if (rider.typeId === 'minecraft:player') {
+      stopChairClap(rider.id, false);
+      chairIdleAnimation(rider, true);
     }
     return true;
   }
@@ -511,17 +515,45 @@ export function createEntityService(ctx) {
   }
 
   function chairClapAnimation(player, stop = false) {
-    try {
-      player.playAnimation(`animation.ordertocook.player.${stop ? 'chair_clap_stop' : 'chair_clap'}`, {
-        controller: 'ordertocook_chair_clap', blendOutTime: 0.1
-      });
-    } catch { /* Cosmetic failure cannot affect seating or order transactions. */ }
+    for (const suffix of ['', '_first_person']) {
+      try {
+        player.playAnimation(`animation.ordertocook.player.${stop ? 'chair_clap_stop' : 'chair_clap' + suffix}`, {
+          controller: 'ordertocook_chair_clap' + suffix, blendOutTime: 0.1
+        });
+      } catch { /* Each view is cosmetic; rejection cannot change seating or orders. */ }
+    }
   }
 
-  function stopChairClap(id) {
+  function chairIdleAnimation(player, restart = false) {
+    const seat = playerChair(player);
+    if (!seat || (!restart && chairIdles.get(player.id)?.seatId === seat.id)) return;
+    chairIdles.set(player.id, { player, seatId: seat.id });
+    try {
+      player.playAnimation('animation.ordertocook.player.chair_idle', {
+        controller: 'ordertocook_chair_idle', blendOutTime: 0.1,
+        stopExpression: "!query.is_riding_any_entity_of_type('ordertocook:seat')"
+      });
+    } catch { /* The client pose cannot determine whether mounting succeeds. */ }
+  }
+
+  function stopChairIdle(id) {
+    const session = chairIdles.get(id);
+    chairIdles.delete(id);
+    if (!session?.player.isValid) return;
+    try {
+      session.player.playAnimation('animation.ordertocook.player.chair_idle_stop', {
+        controller: 'ordertocook_chair_idle', blendOutTime: 0.1
+      });
+    } catch { /* Cosmetic only. */ }
+  }
+
+  function stopChairClap(id, resumeIdle = true) {
     const session = chairClaps.get(id);
     chairClaps.delete(id);
-    if (session?.player.isValid) chairClapAnimation(session.player, true);
+    if (session?.player.isValid) {
+      chairClapAnimation(session.player, true);
+      if (resumeIdle) chairIdleAnimation(session.player, true);
+    }
   }
 
   /** Original RiderAnimatable: 60 ticks, voices at 0/12/20; no restart mid-clap. */
@@ -833,6 +865,9 @@ export function createEntityService(ctx) {
     for (const [id, session] of chairClaps) {
       if (now >= session.until || playerChair(session.player)?.id !== session.seatId) stopChairClap(id);
     }
+    for (const [id, session] of chairIdles) {
+      if (playerChair(session.player)?.id !== session.seatId) stopChairIdle(id);
+    }
     const refresh = now - scanTick >= 20;
     if (refresh) {
       entities = queryAll(CUSTOMER);
@@ -902,6 +937,7 @@ export function createEntityService(ctx) {
   }
 
   function init() {
+    gameWorld.afterEvents.playerSpawn.subscribe(event => gameSystem.run(() => chairIdleAnimation(event.player)));
     gameSystem.afterEvents.scriptEventReceive.subscribe(event => {
       if (event.id !== `${NS}reaction_finished` || event.sourceEntity?.typeId !== CUSTOMER) return;
       const entity = event.sourceEntity, action = Number(event.message);
@@ -943,13 +979,17 @@ export function createEntityService(ctx) {
       if (bike?.typeId === MOTORCYCLE) horn(bike);
     });
     gameWorld.afterEvents.playerLeave.subscribe(event => {
-      stopChairClap(event.playerId);
+      stopChairClap(event.playerId, false);
+      stopChairIdle(event.playerId);
       activeForms.delete(event.playerId);
       lastUse.delete(event.playerId);
       for (const key of entityInteractions.keys()) if (key.startsWith(`${event.playerId}:`)) entityInteractions.delete(key);
     });
     gameSystem.run(() => {
       readyTick = gameSystem.currentTick + 40;
+      // Restore mounted players on a script reload; reconnects use playerSpawn.
+      // No new polling interval or saved player state is needed for the pose.
+      for (const player of gameWorld.getAllPlayers()) chairIdleAnimation(player);
       gameSystem.runInterval(tick, 5);
     });
   }
