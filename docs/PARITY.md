@@ -77,6 +77,16 @@ Java選定source與API版本查 [upstream鎖](../upstream/source.lock.json)。Fo
 
 共享顯示producer的唯一資料源是 [player-presentation.json](../player-presentation.json) 的 `first_person_arm_requests`；生成器由它取得各動作的旗標名。公共Core的[多request contract](https://github.com/burnt-tea-dev/senluo-bedrock-core/blob/e8dbc451d307625d1859ac863b4299665449eb52/docs/PORT-ADAPTERS.md#shared-first-person-left-arm-request)接收這些values，每幀各自reset並OR入有效FP的leftArm／leftSleeve。各動作只清自己的旗標，不能用拍手stop抹掉另一個尚有效的request。整批producer何時採用新Core／descriptor由共享owner決定；來源合併不自動改既有候選或LIVE。
 
+### 分段rig的接入邊界（2026-11-06來源查證）
+
+所選025整批候選的有效owner仍啟用attachables；普通FP、TP及持槍副手FP均讀 `Geometry.default`／`Texture.default`。普通FP以 `rightArm`／`rightSleeve`／`leftArm`／`leftSleeve` 控可見性，TP還沿既有armor layer條件。原分段rig只有原作者骨名，沒有native的 `root`／`waist`、Arm／Item／Leg／Sleeve／Pants等骨名，也沒有locator。因此只把default改成imported rig，並不能同時保留原有姿勢、持物錨點及衣物顯示。這是已選輸入的來源結構差異，不是平台禁止分段骨架的證據；本版未做該切換。
+
+所選官方[原生骨架](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/models/entity/humanoid.custom.geo.json)保留 `rightItem`／`leftItem` 及lead locator。[原生胸甲attachable](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/attachables/iron_chestplate.player.json)另設 `chest_layer_visible=0`，使用[armor geometry](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/models/entity/player_armor.json)的native body／waist／Arm等骨名；不能只看玩家皮膚網格。Java也須分支核對：上述Forge入口只替換base model的renderToBuffer；Neo則在自訂renderer成功後取消整個PlayerRenderer。所選兩分支RiderGeoRenderer只自加motorcycle helmet layer，沒有另加一般armor／held-item layer。這不等於已觀察兩分支穿甲實景，也不要求額外重做所有盔甲分節。
+
+classic／slim的原rig與UV已存在，但自動選取仍需證據。[官方skin pack規格](https://learn.microsoft.com/en-us/minecraft/creator/documents/packagingaskinpack?view=minecraft-bedrock-stable)把 `geometry.humanoid.custom`／`customSlim` 分別當Steve／Alex；該metadata不是client_entity的slim query。所選[Molang參考](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/documentation/Molang.html)有bone_aabb、bone_origin、get_default_bone_pivot；skin_id則關聯實體skin_id component。有效owner目前沒有骨架／slim偵測，也未宣告queryable_geometry；官方[client schema](https://learn.microsoft.com/en-us/minecraft/creator/reference/content/visualreference/actor_resource_definition.v1.10.0?view=minecraft-bedrock-stable)雖列出該欄位，尚未驗證這些查詢在所選玩家skin／取樣階段的值，不能直接拿它們決定粗細手臂，也不能由此斷言它們不支援玩家。
+
+後續接入應沿同一有效owner保留原default、皮膚與既有native骨名協議，再以實際動作選擇可相容的分段geometry；這是待驗證的實作方向。classic／slim／客製avatar、持物／armor與相機矩陣未核清前，本版不加入全域geometry替換、額外player覆寫或機器專屬玩法。
+
 ## 手洗第一人稱左臂
 
 `make_player_handwashing_animation` 使用原left／right arm與hand的相對節拍。0.1.26修正FP原只旋轉／移位而未套臂長的差異：原右肩到手端11.183676像素、左11.161967像素，native整臂卻仍12。現在FP也套來源長度比例，並補償頂端位移以維持原鏡頭肩端。既有native空手旋轉基準、左右鏡射、blend gate與stop不變；TP只另修真native腿網格中心差。這仍不是Java ACTION絕對校準或分段肘關節。
