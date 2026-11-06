@@ -71,7 +71,12 @@ Bedrock implementation, not evidence of full Java parity.
 
 `tests/guide-book.test.js` checks the immutable chapter tree, all reachable
 screens, icon paths, three-language key coverage, admin visibility and the
-existing item/recipe identity. The main harness exercises a complete
+existing item/recipe identity. Every button image must be an actual inventory
+sprite or a thumbnail linked to an original model source in the conversion
+manifest; an existing PNG alone is insufficient, because UV atlases are also
+valid PNG files. This applies to all chapter, topic, lesson and navigation
+buttons, including the plate image used by the order/deadline topic.
+The main harness exercises a complete
 cover→chapter→topic→lesson→next→previous→back→home navigation path.
 Run `npm run verify` before merging.
 

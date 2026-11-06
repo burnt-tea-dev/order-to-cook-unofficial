@@ -2,11 +2,14 @@
 # SPDX-License-Identifier: GPL-3.0-only
 """Exercise the actual offline converter against its pinned source and outputs."""
 import copy
+import contextlib
 import importlib.util
+import io
 import json
 import math
 import itertools
 import re
+import runpy
 from pathlib import Path
 import unittest
 from tempfile import TemporaryDirectory
@@ -50,6 +53,25 @@ class ApplianceGeometryTests(unittest.TestCase):
     def setUp(self):
         self.source = converter.normalize_geo(converter.ASSETS / "geo/block/refrigerator.geo.json", "geometry.source")
         self.clips = converter.read_json(converter.ASSETS / "animations/refrigerator.animation.json")["animations"]
+
+    def test_resource_checker_rejects_the_observed_zero_size_block_cube(self):
+        target = ROOT / 'runtime/RP/models/blocks/dining_plate_empty.geo.json'
+        broken = converter.read_json(target)
+        cube = broken['minecraft:geometry'][0]['bones'][0]['cubes'][0]
+        cube['origin'] = [0, 0, 0]
+        cube['size'] = [0, 0, 0]  # Actual 20:48 overlay input still rejected by the client.
+        original_read = Path.read_text
+        def read(path, *args, **kwargs):
+            return json.dumps(broken) if path == target else original_read(path, *args, **kwargs)
+        output = io.StringIO()
+        # Inject only this real input file. The actual checker reads the rest
+        # of the real pack; no generated files or LIVE data are written.
+        with patch.object(Path, 'read_text', read), contextlib.redirect_stdout(output):
+            with self.assertRaises(SystemExit) as stopped:
+                runpy.run_path(str(ROOT / 'tools/validate_pack.py'), run_name='__main__')
+        self.assertEqual(stopped.exception.code, 1)
+        errors = json.loads(output.getvalue())['errors']
+        self.assertTrue(any('dining_plate_empty' in error and 'non-zero-area' in error for error in errors), errors)
 
     def test_dining_plate_all_encoded_states_have_bounded_meshes_and_only_visible_food_stages(self):
         with TemporaryDirectory() as temp:
