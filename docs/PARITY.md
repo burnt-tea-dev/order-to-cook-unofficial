@@ -87,7 +87,7 @@ Java選定source與API版本查 [upstream鎖](../upstream/source.lock.json)。Fo
 
 classic／slim的原rig與UV已存在，但自動選取仍需證據。[官方skin pack規格](https://learn.microsoft.com/en-us/minecraft/creator/documents/packagingaskinpack?view=minecraft-bedrock-stable)把 `geometry.humanoid.custom`／`customSlim` 分別當Steve／Alex；該metadata不是client_entity的slim query。所選[Molang參考](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/documentation/Molang.html)有bone_aabb、bone_origin、get_default_bone_pivot；skin_id則關聯實體skin_id component。有效owner目前沒有骨架／slim偵測，也未宣告queryable_geometry；官方[client schema](https://learn.microsoft.com/en-us/minecraft/creator/reference/content/visualreference/actor_resource_definition.v1.10.0?view=minecraft-bedrock-stable)雖列出該欄位，尚未驗證這些查詢在所選玩家skin／取樣階段的值，不能直接拿它們決定粗細手臂，也不能由此斷言它們不支援玩家。
 
-全身、前臂及分段FP的可重現生成與矩陣測試現已具備，見[來源原型與接入契約](PLAYER-RIG-PROTOTYPE.md)。它保留分段上下肢、下袖／褲、持物錨點及每手獨立view／body矩陣；參考相機框架明確傳入，未自動選native skin或校準Bedrock絕對相機。這些來源未進runtime，現行rigid姿勢不變。後續接入沿共同持有的Core／既有composer保留同一有效owner的default、皮膚與native骨名，再按實際動作選相容geometry；classic／slim／客製avatar、持物／armor與相機未核清前，不加入全域geometry替換、額外player覆寫或機器專屬玩法。
+全身、前臂及分段FP的可重現生成與矩陣測試現已具備，見[來源原型與接入契約](PLAYER-RIG-PROTOTYPE.md)。classic與customSlim已各讀固定Mojang真基底，補償slim網格／樞紐／持物的半像素座標框差並保留其鏡射UV，不再共用classic只改寬度。它保留分段上下肢、下袖／褲、持物錨點及每手獨立view／body矩陣；參考相機框架明確傳入，未自動選native skin或校準Bedrock絕對相機。這些來源未進runtime，現行rigid姿勢不變。後續接入沿共同持有的Core／既有composer保留同一有效owner的default、皮膚與native骨名，再按實際動作選相容geometry；native自動選型／客製avatar、持物／armor與相機未核清前，不加入全域geometry替換、額外player覆寫或機器專屬玩法。
 
 ## 手洗第一人稱左臂
 

@@ -44,7 +44,8 @@ jobs:
         if: steps.scope.outputs.full != 'false'
         run: |
           curl --fail --silent --show-error --location --max-time 30 https://raw.githubusercontent.com/Mojang/bedrock-samples/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/models/entity/humanoid.custom.geo.json --output "$RUNNER_TEMP/otc-native-player.geo.json"
-          OTC_NATIVE_PLAYER_GEOMETRY="$RUNNER_TEMP/otc-native-player.geo.json" python -m unittest discover -s tests -p test_segmented_player.py
+          curl --fail --silent --show-error --location --max-time 30 https://raw.githubusercontent.com/Mojang/bedrock-samples/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/models/mobs.json --output "$RUNNER_TEMP/otc-native-mobs.json"
+          OTC_NATIVE_PLAYER_GEOMETRY="$RUNNER_TEMP/otc-native-player.geo.json" OTC_NATIVE_SLIM_GEOMETRY="$RUNNER_TEMP/otc-native-mobs.json" python -m unittest discover -s tests -p test_segmented_player.py
       - name: Validate attribution, source inventory and packaged legal notices
         run: python tools/check_compliance.py
       - name: Regression-check advisory clarification and release tag validation

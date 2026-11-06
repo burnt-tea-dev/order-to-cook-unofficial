@@ -613,7 +613,7 @@ def player_action_times(original, duration, period=None):
     return sorted(times)
 
 
-def _split_native_limb_cube(cube, height):
+def _split_native_limb_cube(cube, height, mirror=False):
     """Cut a selected native box without changing its exterior texel mapping."""
     x, y, z = cube['size']
     u, v = cube['uv']
@@ -624,9 +624,19 @@ def _split_native_limb_cube(cube, height):
         'south': {'uv': [u+2*z+x, v+z], 'uv_size': [x, y]},
         'up': {'uv': [u+z, v], 'uv_size': [x, z]},
         'down': {'uv': [u+z+x, v+z], 'uv_size': [x, -z]}}
+    # Bake the selected native box mirror into explicit physical face UVs.
+    # A child bone must not silently lose its parent's cube-local UV flag.
+    if cube.get('mirror', mirror):
+        reflected = {}
+        for name, face in faces.items():
+            target = {'east': 'west', 'west': 'east'}.get(name, name)
+            reflected[target] = {'uv': [face['uv'][0]+face['uv_size'][0], face['uv'][1]],
+                                 'uv_size': [-face['uv_size'][0], face['uv_size'][1]]}
+        faces = reflected
     # Splitting two inflated cubes would overlap at the seam and stretch each
     # half's texels. Bake inflation first, then crop the physical exterior.
     inflated = copy.deepcopy(cube)
+    inflated.pop('mirror', None)
     inflate = inflated.pop('inflate', 0)
     inflated['origin'] = [value-inflate for value in cube['origin']]
     inflated['size'] = [value+2*inflate for value in cube['size']]
@@ -644,11 +654,46 @@ def _split_native_limb_cube(cube, height):
     return halves
 
 
+def native_player_variants(classic, legacy_mobs):
+    """Select the two explicit Mojang inputs without inventing inheritance."""
+    entries = classic.get('minecraft:geometry', [])
+    if len(entries) != 1 or entries[0].get('description', {}).get('identifier') != 'geometry.humanoid.custom':
+        raise ValueError('Classic input must explicitly define geometry.humanoid.custom')
+    identifier = 'geometry.humanoid.customSlim'
+    if legacy_mobs.get('format_version') != '1.8.0' or identifier not in legacy_mobs:
+        raise ValueError('Slim input must contain the standalone legacy geometry.humanoid.customSlim')
+    selected = legacy_mobs[identifier]
+    description = {'identifier': identifier}
+    for key in ('visible_bounds_width', 'visible_bounds_height', 'visible_bounds_offset'):
+        if key in selected:
+            description[key] = copy.deepcopy(selected[key])
+    for old, new in (('texturewidth', 'texture_width'), ('textureheight', 'texture_height')):
+        if old in selected:
+            description[new] = selected[old]
+    slim = {'format_version': GEOMETRY_VERSION, 'minecraft:geometry': [
+        {'description': description, 'bones': copy.deepcopy(selected['bones'])}]}
+    return {'classic': copy.deepcopy(classic), 'slim': slim}
+
+
+def player_segment_frame_offset(source_rig, native_rig, side, limb):
+    """Translate the selected native mesh frame into its author mesh frame.
+
+    Use the real uninflated skin top, not the shoulder pivot: native Slim's
+    shoulder and mesh are both 0.5px lower, while its author shoulder also has
+    a different X pivot. Those are two separate coordinate corrections.
+    """
+    source = source_rig[f'{side}_{limb.lower()}']['cubes'][0]
+    target = native_rig[side+limb]['cubes'][0]
+    return rounded([source['origin'][axis]+source['size'][axis]*fraction
+            -target['origin'][axis]-target['size'][axis]*fraction
+            for axis, fraction in enumerate((.5, 1, .5))])
+
+
 def segmented_player_geometry(native, source_rig, identifier):
     """Local prototype only: native controls with independent elbows/knees.
 
-    The caller explicitly selects the author's classic or slim source rig.
-    This neither detects a client skin nor claims the native slim skeleton.
+    The caller explicitly selects matching native and author source variants.
+    This does not detect or select a client's actual skin.
     No runtime exporter calls this function until the shared selector exists.
     """
     result = copy.deepcopy(native)
@@ -665,19 +710,15 @@ def segmented_player_geometry(native, source_rig, identifier):
         additions.extend([{'name': view, 'parent': 'body', 'pivot': [0, 0, 0]},
                           {'name': action_body, 'parent': view, 'pivot': list(source_rig['body']['pivot'])}])
         bones[side+'Arm']['parent'] = action_body
-        for limb, overlay, joint, height in (('Arm', 'Sleeve', 'forearm', 18), ('Leg', 'Pants', 'shin', 6)):
+        for limb, overlay, joint, source_lower in (('Arm', 'Sleeve', 'forearm', 'hand'), ('Leg', 'Pants', 'shin', 'foot')):
             lower = f'ordertocook_{side}_{joint}'
-            # Arm bends use the actual source elbow, including slim's offset
-            # from its mesh center. Leg bends keep the native +/-1.9 mesh axis.
-            pivot = (source_rig[side+'_hand']['pivot'] if limb == 'Arm'
-                     else [bones[side+'Leg']['pivot'][0], height, 0])
+            delta = player_segment_frame_offset(source_rig, bones, side, limb)
+            pivot = [a-b for a,b in zip(source_rig[side+'_'+source_lower]['pivot'], delta)]
+            height = pivot[1]
             for name, target in ((side+limb, lower), (side+overlay, lower+'_'+overlay.lower())):
                 bone = bones[name]
-                if limb == 'Arm':
-                    for cube in bone['cubes']:
-                        cube['origin'][0] = source_rig[side+'_arm']['cubes'][0]['origin'][0]
-                        cube['size'][0] = source_rig[side+'_arm']['cubes'][0]['size'][0]
-                halves = [_split_native_limb_cube(cube, height) for cube in bone['cubes']]
+                halves = [_split_native_limb_cube(cube, height, bone.get('mirror', False)) for cube in bone['cubes']]
+                bone.pop('mirror', None)  # Now represented by each explicit face UV.
                 bone['cubes'] = [pair[0] for pair in halves]
                 additions.append({'name': target, 'parent': name, 'pivot': list(pivot),
                                   'cubes': [pair[1] for pair in halves]})
@@ -689,7 +730,7 @@ def segmented_player_geometry(native, source_rig, identifier):
     return rounded(result)
 
 
-def _player_bone_below_torso(channels, pivot, native_pivot, torso, torso_pivot, seconds):
+def _player_bone_below_torso(channels, pivot, native_pivot, torso, torso_pivot, seconds, frame_offset=(0, 0, 0)):
     """Retarget a source body sibling under the native torso (selected clips)."""
     rotation = sample_channel(channels.get('rotation'), seconds, [0]*3)
     position = sample_channel(channels.get('position'), seconds, [0]*3)
@@ -699,7 +740,8 @@ def _player_bone_below_torso(channels, pivot, native_pivot, torso, torso_pivot, 
     # is exact here; this is not a general inverse-Euler implementation.
     axes = [geometry_transform3(geometry_transform3([int(i == j) for i in range(3)], rotation), inverse_torso) for j in range(3)]
     angles, _ = closest_cuboid_axes([[axes[j][i] for j in range(3)] for i in range(3)])
-    anchor = [a+b-c for a,b,c in zip(geometry_transform3(native_pivot, rotation, pivot), position, torso_position)]
+    source_anchor = [a+b for a,b in zip(native_pivot, frame_offset)]
+    anchor = [a+b-c for a,b,c in zip(geometry_transform3(source_anchor, rotation, pivot), position, torso_position)]
     anchor = geometry_transform3(anchor, inverse_torso, torso_pivot)
     return angles, [a-b for a,b in zip(anchor, native_pivot)]
 
@@ -720,11 +762,13 @@ def segmented_player_action_pose(original, source_rig, native, duration, period=
     for side in ('right', 'left'):
         targets.append((side+'_arm', side+'Arm'))
     for old, new in targets:
+        frame_offset = (player_segment_frame_offset(source_rig, native_rig, old.split('_')[0], 'Arm')
+                        if old.endswith('_arm') else [0]*3)
         channels = {'rotation': {}, 'position': {}, 'scale': [1]*3}
         for time in player_action_times(original, duration, period):
             seconds = time % period if period else time
             angles, offset = _player_bone_below_torso(source.get(old, {}), source_rig[old]['pivot'],
-                native_rig[new]['pivot'], torso, source_rig['torso']['pivot'], seconds)
+                native_rig[new]['pivot'], torso, source_rig['torso']['pivot'], seconds, frame_offset)
             channels['rotation'][f'{time:g}'] = angles
             channels['position'][f'{time:g}'] = offset
         bones[new] = channels
@@ -762,11 +806,12 @@ def segmented_player_first_person_pose(original, source_rig, native, duration, c
         bones[view] = copy.deepcopy(camera_frames[side])
         bones[action_body] = copy.deepcopy(original['bones'].get('body', {}))
         channels = {'rotation': {}, 'position': {}, 'scale': [1]*3}
+        frame_offset = player_segment_frame_offset(source_rig, native_rig, side, 'Arm')
         for time in player_action_times(original, duration, period):
             seconds = time % period if period else time
             angles, offset = _player_bone_below_torso(original['bones'].get(side+'_arm', {}),
                 source_rig[side+'_arm']['pivot'], native_rig[side+'Arm']['pivot'], {},
-                source_rig['torso']['pivot'], seconds)
+                source_rig['torso']['pivot'], seconds, frame_offset)
             channels['rotation'][f'{time:g}'] = angles
             channels['position'][f'{time:g}'] = offset
         bones[side+'Arm'] = channels
@@ -776,7 +821,7 @@ def segmented_player_first_person_pose(original, source_rig, native, duration, c
     return rounded(bones)
 
 
-def make_segmented_player_source(native, camera_frames, output):
+def make_segmented_player_source(natives, camera_frames, output):
     """Write local model/pose references, never an installed player or pack."""
     if not isinstance(camera_frames, dict) or set(camera_frames) != {'right', 'left'}:
         raise ValueError('Camera frames need explicit right and left views')
@@ -791,6 +836,8 @@ def make_segmented_player_source(native, camera_frames, output):
                ('chair_clap', 'player', 'player_sit&clap', 3, None)]
     contract = {'schema': 1, 'status': 'prototype_no_selector', 'variants': {}, 'part_visibility': {}}
     for variant, filename in (('classic', 'drive_idle'), ('slim', 'drive_idle_alex')):
+        native = natives[variant]
+        native_rig = {bone['name']: bone for bone in native['minecraft:geometry'][0]['bones']}
         source_path = ASSETS / f'geo/{filename}.geo.json'
         rig = {bone['name']: bone for bone in read_json(source_path)['minecraft:geometry'][0]['bones']}
         model = segmented_player_geometry(native, rig, f'geometry.{NS}.prototype.segmented_{variant}')
@@ -802,15 +849,18 @@ def make_segmented_player_source(native, camera_frames, output):
             for view, bones in poses.items():
                 identifier = f'animation.{NS}.prototype.{variant}.{short}.{view}'
                 clips[identifier] = {'animation_length': duration, 'loop': False, 'bones': bones}
-        additions = {bone['name'] for bone in model['minecraft:geometry'][0]['bones']} - {
-            bone['name'] for bone in native['minecraft:geometry'][0]['bones']}
+        additions = {bone['name'] for bone in model['minecraft:geometry'][0]['bones']} - native_rig.keys()
         clips[f'animation.{NS}.prototype.{variant}.reset'] = {'animation_length': .05,
             'bones': {name: {'rotation': [0]*3, 'position': [0]*3, 'scale': [1]*3} for name in sorted(additions)}}
         geometry_file, animation_file = f'{variant}.geometry.json', f'{variant}.poses.json'
         write_json(output / geometry_file, model)
         write_json(output / animation_file, {'format_version': '1.8.0', 'animations': clips})
         contract['variants'][variant] = {'geometry': geometry_file, 'poses': animation_file,
-                                         'source_rig': str(source_path.relative_to(SOURCE))}
+            'source_rig': str(source_path.relative_to(SOURCE)),
+            'native_geometry': native['minecraft:geometry'][0]['description']['identifier'],
+            'native_inheritance': [],
+            'source_frame_offsets': {side+limb: player_segment_frame_offset(rig, native_rig, side, limb)
+                for side in ('right', 'left') for limb in ('Arm', 'Leg')}}
     for side in ('right', 'left'):
         for joint, parent, overlay in (('forearm', 'Arm', 'Sleeve'), ('shin', 'Leg', 'Pants')):
             contract['part_visibility'][f'ordertocook_{side}_{joint}'] = side+parent
@@ -1968,17 +2018,19 @@ def main():
     parser.add_argument("--source",type=Path,default=ROOT / "upstream/reference",help="Bundled upstream/reference source subset (default), or a local OrdertoCook checkout")
     parser.add_argument("--output",type=Path,default=ROOT / "runtime")
     parser.add_argument("--segmented-player-native", type=Path, help="External native input for local model-source prototypes only")
+    parser.add_argument("--segmented-player-slim", type=Path, help="External legacy mobs.json containing standalone native customSlim")
     parser.add_argument("--segmented-camera-frames", type=Path, help="Explicit right/left model-space camera frames for that prototype")
     args=parser.parse_args()
     SOURCE=args.source.resolve(); ASSETS=SOURCE / ASSET_REL; OUT=args.output.resolve(); BP=OUT / "BP"; RP=OUT / "RP"
     if not (SOURCE / "LICENSE.txt").is_file() or not ASSETS.is_dir():
         parser.error("Expected OrdertoCook source inputs with LICENSE.txt and common resources")
-    if args.segmented_player_native or args.segmented_camera_frames:
-        if not (args.segmented_player_native and args.segmented_camera_frames):
-            parser.error("Segmented prototypes need both native geometry and explicit camera frames")
+    if args.segmented_player_native or args.segmented_player_slim or args.segmented_camera_frames:
+        if not (args.segmented_player_native and args.segmented_player_slim and args.segmented_camera_frames):
+            parser.error("Segmented prototypes need separate native classic/slim inputs and explicit camera frames")
         if OUT.is_relative_to(ROOT / 'runtime'):
             parser.error("Segmented prototype output must be outside runtime; no player selector is installed")
-        make_segmented_player_source(read_json(args.segmented_player_native), read_json(args.segmented_camera_frames), OUT)
+        natives = native_player_variants(read_json(args.segmented_player_native), read_json(args.segmented_player_slim))
+        make_segmented_player_source(natives, read_json(args.segmented_camera_frames), OUT)
         print('Generated local model-source prototype; no player, selector, pack or release identity')
         return
     metadata = SOURCE / "UPSTREAM.json"
