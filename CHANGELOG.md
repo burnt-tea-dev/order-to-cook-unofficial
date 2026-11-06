@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.28-alpha.1
+
+- Deliver the canonical guide-icon and invisible dining-plate fixes under a fresh paired identity. A temporary installation already used RP 0.1.27 with a different geometry payload; 0.1.28 avoids reusing that UUID/version for different bytes. The 027 source history and all gameplay/resource content are preserved; only paired manifests advance.
+
 ## 0.1.23-alpha.1
 
 - Declare `pbr` in the canonical RP manifest so a resource-pack stack requiring the optional Vibrant Visuals mode can admit it. Keep the existing 1.26.60 minimum, which exceeds the documented 1.21.120 requirement. No texture sets, material maps, global lighting overrides or artwork are added; missing texture sets use the selected mode's fallbacks. This is a compatibility declaration, not verified PBR artwork or client rendering.
