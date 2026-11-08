@@ -63,6 +63,11 @@ export function createMachineTiming(ctx) {
       arrival.remaining = ticks(restaurant.config?.walkInIntervalMs ?? DEFAULT_CONFIG.walkInIntervalMs);
       changed = ctx.arrive(restaurant, block) || changed;
     }
+    // A nested customer save can fail and restore a different canonical
+    // snapshot. Never recommit this stale object after that rollback.
+    if (ctx.getRestaurant(restaurant.id) !== restaurant) {
+      throw Error('Machine restaurant changed during tick; stale timer save aborted');
+    }
     if (changed) ctx.saveRestaurant(restaurant);
   }
 
