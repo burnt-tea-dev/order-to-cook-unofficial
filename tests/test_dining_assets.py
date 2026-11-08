@@ -43,7 +43,12 @@ class DiningAssetTests(unittest.TestCase):
         ])
         self.assertEqual(components["minecraft:selection_box"],
                          {"origin": [-7, 0, -7], "size": [14, 5, 14]})
-        self.assertEqual(components["minecraft:geometry"], "geometry.ordertocook.dining_plate_empty")
+        # Stage zero has a legal finite placeholder mesh hidden by the native
+        # component. A string-only reference would expose that placeholder.
+        self.assertEqual(components["minecraft:geometry"], {
+            "identifier": "geometry.ordertocook.dining_plate_empty",
+            "bone_visibility": {"root": False},
+        })
         stages = {p["components"]["minecraft:geometry"] for p in block["permutations"]
                   if "minecraft:geometry" in p["components"]}
         self.assertEqual(stages, {f"geometry.ordertocook.dining_plate_{i}" for i in range(1, 41)})
