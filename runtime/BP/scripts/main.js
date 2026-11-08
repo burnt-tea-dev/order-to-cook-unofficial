@@ -1390,7 +1390,7 @@ world.afterEvents.weatherChange.subscribe(event => {
 world.afterEvents.worldLoad.subscribe(() => {
   try {
     initStore();
-    machineTiming = createMachineTiming({ world, saveRestaurant,
+    machineTiming = createMachineTiming({ world, saveRestaurant, getRestaurant,
       refresh: (restaurant, block) => {
         if (syncMenu(restaurant)) saveRestaurant(restaurant);
         if (!restaurant.menu.length || restaurant.orders.filter(order => liveStatus.has(order.status)).length >= 32) return false;
