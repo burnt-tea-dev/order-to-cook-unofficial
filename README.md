@@ -2,6 +2,8 @@
 
 [简体中文](README.zh-CN.md) · **繁體中文** · [English](README.en.md)
 
+0.1.36在到店嘗試尚未建立實體、當下找不到可用已載入空椅時，只撤回此次新單，避免滿座或頭部受阻仍累積無顧客新單。舊待重試單、冷卻與同tick刷新保留；生成／清理結果不明仍走原流程，並非完整admission或POI性能修復。見[到店驗證](docs/validation/0.1.36-alpha.1/WALKIN_ADMISSION.md)。
+
 0.1.35讓普通機器訂單顧客依固定Java的x升序、z升序、y降序，選首張合格的已註冊椅子；到店顧客仍隨機選空椅。保留載入、佔用與頭部空間保護，不等於完整生成還原或性能改善。見[普通選椅驗證](docs/validation/0.1.35-alpha.1/NORMAL_CHAIR_SCAN.md)。
 
 0.1.34阻止到店顧客保存失敗、回滾後，機器計時器再次提交舊物件而復活訂單。保留一般生成失敗的待重試訂單與冷卻規則；這不是整個tick／原生世界交易保證，也不含POI性能或客戶端驗收。見[保存回歸](docs/validation/0.1.34-alpha.1/CANONICAL_COMMIT.md)。
