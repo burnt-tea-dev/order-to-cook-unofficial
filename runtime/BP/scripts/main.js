@@ -336,8 +336,8 @@ function acceptWithTicket(player, restaurant, order) {
   if (freeSlot(containerOf(player)) < 0) { notify(player, '請空出一格背包收取訂單。'); return; }
   // Ordinary machine diners can use the upstream standing fallback. Only
   // independently arriving walk-ins require a restaurant chair to accept.
-  if (order.walkIn && order.type === 'dine_in' && !nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:chair').length) {
-    notify(player, '到店顧客需要餐廳 24 格內有椅子。'); return;
+  if (order.walkIn && order.type === 'dine_in' && !nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:chair', { shape: 'cylinder', halfHeight: 8 }).length) {
+    notify(player, '到店顧客需要餐廳水平 24 格、高低 8 格內有椅子。'); return;
   }
   const result = acceptOrder(restaurant, order.id, orderTime());
   saveRestaurant(restaurant);
@@ -1400,7 +1400,7 @@ world.afterEvents.worldLoad.subscribe(() => {
       arrive: (restaurant, block) => {
         if (syncMenu(restaurant)) saveRestaurant(restaurant);
         if (!restaurant.menu.length || restaurant.orders.filter(order => liveStatus.has(order.status)).length >= 32 ||
-            Math.random() >= getWalkInChance(restaurant) || !nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:chair').length) return false;
+            Math.random() >= getWalkInChance(restaurant) || !nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:chair', { shape: 'cylinder', halfHeight: 8 }).length) return false;
         const order = generateWalkInOrder(restaurant, orderTime());
         if (entities.spawnCustomer(restaurant, order)) playAt(block, 'order_refresh');
         return true;

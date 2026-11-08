@@ -269,12 +269,15 @@ export function createEntityService(ctx) {
     return true;
   }
 
-  function findChair(restaurant) {
+  function findChair(restaurant, randomize = false) {
     const choices = (ctx.stations?.() ?? []).filter(station =>
       station.typeId === CHAIR && station.dimensionId === restaurant.dimensionId &&
       horizontalDist2(station.location, restaurant.location) <= 24 ** 2 &&
       Math.abs(station.location.y - restaurant.location.y) <= 8);
-    choices.sort((a, b) => dist2(a.location, restaurant.location) - dist2(b.location, restaurant.location));
+    // Normal machine diners keep the existing nearest-first adapter behavior.
+    // Java's uniform random pool applies specifically to independent walk-ins.
+    if (!randomize) choices.sort((a, b) => dist2(a.location, restaurant.location) - dist2(b.location, restaurant.location));
+    const eligible = [];
     for (const candidate of choices) {
       try {
         const block = gameWorld.getDimension(candidate.dimensionId).getBlock(candidate.location);
@@ -282,10 +285,18 @@ export function createEntityService(ctx) {
         if (chairOccupied(block)) continue;
         const above = block.dimension.getBlock({ ...block.location, y: block.location.y + 1 });
         const head = block.dimension.getBlock({ ...block.location, y: block.location.y + 2 });
-        if (above?.isAir && head?.isAir) return block;
+        if (above?.isAir && head?.isAir) {
+          if (!randomize) return block;
+          eligible.push(block);
+        }
       } catch { /* A candidate can unload between the lookup and head checks. */ }
     }
-    return undefined;
+    if (eligible.length < 2) return eligible[0];
+    // Java findEmptyChair uniformly chooses among all currently usable chairs,
+    // rather than preferring the nearest. Keep occupancy/headroom checks first.
+    const roll = Number(ctx.random?.() ?? Math.random());
+    const index = Number.isFinite(roll) ? Math.max(0, Math.min(eligible.length - 1, Math.floor(roll * eligible.length))) : 0;
+    return eligible[index];
   }
 
   /** Ground checks read loaded blocks only, never tickingarea/structure commands. */
@@ -351,7 +362,7 @@ export function createEntityService(ctx) {
         if (!oldDimension.getBlock(order.customerAnchor.location)) return undefined;
       } catch { return undefined; }
     }
-    const chair = order.type === "dine_in" ? findChair(restaurant) : undefined;
+    const chair = order.type === "dine_in" ? findChair(restaurant, !!order.walkIn) : undefined;
     // Java walk-ins require a free chair. An accepted machine order instead
     // permits a nearby standing customer when every chair is missing/occupied.
     if (order.type === "dine_in" && order.walkIn && !chair) return undefined;

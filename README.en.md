@@ -2,6 +2,8 @@
 
 [简体中文](README.zh-CN.md) · [繁體中文](README.md) · **English**
 
+Version 0.1.33 aligns walk-in arrival/acceptance chair gates with horizontal radius 24 and ±8 height. Walk-in customers choose uniformly among chairs that pass occupancy and headroom checks. Refrigerator queries remain spherical. This is not a POI/performance improvement or real-client acceptance claim. See [chair validation](docs/validation/0.1.33-alpha.1/CHAIR_PARITY.md).
+
 Version 0.1.32 keeps a valid board binding. Initial/replacement selection uses a 24-block horizontal radius, ±8 height, highest nutrition and then distance. Upgrades and benefits use the highest single nearby board separately from the bound menu that supplies dishes. Unloaded-board and permission safeguards remain; POI and client acceptance are not included. See [board-selection validation](docs/validation/0.1.32-alpha.1/BOARD_SELECTION.md).
 
 Menu rebinding now persists while idle, on cancelled/failed upgrades and on empty refreshes. An unavailable bound board preserves its saved snapshot and defers dependent actions until it can be checked; confirmed removal clears the binding. Version 0.1.31 stays on stable APIs and does not claim to fix POI performance or establish real-client acceptance. See [menu persistence validation](docs/validation/0.1.31-alpha.1/MENU_PERSISTENCE.md).
