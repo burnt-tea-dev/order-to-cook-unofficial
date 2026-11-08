@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.40-alpha.1
+
+- Honor Java's global `countertopConsumeLeather` through the existing server/creative/`otc_admin` configuration event. Strict booleans, default true for legacy/invalid saved field values, persistence and post-form revalidation keep it a world setting.
+- Disabled leather skips all shelf discovery and transactions for delivery and explicit dine-in bags. Food, native full-ItemStack output, permissions, canonical order/proof/deadline checks and clean-plate requirements remain.
+- Preserve shelf stock/records and malformed settings. Regressions exercise actual preparation commit failures with no supply object, safe retry, cancelled/stale forms and reset/reload. Existing restaurant-wide refresh/upgrade propagation is not made atomic by this patch.
+- Retain .38 carrier and .39 placement behavior. No client, LIVE world or BDS acceptance, configurable machine count, delivery-rate setting or 100% parity claim. [Source validation](docs/validation/0.1.40-alpha.1/LEATHER_CONFIG.md).
+
+## 0.1.39-alpha.1
+
+- Match Java’s default machine-placement box: another registered, readable machine blocks placement when existing-minus-new offsets are in [-24, +25] on all axes, inclusive, excluding self. Filter current records before world reads and stop at the first live machine. Keep equipment’s 24-block spherical nearest lookup unchanged.
+- Preserve portable-item cancellation/retry, removal journals and existing dense worlds. Do not add machine-count configuration, unloaded/unregistered discovery, reservations or post-placement destruction. Update the placement error and handbook in all three languages.
+- Confirm ordinary +25/corner and portable-corner regressions fail before the fix and pass afterward; adapter coverage includes signed faces, negative coordinates, live-state changes, canonical rollback and existing-world retention. No client, LIVE world or BDS acceptance is claimed. [Source validation](docs/validation/0.1.39-alpha.1/MACHINE_PLACEMENT.md).
+
 ## 0.1.38-alpha.1
 
 - Add an explicit sneak-click plate/bag choice for dine-in orders while retaining ordinary clicks and held-ticket defaults. Persist the independent carrier; only missing legacy fields on packed orders inherit the old type-based fulfillment default. Validate canonical carrier and proof at placement/handoff, retain full native ItemStacks, and reject delivery plates.

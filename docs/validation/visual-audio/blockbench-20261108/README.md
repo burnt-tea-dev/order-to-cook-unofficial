@@ -78,3 +78,7 @@
 5. **只靠編輯器不能關閉的項目**：Bedrock 原生透明面排序／邊界接受度、實際聲音與粒子、觸控／手把、多玩家、玩家骨架有效 owner、Java／Bedrock 同畫面比較。這一輪沒有啟動 Minecraft 或 BDS。
 
 已知剩餘來源差異，例如冰箱食物陳列、上下半共同 squash、有限姿態的剪切近似及多人預覽適配，仍見 [VISUAL_AUDIO_PARITY](../../../VISUAL_AUDIO_PARITY.md)。本次沒有把取樣通過升格為完整 parity。
+
+## 後續 Java 來源模型對照
+
+同日補充的 [Java 來源模型對照](source-comparison/README.md) 記錄八張新增 GUI 截圖、預覽轉接限制及等角抽屜比較。正式資產另核至 `7373238`（0.1.40）仍相同；含 .40 的純文件合併樹已通過 `npm run verify`：784／784 JavaScript 測試、TypeScript、資源檢查與建置；另重跑 23／23 appliance geometry 測試。此本機診斷包不發布。

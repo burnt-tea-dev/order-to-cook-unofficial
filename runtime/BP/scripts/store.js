@@ -233,6 +233,21 @@ export function nearestRestaurant(block, radius = 24) {
     .sort((a, b) => distanceSquared(a.location, block.location) - distanceSquared(b.location, block.location))
     .find(r => loadedBlock(r)?.typeId === 'ordertocook:order_machine');
 }
+export function hasMachinePlacementConflict(block) {
+  // Java's new AABB(pos).inflate(24), then betweenClosed: existing minus new
+  // is [-24, +25] on every axis, excluding self. This is not equipment radius.
+  // Retain Bedrock's registered/live scope; never scan the 50^3 world cells.
+  for (const restaurant of restaurantsById.values()) {
+    if (restaurant.dimensionId !== block.dimension.id) continue;
+    const dx = restaurant.location.x - block.location.x;
+    const dy = restaurant.location.y - block.location.y;
+    const dz = restaurant.location.z - block.location.z;
+    if (dx === 0 && dy === 0 && dz === 0) continue;
+    if (!(dx >= -24 && dx <= 25 && dy >= -24 && dy <= 25 && dz >= -24 && dz <= 25)) continue;
+    if (loadedBlock(restaurant)?.typeId === 'ordertocook:order_machine') return true;
+  }
+  return false;
+}
 export function setBlockState(block, name, value) {
   try {
     let permutation = block.permutation;
