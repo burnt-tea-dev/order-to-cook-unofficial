@@ -14,6 +14,10 @@
 
 冰箱直接使用原生方塊容器視窗，鍵鼠、控制器、觸控交由 Bedrock 庫存操作處理；爐灶與操作台以直接互動及單頁 [ActionFormData](https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server-ui/actionformdata?view=minecraft-bedrock-stable) 縮短操作。表單使用現有 stable UI 2.0 即可，不需要測試版表單 API。各裝置實際操作仍待驗收，不能宣稱相同於 Java 拖曳、快捷移動及專用槽位佈局。本模組沒有覆寫 `player.json`。
 
+## 新打單機放置
+
+預設只容許區域內一台：當另一台已登記且目前可讀的打單機，其舊位置減新位置在三軸皆為 [-24, +25]（含邊界，排除自身），便於放置前取消。這是 Java 一格 AABB 膨脹 24 後的閉區間；不是球形距離。設備最近餐廳查找仍是半徑 24 的球形，權限及舊有密集世界不變。未登記／未載入機器的探索、Java 可調數量及原生同時放置排序仍未完成或未驗證。詳見 [放置來源驗證](validation/0.1.39-alpha.1/MACHINE_PLACEMENT.md)。
+
 ## 冰箱
 
 | 項目 | 本版行為 |
