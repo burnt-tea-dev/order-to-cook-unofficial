@@ -477,7 +477,7 @@ async function countertopForm(player, block) {
   const labels = orders.map(order => {
     const plan = planExtraction(ingredients, order.items);
     const shelfId = order.type === 'delivery' ? 'ordertocook:shelf' : 'ordertocook:plate_shelf';
-    const supplies = nearbyStations(block.dimension.id, block.location, 5, shelfId)
+    const supplies = nearbyStations(block.dimension.id, block.location, 5, shelfId, { shape: 'cube' })
       .some(station => station.supplies > 0 && canUseStation(player, station));
     const problems = [];
     if (!block.above()?.isAir) problems.push('台上已有成品／方塊');
@@ -499,7 +499,8 @@ function prepareOrderAtCountertop(player, block, restaurant, order) {
   const output = block.above();
   if (!output?.isAir) { notify(player, '先取走操作台上方的成品／方塊。'); return; }
   const shelfId = order.type === 'delivery' ? 'ordertocook:shelf' : 'ordertocook:plate_shelf';
-  const supply = nearbyStations(block.dimension.id, block.location, 5, shelfId).find(station => station.supplies > 0 && canUseStation(player, station));
+  // Java RestaurantSupplyCompatApi scans each axis from -5 through +5.
+  const supply = nearbyStations(block.dimension.id, block.location, 5, shelfId, { shape: 'cube' }).find(station => station.supplies > 0 && canUseStation(player, station));
   if (!supply) { notify(player, `缺少 5 格內的${order.type === 'delivery' ? '包裝架包材（皮革）' : '餐盤架乾淨餐盤'}。`); return; }
   const plan = planExtraction(ingredientContainers(player, block), order.items);
   if (!plan.ok) {
@@ -924,10 +925,12 @@ function giveTestKit(player) {
 
 function claimStation(player, block) {
   const normalized = appliances?.normalizeBlock(block) || block;
+  const restaurant = nearestRestaurant(normalized);
+  // Deny before getStation can create a record or claim an unowned legacy one.
+  if (restaurant && !canManage(player, restaurant)) return false;
   const station = getStation(normalized);
   if (!station.ownerId) { station.ownerId = player.id; saveStation(station); }
-  const restaurant = nearestRestaurant(normalized);
-  if (restaurant) return canManage(player, restaurant);
+  if (restaurant) return true;
   return station.ownerId === player.id || isAdmin(player);
 }
 async function interactBlock(player, block) {
