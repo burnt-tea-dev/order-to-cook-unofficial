@@ -233,10 +233,12 @@ export function nearestRestaurant(block, radius = 24) {
     .sort((a, b) => distanceSquared(a.location, block.location) - distanceSquared(b.location, block.location))
     .find(r => loadedBlock(r)?.typeId === 'ordertocook:order_machine');
 }
-export function hasMachinePlacementConflict(block) {
+export function hasMachinePlacementConflict(block, maxAllowed = 1) {
   // Java's new AABB(pos).inflate(24), then betweenClosed: existing minus new
   // is [-24, +25] on every axis, excluding self. This is not equipment radius.
+  // The caller supplies the current validated global limit, never restaurant config.
   // Retain Bedrock's registered/live scope; never scan the 50^3 world cells.
+  let found = 0;
   for (const restaurant of restaurantsById.values()) {
     if (restaurant.dimensionId !== block.dimension.id) continue;
     const dx = restaurant.location.x - block.location.x;
@@ -244,7 +246,7 @@ export function hasMachinePlacementConflict(block) {
     const dz = restaurant.location.z - block.location.z;
     if (dx === 0 && dy === 0 && dz === 0) continue;
     if (!(dx >= -24 && dx <= 25 && dy >= -24 && dy <= 25 && dz >= -24 && dz <= 25)) continue;
-    if (loadedBlock(restaurant)?.typeId === 'ordertocook:order_machine') return true;
+    if (loadedBlock(restaurant)?.typeId === 'ordertocook:order_machine' && ++found >= maxAllowed) return true;
   }
   return false;
 }

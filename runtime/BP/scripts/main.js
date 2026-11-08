@@ -47,7 +47,7 @@ const foodOverrides = new Map();
 const foodCatalog = createFoodCatalog();
 const requestFoodCatalogs = connectFoodCatalog(system, foodCatalog);
 const weatherByDimension = new Map();
-let settings = { countertopConsumeLeather: DEFAULT_CONFIG.countertopConsumeLeather, currencyItem: '', refreshMs: Number(DEFAULT_CONFIG.refreshMs), orderMachineUpgradeBoardHunger: [...DEFAULT_CONFIG.orderMachineUpgradeBoardHunger] };
+let settings = { maxOrderMachinesWithin24: Number(DEFAULT_CONFIG.maxOrderMachinesWithin24), countertopConsumeLeather: DEFAULT_CONFIG.countertopConsumeLeather, currencyItem: '', refreshMs: Number(DEFAULT_CONFIG.refreshMs), orderMachineUpgradeBoardHunger: [...DEFAULT_CONFIG.orderMachineUpgradeBoardHunger] };
 let ready = false;
 /** @type {any} */ let entities;
 /** @type {any} */ let appliances;
@@ -70,6 +70,8 @@ const SHOP = [
   ['washingtable', 5], ['clean_plate', 1], ['otc_upgrade_box', 20], ['motorcycle', 100], ['controller', 1]
 ];
 
+// Java declares this setting as int and clamps its effective value to at least one.
+function isMachineLimit(value) { return Number.isInteger(value) && value >= -2147483648 && value <= 2147483647; }
 function isAdmin(player) { return player?.hasTag('otc_admin') || player?.getGameMode() === GameMode.Creative; }
 function canManage(player, restaurant) {
   return !!restaurant && !restaurant.removing && (restaurant.ownerId === player.id || restaurant.staff?.includes(player.id) || isAdmin(player));
@@ -1244,6 +1246,11 @@ function registerConfiguration() {
       } else if (event.id === 'ordertocook:config') {
         const data = JSON.parse(event.message);
         const next = { ...settings };
+        const hasMachineLimitSetting = Object.hasOwn(data, 'maxOrderMachinesWithin24');
+        if (hasMachineLimitSetting) {
+          if (!isMachineLimit(data.maxOrderMachinesWithin24)) throw new Error('maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1');
+          next.maxOrderMachinesWithin24 = Math.max(1, data.maxOrderMachinesWithin24);
+        }
         const hasLeatherSetting = Object.hasOwn(data, 'countertopConsumeLeather');
         if (hasLeatherSetting) {
           if (typeof data.countertopConsumeLeather !== 'boolean') throw new Error('countertopConsumeLeather 必須為 boolean（true 或 false）');
@@ -1254,11 +1261,15 @@ function registerConfiguration() {
         if (Array.isArray(data.upgradeNutrition) && data.upgradeNutrition.length === 9 && data.upgradeNutrition.every(n => Number.isInteger(n) && n >= 0 && n <= 10000)) next.orderMachineUpgradeBoardHunger = data.upgradeNutrition;
         const encoded = JSON.stringify(next);
         world.setDynamicProperty('ordertocook:settings', encoded);
-        // Verify this new switch before changing live behavior. Existing refresh/
+        // Verify global placement/packaging settings before changing live behavior. Existing refresh/
         // upgrade restaurant propagation is not made into a new transaction.
-        if (hasLeatherSetting && world.getDynamicProperty('ordertocook:settings') !== encoded) throw new Error('餐廳設定寫入未確認；包材設定未變更。');
+        if ((hasLeatherSetting || hasMachineLimitSetting) && world.getDynamicProperty('ordertocook:settings') !== encoded) throw new Error('餐廳設定寫入未確認；全域設定未變更。');
         settings = next;
-        for (const restaurant of restaurants()) { restaurant.config = { ...restaurant.config, refreshMs: settings.refreshMs, orderMachineUpgradeBoardHunger: settings.orderMachineUpgradeBoardHunger }; saveRestaurant(restaurant); }
+        // A count-only command affects future placements, not existing restaurant
+        // records. Preserve the legacy propagation when its fields are supplied.
+        if (!hasMachineLimitSetting || ['countertopConsumeLeather', 'currencyItem', 'refreshSeconds', 'upgradeNutrition'].some(key => Object.hasOwn(data, key))) {
+          for (const restaurant of restaurants()) { restaurant.config = { ...restaurant.config, refreshMs: settings.refreshMs, orderMachineUpgradeBoardHunger: settings.orderMachineUpgradeBoardHunger }; saveRestaurant(restaurant); }
+        }
         if (player) notify(player, '伺服器餐廳設定已儲存。新刷新間隔於下次刷新後使用。');
       }
     } catch (error) { console.warn(`[OrderToCook] Config: ${error}`); if (player) notify(player, String(error)); }
@@ -1284,11 +1295,12 @@ system.beforeEvents.startup.subscribe(event => {
           event.cancel = true;
           if (event.player) system.run(() => notify(event.player, '舊餐廳仍在保存帳簿或清理餐盤，請完成後再放置。'));
         }
-        if (hasMachinePlacementConflict(event.block)) {
+        const maxAllowed = settings.maxOrderMachinesWithin24;
+        if (hasMachinePlacementConflict(event.block, maxAllowed)) {
           event.cancel = true;
           if (event.player) system.run(() => {
             if (event.player.isValid) event.player.sendMessage({ rawtext: [
-              { text: '§6[下單了]§r ' }, { translate: 'otc.error.machine_placement_conflict' }
+              { text: '§6[下單了]§r ' }, { translate: 'otc.error.machine_placement_conflict', with: [String(maxAllowed)] }
             ] });
           });
         }
@@ -1479,7 +1491,7 @@ world.afterEvents.worldLoad.subscribe(() => {
       if (!saved || typeof saved !== 'object' || Array.isArray(saved)) throw new Error('Expected settings object');
       // Old saves and invalid field types fail safe to the Java default. Do not
       // repair/write the saved document during load; preserve recovery evidence.
-      settings = { ...settings, ...saved, countertopConsumeLeather: typeof saved.countertopConsumeLeather === 'boolean' ? saved.countertopConsumeLeather : DEFAULT_CONFIG.countertopConsumeLeather };
+      settings = { ...settings, ...saved, maxOrderMachinesWithin24: isMachineLimit(saved.maxOrderMachinesWithin24) ? Math.max(1, saved.maxOrderMachinesWithin24) : Number(DEFAULT_CONFIG.maxOrderMachinesWithin24), countertopConsumeLeather: typeof saved.countertopConsumeLeather === 'boolean' ? saved.countertopConsumeLeather : DEFAULT_CONFIG.countertopConsumeLeather };
     }
     const rawFoods = world.getDynamicProperty('ordertocook:food_overrides');
     if (typeof rawFoods === 'string') for (const food of JSON.parse(rawFoods)) foodOverrides.set(food.typeId, food);

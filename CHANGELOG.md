@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.41-alpha.1
+
+- Honor administrator-global `maxOrderMachinesWithin24` using signed 32-bit integers and Java's effective minimum of one. Missing/invalid saved fields safely default to one; malformed settings remain preserved.
+- Count registered, currently readable same-dimension machines in the existing inclusive [-24,+25] box until the threshold, with metadata-first filtering, self exclusion and current canonical membership. No sorting, world-cell scan, persistent cache or equipment-binding change.
+- A limit of two allows first/second placement and cancels third without consuming the ordinary/portable item. Reset affects future attempts only; count-only commands never rewrite dense restaurant records. Retained removal journals still block their exact position.
+- Extend setting readback, count-aware placement translations and the three guidebook languages. Preserve .40 leather behavior and its uncertain-native-write limitations.
+- Source/adapter evidence only. Registered/unloaded discovery and actual multiplayer ordering remain limitations; no new client, LIVE, BDS, performance or full-parity claim. See [validation](docs/validation/0.1.41-alpha.1/MACHINE_COUNT.md).
+
 ## 0.1.40-alpha.1
 
 - Honor Java's global `countertopConsumeLeather` through the existing server/creative/`otc_admin` configuration event. Strict booleans, default true for legacy/invalid saved field values, persistence and post-form revalidation keep it a world setting.
