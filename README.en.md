@@ -2,6 +2,8 @@
 
 [简体中文](README.zh-CN.md) · [繁體中文](README.md) · **English**
 
+Version 0.1.35 selects the first eligible registered chair for normal machine-order diners in the pinned Java order: ascending x, ascending z, descending y. Walk-ins still choose randomly. Loaded-block, occupancy and headroom safeguards remain. This is not full spawn parity or a performance improvement. See [normal chair validation](docs/validation/0.1.35-alpha.1/NORMAL_CHAIR_SCAN.md).
+
 Version 0.1.34 prevents the machine timer from recommitting a stale restaurant after a failed customer save rolls it back. Ordinary spawn misses still retain pending orders and the existing cooldown. This is not whole-tick/native-world transactionality, a POI performance fix or client acceptance. See [save regression evidence](docs/validation/0.1.34-alpha.1/CANONICAL_COMMIT.md).
 
 Version 0.1.33 aligns walk-in arrival/acceptance chair gates with horizontal radius 24 and ±8 height. Walk-in customers choose uniformly among chairs that pass occupancy and headroom checks. Refrigerator queries remain spherical. This is not a POI/performance improvement or real-client acceptance claim. See [chair validation](docs/validation/0.1.33-alpha.1/CHAIR_PARITY.md).

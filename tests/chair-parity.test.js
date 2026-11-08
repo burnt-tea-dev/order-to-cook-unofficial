@@ -85,7 +85,7 @@ test('two sequentially spawned customers occupy distinct usable chairs',()=>{
 });
 
 
-for(const roll of [0,0.5,0.999999])test(`ordinary machine diners retain nearest-first behavior at RNG ${roll}`,()=>{
+for(const roll of [0,0.5,0.999999])test(`ordinary machine diners keep the lowest-x chair independent of RNG ${roll}`,()=>{
   const env=seatingFixture(roll);env.order.walkIn=false;env.order.status='accepted';
   const customer=env.service.spawnCustomer(env.restaurant,env.order);
   assert.ok(customer);assert.equal(env.service.getCustomerSeat(customer),env.chairs[1]);

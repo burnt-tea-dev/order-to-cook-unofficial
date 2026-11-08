@@ -274,9 +274,11 @@ export function createEntityService(ctx) {
       station.typeId === CHAIR && station.dimensionId === restaurant.dimensionId &&
       horizontalDist2(station.location, restaurant.location) <= 24 ** 2 &&
       Math.abs(station.location.y - restaurant.location.y) <= 8);
-    // Normal machine diners keep the existing nearest-first adapter behavior.
-    // Java's uniform random pool applies specifically to independent walk-ins.
-    if (!randomize) choices.sort((a, b) => dist2(a.location, restaurant.location) - dist2(b.location, restaurant.location));
+    // Java normal diners take the first valid chair in x/z ascending, y descending
+    // scan order. Sort metadata only; keep loaded-block validation's early return.
+    // The uniform random pool applies specifically to independent walk-ins.
+    if (!randomize) choices.sort((a, b) => a.location.x - b.location.x ||
+      a.location.z - b.location.z || b.location.y - a.location.y);
     const eligible = [];
     for (const candidate of choices) {
       try {

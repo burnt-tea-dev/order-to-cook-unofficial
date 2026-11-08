@@ -14,6 +14,8 @@ Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedro
 
 ## 核心玩法
 
+0.1.35把普通機器訂單的已註冊椅子選取改為固定Java的x↑、z↑、y↓首合格順序，保留metadata過濾與首個合格即停止方塊驗證；到店顧客隨機池不變。未加入Java世界方塊掃描、顯式fluid／世界Y規則或heightmap隨機fallback，不宣稱完整生成還原、原生性能或客戶端驗收。[來源與回歸](validation/0.1.35-alpha.1/NORMAL_CHAIR_SCAN.md)。
+
 0.1.34在機器計時器最終保存前核對餐廳是否仍為store的canonical物件，防止顧客保存失敗、回滾後又提交過期狀態。它保護最後成功提交的快照，不改一般spawn miss的pending／冷卻，也不保證整tick原子性。Java到店admission差異仍未解；沒有POI性能或原生／客戶端驗收結論。[回歸與界線](validation/0.1.34-alpha.1/CANONICAL_COMMIT.md)。
 
 0.1.33補正到店生成／接單前置椅子範圍為水平24／Y±8，和顧客服務一致；到店顧客的空椅選取改為通過載入／佔用／空間驗證後等機率選取，不固定取最近。冰箱sphere／供應架cube不變。沒有POI性能結論或客戶端驗收；生成失敗時的訂單生命週期仍是分開的待辦。[驗證](validation/0.1.33-alpha.1/CHAIR_PARITY.md)。

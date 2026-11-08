@@ -249,6 +249,12 @@ Java 的 `TakeoutBagItem.prepareBoomBonus` 先選定加賞，`CustomerEntity.tic
 原 `use` 的提前點取會中斷顧客；`onRemove` 只掉物，不觸發該中斷。基岩版點取與原生方塊移除共用不可重領的claim，但僅點取走提前中斷；滿包轉原生世界掉落，打破一律落地，保留店主／員工權限。拆餐廳同樣生成普通可堆疊髒盤，不寫入不受支援的ItemStack動態屬性。已生成後的未知失敗不盲目重試，仍有原來跨世界資料／物品原子提交的限制。原生方塊採原兩層碰撞與穩定階段模型；選取框用外接長方體。當前[原生與重啟範圍](validation/0.1.15-alpha.1/NATIVE_PLATE.md)不等於客戶端聲畫驗收；0.1.14的實體回收結果只作歷史。
 
 
+### 普通機器顧客的選椅順序
+
+固定Java [NormalOrderNpcManager L14–16](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/core/NormalOrderNpcManager.java#L14-L16)呼叫[findSpawnPosNormal L1528–1566](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/core/OrderNpcManager.java#L1528-L1566)，在水平24、Y±8範圍按x升序、z升序、y降序找到第一張合格椅子，不按最近距離或隨機選取。0.1.35只把此順序套用到既有已註冊、已載入且通過Bedrock座位安全檢查的候選；保留首合格早退。到店顧客仍沿用另一個隨機池。
+
+Java同時有世界Y裁切、head／dry及heightmap fallback，Bedrock尚未完整對齊。其fallback不保證站立，腳下若是椅子仍可坐下；不要因此削弱Bedrock佔用保護。具體邊界與測試見[0.1.35驗證](validation/0.1.35-alpha.1/NORMAL_CHAIR_SCAN.md)，沒有POI性能結論。
+
 ### 訂單期限的原作依據
 
 固定提交的`OrderGenerator.java`以`world.getGameTime()`加上36000／12000 tick產生`ExpiryTick`，保留Unix毫秒欄位作相容。`OrderItem.java`的tooltip與inventoryTick優先使用世界tick，舊資料的`ensureExpiryTick`按剩餘毫秒向上取整轉換。基岩版對應`expiresTick`與`ordertocook:expires_tick`；完整原生及保存範圍見[訂單期限](validation/0.1.19-alpha.1/ORDER_DEADLINES.md)。
