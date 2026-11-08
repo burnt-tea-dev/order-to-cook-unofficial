@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.45-alpha.1
+
+- Restore the pinned Java renderer’s washing-table water quad in all 11 plate states, with original RGBA, two physical UV-correct faces and uniform world blend materials. Preserve the dry item through item_visual; body/plates and gameplay scripts stay unchanged.
+- Preserve dine-in bagging guide text through real asset regeneration by synchronizing 12 editable language values, with fallback/repeated-generation/provenance regressions in both Python CI stages.
+- Record 8 cloud Blockbench review scenes and 16 unmodified GUI screenshots. Keep the observed five-plate preview occlusion discrepancy and native sorting/backface/item-display gates explicit; no Minecraft, BDS, LIVE or full-parity acceptance is claimed.
+- Integrate onto merged .44 with unchanged UUIDs/APIs and append-only paired .45 payload identity. See [source and limitations](docs/validation/UNRELEASED-washingtable-water.md).
+
 ## 0.1.44-alpha.1
 
 - Add localized, customer-named five-minute, one-minute and expired notices for ordinary carried paper orders and dine-in/delivery bags. Keep severity-first selection, durable per-item flags and fresh flags on newly prepared bags; plates, dropped items and world containers are excluded.

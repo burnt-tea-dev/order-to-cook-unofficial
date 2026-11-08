@@ -1093,6 +1093,42 @@
                 0,
                 -22.5
               ]
+            },
+            {
+              "origin": [
+                -5.0,
+                15.08,
+                -5.0
+              ],
+              "size": [
+                10.0,
+                0,
+                9.0
+              ],
+              "uv": {
+                "up": {
+                  "uv": [
+                    16,
+                    16
+                  ],
+                  "uv_size": [
+                    -16,
+                    -16
+                  ],
+                  "material_instance": "ordertocook_block_water"
+                },
+                "down": {
+                  "uv": [
+                    16,
+                    0
+                  ],
+                  "uv_size": [
+                    -16,
+                    16
+                  ],
+                  "material_instance": "ordertocook_block_water"
+                }
+              }
             }
           ]
         }

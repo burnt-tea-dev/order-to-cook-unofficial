@@ -22,7 +22,7 @@ Java 各水平 blockstate 的 north/east/south/west 為 0/90/180/270 度。
 | 操作台 countertop | 原幾何、UV、四向、木材聲音族；成品冒煙位置修正 | 本體一個；台上帶身份成品由既有顯示記錄處理。 |
 | 包裝架 shelf | 原 0–10 份包材外形、四向 | 本體＋尚存皮革；未改容量。 |
 | 餐盤架 plate_shelf | 原 0–18 盤外形、高低位 state、四向 | 本體＋尚存乾淨盤；未改容量。 |
-| 洗碗池 washingtable | 原 0–10 髒盤、四向；水花／泡泡改為池內旋轉座標 | 本體＋尚存髒盤；原手洗操作仍為點擊開始。 |
+| 洗碗池 washingtable | 原 0–10 髒盤、四向；補入原 renderer 的靜態半透明水面，物品保留乾檯；水花／泡泡改為池內旋轉座標 | 本體＋尚存髒盤；原手洗操作仍為點擊開始。世界材質共用 blend，透明排序／背面尚待原生驗收，見[水面契約](validation/UNRELEASED-washingtable-water.md)。 |
 | 椅子 chair | 原背板、腿、UV、四向；既有乘座 helper 保留 | 本體一個，既有騎乘清理。 |
 | 洗碗機 dishwasher | 修負 X cuboid 的物理面／UV、非均勻變形、盤數可見性與預覽；見下節 | 本體＋機內盤子，clear_out／ready 為乾淨盤；未新增自動掉落。 |
 | 冰箱 refrigerator | 修負 Z 內壁、上下門、獨立開關曲線；見下節 | 拆任一半只給一個冰箱＋原生庫存，頂半 loot 為空。 |
