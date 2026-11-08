@@ -1402,7 +1402,16 @@ world.afterEvents.worldLoad.subscribe(() => {
         if (!restaurant.menu.length || restaurant.orders.filter(order => liveStatus.has(order.status)).length >= 32 ||
             Math.random() >= getWalkInChance(restaurant) || !nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:chair', { shape: 'cylinder', halfHeight: 8 }).length) return false;
         const order = generateWalkInOrder(restaurant, orderTime());
-        if (entities.spawnCustomer(restaurant, order)) playAt(block, 'order_refresh');
+        let noEligibleChair = false;
+        if (entities.spawnCustomer(restaurant, order, () => { noEligibleChair = true; })) playAt(block, 'order_refresh');
+        else if (noEligibleChair && getRestaurant(restaurant.id) === restaurant) {
+          // This explicit gate ran before entity allocation. Other spawn misses
+          // can have uncertain native outcomes and must retain pending behavior.
+          const index = restaurant.orders.indexOf(order);
+          if (index >= 0) restaurant.orders.splice(index, 1);
+        }
+        // Generation consumed an ID and updatedAt, even when its new offer was
+        // withdrawn. Persist that bookkeeping and any simultaneous refresh.
         return true;
       }
     });

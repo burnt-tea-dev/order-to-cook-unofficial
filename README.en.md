@@ -2,6 +2,8 @@
 
 [简体中文](README.zh-CN.md) · [繁體中文](README.md) · **English**
 
+Version 0.1.36 withdraws only the new walk-in offer when no usable loaded chair is found before any entity allocation. Older pending offers, cooldown and simultaneous machine refresh remain. Uncertain spawn/cleanup outcomes keep their existing path. This is not full admission parity or a POI performance fix. See [walk-in validation](docs/validation/0.1.36-alpha.1/WALKIN_ADMISSION.md).
+
 Version 0.1.35 selects the first eligible registered chair for normal machine-order diners in the pinned Java order: ascending x, ascending z, descending y. Walk-ins still choose randomly. Loaded-block, occupancy and headroom safeguards remain. This is not full spawn parity or a performance improvement. See [normal chair validation](docs/validation/0.1.35-alpha.1/NORMAL_CHAIR_SCAN.md).
 
 Version 0.1.34 prevents the machine timer from recommitting a stale restaurant after a failed customer save rolls it back. Ordinary spawn misses still retain pending orders and the existing cooldown. This is not whole-tick/native-world transactionality, a POI performance fix or client acceptance. See [save regression evidence](docs/validation/0.1.34-alpha.1/CANONICAL_COMMIT.md).

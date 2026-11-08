@@ -68,7 +68,7 @@ for (const refreshTogether of [false, true]) for (const phase of ['chunk', 'root
   }));
 }
 
-for (const failure of ['occupied', 'spawn-rejected']) test(`ordinary ${failure} spawn miss retains existing pending semantics and a simultaneous refresh`, () => withRandom(async () => {
+for (const failure of ['occupied', 'spawn-rejected']) test(`${failure} admission handling preserves a simultaneous refresh without a store rollback`, () => withRandom(async () => {
   const env = await fixture({ occupied: failure === 'occupied', refreshTogether: true });
   const before = env.count('customer');
   if (failure === 'spawn-rejected') {
@@ -79,7 +79,7 @@ for (const failure of ['occupied', 'spawn-rejected']) test(`ordinary ${failure} 
     };
   }
   env.step(1201);
-  assert.equal(env.saved().orders.filter(order => order.walkIn).length, 1);
+  assert.equal(env.saved().orders.filter(order => order.walkIn).length, Number(failure === 'spawn-rejected'));
   assert.equal(env.saved().orders.filter(order => order.source === 'machine').length, 1);
   assert.equal(env.saved().machineRefreshOrigin, 1201);
   assert.equal(env.count('customer'), before);

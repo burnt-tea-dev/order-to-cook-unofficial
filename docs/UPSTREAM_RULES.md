@@ -255,6 +255,12 @@ Java 的 `TakeoutBagItem.prepareBoomBonus` 先選定加賞，`CustomerEntity.tic
 
 Java同時有世界Y裁切、head／dry及heightmap fallback，Bedrock尚未完整對齊。其fallback不保證站立，腳下若是椅子仍可坐下；不要因此削弱Bedrock佔用保護。具體邊界與測試見[0.1.35驗證](validation/0.1.35-alpha.1/NORMAL_CHAIR_SCAN.md)，沒有POI性能結論。
 
+### 到店無椅的 admission 邊界
+
+固定Java [WalkInNpcManager L24–53](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/core/WalkInNpcManager.java#L24-L53)在無空椅或建立NPC失敗時返回false；[機器 L254–289](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/OrderMachineBlockEntity.java#L254-L289)先處理普通刷新、重設到店冷卻再嘗試，失敗並不立即重試。
+
+0.1.36只對齊確定尚未配置實體的「未找到當下可用已載入空椅」情況。Bedrock的其他spawn undefined可能含原生已套用後拋錯或清理不確定，不可一律撤單。新單序號已消耗，保留保存以免重用ID；舊pending與服務排程重試不改。[驗證](validation/0.1.36-alpha.1/WALKIN_ADMISSION.md)。
+
 ### 訂單期限的原作依據
 
 固定提交的`OrderGenerator.java`以`world.getGameTime()`加上36000／12000 tick產生`ExpiryTick`，保留Unix毫秒欄位作相容。`OrderItem.java`的tooltip與inventoryTick優先使用世界tick，舊資料的`ensureExpiryTick`按剩餘毫秒向上取整轉換。基岩版對應`expiresTick`與`ordertocook:expires_tick`；完整原生及保存範圍見[訂單期限](validation/0.1.19-alpha.1/ORDER_DEADLINES.md)。

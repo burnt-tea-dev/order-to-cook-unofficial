@@ -334,7 +334,8 @@ export function createEntityService(ctx) {
     return undefined;
   }
 
-  function spawnCustomer(restaurant, order) {
+  /** @param {() => void} [onNoEligibleChair] Only reports the pre-allocation walk-in chair gate. */
+  function spawnCustomer(restaurant, order, onNoEligibleChair) {
     if (!restaurant || !needsCustomer(order)) return undefined;
     const existing = loadedCustomers(order.id, restaurant.id);
     if (existing.length) {
@@ -367,7 +368,10 @@ export function createEntityService(ctx) {
     const chair = order.type === "dine_in" ? findChair(restaurant, !!order.walkIn) : undefined;
     // Java walk-ins require a free chair. An accepted machine order instead
     // permits a nearby standing customer when every chair is missing/occupied.
-    if (order.type === "dine_in" && order.walkIn && !chair) return undefined;
+    if (order.type === "dine_in" && order.walkIn && !chair) {
+      onNoEligibleChair?.();
+      return undefined;
+    }
     const location = chair ? center(chair.location, 1) : standPosition(dimension, destination, order.type === "dine_in" ? 5 : 2);
     if (!location) return undefined;
     const claim = chair ? chairKey(chair) : undefined;
