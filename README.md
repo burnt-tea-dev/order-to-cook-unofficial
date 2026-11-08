@@ -2,6 +2,8 @@
 
 [简体中文](README.zh-CN.md) · **繁體中文** · [English](README.en.md)
 
+0.1.42 接上全域 `deliveryRate`（預設 `0.3`）：`0` 讓打單機只生成堂食候選，`1` 只生成外送。既有訂單與普通到店單不改類型；重新載入或部分餐廳設定保存失敗後，未來候選仍讀當前全域值。[管理入口與來源證據](docs/validation/0.1.42-alpha.1/DELIVERY_RATE.md)。
+
 0.1.41 接上全域 `maxOrderMachinesWithin24`：預設／最低 `1`；`2` 允許附近兩台、阻擋第三台。原有各軸 [-24, +25] 放置盒、已登記／可讀取範圍、portable 完整物品取消與設備球形綁定維持。重設 `1` 只影響後續放置。來源／adapter 驗證不等於原生排序、效能或完整還原。[設定與證據](docs/validation/0.1.41-alpha.1/MACHINE_COUNT.md)。
 
 0.1.40 接上全域 `countertopConsumeLeather`：預設 `true` 仍消耗一份包材；`false` 讓外送與明確選擇的堂食袋不需要包裝架，裝盤仍需乾淨餐盤。僅完成來源／adapter 驗證，未做原生／客戶端驗收。[行為與證據](docs/validation/0.1.40-alpha.1/LEATHER_CONFIG.md)。
@@ -190,7 +192,19 @@ Server 事件、創造模式與 `otc_admin` 玩家可使用。只接受 signed 3
 /scriptevent ordertocook:config {"countertopConsumeLeather":true}
 ```
 
-只接受 JSON 布林值。Java 預設為 `true`；舊存檔缺欄位或欄位型別錯誤時安全使用預設，不自動改寫存檔。`false` 讓外送與明確選擇的堂食袋完全跳過包裝架；不改既有架子庫存或成品，裝盤仍需並消耗乾淨盤。設定跨 worldLoad 保留，選單關閉後製作時會重讀最新值。設定文件損壞時停止初始化而不清除資料。這是全域設定，不是附近餐廳選項；配送比例仍未接上管理入口。[範圍與保存界線](docs/validation/0.1.40-alpha.1/LEATHER_CONFIG.md)。
+只接受 JSON 布林值。Java 預設為 `true`；舊存檔缺欄位或欄位型別錯誤時安全使用預設，不自動改寫存檔。`false` 讓外送與明確選擇的堂食袋完全跳過包裝架；不改既有架子庫存或成品，裝盤仍需並消耗乾淨盤。設定跨 worldLoad 保留，選單關閉後製作時會重讀最新值。設定文件損壞時停止初始化而不清除資料。這是全域設定，不是附近餐廳選項。[範圍與保存界線](docs/validation/0.1.40-alpha.1/LEATHER_CONFIG.md)。
+
+管理員可設定**全世界餐廳未來打單機候選單**的配送機率：
+
+```mcfunction
+/scriptevent ordertocook:config {"deliveryRate":0}
+/scriptevent ordertocook:config {"deliveryRate":1}
+/scriptevent ordertocook:config {"deliveryRate":0.3}
+```
+
+只接受 `0..1` 的有限 JSON 數字，不轉換字串／布林值；最後一條重設 Java 預設。Server／創造模式／`otc_admin` 權限不變。這是 Bedrock 沿用的管理事件入口；Java 已核對的入口是啟動時載入全域設定檔，不是玩家 GUI 或已驗證的即時檔案重載。舊存檔缺值／無效欄位使用 `0.3`，不自動改寫原始文件；損壞文件保留並停止初始化。
+
+設定跨 worldLoad 保留，既有、新放、portable 還原機器的首次開業、管理員刷新及原生 tick 刷新都使用當前全域值。設定本身不重抽或重定型候選／已接／已備妥／已完成單，不改 proof、期限、承載物；普通到店單仍是堂食。全域提交後若某餐廳保存失敗，提交不撤銷，舊餐廳快照也不能控制下次生成。寫入前失敗或靜默未寫不改即時設定；寫入後例外／讀回失敗可能令存檔比記憶體新，直到重載才生效。這不是所有設定傳播的原子交易。[證據與界線](docs/validation/0.1.42-alpha.1/DELIVERY_RATE.md)。
 
 測試刷新間隔及門檻也可調整，例如：
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.42-alpha.1
+
+- Expose server-global `deliveryRate` through the existing Server/creative/`otc_admin` operator event. Accept only finite JSON probabilities in `0..1`, with default/reset `0.3` and no coercion; preserve malformed saved settings.
+- Apply the current global value at every machine generation entry, with canonical identity validation, and initialize ordinary/portable machines with it. Reload, partial restaurant propagation and later restaurant rollback cannot restore an obsolete generation rate.
+- Preserve existing order types, proof, deadlines and carriers; ordinary walk-ins remain dine-in. Keep .40 uncertain native-write boundaries and .41 count-only no-migration behavior; this is not an atomic multi-record configuration update.
+- No other probability controls, assets, vehicle/NPC changes or native/client acceptance. [Source validation and operator-interface adaptation](docs/validation/0.1.42-alpha.1/DELIVERY_RATE.md).
+
 ## 0.1.41-alpha.1
 
 - Honor administrator-global `maxOrderMachinesWithin24` using signed 32-bit integers and Java's effective minimum of one. Missing/invalid saved fields safely default to one; malformed settings remain preserved.

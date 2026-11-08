@@ -2,6 +2,8 @@
 
 **简体中文** · [繁體中文](README.md) · [English](README.en.md)
 
+0.1.42 接入全局 `deliveryRate`（默认 `0.3`）：`0` 让打单机只生成堂食候选，`1` 只生成外送。现有订单与普通到店单不改类型；重新加载或部分餐厅设置保存失败后，后续候选仍读当前全局值。[管理入口与源码证据](docs/validation/0.1.42-alpha.1/DELIVERY_RATE.md)。
+
 0.1.41 接入全局 `maxOrderMachinesWithin24`：默认／最低 `1`；`2` 允许附近两台、阻挡第三台。原有各轴 [-24, +25] 放置盒、已登记／可读取范围、portable 完整物品取消与设备球形绑定保持。重设 `1` 只影响后续放置。源码／adapter 验证不等于原生排序、性能或完整还原。[设置与证据](docs/validation/0.1.41-alpha.1/MACHINE_COUNT.md)。
 
 0.1.40 接入全局 `countertopConsumeLeather`：默认 `true` 仍消耗一份包材；`false` 让外送与明确选择的堂食袋不需要包装架，装盘仍需干净餐盘。仅完成源码／adapter 验证，未做原生／客户端验收。[行为与证据](docs/validation/0.1.40-alpha.1/LEATHER_CONFIG.md)。
@@ -186,7 +188,19 @@ Server 事件、创造模式与 `otc_admin` 玩家可使用。只接受 signed 3
 /scriptevent ordertocook:config {"countertopConsumeLeather":true}
 ```
 
-只接受 JSON 布尔值。Java 默认为 `true`；旧存档缺少字段或字段类型错误时安全使用默认值，不自动改写存档。`false` 让外送与明确选择的堂食袋完全跳过包装架；不改现有架子库存或成品，装盘仍需并消耗干净盘。设置跨 worldLoad 保留，菜单关闭后制作时会重读最新值。设置文档损坏时停止初始化而不清除数据。这是全局设置，不是附近餐厅选项；配送比例仍未接入管理入口。[范围与保存边界](docs/validation/0.1.40-alpha.1/LEATHER_CONFIG.md)。
+只接受 JSON 布尔值。Java 默认为 `true`；旧存档缺少字段或字段类型错误时安全使用默认值，不自动改写存档。`false` 让外送与明确选择的堂食袋完全跳过包装架；不改现有架子库存或成品，装盘仍需并消耗干净盘。设置跨 worldLoad 保留，菜单关闭后制作时会重读最新值。设置文档损坏时停止初始化而不清除数据。这是全局设置，不是附近餐厅选项。[范围与保存边界](docs/validation/0.1.40-alpha.1/LEATHER_CONFIG.md)。
+
+管理员可设置**全世界餐厅后续打单机候选单**的配送概率：
+
+```mcfunction
+/scriptevent ordertocook:config {"deliveryRate":0}
+/scriptevent ordertocook:config {"deliveryRate":1}
+/scriptevent ordertocook:config {"deliveryRate":0.3}
+```
+
+只接受 `0..1` 的有限 JSON 数字，不转换字符串／布尔值；最后一条恢复 Java 默认值。Server／创造模式／`otc_admin` 权限不变。这是 Bedrock 沿用的管理事件入口；Java 已核对的入口是启动时加载全局配置文件，不是玩家 GUI 或已验证的即时文件重载。旧存档缺值／无效字段使用 `0.3`，不自动改写原始文档；损坏文档保留并停止初始化。
+
+设置跨 worldLoad 保留，现有、新放、portable 还原机器的首次营业、管理员刷新及原生 tick 刷新都使用当前全局值。设置本身不重抽或重定型候选／已接／已备妥／已完成单，不改 proof、期限、承载物；普通到店单仍是堂食。全局提交后若某餐厅保存失败，提交不撤销，旧餐厅快照也不能控制下次生成。写入前失败或静默未写不改即时设置；写入后异常／读回失败可能使存档比内存新，直到重载才生效。这不是所有设置传播的原子事务。[证据与边界](docs/validation/0.1.42-alpha.1/DELIVERY_RATE.md)。
 
 可以测试其他刷新周期／升级门槛，例如：
 
