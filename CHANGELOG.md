@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.40-alpha.1
+
+- Honor Java's global `countertopConsumeLeather` through the existing server/creative/`otc_admin` configuration event. Strict booleans, default true for legacy/invalid saved field values, persistence and post-form revalidation keep it a world setting.
+- Disabled leather skips all shelf discovery and transactions for delivery and explicit dine-in bags. Food, native full-ItemStack output, permissions, canonical order/proof/deadline checks and clean-plate requirements remain.
+- Preserve shelf stock/records and malformed settings. Regressions exercise actual preparation commit failures with no supply object, safe retry, cancelled/stale forms and reset/reload. Existing restaurant-wide refresh/upgrade propagation is not made atomic by this patch.
+- Retain .38 carrier and .39 placement behavior. No client, LIVE world or BDS acceptance, configurable machine count, delivery-rate setting or 100% parity claim. [Source validation](docs/validation/0.1.40-alpha.1/LEATHER_CONFIG.md).
+
 ## 0.1.39-alpha.1
 
 - Match Java’s default machine-placement box: another registered, readable machine blocks placement when existing-minus-new offsets are in [-24, +25] on all axes, inclusive, excluding self. Filter current records before world reads and stop at the first live machine. Keep equipment’s 24-block spherical nearest lookup unchanged.

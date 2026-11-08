@@ -2,6 +2,8 @@
 
 [简体中文](README.zh-CN.md) · [繁體中文](README.md) · **English**
 
+Version 0.1.40 honors the global `countertopConsumeLeather` setting. Default `true` still uses one packaging supply; `false` lets delivery and explicitly selected dine-in bags be prepared without any rack, while plates still need a clean plate. Only source/adapter checks are complete, not native/client acceptance. [Behavior and evidence](docs/validation/0.1.40-alpha.1/LEATHER_CONFIG.md).
+
 Version 0.1.39 corrects default new-machine placement to inclusive [-24, +25] bounds on every axis (existing minus new). Equipment’s 24-block sphere, portable data and existing dense restaurants stay unchanged. Unregistered/unloaded discovery and Java’s configurable count remain unimplemented. Source/adapter checks only, without native or client acceptance. [Source and limits](docs/validation/0.1.39-alpha.1/MACHINE_PLACEMENT.md).
 
 Version 0.1.38 lets dine-in orders be packed to go. Normal countertop clicks and held-ticket shortcuts still default to plating; sneak-click for the explicit plate/bag choice. Bags use packaging without changing the order type, deadline, payment or walk-in statistics, and leave no dining/dirty plate or boom bonus. This change has source and native-I/O-double regression coverage only, not client/live-world acceptance. [Scope and evidence](docs/validation/0.1.38-alpha.1/DINE_IN_TAKEOUT.md).
@@ -55,7 +57,7 @@ Personal progression counts completed order settlements only after this feature 
 
 1. **Set up a restaurant.** Craft/place an order printer, menu stand, preparation counter, packaging rack, plate rack, chairs and washing basin. New machine placement uses a box: it is cancelled if another registered, currently readable machine has **existing minus new** X/Y/Z offsets all in **[-24, +25]**, inclusive, regardless of owner. A 26-block gap on any one axis clears that machine; a diagonal distance over 24 does not guarantee placement. Equipment still finds the nearest restaurant within a **24-block spherical radius**. Existing dense restaurants are not removed or moved. Unregistered/unloaded-machine discovery and Java’s configurable machine count remain unimplemented. [Source and validation](docs/validation/0.1.39-alpha.1/MACHINE_PLACEMENT.md).
 2. **Configure the menu.** Click the stand with food to register a dish without consuming it. Empty-hand/sneak-click to manage the menu. Each dish counts a single nutritional value regardless of stack size.
-3. **Restock supplies.** Supply leather to the packaging rack and clean plates to the plate rack. Both racks must be within **5 blocks** of the counter; the counter, chairs and relevant freezers must be within **24 blocks** of the restaurant.
+3. **Restock supplies.** With the default leather setting, supply leather to the packaging rack; supply clean plates to the plate rack. Both racks must be within **5 blocks** of the counter; the counter, chairs and relevant freezers must be within **24 blocks** of the restaurant.
 4. **Open and accept orders.** Click the printer to open, then choose a candidate order. Accepting one removes the other candidates in that batch; independent walk-in orders remain.
 5. **Prepare finished foods.** Put required foods in your inventory or an accessible nearby refrigerator. Use a valid order ticket on the countertop to plate/pack it directly; interact empty-handed to see dish names, quantities and missing supplies on one page. **The counter does not craft whole dishes automatically**; it consumes finished food.
 6. **Collect and deliver.** Keep the block above the counter clear. Completed plates/parcels appear on the counter; click to pick them up and use them on the corresponding customer. Sneak-place and retrieve them while [preserving the complete carrier](docs/PARITY.md#未交付的展示餐點). Delivery packages/tickets can show destination and direction.
@@ -165,6 +167,15 @@ Catalog/provider foods are recognized automatically. Administrators can still ex
 ```
 
 `example:your_dish` is a placeholder and must be replaced by an installed item ID. Empty currency ID restores oTc coins. Each configured currency item counts as one unit; switching affects future payments but does not convert existing coins.
+
+Administrators can disable or restore leather consumption for **all restaurants in this world**:
+
+```mcfunction
+/scriptevent ordertocook:config {"countertopConsumeLeather":false}
+/scriptevent ordertocook:config {"countertopConsumeLeather":true}
+```
+
+Only JSON booleans are accepted. The Java default is `true`; missing or invalid saved field values safely use that default without an automatic rewrite. `false` skips the packaging rack entirely for delivery and explicit dine-in bags. Existing rack stock and prepared bags are unchanged; plates still require and consume a clean plate. The setting persists across worldLoad and is read again after a picker/carrier form closes. Malformed saved settings stop initialization without erasing them. This is a world setting, not a nearby-restaurant preference. Machine-count and delivery-rate configuration are still not exposed. [Scope and save limits](docs/validation/0.1.40-alpha.1/LEATHER_CONFIG.md).
 
 You may temporarily override refresh intervals and nutrition thresholds:
 

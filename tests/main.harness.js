@@ -123,3 +123,13 @@ export function itemCount(player, id) {
 export function balance(player) {
   return [1, 5, 20, 100, 10000].reduce((sum, value) => sum + itemCount(player, `ordertocook:chef_coin_${value}`) * value, 0);
 }
+
+// Exercise the registered production script-event gate, not a test-only setter.
+export function configure(env, data, source = 'admin') {
+  if (source === 'admin') env.player.tags.add('otc_admin');
+  if (source === 'creative') env.player.getGameMode = () => 'Creative';
+  for (const callback of env.system.afterEvents.scriptEventReceive.subscriptions) callback({
+    id: 'ordertocook:config', message: JSON.stringify(data), sourceType: source === 'server' ? 'Server' : 'Entity',
+    ...(source === 'server' ? {} : { sourceEntity: env.player })
+  });
+}
