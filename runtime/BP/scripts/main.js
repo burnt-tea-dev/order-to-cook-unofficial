@@ -12,7 +12,7 @@ import { VANILLA_FOODS, DEFAULT_MENU, DEFAULT_CONFIG, TIER_LABELS, TIER_COLORS }
 import {
   initStore, locationId, getRestaurant, restaurants, saveRestaurant, deleteRestaurant, getProfile, saveProfile,
   getStation, getStationById, findStation, stations, saveStation, deleteStation,
-  nearbyStations, nearestRestaurant, loadedBlock, distanceSquared, setBlockState
+  nearbyStations, nearestRestaurant, hasMachinePlacementConflict, loadedBlock, distanceSquared, setBlockState
 } from './store.js';
 import {
   containerOf, heldItem, freeSlot, countItem, planExtraction, applyExtraction,
@@ -1272,8 +1272,14 @@ system.beforeEvents.startup.subscribe(event => {
           event.cancel = true;
           if (event.player) system.run(() => notify(event.player, '舊餐廳仍在保存帳簿或清理餐盤，請完成後再放置。'));
         }
-        const nearby = nearestRestaurant(event.block, 24);
-        if (nearby) { event.cancel = true; if (event.player) system.run(() => notify(event.player, '打單機需與另一台相隔超過 24 格。')); }
+        if (hasMachinePlacementConflict(event.block)) {
+          event.cancel = true;
+          if (event.player) system.run(() => {
+            if (event.player.isValid) event.player.sendMessage({ rawtext: [
+              { text: '§6[下單了]§r ' }, { translate: 'otc.error.machine_placement_conflict' }
+            ] });
+          });
+        }
       }
       if (typeId === 'ordertocook:refrigerator') {
         const upper = event.block.above();

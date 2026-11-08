@@ -2,6 +2,8 @@
 
 [简体中文](README.zh-CN.md) · [繁體中文](README.md) · **English**
 
+Version 0.1.39 corrects default new-machine placement to inclusive [-24, +25] bounds on every axis (existing minus new). Equipment’s 24-block sphere, portable data and existing dense restaurants stay unchanged. Unregistered/unloaded discovery and Java’s configurable count remain unimplemented. Source/adapter checks only, without native or client acceptance. [Source and limits](docs/validation/0.1.39-alpha.1/MACHINE_PLACEMENT.md).
+
 Version 0.1.38 lets dine-in orders be packed to go. Normal countertop clicks and held-ticket shortcuts still default to plating; sneak-click for the explicit plate/bag choice. Bags use packaging without changing the order type, deadline, payment or walk-in statistics, and leave no dining/dirty plate or boom bonus. This change has source and native-I/O-double regression coverage only, not client/live-world acceptance. [Scope and evidence](docs/validation/0.1.38-alpha.1/DINE_IN_TAKEOUT.md).
 
 Version 0.1.37 removes redundant world reads: nearest-restaurant queries stop at the first valid distance-sorted candidate, and dishwashers update visuals once per tick. No new cache or permission/save rule changes. This demonstrates fewer source-level calls, not native MSPT or POI gains. Transient cosmetic API failures retry on the next update. See [read-count validation](docs/validation/0.1.37-alpha.1/WORLD_READS.md).
@@ -51,7 +53,7 @@ Personal progression counts completed order settlements only after this feature 
 
 ## Survival restaurant walkthrough
 
-1. **Set up a restaurant.** Craft/place an order printer, menu stand, preparation counter, packaging rack, plate rack, chairs and washing basin. Different restaurants' order printers must be more than **24 blocks apart**.
+1. **Set up a restaurant.** Craft/place an order printer, menu stand, preparation counter, packaging rack, plate rack, chairs and washing basin. New machine placement uses a box: it is cancelled if another registered, currently readable machine has **existing minus new** X/Y/Z offsets all in **[-24, +25]**, inclusive, regardless of owner. A 26-block gap on any one axis clears that machine; a diagonal distance over 24 does not guarantee placement. Equipment still finds the nearest restaurant within a **24-block spherical radius**. Existing dense restaurants are not removed or moved. Unregistered/unloaded-machine discovery and Java’s configurable machine count remain unimplemented. [Source and validation](docs/validation/0.1.39-alpha.1/MACHINE_PLACEMENT.md).
 2. **Configure the menu.** Click the stand with food to register a dish without consuming it. Empty-hand/sneak-click to manage the menu. Each dish counts a single nutritional value regardless of stack size.
 3. **Restock supplies.** Supply leather to the packaging rack and clean plates to the plate rack. Both racks must be within **5 blocks** of the counter; the counter, chairs and relevant freezers must be within **24 blocks** of the restaurant.
 4. **Open and accept orders.** Click the printer to open, then choose a candidate order. Accepting one removes the other candidates in that batch; independent walk-in orders remain.
