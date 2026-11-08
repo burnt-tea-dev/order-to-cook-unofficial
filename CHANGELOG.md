@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.44-alpha.1
+
+- Add localized, customer-named five-minute, one-minute and expired notices for ordinary carried paper orders and dine-in/delivery bags. Keep severity-first selection, durable per-item flags and fresh flags on newly prepared bags; plates, dropped items and world containers are excluded.
+- Preserve full native stacks and existing tick/legacy deadline semantics. Reject retained terminal/stale/proof-mismatched work; keep orphan paper silent and disclose that self-contained orphan bags cannot reconstruct pruned history. Mark-before-chat suppresses routine replay but does not guarantee atomic or exactly-once delivery.
+- Reuse the existing 20-tick callback with at most 36P inventory reads. Build an ephemeral lookup once per referenced restaurant per pass; CPU/memory scale with its retained record count, without a persistent cache, arbitrary history cap or native performance claim.
+- Integrate reviewed alert source onto merged .43 without changing rename logic/tests or prior visual evidence. Freeze paired .44 identity with unchanged UUIDs/APIs and append-only payload history. No client/LIVE/BDS probe, NPC/vehicle/artwork change or full Java-parity claim. [Contract, source checks and limitations](docs/validation/0.1.44-alpha.1/CARRIED_ORDER_ALERTS.md).
+
 ## 0.1.43-alpha.1
 
 - Match current-name restaurant pricing: first/cleared naming is free; confirming a current custom name costs one physical currency unit, including same-name and empty submissions. Preserve cancel separately, custom currencies and denomination change.

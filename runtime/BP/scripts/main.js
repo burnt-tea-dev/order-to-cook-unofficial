@@ -33,6 +33,7 @@ import { playEffects, plateSound, freshMealEffects, newOrderEffects } from './au
 import { writePortableBlock, readPortableBlock } from './portable_blocks.js';
 import { createMachineTiming } from './machine_timing.js';
 import { defaultRestaurantName, restaurantNameIsDefault, sanitizeRestaurantName } from './restaurant_name.js';
+import { tickCarriedOrderAlerts, alertCustomerName, ITEM_CUSTOMER_NAME } from './carried_order_alerts.js';
 
 const PREFIX = 'ordertocook:';
 const ITEM_RESTAURANT = 'ordertocook:restaurant';
@@ -273,6 +274,10 @@ function parcelFor(restaurant, order, typeId) {
   stack.setDynamicProperty(ITEM_RESTAURANT, restaurant.id);
   stack.setDynamicProperty(ITEM_ORDER, order.id);
   if (order.proof) stack.setDynamicProperty(ITEM_PROOF, order.proof);
+  if (['ordertocook:order', 'ordertocook:takeout_bag'].includes(stack.typeId)) {
+    const name = alertCustomerName(order.customerName);
+    if (name) stack.setDynamicProperty(ITEM_CUSTOMER_NAME, name);
+  }
   if (stack.typeId === 'ordertocook:takeout_bag') stack.setDynamicProperty(ITEM_EXPIRY, order.expiresAt);
   if (order.expiresTick !== undefined) stack.setDynamicProperty(ITEM_EXPIRY_TICK, order.expiresTick);
   stack.setLore([orderHeading(order), ...order.items.map(item => `${menuFoodLabel(item, foodLabel(item.typeId))} ×${item.amount}`), `報酬 ${order.reward} · 期限見訂單詳情`, ...(order.destination ? [`目的地 X:${order.destination.x} Z:${order.destination.z}`] : []), '使用查看詳情；蹲下點擊方塊頂面可擺放']);
@@ -1203,6 +1208,10 @@ function tickMachine(block) {
 
 function tickRestaurants() {
   if (!ready) return;
+  // Ordinary carried paper/bags only, before independent world housekeeping.
+  // At most 36P slot reads per 20 ticks; linked records are indexed once/pass.
+  try { tickCarriedOrderAlerts(world.getAllPlayers(), orderTime(), getRestaurant); }
+  catch { /* Player enumeration unavailable; independent expiry still proceeds. */ }
   adoptLegacyDisplays();
   const now = Date.now();
   for (const restaurant of restaurants()) {
