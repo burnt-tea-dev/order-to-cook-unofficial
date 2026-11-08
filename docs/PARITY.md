@@ -14,6 +14,8 @@ Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedro
 
 ## 核心玩法
 
+0.1.37只減少最近餐廳查找與洗碗機視覺更新的重複世界讀取，沒有持久索引或權限／載入快取。正常選店、保存及加工不變；偶發cosmetic錯誤不再同回合重試，而在下一次正常更新重試。只證實來源API呼叫數，未測原生MSPT/TPS，#11性能仍未解。[數據與限制](validation/0.1.37-alpha.1/WORLD_READS.md)。
+
 0.1.36只補到店的無可用已載入椅子分支：在任何實體配置前回報明確訊號，main僅從canonical餐廳撤回此次新單，仍保存已消耗序號／updatedAt及同tick刷新。舊pending與排程重試保留；其餘undefined／例外仍走原流程，不擴成不確定原生結果的刪單。不是完整admission／清理原子性或POI性能修復。[回歸與界線](validation/0.1.36-alpha.1/WALKIN_ADMISSION.md)。
 
 0.1.35把普通機器訂單的已註冊椅子選取改為固定Java的x↑、z↑、y↓首合格順序，保留metadata過濾與首個合格即停止方塊驗證；到店顧客隨機池不變。未加入Java世界方塊掃描、顯式fluid／世界Y規則或heightmap隨機fallback，不宣稱完整生成還原、原生性能或客戶端驗收。[來源與回歸](validation/0.1.35-alpha.1/NORMAL_CHAIR_SCAN.md)。

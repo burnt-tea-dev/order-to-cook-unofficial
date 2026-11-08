@@ -858,7 +858,6 @@ export function createApplianceService(ctx) {
         dishwasherTimedEffects(station.location, facing, d.phase, d.plates, -1, 0), MolangVariableMap);
     }
     if (gameSystem.currentTick % 20 < ticks) ctx.saveStation(station);
-    updateVisual(station);
   }
 
   function tickWashing() {

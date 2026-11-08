@@ -229,8 +229,9 @@ export function nearbyStations(dimensionId, location, radius, typeId, options = 
         : distanceSquared(s.location, location) <= radius * radius) && loadedBlock(s)?.typeId === s.typeId);
 }
 export function nearestRestaurant(block, radius = 24) {
-  return restaurants().filter(r => r.dimensionId === block.dimension.id && distanceSquared(r.location, block.location) <= radius * radius && loadedBlock(r)?.typeId === 'ordertocook:order_machine')
-    .sort((a, b) => distanceSquared(a.location, block.location) - distanceSquared(b.location, block.location))[0];
+  return restaurants().filter(r => r.dimensionId === block.dimension.id && distanceSquared(r.location, block.location) <= radius * radius)
+    .sort((a, b) => distanceSquared(a.location, block.location) - distanceSquared(b.location, block.location))
+    .find(r => loadedBlock(r)?.typeId === 'ordertocook:order_machine');
 }
 export function setBlockState(block, name, value) {
   try {
