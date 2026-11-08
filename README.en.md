@@ -2,6 +2,8 @@
 
 [简体中文](README.zh-CN.md) · [繁體中文](README.md) · **English**
 
+Current source checks restaurant permission before claiming a station and uses the Java ±5-per-axis cube for both countertop supply shelves. Refrigerator queries keep their existing sphere. This stable API fix does not integrate POI or establish real-client acceptance. See [0.1.30 validation](docs/validation/0.1.30-alpha.1/STATION_BOUNDARIES.md).
+
 **Current source version: [package.json](package.json) (unreleased). The refrigerator uses native upper 27-slot / lower 54-slot containers; stove and countertop controls take fewer steps, and dishwasher batch transfers have stronger recovery handling. Bedrock 26.60 and Upcoming Creator Features are required. Full Java parity and real-client acceptance remain incomplete.** [Container validation (0.1.5)](docs/validation/0.1.5-alpha.1/CONTAINER_GUI.md) · [Native container capabilities and limits](docs/NATIVE-CONTAINERS.md)
 
 Historical `0.1.2-alpha.3` client evidence includes refrigerator geometry, hand-washing particles and greyed progression text FAILs; it does not certify this version: [historical client record](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [button-contrast correction](docs/validation/UNRELEASED-button-contrast.md).

@@ -2,6 +2,8 @@
 
 [简体中文](README.zh-CN.md) · **繁體中文** · [English](README.en.md)
 
+目前來源補正設備先驗權再認領，以及操作台兩種供應架的每軸 ±5 立方範圍；冰箱仍使用原球形範圍。這是 stable API 修正，未整合 POI，亦不代表真人驗收完成。見 [0.1.30 驗證](docs/validation/0.1.30-alpha.1/STATION_BOUNDARIES.md)。
+
 **目前來源版本見 [package.json](package.json)（未發布）：冰箱改為上 27／下 54 格原生容器，爐灶與操作台縮短操作流程，洗碗機補強批次存取。需要 Bedrock 26.60 與 Upcoming Creator Features。完整 Java 等價及真實客戶端驗收尚未完成。** [容器驗證（0.1.5）](docs/validation/0.1.5-alpha.1/CONTAINER_GUI.md) · [原生容器能力與限制](docs/NATIVE-CONTAINERS.md)
 
 歷史 `0.1.2-alpha.3` 的限定客戶端紀錄含冰箱幾何、手洗粒子及進度灰字 FAIL，不能當作本版驗收結果：[歷史實機紀錄](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [按鈕可讀性修正](docs/validation/UNRELEASED-button-contrast.md)。

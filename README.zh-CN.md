@@ -2,6 +2,8 @@
 
 **简体中文** · [繁體中文](README.md) · [English](README.en.md)
 
+当前源码修正设备先验权再认领，以及操作台两种供应架的每轴 ±5 立方范围；冰箱仍使用原球形范围。这是 stable API 修正，未整合 POI，也不代表真人验收完成。见 [0.1.30 验证](docs/validation/0.1.30-alpha.1/STATION_BOUNDARIES.md)。
+
 **当前源码版本见 [package.json](package.json)（尚未发布）：冰箱改为上 27／下 54 格原生容器，炉灶和操作台减少操作步骤，洗碗机加强批次存取。需要 Bedrock 26.60 和 Upcoming Creator Features。完整 Java 等价及真实客户端验收尚未完成。** [容器验证（0.1.5）](docs/validation/0.1.5-alpha.1/CONTAINER_GUI.md) · [原生容器能力与限制](docs/NATIVE-CONTAINERS.md)
 
 历史 `0.1.2-alpha.3` 的限定客户端记录含冰箱几何、手洗粒子和进度灰字 FAIL，不能作为本版验收结果：[历史实机记录](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [按钮可读性修复](docs/validation/UNRELEASED-button-contrast.md)。

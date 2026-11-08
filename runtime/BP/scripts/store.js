@@ -218,8 +218,12 @@ export function loadedBlock(record) {
   catch { return undefined; }
 }
 export function distanceSquared(a, b) { return (a.x - b.x) ** 2 + (a.y - b.y) ** 2 + (a.z - b.z) ** 2; }
-export function nearbyStations(dimensionId, location, radius, typeId) {
-  return stations().filter(s => s.dimensionId === dimensionId && (!typeId || s.typeId === typeId) && distanceSquared(s.location, location) <= radius * radius && loadedBlock(s)?.typeId === s.typeId);
+/** @param {{shape?: 'sphere' | 'cube'}} options */
+export function nearbyStations(dimensionId, location, radius, typeId, options = {}) {
+  return stations().filter(s => s.dimensionId === dimensionId && (!typeId || s.typeId === typeId) &&
+    (options.shape === 'cube'
+      ? Math.abs(s.location.x - location.x) <= radius && Math.abs(s.location.y - location.y) <= radius && Math.abs(s.location.z - location.z) <= radius
+      : distanceSquared(s.location, location) <= radius * radius) && loadedBlock(s)?.typeId === s.typeId);
 }
 export function nearestRestaurant(block, radius = 24) {
   return restaurants().filter(r => r.dimensionId === block.dimension.id && distanceSquared(r.location, block.location) <= radius * radius && loadedBlock(r)?.typeId === 'ordertocook:order_machine')

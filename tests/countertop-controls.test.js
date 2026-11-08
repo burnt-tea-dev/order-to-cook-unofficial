@@ -43,6 +43,85 @@ function assertStockUnchanged(env, before) {
   assert.equal(env.counter.above().isAir, true);
 }
 
+function moveSupply(env, offset) {
+  const old = env.shelf;
+  env.dimension.getBlock(old.location).setType('minecraft:air');
+  env.store.deleteStation(old);
+  const location = Object.fromEntries(['x', 'y', 'z'].map(axis => [axis, env.counter.location[axis] + offset[axis]]));
+  env.shelf = env.store.getStation(place(env, old.typeId, location));
+  env.shelf.ownerId = env.player.id;
+  env.shelf.supplies = 3;
+  env.store.saveStation(env.shelf);
+}
+
+for (const type of ['dine_in', 'delivery']) {
+  test(`${type} supply at each Java cube corner is ready in the picker and consumed by preparation`, async t => {
+    for (const x of [-5, 5]) for (const y of [-5, 5]) for (const z of [-5, 5]) {
+      await t.test(`${x},${y},${z}`, async () => {
+        const env = await countertopFixture(type);
+        moveSupply(env, { x, y, z });
+        env.formResponses.push((_player, _title, _body, buttons) => {
+          assert.match(buttons[0], /可製作/);
+          return 0;
+        });
+        await env.hooks.countertopForm(env.player, env.counter);
+        assert.equal(env.order.status, 'packed');
+        assert.equal(env.shelf.supplies, 2);
+        assert.equal(itemCount(env.player, 'minecraft:bread'), 3);
+      });
+    }
+  });
+
+  test(`${type} supply outside any cube face is neither advertised nor consumed`, async t => {
+    for (const axis of ['x', 'y', 'z']) for (const side of [-6, 6]) {
+      await t.test(`${axis}=${side}`, async () => {
+        const env = await countertopFixture(type);
+        moveSupply(env, { x: 0, y: 0, z: 0, [axis]: side });
+        const before = inventorySnapshot(env.player);
+        env.formResponses.push((_player, _title, _body, buttons) => {
+          assert.doesNotMatch(buttons[0], /可製作/);
+          assert.match(buttons[0], /缺少包材|缺少乾淨餐盤/);
+          return 0;
+        });
+        await env.hooks.countertopForm(env.player, env.counter);
+        assert.equal(env.order.status, 'accepted');
+        assertStockUnchanged(env, before);
+      });
+    }
+  });
+
+  test(`${type} rejects an unauthorized cube-corner supply through both picker and held-ticket entries`, async () => {
+    const env = await countertopFixture(type);
+    moveSupply(env, { x: 5, y: 5, z: 5 });
+    // A nearer, separately owned machine controls the supply, not our counter.
+    const neighbor = new FakePlayer(env.dimension, { x: 7, y: 5, z: 5 });
+    neighbor.getGameMode = () => 'Survival';
+    env.hooks.getMachine(neighbor, place(env, 'ordertocook:order_machine', { x: 7, y: 5, z: 5 }));
+    env.shelf.ownerId = neighbor.id; env.store.saveStation(env.shelf);
+    env.formResponses.push((_player, _title, _body, buttons) => {
+      assert.doesNotMatch(buttons[0], /可製作/);
+      return 0;
+    });
+    const before = inventorySnapshot(env.player);
+    await env.hooks.countertopForm(env.player, env.counter);
+    assert.equal(env.order.status, 'accepted');
+    assertStockUnchanged(env, before);
+    env.player.container.setItem(0, env.hooks.parcelFor(env.restaurant, env.order, 'ordertocook:order'));
+    const withTicket = inventorySnapshot(env.player);
+    await env.hooks.countertopForm(env.player, env.counter);
+    assert.equal(env.order.status, 'accepted');
+    assertStockUnchanged(env, withTicket);
+  });
+}
+
+test('the default nearby-station query retains the refrigerator sphere', async () => {
+  const env = await countertopFixture();
+  const edge = env.store.getStation(place(env, 'ordertocook:refrigerator', { x: 25, y: 0, z: 0 }));
+  const corner = env.store.getStation(place(env, 'ordertocook:refrigerator', { x: 25, y: 1, z: 0 }));
+  assert.deepEqual(env.store.nearbyStations(env.dimension.id, env.counter.location, 24, edge.typeId).map(s => s.id), [edge.id]);
+  assert.ok(!env.store.nearbyStations(env.dimension.id, env.counter.location, 24, corner.typeId).includes(corner));
+});
+
 test('held accepted order prepares that order directly and preserves remaining food metadata', async () => {
   const env = await countertopFixture();
   env.player.container.setItem(0, env.hooks.parcelFor(env.restaurant, env.order, 'ordertocook:order'));
