@@ -2,6 +2,8 @@
 
 **简体中文** · [繁體中文](README.md) · [English](README.en.md)
 
+菜单换绑现在会即时保存，包括休息中、升级取消／失败与空菜单刷新；已绑立牌暂未加载时保留原快照并延后相关操作，确认移除才清空。0.1.31仍使用稳定API，未修复POI性能或完成真人验收。见[菜单持久化验证](docs/validation/0.1.31-alpha.1/MENU_PERSISTENCE.md)。
+
 当前源码修正设备先验权再认领，以及操作台两种供应架的每轴 ±5 立方范围；冰箱仍使用原球形范围。这是 stable API 修正，未整合 POI，也不代表真人验收完成。见 [0.1.30 验证](docs/validation/0.1.30-alpha.1/STATION_BOUNDARIES.md)。
 
 **当前源码版本见 [package.json](package.json)（尚未发布）：冰箱改为上 27／下 54 格原生容器，炉灶和操作台减少操作步骤，洗碗机加强批次存取。需要 Bedrock 26.60 和 Upcoming Creator Features。完整 Java 等价及真实客户端验收尚未完成。** [容器验证（0.1.5）](docs/validation/0.1.5-alpha.1/CONTAINER_GUI.md) · [原生容器能力与限制](docs/NATIVE-CONTAINERS.md)
