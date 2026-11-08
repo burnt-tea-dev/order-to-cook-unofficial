@@ -2,11 +2,13 @@
 // Only durable device data travels with an item. Orders and customer anchors
 // belong to the placed world record and must never be cloned by moving a shop.
 import { normalizeMenu, STAT_KEYS } from './core.js';
+import { restaurantNameIsDefault } from './restaurant_name.js';
 
 const DATA = 'ordertocook:block_data';
-const MACHINE_FIELDS = ['name', 'ownerId', 'ownerName', 'staff', 'level', 'stats', 'orderSequence', 'createdAt'];
+const MACHINE_FIELDS = ['name', 'nameIsDefault', 'ownerId', 'ownerName', 'staff', 'level', 'stats', 'orderSequence', 'createdAt'];
 
 export function writePortableBlock(stack, record) {
+  if (stack.typeId === 'ordertocook:order_machine') restaurantNameIsDefault(record);
   const data = stack.typeId === 'ordertocook:order_machine'
     ? Object.fromEntries(MACHINE_FIELDS.filter(key => record[key] !== undefined).map(key => [key, record[key]]))
     : { menu: record.menu, initialized: record.initialized === true };
@@ -51,5 +53,6 @@ export function readPortableBlock(stack) {
       !Number.isInteger(data.level) || data.level < 0 || data.level > 8 || !data.stats || typeof data.stats !== 'object' || Array.isArray(data.stats) ||
       Object.keys(data.stats).length !== STAT_KEYS.length || STAT_KEYS.some(key => !Number.isSafeInteger(data.stats[key]) || data.stats[key] < 0) ||
       !Number.isSafeInteger(data.createdAt) || data.createdAt < 0 || !Number.isSafeInteger(data.orderSequence) || data.orderSequence < 0) throw Error('Invalid portable restaurant');
+  restaurantNameIsDefault(data);
   return data;
 }
