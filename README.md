@@ -2,6 +2,8 @@
 
 [简体中文](README.zh-CN.md) · **繁體中文** · [English](README.en.md)
 
+0.1.43 補上餐廳命名收費：目前無自訂名稱免費，有名稱時每次確認收 1 單位目前實物貨幣，同名及清除也收費；清除後下次恢復免費。普通員工不可改名，保留本包店主／管理員權限。新舊存檔、portable 名稱狀態、原物品退款及已知舊名歧義見 [命名修復報告](docs/validation/0.1.43-alpha.1/RESTAURANT_RENAME.md)。僅來源／adapter 驗證，尚未發布，也未做本輪原生／客戶端驗收。
+
 0.1.42 接上全域 `deliveryRate`（預設 `0.3`）：`0` 讓打單機只生成堂食候選，`1` 只生成外送。既有訂單與普通到店單不改類型；重新載入或部分餐廳設定保存失敗後，未來候選仍讀當前全域值。[管理入口與來源證據](docs/validation/0.1.42-alpha.1/DELIVERY_RATE.md)。
 
 0.1.41 接上全域 `maxOrderMachinesWithin24`：預設／最低 `1`；`2` 允許附近兩台、阻擋第三台。原有各軸 [-24, +25] 放置盒、已登記／可讀取範圍、portable 完整物品取消與設備球形綁定維持。重設 `1` 只影響後續放置。來源／adapter 驗證不等於原生排序、效能或完整還原。[設定與證據](docs/validation/0.1.41-alpha.1/MACHINE_COUNT.md)。
@@ -32,7 +34,7 @@
 
 歷史 `0.1.2-alpha.3` 的限定客戶端紀錄含冰箱幾何、手洗粒子及進度灰字 FAIL，不能當作本版驗收結果：[歷史實機紀錄](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [按鈕可讀性修正](docs/validation/UNRELEASED-button-contrast.md)。
 
-**目前來源的視覺／音效改動**：修正冰箱內壁與開關曲線、洗碗機變形及預覽、餐盤起始食物、顧客時序、打單機／外賣袋動畫，以及已確認的聲音和粒子差異。修正與可重現證據見 [VISUAL_AUDIO_PARITY.md](docs/VISUAL_AUDIO_PARITY.md)。本輪尚未執行 Blockbench 互動檢視或 Java／Bedrock 客戶端畫面複驗，離線對照不改寫上述歷史實測結果，也不代表完整一比一完成。
+**目前來源的視覺／音效改動**：修正冰箱內壁與開關曲線、洗碗機變形及預覽、餐盤起始食物、顧客時序、打單機／外賣袋動畫，以及已確認的聲音和粒子差異。修正與可重現證據見 [VISUAL_AUDIO_PARITY.md](docs/VISUAL_AUDIO_PARITY.md)。已完成部分雲端 Blockbench 互動檢視，包含[顧客與設備抽樣](docs/validation/visual-audio/blockbench-20261108/README.md)及[餐盤、訂單機與袋子有限姿態](docs/validation/visual-audio/blockbench-20261108/stage-review/README.md)。全項視覺與 Java／Bedrock 客戶端畫面複驗仍未完成；這些證據不改寫上述歷史實測結果，也不代表完整一比一完成。
 
 
 原作由 **breezeth** 製作：[CurseForge 官方頁面](https://www.curseforge.com/minecraft/mc-mods/order-to-cook) · [Java 原始碼](https://github.com/breezeth-CN/OrdertoCook)。本專案由 `casama233`／`burnt-tea-dev` 維護，保留上游 GPLv3、原作者署名及素材來源。補充素材範圍詢問尚未收到確認，現作非阻塞紀錄，不會因作者未回覆就停止功能開發；具體授權衝突仍須處理。

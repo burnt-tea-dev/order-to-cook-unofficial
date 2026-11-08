@@ -138,7 +138,8 @@ export function giveCoins(player, value) {
     value %= coin;
   }
 }
-export function payCoins(player, cost) {
+/** @param {{ actions: any[] }} [receipt] */
+export function payCoins(player, cost, receipt) {
   if (!Number.isSafeInteger(cost) || cost < 0) return false;
   if (cost === 0) return true;
   const container = containerOf(player);
@@ -213,6 +214,7 @@ export function payCoins(player, cost) {
       applied.push(slot);
       container.setItem(slot, after[slot]);
     }
+    if (receipt) for (const slot of changed) receipt.actions.push({ container, slot, before: before[slot] });
     return true;
   } catch (error) {
     for (const slot of applied.reverse()) {

@@ -32,6 +32,7 @@ import { createProgressionService, creditBonusEarnings, creditCompletedOrder, qu
 import { playEffects, plateSound, freshMealEffects, newOrderEffects } from './audiovisual.js';
 import { writePortableBlock, readPortableBlock } from './portable_blocks.js';
 import { createMachineTiming } from './machine_timing.js';
+import { defaultRestaurantName, restaurantNameIsDefault, sanitizeRestaurantName } from './restaurant_name.js';
 
 const PREFIX = 'ordertocook:';
 const ITEM_RESTAURANT = 'ordertocook:restaurant';
@@ -217,7 +218,8 @@ function getMachine(player, block, placedByPlayer = false) {
   let restaurant = getRestaurant(id);
   if (restaurant?.removing) return restaurant;
   if (!restaurant) {
-    restaurant = createRestaurant({ id, name: `${player.name} 的餐廳`, ownerId: player.id, ownerName: player.name, dimensionId: block.dimension.id, location: block.location, menu: [], config: { deliveryRate: settings.deliveryRate, refreshMs: settings.refreshMs, orderMachineUpgradeBoardHunger: settings.orderMachineUpgradeBoardHunger } });
+    restaurant = createRestaurant({ id, name: defaultRestaurantName(player.name), ownerId: player.id, ownerName: player.name, dimensionId: block.dimension.id, location: block.location, menu: [], config: { deliveryRate: settings.deliveryRate, refreshMs: settings.refreshMs, orderMachineUpgradeBoardHunger: settings.orderMachineUpgradeBoardHunger } });
+    restaurant.nameIsDefault = true;
     restaurant.staff = [];
     restaurant.pendingDishes = [];
     machineTiming.adopt(restaurant, orderTime());
@@ -232,8 +234,13 @@ function getMachine(player, block, placedByPlayer = false) {
   return restaurant;
 }
 function balance(player) { return settings.currencyItem ? countItem([containerOf(player)], settings.currencyItem) : coinBalance(player); }
-function pay(player, value) {
-  return settings.currencyItem ? applyExtraction(planExtraction([containerOf(player)], [{ typeId: settings.currencyItem, amount: value }])) : payCoins(player, value);
+/** @param {{ actions: any[] }} [receipt] */
+function pay(player, value, receipt) {
+  if (!settings.currencyItem) return payCoins(player, value, receipt);
+  const plan = planExtraction([containerOf(player)], [{ typeId: settings.currencyItem, amount: value }]);
+  const paid = applyExtraction(plan);
+  if (paid && receipt) receipt.actions.push(...plan.actions);
+  return paid;
 }
 function reward(player, value) {
   if (settings.currencyItem) giveItems(player, settings.currencyItem, value); else giveCoins(player, value);
@@ -403,12 +410,12 @@ async function shopForm(player, block, restaurant) {
 }
 
 async function settingsForm(player, block, restaurant) {
-  const selection = await choose(player, '餐廳設定', `店主 ${restaurant.ownerName}\n員工 ${restaurant.staff?.length || 0} 人\n拆除打單機會重置該餐廳的等級與統計。`, ['更改餐廳名稱', '加入在線員工', '移除員工', '返回']);
+  const selection = await choose(player, '餐廳設定', `店主 ${restaurant.ownerName}\n員工 ${restaurant.staff?.length || 0} 人\n拆除後的打單機物品會保留名稱、店主、員工、等級與統計；放置後保持暫停營業，訂單不會搬移。`, ['更改餐廳名稱', '加入在線員工', '移除員工', '返回']);
   if (selection === undefined || !validRestaurant(player, restaurant, block)) return;
   if ((selection === 1 || selection === 2) && restaurant.ownerId !== player.id && !isAdmin(player)) { notify(player, '只有店主可以加入或移除員工。'); return; }
   if (selection === 0) {
-    const name = await textInput(player, '餐廳名稱', '最多 32 字', restaurant.name);
-    if (name && validRestaurant(player, restaurant, block)) { restaurant.name = name.replace(/§./g, '').slice(0, 32); saveRestaurant(restaurant); }
+    if (restaurant.ownerId !== player.id && !isAdmin(player)) { notify(player, '只有店主可以更改餐廳名稱。'); return; }
+    await renameForm(player, block, restaurant);
   } else if (selection === 1) {
     const players = world.getAllPlayers().filter(other => other.id !== restaurant.ownerId && !restaurant.staff?.includes(other.id));
     if (!players.length) { notify(player, '沒有可加入的在線玩家。'); return; }
@@ -420,6 +427,46 @@ async function settingsForm(player, block, restaurant) {
     const index = await choose(player, '移除員工', '', ids.map(id => world.getAllPlayers().find(p => p.id === id)?.name || id));
     if (index !== undefined && validRestaurant(player, restaurant, block) && (restaurant.ownerId === player.id || isAdmin(player))) { restaurant.staff = (restaurant.staff || []).filter(id => id !== ids[index]); saveRestaurant(restaurant); }
   }
+}
+
+async function renameForm(player, block, restaurant) {
+  const valid = () => validRestaurant(player, restaurant, block) &&
+    locationId(block.dimension.id, block.location) === restaurant.id &&
+    (restaurant.ownerId === player.id || isAdmin(player));
+  if (!valid()) return;
+  const quote = { name: restaurant.name, marker: restaurant.nameIsDefault,
+    ownerId: restaurant.ownerId, ownerName: restaurant.ownerName,
+    currencyItem: settings.currencyItem, cost: restaurantNameIsDefault(restaurant) ? 0 : 1 };
+  const value = await textInput(player, '餐廳名稱',
+    `最多 32 字；留空清除自訂名稱。\n本次${quote.cost ? `費用 1 ${currencyLabel()}` : '免費'}；目前有自訂名稱時，確認相同名稱或清除也會收費。`, restaurant.name);
+  if (value === undefined) return;
+  if (!valid() || restaurant.name !== quote.name || restaurant.nameIsDefault !== quote.marker ||
+      restaurant.ownerId !== quote.ownerId || restaurant.ownerName !== quote.ownerName ||
+      settings.currencyItem !== quote.currencyItem || (restaurantNameIsDefault(restaurant) ? 0 : 1) !== quote.cost) {
+    notify(player, '餐廳狀態、權限或貨幣已改變，沒有收費；請重新開啟設定。'); return;
+  }
+  const name = sanitizeRestaurantName(value);
+  if (name === undefined) { notify(player, '餐廳名稱資料無效，沒有收費。'); return; }
+  // No await between validation, payment and canonical save. Receipts retain
+  // complete native ItemStacks, not reconstructed denominations or item JSON.
+  const receipt = { actions: [] };
+  if (quote.cost && !pay(player, quote.cost, receipt)) {
+    notify(player, '貨幣不足，或背包放不下找零；請空出幾格。'); return;
+  }
+  try {
+    restaurant.name = name || defaultRestaurantName(restaurant.ownerName);
+    restaurant.nameIsDefault = name === '';
+    saveRestaurant(restaurant);
+  } catch (error) {
+    // saveRestaurant restores its canonical snapshot. Never save the detached
+    // failed object again. Native inventory + world records are not atomic.
+    for (const action of receipt.actions.reverse()) {
+      try { restoreExtraction({ actions: [action] }); }
+      catch (rollbackError) { console.warn(`[OrderToCook] Rename payment rollback failed: ${rollbackError}`); }
+    }
+    throw error;
+  }
+  notify(player, `餐廳名稱已${name ? '更新' : '清除'}。`);
 }
 
 async function leaderboardForm(player) {
@@ -1394,6 +1441,14 @@ world.beforeEvents.playerBreakBlock.subscribe(event => {
   const station = findStation(block);
   if ((restaurant && !canManage(event.player, restaurant)) || (!restaurant && station?.ownerId && station.ownerId !== event.player.id && !isAdmin(event.player))) {
     event.cancel = true; system.run(() => notify(event.player, '你不是這間餐廳的店主／員工。')); return;
+  }
+  if (event.block.typeId === 'ordertocook:order_machine' && restaurant) {
+    try { restaurantNameIsDefault(restaurant); }
+    catch {
+      event.cancel = true;
+      system.run(() => notify(event.player, '餐廳名稱資料無法讀取；已保留設備與存檔，請先修復資料。'));
+      return;
+    }
   }
   if (station?.progressEvents?.length) {
     event.cancel = true;

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.43-alpha.1
+
+- Match current-name restaurant pricing: first/cleared naming is free; confirming a current custom name costs one physical currency unit, including same-name and empty submissions. Preserve cancel separately, custom currencies and denomination change.
+- Restrict renaming to owners and the existing explicit Bedrock admin/Creative override. Revalidate canonical machine, range, ownership, name state and quoted currency after forms; rejected saves refund the exact touched native ItemStacks without resaving a detached record. Cross-layer native atomicity is not claimed.
+- Preserve the optional default/custom marker through JSON and version-1 portable placement. Interpret missing legacy markers using the saved-owner generated name; document unavoidable ambiguity. Malformed explicit markers fail closed without deleting records. Correct obsolete settings help about portable level/statistics loss.
+- Freeze paired 0.1.43 manifests with unchanged UUIDs/APIs and append-only payload history. Retain the separate visual-documentation evidence; no model, texture, animation, NPC, vehicle or deadline-alert changes. Source/adapter checks and independent review are not native/client acceptance. [Rename contract, validation and limitations](docs/validation/0.1.43-alpha.1/RESTAURANT_RENAME.md).
+
 ## 0.1.42-alpha.1
 
 - Expose server-global `deliveryRate` through the existing Server/creative/`otc_admin` operator event. Accept only finite JSON probabilities in `0..1`, with default/reset `0.3` and no coercion; preserve malformed saved settings.
