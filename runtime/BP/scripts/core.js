@@ -170,6 +170,14 @@ export function getMenuNutrition(restaurantOrMenu) {
 }
 export const menuNutrition = getMenuNutrition;
 
+// The bound menu supplies dishes. Java separately scans the highest single
+// nearby board for upgrade eligibility and effective benefit level. Old pure
+// callers/saves without an adapter snapshot retain their menu-based fallback.
+export function getNearbyBoardNutrition(restaurant) {
+  return restaurant?.nearbyBoardNutrition === undefined ? getMenuNutrition(restaurant)
+    : integer(restaurant.nearbyBoardNutrition, 0, 0, MENU_CAPACITY * 10000);
+}
+
 export function addMenuFood(restaurant, food) {
   const current = normalizeMenu(restaurant.menu);
   const normalized = normalizeMenu([food])[0];
@@ -239,11 +247,11 @@ export function getUpgradeQuote(restaurant) {
   if (level >= maxLevel) return {
     ok: false, reason: "max_level", level, nextLevel: level, cost: 0,
     requiredNutrition: listValue(cfg.orderMachineUpgradeBoardHunger, level),
-    currentNutrition: getMenuNutrition(restaurant)
+    currentNutrition: getNearbyBoardNutrition(restaurant)
   };
   const nextLevel = level + 1;
   const requiredNutrition = listValue(cfg.orderMachineUpgradeBoardHunger, nextLevel);
-  const currentNutrition = getMenuNutrition(restaurant);
+  const currentNutrition = getNearbyBoardNutrition(restaurant);
   const cost = listValue(cfg.upgradeCosts, nextLevel, DEFAULT_CONFIG.upgradeCosts[nextLevel]);
   const quote = { level, nextLevel, cost, requiredNutrition, currentNutrition };
   if (currentNutrition < requiredNutrition) return { ok: false, reason: "menu_nutrition", ...quote };
@@ -267,7 +275,7 @@ export function upgradeRestaurant(restaurant, now = Date.now()) {
 
 export function getEffectiveBenefitLevel(restaurant) {
   const cfg = configFor(restaurant);
-  const nutrition = getMenuNutrition(restaurant);
+  const nutrition = getNearbyBoardNutrition(restaurant);
   let benefit = levelOf(restaurant);
   while (benefit > 0 && listValue(cfg.orderMachineUpgradeBoardHunger, benefit) > nutrition) benefit--;
   return benefit;

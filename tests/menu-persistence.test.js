@@ -26,6 +26,7 @@ function bind(env, value) {
   env.restaurant.active = false;
   env.restaurant.boardId = value.record.id;
   env.restaurant.menu = env.core.normalizeMenu(value.record.menu);
+  env.restaurant.nearbyBoardNutrition = env.core.getMenuNutrition(value.record.menu);
   env.store.saveRestaurant(env.restaurant);
 }
 function rootWrites(env) {
@@ -135,7 +136,8 @@ for (const mode of ['throw', 'undefined']) test(`unavailable bound board (${mode
   assert.deepEqual(savedRestaurant(env), before);
   assert.equal(writes.length, 0);
   restore(); tick(env);
-  assert.deepEqual(savedRestaurant(env).menu, [dish(9, 100)]);
+  assert.deepEqual(savedRestaurant(env).menu, value.record.menu);
+  assert.equal(savedRestaurant(env).nearbyBoardNutrition, 100);
 });
 
 for (const replacement of ['minecraft:air', 'minecraft:stone']) test(`loaded ${replacement} is confirmed removal, not unloading`, async () => {

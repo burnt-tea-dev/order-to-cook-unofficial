@@ -12,7 +12,7 @@
 
 新餐廳是 **Lv.0、關閉營業**。立牌預設四種模板：熟豬肉 8、熟雞肉 6、熟羊肉 6、麵包 5，合計 **25 點營養**。菜單模板上限 150，按物品 ID 去重，每道菜只計一份營養，不會因持有 64 個同種食物而增加門檻進度。菜單設定是模板，不是消耗式食材庫。
 
-原版會在機器水平半徑 24、高度 ±8 的範圍尋找立牌，優先綁定營養最高者；同營養時取較近者。升級門檻使用範圍內**單一立牌的最高總營養**，不是把多塊立牌相加。核心模型中的 `restaurant.menu` 表示配接層選定的單一立牌菜單；不得先將不同立牌拼成一份菜單後再交給核心計算。
+原版在初次／綁定失效時，於機器水平半徑24的圓形、高度±8範圍選營養最高立牌；同營養取3D距離較近者，完全平手保留x、z、y掃描順序。有效綁定持續供應菜品，不因另一立牌更豐富就換牌。升級門檻與有效收益等級另用範圍內**單一立牌的最高總營養**，不是多牌相加，也不一定等於已綁菜單。0.1.32以 `restaurant.menu` 保存已綁菜品、`nearbyBoardNutrition` 保存最近可確認的單牌最高值；舊純核心資料缺後者時沿用菜單營養。Bedrock繼續要求owner／staff／範圍資格及已載入類型確認，不強制載入區塊，保留0.1.31的未載入綁定延後保護；未複製Java的200tick掃描快取。[本輪驗證](validation/0.1.32-alpha.1/BOARD_SELECTION.md)。
 
 來源：[BoardBlockEntity.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/BoardBlockEntity.java#L35)、同檔 L142–181、L223–229；[OrderMachineBlockEntity.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/OrderMachineBlockEntity.java#L390) L390–435、L566–591。
 
