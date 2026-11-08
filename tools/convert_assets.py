@@ -177,6 +177,49 @@ def convert_java_model(name, identifier, extra_models=()):
     return geometry(identifier, [{"name": "root", "pivot": [0, 0, 0], "cubes": cubes}]), materials
 
 
+WASHING_WATER_RENDERER = Path("forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/WashingTableWaterRenderer.java")
+WASHING_WATER_OPERATION = "Static renderer water quad; reflected X, full original UV on both sides, shared block blend material"
+
+
+def add_washingtable_water(g, materials):
+    """Include the pinned Java renderer's quad, which is absent from its model.
+
+    This is a narrow source parser, not a Java evaluator. Refuse a changed
+    vertex/UV contract rather than silently applying the current projection.
+    """
+    source = SOURCE / WASHING_WATER_RENDERER
+    text = source.read_text(encoding="utf-8")
+    constants = {name: float(value) for name, value in re.findall(
+        r"private static final float (X0|X1|Z0|Z1|Y) = ([\d.]+)f / 16f;", text)}
+    vertices = re.findall(r"emitVertex\(buffer, posMat, entry, (X[01]), Y, (Z[01]), ([01])f, ([01])f,", text)
+    expected = [("X0", "Z0", "0", "0"), ("X1", "Z0", "1", "0"),
+                ("X1", "Z1", "1", "1"), ("X0", "Z1", "0", "1")]
+    texture = re.search(r'new ResourceLocation\(ModConstants.MOD_ID, "textures/(block/[^"\n]+)\.png"\)', text)
+    if (set(constants) != {"X0", "X1", "Z0", "Z1", "Y"} or vertices != expected or texture is None
+            or "RenderType.entityTranslucent(WATER_TEXTURE)" not in text or "RenderSystem.disableCull()" not in text):
+        raise ValueError("Unsupported WashingTableWaterRenderer quad/material contract")
+    x0, x1, z0, z1, y = (constants[key] for key in ("X0", "X1", "Z0", "Z1", "Y"))
+    if not (0 <= x0 < x1 <= 16 and 0 <= z0 < z1 <= 16 and 0 <= y <= 16):
+        raise ValueError("WashingTableWaterRenderer quad is outside its block")
+    tile = texture_tile(f"{NS}:" + texture[1])
+    if tile not in materials:
+        raise ValueError("WashingTableWaterRenderer texture is not declared by its block model")
+    # Bedrock up/down faces have opposite vertex orders. The reverse-winding
+    # underside retains the SAME physical UV corners as the Java no-cull quad.
+    # Both faces have real area; no side faces, depth, UV inset or new pixels.
+    g["minecraft:geometry"][0]["bones"][0]["cubes"].append({
+        "origin": [8-x1, y, z0-8], "size": [x1-x0, 0, z1-z0], "uv": {
+            "up": {"uv": [16, 16], "uv_size": [-16, -16], "material_instance": tile},
+            "down": {"uv": [16, 0], "uv_size": [-16, 16], "material_instance": tile}}})
+    # Material Instance's render_method must be shared by EVERY material on
+    # one block. alpha_test cannot represent the original water alpha (133).
+    for material in materials.values():
+        material["render_method"] = "blend"
+        if material["texture"] == tile:
+            material["face_dimming"] = False
+    return source
+
+
 def normalize_signed_cube(cube):
     """Keep the physical face/texel mapping when making signed sizes legal.
 
@@ -1012,7 +1055,7 @@ def state_condition(states):
 
 
 def block_definition(name, base_geo, materials, states=None, variants=(), collision=True, selection=None,
-                     native_container=None, hidden=False, loot_table=None):
+                     native_container=None, hidden=False, loot_table=None, item_visual=None):
     if native_container is not None:
         materials, variants = copy.deepcopy(materials), copy.deepcopy(variants)
         # Native containers require 1.26.60; since 1.26.20 material occlusion is
@@ -1051,6 +1094,8 @@ def block_definition(name, base_geo, materials, states=None, variants=(), collis
         "minecraft:movable": {"movement_type": "immovable"}, f"{NS}:interact": {}}
     if native_container is not None:
         components["minecraft:block_entity"] = {"dynamic_properties": True, "container": native_container}
+    if item_visual is not None:
+        components["minecraft:item_visual"] = item_visual
     permutations = [{"condition": f"q.block_state('minecraft:cardinal_direction') == '{direction}'",
                      "components": {"minecraft:transformation": {"rotation": [0, rotation, 0]}}}
                     for direction, rotation in (("north", 0), ("south", 180), ("west", 90), ("east", -90))]
@@ -1100,14 +1145,28 @@ def make_blocks():
     block_definition("takeout_bag", f"geometry.{NS}.takeout_bag", mats, {"frame": list(range(11))}, variants,
                      False, {"origin": [-5, 0, -5], "size": [10, 10, 10]}, native_container={"slot_count": 1})
     for name, state, maximum in (("shelf", "papers", 10), ("plate_shelf", "plates", 18), ("washingtable", "plates", 10)):
+        item_visual = None
+        if name == "washingtable":
+            # Java's block-entity renderer does not run for its item. The
+            # separate dry item uses the source parent and alpha-test materials.
+            item_g, item_mats = convert_java_model(f"{NS}:item/washingtable", f"geometry.{NS}.washingtable_item")
+            item_visual = {"geometry": emit_geo("washingtable_item", item_g), "material_instances": item_mats}
         variants = []
         for count in range(maximum+1):
             extra = (f"{NS}:block/{name}_{count}",) if count else ()
             g, mats = convert_java_model(f"{NS}:block/{name}_idle", f"geometry.{NS}.{name}_{count}", extra)
+            if name == "washingtable":
+                renderer_source = add_washingtable_water(g, mats)
             identifier = emit_geo(f"{name}_{count}", g)
+            if name == "washingtable":
+                record(renderer_source, RP / "models/blocks" / f"{name}_{count}.geo.json", WASHING_WATER_OPERATION)
             variants.append({"condition": state_condition({state: count}), "components": {"minecraft:geometry": identifier, "minecraft:material_instances": mats}})
         coll = True if name == "washingtable" else {"origin": [-8, 0, 0], "size": [16, 16, 8]}
-        block_definition(name, f"geometry.{NS}.{name}_0", mats, {state: list(range(maximum+1))}, variants, coll)
+        block_definition(name, f"geometry.{NS}.{name}_0", mats, {state: list(range(maximum+1))}, variants, coll,
+                         item_visual=item_visual)
+        if name == "washingtable":
+            record(renderer_source, BP / "blocks/washingtable.json", WASHING_WATER_OPERATION)
+            record(model_path(f"{NS}:item/washingtable"), BP / "blocks/washingtable.json", "Dry block-item geometry and alpha-test material kept separate from the placed water renderer")
     # Stage zero is drawn by Java's placed-meal renderer. The block fallback
     # retains its terminal geometry; the dining entity plays the actual clip.
     blockstates_source = ASSETS / "blockstates" / "food_plate_display.json"
@@ -2062,6 +2121,7 @@ def main():
         "port_assets": [{"source": str(path.relative_to(ROOT)), "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
                         for path in sorted((ROOT / "assets/guidebook").glob("*")) if path.suffix in (".png", ".lang")],
         "adaptations":["Two-part refrigerator with complete independent doors; separate 11-pose open/close source clips; at most 0.126px intermediate hinge translation bounds the sweep",
+            "Washing table includes the source renderer's static translucent water quad in all 11 plate states; whole-block blend and reverse-winding underside require native sorting/backface review",
             "Original GeckoLib elastic/bounce easing and appliance squash retained in sampled static cuboids; residual descendant shear and unsynchronized cabinet halves remain documented",
             "Stove uses six original textures selected by saved per-stove fire phases: 15-tick ignition delay, 5-tick burst and four 8-tick cycle frames; original ignition bone squash is not rendered",
             "Dishwasher drawer, door, plate-count visibility and wash vibration sampled into 82 poses including look-target preview; preview geometry is shared rather than per-client",

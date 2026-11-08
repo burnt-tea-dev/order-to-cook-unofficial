@@ -5,6 +5,7 @@ import copy
 import contextlib
 import importlib.util
 import io
+import hashlib
 import json
 import math
 import itertools
@@ -526,6 +527,151 @@ class ApplianceGeometryTests(unittest.TestCase):
         self.assertNotIn("ordertocook:bag_motion",definition["components"])
         ticking = [p for p in definition["permutations"] if "minecraft:tick" in p["components"]]
         self.assertEqual(ticking,[{"condition":"q.block_state('ordertocook:frame') > 0","components":{"minecraft:tick":{"interval_range":[1,1],"looping":True},"ordertocook:bag_motion":{}}}])
+
+class WashingTableWaterTests(unittest.TestCase):
+    """Source renderer vertices are the oracle, not the converter's UV output."""
+    source = ROOT / 'upstream/reference'
+    renderer = source / converter.WASHING_WATER_RENDERER
+
+    @classmethod
+    def setUpClass(cls):
+        cls.temp = TemporaryDirectory()
+        cls.output = Path(cls.temp.name)
+        with patch.multiple(converter, create=True, SOURCE=cls.source, OUT=cls.output,
+                            BP=cls.output/'BP', RP=cls.output/'RP', PROVENANCE=[], GEOMETRY_SOURCES={}):
+            converter.make_blocks()
+            cls.provenance = copy.deepcopy(converter.PROVENANCE)
+        cls.block = converter.read_json(cls.output/'BP/blocks/washingtable.json')['minecraft:block']
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.temp.cleanup()
+
+    def test_pinned_renderer_bytes_and_all_outputs_have_provenance(self):
+        data = self.renderer.read_bytes()
+        self.assertEqual(hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest(),
+                         'a47acf4717344c0196066cccbf199c8c21347585')
+        self.assertEqual(hashlib.sha256(data).hexdigest(),
+                         'f6f7b7b7781e30acded9d3e2cf17ad6d8ab01d234dd1e2b2d517fd4ea9130d1d')
+        self.assertIn(str(converter.WASHING_WATER_RENDERER), converter.read_json(self.source/'UPSTREAM.json')['subset'])
+        rows = [row for row in self.provenance if row['source'] == str(converter.WASHING_WATER_RENDERER)]
+        self.assertEqual({row['output'] for row in rows}, {'BP/blocks/washingtable.json'} |
+                         {f'RP/models/blocks/washingtable_{count}.geo.json' for count in range(11)})
+        shipped = converter.read_json(ROOT/'runtime/asset_conversion_manifest.json')['assets']
+        for row in rows:
+            self.assertEqual(row['sha256'], hashlib.sha256(data).hexdigest())
+            self.assertIn(row, shipped)
+
+    def test_factory_matches_shipped_states_and_keeps_original_body_and_plate_cubes(self):
+        relative_paths = ['BP/blocks/washingtable.json', 'RP/models/blocks/washingtable_item.geo.json']
+        for count in range(11):
+            path = f'RP/models/blocks/washingtable_{count}.geo.json'
+            relative_paths.append(path)
+            generated = converter.read_json(self.output/path)['minecraft:geometry'][0]
+            cubes = generated['bones'][0]['cubes']
+            # Existing model conversion is unchanged; only one renderer plane
+            # is added to the original 10 body cubes plus source plate cubes.
+            models = [converter.resolve_model('ordertocook:block/washingtable_idle')]
+            if count:
+                models.append(converter.resolve_model(f'ordertocook:block/washingtable_{count}'))
+            originals = [converter.java_cube(cube, model['textures']) for model in models for cube in model['elements']]
+            self.assertEqual(cubes[:-1], originals)
+            self.assertEqual(len(cubes), 11+count)
+            self.assertEqual(cubes[-1]['size'], [10, 0, 9])
+            self.assertEqual(set(cubes[-1]['uv']), {'up', 'down'})
+            converter.assert_block_bounds({'minecraft:geometry': [generated]})
+        for path in relative_paths:
+            with self.subTest(path=path):
+                self.assertEqual((self.output/path).read_bytes(), (ROOT/'runtime'/path).read_bytes())
+
+    def test_independent_renderer_corner_uv_contract_for_both_sides_and_four_facings(self):
+        # Source emitVertex calls in their original order, not a synthetic
+        # Java cube passed through java_cube. Source UVs are normalized 0..1.
+        java = [(3, 15.08, 3, 0, 0), (13, 15.08, 3, 1, 0),
+                (13, 15.08, 12, 1, 1), (3, 15.08, 12, 0, 1)]
+        text = self.renderer.read_text()
+        source_rotations = {name.lower(): int(angle) for name, angle in
+                            re.findall(r'case (NORTH|EAST|SOUTH|WEST) -> (\d+)f;', text)}
+        def turn(point, degrees):
+            # Quarter turns around block center. Compare dispatch and physical
+            # source corners; this is not a claim about engine render behavior.
+            x, y, z, u, v = point
+            for _ in range((degrees % 360)//90):
+                x, z = z, -x
+            return (round(x, 6), round(y, 6), round(z, 6), u, v)
+        for count in range(11):
+            entry = converter.read_json(self.output/f'RP/models/blocks/washingtable_{count}.geo.json')['minecraft:geometry'][0]
+            cube = entry['bones'][0]['cubes'][-1]
+            # Decode Bedrock's reflected X and face vertex order independently
+            # (GeoQuad/VertexSet). This catches mirrors hidden by flat water.png.
+            ox, y, z0 = cube['origin']; dx, _, dz = cube['size']
+            x0, x1, z1 = -ox-dx, -ox, z0+dz
+            positions = {'up': [(x0,y,z1),(x1,y,z1),(x1,y,z0),(x0,y,z0)],
+                         'down': [(x0,y,z0),(x1,y,z0),(x1,y,z1),(x0,y,z1)]}
+            for direction, source_rotation in source_rotations.items():
+                states = {'ordertocook:plates': count, 'minecraft:cardinal_direction': direction}
+                components = copy.deepcopy(self.block['components'])
+                for row in self.block['permutations']:
+                    if eval(row['condition'], {'__builtins__': {}}, {'q': SimpleNamespace(block_state=states.__getitem__)}):
+                        components.update(row['components'])
+                self.assertEqual(components['minecraft:geometry'], f'geometry.ordertocook.washingtable_{count}')
+                rotation = components['minecraft:transformation']['rotation'][1]
+                self.assertEqual(rotation % 360, source_rotation)
+                expected = sorted(turn((x-8,y,z-8,u,v), source_rotation) for x,y,z,u,v in java)
+                for side, vertices in positions.items():
+                    face = cube['uv'][side]
+                    u,v = face['uv']; du,dv = face['uv_size']
+                    texture_corners = [(u+du,v),(u,v),(u,v+dv),(u+du,v+dv)]
+                    actual = sorted(turn((*point, tx/16, ty/16), rotation)
+                                    for point,(tx,ty) in zip(vertices, texture_corners))
+                    with self.subTest(count=count, direction=direction, side=side):
+                        self.assertEqual(actual, expected)
+                        self.assertTrue(all(-8 <= p[0] <= 8 and -8 <= p[2] <= 8 for p in actual))
+                        self.assertEqual(face['material_instance'], 'ordertocook_block_water')
+
+    def test_all_world_materials_blend_original_alpha_but_item_stays_dry(self):
+        for components in [self.block['components'], *[p['components'] for p in self.block['permutations']]]:
+            materials = components.get('minecraft:material_instances')
+            if materials is None:
+                continue
+            self.assertEqual({m['render_method'] for m in materials.values()}, {'blend'})
+            self.assertFalse(materials['ordertocook_block_water']['face_dimming'])
+        item = self.block['components']['minecraft:item_visual']
+        self.assertEqual(item['geometry'], 'geometry.ordertocook.washingtable_item')
+        self.assertEqual({m['render_method'] for m in item['material_instances'].values()}, {'alpha_test'})
+        mesh = converter.read_json(self.output/'RP/models/blocks/washingtable_item.geo.json')['minecraft:geometry'][0]
+        self.assertEqual(len(mesh['bones'][0]['cubes']), 10)
+        self.assertEqual({f['material_instance'] for c in mesh['bones'][0]['cubes'] for f in c['uv'].values()},
+                         {'ordertocook_block_washingtable'})
+        self.assertEqual(converter.read_json(converter.ASSETS/'models/item/washingtable.json'),
+                         {'parent': 'ordertocook:block/washingtable_idle'})
+        from PIL import Image
+        for name, size, alpha in [('water', (32,32), {133}), ('washingtable', (64,64), {0,255})]:
+            source = converter.ASSETS/f'textures/block/{name}.png'
+            self.assertEqual(source.read_bytes(), (ROOT/f'runtime/RP/textures/ordertocook/block/{name}.png').read_bytes())
+            with Image.open(source) as image:
+                self.assertEqual(image.size, size)
+                self.assertEqual(set(image.getchannel('A').tobytes()), alpha)
+
+    def test_source_parser_uses_renderer_dimensions_and_refuses_changed_uv_or_material(self):
+        original = self.renderer.read_text()
+        with TemporaryDirectory() as temp:
+            source = Path(temp)
+            target = source/converter.WASHING_WATER_RENDERER
+            target.parent.mkdir(parents=True)
+            for old, new, valid in [('15.08f / 16f', '14.75f / 16f', True),
+                                    ('X0, Y, Z0, 0f, 0f', 'X0, Y, Z0, 1f, 0f', False),
+                                    ('entityTranslucent', 'entityCutout', False)]:
+                target.write_text(original.replace(old,new))
+                g, mats = converter.convert_java_model('ordertocook:block/washingtable_idle', 'geometry.test')
+                with patch.object(converter, 'SOURCE', source, create=True):
+                    if valid:
+                        converter.add_washingtable_water(g, mats)
+                        self.assertEqual(g['minecraft:geometry'][0]['bones'][0]['cubes'][-1]['origin'][1], 14.75)
+                    else:
+                        with self.assertRaisesRegex(ValueError, 'quad/material contract'):
+                            converter.add_washingtable_water(g, mats)
+
 
 if __name__ == "__main__":
     unittest.main()

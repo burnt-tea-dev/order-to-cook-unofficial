@@ -20,7 +20,7 @@
 
 ## 轉換器與重現
 
-本倉庫的 `upstream/reference/` 隨附上述固定提交的可編輯來源子集：完整的共用 `assets/ordertocook/` 目錄、原工具箱配方、`MotorcycleModel.java` 及上游 `LICENSE.txt`。來源原檔未修改；`upstream/reference/UPSTREAM.json` 記錄提交、作者、授權及子集範圍。它包含轉換器需要的全部上游輸入，因此重產不依賴日後仍可存取的外部下載，也不需要 Java JAR 或完整 Java 建置。
+本倉庫的 `upstream/reference/` 隨附上述固定提交的可編輯來源子集：完整的共用 `assets/ordertocook/` 目錄、原工具箱配方、`MotorcycleModel.java`、`WashingTableWaterRenderer.java` 及上游 `LICENSE.txt`。來源原檔未修改；`upstream/reference/UPSTREAM.json` 記錄提交、作者、授權及子集範圍。它包含轉換器需要的全部上游輸入，因此重產不依賴日後仍可存取的外部下載，也不需要 Java JAR 或完整 Java 建置。
 
 使用本倉庫的 `tools/convert_assets.py`；預設來源就是隨附子集。安裝一次 Pillow 後，資源轉換可以離線執行：
 
@@ -95,6 +95,10 @@ geometry 統一使用 `1.21.0` 格式，以支援原作已使用的逐面 `uv_ro
 ### 餐盤、架子和打單機
 
 餐盤架保留 0–18 盤、包裝架保留 0–10 份包材、洗碗檯保留 0–10 盤的原 multipart 外形。`food_plate_display` 方塊與用餐 helper 均保留原 40 個食物／進食階段。Java stage 0 的空 blockstate 另由 `FoodPlatePlacedRenderer` 顯示食物；候選使用該原 Geo 與專用材質，靜態方塊保留完成姿態，用餐 helper 播放原 0.5 秒 `maked` 並按已過時間定位。
+
+洗碗檯的 Java 模型只宣告 water 紋理，沒有水面；水面由固定 Forge `WashingTableWaterRenderer.java` 另畫。本轉換器讀取其 X=3–13、Z=3–12、Y=15.08 像素及完整 0–1 UV，為全部 11 個世界盤數狀態加入同一零厚度薄片。頂／底面使用相反繞序與相同物理 UV 角點，以表達原 renderer 的 no-cull 平面；沒有新增貼圖、體積或水面動畫。來源 Git blob 為 `a47acf4717344c0196066cccbf199c8c21347585`，SHA-256 為 `f6f7b7b7781e30acded9d3e2cf17ad6d8ab01d234dd1e2b2d517fd4ea9130d1d`；每個輸出均有來源清單條目。
+
+原 water.png 的 alpha 固定為 133，不能用只容許全透明／不透明的 `alpha_test`。依官方同方塊所有材質共用 render_method 的限制，世界本體與水面全部使用 `blend`。Java 物品只繼承乾的 idle 模型，故另外生成 `washingtable_item`，由 `minecraft:item_visual` 使用原 `alpha_test` 材質，沒有讓水面溢入物品。全方塊透明排序、背面、盤子與池壁遮擋，以及原生持物／物品欄仍需 Bedrock 客戶端驗證；來源角點測試不是這些驗收的替代。詳見[水面修正契約](validation/UNRELEASED-washingtable-water.md)。
 
 用餐時的 `ordertocook:dining_plate` 是獨立的外觀實體，41 個 geometry 由同一個 client render controller 選取。它使用單張 `dining_plate_atlas.png`，避免把方塊的 per-face material instance 誤當成 entity 可用的多紋理綁定：
 

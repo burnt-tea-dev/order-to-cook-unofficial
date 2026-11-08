@@ -82,3 +82,5 @@
 ## 後續 Java 來源模型對照
 
 同日補充的 [Java 來源模型對照](source-comparison/README.md) 記錄八張新增 GUI 截圖、預覽轉接限制及等角抽屜比較。正式資產另核至 `7373238`（0.1.40）仍相同；含 .40 的純文件合併樹已通過 `npm run verify`：784／784 JavaScript 測試、TypeScript、資源檢查與建置；另重跑 23／23 appliance geometry 測試。此本機診斷包不發布。
+
+後續 [洗碗檯水面前後對照](washing-water/README.md) 記錄新的 renderer 漏轉修正候選、8 場景／16 張 GUI 證據，以及不能由編輯器消除的透明排序限制。先前各輪結果仍按各自基線與範圍閱讀。

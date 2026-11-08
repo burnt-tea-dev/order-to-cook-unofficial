@@ -1090,10 +1090,28 @@
       "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
     },
     {
+      "source": "common/src/main/resources/assets/ordertocook/models/item/washingtable.json",
+      "output": "RP/models/blocks/washingtable_item.geo.json",
+      "sha256": "12dea488fba4e70a2586b498e9deeade14f7e94be0f4bdf3edc2c33c70e316ed",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
+      "output": "RP/models/blocks/washingtable_item.geo.json",
+      "sha256": "573d98e4c77c21e751d1f41c8368eda41ea8fd1545b51e9d04b738d0103c3d97",
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
       "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
       "output": "RP/models/blocks/washingtable_0.geo.json",
       "sha256": "573d98e4c77c21e751d1f41c8368eda41ea8fd1545b51e9d04b738d0103c3d97",
       "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/WashingTableWaterRenderer.java",
+      "output": "RP/models/blocks/washingtable_0.geo.json",
+      "sha256": "f6f7b7b7781e30acded9d3e2cf17ad6d8ab01d234dd1e2b2d517fd4ea9130d1d",
+      "operation": "Static renderer water quad; reflected X, full original UV on both sides, shared block blend material"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
@@ -1108,6 +1126,12 @@
       "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
     },
     {
+      "source": "forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/WashingTableWaterRenderer.java",
+      "output": "RP/models/blocks/washingtable_1.geo.json",
+      "sha256": "f6f7b7b7781e30acded9d3e2cf17ad6d8ab01d234dd1e2b2d517fd4ea9130d1d",
+      "operation": "Static renderer water quad; reflected X, full original UV on both sides, shared block blend material"
+    },
+    {
       "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
       "output": "RP/models/blocks/washingtable_2.geo.json",
       "sha256": "573d98e4c77c21e751d1f41c8368eda41ea8fd1545b51e9d04b738d0103c3d97",
@@ -1118,6 +1142,12 @@
       "output": "RP/models/blocks/washingtable_2.geo.json",
       "sha256": "cb23d6239498846b66281f39706d8c8c59e148c3898dfe96c8359028b246949d",
       "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/WashingTableWaterRenderer.java",
+      "output": "RP/models/blocks/washingtable_2.geo.json",
+      "sha256": "f6f7b7b7781e30acded9d3e2cf17ad6d8ab01d234dd1e2b2d517fd4ea9130d1d",
+      "operation": "Static renderer water quad; reflected X, full original UV on both sides, shared block blend material"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
@@ -1132,6 +1162,12 @@
       "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
     },
     {
+      "source": "forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/WashingTableWaterRenderer.java",
+      "output": "RP/models/blocks/washingtable_3.geo.json",
+      "sha256": "f6f7b7b7781e30acded9d3e2cf17ad6d8ab01d234dd1e2b2d517fd4ea9130d1d",
+      "operation": "Static renderer water quad; reflected X, full original UV on both sides, shared block blend material"
+    },
+    {
       "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
       "output": "RP/models/blocks/washingtable_4.geo.json",
       "sha256": "573d98e4c77c21e751d1f41c8368eda41ea8fd1545b51e9d04b738d0103c3d97",
@@ -1142,6 +1178,12 @@
       "output": "RP/models/blocks/washingtable_4.geo.json",
       "sha256": "61d9f1073df55223cd7033d7bd28979f97b609ab119589c907796fc22c6b38b4",
       "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/WashingTableWaterRenderer.java",
+      "output": "RP/models/blocks/washingtable_4.geo.json",
+      "sha256": "f6f7b7b7781e30acded9d3e2cf17ad6d8ab01d234dd1e2b2d517fd4ea9130d1d",
+      "operation": "Static renderer water quad; reflected X, full original UV on both sides, shared block blend material"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
@@ -1156,6 +1198,12 @@
       "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
     },
     {
+      "source": "forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/WashingTableWaterRenderer.java",
+      "output": "RP/models/blocks/washingtable_5.geo.json",
+      "sha256": "f6f7b7b7781e30acded9d3e2cf17ad6d8ab01d234dd1e2b2d517fd4ea9130d1d",
+      "operation": "Static renderer water quad; reflected X, full original UV on both sides, shared block blend material"
+    },
+    {
       "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
       "output": "RP/models/blocks/washingtable_6.geo.json",
       "sha256": "573d98e4c77c21e751d1f41c8368eda41ea8fd1545b51e9d04b738d0103c3d97",
@@ -1166,6 +1214,12 @@
       "output": "RP/models/blocks/washingtable_6.geo.json",
       "sha256": "11260d651013cda2bcf754c4be8b18a64923d1c9d391211bb7fddead0fce87e9",
       "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/WashingTableWaterRenderer.java",
+      "output": "RP/models/blocks/washingtable_6.geo.json",
+      "sha256": "f6f7b7b7781e30acded9d3e2cf17ad6d8ab01d234dd1e2b2d517fd4ea9130d1d",
+      "operation": "Static renderer water quad; reflected X, full original UV on both sides, shared block blend material"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
@@ -1180,6 +1234,12 @@
       "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
     },
     {
+      "source": "forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/WashingTableWaterRenderer.java",
+      "output": "RP/models/blocks/washingtable_7.geo.json",
+      "sha256": "f6f7b7b7781e30acded9d3e2cf17ad6d8ab01d234dd1e2b2d517fd4ea9130d1d",
+      "operation": "Static renderer water quad; reflected X, full original UV on both sides, shared block blend material"
+    },
+    {
       "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
       "output": "RP/models/blocks/washingtable_8.geo.json",
       "sha256": "573d98e4c77c21e751d1f41c8368eda41ea8fd1545b51e9d04b738d0103c3d97",
@@ -1190,6 +1250,12 @@
       "output": "RP/models/blocks/washingtable_8.geo.json",
       "sha256": "4c48ae2c3297f78b894e7cf13357875581888b0109307e828bcfcd97ef8d88df",
       "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/WashingTableWaterRenderer.java",
+      "output": "RP/models/blocks/washingtable_8.geo.json",
+      "sha256": "f6f7b7b7781e30acded9d3e2cf17ad6d8ab01d234dd1e2b2d517fd4ea9130d1d",
+      "operation": "Static renderer water quad; reflected X, full original UV on both sides, shared block blend material"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
@@ -1204,6 +1270,12 @@
       "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
     },
     {
+      "source": "forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/WashingTableWaterRenderer.java",
+      "output": "RP/models/blocks/washingtable_9.geo.json",
+      "sha256": "f6f7b7b7781e30acded9d3e2cf17ad6d8ab01d234dd1e2b2d517fd4ea9130d1d",
+      "operation": "Static renderer water quad; reflected X, full original UV on both sides, shared block blend material"
+    },
+    {
       "source": "common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
       "output": "RP/models/blocks/washingtable_10.geo.json",
       "sha256": "573d98e4c77c21e751d1f41c8368eda41ea8fd1545b51e9d04b738d0103c3d97",
@@ -1214,6 +1286,24 @@
       "output": "RP/models/blocks/washingtable_10.geo.json",
       "sha256": "6e9cf660c8f977ee3b75e41e2a6cffdb791fbd85c5fbcf555b7436e3a5393ab8",
       "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    },
+    {
+      "source": "forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/WashingTableWaterRenderer.java",
+      "output": "RP/models/blocks/washingtable_10.geo.json",
+      "sha256": "f6f7b7b7781e30acded9d3e2cf17ad6d8ab01d234dd1e2b2d517fd4ea9130d1d",
+      "operation": "Static renderer water quad; reflected X, full original UV on both sides, shared block blend material"
+    },
+    {
+      "source": "forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/WashingTableWaterRenderer.java",
+      "output": "BP/blocks/washingtable.json",
+      "sha256": "f6f7b7b7781e30acded9d3e2cf17ad6d8ab01d234dd1e2b2d517fd4ea9130d1d",
+      "operation": "Static renderer water quad; reflected X, full original UV on both sides, shared block blend material"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/item/washingtable.json",
+      "output": "BP/blocks/washingtable.json",
+      "sha256": "12dea488fba4e70a2586b498e9deeade14f7e94be0f4bdf3edc2c33c70e316ed",
+      "operation": "Dry block-item geometry and alpha-test material kept separate from the placed water renderer"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/food_plate_placed.geo.json",
@@ -3649,7 +3739,7 @@
   "port_assets": [
     {
       "source": "assets/guidebook/en_US.lang",
-      "sha256": "97d908b48bbd076d81185662da861de9211c1c53d8aebe061cbedcea23144146"
+      "sha256": "07842825bdff3354d8d6eebdc7d27319dee0bd7797786af3104980029c655de5"
     },
     {
       "source": "assets/guidebook/guide_book.png",
@@ -3657,15 +3747,16 @@
     },
     {
       "source": "assets/guidebook/zh_CN.lang",
-      "sha256": "1fa534d0e528dd9605ec718d9a4dffa1407e9ebe838163fa525e9719c236056e"
+      "sha256": "3681854ca66914291c450ce2d4413fbb403aa88f433697b466f4f2b573b025a6"
     },
     {
       "source": "assets/guidebook/zh_TW.lang",
-      "sha256": "9b282a56fea5617c05dad2e3913bebdfc0acaa9b91c4469d979e334276f2180c"
+      "sha256": "ade9567956c163d9f4992fc8d52b40edd944be2e29390aebac5c1ac1709f02d9"
     }
   ],
   "adaptations": [
     "Two-part refrigerator with complete independent doors; separate 11-pose open/close source clips; at most 0.126px intermediate hinge translation bounds the sweep",
+    "Washing table includes the source renderer's static translucent water quad in all 11 plate states; whole-block blend and reverse-winding underside require native sorting/backface review",
     "Original GeckoLib elastic/bounce easing and appliance squash retained in sampled static cuboids; residual descendant shear and unsynchronized cabinet halves remain documented",
     "Stove uses six original textures selected by saved per-stove fire phases: 15-tick ignition delay, 5-tick burst and four 8-tick cycle frames; original ignition bone squash is not rendered",
     "Dishwasher drawer, door, plate-count visibility and wash vibration sampled into 82 poses including look-target preview; preview geometry is shared rather than per-client",

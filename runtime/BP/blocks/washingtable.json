@@ -35,21 +35,21 @@
       "minecraft:material_instances": {
         "ordertocook_block_water": {
           "texture": "ordertocook_block_water",
-          "render_method": "alpha_test",
+          "render_method": "blend",
           "ambient_occlusion": false,
-          "face_dimming": true
+          "face_dimming": false
         },
         "ordertocook_block_washingtable": {
           "texture": "ordertocook_block_washingtable",
-          "render_method": "alpha_test",
+          "render_method": "blend",
           "ambient_occlusion": false,
           "face_dimming": true
         },
         "*": {
           "texture": "ordertocook_block_water",
-          "render_method": "alpha_test",
+          "render_method": "blend",
           "ambient_occlusion": false,
-          "face_dimming": true
+          "face_dimming": false
         }
       },
       "minecraft:collision_box": true,
@@ -70,7 +70,30 @@
       "minecraft:movable": {
         "movement_type": "immovable"
       },
-      "ordertocook:interact": {}
+      "ordertocook:interact": {},
+      "minecraft:item_visual": {
+        "geometry": "geometry.ordertocook.washingtable_item",
+        "material_instances": {
+          "ordertocook_block_water": {
+            "texture": "ordertocook_block_water",
+            "render_method": "alpha_test",
+            "ambient_occlusion": false,
+            "face_dimming": true
+          },
+          "ordertocook_block_washingtable": {
+            "texture": "ordertocook_block_washingtable",
+            "render_method": "alpha_test",
+            "ambient_occlusion": false,
+            "face_dimming": true
+          },
+          "*": {
+            "texture": "ordertocook_block_water",
+            "render_method": "alpha_test",
+            "ambient_occlusion": false,
+            "face_dimming": true
+          }
+        }
+      }
     },
     "permutations": [
       {
@@ -128,21 +151,21 @@
           "minecraft:material_instances": {
             "ordertocook_block_water": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             },
             "ordertocook_block_washingtable": {
               "texture": "ordertocook_block_washingtable",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
               "face_dimming": true
             },
             "*": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             }
           }
         }
@@ -154,21 +177,21 @@
           "minecraft:material_instances": {
             "ordertocook_block_water": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             },
             "ordertocook_block_washingtable": {
               "texture": "ordertocook_block_washingtable",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
               "face_dimming": true
             },
             "*": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             }
           }
         }
@@ -180,21 +203,21 @@
           "minecraft:material_instances": {
             "ordertocook_block_water": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             },
             "ordertocook_block_washingtable": {
               "texture": "ordertocook_block_washingtable",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
               "face_dimming": true
             },
             "*": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             }
           }
         }
@@ -206,21 +229,21 @@
           "minecraft:material_instances": {
             "ordertocook_block_water": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             },
             "ordertocook_block_washingtable": {
               "texture": "ordertocook_block_washingtable",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
               "face_dimming": true
             },
             "*": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             }
           }
         }
@@ -232,21 +255,21 @@
           "minecraft:material_instances": {
             "ordertocook_block_water": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             },
             "ordertocook_block_washingtable": {
               "texture": "ordertocook_block_washingtable",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
               "face_dimming": true
             },
             "*": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             }
           }
         }
@@ -258,21 +281,21 @@
           "minecraft:material_instances": {
             "ordertocook_block_water": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             },
             "ordertocook_block_washingtable": {
               "texture": "ordertocook_block_washingtable",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
               "face_dimming": true
             },
             "*": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             }
           }
         }
@@ -284,21 +307,21 @@
           "minecraft:material_instances": {
             "ordertocook_block_water": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             },
             "ordertocook_block_washingtable": {
               "texture": "ordertocook_block_washingtable",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
               "face_dimming": true
             },
             "*": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             }
           }
         }
@@ -310,21 +333,21 @@
           "minecraft:material_instances": {
             "ordertocook_block_water": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             },
             "ordertocook_block_washingtable": {
               "texture": "ordertocook_block_washingtable",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
               "face_dimming": true
             },
             "*": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             }
           }
         }
@@ -336,21 +359,21 @@
           "minecraft:material_instances": {
             "ordertocook_block_water": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             },
             "ordertocook_block_washingtable": {
               "texture": "ordertocook_block_washingtable",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
               "face_dimming": true
             },
             "*": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             }
           }
         }
@@ -362,21 +385,21 @@
           "minecraft:material_instances": {
             "ordertocook_block_water": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             },
             "ordertocook_block_washingtable": {
               "texture": "ordertocook_block_washingtable",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
               "face_dimming": true
             },
             "*": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             }
           }
         }
@@ -388,21 +411,21 @@
           "minecraft:material_instances": {
             "ordertocook_block_water": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             },
             "ordertocook_block_washingtable": {
               "texture": "ordertocook_block_washingtable",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
               "face_dimming": true
             },
             "*": {
               "texture": "ordertocook_block_water",
-              "render_method": "alpha_test",
+              "render_method": "blend",
               "ambient_occlusion": false,
-              "face_dimming": true
+              "face_dimming": false
             }
           }
         }
