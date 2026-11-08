@@ -1,0 +1,1281 @@
+{
+  "runtime_changed": false,
+  "generated_review_layouts_not_runtime": true,
+  "asset_baseline_commit": "45e1a6d5a845174cfb8ff4be1a463abb4f3ac9d6",
+  "sheets": [
+    {
+      "path": "bedrock/plate_stages_1_8.geo.json",
+      "sha256": "bac24f84cfb517eb59761d07402616c31afbf831269a3d37961e010dd7b8aa19",
+      "texture": "runtime/RP/textures/ordertocook/entity/dining_plate_atlas.png",
+      "texture_sha256": "22d7bc1e10344538d11e1d764631b6b1c3c5f31a89ca2143e83fb6af006469f9",
+      "cases": [
+        {
+          "label": "stage_1",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_1",
+          "offset": [
+            -30.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "label": "stage_2",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_2",
+          "offset": [
+            -10.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "label": "stage_3",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_3",
+          "offset": [
+            10.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "label": "stage_4",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_4",
+          "offset": [
+            30.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "label": "stage_5",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_5",
+          "offset": [
+            -30.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "label": "stage_6",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_6",
+          "offset": [
+            -10.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "label": "stage_7",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_7",
+          "offset": [
+            10.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "label": "stage_8",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_8",
+          "offset": [
+            30.0,
+            0,
+            10.0
+          ]
+        }
+      ]
+    },
+    {
+      "path": "assets/ordertocook/models/block/plate_stages_1_8.json",
+      "sha256": "db14f6dff9571680e45253c3999da777239720148ad0385049342033c655eafa",
+      "texture": "assets/ordertocook/textures/block/food_plate_variants.png",
+      "cases": [
+        {
+          "stage": 1,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/1_1.json",
+          "sha256": "652f44f6f11a644b21da8b966d249e201baad5a9ca9c0602428a5591f3326eee",
+          "offset": [
+            -30.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "stage": 2,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/1_2.json",
+          "sha256": "8664eac0442af13a838004e6d03c89378aea675b0f485d9b983994dd5e9258e1",
+          "offset": [
+            -10.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "stage": 3,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/1_3.json",
+          "sha256": "43a1d79862a005549ac26354c3bd17c219b6f97adbd482400597640abd40a1ef",
+          "offset": [
+            10.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "stage": 4,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/1_4.json",
+          "sha256": "d45c82a78cdd648e139b233affd7d471d1a468ca8c2ceb725a8323b99530977c",
+          "offset": [
+            30.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "stage": 5,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_1.json",
+          "sha256": "e63950cb5b497bb060c4da16b2b2772346831c4087d0dc529366421bac99703c",
+          "offset": [
+            -30.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "stage": 6,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_2.json",
+          "sha256": "62b5a756fca8fc36ceccf6227cd16b2a4518cf43f19d5e38e0b4d311e628f9e8",
+          "offset": [
+            -10.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "stage": 7,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_3.json",
+          "sha256": "e49ae1bf574a82524a09fa6b04a3272b97f01c2cd53a8093a7a97d148ad62a3d",
+          "offset": [
+            10.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "stage": 8,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_4.json",
+          "sha256": "6e67154e23d127e326f79a43c1e551100930e8d0785bf3797ea1943c6092d3af",
+          "offset": [
+            30.0,
+            0,
+            10.0
+          ]
+        }
+      ]
+    },
+    {
+      "path": "bedrock/plate_stages_9_16.geo.json",
+      "sha256": "53feb50670cd28919b31ce4f5ad57ba771fd63d5bb4eef3227ee404e44ad91aa",
+      "texture": "runtime/RP/textures/ordertocook/entity/dining_plate_atlas.png",
+      "texture_sha256": "22d7bc1e10344538d11e1d764631b6b1c3c5f31a89ca2143e83fb6af006469f9",
+      "cases": [
+        {
+          "label": "stage_9",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_9",
+          "offset": [
+            -30.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "label": "stage_10",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_10",
+          "offset": [
+            -10.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "label": "stage_11",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_11",
+          "offset": [
+            10.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "label": "stage_12",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_12",
+          "offset": [
+            30.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "label": "stage_13",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_13",
+          "offset": [
+            -30.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "label": "stage_14",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_14",
+          "offset": [
+            -10.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "label": "stage_15",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_15",
+          "offset": [
+            10.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "label": "stage_16",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_16",
+          "offset": [
+            30.0,
+            0,
+            10.0
+          ]
+        }
+      ]
+    },
+    {
+      "path": "assets/ordertocook/models/block/plate_stages_9_16.json",
+      "sha256": "eddf8c70e42fda5c9d806287755a5e2d909b7ffdc6e63368bc22821a3a405278",
+      "texture": "assets/ordertocook/textures/block/food_plate_variants.png",
+      "cases": [
+        {
+          "stage": 9,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/3_1.json",
+          "sha256": "a1dfae13a9f9060f8a9e65fe85276c1d004800bbfac25642d6dabc133de06ef3",
+          "offset": [
+            -30.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "stage": 10,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/3_2.json",
+          "sha256": "7b1011cd076b0ef64e077da8f00445297036a6e128def81f19dfa90ee3d5b10d",
+          "offset": [
+            -10.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "stage": 11,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/3_3.json",
+          "sha256": "b7e11c21c14c60e3adad6156d88151bf7a626cf51451426475b87a1192e989b4",
+          "offset": [
+            10.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "stage": 12,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/3_4.json",
+          "sha256": "d45c82a78cdd648e139b233affd7d471d1a468ca8c2ceb725a8323b99530977c",
+          "offset": [
+            30.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "stage": 13,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/4_1.json",
+          "sha256": "6119636764c8c392f001e8828f26a378756634e0a20deb4820872256c142fb9c",
+          "offset": [
+            -30.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "stage": 14,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/4_2.json",
+          "sha256": "c27fa608805cc4352cbe24f3cf795aa47eb9157eee6bc222a0d15d8bf4676532",
+          "offset": [
+            -10.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "stage": 15,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/4_3.json",
+          "sha256": "38699ee2b96525afeb8314197fca06bd80065baa10860d2c4b47a2d7b2bbbcb6",
+          "offset": [
+            10.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "stage": 16,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/4_4.json",
+          "sha256": "2574b22e41a99d18986cd14fefb68e7e164fdbec20b78b3a8018f9c18a9458b4",
+          "offset": [
+            30.0,
+            0,
+            10.0
+          ]
+        }
+      ]
+    },
+    {
+      "path": "bedrock/plate_stages_17_24.geo.json",
+      "sha256": "b2b78780b1a24519dceed8a628dd3f49e3629a9aacbfa30ddbbe58e2642905ff",
+      "texture": "runtime/RP/textures/ordertocook/entity/dining_plate_atlas.png",
+      "texture_sha256": "22d7bc1e10344538d11e1d764631b6b1c3c5f31a89ca2143e83fb6af006469f9",
+      "cases": [
+        {
+          "label": "stage_17",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_17",
+          "offset": [
+            -30.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "label": "stage_18",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_18",
+          "offset": [
+            -10.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "label": "stage_19",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_19",
+          "offset": [
+            10.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "label": "stage_20",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_20",
+          "offset": [
+            30.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "label": "stage_21",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_21",
+          "offset": [
+            -30.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "label": "stage_22",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_22",
+          "offset": [
+            -10.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "label": "stage_23",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_23",
+          "offset": [
+            10.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "label": "stage_24",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_24",
+          "offset": [
+            30.0,
+            0,
+            10.0
+          ]
+        }
+      ]
+    },
+    {
+      "path": "assets/ordertocook/models/block/plate_stages_17_24.json",
+      "sha256": "df726ee8650c78924ca022254c0605aa91d0b51de7dd7fb13cc1db27f5d91331",
+      "texture": "assets/ordertocook/textures/block/food_plate_variants.png",
+      "cases": [
+        {
+          "stage": 17,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/5_1.json",
+          "sha256": "024beef092689d5b0cc1108a5a9ff115b0400fd7f54a6b8f134237068b51d431",
+          "offset": [
+            -30.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "stage": 18,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/5_2.json",
+          "sha256": "562b467781f60a3e5f4fabf63b15f7e5683f59b5c36580eb9fa2ed9f92652c4f",
+          "offset": [
+            -10.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "stage": 19,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/5_3.json",
+          "sha256": "f71ad3f60f01f850ef1c30ba88e808774bd4f4dcf9c416e14e072b1ba5527cb6",
+          "offset": [
+            10.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "stage": 20,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/5_4.json",
+          "sha256": "3ebe2f3562984ee9baa778bb2ebcacf2a326d9c938d69327894ed3d52db4352a",
+          "offset": [
+            30.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "stage": 21,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/6_1.json",
+          "sha256": "2edfec870d63ae35ba7269722064cf96d3fb100cc2050e92c8103ac670f9fece",
+          "offset": [
+            -30.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "stage": 22,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/6_2.json",
+          "sha256": "5992fa77bdc0546cb362f104d94c0d60c9e7a87e04d5ab0fea1020f4d9fcb909",
+          "offset": [
+            -10.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "stage": 23,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/6_3.json",
+          "sha256": "7f66a7603a59190c287c9b163f32cfaa0518c5528d085dd05c0832a2d8396a0a",
+          "offset": [
+            10.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "stage": 24,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/6_4.json",
+          "sha256": "d45c82a78cdd648e139b233affd7d471d1a468ca8c2ceb725a8323b99530977c",
+          "offset": [
+            30.0,
+            0,
+            10.0
+          ]
+        }
+      ]
+    },
+    {
+      "path": "bedrock/plate_stages_25_32.geo.json",
+      "sha256": "74c20626ba6b379410db0c50429907e565b972f3e5278a44f11bf83c3f32582f",
+      "texture": "runtime/RP/textures/ordertocook/entity/dining_plate_atlas.png",
+      "texture_sha256": "22d7bc1e10344538d11e1d764631b6b1c3c5f31a89ca2143e83fb6af006469f9",
+      "cases": [
+        {
+          "label": "stage_25",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_25",
+          "offset": [
+            -30.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "label": "stage_26",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_26",
+          "offset": [
+            -10.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "label": "stage_27",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_27",
+          "offset": [
+            10.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "label": "stage_28",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_28",
+          "offset": [
+            30.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "label": "stage_29",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_29",
+          "offset": [
+            -30.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "label": "stage_30",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_30",
+          "offset": [
+            -10.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "label": "stage_31",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_31",
+          "offset": [
+            10.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "label": "stage_32",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_32",
+          "offset": [
+            30.0,
+            0,
+            10.0
+          ]
+        }
+      ]
+    },
+    {
+      "path": "assets/ordertocook/models/block/plate_stages_25_32.json",
+      "sha256": "2979ebb8b7672e68b32513c77252cec4d66466a24b7e814b98ee60e503ddbb6e",
+      "texture": "assets/ordertocook/textures/block/food_plate_variants.png",
+      "cases": [
+        {
+          "stage": 25,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/7_1.json",
+          "sha256": "cd4e81960221d5c3f6ad25614c3d0ba5f9a232717774a24ed244379814c89c98",
+          "offset": [
+            -30.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "stage": 26,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/7_2.json",
+          "sha256": "e5125489fdd1712652bbe6e28f0f7567642d913ce5da93a431536d634645e275",
+          "offset": [
+            -10.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "stage": 27,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/7_3.json",
+          "sha256": "1053fc55540f9ccb33ec2194803aedc282c0b37c35990ae59f826b400519ab30",
+          "offset": [
+            10.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "stage": 28,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/7_4.json",
+          "sha256": "d45c82a78cdd648e139b233affd7d471d1a468ca8c2ceb725a8323b99530977c",
+          "offset": [
+            30.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "stage": 29,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/8_1.json",
+          "sha256": "1ed221e24b778edeb11c6963f96e6990b6c05e5203c169b64f2ac8623c2c024d",
+          "offset": [
+            -30.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "stage": 30,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/8_2.json",
+          "sha256": "f403966bcbcbf2692bbe701af33476ca634913712050fe79026851aabc524d34",
+          "offset": [
+            -10.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "stage": 31,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/8_3.json",
+          "sha256": "5cc5de4c7ffd32ea199678480c977be09bcf907beca24037ae0f537f77526722",
+          "offset": [
+            10.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "stage": 32,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/8_4.json",
+          "sha256": "6cf8cdf9be5b1a6428c720b3b9e489b131174312d45496e9931c178fea80ae60",
+          "offset": [
+            30.0,
+            0,
+            10.0
+          ]
+        }
+      ]
+    },
+    {
+      "path": "bedrock/plate_stages_33_40.geo.json",
+      "sha256": "19db3669f54d44f2c24d5282d52aa3799fcb05b95644a0c0b9f9df47f4dbeb21",
+      "texture": "runtime/RP/textures/ordertocook/entity/dining_plate_atlas.png",
+      "texture_sha256": "22d7bc1e10344538d11e1d764631b6b1c3c5f31a89ca2143e83fb6af006469f9",
+      "cases": [
+        {
+          "label": "stage_33",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_33",
+          "offset": [
+            -30.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "label": "stage_34",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_34",
+          "offset": [
+            -10.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "label": "stage_35",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_35",
+          "offset": [
+            10.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "label": "stage_36",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_36",
+          "offset": [
+            30.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "label": "stage_37",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_37",
+          "offset": [
+            -30.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "label": "stage_38",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_38",
+          "offset": [
+            -10.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "label": "stage_39",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_39",
+          "offset": [
+            10.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "label": "stage_40",
+          "input": "runtime/RP/models/entity/dining_plate.geo.json",
+          "input_sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+          "geometry": "geometry.ordertocook.dining_plate_40",
+          "offset": [
+            30.0,
+            0,
+            10.0
+          ]
+        }
+      ]
+    },
+    {
+      "path": "assets/ordertocook/models/block/plate_stages_33_40.json",
+      "sha256": "c9452333f52abd04acd2b696f1806d730c8d34bab86a65ab16d095eabe143232",
+      "texture": "assets/ordertocook/textures/block/food_plate_variants.png",
+      "cases": [
+        {
+          "stage": 33,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/9_1.json",
+          "sha256": "d4782bbf520c0356504eb6211048a34822a8191a83012c6b10c24f762a2c5526",
+          "offset": [
+            -30.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "stage": 34,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/9_2.json",
+          "sha256": "74a510ee392b294faba363102507f6b8b6dd1e4a8a61e5b415f0c599c50bf2ec",
+          "offset": [
+            -10.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "stage": 35,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/9_3.json",
+          "sha256": "f7429b895a78b210793b12656b09aceb71b56e3af12d4f7e0f5042dd55f6151a",
+          "offset": [
+            10.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "stage": 36,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/9_4.json",
+          "sha256": "8a33cfe464fc27a0e907f2b242e7a71ad5392bebc9cfcedec532e87d688f160e",
+          "offset": [
+            30.0,
+            0,
+            -10.0
+          ]
+        },
+        {
+          "stage": 37,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/10_1.json",
+          "sha256": "574b4269b842c76d392bd962ff6a27d7f5b52afa7b3de37edb1fff4e1f5fd06d",
+          "offset": [
+            -30.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "stage": 38,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/10_2.json",
+          "sha256": "cdbab42b0b248e4da27ac5127620dfa04f081d01d871a844cc302570a55781e0",
+          "offset": [
+            -10.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "stage": 39,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/10_3.json",
+          "sha256": "d7335677c6395f55e5cb0956384f2c6503f8747d6ea3244f8b4ec6640571c538",
+          "offset": [
+            10.0,
+            0,
+            10.0
+          ]
+        },
+        {
+          "stage": 40,
+          "input": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/10_4.json",
+          "sha256": "9407dfc32cbca291df2d23eabb8ae48d8a71c3e498526b1f2cc8117eff3cbf05",
+          "offset": [
+            30.0,
+            0,
+            10.0
+          ]
+        }
+      ]
+    },
+    {
+      "path": "bedrock/orders_0_5.geo.json",
+      "sha256": "4cceaf9fd14e726de4ac2f223d1fd814af965cbc8ba8350323452bb73f3b2733",
+      "texture": "runtime/RP/textures/ordertocook/block/order_machine_geo.png",
+      "texture_sha256": "52cd75a693d199455a6de9155c06a600557a99466c215d673145644b8c09cc68",
+      "cases": [
+        {
+          "label": "order_machine_idle_0",
+          "input": "runtime/RP/models/blocks/order_machine_idle_0.geo.json",
+          "input_sha256": "767aabed4b4867054e09f9d7cfd08917bb0751f5c7ba8aa0579644135dd828c7",
+          "geometry": "geometry.ordertocook.order_machine_idle_0",
+          "offset": [
+            -26.0,
+            0,
+            -13.0
+          ]
+        },
+        {
+          "label": "order_machine_waiting_0",
+          "input": "runtime/RP/models/blocks/order_machine_waiting_0.geo.json",
+          "input_sha256": "ca1ace9553d70c770507bdb2939987bf04bfbabdfb4a9cd0774c3409cf4a95dc",
+          "geometry": "geometry.ordertocook.order_machine_waiting_0",
+          "offset": [
+            0.0,
+            0,
+            -13.0
+          ]
+        },
+        {
+          "label": "order_machine_printing_0",
+          "input": "runtime/RP/models/blocks/order_machine_printing_0.geo.json",
+          "input_sha256": "f7fc237e3bb144b1f0b11e2471e79accb84fe878170ea37c6850ddf5bda219ee",
+          "geometry": "geometry.ordertocook.order_machine_printing_0",
+          "offset": [
+            26.0,
+            0,
+            -13.0
+          ]
+        },
+        {
+          "label": "order_machine_printing_1",
+          "input": "runtime/RP/models/blocks/order_machine_printing_1.geo.json",
+          "input_sha256": "a39ff202f87111c1f5a0d7bbf54b5ddfd7e785313d27e13c99a618c8cd4c34d3",
+          "geometry": "geometry.ordertocook.order_machine_printing_1",
+          "offset": [
+            -26.0,
+            0,
+            13.0
+          ]
+        },
+        {
+          "label": "order_machine_printing_2",
+          "input": "runtime/RP/models/blocks/order_machine_printing_2.geo.json",
+          "input_sha256": "f7e09c656eef7b7e4b872f9e8c843637ed0f4e9e320d1e4d21e9ab01a5b06f69",
+          "geometry": "geometry.ordertocook.order_machine_printing_2",
+          "offset": [
+            0.0,
+            0,
+            13.0
+          ]
+        },
+        {
+          "label": "order_machine_printing_3",
+          "input": "runtime/RP/models/blocks/order_machine_printing_3.geo.json",
+          "input_sha256": "bd476f6c8507d9bb30b18f9be379e7b0cc8cfc31a0901452651f8cd56eb7c876",
+          "geometry": "geometry.ordertocook.order_machine_printing_3",
+          "offset": [
+            26.0,
+            0,
+            13.0
+          ]
+        }
+      ]
+    },
+    {
+      "path": "bedrock/orders_6_11.geo.json",
+      "sha256": "ed63badc2bd6799d62f9ef82aca53ca19045b59cb83aae25487d71dc3336406a",
+      "texture": "runtime/RP/textures/ordertocook/block/order_machine_geo.png",
+      "texture_sha256": "52cd75a693d199455a6de9155c06a600557a99466c215d673145644b8c09cc68",
+      "cases": [
+        {
+          "label": "order_machine_printing_4",
+          "input": "runtime/RP/models/blocks/order_machine_printing_4.geo.json",
+          "input_sha256": "095b6c34f6be0b623f4443229fcf834697b71ecf3e22b6b1e74aae7068383d9a",
+          "geometry": "geometry.ordertocook.order_machine_printing_4",
+          "offset": [
+            -26.0,
+            0,
+            -13.0
+          ]
+        },
+        {
+          "label": "order_machine_printing_5",
+          "input": "runtime/RP/models/blocks/order_machine_printing_5.geo.json",
+          "input_sha256": "7addb77001bb49ae3ad202a16708aad1fbc5b5e7cd308ea27f41ac40e3010af3",
+          "geometry": "geometry.ordertocook.order_machine_printing_5",
+          "offset": [
+            0.0,
+            0,
+            -13.0
+          ]
+        },
+        {
+          "label": "order_machine_printing_6",
+          "input": "runtime/RP/models/blocks/order_machine_printing_6.geo.json",
+          "input_sha256": "b9ae1f621525987c8f16be9840c4c7b7f0844365b2b9e72b495422ee7f8e9e2e",
+          "geometry": "geometry.ordertocook.order_machine_printing_6",
+          "offset": [
+            26.0,
+            0,
+            -13.0
+          ]
+        },
+        {
+          "label": "order_machine_printing_7",
+          "input": "runtime/RP/models/blocks/order_machine_printing_7.geo.json",
+          "input_sha256": "72bccbe8535324bd2bb900fbb1b0b25c59ebc380445334f643e713d8862ad62f",
+          "geometry": "geometry.ordertocook.order_machine_printing_7",
+          "offset": [
+            -26.0,
+            0,
+            13.0
+          ]
+        },
+        {
+          "label": "order_machine_printing_8",
+          "input": "runtime/RP/models/blocks/order_machine_printing_8.geo.json",
+          "input_sha256": "ce40f2d0f117ac9373a8c1b38dd5c835f3a71daa3af157199db79a7f9b0d1194",
+          "geometry": "geometry.ordertocook.order_machine_printing_8",
+          "offset": [
+            0.0,
+            0,
+            13.0
+          ]
+        },
+        {
+          "label": "order_machine_printing_9",
+          "input": "runtime/RP/models/blocks/order_machine_printing_9.geo.json",
+          "input_sha256": "d51653c44afc34ffd804f15939fe8c8b49055822d8f4477dfa39ae97bbff01eb",
+          "geometry": "geometry.ordertocook.order_machine_printing_9",
+          "offset": [
+            26.0,
+            0,
+            13.0
+          ]
+        }
+      ]
+    },
+    {
+      "path": "bedrock/orders_12_17.geo.json",
+      "sha256": "4787edfcca1db92ae430a8cf2ce15e3ba9de3cea3f9fc4378f40f05748f23bf4",
+      "texture": "runtime/RP/textures/ordertocook/block/order_machine_geo.png",
+      "texture_sha256": "52cd75a693d199455a6de9155c06a600557a99466c215d673145644b8c09cc68",
+      "cases": [
+        {
+          "label": "order_machine_printing_10",
+          "input": "runtime/RP/models/blocks/order_machine_printing_10.geo.json",
+          "input_sha256": "5c93a1d3c8786f2b2c44695ba5b09ed1133e864aac935d29fc0c8ebe78d3baed",
+          "geometry": "geometry.ordertocook.order_machine_printing_10",
+          "offset": [
+            -26.0,
+            0,
+            -13.0
+          ]
+        },
+        {
+          "label": "order_machine_printing_11",
+          "input": "runtime/RP/models/blocks/order_machine_printing_11.geo.json",
+          "input_sha256": "c8ec92670299fba0ad5b69584504bc2f96f1fd4810789b517077ed9b881adf02",
+          "geometry": "geometry.ordertocook.order_machine_printing_11",
+          "offset": [
+            0.0,
+            0,
+            -13.0
+          ]
+        },
+        {
+          "label": "order_machine_printing_12",
+          "input": "runtime/RP/models/blocks/order_machine_printing_12.geo.json",
+          "input_sha256": "6cb91be4b714980d7de92eb68cf9d1c119b7b6ab8b15de9acf27b6e09aa82478",
+          "geometry": "geometry.ordertocook.order_machine_printing_12",
+          "offset": [
+            26.0,
+            0,
+            -13.0
+          ]
+        },
+        {
+          "label": "order_machine_printing_13",
+          "input": "runtime/RP/models/blocks/order_machine_printing_13.geo.json",
+          "input_sha256": "5b0ec1d0d4963da5142322fabc41f26fb4c80e64a2367880deccc0801987debb",
+          "geometry": "geometry.ordertocook.order_machine_printing_13",
+          "offset": [
+            -26.0,
+            0,
+            13.0
+          ]
+        },
+        {
+          "label": "order_machine_printing_14",
+          "input": "runtime/RP/models/blocks/order_machine_printing_14.geo.json",
+          "input_sha256": "82dd60f758d1f9ff0513084f5d448073689928d1310bcb7fbfec892fb27f0553",
+          "geometry": "geometry.ordertocook.order_machine_printing_14",
+          "offset": [
+            0.0,
+            0,
+            13.0
+          ]
+        },
+        {
+          "label": "order_machine_printing_15",
+          "input": "runtime/RP/models/blocks/order_machine_printing_15.geo.json",
+          "input_sha256": "36c0a82ad7d4693779dd175bcc98bfc86419364fa0a43690ab1b14c7cfa1bb93",
+          "geometry": "geometry.ordertocook.order_machine_printing_15",
+          "offset": [
+            26.0,
+            0,
+            13.0
+          ]
+        }
+      ]
+    },
+    {
+      "path": "bedrock/bags_0_5.geo.json",
+      "sha256": "de8cdb5c1e29f66f959f091b924f9d19234977de31871bc68e89254dcba83ad4",
+      "texture": "runtime/RP/textures/ordertocook/block/takeout_bag_placed.png",
+      "texture_sha256": "de229103fba45284a4a9a30b08ce1e8d6b10929c697217b5693a3b42688ab167",
+      "cases": [
+        {
+          "label": "takeout_bag",
+          "input": "runtime/RP/models/blocks/takeout_bag.geo.json",
+          "input_sha256": "d4a1501f9f89f645de4527f0b89671ad11327d17d756a9fa72d4ffb0ce9e4764",
+          "geometry": "geometry.ordertocook.takeout_bag",
+          "offset": [
+            -24.0,
+            0,
+            -12.0
+          ]
+        },
+        {
+          "label": "takeout_bag_1",
+          "input": "runtime/RP/models/blocks/takeout_bag_1.geo.json",
+          "input_sha256": "1863bc309d0e4807f07b4016efde4f8fee1756c2c2b1033b85e614db37e71419",
+          "geometry": "geometry.ordertocook.takeout_bag_1",
+          "offset": [
+            0.0,
+            0,
+            -12.0
+          ]
+        },
+        {
+          "label": "takeout_bag_2",
+          "input": "runtime/RP/models/blocks/takeout_bag_2.geo.json",
+          "input_sha256": "2f17dee8e3e122d3ee5235ff53793188417f9b8dfb5e91117c25af28d67ef75d",
+          "geometry": "geometry.ordertocook.takeout_bag_2",
+          "offset": [
+            24.0,
+            0,
+            -12.0
+          ]
+        },
+        {
+          "label": "takeout_bag_3",
+          "input": "runtime/RP/models/blocks/takeout_bag_3.geo.json",
+          "input_sha256": "268467064c1b10d549cc5fcd64f5bfd9cd9bd22d2c9989f44cebada90caa4ca8",
+          "geometry": "geometry.ordertocook.takeout_bag_3",
+          "offset": [
+            -24.0,
+            0,
+            12.0
+          ]
+        },
+        {
+          "label": "takeout_bag_4",
+          "input": "runtime/RP/models/blocks/takeout_bag_4.geo.json",
+          "input_sha256": "8987862264630aa0c60dee9680c7c0bf417ab0d03b9094df6814509537b34406",
+          "geometry": "geometry.ordertocook.takeout_bag_4",
+          "offset": [
+            0.0,
+            0,
+            12.0
+          ]
+        },
+        {
+          "label": "takeout_bag_5",
+          "input": "runtime/RP/models/blocks/takeout_bag_5.geo.json",
+          "input_sha256": "1b8704cddbc5054f474622d0e8fa92473bc673f7964474e7c994f5104089faae",
+          "geometry": "geometry.ordertocook.takeout_bag_5",
+          "offset": [
+            24.0,
+            0,
+            12.0
+          ]
+        }
+      ]
+    },
+    {
+      "path": "bedrock/bags_6_10.geo.json",
+      "sha256": "f757ce53f2e14c20b8282f809996a40a9f0d906053bc944a01c688cb305b340b",
+      "texture": "runtime/RP/textures/ordertocook/block/takeout_bag_placed.png",
+      "texture_sha256": "de229103fba45284a4a9a30b08ce1e8d6b10929c697217b5693a3b42688ab167",
+      "cases": [
+        {
+          "label": "takeout_bag_6",
+          "input": "runtime/RP/models/blocks/takeout_bag_6.geo.json",
+          "input_sha256": "936ffe34c1bec7da6069924aa9bfb4fe5a3ceac12db0e4f16b7729943f345d78",
+          "geometry": "geometry.ordertocook.takeout_bag_6",
+          "offset": [
+            -24.0,
+            0,
+            -12.0
+          ]
+        },
+        {
+          "label": "takeout_bag_7",
+          "input": "runtime/RP/models/blocks/takeout_bag_7.geo.json",
+          "input_sha256": "5d3a35d922d5c3a409f7acdd37972a7261ae5bf2000b0a61a2304e336163e902",
+          "geometry": "geometry.ordertocook.takeout_bag_7",
+          "offset": [
+            0.0,
+            0,
+            -12.0
+          ]
+        },
+        {
+          "label": "takeout_bag_8",
+          "input": "runtime/RP/models/blocks/takeout_bag_8.geo.json",
+          "input_sha256": "575ea29d7ba8b57d8b29044f219c2c37df0b34c1ff12fd03a8499d792b7d4e9d",
+          "geometry": "geometry.ordertocook.takeout_bag_8",
+          "offset": [
+            24.0,
+            0,
+            -12.0
+          ]
+        },
+        {
+          "label": "takeout_bag_9",
+          "input": "runtime/RP/models/blocks/takeout_bag_9.geo.json",
+          "input_sha256": "97716c498b6bd71a31407ea9e7b7e8bd2bcf535a5b4b6b36fa11a069c3e8083a",
+          "geometry": "geometry.ordertocook.takeout_bag_9",
+          "offset": [
+            -24.0,
+            0,
+            12.0
+          ]
+        },
+        {
+          "label": "takeout_bag_10",
+          "input": "runtime/RP/models/blocks/takeout_bag_10.geo.json",
+          "input_sha256": "f37330c146fdb800de289c3180c81852da85dbaa85690bde1666ceef74539409",
+          "geometry": "geometry.ordertocook.takeout_bag_10",
+          "offset": [
+            0.0,
+            0,
+            12.0
+          ]
+        }
+      ]
+    }
+  ]
+}
