@@ -203,3 +203,9 @@ otc.guide.page.limitations.step1=This is an independent Order To Cook handbook. 
 otc.guide.page.limitations.step2=Refrigerator compaction follows native Bedrock stack limits; food-only slots and 128-item stacks remain unavailable. Stove and counter controls use single-page panels; player animation and vehicle differences remain.
 otc.guide.page.limitations.step3=Maintained by burnt-tea-dev under GPLv3 with credit to original author breezeth. Open Credits and licence from this page.
 otc.error.machine_placement_conflict=Cannot place: global machine limit %s reached inside the placement box (-24 to +25 on each axis, existing minus new). Move where fewer registered, loaded machines count; a 26-block gap on one axis excludes that machine.
+
+## Carried paper/bag expiry alerts (pinned Java messages).
+message.ordertocook.order_expiring_soon_5=%s's order will expire within 5 minutes!
+message.ordertocook.order_expiring_soon_1=%s's order will expire within 1 minute!
+message.ordertocook.order_expired_named=%s's order has timed out!
+keyword.ordertocook.customer=Customer

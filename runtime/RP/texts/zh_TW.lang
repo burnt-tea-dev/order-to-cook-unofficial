@@ -203,3 +203,9 @@ otc.guide.page.limitations.step1=本指南是 Order To Cook 的獨立教學書�
 otc.guide.page.limitations.step2=冰箱整理遵守 Bedrock 原生堆疊上限，仍沒有食品限定或每格 128 件；爐灶與操作台採單頁控制，玩家動畫與載具仍有平台差異。
 otc.guide.page.limitations.step3=本移植由 burnt-tea-dev 維護，保留原作者 breezeth 的 GPLv3 署名。可在本頁開啟完整來源與授權聲明。
 otc.error.machine_placement_conflict=無法放置：放置盒形範圍內已達全域上限 %s 台（舊機器減新位置，各軸 -24 到 +25，含邊界）。請移到計入的已登記、已載入機器較少處；任一軸相隔 26 格即可排除該台。
+
+## Carried paper/bag expiry alerts (pinned Java messages).
+message.ordertocook.order_expiring_soon_5=%s的訂單即將在 5 分鐘內過期！
+message.ordertocook.order_expiring_soon_1=%s的訂單即將在 1 分鐘內過期！
+message.ordertocook.order_expired_named=%s的訂單已逾時！
+keyword.ordertocook.customer=顧客
