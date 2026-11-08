@@ -204,7 +204,7 @@ Java 的 `TakeoutBagItem.prepareBoomBonus` 先選定加賞，`CustomerEntity.tic
 
 ### 顧客直接生成、空椅與站立 fallback
 
-上游 `OrderNpcManager.findEmptyChair` 搜尋水平圓形半徑 24 格、Y±8 格，`spawnPreparedNpc` 直接設定位置並掛上座位。普通餐廳顧客在 `findSpawnPosNormal` 無椅時呼叫 `findFallbackPosNearMachine(machine, 5)`；`WalkInNpcManager.spawn` 沒有椅子便返回失敗。`CustomerEntity.createCustomerAttributes` 的 movement speed 為 0，`registerGoals` 僅加入看向玩家及隨機看向目標。因此直接安排顧客符合原作，沒有「尚待補回的預設入店尋路」。基岩版搜尋限制於已載入位置，站立地形以有上限的候選及短支撐射線檢查，未聲稱所有 Java 地形判斷逐點一致。
+上游 `OrderNpcManager.findEmptyChair` 搜尋水平圓形半徑24格、Y±8格，過濾佔用及頭部空間後等機率選空椅；`spawnPreparedNpc` 直接設定位置並掛上座位。0.1.33讓到店前置判斷使用相同圓柱範圍，到店顧客服務從已驗證空椅隨機選取；不改冰箱查找或宣稱性能改善。[本輪來源驗證](validation/0.1.33-alpha.1/CHAIR_PARITY.md)。普通餐廳顧客在 `findSpawnPosNormal` 無椅時呼叫 `findFallbackPosNearMachine(machine, 5)`；`WalkInNpcManager.spawn` 沒有椅子便返回失敗。`CustomerEntity.createCustomerAttributes` 的 movement speed 為 0，`registerGoals` 僅加入看向玩家及隨機看向目標。因此直接安排顧客符合原作，沒有「尚待補回的預設入店尋路」。基岩版搜尋限制於已載入位置，站立地形以有上限的候選及短支撐射線檢查，未聲稱所有 Java 地形判斷逐點一致。
 
 來源：[OrderNpcManager.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/core/OrderNpcManager.java) 的 `findEmptyChair`、`spawnPreparedNpc`、`findSpawnPosNormal`、`findFallbackPosNearMachine`；[WalkInNpcManager.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/core/WalkInNpcManager.java) 的 `spawn`；[CustomerEntity.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/entity/CustomerEntity.java) 的屬性、goals 及 `rollWeightedAnimationVariant`。
 

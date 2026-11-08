@@ -219,12 +219,14 @@ export function loadedBlock(record) {
   catch { return undefined; }
 }
 export function distanceSquared(a, b) { return (a.x - b.x) ** 2 + (a.y - b.y) ** 2 + (a.z - b.z) ** 2; }
-/** @param {{shape?: 'sphere' | 'cube'}} options */
+/** @param {{shape?: 'sphere' | 'cube' | 'cylinder', halfHeight?: number}} options */
 export function nearbyStations(dimensionId, location, radius, typeId, options = {}) {
   return stations().filter(s => s.dimensionId === dimensionId && (!typeId || s.typeId === typeId) &&
     (options.shape === 'cube'
       ? Math.abs(s.location.x - location.x) <= radius && Math.abs(s.location.y - location.y) <= radius && Math.abs(s.location.z - location.z) <= radius
-      : distanceSquared(s.location, location) <= radius * radius) && loadedBlock(s)?.typeId === s.typeId);
+      : options.shape === 'cylinder'
+        ? (s.location.x - location.x) ** 2 + (s.location.z - location.z) ** 2 <= radius * radius && Math.abs(s.location.y - location.y) <= (options.halfHeight ?? radius)
+        : distanceSquared(s.location, location) <= radius * radius) && loadedBlock(s)?.typeId === s.typeId);
 }
 export function nearestRestaurant(block, radius = 24) {
   return restaurants().filter(r => r.dimensionId === block.dimension.id && distanceSquared(r.location, block.location) <= radius * radius && loadedBlock(r)?.typeId === 'ordertocook:order_machine')
