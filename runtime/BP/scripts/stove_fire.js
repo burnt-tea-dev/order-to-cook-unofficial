@@ -4,6 +4,8 @@
 
 /** Call once when this service first sees a stove, including after a reload. */
 export function initializeStoveFire(data) {
+  // Java does not resume FireAnim from disk/chunk reload.
+  data.fireAnimationTicks = 0;
   data.firePhase = data.litTime > 0 ? 3 : 0;
   data.fireTicks = 0;
   data.cycleFrame = data.litTime > 0 && Number.isInteger(data.cycleFrame) &&
@@ -12,6 +14,7 @@ export function initializeStoveFire(data) {
 
 /** Call after consuming a fresh fuel item, even if the previous fuel just ended. */
 export function igniteStoveFire(data) {
+  data.fireAnimationTicks = 20;
   data.firePhase = 1;
   data.fireTicks = 0;
   data.cycleFrame = 0;
@@ -24,6 +27,8 @@ export function igniteStoveFire(data) {
  * @returns {"burst" | "cycle" | undefined}
  */
 export function advanceStoveFire(data) {
+  // Source serverTick decrements this independently, even after fuel expires.
+  if (data.fireAnimationTicks > 0) data.fireAnimationTicks--;
   if (data.litTime <= 0) {
     data.firePhase = 0;
     data.fireTicks = 0;
@@ -55,4 +60,13 @@ export function stoveFireFrame(data) {
   if (data.firePhase === 2) return 1;
   if (data.firePhase === 3) return data.cycleFrame + 2;
   return 0;
+}
+
+/** Source clip age at 20Hz; zero also denotes its neutral endpoint after STOP.
+ * The existing appliance service publishes every two ticks, not every frame.
+ * This source countdown is deliberately independent of the texture/fuel phase.
+ */
+export function stoveIgnitionFrame(data) {
+  const remaining = data.fireAnimationTicks;
+  return Number.isInteger(remaining) && remaining > 0 && remaining <= 20 ? 20 - remaining : 0;
 }

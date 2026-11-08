@@ -1,0 +1,101 @@
+{
+  "date": "2026-11-08",
+  "baseCommit": "f8e0895f0703d786c6f282ad3001a9de2ada5460",
+  "scope": "Source-only candidate, not a frozen/published release; no GUI, Java/Bedrock client or BDS execution.",
+  "checks": [
+    {
+      "command": "node --test tests/stove-ignition.test.js tests/stove-fire.test.js tests/stove.test.js tests/stove-controls.test.js tests/appliance-particles.test.js",
+      "result": "passed",
+      "tests": 59,
+      "failed": 0
+    },
+    {
+      "command": "npm run verify",
+      "result": "blocked_at_build_identity_guard",
+      "javascriptTests": 928,
+      "javascriptFailed": 0,
+      "typescript": "passed",
+      "resourceValidator": {
+        "jsonFiles": 387,
+        "blocks": 14,
+        "items": 17,
+        "entities": 5,
+        "recipes": 17,
+        "geometries": 318,
+        "animations": 46,
+        "permutations": 380,
+        "errors": []
+      },
+      "build": "BP payload changed; freeze a fresh paired release identity before exporting",
+      "exitCode": 1
+    },
+    {
+      "command": "python -m unittest discover -s tests -p test_appliance_geometry.py",
+      "result": "passed",
+      "tests": 33
+    },
+    {
+      "command": "python -m unittest discover -s tests -p test_dining_assets.py",
+      "result": "passed",
+      "tests": 4
+    },
+    {
+      "command": "python -m unittest discover -s tests -p test_guide_languages.py",
+      "result": "passed",
+      "tests": 3
+    },
+    {
+      "command": "python -m unittest discover -s tests -p test_ci_scope.py",
+      "result": "passed",
+      "tests": 8
+    },
+    {
+      "command": "OTC_NATIVE_PLAYER_GEOMETRY=/tmp/otc-native-inputs-20261108/humanoid.json OTC_NATIVE_SLIM_GEOMETRY=/tmp/otc-native-inputs-20261108/mobs.json python -m unittest discover -s tests -p test_segmented_player.py",
+      "result": "passed",
+      "tests": 13,
+      "externalInputs": [
+        {
+          "name": "humanoid.json",
+          "sha256": "d3688f959a95f6b39c9bd8b15312a19361256ae161d2d055ba63d810e17a8ca8"
+        },
+        {
+          "name": "mobs.json",
+          "sha256": "0279492e5f6a7b5bbafb4fbaa80290146acb79332d06ac39619376a4831ff464"
+        }
+      ]
+    },
+    {
+      "command": "python tools/check_compliance.py",
+      "result": "passed_with_existing_advisories",
+      "sourceReferences": 660,
+      "errors": [],
+      "warnings": [
+        "No build-info because source-only candidate is not frozen for export.",
+        "Existing upstream asset-scope clarification remains pending and advisory."
+      ]
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed"
+    }
+  ],
+  "geometryProbe": {
+    "independentSourceFormulaSamples": 1005,
+    "maxCorrespondingVertexDistancePixels": 1.4176960420054018e-06,
+    "unionBoundsPixels": [
+      [
+        -8,
+        -0.42629,
+        -8.852579
+      ],
+      [
+        8,
+        16.42629,
+        8.852579
+      ]
+    ],
+    "activeSourceFaces": 17,
+    "unchangedCanonicalNeutralFaces": 18
+  },
+  "unchangedExistingModelTextureLocalizationIdentityFiles": 351
+}

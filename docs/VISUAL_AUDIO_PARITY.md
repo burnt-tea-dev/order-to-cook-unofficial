@@ -197,3 +197,7 @@ python tests/check_release_policy.py
 
 生成物來自轉換器；日後應改固定來源旁的轉換規則，不在數十個 `.geo.json` 手工重複修補。
 候選保留 BP／RP UUID，版本為 `[0,1,6]`；完整建置與本輪實測指紋以驗證記錄為準。
+
+## Later stove ignition repair
+
+Version .46 restores the registered Java stove renderer’s sampled ignition poses rather than only its texture phases. [Source/service and version scope](validation/0.1.46-alpha.1/STOVE_IGNITION.md) and [actual cloud editor comparisons](validation/visual-audio/blockbench-20261108/remaining-static/README.md) retain the 10Hz publication, continuous animation, packet/reset and native-rendering limitations. Other unreviewed assets and real clients remain open.

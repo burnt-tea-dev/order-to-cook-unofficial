@@ -1,0 +1,275 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.ordertocook.stove_ignition_14",
+        "texture_width": 64,
+        "texture_height": 64,
+        "visible_bounds_width": 2,
+        "visible_bounds_height": 2.5,
+        "visible_bounds_offset": [
+          0,
+          0.75,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "group2",
+          "pivot": [
+            0.0,
+            8.0,
+            0.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -5.0
+              ],
+              "size": [
+                16.0,
+                16.0,
+                13.0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    48,
+                    48
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ]
+                },
+                "east": {
+                  "uv": [
+                    16,
+                    0
+                  ],
+                  "uv_size": [
+                    13,
+                    16
+                  ]
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    16
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ]
+                },
+                "west": {
+                  "uv": [
+                    16,
+                    16
+                  ],
+                  "uv_size": [
+                    13,
+                    16
+                  ]
+                },
+                "up": {
+                  "uv": [
+                    29,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    13
+                  ]
+                },
+                "down": {
+                  "uv": [
+                    29,
+                    26
+                  ],
+                  "uv_size": [
+                    16,
+                    -13
+                  ]
+                }
+              }
+            },
+            {
+              "origin": [
+                -8.0,
+                12.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                4.0,
+                3.0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    45,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    4
+                  ]
+                },
+                "east": {
+                  "uv": [
+                    24,
+                    32
+                  ],
+                  "uv_size": [
+                    3,
+                    4
+                  ]
+                },
+                "west": {
+                  "uv": [
+                    45,
+                    10
+                  ],
+                  "uv_size": [
+                    3,
+                    4
+                  ]
+                },
+                "up": {
+                  "uv": [
+                    45,
+                    4
+                  ],
+                  "uv_size": [
+                    16,
+                    3
+                  ]
+                },
+                "down": {
+                  "uv": [
+                    45,
+                    10
+                  ],
+                  "uv_size": [
+                    16,
+                    -3
+                  ]
+                }
+              }
+            }
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "group5",
+          "parent": "group2",
+          "pivot": [
+            0.0,
+            2.0,
+            -5.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -5.448,
+                2.0,
+                -5.908
+              ],
+              "size": [
+                10.896,
+                7.272,
+                0.908
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    34,
+                    49
+                  ],
+                  "uv_size": [
+                    12,
+                    10
+                  ]
+                },
+                "east": {
+                  "uv": [
+                    33,
+                    51
+                  ],
+                  "uv_size": [
+                    1,
+                    9
+                  ]
+                },
+                "south": {
+                  "uv": [
+                    34,
+                    61
+                  ],
+                  "uv_size": [
+                    12,
+                    -9
+                  ],
+                  "uv_rotation": 180
+                },
+                "west": {
+                  "uv": [
+                    46,
+                    51
+                  ],
+                  "uv_size": [
+                    1,
+                    9
+                  ]
+                },
+                "up": {
+                  "uv": [
+                    34,
+                    48
+                  ],
+                  "uv_size": [
+                    12,
+                    1
+                  ]
+                },
+                "down": {
+                  "uv": [
+                    34,
+                    64
+                  ],
+                  "uv_size": [
+                    12,
+                    -1
+                  ]
+                }
+              },
+              "pivot": [
+                0.0,
+                5.636,
+                -5.454
+              ],
+              "rotation": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            -0.194846
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.46-alpha.1
+
+- Restore source stove ignition wobble/squash with an independent 20-tick countdown, atomic age/material state writes, 19 generated poses and unchanged two-tick appliance scheduling. Keep fuel, cooking, inventory, textures, idle/item geometry and existing appliance geometry unchanged.
+- Correct the Gecko default step easing exact midpoint in both source evaluators. Preserve source-pose sampling, Java packet/reset, native material and client limitations.
+- Record 19 stove GUI captures, 19 furniture/supply-shelf/helmet captures and two washing-table inactive-pivot controls. Keep the helmet isometric transparency discrepancy explicit.
+- Freeze paired 0.1.46 with stable UUIDs/APIs and append-only payload history. This does not publish a Release or establish full Java parity. See [validation](docs/validation/0.1.46-alpha.1/STOVE_IGNITION.md).
+
 ## 0.1.45-alpha.1
 
 - Restore the pinned Java renderer’s washing-table water quad in all 11 plate states, with original RGBA, two physical UV-correct faces and uniform world blend materials. Preserve the dry item through item_visual; body/plates and gameplay scripts stay unchanged.

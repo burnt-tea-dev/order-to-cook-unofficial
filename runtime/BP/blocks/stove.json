@@ -26,6 +26,28 @@
           3,
           4,
           5
+        ],
+        "ordertocook:ignition_frame": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "ordertocook:ignition_frame_high": [
+          false,
+          true
         ]
       }
     },
@@ -207,6 +229,120 @@
               "face_dimming": true
             }
           }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:ignition_frame') + 16 * q.block_state('ordertocook:ignition_frame_high')) == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.stove_ignition_1"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:ignition_frame') + 16 * q.block_state('ordertocook:ignition_frame_high')) == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.stove_ignition_2"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:ignition_frame') + 16 * q.block_state('ordertocook:ignition_frame_high')) == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.stove_ignition_3"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:ignition_frame') + 16 * q.block_state('ordertocook:ignition_frame_high')) == 4",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.stove_ignition_4"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:ignition_frame') + 16 * q.block_state('ordertocook:ignition_frame_high')) == 5",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.stove_ignition_5"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:ignition_frame') + 16 * q.block_state('ordertocook:ignition_frame_high')) == 6",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.stove_ignition_6"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:ignition_frame') + 16 * q.block_state('ordertocook:ignition_frame_high')) == 7",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.stove_ignition_7"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:ignition_frame') + 16 * q.block_state('ordertocook:ignition_frame_high')) == 8",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.stove_ignition_8"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:ignition_frame') + 16 * q.block_state('ordertocook:ignition_frame_high')) == 9",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.stove_ignition_9"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:ignition_frame') + 16 * q.block_state('ordertocook:ignition_frame_high')) == 10",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.stove_ignition_10"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:ignition_frame') + 16 * q.block_state('ordertocook:ignition_frame_high')) == 11",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.stove_ignition_11"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:ignition_frame') + 16 * q.block_state('ordertocook:ignition_frame_high')) == 12",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.stove_ignition_12"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:ignition_frame') + 16 * q.block_state('ordertocook:ignition_frame_high')) == 13",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.stove_ignition_13"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:ignition_frame') + 16 * q.block_state('ordertocook:ignition_frame_high')) == 14",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.stove_ignition_14"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:ignition_frame') + 16 * q.block_state('ordertocook:ignition_frame_high')) == 15",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.stove_ignition_15"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:ignition_frame') + 16 * q.block_state('ordertocook:ignition_frame_high')) == 16",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.stove_ignition_16"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:ignition_frame') + 16 * q.block_state('ordertocook:ignition_frame_high')) == 17",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.stove_ignition_17"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:ignition_frame') + 16 * q.block_state('ordertocook:ignition_frame_high')) == 18",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.stove_ignition_18"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:ignition_frame') + 16 * q.block_state('ordertocook:ignition_frame_high')) == 19",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.stove_ignition_19"
         }
       }
     ]
