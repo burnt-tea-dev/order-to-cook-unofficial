@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { normalFallbackOffsets, deliveryRingOffsets, chooseUniformCandidate, JAVA_DELIVERY_SEARCH } from '../runtime/BP/scripts/npc_spawn_rules.js';
+import { normalFallbackOffsets, deliveryRingOffsets, chooseUniformCandidate, JAVA_DELIVERY_SEARCH } from './helpers/npc-spawn-rules.js';
 
 test('normal no-chair fallback enumerates the Java radius-5 disk in dx/dz order', () => {
   const offsets = normalFallbackOffsets();
