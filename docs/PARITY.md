@@ -8,7 +8,7 @@ Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedro
 
 2026-11-05 原生 BDS 1.26.60.6 載入抓到 0.1.8／0.1.9 共用物品元件的 `onConsume` 註冊錯誤；兩版不適用遊戲交付。0.1.10 將此回呼只掛到具有 `minecraft:food` 的包裹；修正後固定來源已通過原生命令破壞、完整metadata及同一QA世界正常保存／重啟；具體範圍與原失敗見 [原生報告](validation/0.1.10-alpha.1/PORTABLE_NATIVE.md)，不以來源CI或fixture actor冒稱真人輸入。
 
-本文件包含 alpha.3 玩法基線及 **已整合的視覺／音效修復**。本輪修正、離線對照與可重現測試見 [VISUAL_AUDIO_PARITY.md](VISUAL_AUDIO_PARITY.md)；alpha.3 的實機失敗記錄仍保留，不能由新來源測試推定已通過實機複驗。**完整一比一仍未達成**：Java 的 GUI、GeckoLib renderer、玩家動畫、物理與跨模組 API 仍有適配差異；本候選尚未執行 Blockbench 互動檢視及 Java／Bedrock 客戶端畫面驗收。
+本文件包含 alpha.3 玩法基線及 **已整合的視覺／音效修復**。本輪修正、離線對照與可重現測試見 [VISUAL_AUDIO_PARITY.md](VISUAL_AUDIO_PARITY.md)；alpha.3 的實機失敗記錄仍保留，不能由新來源測試推定已通過實機複驗。**完整一比一仍未達成**：Java 的 GUI、GeckoLib renderer、玩家動畫、物理與跨模組 API 仍有適配差異；已完成部分雲端 Blockbench 互動檢視，包括[顧客與設備抽樣](validation/visual-audio/blockbench-20261108/README.md)及[40階餐盤、訂單機與袋子有限姿態](validation/visual-audio/blockbench-20261108/stage-review/README.md)；仍未完成全項視覺或 Java／Bedrock 客戶端畫面驗收。
 
 基準：[官方作品頁](https://www.curseforge.com/minecraft/mc-mods/order-to-cook)，Java [e59e3dbcabe19b783d9adb933db5fcb8bc1e4642](https://github.com/breezeth-CN/OrdertoCook/tree/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642)。證據分層：源碼對照、單元／服務回歸、原生伺服器探針、客戶端驗收。前三者不能代替最後一層。
 
@@ -80,7 +80,7 @@ Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedro
 | 顧客 | 兩款原皮膚／骨架、等待與坐姿各 4 變體、7 個 action | idle 權重 55／15／15／15，完成片段後再選變體；action 按原生實體已模擬的tick定位，保留12／40／60／120／110／10 tick時長及保存進度；完成通知下一tick處理，原生測試中10 tick中斷至移除共13 tick；不下載網路皮膚。 |
 | 用餐餐盤 | 原生方塊、原兩層碰撞、40個進食模型；stage 0沿用原食物與放盤短動畫 | 舊記錄及token保留，穩定階段舊helper會移除；點取／拆除走唯一領取記錄。Java 用餐中或完成後刻意回傳新髒盤；未交付成品的完整物品另見[展示餐點保存](#未交付的展示餐點)。選取框是兩層形狀的外接長方體，原作沒有重力。用餐部分見[原生餐盤](validation/0.1.15-alpha.1/NATIVE_PLATE.md)，不由服務端推定客戶端聲畫。 |
 | 椅子／玩家動作 | 原安坐循環、拍手全身／前臂／足端轉換、手洗身體及獨立FP雙臂 | 原生整臂／整腿匹配分段來源的兩端；手洗FP補回臂長及肩端補位，拍手TP／FP分開，安坐保持同一身體高度。可見性仍須共享player/controller接線；單包不保證空手左臂。真肘／膝、Java ACTION絕對校準、Slim／客製骨架及可見姿勢／停止仍未完成或未確認。沒有player.json覆寫；目前範圍見[玩家來源與骨架](#玩家動作的來源與骨架)、[手洗FP](#手洗第一人稱左臂)及[安坐與拍手](#安坐與拍手)。[020](validation/0.1.20-alpha.1/PLAYER_POSES.md)／[013](validation/0.1.13-alpha.1/CHAIR_CLAP.md)原生證據保留原範圍，不回填新畫面結論。 |
-| 小電驢 | 原Java模型、四車色、保溫箱、燈面、喇叭 | 原生載具物理及按鍵；燈面發光但不照亮地形。原騎車自動頭盔屬玩家渲染層，本版未重建該層及完整玩家姿勢。 |
+| 小電驢 | 原Java模型、四車色、保溫箱、燈面、喇叭 | 原生載具物理及按鍵；現版未綁把手／前輪轉向，輪轉以無方向累積距離驅動，與 Java 的帶方向內部速度、倒車及碰撞語義不同，見[來源與GUI對照](validation/visual-audio/MOTORCYCLE_VISUAL_BINDING_20261108.md)。燈面發光但不照亮地形。原騎車自動頭盔屬玩家渲染層，本版未重建該層及完整玩家姿勢。 |
 | 原始美術 | 67原PNG、12原OGG原樣保留；原geo／動畫正規化存档 | 保存未使用片段不等於其在玩法中已被觸發；動畫清單詳見ASSET_PROVENANCE。 |
 
 ## 未交付的展示餐點
