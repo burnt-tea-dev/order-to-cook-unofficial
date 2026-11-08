@@ -47,7 +47,7 @@ const foodOverrides = new Map();
 const foodCatalog = createFoodCatalog();
 const requestFoodCatalogs = connectFoodCatalog(system, foodCatalog);
 const weatherByDimension = new Map();
-let settings = { currencyItem: '', refreshMs: Number(DEFAULT_CONFIG.refreshMs), orderMachineUpgradeBoardHunger: [...DEFAULT_CONFIG.orderMachineUpgradeBoardHunger] };
+let settings = { countertopConsumeLeather: DEFAULT_CONFIG.countertopConsumeLeather, currencyItem: '', refreshMs: Number(DEFAULT_CONFIG.refreshMs), orderMachineUpgradeBoardHunger: [...DEFAULT_CONFIG.orderMachineUpgradeBoardHunger] };
 let ready = false;
 /** @type {any} */ let entities;
 /** @type {any} */ let appliances;
@@ -515,7 +515,7 @@ async function countertopForm(player, block) {
   const labels = orders.map(order => {
     const plan = planExtraction(ingredients, order.items);
     const shelfId = order.type === 'delivery' ? 'ordertocook:shelf' : 'ordertocook:plate_shelf';
-    const supplies = nearbyStations(block.dimension.id, block.location, 5, shelfId, { shape: 'cube' })
+    const supplies = (order.type === 'delivery' && !settings.countertopConsumeLeather) || nearbyStations(block.dimension.id, block.location, 5, shelfId, { shape: 'cube' })
       .some(station => station.supplies > 0 && canUseStation(player, station));
     const problems = [];
     if (!block.above()?.isAir) problems.push('台上已有成品／方塊');
@@ -524,7 +524,7 @@ async function countertopForm(player, block) {
     const dishes = order.items.map(item => `${menuFoodLabel(item, foodLabel(item.typeId))} ×${item.amount}`).join('、');
     return `${orderHeading(order)}\n${dishes}\n${problems.length ? problems.join('；') : '可製作'} · ${order.type === 'delivery' ? '打包' : '裝盤'}`;
   });
-  const index = await choose(player, '操作台 · 裝盤／打包', '點選訂單直接製作；手持訂單點台可直接處理該單。\n蹲下點台可額外選擇把堂食打包帶走。\n使用背包與附近 24 格冰箱的食品、5 格內架子的包材／乾淨盤。\n成品放在台上，請先保持上方空置。', labels);
+  const index = await choose(player, '操作台 · 裝盤／打包', '點選訂單直接製作；手持訂單點台可直接處理該單。\n蹲下點台可額外選擇把堂食打包帶走。\n使用背包與附近 24 格冰箱的食品；裝盤需 5 格內乾淨盤，打包依伺服器包材設定。\n成品放在台上，請先保持上方空置。', labels);
   if (index === undefined || !nearBlock(player, block) || block.typeId !== 'ordertocook:countertop' || !canManage(player, restaurant)) return;
   const order = orders[index];
   if (!order) return;
@@ -534,7 +534,7 @@ async function countertopForm(player, block) {
 }
 
 async function countertopCarrierForm(player, block, restaurant, order, ticketProof = undefined, requireTicket = false) {
-  const selection = await choose(player, '堂食 · 裝盤／打包', orderBody(order) + '\n裝盤使用乾淨餐盤；打包使用皮革包材，不留下髒盤。取消不扣物。', ['裝盤', '打包帶走']);
+  const selection = await choose(player, '堂食 · 裝盤／打包', orderBody(order) + `\n裝盤使用乾淨餐盤；打包${settings.countertopConsumeLeather ? '使用皮革包材' : '不需包裝架或包材'}，不留下髒盤。取消不扣物。`, ['裝盤', '打包帶走']);
   if (![0, 1].includes(selection)) return;
   if (requireTicket) {
     const current = heldItem(player);
@@ -558,8 +558,11 @@ function prepareOrderAtCountertop(player, block, restaurant, order, carrier = un
   if (!output?.isAir) { notify(player, '先取走操作台上方的成品／方塊。'); return; }
   const shelfId = bag ? 'ordertocook:shelf' : 'ordertocook:plate_shelf';
   // Java RestaurantSupplyCompatApi scans each axis from -5 through +5.
-  const supply = nearbyStations(block.dimension.id, block.location, 5, shelfId, { shape: 'cube' }).find(station => station.supplies > 0 && canUseStation(player, station));
-  if (!supply) { notify(player, `缺少 5 格內的${bag ? '包裝架包材（皮革）' : '餐盤架乾淨餐盤'}。${!bag ? '蹲下點台可選擇打包帶走。' : ''}`); return; }
+  // Read the current global setting here, after any awaited picker/carrier form.
+  // Disabled leather bypasses shelf discovery and every supply transaction.
+  const needsSupply = !bag || settings.countertopConsumeLeather;
+  const supply = needsSupply ? nearbyStations(block.dimension.id, block.location, 5, shelfId, { shape: 'cube' }).find(station => station.supplies > 0 && canUseStation(player, station)) : undefined;
+  if (needsSupply && !supply) { notify(player, `缺少 5 格內的${bag ? '包裝架包材（皮革）' : '餐盤架乾淨餐盤'}。${!bag ? '蹲下點台可選擇打包帶走。' : ''}`); return; }
   const plan = planExtraction(ingredientContainers(player, block), order.items);
   if (!plan.ok) {
     const reasons = plan.missingFoods.length ? plan.missingFoods.map(item =>
@@ -569,7 +572,7 @@ function prepareOrderAtCountertop(player, block, restaurant, order, carrier = un
   // All inventory/currency/state changes below are synchronous: another form
   // callback cannot interleave between the preflight and this commit.
   const before = JSON.stringify(restaurant);
-  const supplyBefore = supply.supplies;
+  const supplyBefore = supply?.supplies;
   if (!applyExtraction(plan)) { notify(player, '食品格子已改變，請重新操作。'); return; }
   try {
     const result = packOrder(restaurant, order.id, orderTime(), selected);
@@ -577,8 +580,7 @@ function prepareOrderAtCountertop(player, block, restaurant, order, carrier = un
     order.proof = `${restaurant.orderSequence.toString(36)}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
     order.outputLocation = { ...output.location };
     order.platedVariant = Math.floor(Math.random() * 10);
-    supply.supplies--;
-    saveStation(supply);
+    if (supply) { supply.supplies--; saveStation(supply); }
     saveRestaurant(restaurant);
     output.setPermutation(BlockPermutation.resolve(bag ? 'ordertocook:takeout_bag' : 'ordertocook:food_plate_display'));
     const display = getStation(output);
@@ -586,16 +588,17 @@ function prepareOrderAtCountertop(player, block, restaurant, order, carrier = un
     saveStation(display);
     parcelInventory(output, display).setItem(0, parcelFor(restaurant, order));
     if (!bag) setBlockState(output, 'ordertocook:stage', order.platedVariant * 4 + 1);
-    const supplyBlock = loadedBlock(supply);
-    if (supplyBlock) setBlockState(supplyBlock, bag ? 'ordertocook:papers' : 'ordertocook:plates', supply.supplies);
+    if (supply) {
+      const supplyBlock = loadedBlock(supply);
+      if (supplyBlock) setBlockState(supplyBlock, bag ? 'ordertocook:papers' : 'ordertocook:plates', supply.supplies);
+    }
     removeTickets(player, order.id);
     if (!bag) playAt(block, 'food_plate_place', 0.9);
     playEffects(output.dimension, freshMealEffects(output.location), MolangVariableMap);
     notify(player, '餐點已備妥並放到操作台上。空手點擊取走，再拿給對應顧客。');
   } catch (error) {
     restoreExtraction(plan);
-    supply.supplies = supplyBefore;
-    saveStation(supply);
+    if (supply) { supply.supplies = supplyBefore; saveStation(supply); }
     saveRestaurant(JSON.parse(before));
     if (isParcelDisplay(output)) {
       containerOf(output)?.setItem(0, undefined);
@@ -1241,10 +1244,19 @@ function registerConfiguration() {
       } else if (event.id === 'ordertocook:config') {
         const data = JSON.parse(event.message);
         const next = { ...settings };
+        const hasLeatherSetting = Object.hasOwn(data, 'countertopConsumeLeather');
+        if (hasLeatherSetting) {
+          if (typeof data.countertopConsumeLeather !== 'boolean') throw new Error('countertopConsumeLeather 必須為 boolean（true 或 false）');
+          next.countertopConsumeLeather = data.countertopConsumeLeather;
+        }
         if (typeof data.currencyItem === 'string') { if (data.currencyItem) new ItemStack(data.currencyItem); next.currencyItem = data.currencyItem; }
         if (Number.isInteger(data.refreshSeconds) && data.refreshSeconds >= 10 && data.refreshSeconds <= 86400) next.refreshMs = data.refreshSeconds * 1000;
         if (Array.isArray(data.upgradeNutrition) && data.upgradeNutrition.length === 9 && data.upgradeNutrition.every(n => Number.isInteger(n) && n >= 0 && n <= 10000)) next.orderMachineUpgradeBoardHunger = data.upgradeNutrition;
-        world.setDynamicProperty('ordertocook:settings', JSON.stringify(next));
+        const encoded = JSON.stringify(next);
+        world.setDynamicProperty('ordertocook:settings', encoded);
+        // Verify this new switch before changing live behavior. Existing refresh/
+        // upgrade restaurant propagation is not made into a new transaction.
+        if (hasLeatherSetting && world.getDynamicProperty('ordertocook:settings') !== encoded) throw new Error('餐廳設定寫入未確認；包材設定未變更。');
         settings = next;
         for (const restaurant of restaurants()) { restaurant.config = { ...restaurant.config, refreshMs: settings.refreshMs, orderMachineUpgradeBoardHunger: settings.orderMachineUpgradeBoardHunger }; saveRestaurant(restaurant); }
         if (player) notify(player, '伺服器餐廳設定已儲存。新刷新間隔於下次刷新後使用。');
@@ -1461,7 +1473,14 @@ world.afterEvents.worldLoad.subscribe(() => {
       if (changed) saveRestaurant(restaurant);
     }
     const rawSettings = world.getDynamicProperty('ordertocook:settings');
-    if (typeof rawSettings === 'string') settings = { ...settings, ...JSON.parse(rawSettings) };
+    if (rawSettings !== undefined) {
+      if (typeof rawSettings !== 'string') throw new Error('Expected settings JSON string');
+      const saved = JSON.parse(rawSettings);
+      if (!saved || typeof saved !== 'object' || Array.isArray(saved)) throw new Error('Expected settings object');
+      // Old saves and invalid field types fail safe to the Java default. Do not
+      // repair/write the saved document during load; preserve recovery evidence.
+      settings = { ...settings, ...saved, countertopConsumeLeather: typeof saved.countertopConsumeLeather === 'boolean' ? saved.countertopConsumeLeather : DEFAULT_CONFIG.countertopConsumeLeather };
+    }
     const rawFoods = world.getDynamicProperty('ordertocook:food_overrides');
     if (typeof rawFoods === 'string') for (const food of JSON.parse(rawFoods)) foodOverrides.set(food.typeId, food);
     for (const key of world.getDynamicPropertyIds()) {

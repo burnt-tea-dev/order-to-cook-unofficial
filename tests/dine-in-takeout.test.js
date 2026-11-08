@@ -3,10 +3,10 @@
 // timer properties are inputs here, not a simulation or client/world proof.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mainFixture, balance, itemCount } from './main.harness.js';
+import { mainFixture, balance, itemCount, configure } from './main.harness.js';
 import { entityServices, FakeItem, place } from './appliances.harness.js';
 
-async function setup({ walkIn = false, seated = true } = {}) {
+async function setup({ walkIn = false, seated = true, consumeLeather = true } = {}) {
   const env = await mainFixture();
   for (const entity of [...env.dimension.entities.values()]) entity.remove();
   env.restaurant.orders = [];
@@ -36,7 +36,12 @@ async function setup({ walkIn = false, seated = true } = {}) {
   env.player.container.setItem(0, new FakeItem('minecraft:leather', 3)); env.player.isSneaking = true;
   env.hooks.shelfInteract(env.player, shelfBlock); env.player.isSneaking = false;
   env.player.container.setItem(0, ticket); env.player.container.setItem(1, new FakeItem('minecraft:bread', 64));
-  return { ...env, order, customer, ticket, counter, shelf: env.store.findStation(shelfBlock), service,
+  const shelf = env.store.findStation(shelfBlock);
+  if (!consumeLeather) {
+    configure(env, { countertopConsumeLeather: false }, 'server');
+    env.store.deleteStation(shelf); shelfBlock.setType('minecraft:air');
+  }
+  return { ...env, order, customer, ticket, counter, shelf: consumeLeather ? shelf : undefined, service,
     linkage: { restaurantId: env.restaurant.id, orderId: order.id } };
 }
 
@@ -81,7 +86,7 @@ function snapshot(env) {
 }
 function canonicalOrder(env) { return env.store.getRestaurant(env.restaurant.id).orders.find(order => order.id === env.order.id); }
 function assertNoPreparation(env, before) {
-  assert.deepEqual(snapshot(env), before); assert.equal(env.shelf.supplies, 3);
+  assert.deepEqual(snapshot(env), before); if (env.shelf) assert.equal(env.shelf.supplies, 3);
   assert.equal(env.counter.above().isAir, true); assert.equal(canonicalOrder(env).status, 'accepted');
   assert.equal(canonicalOrder(env).carrier, undefined);
 }
@@ -129,8 +134,8 @@ test('ordinary and walk-in bag handoffs keep tips/statistics and use seated or s
 });
 
 test('both extra-choice cancellation paths leave the ticket, food, supplies and order untouched', async () => {
-  for (const entry of ['held-ticket', 'picker']) {
-    const env = await setup(); env.player.isSneaking = true;
+  for (const consumeLeather of [true, false]) for (const entry of ['held-ticket', 'picker']) {
+    const env = await setup({ consumeLeather }); env.player.isSneaking = true;
     if (entry === 'picker') { env.player.container.setItem(0, undefined); env.formResponses.push(0); }
     const before = snapshot(env);
     await env.hooks.countertopForm(env.player, env.counter);
@@ -139,8 +144,8 @@ test('both extra-choice cancellation paths leave the ticket, food, supplies and 
 });
 
 test('extra-choice callbacks revalidate canonical state, rights, deadline, proximity and the original held ticket', async () => {
-  for (const mutation of ['canonical', 'permission', 'deadline', 'distance', 'ticket', 'proof', 'machine']) {
-    const env = await setup(); env.player.isSneaking = true;
+  for (const consumeLeather of [true, false]) for (const mutation of ['canonical', 'permission', 'deadline', 'distance', 'ticket', 'proof', 'machine']) {
+    const env = await setup({ consumeLeather }); env.player.isSneaking = true;
     const before = snapshot(env);
     env.formResponses.push(() => {
       if (mutation === 'canonical') env.store.saveRestaurant(JSON.parse(JSON.stringify(env.restaurant)));
@@ -158,18 +163,43 @@ test('extra-choice callbacks revalidate canonical state, rights, deadline, proxi
   }
 });
 
-test('bag preparation rolls back carrier/food/supplies on native save or output failure and allows one canonical retry', async () => {
-  for (const failure of ['save', 'output']) {
-    const env = await setup(); const before = snapshot(env); env.player.isSneaking = true;
-    env.formResponses.push(1);
-    if (failure === 'save') env.failWrite(id => id === `ordertocook:r:${env.restaurant.id}`);
-    else env.dimension.nativeContainers = false;
-    await assert.rejects(env.hooks.countertopForm(env.player, env.counter));
-    assertNoPreparation(env, before); assert.equal(env.dimension.drops.length, 0);
-    env.dimension.nativeContainers = true;
-    env.restaurant = env.store.getRestaurant(env.restaurant.id); env.order = canonicalOrder(env);
-    await packBag(env);
-    assert.equal(env.shelf.supplies, 2); assert.equal(itemCount(env.player, 'minecraft:bread'), 64 - env.order.items[0].amount);
+test('bag preparation rolls back real commit failures with or without a supply object and allows one canonical retry', async () => {
+  for (const consumeLeather of [true, false]) for (const type of ['dine_in', 'delivery']) {
+    for (const failure of ['restaurant', 'output', 'display', 'container', 'item']) {
+      const env = await setup({ consumeLeather }); env.order.type = type; env.store.saveRestaurant(env.restaurant);
+      const before = snapshot(env); env.player.isSneaking = true;
+      const output = env.counter.above(), setPermutation = output.setPermutation.bind(output);
+      let armed = false;
+      // Arm failures after countertopForm's expire/save preflight. In particular,
+      // the restaurant failure must hit the packed commit, not that earlier save.
+      const armFailure = () => {
+        armed = true;
+        if (failure === 'restaurant') env.failWrite(id => id === `ordertocook:r:${env.restaurant.id}`);
+        if (failure === 'display') env.failWrite(id => id === `ordertocook:s:${env.store.locationId(output.dimension.id, output.location)}`);
+        if (failure === 'container') env.dimension.nativeContainers = false;
+        if (['output', 'item'].includes(failure)) output.setPermutation = permutation => {
+          if (armed && permutation.type.id === 'ordertocook:takeout_bag') {
+            armed = false;
+            if (failure === 'output') throw Error('simulated output placement failure');
+            setPermutation(permutation); output.container.failNextSlot = 0; return;
+          }
+          setPermutation(permutation);
+        };
+        return 1;
+      };
+      if (type === 'dine_in') env.formResponses.push(armFailure);
+      else { env.player.container.setItem(0, undefined); before[0] = undefined; env.formResponses.push(() => { armFailure(); return 0; }); }
+      await assert.rejects(env.hooks.countertopForm(env.player, env.counter));
+      assertNoPreparation(env, before); assert.equal(env.dimension.drops.length, 0);
+      assert.equal(env.store.findStation(output), undefined);
+      env.dimension.nativeContainers = true;
+      env.restaurant = env.store.getRestaurant(env.restaurant.id); env.order = canonicalOrder(env);
+      if (type === 'dine_in') await packBag(env);
+      else { env.formResponses.push(0); await env.hooks.countertopForm(env.player, env.counter); }
+      assert.equal(env.order.status, 'packed');
+      if (env.shelf) assert.equal(env.shelf.supplies, 2);
+      assert.equal(itemCount(env.player, 'minecraft:bread'), 64 - env.order.items[0].amount);
+    }
   }
 });
 
@@ -252,8 +282,8 @@ test('delivery cannot select a plate and expired dine-in bags cannot pay', async
   assert.deepEqual(structuredClone(env.player.container.getItem(0)), bag); assert.equal(env.restaurant.pendingDishes.length, 0);
 });
 
-test('the explicit plate choice preserves seated dining, dirty-plate ownership and the deferred boom bonus', async () => {
-  const env = await setup();
+test('the explicit plate choice preserves seated dining, dirty-plate ownership and the deferred boom bonus with leather disabled', async () => {
+  const env = await setup(); configure(env, { countertopConsumeLeather: false }, 'server');
   const shelfBlock = place(env, 'ordertocook:plate_shelf', { x: 1, y: 0, z: -1 });
   env.player.container.setItem(0, new FakeItem('ordertocook:clean_plate')); env.hooks.shelfInteract(env.player, shelfBlock);
   env.player.container.setItem(0, env.ticket); env.player.isSneaking = true; env.formResponses.push(0);
