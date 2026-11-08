@@ -47,7 +47,7 @@ const foodOverrides = new Map();
 const foodCatalog = createFoodCatalog();
 const requestFoodCatalogs = connectFoodCatalog(system, foodCatalog);
 const weatherByDimension = new Map();
-let settings = { maxOrderMachinesWithin24: Number(DEFAULT_CONFIG.maxOrderMachinesWithin24), countertopConsumeLeather: DEFAULT_CONFIG.countertopConsumeLeather, currencyItem: '', refreshMs: Number(DEFAULT_CONFIG.refreshMs), orderMachineUpgradeBoardHunger: [...DEFAULT_CONFIG.orderMachineUpgradeBoardHunger] };
+let settings = { deliveryRate: Number(DEFAULT_CONFIG.deliveryRate), maxOrderMachinesWithin24: Number(DEFAULT_CONFIG.maxOrderMachinesWithin24), countertopConsumeLeather: DEFAULT_CONFIG.countertopConsumeLeather, currencyItem: '', refreshMs: Number(DEFAULT_CONFIG.refreshMs), orderMachineUpgradeBoardHunger: [...DEFAULT_CONFIG.orderMachineUpgradeBoardHunger] };
 let ready = false;
 /** @type {any} */ let entities;
 /** @type {any} */ let appliances;
@@ -72,6 +72,7 @@ const SHOP = [
 
 // Java declares this setting as int and clamps its effective value to at least one.
 function isMachineLimit(value) { return Number.isInteger(value) && value >= -2147483648 && value <= 2147483647; }
+function isDeliveryRate(value) { return Number.isFinite(value) && value >= 0 && value <= 1; }
 function isAdmin(player) { return player?.hasTag('otc_admin') || player?.getGameMode() === GameMode.Creative; }
 function canManage(player, restaurant) {
   return !!restaurant && !restaurant.removing && (restaurant.ownerId === player.id || restaurant.staff?.includes(player.id) || isAdmin(player));
@@ -135,6 +136,12 @@ function syncPrinter(restaurant, block = loadedBlock(restaurant)) {
   } catch { /* A cosmetic permutation must never undo a valid order transaction. */ }
 }
 function refreshMachineOrders(restaurant, block = loadedBlock(restaurant), now = orderTime()) {
+  // Rollback replaces the canonical object. Never adopt a stale caller or save
+  // its orders just to repair a config snapshot. All machine generation entries
+  // pass here; the confirmed global rate wins even after partial propagation or
+  // reload. The caller commits this config with the generated offers.
+  if (getRestaurant(restaurant.id) !== restaurant) throw new Error('Stale machine restaurant; canonical refresh required');
+  restaurant.config = { ...restaurant.config, deliveryRate: settings.deliveryRate };
   refreshOrders(restaurant, now);
   machineTiming.refreshed(restaurant);
   printerStarts.set(restaurant.id, system.currentTick);
@@ -210,7 +217,7 @@ function getMachine(player, block, placedByPlayer = false) {
   let restaurant = getRestaurant(id);
   if (restaurant?.removing) return restaurant;
   if (!restaurant) {
-    restaurant = createRestaurant({ id, name: `${player.name} 的餐廳`, ownerId: player.id, ownerName: player.name, dimensionId: block.dimension.id, location: block.location, menu: [], config: { refreshMs: settings.refreshMs, orderMachineUpgradeBoardHunger: settings.orderMachineUpgradeBoardHunger } });
+    restaurant = createRestaurant({ id, name: `${player.name} 的餐廳`, ownerId: player.id, ownerName: player.name, dimensionId: block.dimension.id, location: block.location, menu: [], config: { deliveryRate: settings.deliveryRate, refreshMs: settings.refreshMs, orderMachineUpgradeBoardHunger: settings.orderMachineUpgradeBoardHunger } });
     restaurant.staff = [];
     restaurant.pendingDishes = [];
     machineTiming.adopt(restaurant, orderTime());
@@ -1246,6 +1253,11 @@ function registerConfiguration() {
       } else if (event.id === 'ordertocook:config') {
         const data = JSON.parse(event.message);
         const next = { ...settings };
+        const hasDeliveryRateSetting = Object.hasOwn(data, 'deliveryRate');
+        if (hasDeliveryRateSetting) {
+          if (!isDeliveryRate(data.deliveryRate)) throw new Error('deliveryRate 必須為 0..1 有限數字');
+          next.deliveryRate = data.deliveryRate;
+        }
         const hasMachineLimitSetting = Object.hasOwn(data, 'maxOrderMachinesWithin24');
         if (hasMachineLimitSetting) {
           if (!isMachineLimit(data.maxOrderMachinesWithin24)) throw new Error('maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1');
@@ -1261,14 +1273,14 @@ function registerConfiguration() {
         if (Array.isArray(data.upgradeNutrition) && data.upgradeNutrition.length === 9 && data.upgradeNutrition.every(n => Number.isInteger(n) && n >= 0 && n <= 10000)) next.orderMachineUpgradeBoardHunger = data.upgradeNutrition;
         const encoded = JSON.stringify(next);
         world.setDynamicProperty('ordertocook:settings', encoded);
-        // Verify global placement/packaging settings before changing live behavior. Existing refresh/
-        // upgrade restaurant propagation is not made into a new transaction.
-        if ((hasLeatherSetting || hasMachineLimitSetting) && world.getDynamicProperty('ordertocook:settings') !== encoded) throw new Error('餐廳設定寫入未確認；全域設定未變更。');
+        // Verify these global settings before changing live behavior. Per-restaurant
+        // propagation follows this commit; it is not an atomic multi-record update.
+        if ((hasLeatherSetting || hasMachineLimitSetting || hasDeliveryRateSetting) && world.getDynamicProperty('ordertocook:settings') !== encoded) throw new Error('餐廳設定寫入未確認；全域設定未變更。');
         settings = next;
         // A count-only command affects future placements, not existing restaurant
         // records. Preserve the legacy propagation when its fields are supplied.
-        if (!hasMachineLimitSetting || ['countertopConsumeLeather', 'currencyItem', 'refreshSeconds', 'upgradeNutrition'].some(key => Object.hasOwn(data, key))) {
-          for (const restaurant of restaurants()) { restaurant.config = { ...restaurant.config, refreshMs: settings.refreshMs, orderMachineUpgradeBoardHunger: settings.orderMachineUpgradeBoardHunger }; saveRestaurant(restaurant); }
+        if (!hasMachineLimitSetting || ['deliveryRate', 'countertopConsumeLeather', 'currencyItem', 'refreshSeconds', 'upgradeNutrition'].some(key => Object.hasOwn(data, key))) {
+          for (const restaurant of restaurants()) { restaurant.config = { ...restaurant.config, deliveryRate: settings.deliveryRate, refreshMs: settings.refreshMs, orderMachineUpgradeBoardHunger: settings.orderMachineUpgradeBoardHunger }; saveRestaurant(restaurant); }
         }
         if (player) notify(player, '伺服器餐廳設定已儲存。新刷新間隔於下次刷新後使用。');
       }
@@ -1410,7 +1422,7 @@ function onPlayerPlace(event) {
     saveStation(station);
     if (block.typeId === 'ordertocook:order_machine') {
       if (portable) {
-        const restaurant = createRestaurant({ ...portable, id, dimensionId: block.dimension.id, location: block.location, config: { refreshMs: settings.refreshMs, orderMachineUpgradeBoardHunger: settings.orderMachineUpgradeBoardHunger } });
+        const restaurant = createRestaurant({ ...portable, id, dimensionId: block.dimension.id, location: block.location, config: { deliveryRate: settings.deliveryRate, refreshMs: settings.refreshMs, orderMachineUpgradeBoardHunger: settings.orderMachineUpgradeBoardHunger } });
         machineTiming.adopt(restaurant, orderTime());
         Object.assign(restaurant, portable, { pendingDishes: [] });
         queueProgressEvent(restaurant, event.player.id, { type: 'order_machine_placed' });
@@ -1491,7 +1503,7 @@ world.afterEvents.worldLoad.subscribe(() => {
       if (!saved || typeof saved !== 'object' || Array.isArray(saved)) throw new Error('Expected settings object');
       // Old saves and invalid field types fail safe to the Java default. Do not
       // repair/write the saved document during load; preserve recovery evidence.
-      settings = { ...settings, ...saved, maxOrderMachinesWithin24: isMachineLimit(saved.maxOrderMachinesWithin24) ? Math.max(1, saved.maxOrderMachinesWithin24) : Number(DEFAULT_CONFIG.maxOrderMachinesWithin24), countertopConsumeLeather: typeof saved.countertopConsumeLeather === 'boolean' ? saved.countertopConsumeLeather : DEFAULT_CONFIG.countertopConsumeLeather };
+      settings = { ...settings, ...saved, deliveryRate: isDeliveryRate(saved.deliveryRate) ? saved.deliveryRate : Number(DEFAULT_CONFIG.deliveryRate), maxOrderMachinesWithin24: isMachineLimit(saved.maxOrderMachinesWithin24) ? Math.max(1, saved.maxOrderMachinesWithin24) : Number(DEFAULT_CONFIG.maxOrderMachinesWithin24), countertopConsumeLeather: typeof saved.countertopConsumeLeather === 'boolean' ? saved.countertopConsumeLeather : DEFAULT_CONFIG.countertopConsumeLeather };
     }
     const rawFoods = world.getDynamicProperty('ordertocook:food_overrides');
     if (typeof rawFoods === 'string') for (const food of JSON.parse(rawFoods)) foodOverrides.set(food.typeId, food);

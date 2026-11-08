@@ -2,6 +2,8 @@
 
 [简体中文](README.zh-CN.md) · [繁體中文](README.md) · **English**
 
+Version 0.1.42 exposes global `deliveryRate` (default `0.3`): `0` generates only dine-in machine offers, `1` only delivery. Existing orders and ordinary walk-ins keep their types. Future offers use the current global value even after reload or partial restaurant-config propagation. [Operator interface and source evidence](docs/validation/0.1.42-alpha.1/DELIVERY_RATE.md).
+
 Version 0.1.41 honors global `maxOrderMachinesWithin24`: default/minimum `1`; `2` permits two nearby machines and blocks a third. The existing [-24, +25] per-axis placement box, registered/live discovery, full portable-item cancellation and equipment sphere stay unchanged. Resetting to `1` affects only future attempts. Source/adapter checks do not establish native ordering, performance or full parity. [Configuration and evidence](docs/validation/0.1.41-alpha.1/MACHINE_COUNT.md).
 
 Version 0.1.40 honors the global `countertopConsumeLeather` setting. Default `true` still uses one packaging supply; `false` lets delivery and explicitly selected dine-in bags be prepared without any rack, while plates still need a clean plate. Only source/adapter checks are complete, not native/client acceptance. [Behavior and evidence](docs/validation/0.1.40-alpha.1/LEATHER_CONFIG.md).
@@ -186,7 +188,19 @@ Administrators can disable or restore leather consumption for **all restaurants 
 /scriptevent ordertocook:config {"countertopConsumeLeather":true}
 ```
 
-Only JSON booleans are accepted. The Java default is `true`; missing or invalid saved field values safely use that default without an automatic rewrite. `false` skips the packaging rack entirely for delivery and explicit dine-in bags. Existing rack stock and prepared bags are unchanged; plates still require and consume a clean plate. The setting persists across worldLoad and is read again after a picker/carrier form closes. Malformed saved settings stop initialization without erasing them. This is a world setting, not a nearby-restaurant preference. Delivery-rate configuration is still not exposed. [Scope and save limits](docs/validation/0.1.40-alpha.1/LEATHER_CONFIG.md).
+Only JSON booleans are accepted. The Java default is `true`; missing or invalid saved field values safely use that default without an automatic rewrite. `false` skips the packaging rack entirely for delivery and explicit dine-in bags. Existing rack stock and prepared bags are unchanged; plates still require and consume a clean plate. The setting persists across worldLoad and is read again after a picker/carrier form closes. Malformed saved settings stop initialization without erasing them. This is a world setting, not a nearby-restaurant preference. [Scope and save limits](docs/validation/0.1.40-alpha.1/LEATHER_CONFIG.md).
+
+Administrators can set delivery probability for **future machine-generated offers in every restaurant**:
+
+```mcfunction
+/scriptevent ordertocook:config {"deliveryRate":0}
+/scriptevent ordertocook:config {"deliveryRate":1}
+/scriptevent ordertocook:config {"deliveryRate":0.3}
+```
+
+Only finite JSON numbers in `0..1` are accepted, with no string/boolean coercion. The last command restores the Java default. Server events, creative players and `otc_admin` players retain access. This reuses Bedrock's operator event; Java's verified interface is a global config file loaded at startup, not a player GUI or verified live file reload. Missing/invalid saved fields use `0.3` without rewriting raw settings; malformed documents stop initialization and remain preserved.
+
+The value persists globally and governs first opening, administrator refresh and native-tick refresh for existing, new and portable/restored machines. Changing it does not reroll/retype offered, accepted, packed or completed orders, alter their proof/deadlines/carriers, or turn ordinary walk-ins into delivery. A global commit followed by a restaurant-save failure remains committed: the next generation uses the global rate despite an old restaurant snapshot. Pre-write failure or a silent non-write leaves live settings unchanged; write-then-throw/readback failure may leave disk newer than live memory until reload. This is not atomic propagation of all settings. [Evidence and limits](docs/validation/0.1.42-alpha.1/DELIVERY_RATE.md).
 
 You may temporarily override refresh intervals and nutrition thresholds:
 
