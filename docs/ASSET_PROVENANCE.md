@@ -113,7 +113,7 @@ helper 無庫存、重力、物理碰撞或自動掉落。`minecraft:custom_hit_
 
 進食約 5 秒後，第四階段髒盤留在原位直到店主／員工領取；沒有顯示實體自動掉一個髒盤的規則。權威記錄在 `restaurant.pendingDishes`，領取先保存 claim，再由腳本給一個 `dirty_plate`，因此重建 helper 或重複 visual ID 不應再次發盤。提前收盤、同一位置舊盤阻擋新餐及重啟邊界見 [RUNTIME_ADAPTATIONS.md](RUNTIME_ADAPTATIONS.md#餐盤進食收盤與付款)。
 
-打單機的原 blockstate 為空，候選直接使用完整 `order_machine.geo.json` 與 `order_machine_geo.png`。`neworder` 的 1 秒升紙、機身縮放及晃動取樣成 16 個 printing 姿態，加 idle／waiting 共 18 個；idle 隱藏紙，waiting 保留原紙張升到 Y=15 的終點。程式遵循 20 tick 內升紙、PRINTING 共 45 tick 及普通候選單未領完時持續留紙。外賣袋同樣改用原 `takeout_bag_placed.geo.json`、專用 32×32 PNG 與 0.5 秒 `maked`：完成姿態為 frame 0，frame 1–10 每 tick 推進；區塊卸載期間暫停。爐火使用原六張 PNG，由各爐自己的 `fire_frame` 選擇熄火、爆火與四張循環畫格：15 tick 等待、5 tick 爆火、每 8 tick 循環；不再共用全域 flipbook。點火骨骼的非均勻 squash 尚未渲染。
+打單機的原 blockstate 為空，候選直接使用完整 `order_machine.geo.json` 與 `order_machine_geo.png`。`neworder` 的 1 秒升紙、機身縮放及晃動取樣成 16 個 printing 姿態，加 idle／waiting 共 18 個；idle 隱藏紙，waiting 保留原紙張升到 Y=15 的終點。程式遵循 20 tick 內升紙、PRINTING 共 45 tick 及普通候選單未領完時持續留紙。外賣袋同樣改用原 `takeout_bag_placed.geo.json`、專用 32×32 PNG 與 0.5 秒 `maked`：完成姿態為 frame 0，frame 1–10 每 tick 推進；區塊卸載期間暫停。爐火使用原六張 PNG，由各爐自己的 `fire_frame` 選擇熄火、爆火與四張循環畫格：15 tick 等待、5 tick 爆火、每 8 tick 循環；不再共用全域 flipbook。點火骨骼改以註冊的 `stove.geo.json` 與 `fire` 片段生成 age 1–19 的原UV姿態；中立／物品仍保留既有模型。來源獨立20 tick倒數決定姿態，服務每2 tick發布；連續曲線、Java封包起點及STOP後5 tick復位並非等價，詳見[點火來源驗證](validation/stove-ignition/README.md)。
 
 
 ### 顧客、騎乘與保留片段
@@ -126,7 +126,7 @@ helper 無庫存、重力、物理碰撞或自動掉落。`minecraft:custom_hit_
 
 匯入的動畫 JSON 將 GeckoLib `{ "vector": [...] }` 包裝轉為原生向量，正規化 `&` 等識別碼字元，移除原生 schema 不接受的 `easing`／`easingArgs`；保留骨骼姿態與時間。使用 easing 的方塊另由來源原檔取樣，並未因匯入 JSON 移除標籤而失去曲線。顧客原骨骼軌跡保持，action 另加入時鐘定位及末幀保持。來源洗碗動畫引用未定義粒子效果 `3`，該孤立事件不輸出；實際遊戲粒子由服務端音效／粒子邏輯接線。
 
-玩家安坐、拍手與刷盤已由原片段生成可達的native姿勢；原rig及classic／slim64UV入口、上臂／前臂與整臂端點適配、FP相機及共享接線的實際範圍統一查 [PARITY](PARITY.md#玩家動作的來源與骨架)。`preserve_imported_geometry`另保留兩組完整原rig，不代表玩家Geometry.default已切換。5個騎車姿勢／喇叭動作與爐灶完整GeckoLib片段仍只保存。餐盤放置已作實體動畫；冰箱、洗碗機、打單機與外賣袋已用原片段生成方塊姿態，保留JSON本身不會逐幀驅動方塊。線上下載玩家皮膚及女僕模組替換不在本包實作範圍內。
+玩家安坐、拍手與刷盤已由原片段生成可達的native姿勢；原rig及classic／slim64UV入口、上臂／前臂與整臂端點適配、FP相機及共享接線的實際範圍統一查 [PARITY](PARITY.md#玩家動作的來源與骨架)。`preserve_imported_geometry`另保留兩組完整原rig，不代表玩家Geometry.default已切換。5個騎車姿勢／喇叭動作仍只保存；爐灶GeckoLib片段另取樣為可達的點火方塊姿態。餐盤放置已作實體動畫；冰箱、洗碗機、打單機與外賣袋已用原片段生成方塊姿態，保留JSON本身不會逐幀驅動方塊。線上下載玩家皮膚及女僕模組替換不在本包實作範圍內。
 
 ## Block state 與實體契約
 
@@ -142,7 +142,7 @@ helper 無庫存、重力、物理碰撞或自動掉落。`minecraft:custom_hit_
 | food_plate_display | `stage` + 16 × `stage_high`: 0–40 |
 | dishwasher | `phase`: 0–6；6 只作預覽，持久工作 phase 為 0–5；`frame`: 0–15；`plates` + 16 × `plates_high`: 0–16 |
 | refrigerator | `half`: lower／upper；`open`: 目標開關；`closing`: 活動關門片段；`frame`: 0–10 |
-| stove | `lit`: false／true；`fire_frame`: 0–5（原六張貼圖） |
+| stove | `lit`: false／true；`fire_frame`: 0–5（原六張貼圖）；`ignition_frame`: 0–15＋`ignition_frame_high`: false／true（0–19 tick age） |
 
 超過 16 個值的整數狀態拆成低位與高位，以免單一 block state 超出允許值數。`plates_high` 是布林值，`stage_high` 是 0–2；真實數量仍由 script 保存。盤數 16 必須寫低位 0、高位 true，不能寫低位 15、高位 true。未使用的高低位組合不由 script 產生。
 

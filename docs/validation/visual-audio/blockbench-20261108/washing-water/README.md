@@ -1,5 +1,7 @@
 # 洗碗檯遺漏水面：Blockbench 前後證據
 
+**後續控制實驗：** [只正規化六個零角度 pivot 的場景](../washing-pivot-control/README.md) 使原本 5 盤水下餐盤預覽差異消失。以下初次觀察與原始檔不改寫；原生透明排序仍未驗收。
+
 2026-11-08，官方桌面 Blockbench 5.2.2，雲端隔離開發環境。基線為 `8979974bd4e1117e583bcbc705592065b3163a3d`，候選資產為 `46fd0f32035f73013acfae8f9aeb6ed241a61b4e`。沒有啟動 Java、Minecraft、BDS，沒有操作使用者電腦或 LIVE。
 
 ## 有限結論

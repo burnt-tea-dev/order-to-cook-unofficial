@@ -2,6 +2,8 @@
 
 **简体中文** · [繁體中文](README.md) · [English](README.en.md)
 
+0.1.46 补回炉灶点火时原版骨骼的倾斜与伸缩：独立20 tick倒数，19个来源姿态沿用每2 tick更新，不改燃料、烹饪或物品。这是有限采样，并非Java连续动画／封包／STOP复位完全等价。[来源、版本与验证](docs/validation/0.1.46-alpha.1/STOVE_IGNITION.md)及[38张云端Blockbench图](docs/validation/visual-audio/blockbench-20261108/remaining-static/README.md)涵盖灶台前后与家具／供应架／头盔局部对照；原生透明材质、实际穿戴及客户端仍未验收。
+
 0.1.45 源码候选补回洗碗台原版 renderer 的水面，11 个盘数状态保留原位置与贴图；物品另用干台模型，不误加世界水面。同步三语装袋指南来源，避免重新生成资产时退回旧外送文字。[源码／测试](docs/validation/0.1.45-alpha.1/WASHING_WATER.md)及[16 张 Blockbench 前后图](docs/validation/visual-audio/blockbench-20261108/washing-water/README.md)保留透明排序与原生物品显示的未验收边界，不代表 Java 100% 还原。
 
 0.1.44 源码候选补上随身纸单及堂食／外送包裹的具名期限提醒：剩 5 分钟、1 分钟及超时各一次，不必选中物品；标记随实体物品保存，新打包物重新开始。沿用每 20 tick 检查，一般背包最多 36 格，餐盘及世界容器不提醒。保留记录会排除已完成／取消／旧补印纸单；孤立包裹不能恢复已裁掉的历史。保存与聊天不是原子事务，CPU 成本另随被引用餐厅的保留记录数增加，没有原生性能或完整 Java 等价声明。见[源码验证、成本及适配边界](docs/validation/0.1.44-alpha.1/CARRIED_ORDER_ALERTS.md)。尚未发布，未做本轮原生／客户端验收。

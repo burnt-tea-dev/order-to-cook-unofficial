@@ -7,7 +7,7 @@ import { formatEquipmentInspection, INSPECTION_TYPES } from "./equipment_inspect
 import { createNativeFridgeStorage, compactFridgeInventory, FRIDGE_UPPER, isFridge, isUpperFridge } from "./native_fridge.js";
 import { createStoveControls } from "./stove_controls.js";
 import { SMOKING_RECIPES } from "./smoking_recipes.js";
-import { initializeStoveFire, igniteStoveFire, advanceStoveFire, stoveFireFrame } from "./stove_fire.js";
+import { initializeStoveFire, igniteStoveFire, advanceStoveFire, stoveFireFrame, stoveIgnitionFrame } from "./stove_fire.js";
 
 export { SMOKING_RECIPES };
 import { playEffects, plateSound, fridgeDoorEffects, dishwasherTakeEffects, dishwasherTimedEffects, washingEffectBeat, handwashingEffects } from "./audiovisual.js";
@@ -381,8 +381,22 @@ export function createApplianceService(ctx) {
       setState(block, `${NS}plates_high`, d.plates === 16);
     }
     if (station.typeId === STOVE) {
-      setState(block, `${NS}lit`, d.litTime > 0);
-      setState(block, `${NS}fire_frame`, stoveFireFrame(d));
+      // Commit texture and both halves of the pose age atomically. Separate
+      // writes can briefly bind a new texture to the previous ignition pose.
+      const age = stoveIgnitionFrame(d);
+      const states = { [`${NS}lit`]: d.litTime > 0, [`${NS}fire_frame`]: stoveFireFrame(d),
+        [`${NS}ignition_frame`]: age % 16, [`${NS}ignition_frame_high`]: age >= 16 };
+      try {
+        let permutation = block.permutation;
+        let changed = false;
+        for (const [state, value] of Object.entries(states)) {
+          if (permutation.getState(state) !== value) {
+            permutation = permutation.withState(state, value);
+            changed = true;
+          }
+        }
+        if (changed) block.setPermutation(permutation);
+      } catch { /* Missing resources cannot change the saved cooking state. */ }
     }
   }
 
@@ -776,6 +790,7 @@ export function createApplianceService(ctx) {
     if (!inventory) return;
     let changed = syncStoveInputs(station, inventory);
     for (let step = 0; step < ticks; step++) {
+      if (d.fireAnimationTicks > 0) changed = true;
       const effect = advanceStoveFire(d);
       if (effect) stoveFeedback(station, effect);
       if (d.litTime > 0) { d.litTime--; changed = true; }

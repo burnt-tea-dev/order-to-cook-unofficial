@@ -327,7 +327,8 @@ def sample_number(value, seconds):
 def easing_fraction(kind, fraction, args=()):
     """GeckoLib 4 curves used by the pinned source, including easingArgs.
 
-    Verified against core/animation/EasingType.java at GeckoLib 7d6f32d.
+    Verified against core/animation/EasingType.java at GeckoLib 4.8.3
+    e81962eefd04e0cab90445d3df37b477d2767ffd (same blob in 4.8.4).
     In particular its elastic/bounce are not the usual easings.net formulas.
     """
     t = max(0.0, min(1.0, fraction))
@@ -337,7 +338,19 @@ def easing_fraction(kind, fraction, args=()):
         steps = int(args[0]) if args else 2
         if steps < 2:
             raise ValueError("GeckoLib step easing requires at least two steps")
-        return min(steps-1, math.floor(t*steps))/steps
+        # Source step() has a strict upper shortcut, then a binary interval
+        # search. In the default two-step case, .5 stays in interval zero.
+        length = 1/steps
+        if t > (steps-1)*length:
+            return (steps-1)*length
+        left, right = 0, steps-1
+        while right-left != 1:
+            middle = left+(right-left)//2
+            if t >= middle*length:
+                left = middle
+            else:
+                right = middle
+        return left*length
     def elastic(value):
         amount = args[0] if args else 1
         return 1-math.cos(value*math.pi/2)**3*math.cos(value*amount*math.pi)
@@ -1332,8 +1345,29 @@ def make_blocks():
                 material["texture"] = texture_tile(f"{NS}:block/{texture}")
         variants.append({"condition": state_condition({"fire_frame": frame}),
                          "components": {"minecraft:material_instances": frame_mats}})
+    # Keep the canonical neutral/item mesh untouched. Active poses use the
+    # registered Java GeoModel hierarchy, including its 17 original UV faces;
+    # it omits the flattened model's wholly interior upper-lip south face.
+    source = ASSETS / "geo/block/stove.geo.json"
+    animation_source = ASSETS / "animations/stove.animation.json"
+    base = normalize_geo(source, f"geometry.{NS}.stove_source")
+    clip = read_json(animation_source)["animations"]["fire"]
+    for age in range(1, 20):
+        name = f"stove_ignition_{age}"
+        pose = bake_pose(base, clip, age/20, f"geometry.{NS}.{name}")
+        assert_block_bounds(pose)
+        identifier = emit_geo(name, pose)
+        for original in (source, animation_source):
+            record(original, RP / "models/blocks" / f"{name}.geo.json",
+                   f"Registered stove GeoModel fire clip at age {age}/20s; original 17 faces, hierarchy and UV; neutral keeps canonical idle mesh")
+        variants.append({"condition": state_condition({"ignition_frame": age}),
+                         "components": {"minecraft:geometry": identifier}})
+    # The standard wide-state adapter splits 0..19 into a low nibble + bool.
+    # Geometry is independent of texture so a short custom fuel can extinguish
+    # before the source's 20-tick animation countdown finishes.
     block_definition("stove", f"geometry.{NS}.stove", mats,
-                     {"lit": [False, True], "fire_frame": list(range(6))}, variants)
+                     {"lit": [False, True], "fire_frame": list(range(6)),
+                      "ignition_frame": list(range(20))}, variants)
 
 
 def transform3(v, rotation, pivot=(0, 0, 0)):
@@ -2123,7 +2157,7 @@ def main():
         "adaptations":["Two-part refrigerator with complete independent doors; separate 11-pose open/close source clips; at most 0.126px intermediate hinge translation bounds the sweep",
             "Washing table includes the source renderer's static translucent water quad in all 11 plate states; whole-block blend and reverse-winding underside require native sorting/backface review",
             "Original GeckoLib elastic/bounce easing and appliance squash retained in sampled static cuboids; residual descendant shear and unsynchronized cabinet halves remain documented",
-            "Stove uses six original textures selected by saved per-stove fire phases: 15-tick ignition delay, 5-tick burst and four 8-tick cycle frames; original ignition bone squash is not rendered",
+            "Stove keeps six original textures and fuel phases; independent source 20-tick ignition countdown selects finite source-Geo wobble/squash poses at integer ages, published by the existing 10Hz service; neutral/item mesh unchanged; not continuous Java/client-packet or STOP-reset parity",
             "Dishwasher drawer, door, plate-count visibility and wash vibration sampled into 82 poses including look-target preview; preview geometry is shared rather than per-client",
             "Native dining plate uses the original two-part collision and forty block stages; the existing actor handles only stage-zero placement animation; canonical meal records own drops",
             "Seven original customer actions seek from canonical elapsed time; weighted idle variation changes only between completed clips",

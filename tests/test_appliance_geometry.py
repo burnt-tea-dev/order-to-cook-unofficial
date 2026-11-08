@@ -528,6 +528,166 @@ class ApplianceGeometryTests(unittest.TestCase):
         ticking = [p for p in definition["permutations"] if "minecraft:tick" in p["components"]]
         self.assertEqual(ticking,[{"condition":"q.block_state('ordertocook:frame') > 0","components":{"minecraft:tick":{"interval_range":[1,1],"looping":True},"ordertocook:bag_motion":{}}}])
 
+class StoveIgnitionGeometryTests(unittest.TestCase):
+    """Pinned source formulas are the oracle, not either shared evaluator."""
+    @classmethod
+    def setUpClass(cls):
+        cls.raw = converter.read_json(converter.ASSETS/'geo/block/stove.geo.json')
+        cls.source = converter.normalize_geo(converter.ASSETS/'geo/block/stove.geo.json', 'geometry.stove_source')
+        cls.clip = converter.read_json(converter.ASSETS/'animations/stove.animation.json')['animations']['fire']
+        cls.bones = {bone['name']: bone for bone in cls.raw['minecraft:geometry'][0]['bones']}
+        review_spec = importlib.util.spec_from_file_location('stove_review', ROOT/'tools/render_visual_review.py')
+        cls.review = importlib.util.module_from_spec(review_spec)
+        review_spec.loader.exec_module(cls.review)
+
+    @staticmethod
+    def source_values(t):
+        # Direct reading of the pinned clip and Gecko 4.8.3 formula. Do not
+        # call converter.sample_channel/easing_fraction or review.channel here.
+        elastic = lambda u: 1-math.cos(math.pi*u/2)**3*math.cos(math.pi*u)
+        if t <= .75:
+            body = [1, 1, 1]
+        elif t <= .875:
+            e = elastic((t-.75)/.125)
+            body = [1, 1+.05*e, 1+.1*e]
+        elif t < 1:
+            body = [1, 1.05, 1.1] if t <= .9375 else [1, 1.025, 1.05]
+        else:
+            body = [1, 1, 1]
+        if t <= .125:
+            door = [1, 1-.1*t/.125, 1]
+        elif t <= .75:
+            u = (t-.125)/.625
+            door = [1-.1*u, .9-.1*u, 1-.1*u]
+        elif t <= .875:
+            e = elastic((t-.75)/.125)
+            door = [.9+.4*e, .8+.5*e, .9+.4*e]
+        elif t < 1:
+            door = [1.3]*3 if t <= .9375 else [1.15]*3
+        else:
+            door = [1]*3
+        angle = math.sin(math.radians(t*3000))*3 if t <= .0833 else (
+            math.sin(math.radians(t*3000))*3*(.75-t)/.6667 if t < .75 else 0)
+        return body, door, angle
+
+    @staticmethod
+    def rotate(point, angles, pivot):
+        # Independent XYZ native cuboid decoding, not converter geometry math.
+        x, y, z = [a-b for a,b in zip(point,pivot)]
+        for axis, degrees in enumerate((-angles[0], angles[1], -angles[2])):
+            c, s = math.cos(math.radians(degrees)), math.sin(math.radians(degrees))
+            if axis == 0: y,z = y*c-z*s, y*s+z*c
+            elif axis == 1: x,z = x*c+z*s, -x*s+z*c
+            else: x,y = x*c-y*s, x*s+y*c
+        return [x+pivot[0], y+pivot[1], z+pivot[2]]
+
+    def direct_point(self, name, point, t):
+        body, door, angle = self.source_values(t)
+        if name == 'group5':
+            point = [pivot+(value-pivot)*scale for pivot,value,scale in zip([0,2,-5],point,door)]
+            # Source group5 Z rotation is native -Z; the parent starts scaling
+            # only after this rotation reaches zero, so no shear is present.
+            point = self.rotate(point, [0,0,angle], [0,2,-5])
+        return [pivot+(value-pivot)*scale for pivot,value,scale in zip([0,8,0],point,body)]
+
+    def compare_pose(self, baked, seconds):
+        lookup = {bone['name']: bone for bone in baked['minecraft:geometry'][0]['bones']}
+        maximum = 0
+        for name,bone in self.bones.items():
+            for source,target in zip(bone['cubes'],lookup[name]['cubes']):
+                self.assertEqual(target['uv'],source['uv'])
+                for signs in itertools.product((0,1), repeat=3):
+                    expected = self.direct_point(name, [a+b*c for a,b,c in zip(source['origin'],source['size'],signs)], seconds)
+                    actual = [a+b*c for a,b,c in zip(target['origin'],target['size'],signs)]
+                    actual = self.rotate(actual,target.get('rotation',[0]*3),target.get('pivot',[0]*3))
+                    current = lookup[name]
+                    while True:
+                        actual = self.rotate(actual,current.get('rotation',[0]*3),current['pivot'])
+                        if 'parent' not in current: break
+                        current = lookup[current['parent']]
+                    maximum = max(maximum,math.dist(expected,actual))
+        self.assertLess(maximum, 0.000002, f'forward source vertex error at t={seconds}: {maximum}')
+        return maximum
+
+    def test_pinned_source_and_all_generated_dependency_records(self):
+        pins = {'geo/block/stove.geo.json': '875a37c0579eb449512a03361e42509625a6a29b',
+                'animations/stove.animation.json': '0e13e05844344566da40d904992f15936b8e81e0'}
+        manifest = converter.read_json(ROOT/'runtime/asset_conversion_manifest.json')
+        self.assertEqual(manifest['revision'], 'e59e3dbcabe19b783d9adb933db5fcb8bc1e4642')
+        for path,blob in pins.items():
+            raw = (converter.ASSETS/path).read_bytes()
+            self.assertEqual(hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest(),blob)
+            for age in range(1,20):
+                rows = [row for row in manifest['assets'] if row['source'] == str(converter.ASSET_REL/path)
+                        and row['output'] == f'RP/models/blocks/stove_ignition_{age}.geo.json']
+                self.assertEqual(len(rows),1)
+                self.assertEqual(rows[0]['sha256'],hashlib.sha256(raw).hexdigest())
+
+    def test_step_discriminates_exact_tie_nextafter_and_endpoint_in_both_evaluators(self):
+        for evaluator in (lambda t: converter.easing_fraction('step',t), lambda t: self.review.easing('step',t,[])):
+            # Literal expectations from EasingType.step, not another sampler.
+            for t,value in [(0,0),(.499999999,0),(.5,0),(math.nextafter(.5,1),.5),(.500000001,.5),(.99,.5),(1,1)]:
+                self.assertEqual(evaluator(t),value)
+        for t,body,door in [(.9375,[1,1.05,1.1],[1.3]*3),
+                             (math.nextafter(.9375,1),[1,1.025,1.05],[1.15]*3),
+                             (.9375+1e-9,[1,1.025,1.05],[1.15]*3),(1,[1]*3,[1]*3)]:
+            for name,expected in [('group2',body),('group5',door)]:
+                channel = self.clip['bones'][name]['scale']
+                for actual in (converter.sample_channel(channel,t,[1]*3), self.review.sample(channel,t,[1]*3)):
+                    for a,b in zip(actual,expected): self.assertAlmostEqual(a,b,places=14)
+        # For >2 steps only the final internal tie has the exceptional lower
+        # interval. Catch an overbroad ceil(t*n)-1 replacement as well.
+        for t,value in [(.25,.25),(.5,.5),(.75,.5),(math.nextafter(.75,1),.75)]:
+            self.assertEqual(converter.easing_fraction('step',t,[4]),value)
+            self.assertEqual(self.review.easing('step',t,[4]),value)
+
+    def test_all_integer_ages_keep_source_uv_bounds_and_exact_factory_output(self):
+        for age in range(1,20):
+            name = f'stove_ignition_{age}'
+            baked = converter.read_json(ROOT/f'runtime/RP/models/blocks/{name}.geo.json')
+            generated = converter.bake_pose(self.source,self.clip,age/20,f'geometry.ordertocook.{name}')
+            self.assertEqual(baked,generated)
+            self.compare_pose(baked,age/20)
+            converter.assert_block_bounds(baked)
+            entry = baked['minecraft:geometry'][0]
+            self.assertEqual([entry['description'][key] for key in ('texture_width','texture_height')],[64,64])
+            self.assertEqual(sum(len(cube['uv']) for bone in entry['bones'] for cube in bone['cubes']),17)
+
+    def test_dense_source_extrema_and_discontinuous_tie_have_no_shear_or_clipping(self):
+        times = sorted({*(i/1000 for i in range(1001)), .025, .0833, .125, .83, .875,
+                        .9375, math.nextafter(.9375,1), .9375+1e-9})
+        maximum = 0
+        for seconds in times:
+            baked = converter.bake_pose(self.source,self.clip,seconds,'geometry.test')
+            maximum = max(maximum,self.compare_pose(baked,seconds))
+            converter.assert_block_bounds(baked)
+        self.assertLess(maximum,0.000002)
+
+    def test_neutral_mesh_preserves_existing_faces_and_all_source_texels(self):
+        idle = converter.read_json(ROOT/'runtime/RP/models/blocks/stove.geo.json')['minecraft:geometry'][0]
+        cubes = idle['bones'][0]['cubes']
+        source_cubes = [cube for bone in self.bones.values() for cube in bone['cubes']]
+        self.assertEqual(len(cubes),3)
+        for cube,source in zip(cubes,source_cubes):
+            self.assertEqual(cube['origin'],source['origin'])
+            self.assertEqual(cube['size'],source['size'])
+            for name,uv in source['uv'].items():
+                actual = {key: ([v*4 for v in value] if key in ('uv','uv_size') else value)
+                          for key,value in cube['uv'][name].items() if key != 'material_instance'}
+                self.assertEqual(actual,uv)
+        extra = set(cubes[1]['uv'])-set(source_cubes[1]['uv'])
+        self.assertEqual(extra,{'south'})
+        # Canonical upper-lip south at z=-5, x[-8,8], y[12,16] is entirely
+        # against the body front. Active source geometry deliberately omits it.
+        self.assertEqual(cubes[1]['origin'][2]+cubes[1]['size'][2],cubes[0]['origin'][2])
+        block = converter.read_json(ROOT/'runtime/BP/blocks/stove.json')['minecraft:block']
+        self.assertEqual(block['components']['minecraft:geometry'],'geometry.ordertocook.stove')
+        self.assertTrue(block['components']['minecraft:collision_box'])
+        self.assertTrue(block['components']['minecraft:selection_box'])
+        self.assertNotIn('minecraft:tick',block['components'])
+        self.assertNotIn('minecraft:light_emission',block['components'])
+
+
 class WashingTableWaterTests(unittest.TestCase):
     """Source renderer vertices are the oracle, not the converter's UV output."""
     source = ROOT / 'upstream/reference'
