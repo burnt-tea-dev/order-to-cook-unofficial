@@ -30,6 +30,14 @@ Runtime tree SHA-256: `29d76d2a8bde343b1eeb3d229a8b682afb8fa2c4c44fa14f7be2f6de0
 
 A clean exact-commit build, independent frozen-package review and exact remote PR-head CI remain publication gates. GitHub's PR checks identify their actual remote commit; this preparation report does not assert an unobserved future CI result.
 
+## Remote CI dependency correction
+
+The first exact PR #71 head `a897a276a8815b397821dbc13e832910db9d8536` passed its JavaScript/type/resource/build stages but failed Python appliance tests in [run 42510895805](https://github.com/burnt-tea-dev/order-to-cook-unofficial/actions/runs/42510895805): importing the independent review evaluator required NumPy, while the clean runner installed only Pillow. This was a declared-test-dependency omission hidden by the pre-provisioned local environment, not a stove runtime failure.
+
+Both `build.yml` and `prepare-candidate.yml` now explicitly install `Pillow==12.3.0 numpy==2.3.5` before asset regressions. A new CI-scope regression checks both entrypoints retain this setup before the appliance test command; CI-scope tests increase from eight to nine. No test is skipped, mocked or serialized to hide the failure.
+
+A fresh isolated Python 3.12 environment with only those two third-party packages passed appliance 33, dining 4, guide 3, CI scope 9 and segmented player 13. Runtime files, payload fingerprints, .46 identity, scene inputs and captured evidence remain byte-identical to the independently reviewed candidate. The corrected remote head must complete the full workflow before merge.
+
 ## Remaining adaptations
 
 The result samples source poses at integer ticks and publishes every two ticks, with no interpolation. Sub-tick elastic extrema, the high-frequency wobble, Java client token/packet start and five-tick STOP bone reset are not exactly reproduced. It retains the previous server-intended texture phases rather than copying client load/packet quirks. Native transparency, shaders, controller playback, world placement, all camera angles, actual helmet wearing and multiplayer/client behavior remain untested. Other OTC models/animations still require further review; this batch is not all-model or 100% Java parity acceptance.
