@@ -2,6 +2,8 @@
 
 [简体中文](README.zh-CN.md) · [繁體中文](README.md) · **English**
 
+Version 0.1.38 lets dine-in orders be packed to go. Normal countertop clicks and held-ticket shortcuts still default to plating; sneak-click for the explicit plate/bag choice. Bags use packaging without changing the order type, deadline, payment or walk-in statistics, and leave no dining/dirty plate or boom bonus. This change has source and native-I/O-double regression coverage only, not client/live-world acceptance. [Scope and evidence](docs/validation/0.1.38-alpha.1/DINE_IN_TAKEOUT.md).
+
 Version 0.1.37 removes redundant world reads: nearest-restaurant queries stop at the first valid distance-sorted candidate, and dishwashers update visuals once per tick. No new cache or permission/save rule changes. This demonstrates fewer source-level calls, not native MSPT or POI gains. Transient cosmetic API failures retry on the next update. See [read-count validation](docs/validation/0.1.37-alpha.1/WORLD_READS.md).
 
 Version 0.1.36 withdraws only the new walk-in offer when no usable loaded chair is found before any entity allocation. Older pending offers, cooldown and simultaneous machine refresh remain. Uncertain spawn/cleanup outcomes keep their existing path. This is not full admission parity or a POI performance fix. See [walk-in validation](docs/validation/0.1.36-alpha.1/WALKIN_ADMISSION.md).

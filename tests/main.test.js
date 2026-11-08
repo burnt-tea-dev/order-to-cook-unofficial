@@ -303,7 +303,7 @@ test('restaurant removal retains an unacknowledged personal ledger for a later r
 
 test('one HUD update combines equipment with delivery and prioritizes washing without losing navigation', async () => {
   const env = await mainFixture();
-  env.order.type = 'delivery'; env.order.destination = { dimensionId: env.player.dimension.id, x: 100, y: 0, z: 100 };
+  env.order.type = 'delivery'; env.order.carrier = 'bag'; env.order.destination = { dimensionId: env.player.dimension.id, x: 100, y: 0, z: 100 };
   env.store.saveRestaurant(env.restaurant);
   env.player.viewedBlock = env.machine;
   env.hooks.appliances.getInspection = () => '設備讀數';
@@ -318,7 +318,7 @@ test('one HUD update combines equipment with delivery and prioritizes washing wi
 
 test('unloaded crosshair targets do not hide delivery hints and idle HUD clears only once', async () => {
   const env = await mainFixture();
-  env.order.type = 'delivery'; env.order.destination = { dimensionId: env.player.dimension.id, x: 100, y: 0, z: 100 };
+  env.order.type = 'delivery'; env.order.carrier = 'bag'; env.order.destination = { dimensionId: env.player.dimension.id, x: 100, y: 0, z: 100 };
   env.store.saveRestaurant(env.restaurant);
   env.player.getBlockFromViewDirection = () => { throw Error('chunk unavailable'); };
   env.hooks.updateHud();

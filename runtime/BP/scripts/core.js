@@ -518,15 +518,27 @@ export function acceptOrder(restaurant, orderId, now = Date.now()) {
   return { ok: true, order };
 }
 
+/** Physical carrier is independent from order type. Only absent legacy fields
+ * inherit the old default; corrupt or delivery-plate selections fail closed.
+ */
+export function orderCarrier(order) {
+  if (!order || !["dine_in", "delivery"].includes(order.type)) return undefined;
+  const carrier = order.carrier === undefined ? (order.type === "delivery" ? "bag" : "plate") : order.carrier;
+  return carrier === "bag" || (carrier === "plate" && order.type === "dine_in") ? carrier : undefined;
+}
+
 /** Ingredient and packaging transactions belong to the Minecraft adapter. */
 /** @param {OrderTime} [now] */
-export function packOrder(restaurant, orderId, now = Date.now()) {
+export function packOrder(restaurant, orderId, now = Date.now(), carrier = undefined) {
   const at = clock(now);
   const found = lookup(restaurant, orderId, now);
   if (!found.ok) return found;
   const order = found.order;
   if (order.status === "packed") return { ok: false, reason: "already_packed", order };
   if (order.status !== "accepted") return { ok: false, reason: "not_accepted", order };
+  const selected = orderCarrier({ ...order, carrier });
+  if (!selected) return { ok: false, reason: "invalid_carrier", order };
+  order.carrier = selected;
   order.status = "packed";
   order.packedAt = at;
   restaurant.updatedAt = at;
@@ -552,7 +564,7 @@ export function rollCustomerCompletion(restaurant, order, now, options = {}) {
   const rng = typeof options.rng === "function" ? options.rng : Math.random;
   let action = seated ? 3 : 4;
   let boomBonus = 0;
-  if (seated && order.type === "dine_in") {
+  if (seated && orderCarrier(order) === "plate") {
     action = unit(rng) < (options.easterEgg ? 0.6 : 0.1) ? 5 : 6;
     if (action === 5) boomBonus = 1 + Math.floor(unit(rng) * 4) + levelOf(restaurant);
   }
@@ -574,6 +586,7 @@ export function completeOrder(restaurant, orderId, now = Date.now(), options = {
   if (!found.ok) return found;
   const order = found.order;
   if (order.status !== "packed") return { ok: false, reason: "not_packed", order };
+  if (!orderCarrier(order)) return { ok: false, reason: "invalid_carrier", order };
   const baseReward = integer(order.reward);
   const tip = rollTip(order, options, configFor(restaurant));
   const completion = typeof options.customerSeated === "boolean"
@@ -585,7 +598,7 @@ export function completeOrder(restaurant, orderId, now = Date.now(), options = {
   order.tip = tip;
   if (completion) {
     order.completion = completion;
-    if (order.type === "dine_in") order.meal = completion;
+    if (orderCarrier(order) === "plate") order.meal = completion;
     order.boomBonus = boomBonus;
   }
   order.paidReward = reward;

@@ -2,6 +2,8 @@
 // Original timing: FoodPlateBlockEntity.java at pinned upstream e59e3db.
 // Entity geometry is cosmetic. Only restaurant.pendingDishes can mint a plate.
 
+import { orderCarrier } from './core.js';
+
 export const DINING_ENTITY = 'ordertocook:dining_plate';
 export const DINING_BLOCK = 'ordertocook:dining_plate_block';
 export const MEAL_TOKEN = 'ordertocook:meal_token';
@@ -134,7 +136,7 @@ export function createDiningService(ctx) {
   }
 
   function queueMeal(restaurant, order, customer, now = Date.now(), playerId) {
-    if (!canonical(restaurant) || order.status !== 'completed' || order.type !== 'dine_in') return undefined;
+    if (!canonical(restaurant) || order.status !== 'completed' || orderCarrier(order) !== 'plate') return undefined;
     restaurant.pendingDishes ||= [];
     const existing = restaurant.pendingDishes.find(meal => meal?.id === order.id);
     if (existing) return existing;
