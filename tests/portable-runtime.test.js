@@ -34,7 +34,7 @@ function placeDevice(env, stack, location) {
 
 test('expired bag requires native consumption, retains its deadline without the order and unlocks once across reload', async () => {
   const env = await mainFixture();
-  env.order.type = 'delivery'; env.order.expiresAt = Date.now() - 1;
+  env.order.type = 'delivery'; env.order.carrier = 'bag'; env.order.expiresAt = Date.now() - 1;
   const bag = env.hooks.parcelFor(env.restaurant, env.order);
   env.restaurant.orders = []; env.store.saveRestaurant(env.restaurant);
   const use = { source: env.player, itemStack: bag, cancel: false };
@@ -54,7 +54,7 @@ test('expired bag requires native consumption, retains its deadline without the 
 
 test('fresh, blank and malformed bags cannot start eating or claim progress', async () => {
   const env = await mainFixture();
-  const fresh = env.hooks.parcelFor(env.restaurant, { ...env.order, type: 'delivery', expiresAt: Date.now() + 60000 });
+  const fresh = env.hooks.parcelFor(env.restaurant, { ...env.order, type: 'delivery', carrier: 'bag', expiresAt: Date.now() + 60000 });
   const malformed = new FakeItem('ordertocook:takeout_bag'); malformed.setDynamicProperty('ordertocook:expires_at', '0');
   for (const itemStack of [fresh, new FakeItem('ordertocook:takeout_bag'), malformed, env.parcel]) {
     const event = { source: env.player, itemStack, cancel: false };
@@ -67,7 +67,7 @@ test('fresh, blank and malformed bags cannot start eating or claim progress', as
 
 test('failed native-consumption progress save returns the complete consumed parcel', async () => {
   const env = await mainFixture();
-  const bag = env.hooks.parcelFor(env.restaurant, { ...env.order, type: 'delivery', expiresAt: Date.now() - 1 });
+  const bag = env.hooks.parcelFor(env.restaurant, { ...env.order, type: 'delivery', carrier: 'bag', expiresAt: Date.now() - 1 });
   env.player.container.setItem(0, undefined); // Native consumption already removed it.
   env.failWrite(id => id.startsWith('ordertocook:p:'));
   env.itemComponents.get('ordertocook:consume_bag').onConsume({ source: env.player, itemStack: bag });

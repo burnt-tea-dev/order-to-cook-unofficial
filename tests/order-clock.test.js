@@ -47,7 +47,7 @@ test('production handoff obeys its tick despite an old wall deadline, and exact 
 
 test('physical bag retains tick expiry through history pruning and native use/consume callbacks',async()=>{
  const env=await mainFixture(),deadline=env.system.currentTick+40;
- const bag=env.hooks.parcelFor(env.restaurant,{...env.order,type:'delivery',expiresTick:deadline,expiresAt:Date.now()-600000});
+ const bag=env.hooks.parcelFor(env.restaurant,{...env.order,type:'delivery',carrier:'bag',expiresTick:deadline,expiresAt:Date.now()-600000});
  assert.equal(bag.getDynamicProperty('ordertocook:expires_tick'),deadline);
  assert.ok(bag.getLore().every(line=>!line.includes('UTC')));
  env.restaurant.orders=[];env.store.saveRestaurant(env.restaurant);
@@ -66,7 +66,7 @@ test('remaining-time display follows game ticks rather than its compatibility wa
 
  test('legacy held orphan bag adopts one tick deadline without losing ItemStack metadata',async()=>{
  const env=await mainFixture();env.restaurant.orders=[];env.store.saveRestaurant(env.restaurant);
- const bag=env.hooks.parcelFor(env.restaurant,{...env.order,type:'delivery',expiresAt:Date.now()+60000});
+ const bag=env.hooks.parcelFor(env.restaurant,{...env.order,type:'delivery',carrier:'bag',expiresAt:Date.now()+60000});
  bag.nameTag='Saved parcel';bag.setLore(['saved lore']);bag.setDynamicProperty('test:kept','value');
  env.player.container.setItem(0,bag);
  emit(env.world.beforeEvents.itemUse,{source:env.player,itemStack:bag,cancel:false});

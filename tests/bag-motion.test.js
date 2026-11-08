@@ -17,7 +17,7 @@ function registeredBagTick(env) {
 
 test('placed delivery bag plays ten source ticks once and preserves its physical proof', async () => {
   const env = await mainFixture(), tick = registeredBagTick(env);
-  env.order.type = 'delivery'; env.store.saveRestaurant(env.restaurant);
+  env.order.type = 'delivery'; env.order.carrier = 'bag'; env.store.saveRestaurant(env.restaurant);
   const parcel = env.hooks.parcelFor(env.restaurant, env.order);
   env.player.container.setItem(0, parcel); env.player.isSneaking = true;
   const table = place(env, 'minecraft:stone', { x: 1, y: 0, z: 2 });
@@ -53,7 +53,7 @@ test('placed delivery bag plays ten source ticks once and preserves its physical
 
 test('countertop delivery output starts the same bag animation after the transaction commits', async () => {
   const env = await mainFixture();
-  env.order.type = 'delivery'; env.order.status = 'accepted';
+  env.order.type = 'delivery'; env.order.carrier = 'bag'; env.order.status = 'accepted';
   env.order.items = [{ typeId: 'minecraft:bread', amount: 1 }];
   env.store.saveRestaurant(env.restaurant);
   env.player.container.setItem(0, new FakeItem('minecraft:bread'));

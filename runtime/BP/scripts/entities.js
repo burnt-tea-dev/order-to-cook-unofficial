@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Bedrock adaptation of Order To Cook by breezeth-CN; see THIRD_PARTY_NOTICES.md.
 import { ButtonState, EntityDamageCause, EntitySwingSource, InputButton, ItemStack, MolangVariableMap, system, world } from "@minecraft/server";
-import { orderRemainingMs } from './core.js';
+import { orderRemainingMs, orderCarrier } from './core.js';
 import { ActionFormData } from "@minecraft/server-ui";
 import { containerCapacity, dropContainerContents, itemLabel, openContainerForm, playerInventory } from "./appliances.js";
 import { playEffects, customerCompletionEffects, customerPortalEffects, customerExplosionEffects, customerUnsuccessfulEffects, motorcycleHitEffects } from "./audiovisual.js";
@@ -432,7 +432,7 @@ export function createEntityService(ctx) {
     const association = customerOrder(entity);
     const restaurant = ctx.getRestaurant?.(association.restaurantId);
     const order = restaurant?.orders?.find(entry => entry.id === association.orderId);
-    return seated && order?.type === "dine_in" ? 6 : seated ? 3 : 4;
+    return seated && orderCarrier(order) === "plate" ? 6 : seated ? 3 : 4;
   }
 
   /**

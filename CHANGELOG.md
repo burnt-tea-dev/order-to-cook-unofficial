@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.38-alpha.1
+
+- Add an explicit sneak-click plate/bag choice for dine-in orders while retaining ordinary clicks and held-ticket defaults. Persist the independent carrier; only missing legacy fields on packed orders inherit the old type-based fulfillment default. Validate canonical carrier and proof at placement/handoff, retain full native ItemStacks, and reject delivery plates.
+- Keep dine-in/walk-in rewards, tips, deadlines and statistics for bags. Use seated/standing take reactions without dining vacancy checks, plates, dirty dishes or boom bonuses. Reuse existing reaction cleanup.
+- Add generated-order main/core/store/dining/entities regressions for both entries, cancellation, deferred revalidation, persistence, rollback and rejection. Pair BP/RP/modules/dependency at 0.1.38 with stable UUIDs and append-only payload history. No client/live-world testing is included in this source change.
+
 ## 0.1.29-alpha.1
 
 - Fix the shared initialization of nine particle emitters: default direct scalar spread variables instead of putting vector members on the left of `??`, which the client rejects. Pass the same three scalars from the real `MolangVariableMap` caller and update the native smoke fixture. Burst counts, spread values, velocity conversion, timing and artwork are unchanged.
