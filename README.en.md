@@ -2,6 +2,8 @@
 
 [简体中文](README.zh-CN.md) · [繁體中文](README.md) · **English**
 
+Version 0.1.32 keeps a valid board binding. Initial/replacement selection uses a 24-block horizontal radius, ±8 height, highest nutrition and then distance. Upgrades and benefits use the highest single nearby board separately from the bound menu that supplies dishes. Unloaded-board and permission safeguards remain; POI and client acceptance are not included. See [board-selection validation](docs/validation/0.1.32-alpha.1/BOARD_SELECTION.md).
+
 Menu rebinding now persists while idle, on cancelled/failed upgrades and on empty refreshes. An unavailable bound board preserves its saved snapshot and defers dependent actions until it can be checked; confirmed removal clears the binding. Version 0.1.31 stays on stable APIs and does not claim to fix POI performance or establish real-client acceptance. See [menu persistence validation](docs/validation/0.1.31-alpha.1/MENU_PERSISTENCE.md).
 
 Current source checks restaurant permission before claiming a station and uses the Java ±5-per-axis cube for both countertop supply shelves. Refrigerator queries keep their existing sphere. This stable API fix does not integrate POI or establish real-client acceptance. See [0.1.30 validation](docs/validation/0.1.30-alpha.1/STATION_BOUNDARIES.md).

@@ -4,7 +4,7 @@ import { world, system, ItemStack, ItemTypes, BlockPermutation, GameMode, Molang
 import {
   createRestaurant, refreshOrders, acceptOrder, packOrder, completeOrder,
   cancelOrder, expireOrders, upgradeRestaurant, getUpgradeQuote,
-  getMenuNutrition, addMenuFood, removeMenuFood, generateWalkInOrder,
+  getMenuNutrition, getNearbyBoardNutrition, addMenuFood, removeMenuFood, generateWalkInOrder,
   getWalkInChance, synchronizeOfferRewards, normalizeFoodId, normalizeMenu,
   orderRemainingMs, adoptOrderDeadline
 } from './core.js';
@@ -171,7 +171,7 @@ class UnavailableMenuBoardError extends Error {}
 function syncMenu(restaurant) {
   const eligible = station => station?.typeId === 'ordertocook:board' && station.dimensionId === restaurant.dimensionId &&
     (!station.ownerId || station.ownerId === restaurant.ownerId || restaurant.staff?.includes(station.ownerId)) &&
-    Math.abs(station.location.x - restaurant.location.x) <= 24 && Math.abs(station.location.z - restaurant.location.z) <= 24 && Math.abs(station.location.y - restaurant.location.y) <= 8;
+    (station.location.x - restaurant.location.x) ** 2 + (station.location.z - restaurant.location.z) ** 2 <= 24 * 24 && Math.abs(station.location.y - restaurant.location.y) <= 8;
   // A missing chunk is not evidence that a saved board was removed. Defer both
   // rebinding and dependent actions until this eligible binding can be checked.
   const bound = restaurant.boardId ? getStationById(restaurant.boardId) : undefined;
@@ -179,18 +179,28 @@ function syncMenu(restaurant) {
   if (eligible(bound) && !boundBlock) throw new UnavailableMenuBoardError('Bound menu board chunk is unavailable; defer menu synchronization');
   const candidates = stations().filter(station => eligible(station) &&
     (station === bound ? boundBlock : loadedBlock(station))?.typeId === station.typeId);
-  candidates.sort((a, b) => getMenuNutrition(b.menu) - getMenuNutrition(a.menu));
+  // Java scans x, z, then y. Distance breaks equal nutrition; exact ties retain
+  // that coordinate order instead of depending on Bedrock registration history.
+  candidates.sort((a, b) => getMenuNutrition(b.menu) - getMenuNutrition(a.menu) ||
+    distanceSquared(a.location, restaurant.location) - distanceSquared(b.location, restaurant.location) ||
+    a.location.x - b.location.x || a.location.z - b.location.z || a.location.y - b.location.y);
+  // A valid existing binding supplies dishes even if a richer board appears.
+  // Upgrade eligibility and benefit use a separate highest-single-board value.
+  const selected = boundBlock?.typeId === 'ordertocook:board' ? bound : candidates[0];
   // Registration is a snapshot. Catalog/override reloads affect new entries only.
   // Detect menu identity and reward-only changes so every caller can commit them,
   // including idle machines and forms that return without generating an order.
   const oldMenu = JSON.stringify(restaurant.menu);
   const oldBoardId = restaurant.boardId || '';
+  const oldNearbyNutrition = restaurant.nearbyBoardNutrition;
   const offered = restaurant.orders.filter(order => order.status === 'offered')
     .map(order => [order, order.reward, order.benefitLevel]);
-  restaurant.menu = normalizeMenu(candidates[0]?.menu || []);
-  restaurant.boardId = candidates[0]?.id || '';
+  restaurant.menu = normalizeMenu(selected?.menu || []);
+  restaurant.boardId = selected?.id || '';
+  restaurant.nearbyBoardNutrition = getMenuNutrition(candidates[0]?.menu || []);
   synchronizeOfferRewards(restaurant);
   return oldBoardId !== restaurant.boardId || oldMenu !== JSON.stringify(restaurant.menu) ||
+    oldNearbyNutrition !== restaurant.nearbyBoardNutrition ||
     offered.some(([order, reward, benefit]) => order.reward !== reward || order.benefitLevel !== benefit);
 }
 function getMachine(player, block, placedByPlayer = false) {
@@ -268,7 +278,7 @@ async function machineForm(player, block) {
   const working = restaurant.orders.filter(order => ['accepted', 'packed'].includes(order.status));
   const next = Math.ceil(machineTiming.remaining(restaurant) / 20);
   const selection = await choose(player, `${restaurant.name} · Lv.${restaurant.level}`,
-    `${restaurant.active ? '§a營業中' : '§7休息中'}§r\n菜單 ${restaurant.menu.length} 道 · 總營養 ${getMenuNutrition(restaurant)}\n完成 ${restaurant.stats.completed} 單 · 總營業額 ${restaurant.stats.earnings}\n候選 ${available.length} 單 · 處理中 ${working.length} 單\n下次刷新 ${next} 秒 · 隨身餘額 ${balance(player)} ${currencyLabel()}`,
+    `${restaurant.active ? '§a營業中' : '§7休息中'}§r\n菜單 ${restaurant.menu.length} 道 · 總營養 ${getMenuNutrition(restaurant)} · 附近單牌最高 ${getNearbyBoardNutrition(restaurant)}\n完成 ${restaurant.stats.completed} 單 · 總營業額 ${restaurant.stats.earnings}\n候選 ${available.length} 單 · 處理中 ${working.length} 單\n下次刷新 ${next} 秒 · 隨身餘額 ${balance(player)} ${currencyLabel()}`,
     [restaurant.active ? '暫停接新單' : '開始營業', `候選訂單（${available.length}）`, `處理中的訂單（${working.length}）`, '升級餐廳', '設備商店', '餐廳排行榜', '餐廳設定／員工', '個人進度', '玩法指南']);
   if (selection === undefined || !validRestaurant(player, restaurant, block)) return;
   if (selection === 0) {
@@ -344,7 +354,7 @@ async function upgradeForm(player, block, restaurant) {
   if (syncMenu(restaurant)) saveRestaurant(restaurant);
   const quote = getUpgradeQuote(restaurant);
   if (quote.reason === 'max_level') { notify(player, reasonText(quote.reason)); return; }
-  const choice = await choose(player, `升級至 Lv.${quote.nextLevel}`, `費用 ${quote.cost} ${currencyLabel()}\n菜單營養要求 ${quote.requiredNutrition} · 目前 ${quote.currentNutrition}\n每種菜只按一份計算，堆疊數量不會增加菜單營養。`, ['升級', '返回']);
+  const choice = await choose(player, `升級至 Lv.${quote.nextLevel}`, `費用 ${quote.cost} ${currencyLabel()}\n附近單牌營養要求 ${quote.requiredNutrition} · 範圍內最高 ${quote.currentNutrition}\n每種菜只按一份計算，堆疊數量不會增加菜單營養。`, ['升級', '返回']);
   if (choice !== 0 || !validRestaurant(player, restaurant, block)) return;
   if (syncMenu(restaurant)) saveRestaurant(restaurant);
   const current = getUpgradeQuote(restaurant);
