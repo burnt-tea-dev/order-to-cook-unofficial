@@ -19,7 +19,7 @@ Existing protections must remain: duplicate-customer reconciliation, persisted-a
 
 ## Ownership and scope
 
-Open PR #11 (`codex/otc-poi-discovery-26-60`) changes `entities.js` and `main.js`; it is Draft and remains active. Do not modify those shared files until its owner coordinates. Open PR #61 changes Blockbench evidence docs only. `config.js` is not changed by either open PR. This branch therefore adds only a pure candidate-order module, focused tests and this source audit; it does not claim runtime behavior is repaired.
+Open PR #11 (`codex/otc-poi-discovery-26-60`) changes `entities.js` and `main.js`; it is Draft and remains active. Do not modify those shared files until its owner coordinates. Open PR #61 changes Blockbench evidence docs only. `config.js` is not changed by either open PR. This branch therefore adds only a pure test-helper module, focused tests and this source audit; it does not claim runtime behavior is repaired.
 
 ## Deferred integration / validation
 
