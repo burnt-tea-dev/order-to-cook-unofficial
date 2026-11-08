@@ -11,7 +11,7 @@ import {
 import { VANILLA_FOODS, DEFAULT_MENU, DEFAULT_CONFIG, TIER_LABELS, TIER_COLORS } from './config.js';
 import {
   initStore, locationId, getRestaurant, restaurants, saveRestaurant, deleteRestaurant, getProfile, saveProfile,
-  getStation, findStation, stations, saveStation, deleteStation,
+  getStation, getStationById, findStation, stations, saveStation, deleteStation,
   nearbyStations, nearestRestaurant, loadedBlock, distanceSquared, setBlockState
 } from './store.js';
 import {
@@ -167,16 +167,31 @@ function foodFromStack(stack) {
   return undefined;
 }
 function foodLabel(typeId) { return foodOverrides.get(typeId)?.label || foodCatalog.labelFor(typeId) || foods.get(typeId)?.label || typeId; }
+class UnavailableMenuBoardError extends Error {}
 function syncMenu(restaurant) {
-  const candidates = stations().filter(s => s.typeId === 'ordertocook:board' && s.dimensionId === restaurant.dimensionId &&
-    (!s.ownerId || s.ownerId === restaurant.ownerId || restaurant.staff?.includes(s.ownerId)) &&
-    Math.abs(s.location.x - restaurant.location.x) <= 24 && Math.abs(s.location.z - restaurant.location.z) <= 24 && Math.abs(s.location.y - restaurant.location.y) <= 8 &&
-    loadedBlock(s)?.typeId === s.typeId);
+  const eligible = station => station?.typeId === 'ordertocook:board' && station.dimensionId === restaurant.dimensionId &&
+    (!station.ownerId || station.ownerId === restaurant.ownerId || restaurant.staff?.includes(station.ownerId)) &&
+    Math.abs(station.location.x - restaurant.location.x) <= 24 && Math.abs(station.location.z - restaurant.location.z) <= 24 && Math.abs(station.location.y - restaurant.location.y) <= 8;
+  // A missing chunk is not evidence that a saved board was removed. Defer both
+  // rebinding and dependent actions until this eligible binding can be checked.
+  const bound = restaurant.boardId ? getStationById(restaurant.boardId) : undefined;
+  const boundBlock = eligible(bound) ? loadedBlock(bound) : undefined;
+  if (eligible(bound) && !boundBlock) throw new UnavailableMenuBoardError('Bound menu board chunk is unavailable; defer menu synchronization');
+  const candidates = stations().filter(station => eligible(station) &&
+    (station === bound ? boundBlock : loadedBlock(station))?.typeId === station.typeId);
   candidates.sort((a, b) => getMenuNutrition(b.menu) - getMenuNutrition(a.menu));
   // Registration is a snapshot. Catalog/override reloads affect new entries only.
+  // Detect menu identity and reward-only changes so every caller can commit them,
+  // including idle machines and forms that return without generating an order.
+  const oldMenu = JSON.stringify(restaurant.menu);
+  const oldBoardId = restaurant.boardId || '';
+  const offered = restaurant.orders.filter(order => order.status === 'offered')
+    .map(order => [order, order.reward, order.benefitLevel]);
   restaurant.menu = normalizeMenu(candidates[0]?.menu || []);
   restaurant.boardId = candidates[0]?.id || '';
   synchronizeOfferRewards(restaurant);
+  return oldBoardId !== restaurant.boardId || oldMenu !== JSON.stringify(restaurant.menu) ||
+    offered.some(([order, reward, benefit]) => order.reward !== reward || order.benefitLevel !== benefit);
 }
 function getMachine(player, block, placedByPlayer = false) {
   const id = locationId(block.dimension.id, block.location);
@@ -194,7 +209,7 @@ function getMachine(player, block, placedByPlayer = false) {
     saveRestaurant(restaurant);
   }
   if (placedByPlayer) reconcileProgress(restaurant);
-  syncMenu(restaurant);
+  if (syncMenu(restaurant)) saveRestaurant(restaurant);
   return restaurant;
 }
 function balance(player) { return settings.currencyItem ? countItem([containerOf(player)], settings.currencyItem) : coinBalance(player); }
@@ -326,12 +341,12 @@ function acceptWithTicket(player, restaurant, order) {
 }
 
 async function upgradeForm(player, block, restaurant) {
-  syncMenu(restaurant);
+  if (syncMenu(restaurant)) saveRestaurant(restaurant);
   const quote = getUpgradeQuote(restaurant);
   if (quote.reason === 'max_level') { notify(player, reasonText(quote.reason)); return; }
   const choice = await choose(player, `升級至 Lv.${quote.nextLevel}`, `費用 ${quote.cost} ${currencyLabel()}\n菜單營養要求 ${quote.requiredNutrition} · 目前 ${quote.currentNutrition}\n每種菜只按一份計算，堆疊數量不會增加菜單營養。`, ['升級', '返回']);
   if (choice !== 0 || !validRestaurant(player, restaurant, block)) return;
-  syncMenu(restaurant);
+  if (syncMenu(restaurant)) saveRestaurant(restaurant);
   const current = getUpgradeQuote(restaurant);
   if (!current.ok) { notify(player, reasonText(current.reason)); return; }
   if (!pay(player, current.cost)) { notify(player, '貨幣不足，或背包放不下找零；請空出幾格。'); return; }
@@ -1098,13 +1113,20 @@ function tickRestaurants() {
       const time = orderTime();
       const expired = expireOrders(restaurant, time);
       for (const order of expired.orders) entities.cleanupOrder(order.id, true);
-      let changed = expired.expired > 0;
+      // Expiry is independent of board chunk availability. Commit it before a
+      // deferred menu check can interrupt this restaurant's remaining work.
+      if (expired.expired > 0) saveRestaurant(restaurant);
       const machine = loadedBlock(restaurant);
       if (machine?.typeId === 'ordertocook:order_machine') {
-        syncMenu(restaurant);
+        try { if (syncMenu(restaurant)) saveRestaurant(restaurant); }
+        catch (error) {
+          // Only defer the menu. Printer state and unrelated progress can still
+          // advance. Persistence failures must exit: the canonical cache rolled
+          // back and this restaurant object is no longer safe to commit.
+          if (!(error instanceof UnavailableMenuBoardError)) throw error;
+        }
         syncPrinter(restaurant, machine);
       } else machineTiming.forget(restaurant.id);
-      if (changed) saveRestaurant(restaurant);
       reconcileProgress(restaurant);
     } catch (error) { console.warn(`[OrderToCook] Restaurant ${restaurant.id}: ${error}`); }
   }
@@ -1158,7 +1180,7 @@ function registerConfiguration() {
       if (event.id === 'ordertocook:kit' && player) { giveTestKit(player); return; }
       if (event.id === 'ordertocook:refresh' && player) {
         const machine = restaurants().filter(r => r.dimensionId === player.dimension.id && distanceSquared(r.location, player.location) < 24 * 24).sort((a, b) => distanceSquared(a.location, player.location) - distanceSquared(b.location, player.location))[0];
-        if (machine) { syncMenu(machine); if (machine.menu.length) { refreshMachineOrders(machine); saveRestaurant(machine); notify(player, '測試用訂單已刷新。'); } }
+        if (machine) { if (syncMenu(machine)) saveRestaurant(machine); if (machine.menu.length) { refreshMachineOrders(machine); saveRestaurant(machine); notify(player, '測試用訂單已刷新。'); } }
         return;
       }
       if (event.id === 'ordertocook:food') {
@@ -1360,13 +1382,13 @@ world.afterEvents.worldLoad.subscribe(() => {
     initStore();
     machineTiming = createMachineTiming({ world, saveRestaurant,
       refresh: (restaurant, block) => {
-        syncMenu(restaurant);
+        if (syncMenu(restaurant)) saveRestaurant(restaurant);
         if (!restaurant.menu.length || restaurant.orders.filter(order => liveStatus.has(order.status)).length >= 32) return false;
         refreshMachineOrders(restaurant, block);
         return true;
       },
       arrive: (restaurant, block) => {
-        syncMenu(restaurant);
+        if (syncMenu(restaurant)) saveRestaurant(restaurant);
         if (!restaurant.menu.length || restaurant.orders.filter(order => liveStatus.has(order.status)).length >= 32 ||
             Math.random() >= getWalkInChance(restaurant) || !nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:chair').length) return false;
         const order = generateWalkInOrder(restaurant, orderTime());
