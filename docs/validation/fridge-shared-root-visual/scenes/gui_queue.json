@@ -1,0 +1,33 @@
+{
+  "status": "CAPTURE_PLANNED_NOT_GUI_ACCEPTED",
+  "views": [
+    {
+      "scene": "lower_closing_upper_open.bbmodel",
+      "sha256": "2d5cbc27ec308b5a528a513c9e1417e7f54ed9ed8bb3bfb32ad0f2f1d2e0a91e",
+      "camera": "Isometric Right (2:1)",
+      "source_side": "right",
+      "status": "NOT_RUN"
+    },
+    {
+      "scene": "lower_closing_upper_open.bbmodel",
+      "sha256": "2d5cbc27ec308b5a528a513c9e1417e7f54ed9ed8bb3bfb32ad0f2f1d2e0a91e",
+      "camera": "Top",
+      "source_side": "left",
+      "status": "NOT_RUN"
+    },
+    {
+      "scene": "upper_closing_lower_open.bbmodel",
+      "sha256": "ce772daba3cabc3d724a227645bd9b26b9d93d94a4fc6808d57be527714a76cf",
+      "camera": "Isometric Right (2:1)",
+      "source_side": "right",
+      "status": "NOT_RUN"
+    },
+    {
+      "scene": "upper_closing_lower_open.bbmodel",
+      "sha256": "ce772daba3cabc3d724a227645bd9b26b9d93d94a4fc6808d57be527714a76cf",
+      "camera": "Bottom",
+      "source_side": "left",
+      "status": "NOT_RUN"
+    }
+  ]
+}

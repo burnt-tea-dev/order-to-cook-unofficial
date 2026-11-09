@@ -399,6 +399,51 @@ def sample_channel(channel, seconds, default):
     return sample_channel(keys[-1][1], seconds, default)
 
 
+def fridge_root_samples(clips):
+    """Unique common-root transforms, in sampled close-clip time order.
+
+    Open clips have no root channels. Both close controllers author the same
+    root; runtime chooses the last active controller, including neutral poses.
+    Keep full precision until geometry serialization, just like door sampling.
+    """
+    roots = []
+    frame_roots = []
+    for frame in range(11):
+        sampled = []
+        for prefix in ("up_", "down_"):
+            tracks = clips[prefix+"close"]["bones"]["bone"]
+            sampled.append({key: sample_channel(tracks.get(key), frame/10, default)
+                            for key, default in (("position", [0]*3), ("scale", [1]*3), ("rotation", [0]*3))})
+            if "bone" in clips[prefix+"open"]["bones"]:
+                raise ValueError("Refrigerator open clip unexpectedly authors the common root")
+        if sampled[0] != sampled[1]:
+            raise ValueError("Refrigerator close roots differ; shared sample mapping needs review")
+        root = sampled[0]
+        if root["position"][:2] != [0, 0] or root["scale"][:2] != [1, 1] or root["rotation"] != [0]*3:
+            raise ValueError("Refrigerator root no longer has only Z scale/translation")
+        if root not in roots:
+            roots.append(root)
+        frame_roots.append(roots.index(root))
+    if len(roots) != 4 or frame_roots != [0, 0, 0, 0, 1, 2, 3, 0, 0, 0, 0]:
+        raise ValueError("Refrigerator common-root state contract changed")
+    return roots, frame_roots
+
+
+def fridge_pose_clip(clips, half, closing, root):
+    """Combine one door's own source clip with the selected common root."""
+    name = ("up_" if half == "upper" else "down_")+("close" if closing else "open")
+    clip = copy.deepcopy(clips[name])
+    # Preserve the existing opening meshes byte-for-byte at neutral root.
+    if closing or root["scale"] != [1]*3 or root["position"] != [0]*3:
+        clip["bones"]["bone"] = copy.deepcopy(root)
+    return clip
+
+
+def fridge_pose_name(half, closing, frame, root_frame):
+    # Retain the existing neutral identifiers; additional root states are new.
+    return f"refrigerator_{half}_{'close_' if closing else ''}{frame}" + (f"_root_{root_frame}" if root_frame else "")
+
+
 def closest_cuboid_axes(matrix):
     """Polar rotation of a positive-scale affine matrix, without dependencies.
 
@@ -1238,39 +1283,41 @@ def make_blocks():
     machine['minecraft:block']['components'].update({
         'minecraft:tick': {'interval_range': [1, 1], 'looping': True}, f'{NS}:machine_timing': {}})
     write_json(machine_path, machine)
-    # Separate source open/close curves; each complete door belongs to one
-    # compartment. Root squash uses each half's closing phase (see adaptations).
+    # Each complete door has its own frame, but both halves receive the same
+    # selected common root. Prebake the cross product rather than introducing
+    # an unverified native scale/translation order or changing collision.
     fridge_source = ASSETS / "geo/block/refrigerator.geo.json"
     fridge_animation = ASSETS / "animations/refrigerator.animation.json"
     fridge = normalize_geo(fridge_source, f"geometry.{NS}.refrigerator_source")
     fridge_clips = read_json(fridge_animation)["animations"]
+    fridge_roots, root_frames = fridge_root_samples(fridge_clips)
     tile = texture_tile(f"{NS}:block/refrigerator")
     # Format >= 1.26.20 requires a numeric AO exponent; 0 disables the effect.
     mats = {"*": {"texture": tile, "render_method": "alpha_test", "ambient_occlusion": 0}}
     variants = []
     upper_variants = []
-    for half, closing, frame in itertools.product(("lower", "upper"), (False, True), range(11)):
-        name = f"refrigerator_{half}_{'close_' if closing else ''}{frame}"
-        clip = fridge_clips[("up_" if half == "upper" else "down_")+("close" if closing else "open")]
+    for half, closing, frame, root_frame in itertools.product(("lower", "upper"), (False, True), range(11), range(len(fridge_roots))):
+        name = fridge_pose_name(half, closing, frame, root_frame)
+        clip = fridge_pose_clip(fridge_clips, half, closing, fridge_roots[root_frame])
         g = bound_fridge_swing(bake_pose(split_fridge_geo(fridge, half), clip, frame/10, f"geometry.{NS}.{name}"), half)
         assert_block_bounds(g)
         identifier = emit_geo(name, g)
         for source in (fridge_source, fridge_animation):
-            record(source, RP / "models/blocks" / f"{name}.geo.json", "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep")
+            record(source, RP / "models/blocks" / f"{name}.geo.json", "Complete independent door times four common-root samples; GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; shared cabinet squash; bounded hinge sweep")
         components = {"minecraft:geometry": identifier}
         if half == "upper":
             components["minecraft:loot"] = "loot_tables/empty.json"
-        variant = {"condition": state_condition({"half": half, "closing": closing, "frame": frame}), "components": components}
+        variant = {"condition": state_condition({"half": half, "closing": closing, "frame": frame, "root_frame": root_frame}), "components": components}
         variants.append(variant)
         if half == "upper":
             upper_variants.append(variant)
     # block_entity is not allowed in permutations. Two identifiers give each
     # compartment its actual capacity; the old upper state remains migratable.
     block_definition("refrigerator", f"geometry.{NS}.refrigerator_lower_0", mats,
-                     {"half": ["lower", "upper"], "open": [False, True], "closing": [False, True], "frame": list(range(11))}, variants,
+                     {"half": ["lower", "upper"], "open": [False, True], "closing": [False, True], "frame": list(range(11)), "root_frame": list(range(len(fridge_roots)))}, variants,
                      native_container={"slot_count": 54, "title": f"container.{NS}.refrigerator.lower"})
     block_definition("refrigerator_upper", f"geometry.{NS}.refrigerator_upper_0", mats,
-                     {"half": ["upper"], "open": [False, True], "closing": [False, True], "frame": list(range(11))}, upper_variants,
+                     {"half": ["upper"], "open": [False, True], "closing": [False, True], "frame": list(range(11)), "root_frame": list(range(len(fridge_roots)))}, upper_variants,
                      native_container={"slot_count": 27, "title": f"container.{NS}.refrigerator.upper"},
                      hidden=True, loot_table="loot_tables/empty.json")
     # Shared data keeps script reversal selection tied to the actual baked
@@ -1280,8 +1327,9 @@ def make_blocks():
     pose_data = BP / "scripts/appliance_pose_data.js"
     pose_data.parent.mkdir(parents=True, exist_ok=True)
     pose_data.write_text("// SPDX-License-Identifier: GPL-3.0-only\n// Generated from pinned refrigerator.animation.json by tools/convert_assets.py.\n"
-                        + "export const FRIDGE_POSE_PROGRESS = " + json.dumps(progress, indent=2) + ";\n", encoding="utf-8")
-    record(fridge_animation, pose_data, "Normalized source door angles shared with reversible runtime motion")
+                        + "export const FRIDGE_POSE_PROGRESS = " + json.dumps(progress, indent=2) + ";\n"
+                        + "export const FRIDGE_ROOT_BY_CLOSE_FRAME = " + json.dumps(root_frames) + ";\n", encoding="utf-8")
+    record(fridge_animation, pose_data, "Normalized source door angles and common-root sample mapping for runtime motion")
     write_json(BP / "loot_tables" / "empty.json", {"pools": []})
     # Source drawer/door keyframes plus the original empty_out preview. Preview
     # is visual phase 6 only; it never becomes a saved washing-machine phase.
@@ -2156,7 +2204,7 @@ def main():
                         for path in sorted((ROOT / "assets/guidebook").glob("*")) if path.suffix in (".png", ".lang")],
         "adaptations":["Two-part refrigerator with complete independent doors; separate 11-pose open/close source clips; at most 0.126px intermediate hinge translation bounds the sweep",
             "Washing table includes the source renderer's static translucent water quad in all 11 plate states; whole-block blend and reverse-winding underside require native sorting/backface review",
-            "Original GeckoLib elastic/bounce easing and appliance squash retained in sampled static cuboids; residual descendant shear and unsynchronized cabinet halves remain documented",
+            "Original GeckoLib elastic/bounce easing and appliance squash retained in sampled static cuboids; refrigerator halves share four common-root samples with active-lower controller priority; residual descendant shear, reversal/STOP adaptation and non-atomic block writes remain documented",
             "Stove keeps six original textures and fuel phases; independent source 20-tick ignition countdown selects finite source-Geo wobble/squash poses at integer ages, published by the existing 10Hz service; neutral/item mesh unchanged; not continuous Java/client-packet or STOP-reset parity",
             "Dishwasher drawer, door, plate-count visibility and wash vibration sampled into 82 poses including look-target preview; preview geometry is shared rather than per-client",
             "Native dining plate uses the original two-part collision and forty block stages; the existing actor handles only stage-zero placement animation; canonical meal records own drops",

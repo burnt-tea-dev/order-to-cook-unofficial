@@ -62,9 +62,9 @@ Java 各水平 blockstate 的 north/east/south/west 為 0/90/180/270 度。
 來源原點、角點和每個角的 UV 有獨立對照。原 96×96 貼圖 bytes 不變。
 
 櫃體仍在 Y=16 分為兩格，原下門最高 Y=19.5，整扇門不再被櫃體切線裁斷。
-上下門各有 **11 個 open＋11 個 close** 姿態，共 44 個；使用來源的 `easeInElastic`、
+上下門各有 **11 個 open＋11 個 close** 門姿態，與四個共同 root 組合共 176 個模型；使用來源的 `easeInElastic`、
 `easeInBounce` 和 `easingArgs`，不是把關門當成線性開門的逆放。完整一程仍為 20 tick。
-關門原有的 Z 壓縮到 0.95 及 0.25 像素位移已參與烘焙。
+關門原有的 Z 壓縮到 0.95 及 0.25 像素位移以 `root_frame` 同步作用到兩半，包括另一扇完全打開的門。下門 close 活動時覆寫上門 root，即使下門的當前樣本是中性。
 
 觀看者計數仍逐層分開。完整開／關使用各自原片段；**中途改目標沿當前片段反向**，
 不把當前角度瞬間跳到另一曲線的端點。`closing` state 表示正在使用 close 片段，
@@ -78,10 +78,9 @@ Java 各水平 blockstate 的 north/east/south/west 為 0/90/180/270 度。
 方塊是有限姿態，不是 GeckoLib 每幀骨骼 renderer。門片某些中間角度需至多 0.126 像素
 整片平移，以留在 Bedrock 幾何範圍；原尺寸、UV 和端點不變。非均勻父縮放加子旋轉會產生
 剪切，靜態 cuboid 只能近似。與來源完整 affine 變換的最大頂點差，冰箱為
-0.086177 像素、洗碗機為 0.259642 像素；這是數學量測，不是遊戲畫面驗收。
+本次完整 own-frame × root 量測為 0.201556444 像素（舊 0.086177 上限不再適用）、洗碗機既有量測為 0.259642 像素；這是數學量測，不是遊戲畫面驗收。
 
-Java 的根骨骼讓整台櫃體一起壓縮；本版仍是正在關閉的那一半櫃體變形，沒有同步另一半的根變形。
-原食品陳列尚未加入。這兩項明列為剩餘差異，不能以 44 個模型檔代替驗收。
+兩半現在共用根樣本；完整 176 姿態的邊界平移最大為 0.086115 像素，與 affine→cuboid 殘差分開量測，櫃體接縫差為零。兩個方塊寫入仍非原子，失敗後下一次成功 tick 才收斂；下方 anchor 不可讀時整個站點暫停。原食品陳列尚未加入，Java 的 STOP/reset 及 reopen 起點也非完全等價。見[共同 root 修復驗證](validation/fridge-shared-root/README.md)，不能以模型數量代替原生驗收。
 
 來源：[RefrigeratorBlockEntity.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/RefrigeratorBlockEntity.java)
 及同提交 `refrigerator.geo.json`、`refrigerator.animation.json`。

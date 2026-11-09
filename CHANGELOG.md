@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.47-alpha.1
+
+- Restore the refrigerator's common root across both blocks while retaining independent door clips/frames. Prebake 176 own-door/root combinations; preserve lower-close controller priority even at neutral samples and zero-elapsed restored endpoints.
+- Keep cosmetic root recovery running after upper-block storage lookup exceptions. Clear the unavailable half's viewer/motion cache and restore persisted poses without weakening native inventory migration checks or changing cargo.
+- Preserve all textures, facing/collision/selection components, UUIDs and APIs. Record the full-cross-product affine-to-cuboid residual of 0.201556443707 modelpx separately from the maximum 0.086115px bounds translation.
+- Freeze paired 0.1.47 identity with append-only payload history. Keep finite sampling, Java STOP/reversal differences, non-atomic two-block writes and untested native/material timing explicit. This does not publish a Release or claim full parity. See [validation](docs/validation/0.1.47-alpha.1/FRIDGE_SHARED_ROOT.md).
+
 ## 0.1.46-alpha.1
 
 - Restore source stove ignition wobble/squash with an independent 20-tick countdown, atomic age/material state writes, 19 generated poses and unchanged two-tick appliance scheduling. Keep fuel, cooking, inventory, textures, idle/item geometry and existing appliance geometry unchanged.

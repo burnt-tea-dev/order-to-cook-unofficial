@@ -1,0 +1,33 @@
+{
+  "documentation_checkout_base": "11280a09d232a3dd7e7d1e6f5ae42e5a9e5c53d7",
+  "scope": "Checks on the documentation-only checkout and independently bundled review inputs, not a new runtime/client release acceptance.",
+  "node_tests": {
+    "command": "node --test --test-concurrency=1 tests/*.test.js",
+    "passed": 928,
+    "failed": 0
+  },
+  "typescript": {
+    "version": "5.8.3",
+    "result": "PASS",
+    "minecraft_server": "2.11.0",
+    "minecraft_server_ui": "2.0.0",
+    "method": "Existing matching dependencies with a temporary explicit paths configuration; no dependency installation or repository settings changes."
+  },
+  "pack_validator": {
+    "command": "python -B tools/validate_pack.py",
+    "jsonFiles": 387,
+    "geometries": 318,
+    "permutations": 380,
+    "errors": []
+  },
+  "original_npm_check_attempt": "Could not start tsc because this clean docs checkout had no local node_modules. TypeScript and pack validation were then run separately as recorded.",
+  "pack_build": "Not run by this documentation-only verification.",
+  "whitespace_check": {
+    "full_diff": "Reports whitespace retained in byte-exact upstream/editor source snapshots. Those files were not normalized because their original blob/SHA identity is part of the evidence.",
+    "authored_review_files": "PASS, excluding the explicitly preserved source snapshot directories."
+  },
+  "relocated_bundle_reproduction": {
+    "result": "PASS",
+    "method": "Copied this directory to an independent temporary location without .git, original branches or external input checkouts; ran verify_review.py successfully."
+  }
+}

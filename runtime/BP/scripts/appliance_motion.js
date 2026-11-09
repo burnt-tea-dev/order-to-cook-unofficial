@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Pure timing for bounded poses baked from the pinned Order To Cook animations.
+import { FRIDGE_ROOT_BY_CLOSE_FRAME } from "./appliance_pose_data.js";
 
 export const APPLIANCE_TICK_INTERVAL = 2;
 export const FRIDGE_MOTION_TICKS = 20;
@@ -37,4 +38,17 @@ export function dishwasherFrame(appliance) {
   const elapsed = clamp(duration - appliance.remainingTicks, 0, duration);
   if (phase === 3) return Math.min(DISHWASHER_LAST_FRAME, Math.floor((elapsed % 40) / 40 * (DISHWASHER_LAST_FRAME + 1)));
   return clamp(Math.floor(elapsed / duration * DISHWASHER_LAST_FRAME), 0, DISHWASHER_LAST_FRAME);
+}
+
+/** Shared root: Java registers upper then lower; an active lower clip wins even
+ * at a neutral sample. This retains our bounded clip reversal approximation. */
+export function fridgeRootFrame(upper, lower) {
+  let root = 0;
+  for (const motion of [upper, lower]) {
+    if (motion?.closing === true && Number.isFinite(motion.position) &&
+        motion.position >= 0 && motion.position <= FRIDGE_MOTION_TICKS &&
+        Number.isInteger(motion.frame) && motion.frame >= 0 && motion.frame <= FRIDGE_LAST_FRAME)
+      root = FRIDGE_ROOT_BY_CLOSE_FRAME[motion.frame];
+  }
+  return root;
 }

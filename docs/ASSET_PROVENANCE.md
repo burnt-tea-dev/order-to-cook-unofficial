@@ -78,9 +78,9 @@ geometry 統一使用 `1.21.0` 格式，以支援原作已使用的逐面 `uv_ro
 
 原下門跨越上下格的分界。alpha.2 把整扇下門留在下半 geometry，最高到 Y=19.5，上半 geometry 只擁有上門；櫃體仍分格。如此上下門可以各自開合而不在 Y=16 斷裂，不需讓上門狀態跟著下門改變。儲物仍分上層 27 格、下層 54 格。
 
-`refrigerator.animation.json` 的上下門 open／close 四段各在 0–1 秒取 11 個姿態，共 **44 個**，保留原 −135°／−125° 開門終點、Elastic 開門、帶 `easingArgs=[0.1]` 的 Bounce 關門與關門機身縮放。採用固定 GeckoLib 4 的實際公式，並非用另一套同名曲線猜測。各半 `frame` 為 0–10，`closing` 選擇活動片段；途中反轉倒播當前片段，端點才改用原另一段。部分中間姿態對完整門片平移不足 0.126 像素以符合原生邊界，保持尺寸、UV、角度及端點。全部生成模型另以四方向及 Float32 運算檢查邊界。
+`refrigerator.animation.json` 的上下門 open／close 四段各在 0–1 秒取 11 個姿態，形成 44 個門姿態，再與四個共同 root 組合成 **176 個模型**，保留原 −135°／−125° 開門終點、Elastic 開門、帶 `easingArgs=[0.1]` 的 Bounce 關門與關門機身縮放。採用固定 GeckoLib 4 的實際公式，並非用另一套同名曲線猜測。各半 `frame` 為 0–10，`closing` 選擇活動片段；途中反轉倒播當前片段，端點才改用原另一段。部分中間姿態對完整門片平移不足 0.126 像素以符合原生邊界，保持尺寸、UV、角度及端點。全部生成模型另以四方向及 Float32 運算檢查邊界。
 
-非均勻縮放完整作用於子部件，再用最接近的靜態立方體表示無法直接輸出的剪切；取樣測試的冰箱最大頂點殘差約 0.087 像素。仍缺上下層各最多 8 件食品陳列，且 Java 關門壓縮整座櫃體，本版只有各自分區跟隨自己的關門片段。有限取樣及分區共用櫃體的差異仍須實機驗收。來源和每個衍生姿態均記入 conversion manifest，沒有另畫門模型。
+非均勻縮放完整作用於子部件，再用最接近的靜態立方體表示無法直接輸出的剪切；完整 own-frame × root 取樣的冰箱最大頂點殘差為 0.201556444 像素，邊界平移另為最多 0.086115 像素。兩半共用 `root_frame`，下門活動 close（含中性）覆寫上門；仍缺上下層各最多 8 件食品陳列，有限取樣、反向／STOP 差異及兩方塊非原子寫入仍須實機驗收。見[共同 root 來源驗證](validation/fridge-shared-root/README.md)。來源和每個衍生姿態均記入 conversion manifest，沒有另畫門模型。
 
 參考：[官方自訂方塊幾何邊界](https://learn.microsoft.com/en-us/minecraft/creator/documents/customblockoversized?view=minecraft-bedrock-stable)、[固定 GeckoLib 曲線實作](https://github.com/bernie-g/geckolib/blob/7d6f32db9168a24e14b327c0ad9f8f87dfc204de/core/src/main/java/software/bernie/geckolib/core/animation/EasingType.java)。
 
