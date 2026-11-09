@@ -79,14 +79,14 @@ test('creative-mode motorcycle placement keeps the colored item and deduplicates
   const env = makeEnvironment(), player = new FakePlayer(env.dimension), service = entityServices.createEntityService(env.ctx);
   player.getGameMode = () => 'Creative';
   for (let x = -3; x <= 3; x++) for (let z = 0; z <= 5; z++) place(env, 'minecraft:stone', { x, y: -1, z });
-  const bikeItem = new FakeItem('ordertocook:motorcycle', 2);
+  const bikeItem = new FakeItem('ordertocook:motorcycle');
   bikeItem.setDynamicProperty('ordertocook:color', 3);
   player.container.setItem(0, bikeItem);
   service.onItemUse(player, bikeItem); service.onItemUse(player, bikeItem);
   const bikes = env.dimension.getEntities({ type: 'ordertocook:motorcycle' });
   assert.equal(bikes.length, 1);
   assert.equal(bikes[0].getProperty('ordertocook:color'), 3);
-  assert.equal(player.container.getItem(0).amount, 2);
+  assert.equal(player.container.getItem(0).amount, 1);
   assert.equal(player.container.getItem(0).getDynamicProperty('ordertocook:color'), 3);
 });
 
