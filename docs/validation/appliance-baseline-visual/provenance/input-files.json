@@ -1,0 +1,996 @@
+[
+  {
+    "source_path": "runtime/BP/blocks/dishwasher.json",
+    "path": "inputs/runtime/BP/blocks/dishwasher.json",
+    "sha256": "958fe872a0743e09e41f86c7182335cfa3c5c468fb0c5f886ff1cac4a2448197",
+    "bytes": 152546,
+    "git_blob_sha": "5cc587d5a1f68ff493148c1cb57a9d53b5016363"
+  },
+  {
+    "source_path": "runtime/BP/blocks/refrigerator.json",
+    "path": "inputs/runtime/BP/blocks/refrigerator.json",
+    "sha256": "b78ae21d0234626a23b8c2d3fe670437e3c954394fab7101f7dd2a1b517f77e8",
+    "bytes": 17093,
+    "git_blob_sha": "520bffafac1e1785371864753793157631aaec67"
+  },
+  {
+    "source_path": "runtime/BP/blocks/refrigerator_upper.json",
+    "path": "inputs/runtime/BP/blocks/refrigerator_upper.json",
+    "sha256": "d299ee6a4538b41a5977779c835d998cc6f28db78dbe9bfa945f2c463429d8cb",
+    "bytes": 10702,
+    "git_blob_sha": "eb62e660dde32aa0ac436b2175d07e3af34acf09"
+  },
+  {
+    "source_path": "runtime/BP/manifest.json",
+    "path": "inputs/runtime/BP/manifest.json",
+    "sha256": "94376a7e728986075ea5856f8fb205d46d6e26bf5e29ecf5c2c15ed2ddc6d3db",
+    "bytes": 1342,
+    "git_blob_sha": "7467f0cb306899b3bcce254e73df64d2388f2a36"
+  },
+  {
+    "source_path": "runtime/RP/manifest.json",
+    "path": "inputs/runtime/RP/manifest.json",
+    "sha256": "da935eb8c69ea5eb605a93da01d383ed0414bf5a2a3f7e7e86ca5f6885eb2c4e",
+    "bytes": 814,
+    "git_blob_sha": "37bb08095cfc0dfa62db47b9310adb71adf4d8b2"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_0_0.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_0_0.geo.json",
+    "sha256": "3a244d5d3fca756f248470e55367af643465bc6d91a739189f89ae2595c0b269",
+    "bytes": 14078,
+    "git_blob_sha": "fb674947f77ecfb93248c6dfbd46efcfbada2ead"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_1_0.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_1_0.geo.json",
+    "sha256": "6b08da669ec21fca1cefbf9927fb82309036896cc534161639af6a759a9194ae",
+    "bytes": 14123,
+    "git_blob_sha": "9f6d542000f28c06bc49aea528c00e1f74397148"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_1_1.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_1_1.geo.json",
+    "sha256": "3309028f43a87c6315e20715898aa744576c12d1d3370cb17f5c05f76fcbdf4a",
+    "bytes": 14179,
+    "git_blob_sha": "be0d61784b714b9de1b4c4f595a215b29172dc84"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_1_10.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_1_10.geo.json",
+    "sha256": "d1a2e201fa8d6b146a9e2e3ba77cd438a1876f7792f2827987ca51a7517cb1f1",
+    "bytes": 14097,
+    "git_blob_sha": "1f063944e85ae45c2e4a5f9fe67f74dbbbde3f2e"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_1_11.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_1_11.geo.json",
+    "sha256": "bd4ba002e64d9e76d15282088635fc41e89fe8150f4a808c616b77e56bc8868c",
+    "bytes": 15550,
+    "git_blob_sha": "dac7a455e471da2255dc0b8322b986338a322bf1"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_1_12.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_1_12.geo.json",
+    "sha256": "300dbc6213f17d4a9760814d4424f67b47bf326f91a493718546593258f7b16d",
+    "bytes": 15512,
+    "git_blob_sha": "d149a7da3d644f80b086ce9bcb44cf08fa416a05"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_1_13.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_1_13.geo.json",
+    "sha256": "e02cbcbfd57c0a541b7a0dad449dce7fd00fdcc1b22f25ce552ca4048d877c34",
+    "bytes": 15526,
+    "git_blob_sha": "d7943d5b1ad25e0e331705b3b36c10c552f86851"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_1_14.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_1_14.geo.json",
+    "sha256": "d95cb8252d7a076b5f37492f3195890c1a325d1db87e78695b1ac1fd23f845c6",
+    "bytes": 15528,
+    "git_blob_sha": "cd8110526b03d3ad847eee0f0dc8a23c6a17a285"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_1_15.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_1_15.geo.json",
+    "sha256": "1793161092b7b23af08186c976cd48b21eb07d19ad2583882aba3c16d7ad5b99",
+    "bytes": 14091,
+    "git_blob_sha": "ab37374980582a46df18bf2c69ecdbe189e5b64b"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_1_2.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_1_2.geo.json",
+    "sha256": "327f9bc48d17cfed060c6113a73360750684af5db1d908f5771e1c582d27dc17",
+    "bytes": 14179,
+    "git_blob_sha": "ff9588bdbca52bcc9258f721d7468f41d341c8d3"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_1_3.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_1_3.geo.json",
+    "sha256": "d064c826b3a35fef2bf07d8d7b6324fd73241a3944d340f6adde11b90e2fcaef",
+    "bytes": 14176,
+    "git_blob_sha": "f436a415ebc34ce92e0b3d9b964ffaf7791431f8"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_1_4.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_1_4.geo.json",
+    "sha256": "82d6ee3c920a90296c4134979abf991c041326212fcaff0fc33f0fd2b60c199c",
+    "bytes": 14177,
+    "git_blob_sha": "c14ba52b2d0b2433c284e8cd60145d758ef9d4ed"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_1_5.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_1_5.geo.json",
+    "sha256": "0384d280801807aa83fa5b24e4f8f93d17d1d629387944ee6c75ed2bfb327ad0",
+    "bytes": 14160,
+    "git_blob_sha": "84149fc3609cf26d2d80cc4808bda31c451c4921"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_1_6.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_1_6.geo.json",
+    "sha256": "ead6dfa9770ae2dce237aefcb335462900cbf13d74e272ae6d871d737891f3d8",
+    "bytes": 14094,
+    "git_blob_sha": "2788098ebe1bff9db7eba723a318da1e04ba52aa"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_1_7.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_1_7.geo.json",
+    "sha256": "fa89c0568e86c17da09eedfe0a064d40cf61358fd7daff8be29ef1d90a6e3b38",
+    "bytes": 14096,
+    "git_blob_sha": "94c15e011cf87a39d80335c75632564a3aa247fd"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_1_8.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_1_8.geo.json",
+    "sha256": "7a4053cf2612417a344ca56afc39a8b05aa24cb8f2f39f02d9da00d68868e434",
+    "bytes": 14096,
+    "git_blob_sha": "588b80dde2c6dcf4c7bd384935841076dd44a6d4"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_1_9.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_1_9.geo.json",
+    "sha256": "a7a317738e2c92d1cf86935c78b6ffceccdae3303842372ff75683088c9b4c15",
+    "bytes": 14094,
+    "git_blob_sha": "6a80e4e1519254562e06d7ea99ae096db4b788bc"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_2_0.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_2_0.geo.json",
+    "sha256": "94ba7704a65cb6cb96757217c22a72ba5624690f7338f274ab651a36af03b203",
+    "bytes": 14129,
+    "git_blob_sha": "fb593871082e860f65fb439ec9f103a411f60123"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_2_1.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_2_1.geo.json",
+    "sha256": "ef27e9dd4c7bf09512a7af7ec49a392ed3b9dd334a8b3c32c5b8c1734ef42615",
+    "bytes": 25229,
+    "git_blob_sha": "321308d9dd7fb64cdda5aead46ea3bacc52d2dd4"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_2_10.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_2_10.geo.json",
+    "sha256": "608045c10d27bd2d18180d70ed93643a6c1f504f994c3bd38e18727eb000a7a2",
+    "bytes": 25048,
+    "git_blob_sha": "2158d45e1f5ce907415c18d9e9116428903911c4"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_2_11.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_2_11.geo.json",
+    "sha256": "8282929cd8f5a68a45c29184ffb7fadf40a24373dbe8f5fefc89fd2a6c9e7ceb",
+    "bytes": 24956,
+    "git_blob_sha": "6a865180c0bb65a0bfe2a023796827f75e45903c"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_2_12.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_2_12.geo.json",
+    "sha256": "4ff2aeaef622640192a9940f67e5a529873ea80dffc46e3f69a623ffb25059ab",
+    "bytes": 24956,
+    "git_blob_sha": "d25828c17140271560ef983643bdc2854d3807bf"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_2_13.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_2_13.geo.json",
+    "sha256": "a69e603cde4ce71c1e10e15d650c30dd718405a521ea484a78c98acc658e82ab",
+    "bytes": 27174,
+    "git_blob_sha": "998f4ac79b63822f08dbe28892c91bea0d7b0e15"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_2_14.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_2_14.geo.json",
+    "sha256": "dab9ca8b18fd017191011ff931e1d4442ef87ba955d42baefe6d59181145d658",
+    "bytes": 27135,
+    "git_blob_sha": "8a5fc64a7edacc67b7de6d73b5581080f6ad8dd4"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_2_15.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_2_15.geo.json",
+    "sha256": "f655041f5e228c3e3e432036445388ec49173d249fad26e035a12be8fe37a4b9",
+    "bytes": 24953,
+    "git_blob_sha": "e343c1455b0ac5db567d5fb2268ad672bce85e7b"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_2_2.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_2_2.geo.json",
+    "sha256": "b8908230d303ee69efe4bf8fb8ef1f494d913a55b64506473af29842c31de185",
+    "bytes": 25008,
+    "git_blob_sha": "cb25350ee4de8c5542cf5599f69bb1094d104e08"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_2_3.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_2_3.geo.json",
+    "sha256": "e497281d20d7cf8607a7047bf8357427463e7db6f5d414ae421a5a9aa2757cf8",
+    "bytes": 25080,
+    "git_blob_sha": "9b5b44750171724049fc2d9e8f4dcb01d080db1f"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_2_4.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_2_4.geo.json",
+    "sha256": "3a1c4c6293cbcc33e802b0b2171a7bec27b9a350c70fef84c5f2b9f58581e933",
+    "bytes": 25075,
+    "git_blob_sha": "9a72495ceb56693b5ec2e68ac977b33d898ad30b"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_2_5.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_2_5.geo.json",
+    "sha256": "3405c3ad10b2bdf9604bff9e713b809ceaf78302cdd924153e8d2e9bcc00520c",
+    "bytes": 25003,
+    "git_blob_sha": "4a997b97492c5b62cf6e5dd82a57d9acf31b1d45"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_2_6.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_2_6.geo.json",
+    "sha256": "841db62fc8f1a9bfcf12b3838ade814965c286913c017984f16dde7796879ea8",
+    "bytes": 26464,
+    "git_blob_sha": "a48e878b406b1e910647de38d250eb39da889994"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_2_7.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_2_7.geo.json",
+    "sha256": "79448f8b77ac099bb42724577fbb3961709108ae5803ff7796437a4dbb68a8ec",
+    "bytes": 26450,
+    "git_blob_sha": "3a3e8ed6dfbe83876f0687f2e7bb02f574f80fad"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_2_8.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_2_8.geo.json",
+    "sha256": "9b7e3ce7be9a8ba522729025e2a77b5886eee82b694cfb25ef959cac72416289",
+    "bytes": 25051,
+    "git_blob_sha": "ed49d49c63ee70c5d0db7701914082e6b8fcb709"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_2_9.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_2_9.geo.json",
+    "sha256": "ebee940ef9870b5211a691fc7aa69827d9985ccf9fee06931e61731f0b096250",
+    "bytes": 25055,
+    "git_blob_sha": "f202e7d5b443dfc9fcd8aab39f9a76f576610184"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_3_0.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_3_0.geo.json",
+    "sha256": "c9aac8f4e7a7f48ac5b1c77043628c2edf710cddaae1569897369347099dc683",
+    "bytes": 14084,
+    "git_blob_sha": "c17bb1adc5970f38af8f8ce407b3d593ad5f4daf"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_3_1.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_3_1.geo.json",
+    "sha256": "edeedc4944e91bbd7c0f8cc453b29cae2fb95c654f9463492d7023146379228f",
+    "bytes": 14085,
+    "git_blob_sha": "c8e66b8931e09696aeb34f2101147776a8fc11c4"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_3_10.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_3_10.geo.json",
+    "sha256": "c3cd5d340199b98ffbdfc29fec1cde0a20503aff88a3f97c6148d8e2439e30ad",
+    "bytes": 14085,
+    "git_blob_sha": "bb15a26b8020ac2f7cc8664250aae6c004d001aa"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_3_11.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_3_11.geo.json",
+    "sha256": "d5a330bf965aa60b0ae576c9687cfe65aaff665f83e8684ec1afa973120cfa11",
+    "bytes": 14085,
+    "git_blob_sha": "673d4fd426deaf8e66289e9312057ec156a35bb8"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_3_12.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_3_12.geo.json",
+    "sha256": "eb4b9fc831c9aa3b1f7cd21679f2f0ba0ffc708fda46f7d7376ea16af6db2bc0",
+    "bytes": 14085,
+    "git_blob_sha": "52c22a73be853871337266cf23ec4517079ad848"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_3_13.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_3_13.geo.json",
+    "sha256": "56f40537eeef150ba7752076e6c5ed5a3ab4959c0da385d89f0357473e6706b6",
+    "bytes": 14086,
+    "git_blob_sha": "db341649b26a47691c4253ef64bf9815eb34ab6d"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_3_14.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_3_14.geo.json",
+    "sha256": "e16fd83aa167cc27fe0716327ce3f31a53a2912a7545a0ea9c58be05bce1d7a8",
+    "bytes": 14085,
+    "git_blob_sha": "581b211f58338375413601c4a7263336548f1eb9"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_3_15.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_3_15.geo.json",
+    "sha256": "6cd7b8b05567137b2ece6a959696d250ea69682239d65d318dd04be291e97a8c",
+    "bytes": 14088,
+    "git_blob_sha": "fd0393d19c92a739f574bfd1ff35c2d0afae6f73"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_3_2.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_3_2.geo.json",
+    "sha256": "d0d61a5a14951a14da8ff248c6d403b3a2e6b264ea82da095976e3eb180ec61d",
+    "bytes": 14084,
+    "git_blob_sha": "05b4db6ceb299bf8a9b9b70ea81406cda3978330"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_3_3.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_3_3.geo.json",
+    "sha256": "47434be65ade0ab6380709366d6eecfe35dd82cded58ef5d1e3f01bce51b631e",
+    "bytes": 14084,
+    "git_blob_sha": "2cf30dc6b7aa26e5f9e1c8e7c66c44f56bc48c9e"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_3_4.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_3_4.geo.json",
+    "sha256": "ee8f782cb4c3238f656e77a3549c086384e234e08c449d6ae6f059cc1370a154",
+    "bytes": 14084,
+    "git_blob_sha": "9013b9816c33535ebe92c43d013d5d62db7139f9"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_3_5.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_3_5.geo.json",
+    "sha256": "2fad968050be4f6c75e9e1ae623b546c54b7935855ce20982f8f1bd4109080ac",
+    "bytes": 14085,
+    "git_blob_sha": "8bcdd6e07ab74fb55ef56b1faf1d29e631b5644a"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_3_6.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_3_6.geo.json",
+    "sha256": "2fb394f0d1217131b65691f12796c6eab294012e3ae289530850400c98a7c51b",
+    "bytes": 14084,
+    "git_blob_sha": "dc49d82b66ed0059a68d5f9bc7db26f0cc9112d2"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_3_7.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_3_7.geo.json",
+    "sha256": "5e2628f60dcd364718fd19e1a8f5bda70c7949e2f413f52c4af8d356bf40834b",
+    "bytes": 14084,
+    "git_blob_sha": "8c8b3e1d8e76692c0a25bc4ed1a3ccb192c3a9b6"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_3_8.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_3_8.geo.json",
+    "sha256": "0d85bec3413c1d1ca06fdb5124f8e1edaee0c147d65e083205847de20fce3b75",
+    "bytes": 14084,
+    "git_blob_sha": "66f495f875cb1780d66d7714ae610c84cb288dd7"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_3_9.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_3_9.geo.json",
+    "sha256": "1b04ce2a912a626f6605726cd4c46b6aa20b34612ed87499688c7a16ce70256a",
+    "bytes": 14085,
+    "git_blob_sha": "4cf029f1a21994d2a3706dec9f71884372667e03"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_4_0.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_4_0.geo.json",
+    "sha256": "32dd6cb3a0a3c25ea39c505a107e11a1d8fe26bb17f88537f96b0fe816dd26ba",
+    "bytes": 24959,
+    "git_blob_sha": "e4184fd1cb118cbfa020d71c308003010e95f911"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_4_1.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_4_1.geo.json",
+    "sha256": "4f36657a3eb8b2782cf1184f96a3565b7af8f1ceaaf2d736bcadb04be40e182a",
+    "bytes": 24965,
+    "git_blob_sha": "9f641bade64687f2b74dd7eb3c8764e24bab29a8"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_4_10.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_4_10.geo.json",
+    "sha256": "03d2d0d54b43d1d71bddf64ce24e571fc61448eaf7c845c72ec7f9c05b6675a2",
+    "bytes": 26442,
+    "git_blob_sha": "61e855424720d2defcd164907f7cb9d0292ccfdd"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_4_11.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_4_11.geo.json",
+    "sha256": "6d26d3037e56ca675a4f7b3ea920ce203070b318c5015b766ce58756a3d69562",
+    "bytes": 26432,
+    "git_blob_sha": "e1c33c40fa630a365e3cfa57bc7c37eb96fa4fb6"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_4_12.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_4_12.geo.json",
+    "sha256": "4725a84a765040fe7bb24cca6005394a72e2f863158b5cb5a4d7b33ec289601a",
+    "bytes": 26445,
+    "git_blob_sha": "a981932f9b43b3dda7f4645f84906072487398cc"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_4_13.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_4_13.geo.json",
+    "sha256": "b70bebecf2aa7c816f33f0d206c4bda7085c711b59bb27db564d6bb9799ad174",
+    "bytes": 25003,
+    "git_blob_sha": "86236f8cd8a13d196b432d459b10682ff9155ed3"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_4_14.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_4_14.geo.json",
+    "sha256": "08ee8a6084cdc4e6591af0ef86e82806769b5b0415ac8a9caaf918e7d2a9d674",
+    "bytes": 25003,
+    "git_blob_sha": "1832c45e76da8ea488d67a7a714a30b9a0fb3ee3"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_4_15.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_4_15.geo.json",
+    "sha256": "9805d0279f1f8ccaefc3b0988a094834189c9686140bb5d7b49417d45868b60c",
+    "bytes": 25003,
+    "git_blob_sha": "26fd49316fc5fd698331d05dd620e2f2cc073e52"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_4_2.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_4_2.geo.json",
+    "sha256": "5282e27ae5d8ca9dac8dc367e5009f1b19f053444815d673826fbbd4ffc7fa98",
+    "bytes": 24964,
+    "git_blob_sha": "96f4158e7b76eb8fd2218c31ec6640c1f611ab26"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_4_3.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_4_3.geo.json",
+    "sha256": "a47dfc7949a6e3e447f0e8c2e6d06ee25d869b0d493ba12259f0a47fa263e88c",
+    "bytes": 24960,
+    "git_blob_sha": "ac65af33396a8644d620cbc8f9beee998904b4a3"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_4_4.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_4_4.geo.json",
+    "sha256": "8483ebaa9e32503ed5e3cce22cede9b4f8e95b3c9f5666fd508c747cec0915e7",
+    "bytes": 24965,
+    "git_blob_sha": "bea2118c51a92f7fa4fbc4d28e07677291a131c1"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_4_5.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_4_5.geo.json",
+    "sha256": "cc0629a76538a914ea68e8a07c64701266e6fedca9ae3aec2309dd5d0cf3c5f8",
+    "bytes": 24960,
+    "git_blob_sha": "4ccfef3248bc526373bdf5f4801ae4f0632803e8"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_4_6.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_4_6.geo.json",
+    "sha256": "d26c74bcb16ccab536a049500521bef2cee5ba5c1b8251c867ee028be173649e",
+    "bytes": 24960,
+    "git_blob_sha": "cd7245c26c17e186356bfc1ec23a1361799196b7"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_4_7.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_4_7.geo.json",
+    "sha256": "aa28a6be8dfd1cd431b8e47ccfcf571ee620e590a516fb8aac7fc76cbf6f3282",
+    "bytes": 25098,
+    "git_blob_sha": "c17ff342a995a470c04318dd559af6c98954f574"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_4_8.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_4_8.geo.json",
+    "sha256": "db9c2a5fc54077bb7dd806b31195aa05b11a205e8caac454a4e7edb9a866c825",
+    "bytes": 27331,
+    "git_blob_sha": "b980afcae211bf554d2b9584d4b0f92fb98753ad"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_4_9.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_4_9.geo.json",
+    "sha256": "61afe7e4aa39f309be6191d01133388280844595cdc7464e218678d59ee43ade",
+    "bytes": 26446,
+    "git_blob_sha": "3f313250408a68ac90283c70e48a20131fe326aa"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_5_0.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_5_0.geo.json",
+    "sha256": "2c1090789a66f1b227554a96e3fed527862697d6fb222644b750f852c7002beb",
+    "bytes": 25002,
+    "git_blob_sha": "4397839888f7b6382451a846b086c28b13fa0faf"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_6_0.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_6_0.geo.json",
+    "sha256": "ad083f2976a19c87bd988fca353fea9ef2c35dc8e1828f96d8afa3c03ea9a453",
+    "bytes": 14090,
+    "git_blob_sha": "faf31b2512caa40e775610b619c21b6505718d59"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_6_1.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_6_1.geo.json",
+    "sha256": "94e11aef5442299ee6fdc01afa339506cb58274d8cf2298277fe7932b9436d78",
+    "bytes": 14096,
+    "git_blob_sha": "7611c301ebe849d6c83d8350149ccd464adfab9c"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_6_10.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_6_10.geo.json",
+    "sha256": "b39363b6f514b07a060b6750229e18a4887f1d03d1e5d779f86610fcfb3594d9",
+    "bytes": 14695,
+    "git_blob_sha": "950cae3173d923d666ed850af7850424467638b0"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_6_11.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_6_11.geo.json",
+    "sha256": "16651cef51bc5f15f58117bca28d27800c7238785ecc631a9616c30c637c2d08",
+    "bytes": 14680,
+    "git_blob_sha": "82a3eacb03599cc68a8898c1e4ce0936b3b5fc52"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_6_12.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_6_12.geo.json",
+    "sha256": "c38fa626cc21cbf68975eff14e06325135b13a6f77ab43185846211968d443e1",
+    "bytes": 14690,
+    "git_blob_sha": "f98354af393265eca0657ebf65e488fdd118f899"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_6_13.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_6_13.geo.json",
+    "sha256": "1f886519372e7a36f855321645564a51f2d22acff5da402ed743d41132af55a4",
+    "bytes": 14124,
+    "git_blob_sha": "4db976f276a165e163e272c128025a3f97b72a51"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_6_14.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_6_14.geo.json",
+    "sha256": "c493e712b1600614f2b83aff4e2751f634e18a90bd5d0ffb60c09495a972e8ad",
+    "bytes": 14124,
+    "git_blob_sha": "8ea94f97330d7f57dcf93aa9f425f7496d21d35b"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_6_15.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_6_15.geo.json",
+    "sha256": "9c6f233157bda38072dbf56b231f181d619da82139fc2b511c0a09a95cd776cf",
+    "bytes": 14124,
+    "git_blob_sha": "9dfb4a432932b79b3e514b14990d826d756d4043"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_6_2.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_6_2.geo.json",
+    "sha256": "6163c9aa57e42418b50c37fd97e105fa695c98278b76b2f8c00e9f9b4b2ee550",
+    "bytes": 14095,
+    "git_blob_sha": "e0843aed0c6ea01c03b62ea86ab2beb7a3de04d6"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_6_3.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_6_3.geo.json",
+    "sha256": "7d79542867b6149d2a54eb2fe12f57b2a8383e05e4df925796b3da729897337e",
+    "bytes": 14091,
+    "git_blob_sha": "59cd4055a2ecde7ca9cd7d3995eb73bd33215eeb"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_6_4.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_6_4.geo.json",
+    "sha256": "eb4b55f30b3db4cd5031fde98a203826f8c1a4846c0a6d44ca59c65c810d56f0",
+    "bytes": 14096,
+    "git_blob_sha": "59bbd3a4659ac4bead0869a03455fccacd5a6de9"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_6_5.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_6_5.geo.json",
+    "sha256": "c901430e4a509e88d6cd8d837378cd89627ef8fed5b639a312ffa5692633c71c",
+    "bytes": 14091,
+    "git_blob_sha": "656820ee78177c067321bed0eed4fe937836966e"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_6_6.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_6_6.geo.json",
+    "sha256": "4b084d70a75af48f4531ce166137d26050cc0ef67b6c3ef9eb7e8028c3dcb5c0",
+    "bytes": 14091,
+    "git_blob_sha": "b5b7946a948cfa8caf6c159a9fb002281ce743ab"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_6_7.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_6_7.geo.json",
+    "sha256": "ca5f7fbda3f25bf718a5d4f19be1527d3e5ea74314fd78d6ab18b0169384ef60",
+    "bytes": 14192,
+    "git_blob_sha": "1b8b79c796b9e000b83c130c0c79d20979f90bd8"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_6_8.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_6_8.geo.json",
+    "sha256": "d00aa6eca6bac5258eeaa8606b9416dd682a92dd2512bd5fec69619d3a85f37b",
+    "bytes": 15614,
+    "git_blob_sha": "54ec6c5a7632cfdbc79343280bf349c99936fac3"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/dishwasher_6_9.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/dishwasher_6_9.geo.json",
+    "sha256": "aab23fd3dafbfb83f4eda2f35016429e5347fb6f4d4366fc1d66f4583c04da61",
+    "bytes": 14694,
+    "git_blob_sha": "49e9c464c5ff05663ba642aa3a51f1bc3f03d2fb"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_0.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_lower_0.geo.json",
+    "sha256": "bc28f33f9eb8ca1075021c3e76cac9685cd4e5d68610eeb1914b2845f4ce5491",
+    "bytes": 7802,
+    "git_blob_sha": "ad3bbadad1c0ebc9f4d44807a0bf5c1c1af0315d"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_1.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_lower_1.geo.json",
+    "sha256": "7e0afba793896dd6f3f2cde2fb157b0c505b0ae5853daa534745a26503bf9c9e",
+    "bytes": 7809,
+    "git_blob_sha": "54c2cb8730cd301479deb7b6b4e7c68bf87d9c97"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_10.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_lower_10.geo.json",
+    "sha256": "ab8a12602a38c22bbe16e1cb950675bffcca04dc5e1bf1db03258d83b8486192",
+    "bytes": 7806,
+    "git_blob_sha": "5f2478c3b59d32a2089261706eafc15b07df1095"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_2.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_lower_2.geo.json",
+    "sha256": "e9513e9893de8d7f29d75b7e28f376c2b007fb550e583233721c338b77dd8e8d",
+    "bytes": 7809,
+    "git_blob_sha": "03b7c620f8b53942af9be975812f22cecd528df9"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_3.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_lower_3.geo.json",
+    "sha256": "eb9e5e2b85623fc6bedc326d7b2bd9acb2d1a358f1a2a78036fb4bb9e3615bb3",
+    "bytes": 7808,
+    "git_blob_sha": "9e3aa3ab5ffdf57d661f5bfbd4cf9fe59a5de0d9"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_4.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_lower_4.geo.json",
+    "sha256": "c5f134fd4f697c05bb1700834bd0d9eeb0aed65c607604d09d8a4f2f610020dc",
+    "bytes": 7810,
+    "git_blob_sha": "d4b3811ea31807316640a76ba60c4bc252dd0673"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_5.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_lower_5.geo.json",
+    "sha256": "df7dda674713fa112964c8eb9fd86cc512b7ac291563bd3985bb0a48390e5647",
+    "bytes": 7805,
+    "git_blob_sha": "0f649fbc0ac8b3d826cc270a6b18cc420232544c"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_6.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_lower_6.geo.json",
+    "sha256": "cb79675d1cd7bbe35fffcaa6b9f1c2f92591e87e7a085ddd435c94a0ecbbadf9",
+    "bytes": 7810,
+    "git_blob_sha": "925f1c130cfd49353336dbafd2f26729fe41a8cc"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_7.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_lower_7.geo.json",
+    "sha256": "c87c5b0bfc0f4cf581f4c4d35d61a7d5a861f5a94ce0526c1f2330cd6aedf1e4",
+    "bytes": 7810,
+    "git_blob_sha": "56be6ba54b2c87a6a3cc520269d3236ad53b5971"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_8.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_lower_8.geo.json",
+    "sha256": "2f66a33e5eb40898ed99db98cfa5e564747e67889b984d83e9a022cae3631349",
+    "bytes": 7810,
+    "git_blob_sha": "13d3b6d7c994fd53b52cc31e2a603d398db1a7f1"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_9.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_lower_9.geo.json",
+    "sha256": "1151c3e1a4eb63daaf036c5c488fb8b39c2a14f11023b0ac73f166ee74ea1c3c",
+    "bytes": 7810,
+    "git_blob_sha": "a5b08e7582ba9a1c3a81ff80e9c339dd1c682f7e"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_close_0.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_lower_close_0.geo.json",
+    "sha256": "3f6d66d7574f2aedf46ffe95fe0bb6f3248b66723c116b280dc750a772e4daea",
+    "bytes": 7875,
+    "git_blob_sha": "c592162e8ccd8d9f07acaa1873ae7bf3990405c2"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_close_1.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_lower_close_1.geo.json",
+    "sha256": "7350a52d9b6ad43b27ab4fe868ff22ddeb4d982d9c6fadae3d7731123c7acfc9",
+    "bytes": 7880,
+    "git_blob_sha": "503507680b623db315156ec98fa64bfe2a8e4807"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_close_10.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_lower_close_10.geo.json",
+    "sha256": "46c177a9cec13348f77da5893e78e3d264619d007c52c6746f8a52228b8d7f9a",
+    "bytes": 7873,
+    "git_blob_sha": "912c4ea0992d5e9e05173087e8183261cdf7b0c1"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_close_2.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_lower_close_2.geo.json",
+    "sha256": "7cbcc13a20a43299af5d29d28857f539a51201fabed6e2ff0b64e0d1454595b0",
+    "bytes": 7887,
+    "git_blob_sha": "422fecc8d46bb047b20a0be8d0adcff240006d2e"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_close_3.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_lower_close_3.geo.json",
+    "sha256": "af6d1b5dc2d968a2f11dc6c449034065bf5a0771a6cdf6a606e38c7d476388bf",
+    "bytes": 7879,
+    "git_blob_sha": "d9fe24a0e3c9650990504e723e59f79b4a502b65"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_close_4.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_lower_close_4.geo.json",
+    "sha256": "77a87b7dae5d312c59a354cce47c2d29c90e1bc357af54b42f9a95e237035bed",
+    "bytes": 8812,
+    "git_blob_sha": "7d64cb9ae7d2c42bbd894bc82f52a7187d892511"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_close_5.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_lower_close_5.geo.json",
+    "sha256": "4fd0a988904f3701184a3f5f55398c465bd513dc24aa3d45c6e0963daf638bcb",
+    "bytes": 8772,
+    "git_blob_sha": "2c3b1b953fe90b3c79c94cb599ce96ab5be8416a"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_close_6.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_lower_close_6.geo.json",
+    "sha256": "e15765e424fdb3f0c511e39ae6139b56fc6f2b677bfb3cfac9bfee3925353011",
+    "bytes": 8815,
+    "git_blob_sha": "b583e56da5224bfa538da1f213e6c67d443b06d3"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_close_7.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_lower_close_7.geo.json",
+    "sha256": "d0d45724b30613841071a4e092f81bb6e443d3c539c7a0aa29e60a2b3a5f3e08",
+    "bytes": 7877,
+    "git_blob_sha": "86d4a9645397fcfd756d69df289857a0baac5265"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_close_8.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_lower_close_8.geo.json",
+    "sha256": "afed250a55484d28239c22b73067cb315de810a4c110f635f98aeb3e3e9d497b",
+    "bytes": 7873,
+    "git_blob_sha": "aa56ef01a04bf8fdfc4f3269bbb99c653b12fe42"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_lower_close_9.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_lower_close_9.geo.json",
+    "sha256": "0724f9fe595dca166543295b972c8075375e2f81fd9b53ec55da469830734d41",
+    "bytes": 7876,
+    "git_blob_sha": "d489ac7bf4f39956282a26ea447dcb0c985345a9"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_0.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_upper_0.geo.json",
+    "sha256": "4996fbdc98cc19a7da63a53ddf64f25e31343d00fa4c13332f0c241d3892f0f0",
+    "bytes": 14604,
+    "git_blob_sha": "80ffa64197cac9d8a2b4e1d81b0c5a74db781a0b"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_1.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_upper_1.geo.json",
+    "sha256": "a60fa026391f04d6df3874b784af16416b6ca91d71a2aa64e127300d835ee0c8",
+    "bytes": 14611,
+    "git_blob_sha": "e76e07858622559886c651dea800da4fd49322ff"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_10.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_upper_10.geo.json",
+    "sha256": "33bf0dd598248fb7f376683ffd0baa688640ca5a8283756b4dd3df26b5d73065",
+    "bytes": 14608,
+    "git_blob_sha": "19caa46ab664a25c3e0eb23ee8c34f112c0c9a0d"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_2.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_upper_2.geo.json",
+    "sha256": "cc6227d59b40d4962b8922337d85f8a65e317d1915cc5b4b67baf17ba1d1e1f9",
+    "bytes": 14611,
+    "git_blob_sha": "66d5246ba376ba9b3136f3beffb902d47b7e5ac9"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_3.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_upper_3.geo.json",
+    "sha256": "f943bf9ea3387c74bdf628805f83058fd2e7820c5775a9e5dfd9d218843a5367",
+    "bytes": 14647,
+    "git_blob_sha": "bd1965bfddd77ee2fc7f9e15dbc73bd5c5f043b8"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_4.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_upper_4.geo.json",
+    "sha256": "40e0adafa8316999b5bbec85b6c386fc3bf5c3524a1c3bfa565edec94caafb80",
+    "bytes": 14612,
+    "git_blob_sha": "53e922f485e704f49b307111837b322aaff6672b"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_5.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_upper_5.geo.json",
+    "sha256": "a9b49b0617828035eedd2e4d3b75dcb3479a6ec179ad0fedb877aa095a9c27d9",
+    "bytes": 14607,
+    "git_blob_sha": "f3ba91af5db0345645830befcc770f4230b7aaee"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_6.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_upper_6.geo.json",
+    "sha256": "0cbaf0e0971b6d2b3c7522f6dd2a4b1532b7c89022951ebf177ae547dc3189a2",
+    "bytes": 14650,
+    "git_blob_sha": "7d4a4974da8a29049c9112e9a1462de4b6e793bb"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_7.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_upper_7.geo.json",
+    "sha256": "af670a3445eb06d393817532043fd7dc5c2d9e40a1f0fd6bd8b0bc61fb08830f",
+    "bytes": 14612,
+    "git_blob_sha": "a602abc0ebe0f66094344625762d44268e9ffcfb"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_8.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_upper_8.geo.json",
+    "sha256": "df4be8756cb1556d52aef4aa1c5b201cd52172c1c5c87cb92a734cd456f5319f",
+    "bytes": 14612,
+    "git_blob_sha": "49bcb6f52f9cbed9239c9e581443472686aa03ec"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_9.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/models/blocks/refrigerator_upper_9.geo.json",
+    "sha256": "f6f8fb85486a3388a6facda19ca1760516378a9c165577a7c264f06a0485eb3c",
+    "bytes": 14612,
+    "git_blob_sha": "8f61b061600da69e2a5cf6d03daa8cb152124a33"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_close_0.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_upper_close_0.geo.json",
+    "sha256": "3f887fb1646629616c141d4c22e26a3ee917be4f25e8489ebf765b26f4c00fa1",
+    "bytes": 14713,
+    "git_blob_sha": "b5930ccffc2f1efe10534e50288785f6657af29c"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_close_1.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_upper_close_1.geo.json",
+    "sha256": "abd6f2d56a2922b05b2ce14926faa659d87b74566b61cf766b6e4c571d4c1197",
+    "bytes": 14718,
+    "git_blob_sha": "c0ae0720d510314c15741c8a44ffb354fe018a5d"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_close_10.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_upper_close_10.geo.json",
+    "sha256": "44ee50ad11fcbdedb72cc0ebd91b3bea810896022331b464ff3b4ce53497735a",
+    "bytes": 14711,
+    "git_blob_sha": "ab17cbf0ae903278a8b0c879fa840cb78b2792ba"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_close_2.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_upper_close_2.geo.json",
+    "sha256": "65df42d8664a0cd9f906f7d309e4d40ab09ce5f705615fe620816829e2e64cfb",
+    "bytes": 14715,
+    "git_blob_sha": "aa21e7b18418d79fb763368f8e7e5d2f3e7f26c2"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_close_3.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_upper_close_3.geo.json",
+    "sha256": "5e4bad1f09a93a62608beaf79d8065dbef0b8bf0ed229ea83884ede546c07c2a",
+    "bytes": 14717,
+    "git_blob_sha": "79369f329a31b597ca391c53621f0f9818feadc1"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_close_4.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_upper_close_4.geo.json",
+    "sha256": "fdf80857210d5c04575538a7b95fc58be34a8142015fd0980d8fd6556215fe16",
+    "bytes": 16583,
+    "git_blob_sha": "50acb53cc5fdb3a7e581257f7118eddb1ca05112"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_close_5.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_upper_close_5.geo.json",
+    "sha256": "2409c4058f50016412d6ccb481527ac47983bbe38803a620dd35bd76e0d26f64",
+    "bytes": 16520,
+    "git_blob_sha": "706146eb6e3019ddbe6a3419c46e5ab5f90cf47d"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_close_6.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_upper_close_6.geo.json",
+    "sha256": "cbcb6ff70b4151d7c5ae03f7236cf310894ddc6480a8fcba5664ff6820a7f538",
+    "bytes": 16587,
+    "git_blob_sha": "b465d7c5ee37bf4ad3d77c6bdc30c1f4f6ecd271"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_close_7.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_upper_close_7.geo.json",
+    "sha256": "a7423e16daf2a2fa6ef21b2556ee986332b7d52b48dd3e9d3df5364f61abdcfd",
+    "bytes": 14715,
+    "git_blob_sha": "c9a20d346b36952407df538fd4062c63c3d06995"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_close_8.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_upper_close_8.geo.json",
+    "sha256": "5eff17bfc3d0a68f288a4d7f7cb7b34e3e8c8414dbd0f7d464e72ffefb9a257e",
+    "bytes": 14713,
+    "git_blob_sha": "6204c11d943a3b9fb40e60f788b202d9b89b095e"
+  },
+  {
+    "source_path": "runtime/RP/models/blocks/refrigerator_upper_close_9.geo.json",
+    "path": "inputs/runtime/RP/models/blocks/refrigerator_upper_close_9.geo.json",
+    "sha256": "064e3dcde8b063cd256e7a2d6437923397604ce3b1132d157a9520e68ce9e405",
+    "bytes": 14714,
+    "git_blob_sha": "18bc9f87846716e67d11c33c2ae21c8f9e5a2ed5"
+  },
+  {
+    "source_path": "runtime/RP/textures/ordertocook/block/dishwasher.png",
+    "path": "inputs/runtime/RP/textures/ordertocook/block/dishwasher.png",
+    "sha256": "7c85e91a5fb2a8baff87528cec4512cf63dc4004ee209aad8ba169755eb97c90",
+    "bytes": 2162,
+    "git_blob_sha": "f7eaa4fe91c7926a8793595ddd38239ed67f7891"
+  },
+  {
+    "source_path": "runtime/RP/textures/ordertocook/block/refrigerator.png",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/textures/ordertocook/block/refrigerator.png",
+    "sha256": "a545ea6a2c2ef3c25d48fd65051bf00e01382b01a97ef4f295b6d3b171e02039",
+    "bytes": 2138,
+    "git_blob_sha": "10a90abddb4bf8d9203aafadf873e6b5dd8182c6"
+  },
+  {
+    "source_path": "runtime/RP/textures/terrain_texture.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/runtime/RP/textures/terrain_texture.json",
+    "sha256": "25868565cbdcf7f4cb67c2f23b13fde43714795524956ac22f513bd615332f9e",
+    "bytes": 4561,
+    "git_blob_sha": "8e568bb76f66cdabc4f6b3c4c642c54783ae84e9"
+  },
+  {
+    "source_path": "tools/convert_assets.py",
+    "path": "inputs/tools/convert_assets.py",
+    "sha256": "05299ed474cb13ee0c8b6e544fce640c20c0390386425acb4f2731033a27738c",
+    "bytes": 136389,
+    "git_blob_sha": "76498eec43cff7dd52f71e1024ecc56bbcf9209c"
+  },
+  {
+    "source_path": "upstream/reference/common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+    "path": "inputs/upstream/reference/common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+    "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+    "bytes": 6848,
+    "git_blob_sha": "65f8be5b5ff183e8894073b2ee5c6457f788d616"
+  },
+  {
+    "source_path": "upstream/reference/common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/upstream/reference/common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+    "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+    "bytes": 4950,
+    "git_blob_sha": "a8c06567396965b28ef214d50760b6953f525387"
+  },
+  {
+    "source_path": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+    "path": "inputs/upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+    "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+    "bytes": 144802,
+    "git_blob_sha": "457fb7c122b3467b44ca30c023ead4addf871010"
+  },
+  {
+    "source_path": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+    "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+    "bytes": 4965,
+    "git_blob_sha": "30a92337a06df621d66c3156d1d81be537626a65"
+  },
+  {
+    "source_path": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/dishwasher.png",
+    "path": "inputs/upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/dishwasher.png",
+    "sha256": "7c85e91a5fb2a8baff87528cec4512cf63dc4004ee209aad8ba169755eb97c90",
+    "bytes": 2162,
+    "git_blob_sha": "f7eaa4fe91c7926a8793595ddd38239ed67f7891"
+  },
+  {
+    "source_path": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/refrigerator.png",
+    "path": "../fridge-shared-root-visual/inputs/e544/upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/refrigerator.png",
+    "sha256": "a545ea6a2c2ef3c25d48fd65051bf00e01382b01a97ef4f295b6d3b171e02039",
+    "bytes": 2138,
+    "git_blob_sha": "10a90abddb4bf8d9203aafadf873e6b5dd8182c6"
+  },
+  {
+    "source_path": "upstream/source.lock.json",
+    "path": "../fridge-shared-root-visual/inputs/e544/upstream/source.lock.json",
+    "sha256": "2222a2d53450fdc2ca81abe4088e2581405ae8409b16fbd479324992c8f5c909",
+    "bytes": 636,
+    "git_blob_sha": "bd63d0794b80dfccb5977cdeec1a5ce9d3726e8b"
+  }
+]

@@ -1,0 +1,38 @@
+{
+  "status": "APPLIANCE_BASELINE_REPRODUCED_NOT_NATIVE_ACCEPTANCE",
+  "source_input_references": 142,
+  "full_sheets": 32,
+  "pose_pairs_on_sheets": 142,
+  "baseline_original_jpegs": 43,
+  "full_sheet_views": 39,
+  "isolated_fridge_views": 4,
+  "excluded_unconfirmed_photographs": 2,
+  "numerical": {
+    "physical_uv_corners": 18200,
+    "maximum_corner_residual_model_units": {
+      "dishwasher": 0.25964161378011075,
+      "fridge_active_door": 0.08617698358695226
+    },
+    "channel_samples": 4141,
+    "maximum_channel_disagreement": 2.842170943040401e-14,
+    "state_bindings": {
+      "dishwasher": 5576,
+      "refrigerator": 528
+    }
+  },
+  "face_order_control": {
+    "original_jpegs": 2,
+    "identity_cubes": 6,
+    "identity_faces": 35,
+    "identity_uv_corners": 140,
+    "canonical_roi_unchanged_pixels": 41209,
+    "changed_viewport_pixels": 4430,
+    "native_material_acceptance": false
+  },
+  "fresh_process_scene_bytes_identical": true,
+  "shared_calibration_reproduced": true,
+  "git_required": false,
+  "network_required": false,
+  "gui_operated": false,
+  "runtime_modified": false
+}
