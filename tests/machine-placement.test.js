@@ -2,7 +2,7 @@
 // Real main/store callbacks with native I/O doubles. Not native event-order QA.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mainFixture } from './main.harness.js';
+import { mainFixture, configure } from './main.harness.js';
 import { FakeItem, makeEnvironment, place } from './appliances.harness.js';
 import { writePortableBlock, readPortableBlock } from '../runtime/BP/scripts/portable_blocks.js';
 
@@ -75,9 +75,11 @@ test('portable corner denial preserves item and ledgers; a later retry restores 
   const restored = JSON.stringify(retry.record); drain(env); assert.equal(JSON.stringify(retry.record), restored);
 });
 
-for (const target of [{ x: 100, y: 64, z: 100 }, { x: -100, y: -30, z: -100 }]) {
-  test(`all signed faces, corners and self at ${JSON.stringify(target)}`, async () => {
+for (const limit of [1, 2]) for (const target of [{ x: 100, y: 64, z: 100 }, { x: -100, y: -30, z: -100 }]) {
+  test(`limit ${limit}: all signed faces, corners and self at ${JSON.stringify(target)}`, async () => {
     const env = await clean();
+    configureLimit(env, limit);
+    if (limit === 2) seed(env, add(target, [24, 24, 24]));
     const cases = [];
     for (let axis = 0; axis < 3; axis++) for (const offset of [-25, -24, 24, 25, 26]) {
       const delta = [0, 0, 0]; delta[axis] = offset;
@@ -93,13 +95,14 @@ for (const target of [{ x: 100, y: 64, z: 100 }, { x: -100, y: -30, z: -100 }]) 
       env.store.deleteRestaurant(record.id); env.dimension.getBlock(location).setType('minecraft:air'); drain(env);
     }
     const placed = attempt(env, target);
-    assert.equal(placed.event.cancel, false); assert.equal(env.store.restaurants().length, 1);
+    assert.equal(placed.event.cancel, false); assert.equal(env.store.restaurants().length, limit);
     const record = placed.record; drain(env); assert.equal(env.store.getRestaurant(record.id), record);
   });
 }
 
-test('placement excludes metadata before world reads, skips nonlive records and stops at first live machine', async () => {
+for (const limit of [1, 2]) test(`limit ${limit}: metadata filters before reads; live count stops at threshold`, async () => {
   const env = await clean(), target = { x: 100, y: 64, z: 100 }, block = env.dimension.getBlock(target);
+  configureLimit(env, limit);
   const component = env.blockComponents.get('ordertocook:interact');
   const check = () => { const event = { block, player: env.player, permutationToPlace: { type: { id: TYPE } }, cancel: false }; component.beforeOnPlayerPlace(event); return event.cancel; };
   const get = env.dimension.getBlock.bind(env.dimension), getDimension = env.world.getDimension.bind(env.world);
@@ -122,18 +125,21 @@ test('placement excludes metadata before world reads, skips nonlive records and 
   const candidates = [[25, 25, 25], [24, 0, 24], [23, 0, 23], [22, 0, 22]].map(delta => seed(env, add(target, delta)));
   modes.set(125, 'unloaded'); modes.set(124, 'missing'); modes.set(123, 'replaced');
   const saved = [...env.properties];
-  assert.equal(probe(), true); assert.deepEqual(reads.map(p => p.x), [125, 124, 123, 122]);
+  assert.equal(probe(), limit === 1); assert.deepEqual(reads.map(p => p.x), [125, 124, 123, 122]);
   modes.delete(125);
-  assert.equal(probe(), true); assert.deepEqual(reads.map(p => p.x), [125], 'first live record, no sort or scan');
+  assert.equal(probe(), true); assert.deepEqual(reads.map(p => p.x), limit === 1 ? [125] : [125, 124, 123, 122], 'count only live records, no sort or scan');
+  modes.delete(124);
+  assert.equal(probe(), true); assert.deepEqual(reads.map(p => p.x), limit === 1 ? [125] : [125, 124], 'stop at configured threshold');
   for (const record of candidates) modes.set(record.location.x, 'missing');
   assert.equal(probe(), false); assert.equal(reads.length, 4);
-  modes.delete(124);
-  assert.equal(probe(), true); assert.deepEqual(reads.map(p => p.x), [125, 124], 'load state is rechecked');
+  modes.delete(124); modes.delete(123);
+  assert.equal(probe(), true); assert.deepEqual(reads.map(p => p.x), limit === 1 ? [125, 124] : [125, 124, 123], 'load state is rechecked');
   assert.deepEqual([...env.properties], saved, 'unavailable records and save data remain untouched');
 });
 
-test('current canonical rollback and membership determine placement without cached records', async () => {
+for (const limit of [1, 2]) test(`limit ${limit}: current canonical rollback and membership determine placement without cached records`, async () => {
   const env = await clean(), target = { x: 100, y: 64, z: 100 }, stale = seed(env, add(target, [25, 25, 25]));
+  configureLimit(env, limit); if (limit === 2) seed(env, add(target, [1, 1, 1]));
   assert.equal(preflight(env, target).cancel, true);
   stale.location.x += 100;
   assert.equal(preflight(env, target).cancel, false, 'current metadata, not insertion snapshot');
@@ -146,8 +152,9 @@ test('current canonical rollback and membership determine placement without cach
   env.store.saveRestaurant(canonical); assert.equal(preflight(env, target).cancel, true);
 });
 
-test('owner, staff, stranger, creative and admin cannot bypass box separation; dimensions remain independent', async () => {
+for (const limit of [1, 2]) test(`limit ${limit}: owner, staff, stranger, creative and admin cannot bypass count; dimensions remain independent`, async () => {
   const env = await clean(), target = { x: 100, y: 64, z: 100 }, first = attempt(env, add(target, [25, -24, 25]));
+  configureLimit(env, limit); if (limit === 2) attempt(env, add(target, [24, -24, 25]));
   const owner = env.player.id;
   for (const role of ['owner', 'stranger', 'staff', 'creative', 'admin']) {
     env.player.id = role === 'owner' ? owner : 'other'; first.record.staff = role === 'staff' ? ['other'] : [];
@@ -164,6 +171,7 @@ test('owner, staff, stranger, creative and admin cannot bypass box separation; d
 test('retained removal journal blocks same-position placement before portable capture', async () => {
   const env = await clean(), target = { x: 100, y: 64, z: 100 }, old = attempt(env, target);
   old.record.removing = true; env.store.saveRestaurant(old.record); old.block.setType('minecraft:air');
+  configureLimit(env, 2147483647); // The removal journal is independent of any count allowance.
   const stack = writePortableBlock(new FakeItem(TYPE), env.restaurant), saved = [...env.properties];
   assert.equal(attempt(env, target, stack).event.cancel, true);
   assert.deepEqual(env.player.container.getItem(0), stack); assert.deepEqual([...env.properties], saved);
@@ -192,7 +200,7 @@ test('placement rejection uses localized box guidance without changing equipment
   const env = await clean(), target = { x: 100, y: 64, z: 100 };
   attempt(env, add(target, [25, 0, 0])); attempt(env, target);
   assert.deepEqual(env.player.messages.at(-1), { rawtext: [
-    { text: '§6[下單了]§r ' }, { translate: 'otc.error.machine_placement_conflict' }
+    { text: '§6[下單了]§r ' }, { translate: 'otc.error.machine_placement_conflict', with: ['1'] }
   ] });
   const { readFile } = await import('node:fs/promises');
   for (const locale of ['en_US', 'zh_CN', 'zh_TW']) {
@@ -201,6 +209,169 @@ test('placement rejection uses localized box guidance without changing equipment
     const step = source.split('\n').find(line => line.startsWith('otc.guide.page.placing_station.step2='));
     assert.ok(runtime.split('\n').includes(step), `generated handbook matches source ${locale}`);
     const error = runtime.split('\n').filter(line => line.startsWith('otc.error.machine_placement_conflict='));
-    assert.equal(error.length, 1); assert.match(error[0], /-24.*\+25/); assert.match(step, /24.*-24.*\+25.*26/);
+    assert.equal(error.length, 1); assert.match(error[0], /%s/); assert.match(error[0], /-24.*\+25/); assert.match(step, /24.*-24.*\+25.*maxOrderMachinesWithin24.*26/);
   }
+});
+
+const SETTINGS = 'ordertocook:settings';
+const configureLimit = (env, limit, source = 'server') => configure(env, { maxOrderMachinesWithin24: limit }, source);
+
+test('global limit two permits first and second, cancels third with full ordinary or portable item, and permits retry once', async () => {
+  for (const portable of [false, true]) {
+    const env = await clean(), target = { x: 100, y: 64, z: 100 };
+    configureLimit(env, 2);
+    const first = attempt(env, add(target, [2, 0, 0]));
+    const second = attempt(env, add(target, [1, 0, 0]));
+    assert.equal(first.event.cancel, false); assert.equal(second.event.cancel, false);
+    assert.ok(first.record); assert.ok(second.record);
+    env.restaurant.stats.earnings = 73;
+    const stack = portable ? writePortableBlock(new FakeItem(TYPE), { ...env.restaurant, name: 'Counted portable', ownerId: 'other-owner', staff: ['friend'], level: 5,
+      config: { ...env.restaurant.config, maxOrderMachinesWithin24: 99 } }) : new FakeItem(TYPE);
+    stack.nameTag = 'Keep exact machine'; stack.setLore(['Counted item lore']); stack.setDynamicProperty('test:extra', 'retain');
+    const data = portable && readPortableBlock(stack), saved = [...env.properties], drops = env.dimension.drops.length;
+    const denied = attempt(env, target, stack);
+    assert.equal(denied.event.cancel, true); assert.equal(denied.block.typeId, 'minecraft:air');
+    assert.equal(denied.record, undefined); assert.equal(env.store.findStation(denied.block), undefined);
+    assert.deepEqual(env.player.container.getItem(0), stack); assert.deepEqual([...env.properties], saved);
+    assert.equal(env.dimension.drops.length, drops);
+    // One now-unloaded/nonmachine candidate ceases to count on this attempt.
+    first.block.setType('minecraft:air');
+    const retried = attempt(env, target, env.player.container.getItem(0));
+    assert.equal(retried.event.cancel, false); assert.ok(retried.record);
+    assert.equal(env.player.container.getItem(0), undefined); assert.equal(env.dimension.drops.length, drops);
+    if (portable) {
+      for (const key of ['ownerId', 'name', 'staff', 'level', 'stats']) assert.deepEqual(retried.record[key], data[key]);
+      assert.deepEqual(retried.record.orders, []);
+    }
+    const restored = JSON.stringify(retried.record); drain(env); assert.equal(JSON.stringify(retried.record), restored);
+  }
+});
+
+test('server, creative and tagged admin can persist global count; ordinary source cannot', async () => {
+  for (const source of ['server', 'creative', 'admin', 'ordinary']) {
+    const env = await clean(), target = { x: 100, y: 64, z: 100 };
+    attempt(env, add(target, [1, 0, 0])); const saved = [...env.properties];
+    configureLimit(env, 2, source);
+    if (source === 'ordinary') assert.deepEqual([...env.properties], saved);
+    else assert.equal(JSON.parse(env.properties.get(SETTINGS)).maxOrderMachinesWithin24, 2);
+    assert.equal(preflight(env, target).cancel, source === 'ordinary');
+  }
+});
+
+
+test('signed 32-bit input is normalized to minimum one, never unlimited', async () => {
+  for (const value of [-2147483648, -1, 0, 1, 2, 2147483647]) {
+    const env = await clean(), target = { x: 100, y: 64, z: 100 };
+    seed(env, add(target, [1, 0, 0])); configureLimit(env, value);
+    assert.equal(JSON.parse(env.properties.get(SETTINGS)).maxOrderMachinesWithin24, Math.max(1, value));
+    assert.equal(preflight(env, target).cancel, value <= 1);
+  }
+});
+
+test('invalid input rejects the whole command and preserves previous count and leather behavior', async () => {
+  for (const initial of [1, 2]) for (const value of [null, true, false, '2', [], {}, 1.5, -2147483649, 2147483648, NaN, Infinity]) {
+    const env = await clean(), target = { x: 100, y: 64, z: 100 };
+    seed(env, add(target, [1, 0, 0])); configureLimit(env, initial);
+    const before = [...env.properties];
+    configure(env, { maxOrderMachinesWithin24: value, countertopConsumeLeather: false, refreshSeconds: 42 });
+    assert.deepEqual([...env.properties], before);
+    assert.match(env.player.messages.at(-1), /maxOrderMachinesWithin24.*整數/);
+    assert.equal(preflight(env, target).cancel, initial === 1);
+  }
+});
+
+test('missing or invalid saved count defaults to one without rewriting settings; valid signed inputs normalize', async () => {
+  const invalid = [null, true, false, '2', [], {}, 1.5, -2147483649, 2147483648];
+  for (const value of [undefined, ...invalid, -2147483648, 0, 1, 2, 2147483647]) {
+    const raw = JSON.stringify({ currencyItem: '', maxOrderMachinesWithin24: value });
+    const env = await clean([[SETTINGS, raw]]), target = { x: 100, y: 64, z: 100 };
+    assert.equal(env.hooks.ready, true); assert.equal(env.properties.get(SETTINGS), raw);
+    seed(env, add(target, [1, 0, 0]));
+    assert.equal(preflight(env, target).cancel, ![2, 2147483647].includes(value));
+    assert.equal(env.properties.get(SETTINGS), raw);
+  }
+  const fresh = await clean(); seed(fresh, { x: 1, y: 0, z: 0 });
+  assert.equal(preflight(fresh, { x: 2, y: 0, z: 0 }).cancel, true);
+  assert.equal(fresh.properties.has(SETTINGS), false, 'default requires no saved settings document');
+});
+
+test('malformed settings stop initialization and cannot be replaced by a count command', async () => {
+  for (const raw of ['{broken', 'null', '[]', 'false', '42', '"wrong"', 42]) {
+    const env = await mainFixture([[SETTINGS, raw]]);
+    assert.equal(env.hooks.ready, false); configureLimit(env, 2);
+    assert.equal(env.properties.get(SETTINGS), raw);
+    assert.equal(preflight(env, { x: 100, y: 64, z: 100 }).cancel, true);
+  }
+});
+
+test('count persists across worldLoad; reset changes only future attempts and preserves dense restaurants exactly', async () => {
+  const env = await clean(), target = { x: 100, y: 64, z: 100 };
+  configureLimit(env, 2);
+  const first = attempt(env, add(target, [2, 0, 0]));
+  const resumed = await clean(env.properties); place(resumed, TYPE, first.block.location);
+  const second = attempt(resumed, add(target, [1, 0, 0]));
+  assert.equal(second.event.cancel, false); assert.equal(preflight(resumed, target).cancel, true);
+  for (const record of resumed.store.restaurants()) {
+    record.level = 3; record.stats.earnings = 101; record.staff = ['friend'];
+    // Reset must not perform the legacy refresh/upgrade config rewrite either.
+    record.config.refreshMs = 34567; record.config.maxOrderMachinesWithin24 = 99;
+    resumed.store.saveRestaurant(record);
+  }
+  const records = JSON.stringify(resumed.store.restaurants());
+  const persisted = [...resumed.properties].filter(([key]) => key !== SETTINGS);
+  configureLimit(resumed, 1);
+  assert.equal(JSON.stringify(resumed.store.restaurants()), records);
+  assert.deepEqual([...resumed.properties].filter(([key]) => key !== SETTINGS), persisted);
+  for (const record of resumed.store.restaurants()) assert.equal(resumed.dimension.getBlock(record.location).typeId, TYPE);
+  assert.equal(preflight(resumed, target).cancel, true);
+  const reset = await clean(resumed.properties);
+  for (const record of reset.store.restaurants()) place(reset, TYPE, record.location);
+  assert.equal(JSON.stringify(reset.store.restaurants()), records);
+  assert.equal(preflight(reset, target).cancel, true);
+  reset.hooks.tickRestaurants();
+  for (const record of reset.store.restaurants()) assert.equal(reset.dimension.getBlock(record.location).typeId, TYPE);
+});
+
+test('restaurant count cannot override global; portable format excludes config and rejects an injected field', async () => {
+  const env = await clean(), target = { x: 100, y: 64, z: 100 };
+  const first = attempt(env, add(target, [2, 0, 0]));
+  first.record.config.maxOrderMachinesWithin24 = 99; env.store.saveRestaurant(first.record);
+  const stack = writePortableBlock(new FakeItem(TYPE), { ...env.restaurant, config: { ...env.restaurant.config, maxOrderMachinesWithin24: 99 } });
+  assert.equal(Object.hasOwn(readPortableBlock(stack), 'config'), false, 'portable writer does not carry restaurant config');
+  assert.equal(preflight(env, target, stack).cancel, true, 'global default beats high restaurant config');
+  configureLimit(env, 2); first.record.config.maxOrderMachinesWithin24 = 1; env.store.saveRestaurant(first.record);
+  const forged = stack.clone();
+  const payload = JSON.parse(forged.getDynamicProperty('ordertocook:block_data:0'));
+  payload.data.config = { maxOrderMachinesWithin24: 99 };
+  forged.setDynamicProperty('ordertocook:block_data:0', JSON.stringify(payload));
+  const saved = [...env.properties];
+  assert.throws(() => readPortableBlock(forged), /Invalid portable restaurant/);
+  assert.equal(attempt(env, target, forged).event.cancel, true, 'malformed portable config cannot supply another limit');
+  assert.deepEqual(env.player.container.getItem(0), forged); assert.deepEqual([...env.properties], saved);
+  const low = writePortableBlock(new FakeItem(TYPE), { ...env.restaurant, config: { ...env.restaurant.config, maxOrderMachinesWithin24: 1 } });
+  assert.equal(attempt(env, target, low).event.cancel, false, 'global two beats low restaurant config for valid portable placement');
+  assert.equal(preflight(env, add(target, [1, 0, 0]), stack).cancel, true, 'high snapshot cannot bypass two neighbors');
+});
+
+test('failed and silently omitted settings writes keep prior live count and persisted bytes', async () => {
+  for (const initial of [1, 2]) for (const failure of ['throw', 'omit']) {
+    const env = await clean(), target = { x: 100, y: 64, z: 100 };
+    seed(env, add(target, [1, 0, 0])); configureLimit(env, initial);
+    const before = [...env.properties];
+    if (failure === 'throw') env.failWrite(key => key === SETTINGS);
+    else { const write = env.world.setDynamicProperty; env.world.setDynamicProperty = (key, value) => { if (key !== SETTINGS) write(key, value); }; }
+    configureLimit(env, initial === 1 ? 2 : 1, 'admin');
+    assert.deepEqual([...env.properties], before); assert.doesNotMatch(env.player.messages.at(-1), /設定已儲存/);
+    assert.equal(preflight(env, target).cancel, initial === 1);
+  }
+});
+
+test('deferred count-aware error retains the attempted limit when global configuration changes', async () => {
+  const env = await clean(), target = { x: 100, y: 64, z: 100 };
+  configureLimit(env, 2); seed(env, add(target, [1, 0, 0])); seed(env, add(target, [2, 0, 0]));
+  assert.equal(preflight(env, target).cancel, true); configureLimit(env, 3); drain(env);
+  assert.deepEqual(env.player.messages.at(-1), { rawtext: [
+    { text: '§6[下單了]§r ' }, { translate: 'otc.error.machine_placement_conflict', with: ['2'] }
+  ] });
+  assert.equal(preflight(env, target).cancel, false);
 });

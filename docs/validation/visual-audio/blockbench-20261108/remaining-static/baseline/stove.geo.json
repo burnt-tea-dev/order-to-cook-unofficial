@@ -1,0 +1,272 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.ordertocook.stove",
+        "texture_width": 16,
+        "texture_height": 16,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -8,
+                0,
+                -5
+              ],
+              "size": [
+                16,
+                16,
+                13
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    12,
+                    12
+                  ],
+                  "uv_size": [
+                    4,
+                    4
+                  ],
+                  "material_instance": "ordertocook_block_stove"
+                },
+                "east": {
+                  "uv": [
+                    4,
+                    0
+                  ],
+                  "uv_size": [
+                    3.25,
+                    4
+                  ],
+                  "material_instance": "ordertocook_block_stove"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    4
+                  ],
+                  "uv_size": [
+                    4,
+                    4
+                  ],
+                  "material_instance": "ordertocook_block_stove"
+                },
+                "west": {
+                  "uv": [
+                    4,
+                    4
+                  ],
+                  "uv_size": [
+                    3.25,
+                    4
+                  ],
+                  "material_instance": "ordertocook_block_stove"
+                },
+                "up": {
+                  "uv": [
+                    7.25,
+                    0
+                  ],
+                  "uv_size": [
+                    4.0,
+                    3.25
+                  ],
+                  "material_instance": "ordertocook_block_stove"
+                },
+                "down": {
+                  "uv": [
+                    7.25,
+                    6.5
+                  ],
+                  "uv_size": [
+                    4.0,
+                    -3.25
+                  ],
+                  "material_instance": "ordertocook_block_stove"
+                }
+              }
+            },
+            {
+              "origin": [
+                -8,
+                12,
+                -8
+              ],
+              "size": [
+                16,
+                4,
+                3
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    11.25,
+                    0
+                  ],
+                  "uv_size": [
+                    4.0,
+                    1
+                  ],
+                  "material_instance": "ordertocook_block_stove"
+                },
+                "east": {
+                  "uv": [
+                    6,
+                    8
+                  ],
+                  "uv_size": [
+                    0.75,
+                    1
+                  ],
+                  "material_instance": "ordertocook_block_stove"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    8
+                  ],
+                  "uv_size": [
+                    4,
+                    1
+                  ],
+                  "material_instance": "ordertocook_block_stove"
+                },
+                "west": {
+                  "uv": [
+                    11.25,
+                    2.5
+                  ],
+                  "uv_size": [
+                    0.75,
+                    1.0
+                  ],
+                  "material_instance": "ordertocook_block_stove"
+                },
+                "up": {
+                  "uv": [
+                    11.25,
+                    1
+                  ],
+                  "uv_size": [
+                    4.0,
+                    0.75
+                  ],
+                  "material_instance": "ordertocook_block_stove"
+                },
+                "down": {
+                  "uv": [
+                    11.25,
+                    2.5
+                  ],
+                  "uv_size": [
+                    4.0,
+                    -0.75
+                  ],
+                  "material_instance": "ordertocook_block_stove"
+                }
+              }
+            },
+            {
+              "origin": [
+                -6,
+                2,
+                -6
+              ],
+              "size": [
+                12,
+                9,
+                1
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    8.5,
+                    12.25
+                  ],
+                  "uv_size": [
+                    3.0,
+                    2.5
+                  ],
+                  "material_instance": "ordertocook_block_stove"
+                },
+                "east": {
+                  "uv": [
+                    8.25,
+                    12.75
+                  ],
+                  "uv_size": [
+                    0.25,
+                    2.25
+                  ],
+                  "material_instance": "ordertocook_block_stove"
+                },
+                "south": {
+                  "uv": [
+                    8.5,
+                    15.25
+                  ],
+                  "uv_size": [
+                    3.0,
+                    -2.25
+                  ],
+                  "material_instance": "ordertocook_block_stove",
+                  "uv_rotation": 180
+                },
+                "west": {
+                  "uv": [
+                    11.5,
+                    12.75
+                  ],
+                  "uv_size": [
+                    0.25,
+                    2.25
+                  ],
+                  "material_instance": "ordertocook_block_stove"
+                },
+                "up": {
+                  "uv": [
+                    8.5,
+                    12
+                  ],
+                  "uv_size": [
+                    3.0,
+                    0.25
+                  ],
+                  "material_instance": "ordertocook_block_stove"
+                },
+                "down": {
+                  "uv": [
+                    8.5,
+                    16
+                  ],
+                  "uv_size": [
+                    3.0,
+                    -0.25
+                  ],
+                  "material_instance": "ordertocook_block_stove"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

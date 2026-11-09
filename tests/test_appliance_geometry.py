@@ -5,6 +5,7 @@ import copy
 import contextlib
 import importlib.util
 import io
+import hashlib
 import json
 import math
 import itertools
@@ -296,15 +297,20 @@ class ApplianceGeometryTests(unittest.TestCase):
             self.clips[clip], frame/10,
             f"geometry.ordertocook.refrigerator_{half}_{'close_' if closing else ''}{frame}")
 
-    def test_all_44_committed_fridge_poses_reproduce_from_the_converter(self):
+    def test_all_176_committed_fridge_poses_reproduce_from_the_converter(self):
+        roots, _ = converter.fridge_root_samples(self.clips)
         for half in ("lower", "upper"):
             for closing in (False, True):
                 for frame in range(11):
-                    with self.subTest(half=half, closing=closing, frame=frame):
-                        result = converter.bound_fridge_swing(self.pose(half, frame, closing), half)
-                        converter.assert_block_bounds(result)
-                        expected = converter.read_json(ROOT / f"runtime/RP/models/blocks/refrigerator_{half}_{'close_' if closing else ''}{frame}.geo.json")
-                        self.assertEqual(result, expected)
+                    for root_frame, root in enumerate(roots):
+                        with self.subTest(half=half, closing=closing, frame=frame, root_frame=root_frame):
+                            name = converter.fridge_pose_name(half, closing, frame, root_frame)
+                            clip = converter.fridge_pose_clip(self.clips, half, closing, root)
+                            result = converter.bound_fridge_swing(converter.bake_pose(
+                                converter.split_fridge_geo(self.source, half), clip, frame/10, f'geometry.ordertocook.{name}'), half)
+                            converter.assert_block_bounds(result)
+                            expected = converter.read_json(ROOT / f"runtime/RP/models/blocks/{name}.geo.json")
+                            self.assertEqual(result, expected)
 
     def test_guard_preserves_door_sizes_uvs_angles_and_cabinet(self):
         for half, frame, closing, axis in (("lower", 2, True, 2), ("upper", 3, False, 2), ("upper", 6, False, 0)):
@@ -526,6 +532,311 @@ class ApplianceGeometryTests(unittest.TestCase):
         self.assertNotIn("ordertocook:bag_motion",definition["components"])
         ticking = [p for p in definition["permutations"] if "minecraft:tick" in p["components"]]
         self.assertEqual(ticking,[{"condition":"q.block_state('ordertocook:frame') > 0","components":{"minecraft:tick":{"interval_range":[1,1],"looping":True},"ordertocook:bag_motion":{}}}])
+
+class StoveIgnitionGeometryTests(unittest.TestCase):
+    """Pinned source formulas are the oracle, not either shared evaluator."""
+    @classmethod
+    def setUpClass(cls):
+        cls.raw = converter.read_json(converter.ASSETS/'geo/block/stove.geo.json')
+        cls.source = converter.normalize_geo(converter.ASSETS/'geo/block/stove.geo.json', 'geometry.stove_source')
+        cls.clip = converter.read_json(converter.ASSETS/'animations/stove.animation.json')['animations']['fire']
+        cls.bones = {bone['name']: bone for bone in cls.raw['minecraft:geometry'][0]['bones']}
+        review_spec = importlib.util.spec_from_file_location('stove_review', ROOT/'tools/render_visual_review.py')
+        cls.review = importlib.util.module_from_spec(review_spec)
+        review_spec.loader.exec_module(cls.review)
+
+    @staticmethod
+    def source_values(t):
+        # Direct reading of the pinned clip and Gecko 4.8.3 formula. Do not
+        # call converter.sample_channel/easing_fraction or review.channel here.
+        elastic = lambda u: 1-math.cos(math.pi*u/2)**3*math.cos(math.pi*u)
+        if t <= .75:
+            body = [1, 1, 1]
+        elif t <= .875:
+            e = elastic((t-.75)/.125)
+            body = [1, 1+.05*e, 1+.1*e]
+        elif t < 1:
+            body = [1, 1.05, 1.1] if t <= .9375 else [1, 1.025, 1.05]
+        else:
+            body = [1, 1, 1]
+        if t <= .125:
+            door = [1, 1-.1*t/.125, 1]
+        elif t <= .75:
+            u = (t-.125)/.625
+            door = [1-.1*u, .9-.1*u, 1-.1*u]
+        elif t <= .875:
+            e = elastic((t-.75)/.125)
+            door = [.9+.4*e, .8+.5*e, .9+.4*e]
+        elif t < 1:
+            door = [1.3]*3 if t <= .9375 else [1.15]*3
+        else:
+            door = [1]*3
+        angle = math.sin(math.radians(t*3000))*3 if t <= .0833 else (
+            math.sin(math.radians(t*3000))*3*(.75-t)/.6667 if t < .75 else 0)
+        return body, door, angle
+
+    @staticmethod
+    def rotate(point, angles, pivot):
+        # Independent XYZ native cuboid decoding, not converter geometry math.
+        x, y, z = [a-b for a,b in zip(point,pivot)]
+        for axis, degrees in enumerate((-angles[0], angles[1], -angles[2])):
+            c, s = math.cos(math.radians(degrees)), math.sin(math.radians(degrees))
+            if axis == 0: y,z = y*c-z*s, y*s+z*c
+            elif axis == 1: x,z = x*c+z*s, -x*s+z*c
+            else: x,y = x*c-y*s, x*s+y*c
+        return [x+pivot[0], y+pivot[1], z+pivot[2]]
+
+    def direct_point(self, name, point, t):
+        body, door, angle = self.source_values(t)
+        if name == 'group5':
+            point = [pivot+(value-pivot)*scale for pivot,value,scale in zip([0,2,-5],point,door)]
+            # Source group5 Z rotation is native -Z; the parent starts scaling
+            # only after this rotation reaches zero, so no shear is present.
+            point = self.rotate(point, [0,0,angle], [0,2,-5])
+        return [pivot+(value-pivot)*scale for pivot,value,scale in zip([0,8,0],point,body)]
+
+    def compare_pose(self, baked, seconds):
+        lookup = {bone['name']: bone for bone in baked['minecraft:geometry'][0]['bones']}
+        maximum = 0
+        for name,bone in self.bones.items():
+            for source,target in zip(bone['cubes'],lookup[name]['cubes']):
+                self.assertEqual(target['uv'],source['uv'])
+                for signs in itertools.product((0,1), repeat=3):
+                    expected = self.direct_point(name, [a+b*c for a,b,c in zip(source['origin'],source['size'],signs)], seconds)
+                    actual = [a+b*c for a,b,c in zip(target['origin'],target['size'],signs)]
+                    actual = self.rotate(actual,target.get('rotation',[0]*3),target.get('pivot',[0]*3))
+                    current = lookup[name]
+                    while True:
+                        actual = self.rotate(actual,current.get('rotation',[0]*3),current['pivot'])
+                        if 'parent' not in current: break
+                        current = lookup[current['parent']]
+                    maximum = max(maximum,math.dist(expected,actual))
+        self.assertLess(maximum, 0.000002, f'forward source vertex error at t={seconds}: {maximum}')
+        return maximum
+
+    def test_pinned_source_and_all_generated_dependency_records(self):
+        pins = {'geo/block/stove.geo.json': '875a37c0579eb449512a03361e42509625a6a29b',
+                'animations/stove.animation.json': '0e13e05844344566da40d904992f15936b8e81e0'}
+        manifest = converter.read_json(ROOT/'runtime/asset_conversion_manifest.json')
+        self.assertEqual(manifest['revision'], 'e59e3dbcabe19b783d9adb933db5fcb8bc1e4642')
+        for path,blob in pins.items():
+            raw = (converter.ASSETS/path).read_bytes()
+            self.assertEqual(hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest(),blob)
+            for age in range(1,20):
+                rows = [row for row in manifest['assets'] if row['source'] == str(converter.ASSET_REL/path)
+                        and row['output'] == f'RP/models/blocks/stove_ignition_{age}.geo.json']
+                self.assertEqual(len(rows),1)
+                self.assertEqual(rows[0]['sha256'],hashlib.sha256(raw).hexdigest())
+
+    def test_step_discriminates_exact_tie_nextafter_and_endpoint_in_both_evaluators(self):
+        for evaluator in (lambda t: converter.easing_fraction('step',t), lambda t: self.review.easing('step',t,[])):
+            # Literal expectations from EasingType.step, not another sampler.
+            for t,value in [(0,0),(.499999999,0),(.5,0),(math.nextafter(.5,1),.5),(.500000001,.5),(.99,.5),(1,1)]:
+                self.assertEqual(evaluator(t),value)
+        for t,body,door in [(.9375,[1,1.05,1.1],[1.3]*3),
+                             (math.nextafter(.9375,1),[1,1.025,1.05],[1.15]*3),
+                             (.9375+1e-9,[1,1.025,1.05],[1.15]*3),(1,[1]*3,[1]*3)]:
+            for name,expected in [('group2',body),('group5',door)]:
+                channel = self.clip['bones'][name]['scale']
+                for actual in (converter.sample_channel(channel,t,[1]*3), self.review.sample(channel,t,[1]*3)):
+                    for a,b in zip(actual,expected): self.assertAlmostEqual(a,b,places=14)
+        # For >2 steps only the final internal tie has the exceptional lower
+        # interval. Catch an overbroad ceil(t*n)-1 replacement as well.
+        for t,value in [(.25,.25),(.5,.5),(.75,.5),(math.nextafter(.75,1),.75)]:
+            self.assertEqual(converter.easing_fraction('step',t,[4]),value)
+            self.assertEqual(self.review.easing('step',t,[4]),value)
+
+    def test_all_integer_ages_keep_source_uv_bounds_and_exact_factory_output(self):
+        for age in range(1,20):
+            name = f'stove_ignition_{age}'
+            baked = converter.read_json(ROOT/f'runtime/RP/models/blocks/{name}.geo.json')
+            generated = converter.bake_pose(self.source,self.clip,age/20,f'geometry.ordertocook.{name}')
+            self.assertEqual(baked,generated)
+            self.compare_pose(baked,age/20)
+            converter.assert_block_bounds(baked)
+            entry = baked['minecraft:geometry'][0]
+            self.assertEqual([entry['description'][key] for key in ('texture_width','texture_height')],[64,64])
+            self.assertEqual(sum(len(cube['uv']) for bone in entry['bones'] for cube in bone['cubes']),17)
+
+    def test_dense_source_extrema_and_discontinuous_tie_have_no_shear_or_clipping(self):
+        times = sorted({*(i/1000 for i in range(1001)), .025, .0833, .125, .83, .875,
+                        .9375, math.nextafter(.9375,1), .9375+1e-9})
+        maximum = 0
+        for seconds in times:
+            baked = converter.bake_pose(self.source,self.clip,seconds,'geometry.test')
+            maximum = max(maximum,self.compare_pose(baked,seconds))
+            converter.assert_block_bounds(baked)
+        self.assertLess(maximum,0.000002)
+
+    def test_neutral_mesh_preserves_existing_faces_and_all_source_texels(self):
+        idle = converter.read_json(ROOT/'runtime/RP/models/blocks/stove.geo.json')['minecraft:geometry'][0]
+        cubes = idle['bones'][0]['cubes']
+        source_cubes = [cube for bone in self.bones.values() for cube in bone['cubes']]
+        self.assertEqual(len(cubes),3)
+        for cube,source in zip(cubes,source_cubes):
+            self.assertEqual(cube['origin'],source['origin'])
+            self.assertEqual(cube['size'],source['size'])
+            for name,uv in source['uv'].items():
+                actual = {key: ([v*4 for v in value] if key in ('uv','uv_size') else value)
+                          for key,value in cube['uv'][name].items() if key != 'material_instance'}
+                self.assertEqual(actual,uv)
+        extra = set(cubes[1]['uv'])-set(source_cubes[1]['uv'])
+        self.assertEqual(extra,{'south'})
+        # Canonical upper-lip south at z=-5, x[-8,8], y[12,16] is entirely
+        # against the body front. Active source geometry deliberately omits it.
+        self.assertEqual(cubes[1]['origin'][2]+cubes[1]['size'][2],cubes[0]['origin'][2])
+        block = converter.read_json(ROOT/'runtime/BP/blocks/stove.json')['minecraft:block']
+        self.assertEqual(block['components']['minecraft:geometry'],'geometry.ordertocook.stove')
+        self.assertTrue(block['components']['minecraft:collision_box'])
+        self.assertTrue(block['components']['minecraft:selection_box'])
+        self.assertNotIn('minecraft:tick',block['components'])
+        self.assertNotIn('minecraft:light_emission',block['components'])
+
+
+class WashingTableWaterTests(unittest.TestCase):
+    """Source renderer vertices are the oracle, not the converter's UV output."""
+    source = ROOT / 'upstream/reference'
+    renderer = source / converter.WASHING_WATER_RENDERER
+
+    @classmethod
+    def setUpClass(cls):
+        cls.temp = TemporaryDirectory()
+        cls.output = Path(cls.temp.name)
+        with patch.multiple(converter, create=True, SOURCE=cls.source, OUT=cls.output,
+                            BP=cls.output/'BP', RP=cls.output/'RP', PROVENANCE=[], GEOMETRY_SOURCES={}):
+            converter.make_blocks()
+            cls.provenance = copy.deepcopy(converter.PROVENANCE)
+        cls.block = converter.read_json(cls.output/'BP/blocks/washingtable.json')['minecraft:block']
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.temp.cleanup()
+
+    def test_pinned_renderer_bytes_and_all_outputs_have_provenance(self):
+        data = self.renderer.read_bytes()
+        self.assertEqual(hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest(),
+                         'a47acf4717344c0196066cccbf199c8c21347585')
+        self.assertEqual(hashlib.sha256(data).hexdigest(),
+                         'f6f7b7b7781e30acded9d3e2cf17ad6d8ab01d234dd1e2b2d517fd4ea9130d1d')
+        self.assertIn(str(converter.WASHING_WATER_RENDERER), converter.read_json(self.source/'UPSTREAM.json')['subset'])
+        rows = [row for row in self.provenance if row['source'] == str(converter.WASHING_WATER_RENDERER)]
+        self.assertEqual({row['output'] for row in rows}, {'BP/blocks/washingtable.json'} |
+                         {f'RP/models/blocks/washingtable_{count}.geo.json' for count in range(11)})
+        shipped = converter.read_json(ROOT/'runtime/asset_conversion_manifest.json')['assets']
+        for row in rows:
+            self.assertEqual(row['sha256'], hashlib.sha256(data).hexdigest())
+            self.assertIn(row, shipped)
+
+    def test_factory_matches_shipped_states_and_keeps_original_body_and_plate_cubes(self):
+        relative_paths = ['BP/blocks/washingtable.json', 'RP/models/blocks/washingtable_item.geo.json']
+        for count in range(11):
+            path = f'RP/models/blocks/washingtable_{count}.geo.json'
+            relative_paths.append(path)
+            generated = converter.read_json(self.output/path)['minecraft:geometry'][0]
+            cubes = generated['bones'][0]['cubes']
+            # Existing model conversion is unchanged; only one renderer plane
+            # is added to the original 10 body cubes plus source plate cubes.
+            models = [converter.resolve_model('ordertocook:block/washingtable_idle')]
+            if count:
+                models.append(converter.resolve_model(f'ordertocook:block/washingtable_{count}'))
+            originals = [converter.java_cube(cube, model['textures']) for model in models for cube in model['elements']]
+            self.assertEqual(cubes[:-1], originals)
+            self.assertEqual(len(cubes), 11+count)
+            self.assertEqual(cubes[-1]['size'], [10, 0, 9])
+            self.assertEqual(set(cubes[-1]['uv']), {'up', 'down'})
+            converter.assert_block_bounds({'minecraft:geometry': [generated]})
+        for path in relative_paths:
+            with self.subTest(path=path):
+                self.assertEqual((self.output/path).read_bytes(), (ROOT/'runtime'/path).read_bytes())
+
+    def test_independent_renderer_corner_uv_contract_for_both_sides_and_four_facings(self):
+        # Source emitVertex calls in their original order, not a synthetic
+        # Java cube passed through java_cube. Source UVs are normalized 0..1.
+        java = [(3, 15.08, 3, 0, 0), (13, 15.08, 3, 1, 0),
+                (13, 15.08, 12, 1, 1), (3, 15.08, 12, 0, 1)]
+        text = self.renderer.read_text()
+        source_rotations = {name.lower(): int(angle) for name, angle in
+                            re.findall(r'case (NORTH|EAST|SOUTH|WEST) -> (\d+)f;', text)}
+        def turn(point, degrees):
+            # Quarter turns around block center. Compare dispatch and physical
+            # source corners; this is not a claim about engine render behavior.
+            x, y, z, u, v = point
+            for _ in range((degrees % 360)//90):
+                x, z = z, -x
+            return (round(x, 6), round(y, 6), round(z, 6), u, v)
+        for count in range(11):
+            entry = converter.read_json(self.output/f'RP/models/blocks/washingtable_{count}.geo.json')['minecraft:geometry'][0]
+            cube = entry['bones'][0]['cubes'][-1]
+            # Decode Bedrock's reflected X and face vertex order independently
+            # (GeoQuad/VertexSet). This catches mirrors hidden by flat water.png.
+            ox, y, z0 = cube['origin']; dx, _, dz = cube['size']
+            x0, x1, z1 = -ox-dx, -ox, z0+dz
+            positions = {'up': [(x0,y,z1),(x1,y,z1),(x1,y,z0),(x0,y,z0)],
+                         'down': [(x0,y,z0),(x1,y,z0),(x1,y,z1),(x0,y,z1)]}
+            for direction, source_rotation in source_rotations.items():
+                states = {'ordertocook:plates': count, 'minecraft:cardinal_direction': direction}
+                components = copy.deepcopy(self.block['components'])
+                for row in self.block['permutations']:
+                    if eval(row['condition'], {'__builtins__': {}}, {'q': SimpleNamespace(block_state=states.__getitem__)}):
+                        components.update(row['components'])
+                self.assertEqual(components['minecraft:geometry'], f'geometry.ordertocook.washingtable_{count}')
+                rotation = components['minecraft:transformation']['rotation'][1]
+                self.assertEqual(rotation % 360, source_rotation)
+                expected = sorted(turn((x-8,y,z-8,u,v), source_rotation) for x,y,z,u,v in java)
+                for side, vertices in positions.items():
+                    face = cube['uv'][side]
+                    u,v = face['uv']; du,dv = face['uv_size']
+                    texture_corners = [(u+du,v),(u,v),(u,v+dv),(u+du,v+dv)]
+                    actual = sorted(turn((*point, tx/16, ty/16), rotation)
+                                    for point,(tx,ty) in zip(vertices, texture_corners))
+                    with self.subTest(count=count, direction=direction, side=side):
+                        self.assertEqual(actual, expected)
+                        self.assertTrue(all(-8 <= p[0] <= 8 and -8 <= p[2] <= 8 for p in actual))
+                        self.assertEqual(face['material_instance'], 'ordertocook_block_water')
+
+    def test_all_world_materials_blend_original_alpha_but_item_stays_dry(self):
+        for components in [self.block['components'], *[p['components'] for p in self.block['permutations']]]:
+            materials = components.get('minecraft:material_instances')
+            if materials is None:
+                continue
+            self.assertEqual({m['render_method'] for m in materials.values()}, {'blend'})
+            self.assertFalse(materials['ordertocook_block_water']['face_dimming'])
+        item = self.block['components']['minecraft:item_visual']
+        self.assertEqual(item['geometry'], 'geometry.ordertocook.washingtable_item')
+        self.assertEqual({m['render_method'] for m in item['material_instances'].values()}, {'alpha_test'})
+        mesh = converter.read_json(self.output/'RP/models/blocks/washingtable_item.geo.json')['minecraft:geometry'][0]
+        self.assertEqual(len(mesh['bones'][0]['cubes']), 10)
+        self.assertEqual({f['material_instance'] for c in mesh['bones'][0]['cubes'] for f in c['uv'].values()},
+                         {'ordertocook_block_washingtable'})
+        self.assertEqual(converter.read_json(converter.ASSETS/'models/item/washingtable.json'),
+                         {'parent': 'ordertocook:block/washingtable_idle'})
+        from PIL import Image
+        for name, size, alpha in [('water', (32,32), {133}), ('washingtable', (64,64), {0,255})]:
+            source = converter.ASSETS/f'textures/block/{name}.png'
+            self.assertEqual(source.read_bytes(), (ROOT/f'runtime/RP/textures/ordertocook/block/{name}.png').read_bytes())
+            with Image.open(source) as image:
+                self.assertEqual(image.size, size)
+                self.assertEqual(set(image.getchannel('A').tobytes()), alpha)
+
+    def test_source_parser_uses_renderer_dimensions_and_refuses_changed_uv_or_material(self):
+        original = self.renderer.read_text()
+        with TemporaryDirectory() as temp:
+            source = Path(temp)
+            target = source/converter.WASHING_WATER_RENDERER
+            target.parent.mkdir(parents=True)
+            for old, new, valid in [('15.08f / 16f', '14.75f / 16f', True),
+                                    ('X0, Y, Z0, 0f, 0f', 'X0, Y, Z0, 1f, 0f', False),
+                                    ('entityTranslucent', 'entityCutout', False)]:
+                target.write_text(original.replace(old,new))
+                g, mats = converter.convert_java_model('ordertocook:block/washingtable_idle', 'geometry.test')
+                with patch.object(converter, 'SOURCE', source, create=True):
+                    if valid:
+                        converter.add_washingtable_water(g, mats)
+                        self.assertEqual(g['minecraft:geometry'][0]['bones'][0]['cubes'][-1]['origin'][1], 14.75)
+                    else:
+                        with self.assertRaisesRegex(ValueError, 'quad/material contract'):
+                            converter.add_washingtable_water(g, mats)
+
 
 if __name__ == "__main__":
     unittest.main()

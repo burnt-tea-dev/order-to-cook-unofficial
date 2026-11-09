@@ -85,7 +85,21 @@ def easing(name, t, args):
         return t
     if name == "step":
         count = int(args[0]) if args else 2
-        return min(count - 1, math.floor(t * count)) / count
+        # GeckoLib 4.8.3 EasingType.step: the final boundary uses >, not >=.
+        # For its default two steps the stove stays expanded through .9375s.
+        if count < 2:
+            raise ValueError("GeckoLib step easing requires at least two steps")
+        width = 1/count
+        if t > (count-1)*width:
+            return (count-1)*width
+        low, high = 0, count-1
+        while high-low != 1:
+            mid = low+(high-low)//2
+            if t >= mid*width:
+                low = mid
+            else:
+                high = mid
+        return low*width
     def elastic(x):
         amount = args[0] if args else 1
         return 1 - math.cos(x * math.pi / 2) ** 3 * math.cos(x * amount * math.pi)

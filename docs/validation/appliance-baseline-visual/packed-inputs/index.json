@@ -1,0 +1,320 @@
+{
+  "format": "ordertocook.gzip-review-inputs.v1",
+  "files": [
+    {
+      "path": "inputs/runtime/BP/blocks/dishwasher.json",
+      "bytes": 152546,
+      "sha256": "958fe872a0743e09e41f86c7182335cfa3c5c468fb0c5f886ff1cac4a2448197",
+      "git_blob_sha1": "5cc587d5a1f68ff493148c1cb57a9d53b5016363",
+      "stored_path": "data/0000.gz",
+      "stored_bytes": 2268,
+      "stored_sha256": "59862342f498c1f98c66f2bed6d3e42f0425a00898645bc927ccaf75d1e46165"
+    },
+    {
+      "path": "inputs/tools/convert_assets.py",
+      "bytes": 136389,
+      "sha256": "05299ed474cb13ee0c8b6e544fce640c20c0390386425acb4f2731033a27738c",
+      "git_blob_sha1": "76498eec43cff7dd52f71e1024ecc56bbcf9209c",
+      "stored_path": "data/0001.gz",
+      "stored_bytes": 38546,
+      "stored_sha256": "f500c38c193a985d9fa4e9ce94c66875d96dcb499e4a1c2696dd61b8c2b297e1"
+    },
+    {
+      "path": "inputs/upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "bytes": 144802,
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "git_blob_sha1": "457fb7c122b3467b44ca30c023ead4addf871010",
+      "stored_path": "data/0002.gz",
+      "stored_bytes": 2686,
+      "stored_sha256": "a4f41ddc45083ed8c6497eb9825fc428d571bcc698ddd55132100a16af2b7e06"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 472502,
+      "sha256": "2542e9c2b5775edff653d6e9508e66111aeda2f7e4f7acc7548df253ce2f6ad8",
+      "git_blob_sha1": "e9c7ed0aeb55f5c75aa9c3258c146f9494aa4a06",
+      "stored_path": "data/0003.gz",
+      "stored_bytes": 25849,
+      "stored_sha256": "1a110d0e68211eeacc32f68e239d2c83dc5d1ebb6d83c8e16393e9fe74597a3a"
+    },
+    {
+      "path": "scenes/dish_1_0_5.bbmodel",
+      "bytes": 274210,
+      "sha256": "b66bbefad9f3e22ea6500d9a182bb5f5032346e923c6d1b173f12ca44e874fe9",
+      "git_blob_sha1": "ea46375aeea8aa47a7f31489be4fba13d85bbb61",
+      "stored_path": "data/0004.gz",
+      "stored_bytes": 24076,
+      "stored_sha256": "d70c939c04684078c08b4bedb28ad23c056942401ca314475e4fa0829cac242b"
+    },
+    {
+      "path": "scenes/dish_1_12_15.bbmodel",
+      "bytes": 184848,
+      "sha256": "a19d5b4c5a61b9191106d0b2a20fde2faac955bc40ee072059cef347be9a8843",
+      "git_blob_sha1": "f47a94134bac7042e9c01d2e0022446f7fd992b8",
+      "stored_path": "data/0005.gz",
+      "stored_bytes": 15450,
+      "stored_sha256": "f7a5ba0c1348425301ec24a18a4c3e6f493d421c7bb99684c8098410fa507a0c"
+    },
+    {
+      "path": "scenes/dish_1_6_11.bbmodel",
+      "bytes": 271925,
+      "sha256": "dc06a5c1c737f232433f08eff34d8195bce5638278a0c23d06578026263ba187",
+      "git_blob_sha1": "1556aea3dbcd6bad937a7d10eb7e92f5df61e682",
+      "stored_path": "data/0006.gz",
+      "stored_bytes": 20804,
+      "stored_sha256": "2623533512f66a6b7b9b968611cc3d5e993ffeeb8c06a1199f3f91e535586e55"
+    },
+    {
+      "path": "scenes/dish_2_0_5.bbmodel",
+      "bytes": 458398,
+      "sha256": "720adb34038f29ea2a7957614ceb1f25858d9675f9d846cea4292e62243e4256",
+      "git_blob_sha1": "5bc31866df4a141ed3f5ec3ddb4e3dd6978d26d6",
+      "stored_path": "data/0007.gz",
+      "stored_bytes": 40376,
+      "stored_sha256": "8734c8cbc69c9d162cfde03ff78f4251a219bedf92a9347599ad741f1f8f94e7"
+    },
+    {
+      "path": "scenes/dish_2_12_15.bbmodel",
+      "bytes": 323101,
+      "sha256": "b8568379060d32886f9435205edf2e72757eb176bbf18d4f8e3eecb4b5fb9eec",
+      "git_blob_sha1": "7b6d91ffb9f69fe24e0918fd629af3a97cb90bf0",
+      "stored_path": "data/0008.gz",
+      "stored_bytes": 24048,
+      "stored_sha256": "c31fa71b1e94049a58e96bea70f729d2670142687f8df5553c3471d9346ce022"
+    },
+    {
+      "path": "scenes/dish_2_6_11.bbmodel",
+      "bytes": 485854,
+      "sha256": "9086e5001dacbf4b9b5e2be278139add134f8544317b9848441f49c3cd1120c3",
+      "git_blob_sha1": "711e64b88588c3a99791d23771953c1ea4f71780",
+      "stored_path": "data/0009.gz",
+      "stored_bytes": 41248,
+      "stored_sha256": "9796538520dc22f92e9c52df8806d0dac116e8a945b72ef0683b28a849fc3df4"
+    },
+    {
+      "path": "scenes/dish_3_0_5.bbmodel",
+      "bytes": 270396,
+      "sha256": "96c2d372a85a487da839aafae9e4fab7497031d917770271c04807a479aa826f",
+      "git_blob_sha1": "4452e9a414a5371127a828dfb7d57d8152f86ab2",
+      "stored_path": "data/0010.gz",
+      "stored_bytes": 19934,
+      "stored_sha256": "685ddfb2d2977141a786628eaa10ac2930d3b3601b8d29cc5ea2536b28993f9c"
+    },
+    {
+      "path": "scenes/dish_3_12_15.bbmodel",
+      "bytes": 182576,
+      "sha256": "4e1b846a5c0f27d07e246c881c4ad9a053b7efbb5ba1bc7bb4da9ffca5fac18e",
+      "git_blob_sha1": "1301e4d5375938820c6a04d9296adbbbf8c21fa4",
+      "stored_path": "data/0011.gz",
+      "stored_bytes": 13353,
+      "stored_sha256": "889a499a15e8d3e1d8b7809e363f2691f1a956623ff8afb54ab78f7004f207ed"
+    },
+    {
+      "path": "scenes/dish_3_6_11.bbmodel",
+      "bytes": 270400,
+      "sha256": "b337b44998da9badc98bf538c061a0f7bcd13589dd65325adb5dbb24339306d3",
+      "git_blob_sha1": "2fd0637d39d8995683ac67cbdd5a74fc88706f64",
+      "stored_path": "data/0012.gz",
+      "stored_bytes": 19940,
+      "stored_sha256": "9a31161cf799579073918ff9fe8bc2566007de09584943a03917f75ce9e56425"
+    },
+    {
+      "path": "scenes/dish_4_0_5.bbmodel",
+      "bytes": 476408,
+      "sha256": "52770c6088256bef4a71896b6b0cd4a7b94ba25bf7b560537e51478be0a1477c",
+      "git_blob_sha1": "7474f3e51fb3e6e3c5fff85a3e00e321541b6e8a",
+      "stored_path": "data/0013.gz",
+      "stored_bytes": 36155,
+      "stored_sha256": "ae760551aaad939689b4af17ff765d10252c02ec7528f25d9e3e5c206411ee01"
+    },
+    {
+      "path": "scenes/dish_4_12_15.bbmodel",
+      "bytes": 327065,
+      "sha256": "379a82f5b97c109709f7c02bacbc1f68750e446464a26b1469aa3983e5c031ae",
+      "git_blob_sha1": "19a49fbbd93f1ce11b9fd2afb4373583b60150b8",
+      "stored_path": "data/0014.gz",
+      "stored_bytes": 26908,
+      "stored_sha256": "87c3dc937b073383b9c38906494ce3681bbda6c1d5947b493c16e515a47fa765"
+    },
+    {
+      "path": "scenes/dish_4_6_11.bbmodel",
+      "bytes": 487477,
+      "sha256": "52cca4f56e0abe6dc057aee9e55e225c3dddeea2fbde2bf643b83f656e24482b",
+      "git_blob_sha1": "918767510e3a8b7dd0e2e844b7f1c80e24eceaab",
+      "stored_path": "data/0015.gz",
+      "stored_bytes": 41657,
+      "stored_sha256": "85f740f99920e18686e14a9b6b4d2b0279b9d5eec112fee4caba852168d1a482"
+    },
+    {
+      "path": "scenes/dish_6_0_5.bbmodel",
+      "bytes": 270873,
+      "sha256": "0132b294aec770d83508d7badaa78a1aa453f91def48c4590d3eba6294848e84",
+      "git_blob_sha1": "523bcacc9ed3c516e1e6a52c1ba5c8a83ad09cb5",
+      "stored_path": "data/0016.gz",
+      "stored_bytes": 20086,
+      "stored_sha256": "aa58fedc27ea06def48140a3898868543d256d2e795b1f8472eb40d155402986"
+    },
+    {
+      "path": "scenes/dish_6_12_15.bbmodel",
+      "bytes": 185324,
+      "sha256": "5cb5f7e00d08f1faede267c7cf20e0ba3beeadbc63cb7a691d19bcf1d90e7ba5",
+      "git_blob_sha1": "888429565614627953bf92e31485143f3542cab0",
+      "stored_path": "data/0017.gz",
+      "stored_bytes": 16240,
+      "stored_sha256": "09c84a4c1f9a338d4d0ea0f286fa650d16551364db8d0bd3ea4586ec6228184d"
+    },
+    {
+      "path": "scenes/dish_6_6_11.bbmodel",
+      "bytes": 275242,
+      "sha256": "86e13b79fe6cd0cc02fc9a381f9f4f32e1f6745c4b5fb7f4810dc8bf9b264c73",
+      "git_blob_sha1": "cd75532b4ea2ddc2eb5b928ce451e34e2c16883e",
+      "stored_path": "data/0018.gz",
+      "stored_bytes": 24370,
+      "stored_sha256": "5184bc347bac90a8d03db1dc66926e22778516dca4cc03425fa35aeff3e57a08"
+    },
+    {
+      "path": "scenes/dish_counts_phase2_0_1_2_3_8_16.bbmodel",
+      "bytes": 421239,
+      "sha256": "5c0295a9c86c6d9a4b24162568fd18ee4da8c9289e6d10252b8369a9a1247a53",
+      "git_blob_sha1": "8f2bf1cbe5f9598164f197dca7676838d2f429e7",
+      "stored_path": "data/0019.gz",
+      "stored_bytes": 36270,
+      "stored_sha256": "4db9835c30c0ce0613de831665e72f854bf70f2752048aad294d07e776194dd4"
+    },
+    {
+      "path": "scenes/dish_counts_phase5_0_1_2_3_8_16.bbmodel",
+      "bytes": 421915,
+      "sha256": "750c08cbe9af6797108e1069ac3b0ed8702a31f0fc0220f62956312347444379",
+      "git_blob_sha1": "0f29d3edcd978901e62754fc5b82dfc80b4bc83d",
+      "stored_path": "data/0020.gz",
+      "stored_bytes": 36227,
+      "stored_sha256": "6ee578219d6307317dab32f98f0540737d7d62d94712191729a903de0b109c75"
+    },
+    {
+      "path": "scenes/fridge_full_assembly_controls.bbmodel",
+      "bytes": 269591,
+      "sha256": "47556fee6160d55b0381053b4ef9549d71c0e2825d1caa1cf0280becef3abf8a",
+      "git_blob_sha1": "87504aa5ba16bdd2146b4de1d6b9907e1c7f7812",
+      "stored_path": "data/0021.gz",
+      "stored_bytes": 21188,
+      "stored_sha256": "fca3d61895559b353a167c409adcda8160962dc099ea549ec531c9657dae0afe"
+    },
+    {
+      "path": "scenes/fridge_lower_0_3.bbmodel",
+      "bytes": 266244,
+      "sha256": "c9cbac29d476675c09f60910b6ca9a4532a8be779e7bb6f616b3b8c248e055e7",
+      "git_blob_sha1": "cf80b1c6b0b2f76a95a563759df2a33ca1981a35",
+      "stored_path": "data/0022.gz",
+      "stored_bytes": 20314,
+      "stored_sha256": "14c73c0396713ad5c4460bcfe58a0f7df6ea76b5666f3f962eabe8b1e1d11b6e"
+    },
+    {
+      "path": "scenes/fridge_lower_4_7.bbmodel",
+      "bytes": 266423,
+      "sha256": "5c1f984d2cd0a2bd3b5185dc84ffbaedc5cbebeb0bb8e88cd5337740935a51e9",
+      "git_blob_sha1": "288312dda67b138219d2cfb2b9fd91edadebe6c8",
+      "stored_path": "data/0023.gz",
+      "stored_bytes": 20445,
+      "stored_sha256": "e28b2b6177d0f32c43122c924de063146771db5c36b8e80f204a058c664c2160"
+    },
+    {
+      "path": "scenes/fridge_lower_8_10.bbmodel",
+      "bytes": 201554,
+      "sha256": "2d06b39edcae27909e0993ca1b118be62218827e5ee59f25fe186abf10ce945c",
+      "git_blob_sha1": "0fb33cfee6b482761430dfe605a861c9a77b3e5a",
+      "stored_path": "data/0024.gz",
+      "stored_bytes": 16050,
+      "stored_sha256": "245714fb9ce003a9d164288f7d1a70702b7b66b8c32e50a6ab2d0c5acc7e4994"
+    },
+    {
+      "path": "scenes/fridge_lower_close_0_3.bbmodel",
+      "bytes": 266542,
+      "sha256": "1c256d55b3f41ee24ecbee70e92f4a79d853d154803cae9c4fcfd2cb60b0e344",
+      "git_blob_sha1": "7658353ef2739a8456fb77451d044003a8c47896",
+      "stored_path": "data/0025.gz",
+      "stored_bytes": 20511,
+      "stored_sha256": "b2868980d067c7f81d1d964799b8fa916a5e3b5382ffb6afc7e1c8535dc7924a"
+    },
+    {
+      "path": "scenes/fridge_lower_close_4_7.bbmodel",
+      "bytes": 269233,
+      "sha256": "6d3b8af666c45a950b4d7e03d267f230fb8ddc81345544c1479481c3c4bf5aec",
+      "git_blob_sha1": "6582b5e02f540832340a7a3f2f3d5c0417ac0d50",
+      "stored_path": "data/0026.gz",
+      "stored_bytes": 20930,
+      "stored_sha256": "299920f567fc240c8abfd6b9ae5e1de4ca76115fe87b1c2d4878305c8080f2fb"
+    },
+    {
+      "path": "scenes/fridge_lower_close_8_10.bbmodel",
+      "bytes": 201459,
+      "sha256": "af29d09363062b3fe7b81e86013ed0a033e041a3778df05fe70761bdff05f7e0",
+      "git_blob_sha1": "3da0a4ab79a23bf5b9c5c13710e78c09dbdb72f1",
+      "stored_path": "data/0027.gz",
+      "stored_bytes": 16019,
+      "stored_sha256": "d08fffb8d397be11a8b484df25ff5597c2f936b4cc65b438bdab1a79f7014729"
+    },
+    {
+      "path": "scenes/fridge_upper_0_3.bbmodel",
+      "bytes": 267538,
+      "sha256": "d891c458840cf80f4f9b0c595ca14fa8776f4d09a9e4b257301a8312fb7ccdf4",
+      "git_blob_sha1": "3a729686222d989ed66877db5142f1799e68e33a",
+      "stored_path": "data/0028.gz",
+      "stored_bytes": 20623,
+      "stored_sha256": "17784009bde1937ce3e1ad30a9f02e4e809acdccfbc10a37fe95aac2a61d5df3"
+    },
+    {
+      "path": "scenes/fridge_upper_4_7.bbmodel",
+      "bytes": 268188,
+      "sha256": "d20f10e3b61c5cfcbbcfcedbc47dfd9d4b56a75b16b154b896631fa1901e964a",
+      "git_blob_sha1": "c375e6d2c71286bb839b8cdf6aaf84e1e90fc0e6",
+      "stored_path": "data/0029.gz",
+      "stored_bytes": 20804,
+      "stored_sha256": "ecba68ccc6aae3ccbf8b4a990e05415c44669f20e157c2cc7c5a7c245ee83114"
+    },
+    {
+      "path": "scenes/fridge_upper_8_10.bbmodel",
+      "bytes": 202844,
+      "sha256": "a492e37c9f9ffd98366ed4de1674d06d39a1650a94665788c79382d83e73ff8b",
+      "git_blob_sha1": "2e8917e86f898860dc569c7ac3d2723e8b178e5f",
+      "stored_path": "data/0030.gz",
+      "stored_bytes": 16317,
+      "stored_sha256": "fca3cb3f41363d36ee1210e7172225197c49e5cbf6a6d01c3a330bae5fe7e4bf"
+    },
+    {
+      "path": "scenes/fridge_upper_close_0_3.bbmodel",
+      "bytes": 268263,
+      "sha256": "bfabfed0703c107d884bc0a1034a63b4e40509ca80bc8028f40d32f6a75f6997",
+      "git_blob_sha1": "ad2aeae970ab829183464385a865fbc0a520a595",
+      "stored_path": "data/0031.gz",
+      "stored_bytes": 20835,
+      "stored_sha256": "3f307afad69a8dceae971a46239585a2fb1f484a3da11ca4452bbc5cb013cbbc"
+    },
+    {
+      "path": "scenes/fridge_upper_close_4_7.bbmodel",
+      "bytes": 270808,
+      "sha256": "a794196abdd9e79fc6dad7605e3408d026b57a926eebfe07153347873e1f6637",
+      "git_blob_sha1": "42e38e2378e62060a5f357ecb305a634078756cb",
+      "stored_path": "data/0032.gz",
+      "stored_bytes": 21438,
+      "stored_sha256": "1e44c0c416680f382367e7293f7a5e9d7471e6a55c0ad3a2b20f6e41790b6b72"
+    },
+    {
+      "path": "scenes/fridge_upper_close_8_10.bbmodel",
+      "bytes": 202329,
+      "sha256": "dd6de01ee101fac0d8dc157fde46843db9a5e2d0f01a3391f032a3c62be5dc10",
+      "git_blob_sha1": "23ad29365ebe04cfc1597c917f265c990d09c314",
+      "stored_path": "data/0033.gz",
+      "stored_bytes": 16204,
+      "stored_sha256": "7a27f73fb7edb707cd67c506499cf33af8a52ed85abd77a7898ee3a5bf89ee7b"
+    },
+    {
+      "path": "scenes/manifest.json",
+      "bytes": 739093,
+      "sha256": "3fdf164ab20800dfa24b7d4bce9f02c776e9eff59cb42ed2561919d1769d7103",
+      "git_blob_sha1": "cda21274d97959e976d8364f0f2ec8cb05a3c6c3",
+      "stored_path": "data/0034.gz",
+      "stored_bytes": 16671,
+      "stored_sha256": "d6e10f36073b2a302d2c339a0fd987075988d65bfd42a706cbccdaf08d70be98"
+    }
+  ]
+}

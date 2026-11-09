@@ -1,0 +1,278 @@
+{
+  "review_date_utc": "2026-11-08",
+  "application": "Blockbench Desktop 5.2.2",
+  "original_load_commit": "71d8952a9d38cc9df9ad557e41338fbbc2f656ab",
+  "report_base_commit": "4bd27721b56f5f11d9049da1fb6b0a371be68e52",
+  "runtime_changes": false,
+  "native_game_client_tested": false,
+  "bds_tested": false,
+  "official_application_deb_sha256": "76ea903a2d0086a112f177586efdeba9a1a87ea0218b2f1bbb4b2dc3ce177031",
+  "inputs": [
+    {
+      "path": "runtime/RP/animation_controllers/customer.animation_controllers.json",
+      "sha256": "2b024e01dcdf472a53322f62d202f73b6e6c6f1ef1d63560c880b3020cf1e2ee",
+      "size": 11772
+    },
+    {
+      "path": "runtime/RP/animations/npc.animation.json",
+      "sha256": "101a5507f2aa2d04ceae3e9ea84b8201fa69feb85baf46fb075980db63bc4b9e",
+      "size": 30344
+    },
+    {
+      "path": "runtime/RP/animations/npc.transition.animation.json",
+      "sha256": "5870c333007cc844905cb524e14b7b36ba0c2e093cbefc44766b2f5ed3059581",
+      "size": 42223
+    },
+    {
+      "path": "runtime/RP/entity/customer.entity.json",
+      "sha256": "54117245491fbad4560bfa374ef62612062a67a6081e10229f5ea63569cfac16",
+      "size": 1890
+    },
+    {
+      "path": "runtime/RP/models/blocks/dishwasher_2_5.geo.json",
+      "sha256": "3405c3ad10b2bdf9604bff9e713b809ceaf78302cdd924153e8d2e9bcc00520c",
+      "size": 25003
+    },
+    {
+      "path": "runtime/RP/models/blocks/dishwasher_4_10.geo.json",
+      "sha256": "03d2d0d54b43d1d71bddf64ce24e571fc61448eaf7c845c72ec7f9c05b6675a2",
+      "size": 26442
+    },
+    {
+      "path": "runtime/RP/models/blocks/dishwasher_6_9.geo.json",
+      "sha256": "aab23fd3dafbfb83f4eda2f35016429e5347fb6f4d4366fc1d66f4583c04da61",
+      "size": 14694
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_7.geo.json",
+      "sha256": "c87c5b0bfc0f4cf581f4c4d35d61a7d5a861f5a94ce0526c1f2330cd6aedf1e4",
+      "size": 7810
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_6.geo.json",
+      "sha256": "0cbaf0e0971b6d2b3c7522f6dd2a4b1532b7c89022951ebf177ae547dc3189a2",
+      "size": 14650
+    },
+    {
+      "path": "runtime/RP/models/entity/customer.geo.json",
+      "sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+      "size": 36330
+    },
+    {
+      "path": "runtime/RP/models/entity/customer_slim.geo.json",
+      "sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+      "size": 36271
+    },
+    {
+      "path": "runtime/RP/textures/ordertocook/block/dishwasher.png",
+      "sha256": "7c85e91a5fb2a8baff87528cec4512cf63dc4004ee209aad8ba169755eb97c90",
+      "size": 2162
+    },
+    {
+      "path": "runtime/RP/textures/ordertocook/block/refrigerator.png",
+      "sha256": "a545ea6a2c2ef3c25d48fd65051bf00e01382b01a97ef4f295b6d3b171e02039",
+      "size": 2138
+    },
+    {
+      "path": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+      "sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+      "size": 2497
+    },
+    {
+      "path": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+      "sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+      "size": 2611
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "evidence/blockbench-web-webgl-error.png",
+      "sha256": "70d58a326bc078afc5f69671b4f2a14800655e0149de1e56c1cbbd36e59a0372",
+      "size": 22092,
+      "dimensions": [
+        1180,
+        757
+      ]
+    },
+    {
+      "path": "evidence/customer-animation-warnings.png",
+      "sha256": "906a3731170826321a5d647b4c449bf6c2664dca38166bed8df5dcf05a555f08",
+      "size": 128812,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/customer-slim-neutral.png",
+      "sha256": "e1f5d2cae3700c5d90e66a109dadf7f0ca5bc9a215f6f849eb8aff9772417238",
+      "size": 100394,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/customer-slim-sit1.png",
+      "sha256": "cea19782eb35fd3844aede69279fa582f2db8be2c9533d4360e4d28f618cb794",
+      "size": 109932,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/customer-slim-sit4-mid.png",
+      "sha256": "df90d8e3a57407f4a4aa859f62d48be8404c07f79eddb3691839219897abc8b8",
+      "size": 111674,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/customer-wide-eat-boom-end.png",
+      "sha256": "f76c1e66198f2ad5ba1a3d736357fe375f831db1649028faa7f9bb738ecb47a6",
+      "size": 103786,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/customer-wide-eat-boom-late.png",
+      "sha256": "383f7b3342cf66805ca2310b9666a2660b8f4cbf891868813343d8b03f0b3bd0",
+      "size": 108330,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/customer-wide-eat-scale-mid.png",
+      "sha256": "727a745020d113ef2a8e1325994ae086458018b98d676bdcfb0e60b002ce4d70",
+      "size": 107409,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/customer-wide-interrupt-mid.png",
+      "sha256": "186d137f0501052d2c2e34ef1b880ad79dca93ac93491b6e69f556e0956ff114",
+      "size": 107210,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/customer-wide-neutral.png",
+      "sha256": "22fd1e4ff949d7a3b640a8c69090c9763213bfd31c89feb7121e7bed0af43c57",
+      "size": 85313,
+      "dimensions": [
+        1088,
+        724
+      ]
+    },
+    {
+      "path": "evidence/customer-wide-sit1.png",
+      "sha256": "8203b4d7cc8cf01c867c99ca3c98b0b86e7d03e18aee71d95966e48ff2b2d75a",
+      "size": 107326,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/customer-wide-sitspawn-mid.png",
+      "sha256": "2eb089f6761a0b158135fb8a54f1a4481c7f4db55a9c10eb5f490f1a6bd6dbb7",
+      "size": 107903,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/customer-wide-sittake-mid.png",
+      "sha256": "bbffd515cc0c175c022e68a89ccdcbfaae2f33b2f8479755b7e18f87f93ecd6e",
+      "size": 107958,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/customer-wide-standspawn-mid.png",
+      "sha256": "ce8b0794660e512ae4bdb9d70de53a82dcd172ece24db5970b993b8f17365959",
+      "size": 107480,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/customer-wide-standtake-end.png",
+      "sha256": "b63ae743e29d9b34ad0da458c578b15ceaeea33a0f41e843817da9cccb9ae539",
+      "size": 103664,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/customer-wide-standtake-mid.png",
+      "sha256": "74db54b3e3fed2e2790f0992c38fad4c2dc78ae78f16ff9a0624508a09217fdb",
+      "size": 108139,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/dishwasher-clean-output.png",
+      "sha256": "c65fa03bbd8e318044c04a2a28f714c416adde32fdc1fc54d435cf3fb5ec227d",
+      "size": 93864,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/dishwasher-dirty-input.png",
+      "sha256": "bafac5db29781d814c917b438dfef1cc86bd23bd624a58046d5e0557cc9fb6f0",
+      "size": 94751,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/dishwasher-empty-preview.png",
+      "sha256": "d8f0cedde135c4a092eff3b5e656be978628403bd2068b755bb07eeef4380d3d",
+      "size": 93196,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/refrigerator-lower7-interior.png",
+      "sha256": "fc2b30ccd6397be2fb3c0edf822c251c6292a6a990e8f486d6ae968c3d62be96",
+      "size": 84828,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/refrigerator-upper6-interior.png",
+      "sha256": "44545aeda8bbbb68ae9ac9b301fb0db263cab6cbe0ecd6557aa83981d9ef1934",
+      "size": 87368,
+      "dimensions": [
+        1188,
+        848
+      ]
+    }
+  ]
+}

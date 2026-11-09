@@ -9,7 +9,7 @@ const scripts = new URL('../runtime/BP/scripts/', import.meta.url);
 const signal = () => ({ subscriptions: [], subscribe(fn) { this.subscriptions.push(fn); return fn; } });
 const signals = () => new Proxy({}, { get(target, name) { return target[name] ||= signal(); } });
 
-export async function mainFixture(savedProperties = []) {
+export async function mainFixture(savedProperties = [], { captureErrors = false } = {}) {
   const env = makeEnvironment();
   const properties = new Map(savedProperties);
   env.world.messages = [];
@@ -41,7 +41,7 @@ export async function mainFixture(savedProperties = []) {
     BlockPermutation: FakePermutation, GameMode: { Creative: 'Creative', Survival: 'Survival' } };
   const key = `__otcMainTests${++sequence}`;
   const endings = [], interruptions = [];
-  const formResponses = [], forms = [];
+  const formResponses = [], forms = [], textResponses = [], errors = [];
   let applianceContext, entityContext;
   const stubs = {
     createEntityService: context => { entityContext = context; return { init() {}, spawnCustomer() {}, cleanupOrder() {}, onBlockBreak() {},
@@ -55,8 +55,12 @@ export async function mainFixture(savedProperties = []) {
       getCustomerSeat: entity => entity?.qaChair || chair }; },
     createApplianceService: context => { applianceContext = context; return { init() {}, onPlace() {}, onBreak() {}, getStorage() {}, normalizeBlock: block => block }; },
     notify: (who, text) => who.sendMessage(text),
-    choose: async (...args) => { forms.push(args); const response = formResponses.shift(); return typeof response === 'function' ? response(...args) : response; }, textInput: async () => undefined,
-    safely: (who, fn) => Promise.resolve().then(fn),
+    choose: async (...args) => { forms.push(args); const response = formResponses.shift(); return typeof response === 'function' ? response(...args) : response; },
+    textInput: async (...args) => { forms.push(args); const result = textResponses.shift(); return typeof result === 'function' ? result(...args) : result === undefined ? undefined : String(result).trim(); },
+    safely: (who, fn) => {
+      const result = Promise.resolve().then(fn);
+      return captureErrors ? result.catch(error => { errors.push(error); who.sendMessage('Operation failed'); }) : result;
+    },
   };
   globalThis[key] = { native, stubs };
   const loaded = new Map();
@@ -107,7 +111,7 @@ export async function mainFixture(savedProperties = []) {
   customer.setDynamicProperty('ordertocook:order_id', order.id);
   return { ...env, hooks, store, core, player, customer, chair, machine, restaurant, order, parcel, properties,
     applianceContext, finishNativeReaction: (restaurantId = restaurant.id, orderId = order.id) => entityContext.onCustomerReactionFinished(restaurantId, orderId), installedItems, scriptEvents, blockComponents, itemComponents,
-    endings, interruptions, forms, formResponses, failWrite: predicate => { failProperty = predicate; },
+    endings, interruptions, forms, formResponses, textResponses, errors, failWrite: predicate => { failProperty = predicate; },
     linkage: { restaurantId: restaurant.id, orderId: order.id } };
 }
 

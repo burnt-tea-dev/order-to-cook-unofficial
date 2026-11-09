@@ -1,0 +1,3929 @@
+{
+  "status": "PREPARED_SHARED_ROOT_CANDIDATE_NOT_GUI_ACCEPTED",
+  "canonical_commit": "e544f563062bf92e58afaa057a9ee52fd7ccbdc8",
+  "canonical_tree": "bb9f843cdb79a9ea9488acf8db67748cb2e69c21",
+  "source_commit": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+  "roots_independently_sampled": [
+    {
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "position": [
+        0.0,
+        0.0,
+        0.07562500000000014
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        0.984875
+      ]
+    },
+    {
+      "position": [
+        0,
+        0,
+        0.25
+      ],
+      "scale": [
+        1,
+        1,
+        0.95
+      ]
+    },
+    {
+      "position": [
+        0.0,
+        0.0,
+        0.10002999400119975
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        0.97999400119976
+      ]
+    }
+  ],
+  "inputs": {
+    "upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+    "upstream/reference/common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+    "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/refrigerator.png": "a545ea6a2c2ef3c25d48fd65051bf00e01382b01a97ef4f295b6d3b171e02039",
+    "runtime/BP/blocks/refrigerator.json": "3bdb34470d9ab01ae8bfcfd7afc95416aa8405a402adb6da702d7f8fb9bc70f1",
+    "runtime/BP/blocks/refrigerator_upper.json": "dced8c0a80bb32aa6e7c472f628dafeb26fe5c798befdb5e1ec7b6b5701310e5",
+    "runtime/BP/scripts/appliance_motion.js": "f6ee5aca864139b0339928d9d6e364c3de5e5a840545b918b0c0ed9ff80d0b83",
+    "runtime/BP/scripts/appliance_pose_data.js": "7136a6f096b30bc41c71cf101a2859506236b6f36312ad8529dd2a233a11c337",
+    "runtime/BP/scripts/appliances.js": "b21a6c3a16d1c6b163b641b27bb591df13e0023a68968642f61c97beb42c1093",
+    "runtime/RP/textures/terrain_texture.json": "25868565cbdcf7f4cb67c2f23b13fde43714795524956ac22f513bd615332f9e",
+    "runtime/RP/textures/ordertocook/block/refrigerator.png": "a545ea6a2c2ef3c25d48fd65051bf00e01382b01a97ef4f295b6d3b171e02039",
+    "runtime/RP/models/blocks/refrigerator_lower_close_5_root_2.geo.json": "a151537d83685a4be0a786719c52445d3e1db76c5f7011f660527e598862a965",
+    "runtime/RP/models/blocks/refrigerator_upper_3_root_2.geo.json": "533a2e85deac8bd31efd320a0c62ccc63a3579e52a8ca48738c1045e4036fee9",
+    "runtime/RP/models/blocks/refrigerator_lower_3_root_2.geo.json": "878e4536be7e3da4c4754fe5ac5e9a86e2f06b2d0e8b3b78226a9388ae43bc80",
+    "runtime/RP/models/blocks/refrigerator_upper_close_5_root_2.geo.json": "299caa903f730a1fd575af38499dbfb60e8742fac3deec3f9c2f9549e6dc4043",
+    "runtime/RP/models/blocks/refrigerator_lower_close_1.geo.json": "ad0df22067adb43eff490af9bfae317b477a5346b91b725d20d5f70eea43ffcc",
+    "runtime/RP/models/blocks/refrigerator_upper_close_5.geo.json": "0d3a97c68b184a349ea4e8bd9ffaed383672bae410bf069887de4169a2835c14",
+    "runtime/RP/models/blocks/refrigerator_lower_close_6_root_3.geo.json": "58ceaa41b7630ca7008f8aa79eafdf3962db13bb3d8bf88f5747ae58b46d35b4",
+    "runtime/RP/models/blocks/refrigerator_upper_close_5_root_3.geo.json": "4eac0213b04f751ccb791c04af4fd3c9d29dcbee7f4cf5564d7259c5afaf3622",
+    "runtime/RP/models/blocks/refrigerator_upper_close_6_root_2.geo.json": "5b72223a57915bb779aaa2be90be047dcaa0a3e3c4ca4c240756aeba61d86e1a"
+  },
+  "files": [
+    {
+      "path": "lower_peak_upper_open_frame3.bbmodel",
+      "sha256": "787826b92168560b6deaa77631cd41bd1c7aa806a7fcacc0d63316b8c3d43da8",
+      "status": "CAPTURE_PLANNED_NOT_GUI_ACCEPTED",
+      "case": {
+        "name": "lower_peak_upper_open_frame3",
+        "lower": {
+          "closing": true,
+          "frame": 5,
+          "open": false,
+          "position": 10
+        },
+        "upper": {
+          "closing": false,
+          "frame": 3,
+          "open": true,
+          "position": 6
+        },
+        "facing": "north",
+        "purpose": "Shared peak with upper door partway through opening; frame 3 is a sampled pose, not exactly half of its angular sweep."
+      },
+      "root_frame": 2,
+      "source_controller_order": [
+        {
+          "half": "upper",
+          "clip": "up_open",
+          "time_seconds": 0.3,
+          "sampled_channels": {
+            "bone2": {
+              "rotation": [
+                0.0,
+                -78.86999175714647,
+                0.0
+              ]
+            }
+          }
+        },
+        {
+          "half": "lower",
+          "clip": "down_close",
+          "time_seconds": 0.5,
+          "sampled_channels": {
+            "bone": {
+              "position": [
+                0,
+                0,
+                0.25
+              ],
+              "scale": [
+                1,
+                1,
+                0.95
+              ]
+            },
+            "bone3": {
+              "rotation": [
+                0.0,
+                -11.718749999999986,
+                0.0
+              ]
+            }
+          }
+        }
+      ],
+      "source_pose": {
+        "bone_hierarchy": {
+          "bone": {
+            "parent": null,
+            "authored_pivot": [
+              0,
+              0,
+              0
+            ],
+            "channels": {
+              "position": [
+                0,
+                0,
+                0.25
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "scale": [
+                1,
+                1,
+                0.95
+              ]
+            }
+          },
+          "bone4": {
+            "parent": "bone",
+            "authored_pivot": [
+              0,
+              1,
+              0
+            ],
+            "channels": {
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "scale": [
+                1,
+                1,
+                1
+              ]
+            }
+          },
+          "bone3": {
+            "parent": "bone4",
+            "authored_pivot": [
+              8,
+              10,
+              -6
+            ],
+            "channels": {
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0.0,
+                -11.718749999999986,
+                0.0
+              ],
+              "scale": [
+                1,
+                1,
+                1
+              ]
+            }
+          },
+          "bone2": {
+            "parent": "bone4",
+            "authored_pivot": [
+              8,
+              10,
+              -6
+            ],
+            "channels": {
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0.0,
+                -78.86999175714647,
+                0.0
+              ],
+              "scale": [
+                1,
+                1,
+                1
+              ]
+            }
+          }
+        },
+        "drawn_cubes": [
+          {
+            "bone": "bone",
+            "cube": 1,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 2,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 3,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 4,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 5,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 6,
+            "faces": 6
+          },
+          {
+            "bone": "bone3",
+            "cube": 1,
+            "faces": 6
+          },
+          {
+            "bone": "bone2",
+            "cube": 1,
+            "faces": 6
+          },
+          {
+            "bone": "bone2",
+            "cube": 2,
+            "faces": 6
+          },
+          {
+            "bone": "bone2",
+            "cube": 3,
+            "faces": 6
+          }
+        ],
+        "png_dimensions": [
+          96,
+          96
+        ],
+        "virtual_uv_dimensions": [
+          96,
+          96
+        ],
+        "pixel_uv_ratio": [
+          1.0,
+          1.0
+        ]
+      },
+      "canonical_inputs": [
+        {
+          "half": "lower",
+          "path": "runtime/RP/models/blocks/refrigerator_lower_close_5_root_2.geo.json",
+          "sha256": "a151537d83685a4be0a786719c52445d3e1db76c5f7011f660527e598862a965",
+          "states": {
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:half": "lower",
+            "ordertocook:open": false,
+            "ordertocook:closing": true,
+            "ordertocook:frame": 5,
+            "ordertocook:root_frame": 2
+          },
+          "assembly_offset": [
+            24,
+            0,
+            0
+          ],
+          "resolved_transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "inverse_assembly_placement_verified": true
+        },
+        {
+          "half": "upper",
+          "path": "runtime/RP/models/blocks/refrigerator_upper_3_root_2.geo.json",
+          "sha256": "533a2e85deac8bd31efd320a0c62ccc63a3579e52a8ca48738c1045e4036fee9",
+          "states": {
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:half": "upper",
+            "ordertocook:open": true,
+            "ordertocook:closing": false,
+            "ordertocook:frame": 3,
+            "ordertocook:root_frame": 2
+          },
+          "assembly_offset": [
+            24,
+            16,
+            0
+          ],
+          "resolved_transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "inverse_assembly_placement_verified": true
+        }
+      ],
+      "source_offset": [
+        -24,
+        0,
+        0
+      ],
+      "canonical_offset": [
+        24,
+        0,
+        0
+      ],
+      "independent_affine_vertices": [
+        {
+          "bone": "bone",
+          "cube": 1,
+          "points": [
+            [
+              -8.0,
+              0.0,
+              -5.449999999999999
+            ],
+            [
+              -8.0,
+              0.0,
+              7.85
+            ],
+            [
+              -8.0,
+              32.0,
+              -5.449999999999999
+            ],
+            [
+              -8.0,
+              32.0,
+              7.85
+            ],
+            [
+              8.0,
+              32.0,
+              -5.449999999999999
+            ],
+            [
+              8.0,
+              32.0,
+              7.85
+            ],
+            [
+              8.0,
+              0.0,
+              -5.449999999999999
+            ],
+            [
+              8.0,
+              0.0,
+              7.85
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 2,
+          "points": [
+            [
+              -7.0,
+              20.0,
+              6.8999999999999995
+            ],
+            [
+              -7.0,
+              20.0,
+              -5.449999999999999
+            ],
+            [
+              -7.0,
+              30.0,
+              6.8999999999999995
+            ],
+            [
+              -7.0,
+              30.0,
+              -5.449999999999999
+            ],
+            [
+              7.0,
+              30.0,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              30.0,
+              -5.449999999999999
+            ],
+            [
+              7.0,
+              20.0,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              20.0,
+              -5.449999999999999
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 3,
+          "points": [
+            [
+              -7.0,
+              2.0,
+              6.8999999999999995
+            ],
+            [
+              -7.0,
+              2.0,
+              -5.449999999999999
+            ],
+            [
+              -7.0,
+              19.0,
+              6.8999999999999995
+            ],
+            [
+              -7.0,
+              19.0,
+              -5.449999999999999
+            ],
+            [
+              7.0,
+              19.0,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              19.0,
+              -5.449999999999999
+            ],
+            [
+              7.0,
+              2.0,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              2.0,
+              -5.449999999999999
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 4,
+          "points": [
+            [
+              -8.0,
+              30.0,
+              -7.35
+            ],
+            [
+              -8.0,
+              30.0,
+              -5.449999999999999
+            ],
+            [
+              -8.0,
+              32.0,
+              -7.35
+            ],
+            [
+              -8.0,
+              32.0,
+              -5.449999999999999
+            ],
+            [
+              8.0,
+              32.0,
+              -7.35
+            ],
+            [
+              8.0,
+              32.0,
+              -5.449999999999999
+            ],
+            [
+              8.0,
+              30.0,
+              -7.35
+            ],
+            [
+              8.0,
+              30.0,
+              -5.449999999999999
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 5,
+          "points": [
+            [
+              -7.0,
+              9.0,
+              -4.975
+            ],
+            [
+              -7.0,
+              9.0,
+              6.8999999999999995
+            ],
+            [
+              -7.0,
+              11.0,
+              -4.975
+            ],
+            [
+              -7.0,
+              11.0,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              11.0,
+              -4.975
+            ],
+            [
+              7.0,
+              11.0,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              9.0,
+              -4.975
+            ],
+            [
+              7.0,
+              9.0,
+              6.8999999999999995
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 6,
+          "points": [
+            [
+              -7.0,
+              24.5,
+              -4.975
+            ],
+            [
+              -7.0,
+              24.5,
+              6.8999999999999995
+            ],
+            [
+              -7.0,
+              25.5,
+              -4.975
+            ],
+            [
+              -7.0,
+              25.5,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              25.5,
+              -4.975
+            ],
+            [
+              7.0,
+              25.5,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              24.5,
+              -4.975
+            ],
+            [
+              7.0,
+              24.5,
+              6.8999999999999995
+            ]
+          ]
+        },
+        {
+          "bone": "bone3",
+          "cube": 1,
+          "points": [
+            [
+              -8.406215468815525,
+              0.25,
+              -7.310397152784244
+            ],
+            [
+              -8.0,
+              0.25,
+              -5.449999999999999
+            ],
+            [
+              -8.406215468815525,
+              19.5,
+              -7.310397152784244
+            ],
+            [
+              -8.0,
+              19.5,
+              -5.449999999999999
+            ],
+            [
+              7.260286870420215,
+              19.5,
+              -10.397634715782237
+            ],
+            [
+              7.666502339235739,
+              19.5,
+              -8.537237562997992
+            ],
+            [
+              7.260286870420215,
+              0.25,
+              -10.397634715782237
+            ],
+            [
+              7.666502339235739,
+              0.25,
+              -8.537237562997992
+            ]
+          ]
+        },
+        {
+          "bone": "bone2",
+          "cube": 1,
+          "points": [
+            [
+              -9.962383394892687,
+              19.75,
+              -5.816768181325934
+            ],
+            [
+              -8.0,
+              19.75,
+              -5.449999999999999
+            ],
+            [
+              -9.962383394892687,
+              30.0,
+              -5.816768181325934
+            ],
+            [
+              -8.0,
+              30.0,
+              -5.449999999999999
+            ],
+            [
+              -6.873809236358501,
+              30.0,
+              -20.730881982510347
+            ],
+            [
+              -4.911425841465816,
+              30.0,
+              -20.364113801184416
+            ],
+            [
+              -6.873809236358501,
+              19.75,
+              -20.730881982510347
+            ],
+            [
+              -4.911425841465816,
+              19.75,
+              -20.364113801184416
+            ]
+          ]
+        },
+        {
+          "bone": "bone2",
+          "cube": 2,
+          "points": [
+            [
+              -9.524049585622715,
+              21.0,
+              -6.703054271234219
+            ],
+            [
+              -6.089878644560513,
+              21.0,
+              -6.061209953913833
+            ],
+            [
+              -9.524049585622715,
+              24.0,
+              -6.703054271234219
+            ],
+            [
+              -6.089878644560513,
+              24.0,
+              -6.061209953913833
+            ],
+            [
+              -6.8215471969053025,
+              24.0,
+              -19.752903847270584
+            ],
+            [
+              -3.387376255843101,
+              24.0,
+              -19.111059529950197
+            ],
+            [
+              -6.8215471969053025,
+              21.0,
+              -19.752903847270584
+            ],
+            [
+              -3.387376255843101,
+              21.0,
+              -19.111059529950197
+            ]
+          ]
+        },
+        {
+          "bone": "bone2",
+          "cube": 3,
+          "points": [
+            [
+              -9.524049585622715,
+              26.0,
+              -6.703054271234219
+            ],
+            [
+              -6.089878644560513,
+              26.0,
+              -6.061209953913833
+            ],
+            [
+              -9.524049585622715,
+              29.0,
+              -6.703054271234219
+            ],
+            [
+              -6.089878644560513,
+              29.0,
+              -6.061209953913833
+            ],
+            [
+              -6.8215471969053025,
+              29.0,
+              -19.752903847270584
+            ],
+            [
+              -3.387376255843101,
+              29.0,
+              -19.111059529950197
+            ],
+            [
+              -6.8215471969053025,
+              26.0,
+              -19.752903847270584
+            ],
+            [
+              -3.387376255843101,
+              26.0,
+              -19.111059529950197
+            ]
+          ]
+        }
+      ],
+      "reverse_source_translation_verified": true,
+      "textures_auto_original_png_ratio_1": true
+    },
+    {
+      "path": "upper_peak_lower_open_frame3.bbmodel",
+      "sha256": "c02ae224c3b83507254fc6899459ed8372b2e2d4cc7457e128d11643c3574931",
+      "status": "CAPTURE_PLANNED_NOT_GUI_ACCEPTED",
+      "case": {
+        "name": "upper_peak_lower_open_frame3",
+        "lower": {
+          "closing": false,
+          "frame": 3,
+          "open": true,
+          "position": 6
+        },
+        "upper": {
+          "closing": true,
+          "frame": 5,
+          "open": false,
+          "position": 10
+        },
+        "facing": "north",
+        "purpose": "Shared peak with lower door partway through opening; inspect fitted-door residual, not an exact affine-parity claim."
+      },
+      "root_frame": 2,
+      "source_controller_order": [
+        {
+          "half": "upper",
+          "clip": "up_close",
+          "time_seconds": 0.5,
+          "sampled_channels": {
+            "bone": {
+              "position": [
+                0,
+                0,
+                0.25
+              ],
+              "scale": [
+                1,
+                1,
+                0.95
+              ]
+            },
+            "bone2": {
+              "rotation": [
+                0.0,
+                -12.656249999999986,
+                0.0
+              ]
+            }
+          }
+        },
+        {
+          "half": "lower",
+          "clip": "down_open",
+          "time_seconds": 0.3,
+          "sampled_channels": {
+            "bone3": {
+              "rotation": [
+                0.0,
+                -73.02777014550598,
+                0.0
+              ]
+            }
+          }
+        }
+      ],
+      "source_pose": {
+        "bone_hierarchy": {
+          "bone": {
+            "parent": null,
+            "authored_pivot": [
+              0,
+              0,
+              0
+            ],
+            "channels": {
+              "position": [
+                0,
+                0,
+                0.25
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "scale": [
+                1,
+                1,
+                0.95
+              ]
+            }
+          },
+          "bone4": {
+            "parent": "bone",
+            "authored_pivot": [
+              0,
+              1,
+              0
+            ],
+            "channels": {
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "scale": [
+                1,
+                1,
+                1
+              ]
+            }
+          },
+          "bone3": {
+            "parent": "bone4",
+            "authored_pivot": [
+              8,
+              10,
+              -6
+            ],
+            "channels": {
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0.0,
+                -73.02777014550598,
+                0.0
+              ],
+              "scale": [
+                1,
+                1,
+                1
+              ]
+            }
+          },
+          "bone2": {
+            "parent": "bone4",
+            "authored_pivot": [
+              8,
+              10,
+              -6
+            ],
+            "channels": {
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0.0,
+                -12.656249999999986,
+                0.0
+              ],
+              "scale": [
+                1,
+                1,
+                1
+              ]
+            }
+          }
+        },
+        "drawn_cubes": [
+          {
+            "bone": "bone",
+            "cube": 1,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 2,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 3,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 4,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 5,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 6,
+            "faces": 6
+          },
+          {
+            "bone": "bone3",
+            "cube": 1,
+            "faces": 6
+          },
+          {
+            "bone": "bone2",
+            "cube": 1,
+            "faces": 6
+          },
+          {
+            "bone": "bone2",
+            "cube": 2,
+            "faces": 6
+          },
+          {
+            "bone": "bone2",
+            "cube": 3,
+            "faces": 6
+          }
+        ],
+        "png_dimensions": [
+          96,
+          96
+        ],
+        "virtual_uv_dimensions": [
+          96,
+          96
+        ],
+        "pixel_uv_ratio": [
+          1.0,
+          1.0
+        ]
+      },
+      "canonical_inputs": [
+        {
+          "half": "lower",
+          "path": "runtime/RP/models/blocks/refrigerator_lower_3_root_2.geo.json",
+          "sha256": "878e4536be7e3da4c4754fe5ac5e9a86e2f06b2d0e8b3b78226a9388ae43bc80",
+          "states": {
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:half": "lower",
+            "ordertocook:open": true,
+            "ordertocook:closing": false,
+            "ordertocook:frame": 3,
+            "ordertocook:root_frame": 2
+          },
+          "assembly_offset": [
+            24,
+            0,
+            0
+          ],
+          "resolved_transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "inverse_assembly_placement_verified": true
+        },
+        {
+          "half": "upper",
+          "path": "runtime/RP/models/blocks/refrigerator_upper_close_5_root_2.geo.json",
+          "sha256": "299caa903f730a1fd575af38499dbfb60e8742fac3deec3f9c2f9549e6dc4043",
+          "states": {
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:half": "upper",
+            "ordertocook:open": false,
+            "ordertocook:closing": true,
+            "ordertocook:frame": 5,
+            "ordertocook:root_frame": 2
+          },
+          "assembly_offset": [
+            24,
+            16,
+            0
+          ],
+          "resolved_transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "inverse_assembly_placement_verified": true
+        }
+      ],
+      "source_offset": [
+        -24,
+        0,
+        0
+      ],
+      "canonical_offset": [
+        24,
+        0,
+        0
+      ],
+      "independent_affine_vertices": [
+        {
+          "bone": "bone",
+          "cube": 1,
+          "points": [
+            [
+              -8.0,
+              0.0,
+              -5.449999999999999
+            ],
+            [
+              -8.0,
+              0.0,
+              7.85
+            ],
+            [
+              -8.0,
+              32.0,
+              -5.449999999999999
+            ],
+            [
+              -8.0,
+              32.0,
+              7.85
+            ],
+            [
+              8.0,
+              32.0,
+              -5.449999999999999
+            ],
+            [
+              8.0,
+              32.0,
+              7.85
+            ],
+            [
+              8.0,
+              0.0,
+              -5.449999999999999
+            ],
+            [
+              8.0,
+              0.0,
+              7.85
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 2,
+          "points": [
+            [
+              -7.0,
+              20.0,
+              6.8999999999999995
+            ],
+            [
+              -7.0,
+              20.0,
+              -5.449999999999999
+            ],
+            [
+              -7.0,
+              30.0,
+              6.8999999999999995
+            ],
+            [
+              -7.0,
+              30.0,
+              -5.449999999999999
+            ],
+            [
+              7.0,
+              30.0,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              30.0,
+              -5.449999999999999
+            ],
+            [
+              7.0,
+              20.0,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              20.0,
+              -5.449999999999999
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 3,
+          "points": [
+            [
+              -7.0,
+              2.0,
+              6.8999999999999995
+            ],
+            [
+              -7.0,
+              2.0,
+              -5.449999999999999
+            ],
+            [
+              -7.0,
+              19.0,
+              6.8999999999999995
+            ],
+            [
+              -7.0,
+              19.0,
+              -5.449999999999999
+            ],
+            [
+              7.0,
+              19.0,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              19.0,
+              -5.449999999999999
+            ],
+            [
+              7.0,
+              2.0,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              2.0,
+              -5.449999999999999
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 4,
+          "points": [
+            [
+              -8.0,
+              30.0,
+              -7.35
+            ],
+            [
+              -8.0,
+              30.0,
+              -5.449999999999999
+            ],
+            [
+              -8.0,
+              32.0,
+              -7.35
+            ],
+            [
+              -8.0,
+              32.0,
+              -5.449999999999999
+            ],
+            [
+              8.0,
+              32.0,
+              -7.35
+            ],
+            [
+              8.0,
+              32.0,
+              -5.449999999999999
+            ],
+            [
+              8.0,
+              30.0,
+              -7.35
+            ],
+            [
+              8.0,
+              30.0,
+              -5.449999999999999
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 5,
+          "points": [
+            [
+              -7.0,
+              9.0,
+              -4.975
+            ],
+            [
+              -7.0,
+              9.0,
+              6.8999999999999995
+            ],
+            [
+              -7.0,
+              11.0,
+              -4.975
+            ],
+            [
+              -7.0,
+              11.0,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              11.0,
+              -4.975
+            ],
+            [
+              7.0,
+              11.0,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              9.0,
+              -4.975
+            ],
+            [
+              7.0,
+              9.0,
+              6.8999999999999995
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 6,
+          "points": [
+            [
+              -7.0,
+              24.5,
+              -4.975
+            ],
+            [
+              -7.0,
+              24.5,
+              6.8999999999999995
+            ],
+            [
+              -7.0,
+              25.5,
+              -4.975
+            ],
+            [
+              -7.0,
+              25.5,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              25.5,
+              -4.975
+            ],
+            [
+              7.0,
+              25.5,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              24.5,
+              -4.975
+            ],
+            [
+              7.0,
+              24.5,
+              6.8999999999999995
+            ]
+          ]
+        },
+        {
+          "bone": "bone3",
+          "cube": 1,
+          "points": [
+            [
+              -9.912892700976672,
+              0.25,
+              -6.004625519500799
+            ],
+            [
+              -8.0,
+              0.25,
+              -5.449999999999999
+            ],
+            [
+              -9.912892700976672,
+              19.5,
+              -6.004625519500799
+            ],
+            [
+              -8.0,
+              19.5,
+              -5.449999999999999
+            ],
+            [
+              -5.2423620104436335,
+              19.5,
+              -20.542610046923507
+            ],
+            [
+              -3.329469309466961,
+              19.5,
+              -19.987984527422707
+            ],
+            [
+              -5.2423620104436335,
+              0.25,
+              -20.542610046923507
+            ],
+            [
+              -3.329469309466961,
+              0.25,
+              -19.987984527422707
+            ]
+          ]
+        },
+        {
+          "bone": "bone2",
+          "cube": 1,
+          "points": [
+            [
+              -8.43820248031374,
+              19.75,
+              -7.303834047073204
+            ],
+            [
+              -8.0,
+              19.75,
+              -5.449999999999999
+            ],
+            [
+              -8.43820248031374,
+              30.0,
+              -7.303834047073204
+            ],
+            [
+              -8.0,
+              30.0,
+              -5.449999999999999
+            ],
+            [
+              7.173031600302718,
+              30.0,
+              -10.634172897457622
+            ],
+            [
+              7.611234080616457,
+              30.0,
+              -8.780338850384416
+            ],
+            [
+              7.173031600302718,
+              19.75,
+              -10.634172897457622
+            ],
+            [
+              7.611234080616457,
+              19.75,
+              -8.780338850384416
+            ]
+          ]
+        },
+        {
+          "bone": "bone2",
+          "cube": 2,
+          "points": [
+            [
+              -7.407725040235993,
+              21.0,
+              -7.28025096933808
+            ],
+            [
+              -6.64087069968695,
+              21.0,
+              -4.0360413869599725
+            ],
+            [
+              -7.407725040235993,
+              24.0,
+              -7.28025096933808
+            ],
+            [
+              -6.64087069968695,
+              24.0,
+              -4.0360413869599725
+            ],
+            [
+              6.252104780303407,
+              24.0,
+              -10.194297463424444
+            ],
+            [
+              7.018959120852449,
+              24.0,
+              -6.950087881046337
+            ],
+            [
+              6.252104780303407,
+              21.0,
+              -10.194297463424444
+            ],
+            [
+              7.018959120852449,
+              21.0,
+              -6.950087881046337
+            ]
+          ]
+        },
+        {
+          "bone": "bone2",
+          "cube": 3,
+          "points": [
+            [
+              -7.407725040235993,
+              26.0,
+              -7.28025096933808
+            ],
+            [
+              -6.64087069968695,
+              26.0,
+              -4.0360413869599725
+            ],
+            [
+              -7.407725040235993,
+              29.0,
+              -7.28025096933808
+            ],
+            [
+              -6.64087069968695,
+              29.0,
+              -4.0360413869599725
+            ],
+            [
+              6.252104780303407,
+              29.0,
+              -10.194297463424444
+            ],
+            [
+              7.018959120852449,
+              29.0,
+              -6.950087881046337
+            ],
+            [
+              6.252104780303407,
+              26.0,
+              -10.194297463424444
+            ],
+            [
+              7.018959120852449,
+              26.0,
+              -6.950087881046337
+            ]
+          ]
+        }
+      ],
+      "reverse_source_translation_verified": true,
+      "textures_auto_original_png_ratio_1": true
+    },
+    {
+      "path": "lower_neutral_active_overrides_upper_peak.bbmodel",
+      "sha256": "353284e9d5854c4b27bae4e301690732942124385a16a84b2e1d79f8685f6a71",
+      "status": "CAPTURE_PLANNED_NOT_GUI_ACCEPTED",
+      "case": {
+        "name": "lower_neutral_active_overrides_upper_peak",
+        "lower": {
+          "closing": true,
+          "frame": 1,
+          "open": false,
+          "position": 18
+        },
+        "upper": {
+          "closing": true,
+          "frame": 5,
+          "open": false,
+          "position": 10
+        },
+        "facing": "north",
+        "purpose": "Active lower close 0.1 s writes neutral root and overrides upper close 0.5 s peak."
+      },
+      "root_frame": 0,
+      "source_controller_order": [
+        {
+          "half": "upper",
+          "clip": "up_close",
+          "time_seconds": 0.5,
+          "sampled_channels": {
+            "bone": {
+              "position": [
+                0,
+                0,
+                0.25
+              ],
+              "scale": [
+                1,
+                1,
+                0.95
+              ]
+            },
+            "bone2": {
+              "rotation": [
+                0.0,
+                -12.656249999999986,
+                0.0
+              ]
+            }
+          }
+        },
+        {
+          "half": "lower",
+          "clip": "down_close",
+          "time_seconds": 0.1,
+          "sampled_channels": {
+            "bone": {
+              "position": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "scale": [
+                1.0,
+                1.0,
+                1.0
+              ]
+            },
+            "bone3": {
+              "rotation": [
+                0.0,
+                -115.546875,
+                0.0
+              ]
+            }
+          }
+        }
+      ],
+      "source_pose": {
+        "bone_hierarchy": {
+          "bone": {
+            "parent": null,
+            "authored_pivot": [
+              0,
+              0,
+              0
+            ],
+            "channels": {
+              "position": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "scale": [
+                1.0,
+                1.0,
+                1.0
+              ]
+            }
+          },
+          "bone4": {
+            "parent": "bone",
+            "authored_pivot": [
+              0,
+              1,
+              0
+            ],
+            "channels": {
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "scale": [
+                1,
+                1,
+                1
+              ]
+            }
+          },
+          "bone3": {
+            "parent": "bone4",
+            "authored_pivot": [
+              8,
+              10,
+              -6
+            ],
+            "channels": {
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0.0,
+                -115.546875,
+                0.0
+              ],
+              "scale": [
+                1,
+                1,
+                1
+              ]
+            }
+          },
+          "bone2": {
+            "parent": "bone4",
+            "authored_pivot": [
+              8,
+              10,
+              -6
+            ],
+            "channels": {
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0.0,
+                -12.656249999999986,
+                0.0
+              ],
+              "scale": [
+                1,
+                1,
+                1
+              ]
+            }
+          }
+        },
+        "drawn_cubes": [
+          {
+            "bone": "bone",
+            "cube": 1,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 2,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 3,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 4,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 5,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 6,
+            "faces": 6
+          },
+          {
+            "bone": "bone3",
+            "cube": 1,
+            "faces": 6
+          },
+          {
+            "bone": "bone2",
+            "cube": 1,
+            "faces": 6
+          },
+          {
+            "bone": "bone2",
+            "cube": 2,
+            "faces": 6
+          },
+          {
+            "bone": "bone2",
+            "cube": 3,
+            "faces": 6
+          }
+        ],
+        "png_dimensions": [
+          96,
+          96
+        ],
+        "virtual_uv_dimensions": [
+          96,
+          96
+        ],
+        "pixel_uv_ratio": [
+          1.0,
+          1.0
+        ]
+      },
+      "canonical_inputs": [
+        {
+          "half": "lower",
+          "path": "runtime/RP/models/blocks/refrigerator_lower_close_1.geo.json",
+          "sha256": "ad0df22067adb43eff490af9bfae317b477a5346b91b725d20d5f70eea43ffcc",
+          "states": {
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:half": "lower",
+            "ordertocook:open": false,
+            "ordertocook:closing": true,
+            "ordertocook:frame": 1,
+            "ordertocook:root_frame": 0
+          },
+          "assembly_offset": [
+            24,
+            0,
+            0
+          ],
+          "resolved_transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "inverse_assembly_placement_verified": true
+        },
+        {
+          "half": "upper",
+          "path": "runtime/RP/models/blocks/refrigerator_upper_close_5.geo.json",
+          "sha256": "0d3a97c68b184a349ea4e8bd9ffaed383672bae410bf069887de4169a2835c14",
+          "states": {
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:half": "upper",
+            "ordertocook:open": false,
+            "ordertocook:closing": true,
+            "ordertocook:frame": 5,
+            "ordertocook:root_frame": 0
+          },
+          "assembly_offset": [
+            24,
+            16,
+            0
+          ],
+          "resolved_transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "inverse_assembly_placement_verified": true
+        }
+      ],
+      "source_offset": [
+        -24,
+        0,
+        0
+      ],
+      "canonical_offset": [
+        24,
+        0,
+        0
+      ],
+      "independent_affine_vertices": [
+        {
+          "bone": "bone",
+          "cube": 1,
+          "points": [
+            [
+              -8.0,
+              0.0,
+              -6.0
+            ],
+            [
+              -8.0,
+              0.0,
+              8.0
+            ],
+            [
+              -8.0,
+              32.0,
+              -6.0
+            ],
+            [
+              -8.0,
+              32.0,
+              8.0
+            ],
+            [
+              8.0,
+              32.0,
+              -6.0
+            ],
+            [
+              8.0,
+              32.0,
+              8.0
+            ],
+            [
+              8.0,
+              0.0,
+              -6.0
+            ],
+            [
+              8.0,
+              0.0,
+              8.0
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 2,
+          "points": [
+            [
+              -7.0,
+              20.0,
+              7.0
+            ],
+            [
+              -7.0,
+              20.0,
+              -6.0
+            ],
+            [
+              -7.0,
+              30.0,
+              7.0
+            ],
+            [
+              -7.0,
+              30.0,
+              -6.0
+            ],
+            [
+              7.0,
+              30.0,
+              7.0
+            ],
+            [
+              7.0,
+              30.0,
+              -6.0
+            ],
+            [
+              7.0,
+              20.0,
+              7.0
+            ],
+            [
+              7.0,
+              20.0,
+              -6.0
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 3,
+          "points": [
+            [
+              -7.0,
+              2.0,
+              7.0
+            ],
+            [
+              -7.0,
+              2.0,
+              -6.0
+            ],
+            [
+              -7.0,
+              19.0,
+              7.0
+            ],
+            [
+              -7.0,
+              19.0,
+              -6.0
+            ],
+            [
+              7.0,
+              19.0,
+              7.0
+            ],
+            [
+              7.0,
+              19.0,
+              -6.0
+            ],
+            [
+              7.0,
+              2.0,
+              7.0
+            ],
+            [
+              7.0,
+              2.0,
+              -6.0
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 4,
+          "points": [
+            [
+              -8.0,
+              30.0,
+              -8.0
+            ],
+            [
+              -8.0,
+              30.0,
+              -6.0
+            ],
+            [
+              -8.0,
+              32.0,
+              -8.0
+            ],
+            [
+              -8.0,
+              32.0,
+              -6.0
+            ],
+            [
+              8.0,
+              32.0,
+              -8.0
+            ],
+            [
+              8.0,
+              32.0,
+              -6.0
+            ],
+            [
+              8.0,
+              30.0,
+              -8.0
+            ],
+            [
+              8.0,
+              30.0,
+              -6.0
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 5,
+          "points": [
+            [
+              -7.0,
+              9.0,
+              -5.5
+            ],
+            [
+              -7.0,
+              9.0,
+              7.0
+            ],
+            [
+              -7.0,
+              11.0,
+              -5.5
+            ],
+            [
+              -7.0,
+              11.0,
+              7.0
+            ],
+            [
+              7.0,
+              11.0,
+              -5.5
+            ],
+            [
+              7.0,
+              11.0,
+              7.0
+            ],
+            [
+              7.0,
+              9.0,
+              -5.5
+            ],
+            [
+              7.0,
+              9.0,
+              7.0
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 6,
+          "points": [
+            [
+              -7.0,
+              24.5,
+              -5.5
+            ],
+            [
+              -7.0,
+              24.5,
+              7.0
+            ],
+            [
+              -7.0,
+              25.5,
+              -5.5
+            ],
+            [
+              -7.0,
+              25.5,
+              7.0
+            ],
+            [
+              7.0,
+              25.5,
+              -5.5
+            ],
+            [
+              7.0,
+              25.5,
+              7.0
+            ],
+            [
+              7.0,
+              24.5,
+              -5.5
+            ],
+            [
+              7.0,
+              24.5,
+              7.0
+            ]
+          ]
+        },
+        {
+          "bone": "bone3",
+          "cube": 1,
+          "points": [
+            [
+              -9.804465542520186,
+              0.25,
+              -5.137501242982153
+            ],
+            [
+              -8.0,
+              0.25,
+              -6.0
+            ],
+            [
+              -9.804465542520186,
+              19.5,
+              -5.137501242982153
+            ],
+            [
+              -8.0,
+              19.5,
+              -6.0
+            ],
+            [
+              -16.70445559866296,
+              19.5,
+              -19.57322558314364
+            ],
+            [
+              -14.899990056142776,
+              19.5,
+              -20.435724340161485
+            ],
+            [
+              -16.70445559866296,
+              0.25,
+              -19.57322558314364
+            ],
+            [
+              -14.899990056142776,
+              0.25,
+              -20.435724340161485
+            ]
+          ]
+        },
+        {
+          "bone": "bone2",
+          "cube": 1,
+          "points": [
+            [
+              -8.43820248031374,
+              19.75,
+              -7.951404260077057
+            ],
+            [
+              -8.0,
+              19.75,
+              -6.0
+            ],
+            [
+              -8.43820248031374,
+              30.0,
+              -7.951404260077057
+            ],
+            [
+              -8.0,
+              30.0,
+              -6.0
+            ],
+            [
+              7.173031600302718,
+              30.0,
+              -11.45702410258697
+            ],
+            [
+              7.611234080616457,
+              30.0,
+              -9.505619842509912
+            ],
+            [
+              7.173031600302718,
+              19.75,
+              -11.45702410258697
+            ],
+            [
+              7.611234080616457,
+              19.75,
+              -9.505619842509912
+            ]
+          ]
+        },
+        {
+          "bone": "bone2",
+          "cube": 2,
+          "points": [
+            [
+              -7.407725040235993,
+              21.0,
+              -7.926579967724295
+            ],
+            [
+              -6.64087069968695,
+              21.0,
+              -4.511622512589445
+            ],
+            [
+              -7.407725040235993,
+              24.0,
+              -7.926579967724295
+            ],
+            [
+              -6.64087069968695,
+              24.0,
+              -4.511622512589445
+            ],
+            [
+              6.252104780303407,
+              24.0,
+              -10.993997329920468
+            ],
+            [
+              7.018959120852449,
+              24.0,
+              -7.579039874785618
+            ],
+            [
+              6.252104780303407,
+              21.0,
+              -10.993997329920468
+            ],
+            [
+              7.018959120852449,
+              21.0,
+              -7.579039874785618
+            ]
+          ]
+        },
+        {
+          "bone": "bone2",
+          "cube": 3,
+          "points": [
+            [
+              -7.407725040235993,
+              26.0,
+              -7.926579967724295
+            ],
+            [
+              -6.64087069968695,
+              26.0,
+              -4.511622512589445
+            ],
+            [
+              -7.407725040235993,
+              29.0,
+              -7.926579967724295
+            ],
+            [
+              -6.64087069968695,
+              29.0,
+              -4.511622512589445
+            ],
+            [
+              6.252104780303407,
+              29.0,
+              -10.993997329920468
+            ],
+            [
+              7.018959120852449,
+              29.0,
+              -7.579039874785618
+            ],
+            [
+              6.252104780303407,
+              26.0,
+              -10.993997329920468
+            ],
+            [
+              7.018959120852449,
+              26.0,
+              -7.579039874785618
+            ]
+          ]
+        }
+      ],
+      "reverse_source_translation_verified": true,
+      "textures_auto_original_png_ratio_1": true
+    },
+    {
+      "path": "lower_recovering_overrides_upper_peak.bbmodel",
+      "sha256": "a919e5227385e61bbf28f660dd5e64728d9ba64b58b55afc802f5c66460fa498",
+      "status": "CAPTURE_PLANNED_NOT_GUI_ACCEPTED",
+      "case": {
+        "name": "lower_recovering_overrides_upper_peak",
+        "lower": {
+          "closing": true,
+          "frame": 6,
+          "open": false,
+          "position": 8
+        },
+        "upper": {
+          "closing": true,
+          "frame": 5,
+          "open": false,
+          "position": 10
+        },
+        "facing": "north",
+        "purpose": "Both close at staggered times: lower 0.6 s overrides upper 0.5 s, selecting root 3."
+      },
+      "root_frame": 3,
+      "source_controller_order": [
+        {
+          "half": "upper",
+          "clip": "up_close",
+          "time_seconds": 0.5,
+          "sampled_channels": {
+            "bone": {
+              "position": [
+                0,
+                0,
+                0.25
+              ],
+              "scale": [
+                1,
+                1,
+                0.95
+              ]
+            },
+            "bone2": {
+              "rotation": [
+                0.0,
+                -12.656249999999986,
+                0.0
+              ]
+            }
+          }
+        },
+        {
+          "half": "lower",
+          "clip": "down_close",
+          "time_seconds": 0.6,
+          "sampled_channels": {
+            "bone": {
+              "position": [
+                0.0,
+                0.0,
+                0.10002999400119975
+              ],
+              "scale": [
+                1.0,
+                1.0,
+                0.97999400119976
+              ]
+            },
+            "bone3": {
+              "rotation": [
+                0.0,
+                -11.375000000000014,
+                0.0
+              ]
+            }
+          }
+        }
+      ],
+      "source_pose": {
+        "bone_hierarchy": {
+          "bone": {
+            "parent": null,
+            "authored_pivot": [
+              0,
+              0,
+              0
+            ],
+            "channels": {
+              "position": [
+                0.0,
+                0.0,
+                0.10002999400119975
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "scale": [
+                1.0,
+                1.0,
+                0.97999400119976
+              ]
+            }
+          },
+          "bone4": {
+            "parent": "bone",
+            "authored_pivot": [
+              0,
+              1,
+              0
+            ],
+            "channels": {
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "scale": [
+                1,
+                1,
+                1
+              ]
+            }
+          },
+          "bone3": {
+            "parent": "bone4",
+            "authored_pivot": [
+              8,
+              10,
+              -6
+            ],
+            "channels": {
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0.0,
+                -11.375000000000014,
+                0.0
+              ],
+              "scale": [
+                1,
+                1,
+                1
+              ]
+            }
+          },
+          "bone2": {
+            "parent": "bone4",
+            "authored_pivot": [
+              8,
+              10,
+              -6
+            ],
+            "channels": {
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0.0,
+                -12.656249999999986,
+                0.0
+              ],
+              "scale": [
+                1,
+                1,
+                1
+              ]
+            }
+          }
+        },
+        "drawn_cubes": [
+          {
+            "bone": "bone",
+            "cube": 1,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 2,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 3,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 4,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 5,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 6,
+            "faces": 6
+          },
+          {
+            "bone": "bone3",
+            "cube": 1,
+            "faces": 6
+          },
+          {
+            "bone": "bone2",
+            "cube": 1,
+            "faces": 6
+          },
+          {
+            "bone": "bone2",
+            "cube": 2,
+            "faces": 6
+          },
+          {
+            "bone": "bone2",
+            "cube": 3,
+            "faces": 6
+          }
+        ],
+        "png_dimensions": [
+          96,
+          96
+        ],
+        "virtual_uv_dimensions": [
+          96,
+          96
+        ],
+        "pixel_uv_ratio": [
+          1.0,
+          1.0
+        ]
+      },
+      "canonical_inputs": [
+        {
+          "half": "lower",
+          "path": "runtime/RP/models/blocks/refrigerator_lower_close_6_root_3.geo.json",
+          "sha256": "58ceaa41b7630ca7008f8aa79eafdf3962db13bb3d8bf88f5747ae58b46d35b4",
+          "states": {
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:half": "lower",
+            "ordertocook:open": false,
+            "ordertocook:closing": true,
+            "ordertocook:frame": 6,
+            "ordertocook:root_frame": 3
+          },
+          "assembly_offset": [
+            24,
+            0,
+            0
+          ],
+          "resolved_transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "inverse_assembly_placement_verified": true
+        },
+        {
+          "half": "upper",
+          "path": "runtime/RP/models/blocks/refrigerator_upper_close_5_root_3.geo.json",
+          "sha256": "4eac0213b04f751ccb791c04af4fd3c9d29dcbee7f4cf5564d7259c5afaf3622",
+          "states": {
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:half": "upper",
+            "ordertocook:open": false,
+            "ordertocook:closing": true,
+            "ordertocook:frame": 5,
+            "ordertocook:root_frame": 3
+          },
+          "assembly_offset": [
+            24,
+            16,
+            0
+          ],
+          "resolved_transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "inverse_assembly_placement_verified": true
+        }
+      ],
+      "source_offset": [
+        -24,
+        0,
+        0
+      ],
+      "canonical_offset": [
+        24,
+        0,
+        0
+      ],
+      "independent_affine_vertices": [
+        {
+          "bone": "bone",
+          "cube": 1,
+          "points": [
+            [
+              -8.0,
+              0.0,
+              -5.77993401319736
+            ],
+            [
+              -8.0,
+              0.0,
+              7.93998200359928
+            ],
+            [
+              -8.0,
+              32.0,
+              -5.77993401319736
+            ],
+            [
+              -8.0,
+              32.0,
+              7.93998200359928
+            ],
+            [
+              8.0,
+              32.0,
+              -5.77993401319736
+            ],
+            [
+              8.0,
+              32.0,
+              7.93998200359928
+            ],
+            [
+              8.0,
+              0.0,
+              -5.77993401319736
+            ],
+            [
+              8.0,
+              0.0,
+              7.93998200359928
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 2,
+          "points": [
+            [
+              -7.0,
+              20.0,
+              6.95998800239952
+            ],
+            [
+              -7.0,
+              20.0,
+              -5.77993401319736
+            ],
+            [
+              -7.0,
+              30.0,
+              6.95998800239952
+            ],
+            [
+              -7.0,
+              30.0,
+              -5.77993401319736
+            ],
+            [
+              7.0,
+              30.0,
+              6.95998800239952
+            ],
+            [
+              7.0,
+              30.0,
+              -5.77993401319736
+            ],
+            [
+              7.0,
+              20.0,
+              6.95998800239952
+            ],
+            [
+              7.0,
+              20.0,
+              -5.77993401319736
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 3,
+          "points": [
+            [
+              -7.0,
+              2.0,
+              6.95998800239952
+            ],
+            [
+              -7.0,
+              2.0,
+              -5.77993401319736
+            ],
+            [
+              -7.0,
+              19.0,
+              6.95998800239952
+            ],
+            [
+              -7.0,
+              19.0,
+              -5.77993401319736
+            ],
+            [
+              7.0,
+              19.0,
+              6.95998800239952
+            ],
+            [
+              7.0,
+              19.0,
+              -5.77993401319736
+            ],
+            [
+              7.0,
+              2.0,
+              6.95998800239952
+            ],
+            [
+              7.0,
+              2.0,
+              -5.77993401319736
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 4,
+          "points": [
+            [
+              -8.0,
+              30.0,
+              -7.73992201559688
+            ],
+            [
+              -8.0,
+              30.0,
+              -5.77993401319736
+            ],
+            [
+              -8.0,
+              32.0,
+              -7.73992201559688
+            ],
+            [
+              -8.0,
+              32.0,
+              -5.77993401319736
+            ],
+            [
+              8.0,
+              32.0,
+              -7.73992201559688
+            ],
+            [
+              8.0,
+              32.0,
+              -5.77993401319736
+            ],
+            [
+              8.0,
+              30.0,
+              -7.73992201559688
+            ],
+            [
+              8.0,
+              30.0,
+              -5.77993401319736
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 5,
+          "points": [
+            [
+              -7.0,
+              9.0,
+              -5.2899370125974805
+            ],
+            [
+              -7.0,
+              9.0,
+              6.95998800239952
+            ],
+            [
+              -7.0,
+              11.0,
+              -5.2899370125974805
+            ],
+            [
+              -7.0,
+              11.0,
+              6.95998800239952
+            ],
+            [
+              7.0,
+              11.0,
+              -5.2899370125974805
+            ],
+            [
+              7.0,
+              11.0,
+              6.95998800239952
+            ],
+            [
+              7.0,
+              9.0,
+              -5.2899370125974805
+            ],
+            [
+              7.0,
+              9.0,
+              6.95998800239952
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 6,
+          "points": [
+            [
+              -7.0,
+              24.5,
+              -5.2899370125974805
+            ],
+            [
+              -7.0,
+              24.5,
+              6.95998800239952
+            ],
+            [
+              -7.0,
+              25.5,
+              -5.2899370125974805
+            ],
+            [
+              -7.0,
+              25.5,
+              6.95998800239952
+            ],
+            [
+              7.0,
+              25.5,
+              -5.2899370125974805
+            ],
+            [
+              7.0,
+              25.5,
+              6.95998800239952
+            ],
+            [
+              7.0,
+              24.5,
+              -5.2899370125974805
+            ],
+            [
+              7.0,
+              24.5,
+              6.95998800239952
+            ]
+          ]
+        },
+        {
+          "bone": "bone3",
+          "cube": 1,
+          "points": [
+            [
+              -8.394459195176253,
+              0.25,
+              -7.70142260941549
+            ],
+            [
+              -8.0,
+              0.25,
+              -5.77993401319736
+            ],
+            [
+              -8.394459195176253,
+              19.5,
+              -7.70142260941549
+            ],
+            [
+              -8.0,
+              19.5,
+              -5.77993401319736
+            ],
+            [
+              7.2912580142412935,
+              19.5,
+              -10.793963769341989
+            ],
+            [
+              7.685717209417547,
+              19.5,
+              -8.87247517312386
+            ],
+            [
+              7.2912580142412935,
+              0.25,
+              -10.793963769341989
+            ],
+            [
+              7.685717209417547,
+              0.25,
+              -8.87247517312386
+            ]
+          ]
+        },
+        {
+          "bone": "bone2",
+          "cube": 1,
+          "points": [
+            [
+              -8.43820248031374,
+              19.75,
+              -7.692298481988533
+            ],
+            [
+              -8.0,
+              19.75,
+              -5.77993401319736
+            ],
+            [
+              -8.43820248031374,
+              30.0,
+              -7.692298481988533
+            ],
+            [
+              -8.0,
+              30.0,
+              -5.77993401319736
+            ],
+            [
+              7.173031600302718,
+              30.0,
+              -11.127784898135094
+            ],
+            [
+              7.611234080616457,
+              30.0,
+              -9.21542042934392
+            ],
+            [
+              7.173031600302718,
+              19.75,
+              -11.127784898135094
+            ],
+            [
+              7.611234080616457,
+              19.75,
+              -9.21542042934392
+            ]
+          ]
+        },
+        {
+          "bone": "bone2",
+          "cube": 2,
+          "points": [
+            [
+              -7.407725040235993,
+              21.0,
+              -7.667970824398796
+            ],
+            [
+              -6.64087069968695,
+              21.0,
+              -4.321333004014245
+            ],
+            [
+              -7.407725040235993,
+              24.0,
+              -7.667970824398796
+            ],
+            [
+              -6.64087069968695,
+              24.0,
+              -4.321333004014245
+            ],
+            [
+              6.252104780303407,
+              24.0,
+              -10.674021438527037
+            ],
+            [
+              7.018959120852449,
+              24.0,
+              -7.327383618142486
+            ],
+            [
+              6.252104780303407,
+              21.0,
+              -10.674021438527037
+            ],
+            [
+              7.018959120852449,
+              21.0,
+              -7.327383618142486
+            ]
+          ]
+        },
+        {
+          "bone": "bone2",
+          "cube": 3,
+          "points": [
+            [
+              -7.407725040235993,
+              26.0,
+              -7.667970824398796
+            ],
+            [
+              -6.64087069968695,
+              26.0,
+              -4.321333004014245
+            ],
+            [
+              -7.407725040235993,
+              29.0,
+              -7.667970824398796
+            ],
+            [
+              -6.64087069968695,
+              29.0,
+              -4.321333004014245
+            ],
+            [
+              6.252104780303407,
+              29.0,
+              -10.674021438527037
+            ],
+            [
+              7.018959120852449,
+              29.0,
+              -7.327383618142486
+            ],
+            [
+              6.252104780303407,
+              26.0,
+              -10.674021438527037
+            ],
+            [
+              7.018959120852449,
+              26.0,
+              -7.327383618142486
+            ]
+          ]
+        }
+      ],
+      "reverse_source_translation_verified": true,
+      "textures_auto_original_png_ratio_1": true
+    },
+    {
+      "path": "lower_peak_overrides_upper_recovering.bbmodel",
+      "sha256": "55351e4eedb9174e731370f0f6bc1bff5e4f72e972d8ab026a9a760bca584e6e",
+      "status": "CAPTURE_PLANNED_NOT_GUI_ACCEPTED",
+      "case": {
+        "name": "lower_peak_overrides_upper_recovering",
+        "lower": {
+          "closing": true,
+          "frame": 5,
+          "open": false,
+          "position": 10
+        },
+        "upper": {
+          "closing": true,
+          "frame": 6,
+          "open": false,
+          "position": 8
+        },
+        "facing": "north",
+        "purpose": "Opposite stagger: lower 0.5 s overrides upper 0.6 s, selecting root 2."
+      },
+      "root_frame": 2,
+      "source_controller_order": [
+        {
+          "half": "upper",
+          "clip": "up_close",
+          "time_seconds": 0.6,
+          "sampled_channels": {
+            "bone": {
+              "position": [
+                0.0,
+                0.0,
+                0.10002999400119975
+              ],
+              "scale": [
+                1.0,
+                1.0,
+                0.97999400119976
+              ]
+            },
+            "bone2": {
+              "rotation": [
+                0.0,
+                -12.28500000000001,
+                0.0
+              ]
+            }
+          }
+        },
+        {
+          "half": "lower",
+          "clip": "down_close",
+          "time_seconds": 0.5,
+          "sampled_channels": {
+            "bone": {
+              "position": [
+                0,
+                0,
+                0.25
+              ],
+              "scale": [
+                1,
+                1,
+                0.95
+              ]
+            },
+            "bone3": {
+              "rotation": [
+                0.0,
+                -11.718749999999986,
+                0.0
+              ]
+            }
+          }
+        }
+      ],
+      "source_pose": {
+        "bone_hierarchy": {
+          "bone": {
+            "parent": null,
+            "authored_pivot": [
+              0,
+              0,
+              0
+            ],
+            "channels": {
+              "position": [
+                0,
+                0,
+                0.25
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "scale": [
+                1,
+                1,
+                0.95
+              ]
+            }
+          },
+          "bone4": {
+            "parent": "bone",
+            "authored_pivot": [
+              0,
+              1,
+              0
+            ],
+            "channels": {
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "scale": [
+                1,
+                1,
+                1
+              ]
+            }
+          },
+          "bone3": {
+            "parent": "bone4",
+            "authored_pivot": [
+              8,
+              10,
+              -6
+            ],
+            "channels": {
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0.0,
+                -11.718749999999986,
+                0.0
+              ],
+              "scale": [
+                1,
+                1,
+                1
+              ]
+            }
+          },
+          "bone2": {
+            "parent": "bone4",
+            "authored_pivot": [
+              8,
+              10,
+              -6
+            ],
+            "channels": {
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "rotation": [
+                0.0,
+                -12.28500000000001,
+                0.0
+              ],
+              "scale": [
+                1,
+                1,
+                1
+              ]
+            }
+          }
+        },
+        "drawn_cubes": [
+          {
+            "bone": "bone",
+            "cube": 1,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 2,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 3,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 4,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 5,
+            "faces": 6
+          },
+          {
+            "bone": "bone",
+            "cube": 6,
+            "faces": 6
+          },
+          {
+            "bone": "bone3",
+            "cube": 1,
+            "faces": 6
+          },
+          {
+            "bone": "bone2",
+            "cube": 1,
+            "faces": 6
+          },
+          {
+            "bone": "bone2",
+            "cube": 2,
+            "faces": 6
+          },
+          {
+            "bone": "bone2",
+            "cube": 3,
+            "faces": 6
+          }
+        ],
+        "png_dimensions": [
+          96,
+          96
+        ],
+        "virtual_uv_dimensions": [
+          96,
+          96
+        ],
+        "pixel_uv_ratio": [
+          1.0,
+          1.0
+        ]
+      },
+      "canonical_inputs": [
+        {
+          "half": "lower",
+          "path": "runtime/RP/models/blocks/refrigerator_lower_close_5_root_2.geo.json",
+          "sha256": "a151537d83685a4be0a786719c52445d3e1db76c5f7011f660527e598862a965",
+          "states": {
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:half": "lower",
+            "ordertocook:open": false,
+            "ordertocook:closing": true,
+            "ordertocook:frame": 5,
+            "ordertocook:root_frame": 2
+          },
+          "assembly_offset": [
+            24,
+            0,
+            0
+          ],
+          "resolved_transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "inverse_assembly_placement_verified": true
+        },
+        {
+          "half": "upper",
+          "path": "runtime/RP/models/blocks/refrigerator_upper_close_6_root_2.geo.json",
+          "sha256": "5b72223a57915bb779aaa2be90be047dcaa0a3e3c4ca4c240756aeba61d86e1a",
+          "states": {
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:half": "upper",
+            "ordertocook:open": false,
+            "ordertocook:closing": true,
+            "ordertocook:frame": 6,
+            "ordertocook:root_frame": 2
+          },
+          "assembly_offset": [
+            24,
+            16,
+            0
+          ],
+          "resolved_transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "inverse_assembly_placement_verified": true
+        }
+      ],
+      "source_offset": [
+        -24,
+        0,
+        0
+      ],
+      "canonical_offset": [
+        24,
+        0,
+        0
+      ],
+      "independent_affine_vertices": [
+        {
+          "bone": "bone",
+          "cube": 1,
+          "points": [
+            [
+              -8.0,
+              0.0,
+              -5.449999999999999
+            ],
+            [
+              -8.0,
+              0.0,
+              7.85
+            ],
+            [
+              -8.0,
+              32.0,
+              -5.449999999999999
+            ],
+            [
+              -8.0,
+              32.0,
+              7.85
+            ],
+            [
+              8.0,
+              32.0,
+              -5.449999999999999
+            ],
+            [
+              8.0,
+              32.0,
+              7.85
+            ],
+            [
+              8.0,
+              0.0,
+              -5.449999999999999
+            ],
+            [
+              8.0,
+              0.0,
+              7.85
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 2,
+          "points": [
+            [
+              -7.0,
+              20.0,
+              6.8999999999999995
+            ],
+            [
+              -7.0,
+              20.0,
+              -5.449999999999999
+            ],
+            [
+              -7.0,
+              30.0,
+              6.8999999999999995
+            ],
+            [
+              -7.0,
+              30.0,
+              -5.449999999999999
+            ],
+            [
+              7.0,
+              30.0,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              30.0,
+              -5.449999999999999
+            ],
+            [
+              7.0,
+              20.0,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              20.0,
+              -5.449999999999999
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 3,
+          "points": [
+            [
+              -7.0,
+              2.0,
+              6.8999999999999995
+            ],
+            [
+              -7.0,
+              2.0,
+              -5.449999999999999
+            ],
+            [
+              -7.0,
+              19.0,
+              6.8999999999999995
+            ],
+            [
+              -7.0,
+              19.0,
+              -5.449999999999999
+            ],
+            [
+              7.0,
+              19.0,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              19.0,
+              -5.449999999999999
+            ],
+            [
+              7.0,
+              2.0,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              2.0,
+              -5.449999999999999
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 4,
+          "points": [
+            [
+              -8.0,
+              30.0,
+              -7.35
+            ],
+            [
+              -8.0,
+              30.0,
+              -5.449999999999999
+            ],
+            [
+              -8.0,
+              32.0,
+              -7.35
+            ],
+            [
+              -8.0,
+              32.0,
+              -5.449999999999999
+            ],
+            [
+              8.0,
+              32.0,
+              -7.35
+            ],
+            [
+              8.0,
+              32.0,
+              -5.449999999999999
+            ],
+            [
+              8.0,
+              30.0,
+              -7.35
+            ],
+            [
+              8.0,
+              30.0,
+              -5.449999999999999
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 5,
+          "points": [
+            [
+              -7.0,
+              9.0,
+              -4.975
+            ],
+            [
+              -7.0,
+              9.0,
+              6.8999999999999995
+            ],
+            [
+              -7.0,
+              11.0,
+              -4.975
+            ],
+            [
+              -7.0,
+              11.0,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              11.0,
+              -4.975
+            ],
+            [
+              7.0,
+              11.0,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              9.0,
+              -4.975
+            ],
+            [
+              7.0,
+              9.0,
+              6.8999999999999995
+            ]
+          ]
+        },
+        {
+          "bone": "bone",
+          "cube": 6,
+          "points": [
+            [
+              -7.0,
+              24.5,
+              -4.975
+            ],
+            [
+              -7.0,
+              24.5,
+              6.8999999999999995
+            ],
+            [
+              -7.0,
+              25.5,
+              -4.975
+            ],
+            [
+              -7.0,
+              25.5,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              25.5,
+              -4.975
+            ],
+            [
+              7.0,
+              25.5,
+              6.8999999999999995
+            ],
+            [
+              7.0,
+              24.5,
+              -4.975
+            ],
+            [
+              7.0,
+              24.5,
+              6.8999999999999995
+            ]
+          ]
+        },
+        {
+          "bone": "bone3",
+          "cube": 1,
+          "points": [
+            [
+              -8.406215468815525,
+              0.25,
+              -7.310397152784244
+            ],
+            [
+              -8.0,
+              0.25,
+              -5.449999999999999
+            ],
+            [
+              -8.406215468815525,
+              19.5,
+              -7.310397152784244
+            ],
+            [
+              -8.0,
+              19.5,
+              -5.449999999999999
+            ],
+            [
+              7.260286870420215,
+              19.5,
+              -10.397634715782237
+            ],
+            [
+              7.666502339235739,
+              19.5,
+              -8.537237562997992
+            ],
+            [
+              7.260286870420215,
+              0.25,
+              -10.397634715782237
+            ],
+            [
+              7.666502339235739,
+              0.25,
+              -8.537237562997992
+            ]
+          ]
+        },
+        {
+          "bone": "bone2",
+          "cube": 1,
+          "points": [
+            [
+              -8.425549178088447,
+              19.75,
+              -7.306492493135372
+            ],
+            [
+              -8.0,
+              19.75,
+              -5.449999999999999
+            ],
+            [
+              -8.425549178088447,
+              30.0,
+              -7.306492493135372
+            ],
+            [
+              -8.0,
+              30.0,
+              -5.449999999999999
+            ],
+            [
+              7.208071816735746,
+              30.0,
+              -10.54066624660757
+            ],
+            [
+              7.633620994824193,
+              30.0,
+              -8.684173753472196
+            ],
+            [
+              7.208071816735746,
+              19.75,
+              -10.54066624660757
+            ],
+            [
+              7.633620994824193,
+              19.75,
+              -8.684173753472196
+            ]
+          ]
+        },
+        {
+          "bone": "bone2",
+          "cube": 2,
+          "points": [
+            [
+              -7.395254218650879,
+              21.0,
+              -7.276566791085464
+            ],
+            [
+              -6.650543156996097,
+              21.0,
+              -4.027704928098561
+            ],
+            [
+              -7.395254218650879,
+              24.0,
+              -7.276566791085464
+            ],
+            [
+              -6.650543156996097,
+              24.0,
+              -4.027704928098561
+            ],
+            [
+              6.28416415182029,
+              24.0,
+              -10.106468825373636
+            ],
+            [
+              7.028875213475073,
+              24.0,
+              -6.857606962386733
+            ],
+            [
+              6.28416415182029,
+              21.0,
+              -10.106468825373636
+            ],
+            [
+              7.028875213475073,
+              21.0,
+              -6.857606962386733
+            ]
+          ]
+        },
+        {
+          "bone": "bone2",
+          "cube": 3,
+          "points": [
+            [
+              -7.395254218650879,
+              26.0,
+              -7.276566791085464
+            ],
+            [
+              -6.650543156996097,
+              26.0,
+              -4.027704928098561
+            ],
+            [
+              -7.395254218650879,
+              29.0,
+              -7.276566791085464
+            ],
+            [
+              -6.650543156996097,
+              29.0,
+              -4.027704928098561
+            ],
+            [
+              6.28416415182029,
+              29.0,
+              -10.106468825373636
+            ],
+            [
+              7.028875213475073,
+              29.0,
+              -6.857606962386733
+            ],
+            [
+              6.28416415182029,
+              26.0,
+              -10.106468825373636
+            ],
+            [
+              7.028875213475073,
+              26.0,
+              -6.857606962386733
+            ]
+          ]
+        }
+      ],
+      "reverse_source_translation_verified": true,
+      "textures_auto_original_png_ratio_1": true
+    }
+  ],
+  "source_helper": "Independent source hierarchy/easing helper; no production converter import.",
+  "runtime_selector": "Actual exact-pin fridgeRootFrame called with each explicit motion; compared to source ordered writes.",
+  "limits": [
+    "Static active samples only; Java STOP/reset/reopen and running timing not simulated.",
+    "Source affine mesh versus bounded fitted canonical cuboids retains documented residuals.",
+    "No Minecraft, BDS, native material or gameplay acceptance."
+  ],
+  "gui_run": false,
+  "runtime_modified": false
+}

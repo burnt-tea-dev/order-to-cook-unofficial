@@ -1,0 +1,121 @@
+{
+  "otcCommit": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+  "geckoVersion": "4.8.3",
+  "geckoCommit": "e81962eefd04e0cab90445d3df37b477d2767ffd",
+  "equivalentGecko484Commit": "7d6f32db9168a24e14b327c0ad9f8f87dfc204de",
+  "note": "Referenced Gecko parser, controller, easing, degree sine, animation, reset and processor blobs are identical at the two pinned commits. External Java/library text was inspected for source semantics, not bundled as executable code.",
+  "records": [
+    {
+      "repository": "https://github.com/breezeth-CN/OrdertoCook",
+      "commit": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+      "path": "forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/StoveGeoModel.java",
+      "blobSha": "344065ea0707ec53ac4a056e142cacdb02df12f1",
+      "sha256": "bfd5b7675844d90f73c936b7f6fc8c0ec39428b99b6e202df64faf433826adf4",
+      "sourceUrl": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/StoveGeoModel.java"
+    },
+    {
+      "repository": "https://github.com/breezeth-CN/OrdertoCook",
+      "commit": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+      "path": "forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/StoveBlockEntity.java",
+      "blobSha": "1e294bf78139daaa676732e84d2331da195bcdee",
+      "sha256": "a397f135ccce6a25aeee8f569619cf4da3bbe31b0ccae79ca6e567d474308210",
+      "sourceUrl": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/StoveBlockEntity.java"
+    },
+    {
+      "repository": "https://github.com/breezeth-CN/OrdertoCook",
+      "commit": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+      "path": "neoforge-1.21.1/src/main/java/cn/breezeth/ordertocook/block/entity/StoveBlockEntity.java",
+      "blobSha": "17a256cfbcb91765601296ad9517e06a467e2ed8",
+      "sha256": "e856f12cd0693c130b4946d86f40596a9b436903f259f8fbd8eeda01ff378774",
+      "sourceUrl": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/neoforge-1.21.1/src/main/java/cn/breezeth/ordertocook/block/entity/StoveBlockEntity.java"
+    },
+    {
+      "repository": "https://github.com/bernie-g/geckolib",
+      "commit": "e81962eefd04e0cab90445d3df37b477d2767ffd",
+      "path": "Forge/src/main/java/software/bernie/geckolib/loading/json/typeadapter/BakedAnimationsAdapter.java",
+      "blobSha": "8a3277e679ac7fc0481d175e992cc7626bfffe4e",
+      "sha256": "ec30c7cdb195f597688abab0e13dae009a3eb512bc3269fc991814771c1ecbec",
+      "sourceUrl": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/Forge/src/main/java/software/bernie/geckolib/loading/json/typeadapter/BakedAnimationsAdapter.java"
+    },
+    {
+      "repository": "https://github.com/bernie-g/geckolib",
+      "commit": "e81962eefd04e0cab90445d3df37b477d2767ffd",
+      "path": "core/src/main/java/software/bernie/geckolib/core/molang/functions/SinDegrees.java",
+      "blobSha": "128690325446592bef32aa2d72dba59710e0f60d",
+      "sha256": "0bec9b471363c7765d5e84c72dfbd02c60f4f7209de2c7f7e693c9f464d82c22",
+      "sourceUrl": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/core/src/main/java/software/bernie/geckolib/core/molang/functions/SinDegrees.java"
+    },
+    {
+      "repository": "https://github.com/bernie-g/geckolib",
+      "commit": "e81962eefd04e0cab90445d3df37b477d2767ffd",
+      "path": "core/src/main/java/software/bernie/geckolib/core/animation/Animation.java",
+      "blobSha": "9e72b09af521a639f30851b279a9e886cfa8ce34",
+      "sha256": "efbe1ac5cba95ee7841451eed104eb1df6b3023190fdfd9eba4455c028b9c517",
+      "sourceUrl": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/core/src/main/java/software/bernie/geckolib/core/animation/Animation.java"
+    },
+    {
+      "repository": "https://github.com/bernie-g/geckolib",
+      "commit": "e81962eefd04e0cab90445d3df37b477d2767ffd",
+      "path": "core/src/main/java/software/bernie/geckolib/core/animation/RawAnimation.java",
+      "blobSha": "5d347b70703f8f439e9d975b88995c73b63e678b",
+      "sha256": "6b38dcad308b0bc7bbd9dd92e77e7b261139faf677f642f524eba28d3fcca98d",
+      "sourceUrl": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/core/src/main/java/software/bernie/geckolib/core/animation/RawAnimation.java"
+    },
+    {
+      "repository": "https://github.com/bernie-g/geckolib",
+      "commit": "e81962eefd04e0cab90445d3df37b477d2767ffd",
+      "path": "core/src/main/java/software/bernie/geckolib/core/animation/EasingType.java",
+      "blobSha": "2f77c97fb96966e918603486892a40c63e8f2716",
+      "sha256": "a70347c881123c272f05425faba7adf5e415d33d69c0b53758da9b0a6fc94673",
+      "sourceUrl": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/core/src/main/java/software/bernie/geckolib/core/animation/EasingType.java"
+    },
+    {
+      "repository": "https://github.com/bernie-g/geckolib",
+      "commit": "e81962eefd04e0cab90445d3df37b477d2767ffd",
+      "path": "core/src/main/java/software/bernie/geckolib/core/animation/AnimationController.java",
+      "blobSha": "6314af8aad401339a60c217ec56f0fb40a31a561",
+      "sha256": "851d9a8e5fa8f54971c678823354385cacf9ffd241cc7eecabaabc79b67799ed",
+      "sourceUrl": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/core/src/main/java/software/bernie/geckolib/core/animation/AnimationController.java"
+    },
+    {
+      "repository": "https://github.com/bernie-g/geckolib",
+      "commit": "e81962eefd04e0cab90445d3df37b477d2767ffd",
+      "path": "gradle.properties",
+      "blobSha": "8ef52c2b6a56efd52520349f887c665292526832",
+      "sha256": "f29f80e0fa53983571a744a1f73bf800cb58a04f47a1fabd933a6d0f0b19f264",
+      "sourceUrl": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/gradle.properties"
+    },
+    {
+      "repository": "https://github.com/bernie-g/geckolib",
+      "commit": "e81962eefd04e0cab90445d3df37b477d2767ffd",
+      "path": "core/src/main/java/software/bernie/geckolib/core/animatable/GeoAnimatable.java",
+      "blobSha": "5bff4223f5e64a6c25ae9c5c06852670c306b4d3",
+      "sha256": "c0b4f7f5c6d82a42d76fd1147befb050651405b5aff6a0eee87a79efa6e86051",
+      "sourceUrl": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/core/src/main/java/software/bernie/geckolib/core/animatable/GeoAnimatable.java"
+    },
+    {
+      "repository": "https://github.com/bernie-g/geckolib",
+      "commit": "e81962eefd04e0cab90445d3df37b477d2767ffd",
+      "path": "core/src/main/java/software/bernie/geckolib/core/animation/AnimationProcessor.java",
+      "blobSha": "123a7c4341a928b7b68f4d54d383df5bec21a4c0",
+      "sha256": "1be203aa564b93bdfb8fdd9a435be5635639b881d074360bfb3933164dd0789d",
+      "sourceUrl": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/core/src/main/java/software/bernie/geckolib/core/animation/AnimationProcessor.java"
+    },
+    {
+      "repository": "https://github.com/breezeth-CN/OrdertoCook",
+      "commit": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+      "path": "common/src/main/resources/assets/ordertocook/geo/block/stove.geo.json",
+      "blobSha": "875a37c0579eb449512a03361e42509625a6a29b",
+      "sha256": "f81d5b7999426f87db667eadb168cbda8914a3690b7cb65a5295cada3facb99f",
+      "sourceUrl": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/common/src/main/resources/assets/ordertocook/geo/block/stove.geo.json"
+    },
+    {
+      "repository": "https://github.com/breezeth-CN/OrdertoCook",
+      "commit": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+      "path": "common/src/main/resources/assets/ordertocook/animations/stove.animation.json",
+      "blobSha": "0e13e05844344566da40d904992f15936b8e81e0",
+      "sha256": "723bfbce05d84a272acbf47aa8ccc0ce6bcb998f6313122ef6a4e9c548e81c75",
+      "sourceUrl": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/common/src/main/resources/assets/ordertocook/animations/stove.animation.json"
+    }
+  ]
+}

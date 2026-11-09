@@ -1,0 +1,1140 @@
+{
+  "schema": 1,
+  "source_java_revision": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+  "baseline_revision": "f8e0895f0703d786c6f282ad3001a9de2ada5460",
+  "scope": "Review-only editor comparisons. Native materials, controllers and gameplay not tested.",
+  "layouts": {
+    "static": 21,
+    "source_baseline": 9,
+    "source_candidate_control": 7
+  },
+  "new_gui_layouts": 34,
+  "screenshots": {
+    "screenshots/board-isometric.jpg": {
+      "scene": "scenes/board.bbmodel",
+      "view": "isometric",
+      "native_client": false
+    },
+    "screenshots/chair-isometric.jpg": {
+      "scene": "scenes/chair.bbmodel",
+      "view": "isometric",
+      "native_client": false
+    },
+    "screenshots/countertop-isometric.jpg": {
+      "scene": "scenes/countertop.bbmodel",
+      "view": "isometric",
+      "native_client": false
+    },
+    "screenshots/helmet-shell-and-visor-isometric.jpg": {
+      "scene": "scenes/helmet-shell-and-visor.bbmodel",
+      "view": "isometric",
+      "native_client": false
+    },
+    "screenshots/helmet-shell-and-visor-north.jpg": {
+      "scene": "scenes/helmet-shell-and-visor.bbmodel",
+      "view": "north",
+      "native_client": false
+    },
+    "screenshots/plate-shelf-0-2-isometric.jpg": {
+      "scene": "scenes/plate_shelf-0-2.bbmodel",
+      "view": "isometric",
+      "native_client": false
+    },
+    "screenshots/plate-shelf-12-14-isometric.jpg": {
+      "scene": "scenes/plate_shelf-12-14.bbmodel",
+      "view": "isometric",
+      "native_client": false
+    },
+    "screenshots/plate-shelf-15-17-isometric.jpg": {
+      "scene": "scenes/plate_shelf-15-17.bbmodel",
+      "view": "isometric",
+      "native_client": false
+    },
+    "screenshots/plate-shelf-18-isometric.jpg": {
+      "scene": "scenes/plate_shelf-18-18.bbmodel",
+      "view": "isometric",
+      "native_client": false
+    },
+    "screenshots/plate-shelf-3-5-isometric.jpg": {
+      "scene": "scenes/plate_shelf-3-5.bbmodel",
+      "view": "isometric",
+      "native_client": false
+    },
+    "screenshots/plate-shelf-6-8-isometric.jpg": {
+      "scene": "scenes/plate_shelf-6-8.bbmodel",
+      "view": "isometric",
+      "native_client": false
+    },
+    "screenshots/plate-shelf-9-11-isometric.jpg": {
+      "scene": "scenes/plate_shelf-9-11.bbmodel",
+      "view": "isometric",
+      "native_client": false
+    },
+    "screenshots/shelf-0-2-north.jpg": {
+      "scene": "scenes/shelf-0-2.bbmodel",
+      "view": "north",
+      "native_client": false
+    },
+    "screenshots/shelf-3-5-north.jpg": {
+      "scene": "scenes/shelf-3-5.bbmodel",
+      "view": "north",
+      "native_client": false
+    },
+    "screenshots/shelf-6-8-north.jpg": {
+      "scene": "scenes/shelf-6-8.bbmodel",
+      "view": "north",
+      "native_client": false
+    },
+    "screenshots/shelf-9-10-north.jpg": {
+      "scene": "scenes/shelf-9-10.bbmodel",
+      "view": "north",
+      "native_client": false
+    },
+    "screenshots/stove-3-stove_fire_1-isometric.jpg": {
+      "scene": "scenes/stove-3-stove_fire_1.bbmodel",
+      "view": "isometric",
+      "native_client": false
+    },
+    "screenshots/stove-4-stove_fire_2-isometric.jpg": {
+      "scene": "scenes/stove-4-stove_fire_2.bbmodel",
+      "view": "isometric",
+      "native_client": false
+    },
+    "screenshots/stove-5-stove_fire_3-isometric.jpg": {
+      "scene": "scenes/stove-5-stove_fire_3.bbmodel",
+      "view": "isometric",
+      "native_client": false
+    },
+    "screenshots/stove-after-age1-north.jpg": {
+      "scene": "stove-candidate-scenes/stove-age-1-source-vs-candidate.bbmodel",
+      "view": "north",
+      "native_client": false
+    },
+    "screenshots/stove-after-age15-north.jpg": {
+      "scene": "stove-candidate-scenes/stove-age-15-source-vs-candidate.bbmodel",
+      "view": "north",
+      "native_client": false
+    },
+    "screenshots/stove-after-age17-isometric.jpg": {
+      "scene": "stove-candidate-scenes/stove-age-17-source-vs-candidate.bbmodel",
+      "view": "isometric",
+      "native_client": false
+    },
+    "screenshots/stove-after-age17-north.jpg": {
+      "scene": "stove-candidate-scenes/stove-age-17-source-vs-candidate.bbmodel",
+      "view": "north",
+      "native_client": false
+    },
+    "screenshots/stove-after-age19-north.jpg": {
+      "scene": "stove-candidate-scenes/stove-age-19-source-vs-candidate.bbmodel",
+      "view": "north",
+      "native_client": false
+    },
+    "screenshots/stove-after-age3-north.jpg": {
+      "scene": "stove-candidate-scenes/stove-age-3-source-vs-candidate.bbmodel",
+      "view": "north",
+      "native_client": false
+    },
+    "screenshots/stove-after-age9-north.jpg": {
+      "scene": "stove-candidate-scenes/stove-age-9-source-vs-candidate.bbmodel",
+      "view": "north",
+      "native_client": false
+    },
+    "screenshots/stove-before-0-isometric.jpg": {
+      "scene": "stove-pose-scenes/stove-source-pose-0-vs-current.bbmodel",
+      "view": "isometric",
+      "native_client": false
+    },
+    "screenshots/stove-before-0p05-isometric.jpg": {
+      "scene": "stove-pose-scenes/stove-source-pose-0p05-vs-current.bbmodel",
+      "view": "isometric",
+      "native_client": false
+    },
+    "screenshots/stove-before-0p05-north.jpg": {
+      "scene": "stove-pose-scenes/stove-source-pose-0p05-vs-current.bbmodel",
+      "view": "north",
+      "native_client": false
+    },
+    "screenshots/stove-before-0p45-isometric.jpg": {
+      "scene": "stove-pose-scenes/stove-source-pose-0p45-vs-current.bbmodel",
+      "view": "isometric",
+      "native_client": false
+    },
+    "screenshots/stove-before-0p45-north.jpg": {
+      "scene": "stove-pose-scenes/stove-source-pose-0p45-vs-current.bbmodel",
+      "view": "north",
+      "native_client": false
+    },
+    "screenshots/stove-before-0p75-north.jpg": {
+      "scene": "stove-pose-scenes/stove-source-pose-0p75-vs-current.bbmodel",
+      "view": "north",
+      "native_client": false
+    },
+    "screenshots/stove-before-0p83-north.jpg": {
+      "scene": "stove-pose-scenes/stove-source-pose-0p83-vs-current.bbmodel",
+      "view": "north",
+      "native_client": false
+    },
+    "screenshots/stove-before-0p875-north.jpg": {
+      "scene": "stove-pose-scenes/stove-source-pose-0p875-vs-current.bbmodel",
+      "view": "north",
+      "native_client": false
+    },
+    "screenshots/stove-before-0p9375-north.jpg": {
+      "scene": "stove-pose-scenes/stove-source-pose-0p9375-vs-current.bbmodel",
+      "view": "north",
+      "native_client": false
+    },
+    "screenshots/stove-before-0p95-north.jpg": {
+      "scene": "stove-pose-scenes/stove-source-pose-0p95-vs-current.bbmodel",
+      "view": "north",
+      "native_client": false
+    },
+    "screenshots/stove-before-1-north.jpg": {
+      "scene": "stove-pose-scenes/stove-source-pose-1-vs-current.bbmodel",
+      "view": "north",
+      "native_client": false
+    },
+    "screenshots/stove-identical-age17-north.jpg": {
+      "scene": "stove-candidate-scenes/stove-identical-age-17-control.bbmodel",
+      "view": "north",
+      "native_client": false
+    }
+  },
+  "inputs": {
+    "runtime/BP/blocks/board.json": {
+      "bytes": 2819,
+      "sha256": "166648aa8e472668a815f78e279c1d88ddb5e3f0cd3e6ba352d7cbef44573a45"
+    },
+    "runtime/BP/blocks/chair.json": {
+      "bytes": 2964,
+      "sha256": "b2738d12e2828a44093c7004e9dc6ac23db20e94c2afd155497f5dbb58717967"
+    },
+    "runtime/BP/blocks/countertop.json": {
+      "bytes": 2710,
+      "sha256": "d6eaf1759da5357d1f8dfea401f1e60d3f0fdec3771bb983e395e386371d9c81"
+    },
+    "runtime/BP/blocks/plate_shelf.json": {
+      "bytes": 17578,
+      "sha256": "1f38efc0c5e04ec1b5e8f8140829a559af68d66c2f4b39bbdc7e8da31a6ab10a"
+    },
+    "runtime/BP/blocks/shelf.json": {
+      "bytes": 10580,
+      "sha256": "73afc9a2b859fcd328fab878bcfed51c4f81f87956b86b4af4286c44684fac5c"
+    },
+    "runtime/BP/blocks/stove.json": {
+      "bytes": 11226,
+      "sha256": "bb8ba9e0708414fb61dadba39480294be50fa00105b2e10d9e43a3a839312856"
+    },
+    "runtime/BP/scripts/appliances.js": {
+      "bytes": 54694,
+      "sha256": "bbf8edb207d0819bad7ffa3544ec6985280cf537686c5293c6bde01002d079d1"
+    },
+    "runtime/BP/scripts/stove_fire.js": {
+      "bytes": 2586,
+      "sha256": "cac7d482667884495be93210cc7d08470a789bb32a7dda272922cc8cc9e853f8"
+    },
+    "runtime/RP/attachables/helmet.attachable.json": {
+      "bytes": 758,
+      "sha256": "79d285e211f91f184439b7e2fec109437757c9c065186c8db8c700344a340c4a"
+    },
+    "runtime/RP/models/blocks/board.geo.json": {
+      "bytes": 25244,
+      "sha256": "4e2e176dc7561420f47c063abed94ddc13aa845e9ff6f7bea7568324a08b403d"
+    },
+    "runtime/RP/models/blocks/chair.geo.json": {
+      "bytes": 14943,
+      "sha256": "1fde7e3385f3cfec04af03c0e1c59f23c3f915b444f6ca8c9f9ced465f762938"
+    },
+    "runtime/RP/models/blocks/countertop.geo.json": {
+      "bytes": 6820,
+      "sha256": "5fefce27f9af5376f397687ef0c220ef09122e341fa0007a605ce8656b9beb81"
+    },
+    "runtime/RP/models/blocks/plate_shelf_0.geo.json": {
+      "bytes": 7164,
+      "sha256": "23c926bbfee23de9bdeff535577a88af7c23657cccf4aae85ce2467f290f1cdd"
+    },
+    "runtime/RP/models/blocks/plate_shelf_1.geo.json": {
+      "bytes": 9395,
+      "sha256": "42db8a65466ef527da9b949d94d7b47ab4cc9c0d0b62c27f430491a06dc19a1e"
+    },
+    "runtime/RP/models/blocks/plate_shelf_10.geo.json": {
+      "bytes": 29454,
+      "sha256": "2c44f4477196ca6f83bfafb3620ab85f8f65b10ed7fdab685eaf2aaa2d293b25"
+    },
+    "runtime/RP/models/blocks/plate_shelf_11.geo.json": {
+      "bytes": 31680,
+      "sha256": "d8123e9e8541922a2d51fd8b179b58d9775837e5569bb27cd5eed623850845f8"
+    },
+    "runtime/RP/models/blocks/plate_shelf_12.geo.json": {
+      "bytes": 33910,
+      "sha256": "49c5ca86a219b5d84b44be1c0c26ecef5c92f17486df0cf5558caf1066e75275"
+    },
+    "runtime/RP/models/blocks/plate_shelf_13.geo.json": {
+      "bytes": 36136,
+      "sha256": "3cfb9a2e9838397714073f07112558c3bf39b4cac9e13087c24b37f2f160a8ae"
+    },
+    "runtime/RP/models/blocks/plate_shelf_14.geo.json": {
+      "bytes": 38366,
+      "sha256": "bdb14446ecbd79d9f69d9bb49b262c6a057ee608531523cd2554437f14b22f14"
+    },
+    "runtime/RP/models/blocks/plate_shelf_15.geo.json": {
+      "bytes": 40591,
+      "sha256": "008622de62b7eabf4fa2170e15c82260547a0d27ef79d9093af9a515d85961a4"
+    },
+    "runtime/RP/models/blocks/plate_shelf_16.geo.json": {
+      "bytes": 42820,
+      "sha256": "b533ef6b1f262ce2494495123a62f37f2155d32be695e0fe1c780303b724d04d"
+    },
+    "runtime/RP/models/blocks/plate_shelf_17.geo.json": {
+      "bytes": 45045,
+      "sha256": "9f0d5d1510f844c61bd262cbe1e75aff375095b8ea673a722064dd620dafc822"
+    },
+    "runtime/RP/models/blocks/plate_shelf_18.geo.json": {
+      "bytes": 47274,
+      "sha256": "d0ff134b82e9bc349546a816ea09731e78032b8f5bd9e516cdd1f173499915d9"
+    },
+    "runtime/RP/models/blocks/plate_shelf_2.geo.json": {
+      "bytes": 11622,
+      "sha256": "bbac9cba5bdd38df65b887bd0cb8fd8819e015f8e714f16fcf9ea1e5bda6d6c9"
+    },
+    "runtime/RP/models/blocks/plate_shelf_3.geo.json": {
+      "bytes": 13853,
+      "sha256": "556e10fa3ec8b65cadb39bc63229435b57b1c383c91d1059450cf0cdb08736c2"
+    },
+    "runtime/RP/models/blocks/plate_shelf_4.geo.json": {
+      "bytes": 16080,
+      "sha256": "7ad91d9429b672a26f4c76e4701fe64e22ccac4f618378eb5249b6aec2f9444e"
+    },
+    "runtime/RP/models/blocks/plate_shelf_5.geo.json": {
+      "bytes": 18311,
+      "sha256": "368547a264b93cd0fbe598d29f172e17d35262cbfc34dfbb91453322fb9c0f9c"
+    },
+    "runtime/RP/models/blocks/plate_shelf_6.geo.json": {
+      "bytes": 20537,
+      "sha256": "9626b9e2939038d4d0e64ec2a731bc58bf83074acfb032c2d8a976583c9e5e51"
+    },
+    "runtime/RP/models/blocks/plate_shelf_7.geo.json": {
+      "bytes": 22767,
+      "sha256": "1535a5db90d60e444c52812ad827630d36012740b86fbd89f9a0407ca8eec825"
+    },
+    "runtime/RP/models/blocks/plate_shelf_8.geo.json": {
+      "bytes": 24993,
+      "sha256": "f7f76292f612a44da687ae84bbf3ff6e4685c7c274cefd18defe90b495264573"
+    },
+    "runtime/RP/models/blocks/plate_shelf_9.geo.json": {
+      "bytes": 27223,
+      "sha256": "96b1f8a99d4d8161a311ffd3320fd6a9709436fd113ae1b5903e17869f53a821"
+    },
+    "runtime/RP/models/blocks/shelf_0.geo.json": {
+      "bytes": 7050,
+      "sha256": "4c02b6accba85fc61a2d24bd245305a6e6a1e9f45b961d33031b8b411d212599"
+    },
+    "runtime/RP/models/blocks/shelf_1.geo.json": {
+      "bytes": 9240,
+      "sha256": "6525c054bfb732296d3a7b9de5c194a47f581ae49e45e3a97014152b2fdeafd9"
+    },
+    "runtime/RP/models/blocks/shelf_10.geo.json": {
+      "bytes": 28952,
+      "sha256": "97ca83e039156c3e2dc42956d6f8f5cfd8791b7449095f7ed5d8c2c97d9d7cea"
+    },
+    "runtime/RP/models/blocks/shelf_2.geo.json": {
+      "bytes": 11430,
+      "sha256": "752bec1e1e50cba6f3a3dd988ab33a811c92d6c5a95fd195301057c5f72bd2ea"
+    },
+    "runtime/RP/models/blocks/shelf_3.geo.json": {
+      "bytes": 13620,
+      "sha256": "48f3379452b05b0b2136b80015413352c7311512ea2df6d09df6ebc6f96126bc"
+    },
+    "runtime/RP/models/blocks/shelf_4.geo.json": {
+      "bytes": 15809,
+      "sha256": "6ccf41e6f125c6eeb9621f04154274ad9c59b3441954f3a7ef2a6a5e9b7660f1"
+    },
+    "runtime/RP/models/blocks/shelf_5.geo.json": {
+      "bytes": 17998,
+      "sha256": "1f24c9814a1c76c01b4a26db213474614a4581d99c79904651b2f1587c76f017"
+    },
+    "runtime/RP/models/blocks/shelf_6.geo.json": {
+      "bytes": 20189,
+      "sha256": "333dae9ffcaf41f682fac937fc6d8ce0076327d0b245f2536a9eea94a1d49812"
+    },
+    "runtime/RP/models/blocks/shelf_7.geo.json": {
+      "bytes": 22380,
+      "sha256": "071f2a86139128ed77df7dd03e177afd13ea368ff1ea0389552974c4ba249d01"
+    },
+    "runtime/RP/models/blocks/shelf_8.geo.json": {
+      "bytes": 24571,
+      "sha256": "b5cbffedd0f1a97262dedaa394e4069581f49023fa7a1afefbb205539386e7d6"
+    },
+    "runtime/RP/models/blocks/shelf_9.geo.json": {
+      "bytes": 26761,
+      "sha256": "81160c9998e50f565d588322e3e6e1326ea352e6d0327a1f526a716c3a12689b"
+    },
+    "runtime/RP/models/blocks/stove_ignition_1.geo.json": {
+      "bytes": 6041,
+      "sha256": "bb78d7d6740b75d1e4212618fc5531aee5d4bae3448a9e510a49d304e2471c9e"
+    },
+    "runtime/RP/models/blocks/stove_ignition_10.geo.json": {
+      "bytes": 6051,
+      "sha256": "f35f1976e4286f9c3a2fb1d5a0cbf1fde09b21233b80f3ed225587f4da7c877b"
+    },
+    "runtime/RP/models/blocks/stove_ignition_11.geo.json": {
+      "bytes": 6060,
+      "sha256": "6f15b4b26be0607ac10727c5bfa6ca47cff553c98f54b2135e41c305108bac46"
+    },
+    "runtime/RP/models/blocks/stove_ignition_12.geo.json": {
+      "bytes": 6054,
+      "sha256": "9e0486a0370117154e43d016c3db7b9cd5444777736b449a372b54264addfc36"
+    },
+    "runtime/RP/models/blocks/stove_ignition_13.geo.json": {
+      "bytes": 6059,
+      "sha256": "4389a6c38452127047d80fec545b2496a08bdb0345cb534ce8078ecf1120ffed"
+    },
+    "runtime/RP/models/blocks/stove_ignition_14.geo.json": {
+      "bytes": 6060,
+      "sha256": "04b689a18c04aa2776261ce8bf0dfe7806ce8e0711833584a621c811ed22cfe8"
+    },
+    "runtime/RP/models/blocks/stove_ignition_15.geo.json": {
+      "bytes": 6041,
+      "sha256": "dedb8a46fd2ba5eedfeb6ea7a845b200e32fc8168ac56b82d24c7c162c33b7c7"
+    },
+    "runtime/RP/models/blocks/stove_ignition_16.geo.json": {
+      "bytes": 6568,
+      "sha256": "4c6277af64984c1d6f34da85231eb4636e2fe13ba1a29dd92cab3bbc8afe53de"
+    },
+    "runtime/RP/models/blocks/stove_ignition_17.geo.json": {
+      "bytes": 6569,
+      "sha256": "f22508fc7f2c298cfe2e1361354162efaa122bf59a5e4c13f4c2f7575d9b6d53"
+    },
+    "runtime/RP/models/blocks/stove_ignition_18.geo.json": {
+      "bytes": 6477,
+      "sha256": "279248b0107dd6ebaadde0dd45b7df457e7e4f596fb4e262b87f46abd53d0d40"
+    },
+    "runtime/RP/models/blocks/stove_ignition_19.geo.json": {
+      "bytes": 6496,
+      "sha256": "d2e643afd03716cf4f8fc412e5685a634cbd08f8cf68251a9b0362d4a57be7f2"
+    },
+    "runtime/RP/models/blocks/stove_ignition_2.geo.json": {
+      "bytes": 6047,
+      "sha256": "7858c14a6f6015e5022a491d08d4a8a5cc8268c07e0d46e1fb598a09c61ba10f"
+    },
+    "runtime/RP/models/blocks/stove_ignition_3.geo.json": {
+      "bytes": 6058,
+      "sha256": "e842e740cfc8c7b8102e56f1eaf5d0f8d871e5627d22182925c151ddc5291f2a"
+    },
+    "runtime/RP/models/blocks/stove_ignition_4.geo.json": {
+      "bytes": 6059,
+      "sha256": "50133557b59adf663baa8183c59776b4a00edaf54ebd2b1b14b765751255f4f6"
+    },
+    "runtime/RP/models/blocks/stove_ignition_5.geo.json": {
+      "bytes": 6051,
+      "sha256": "de5ee5b7ae155442f9ae33b322300f44ea8f023a82d7c56e4adce3f5985c3ea8"
+    },
+    "runtime/RP/models/blocks/stove_ignition_6.geo.json": {
+      "bytes": 6053,
+      "sha256": "425938706497828d456d8603a05cb6a51e30e12bfec7d89abb89d0d4fb8d86c3"
+    },
+    "runtime/RP/models/blocks/stove_ignition_7.geo.json": {
+      "bytes": 6059,
+      "sha256": "9fa1e5387c7f0602831c6f7ac0a1d57ee6059100526eeabbf30ca28633ca221a"
+    },
+    "runtime/RP/models/blocks/stove_ignition_8.geo.json": {
+      "bytes": 6058,
+      "sha256": "07647a73f95b3bf6462c965958d187d3725034493d739ef606bc771b3fc1a515"
+    },
+    "runtime/RP/models/blocks/stove_ignition_9.geo.json": {
+      "bytes": 6059,
+      "sha256": "1b1942cc033c199dce7c880a63cbfae8bed640e896188293cd74841062a7906c"
+    },
+    "runtime/RP/models/entity/helmet_shell.geo.json": {
+      "bytes": 29848,
+      "sha256": "9bd0570579538dfbce91cc36e9b5c215f692c0cc658e5f265c906545decd8f02"
+    },
+    "runtime/RP/models/entity/helmet_visor.geo.json": {
+      "bytes": 6273,
+      "sha256": "c5ec3c1f0398348166efed8635a75ba025c81c01627c1095479172faa279fcba"
+    },
+    "runtime/RP/textures/ordertocook/block/board.png": {
+      "bytes": 982,
+      "sha256": "e0026c3137b79f43bf7d27ae27d3456e63d979ea50d1ae49283109f67ae61f01"
+    },
+    "runtime/RP/textures/ordertocook/block/chair.png": {
+      "bytes": 771,
+      "sha256": "ba7b3c247b3a13677e493d64cc7f04a1115d7a1bc077cdc8e6ca1178af56404b"
+    },
+    "runtime/RP/textures/ordertocook/block/countertop.png": {
+      "bytes": 1117,
+      "sha256": "ba902d6f1edbc81d1a616f597a5379a046fdd1b61af5aadb2a82b4ea30001317"
+    },
+    "runtime/RP/textures/ordertocook/block/plate_shelf.png": {
+      "bytes": 796,
+      "sha256": "e38825e0ca7117dbb74494e418c787822500ea40cdff7b6dfe1db326e728ed1d"
+    },
+    "runtime/RP/textures/ordertocook/block/shelf.png": {
+      "bytes": 757,
+      "sha256": "17ef0ff2479aa2c4e104b59110019be83b611b1c58b0184ae083b4a32df5ed5c"
+    },
+    "runtime/RP/textures/ordertocook/block/stove.png": {
+      "bytes": 2207,
+      "sha256": "e0d4fed8d6140b32708c6a75b6f0aeb380191e06c3bcb3122c084d0ff8400f2b"
+    },
+    "runtime/RP/textures/ordertocook/block/stove_fire.png": {
+      "bytes": 2247,
+      "sha256": "f96e48fed36190dd24c10ebd28961b89e1a189cebfd084a3ed5fcc42df4ecb5e"
+    },
+    "runtime/RP/textures/ordertocook/block/stove_fire_0.png": {
+      "bytes": 1964,
+      "sha256": "1e5daa50715f13ba739b52b7258a73e24884666c899da25069ab3adfbcc4a1be"
+    },
+    "runtime/RP/textures/ordertocook/block/stove_fire_1.png": {
+      "bytes": 1946,
+      "sha256": "618ae232ba2f83b7be272fe4a8c72475546940c6d7acb4bd8847d8b54b47eb72"
+    },
+    "runtime/RP/textures/ordertocook/block/stove_fire_2.png": {
+      "bytes": 1957,
+      "sha256": "2e7fd6c963f7312aed1dfd2b57fb583a5d78d4aa4568daf576a27ba5e7ce4954"
+    },
+    "runtime/RP/textures/ordertocook/block/stove_fire_3.png": {
+      "bytes": 1935,
+      "sha256": "18fedd4de5bd5823369e76430b8d876a1f8eefd826b66831f611c8268f5f08f0"
+    },
+    "runtime/RP/textures/ordertocook/item/delivery_helmet.png": {
+      "bytes": 1037,
+      "sha256": "0fa0f426368f255c945f74ed9a603aa7523c611282bea4affbdf4a3e96854bba"
+    },
+    "runtime/RP/textures/ordertocook/item/delivery_helmet_glass.png": {
+      "bytes": 471,
+      "sha256": "ecbe469b6e4b6c0ad3c9acffb2a5a2ff85ee79b85630b6ae475e52938bbb42f8"
+    },
+    "runtime/RP/textures/terrain_texture.json": {
+      "bytes": 4561,
+      "sha256": "25868565cbdcf7f4cb67c2f23b13fde43714795524956ac22f513bd615332f9e"
+    },
+    "runtime/asset_conversion_manifest.json": {
+      "bytes": 252559,
+      "sha256": "12bcb7a99b33122239cd50d0d507e51349bc04d69f225e50060e5dc838d71716"
+    },
+    "tools/convert_assets.py": {
+      "bytes": 136389,
+      "sha256": "05299ed474cb13ee0c8b6e544fce640c20c0390386425acb4f2731033a27738c"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/blockstates/board.json": {
+      "bytes": 292,
+      "sha256": "18c84e8ac272b1eecd2a5dde0336044244e2994632ee7227b8d0f57880af4a6a"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/blockstates/chair.json": {
+      "bytes": 290,
+      "sha256": "325b10621963548b12c4b06a66410c642b49dffaac55807e2307e7d052c64ad2"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/blockstates/countertop.json": {
+      "bytes": 368,
+      "sha256": "31dbc21f734571941340def97a1418a4e6d0897901eb2788a3cb76f1906d4cc6"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/blockstates/plate_shelf.json": {
+      "bytes": 8997,
+      "sha256": "b9d1c503601f6d313b3edc71e2bbcd963e5511d40a7f693bd8daa05aceafc529"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/blockstates/shelf.json": {
+      "bytes": 4933,
+      "sha256": "fb038469b44c2494cb9eb605aa34169a1855795f37f8ab7b2b2a4621949e633e"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/stove.geo.json": {
+      "bytes": 1732,
+      "sha256": "f81d5b7999426f87db667eadb168cbda8914a3690b7cb65a5295cada3facb99f"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/board.json": {
+      "bytes": 6609,
+      "sha256": "b927193fb20ba40a5e72f6630520a7a25988ab642215c165fe9a96d980669754"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/chair.json": {
+      "bytes": 4175,
+      "sha256": "3411e8d52ff1eb9663aacdfe72ebe2ca879d43cdcc8608516feb4c9727d68c87"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/countertop.json": {
+      "bytes": 2503,
+      "sha256": "c148471a22732e3760ac915b59b262492552a568dd2c7e58d62918e0524acd71"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/plate_shelf_1.json": {
+      "bytes": 921,
+      "sha256": "fefa78e924ab807fe75c5433a25eebfc73f697c0e12bf06f9f8adb7e572f76e3"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/plate_shelf_10.json": {
+      "bytes": 5766,
+      "sha256": "20138912c9430153d446297e9545d028a779a0fb60ee2d52adf4f2c2cb4aaab0"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/plate_shelf_11.json": {
+      "bytes": 6316,
+      "sha256": "53bfcaf12053b5ad00417a4a5881476c8daf42044d9c811af2d8eaa44055809f"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/plate_shelf_12.json": {
+      "bytes": 6870,
+      "sha256": "46a4a6c350f006950a61d901a8d2cc9a305de1f7707a26089539773054d166cd"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/plate_shelf_13.json": {
+      "bytes": 7419,
+      "sha256": "8a619bb543c2562dad890a4084c3f660d11a0d1c7e9ec22b27091158bb85f069"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/plate_shelf_14.json": {
+      "bytes": 7971,
+      "sha256": "7822e9dbbed21512de7f52a97e6113cac884a2550630e62eecf14126643030f3"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/plate_shelf_15.json": {
+      "bytes": 8519,
+      "sha256": "8993a223e1a4c7c27aa84fac3276435b97253926c7ccba400c2a994b65dd9dd3"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/plate_shelf_16.json": {
+      "bytes": 9071,
+      "sha256": "fee9f002d7f8431bb1919f2f24a4955e24380573f79e2fde015b22200dcdd39e"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/plate_shelf_17.json": {
+      "bytes": 9619,
+      "sha256": "462a7d7caa1b2caf18aa4ee7ebfcfd9dbdcf3931e948fe2ad96dee27245915a8"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/plate_shelf_18.json": {
+      "bytes": 10171,
+      "sha256": "6ad7e490e9af502c53c377f689119bc2470c370422f0ff1641442434a85fd7e1"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/plate_shelf_2.json": {
+      "bytes": 1350,
+      "sha256": "ff7a8ac6765624502c2474d514fad59a90363d7c91aa3f4301eaf7172ff011fb"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/plate_shelf_3.json": {
+      "bytes": 1905,
+      "sha256": "f64803c29e58f67bc3f57d6b5e3dfc1bf28f1037c2d0dffdae4623b445428722"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/plate_shelf_4.json": {
+      "bytes": 2455,
+      "sha256": "1bd9c87d69ebac5af93d4d7b49383f8ddaf8590690d284cfc221f32c223f602c"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/plate_shelf_5.json": {
+      "bytes": 3008,
+      "sha256": "e7b1fd10a92940a3f7f3d9437d072788970426712033819fb041498cef7228cd"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/plate_shelf_6.json": {
+      "bytes": 3557,
+      "sha256": "90c1013ef3a20db7727abe4e2a0b0d3037f1d44b0cbd6ddc28fade7afe3591d2"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/plate_shelf_7.json": {
+      "bytes": 4110,
+      "sha256": "dc6b8cb3ba94fc8c0a11959a8ddfb08627988b61c2ed3dc476ea960d86ead24c"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/plate_shelf_8.json": {
+      "bytes": 4659,
+      "sha256": "f6bfc580d8fef4a7d9e5d3512761395003ab8aa0ad10bf16e6f555aa324356a4"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/plate_shelf_9.json": {
+      "bytes": 5212,
+      "sha256": "6a51172e8f1847c334fdd56d35bd66943e53e3909ceabc5c76f045807f357a7d"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/plate_shelf_idle.json": {
+      "bytes": 2700,
+      "sha256": "96c3f07c84c4932e077746c4a7577e5180952e030a3f4e6740973f46f84d3edd"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/shelf_1.json": {
+      "bytes": 798,
+      "sha256": "519a6ff9814e205eded7be4cb62456305f309f955c6e216ebe818e92087ee3e2"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/shelf_10.json": {
+      "bytes": 5890,
+      "sha256": "8a39288afa3edae96e939f1bf779f9e39bab12a5dc4634c945402faa1557c05e"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/shelf_2.json": {
+      "bytes": 1364,
+      "sha256": "eefdb215f26f0d7f73d2e2b62cd6ecc703f475ddd7096c5c77c77c441a615035"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/shelf_3.json": {
+      "bytes": 1928,
+      "sha256": "f27c7a4c32c920b1cc2c211e43cad243103818e6212e4a4ea5fc667a2b9866f6"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/shelf_4.json": {
+      "bytes": 2492,
+      "sha256": "eb1accf8a96edb5990220dd24409229b20887b60a8ffe9065e16f414c74a24b7"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/shelf_5.json": {
+      "bytes": 3056,
+      "sha256": "6596470c805a912934e45344ee4101273625a77d8abe503b30fd91385ecde2b0"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/shelf_6.json": {
+      "bytes": 3624,
+      "sha256": "69145b0d4c79023b0242e8965095a3cf792cdd3c23f98140cd65b9a5345cf2e5"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/shelf_7.json": {
+      "bytes": 4192,
+      "sha256": "cd8921377de6ce866a7424bb579631c4de36f67921ddc8a2eb143108b793ad85"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/shelf_8.json": {
+      "bytes": 4758,
+      "sha256": "b59da009e946ea039142d328a15213932a073b3f90777243db147217ff0f2269"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/shelf_9.json": {
+      "bytes": 5324,
+      "sha256": "d72bc408b7f85e2fe1cf1696b7b7d2e7a43beaf3c335e3c33601452be5d1c0dd"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/shelf_idle.json": {
+      "bytes": 2796,
+      "sha256": "268c0d0175f43cff56da5430fbc7906422c2c1c2b60c6dec5036c80f1c540442"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/stove.json": {
+      "bytes": 2518,
+      "sha256": "a447396bc78980d8f2581f5c9a33ecd142168ee7cf63dd03450358ec5eda9dd2"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/item/helmet.json": {
+      "bytes": 11179,
+      "sha256": "d4971693a996e0e1fdb19fee27f809bc2f4dfc7a8b666a0caeed91e5f227ef7f"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/board.png": {
+      "bytes": 982,
+      "sha256": "e0026c3137b79f43bf7d27ae27d3456e63d979ea50d1ae49283109f67ae61f01"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/chair.png": {
+      "bytes": 771,
+      "sha256": "ba7b3c247b3a13677e493d64cc7f04a1115d7a1bc077cdc8e6ca1178af56404b"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/countertop.png": {
+      "bytes": 1117,
+      "sha256": "ba902d6f1edbc81d1a616f597a5379a046fdd1b61af5aadb2a82b4ea30001317"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/plate_shelf.png": {
+      "bytes": 796,
+      "sha256": "e38825e0ca7117dbb74494e418c787822500ea40cdff7b6dfe1db326e728ed1d"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/shelf.png": {
+      "bytes": 757,
+      "sha256": "17ef0ff2479aa2c4e104b59110019be83b611b1c58b0184ae083b4a32df5ed5c"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/stove.png": {
+      "bytes": 2207,
+      "sha256": "e0d4fed8d6140b32708c6a75b6f0aeb380191e06c3bcb3122c084d0ff8400f2b"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/stove_fire.png": {
+      "bytes": 2247,
+      "sha256": "f96e48fed36190dd24c10ebd28961b89e1a189cebfd084a3ed5fcc42df4ecb5e"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/stove_fire_0.png": {
+      "bytes": 1964,
+      "sha256": "1e5daa50715f13ba739b52b7258a73e24884666c899da25069ab3adfbcc4a1be"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/stove_fire_1.png": {
+      "bytes": 1946,
+      "sha256": "618ae232ba2f83b7be272fe4a8c72475546940c6d7acb4bd8847d8b54b47eb72"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/stove_fire_2.png": {
+      "bytes": 1957,
+      "sha256": "2e7fd6c963f7312aed1dfd2b57fb583a5d78d4aa4568daf576a27ba5e7ce4954"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/stove_fire_3.png": {
+      "bytes": 1935,
+      "sha256": "18fedd4de5bd5823369e76430b8d876a1f8eefd826b66831f611c8268f5f08f0"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/textures/item/delivery_helmet.png": {
+      "bytes": 1037,
+      "sha256": "0fa0f426368f255c945f74ed9a603aa7523c611282bea4affbdf4a3e96854bba"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/textures/item/delivery_helmet_glass.png": {
+      "bytes": 471,
+      "sha256": "ecbe469b6e4b6c0ad3c9acffb2a5a2ff85ee79b85630b6ae475e52938bbb42f8"
+    }
+  },
+  "evidence": {
+    "README.md": {
+      "bytes": 12290,
+      "sha256": "617bf34c63be87c1c99c8a372c7cb7c364089f5db48d85aa03804c4f70fff21c"
+    },
+    "baseline/stove.block.json": {
+      "bytes": 6028,
+      "sha256": "52c7578d3bfde08d04e6cc4160c0f40b5ea5db8f115a74d112c42a57998ba49d"
+    },
+    "baseline/stove.geo.json": {
+      "bytes": 6905,
+      "sha256": "28cf72875576ec2bbe530df42134a9957471a6237f7f4370821f76f2e422e59f"
+    },
+    "build_scenes.py": {
+      "bytes": 6835,
+      "sha256": "b7facad5a4152a3513269c41574a4fbca38b9ecefd8bd40f890af4ef0adf73fb"
+    },
+    "build_stove_candidate_scenes.py": {
+      "bytes": 2484,
+      "sha256": "f6df1d5f46c495aec34fe7bfbaa7affa7646b9478bd70c863bcdc4d12f3db2c8"
+    },
+    "build_stove_pose_scenes.py": {
+      "bytes": 3320,
+      "sha256": "5fe7e21a5972e6aec1e8fa09b9c343565b5a102a3b51ffc8d04509b34ce92a28"
+    },
+    "input-identities.json": {
+      "bytes": 23632,
+      "sha256": "9c5073867f7eed44dce78ec8d28b1b2bd7e3628c5ebcd443bf36129c11d6bab4"
+    },
+    "scene_lib.py": {
+      "bytes": 4279,
+      "sha256": "d5d32ed323a88c458e0e6077fb7bf76da1bbd7e1b48eb02f42bbf1bb7fe8c4b9"
+    },
+    "scenes/board.bbmodel": {
+      "bytes": 38121,
+      "sha256": "435bb26731583be32456f044909a405aefb3317a19b4dd5156b145bbcc117ced"
+    },
+    "scenes/chair.bbmodel": {
+      "bytes": 24727,
+      "sha256": "494681eb12fe9353bff65c9d46d9415dcb9eaf556f856727224dbce0fa372159"
+    },
+    "scenes/countertop.bbmodel": {
+      "bytes": 13053,
+      "sha256": "8efa05acddd7e89edc951965319b3386e2be570da2cc5d74032d9c8301a46fa1"
+    },
+    "scenes/helmet-shell-and-visor.bbmodel": {
+      "bytes": 68504,
+      "sha256": "5be95f8e613a76e6f467ed0756d46ee0e61504277f0d902cd98a5dc88074e954"
+    },
+    "scenes/plate_shelf-0-2.bbmodel": {
+      "bytes": 45688,
+      "sha256": "6cd558159c3c2c4f7500477942c740de75fc4967ff718f0dc490f28a682ce297"
+    },
+    "scenes/plate_shelf-12-14.bbmodel": {
+      "bytes": 164585,
+      "sha256": "22a693bae8bf87d6eb5a176a9b154fdfe1dbc6582e2913ff1b3e0b641546272b"
+    },
+    "scenes/plate_shelf-15-17.bbmodel": {
+      "bytes": 194202,
+      "sha256": "717bcad92b594841855928434f199d85614fc399774752d8491712d03a81492e"
+    },
+    "scenes/plate_shelf-18-18.bbmodel": {
+      "bytes": 72356,
+      "sha256": "c6297ae58cc9fbb4510d7fb9bfc35de75c5124920bfa7d385bc1f2c649c0e58c"
+    },
+    "scenes/plate_shelf-3-5.bbmodel": {
+      "bytes": 75725,
+      "sha256": "b3b0a7ec508dd2b46dc006b3b1736093f96dd75b01d6c6d6354937874f216075"
+    },
+    "scenes/plate_shelf-6-8.bbmodel": {
+      "bytes": 105334,
+      "sha256": "2f1e651bffc8128a33b148b9044f579dbb5abdcfc290fe7184e554c7050b4f1b"
+    },
+    "scenes/plate_shelf-9-11.bbmodel": {
+      "bytes": 134962,
+      "sha256": "8ec2b27ff40b084202c3a8cd8441ec30c6ef645c5e09a482a331f311456f15e0"
+    },
+    "scenes/shelf-0-2.bbmodel": {
+      "bytes": 45622,
+      "sha256": "6323d04a79d88d5c4973fa0f80c54377daa8ebb4715893dc8dc94504b9f24633"
+    },
+    "scenes/shelf-3-5.bbmodel": {
+      "bytes": 75801,
+      "sha256": "75e311efd202dadc7f4b72ff3246f0e1b358af2c1ca12c4d8173966f401ba58a"
+    },
+    "scenes/shelf-6-8.bbmodel": {
+      "bytes": 105566,
+      "sha256": "11a83a40b6ad8e1ff653dc6bf2f992a3903407121fd263670c0e0f6ccbd39577"
+    },
+    "scenes/shelf-9-10.bbmodel": {
+      "bytes": 87489,
+      "sha256": "f1ea801ab16e0301858e43cd0b68574d674dddd75f3e3062b6783b5a6c02b129"
+    },
+    "scenes/stove-0-stove.bbmodel": {
+      "bytes": 14230,
+      "sha256": "73a3cca03bc7fd8c89808877eb910169bb5b801b69ff26243dc864e465448c1d"
+    },
+    "scenes/stove-1-stove_fire.bbmodel": {
+      "bytes": 14287,
+      "sha256": "5060dcc90bad0f0b4d021f5fa086d32bd2a58cd4295154786666d7313da71b6b"
+    },
+    "scenes/stove-2-stove_fire_0.bbmodel": {
+      "bytes": 13913,
+      "sha256": "07b01d3564ae84e362766a8b0aff89a04f7d728cb1cc430d199eb219fe4b4e7c"
+    },
+    "scenes/stove-3-stove_fire_1.bbmodel": {
+      "bytes": 13889,
+      "sha256": "3b42d846e74e59c5492e94a8cdd5c81887ce1ad9e2fe15f0d326e7fd5ff9e1bb"
+    },
+    "scenes/stove-4-stove_fire_2.bbmodel": {
+      "bytes": 13905,
+      "sha256": "2731c85dd96742d5df5977efe8cec6891c1570091e361e0b19ae54b053a69c87"
+    },
+    "scenes/stove-5-stove_fire_3.bbmodel": {
+      "bytes": 13873,
+      "sha256": "0895c9f1c4fd6b18890c80b0be13df206dc1aedcb9e1ded0015a470ecdc2bafc"
+    },
+    "screenshots/board-isometric.jpg": {
+      "bytes": 102887,
+      "sha256": "ecf3ca74cf109677f495825b70a7cd3086db5581fadf587fe5ff85207e34b9f6"
+    },
+    "screenshots/chair-isometric.jpg": {
+      "bytes": 89536,
+      "sha256": "9772e35191560347b3cdef46769863fe7bec2265bdbd6ceda24ee92861f4983c"
+    },
+    "screenshots/countertop-isometric.jpg": {
+      "bytes": 94709,
+      "sha256": "38479e926709fe042cdda374dfe348f12a9620f8159fe1185d886a4df21750f4"
+    },
+    "screenshots/helmet-shell-and-visor-isometric.jpg": {
+      "bytes": 93100,
+      "sha256": "ed01047a107f2f433063ed3a113db1b21549b5cadd4677b610c3df9fa72ef0cc"
+    },
+    "screenshots/helmet-shell-and-visor-north.jpg": {
+      "bytes": 88931,
+      "sha256": "f59e10067ef4e9bd92c4fc914fa87e85ba79a95ac3b0e0ae38f7f44adccda7bf"
+    },
+    "screenshots/plate-shelf-0-2-isometric.jpg": {
+      "bytes": 95399,
+      "sha256": "edada1e9beef26d171b901b6d9891ea92566dfa964f0ca61416f4a12051b79e7"
+    },
+    "screenshots/plate-shelf-12-14-isometric.jpg": {
+      "bytes": 98954,
+      "sha256": "77f0990cb29a1c017299f36e24ecbb218e7b35e5741c70b264bc1a45ef68d3c9"
+    },
+    "screenshots/plate-shelf-15-17-isometric.jpg": {
+      "bytes": 99427,
+      "sha256": "c7d8a9d050904663e7df2ba54a0585274a69204fb2199f9599a32422c12609c0"
+    },
+    "screenshots/plate-shelf-18-isometric.jpg": {
+      "bytes": 97337,
+      "sha256": "eac563c542ed011230419cab246e111b50edf018e15afbd5d60669af0df570dd"
+    },
+    "screenshots/plate-shelf-3-5-isometric.jpg": {
+      "bytes": 96525,
+      "sha256": "f61019280ba626c2cad7edc8249b67548bcd7dd375e01c82646283b65b818a81"
+    },
+    "screenshots/plate-shelf-6-8-isometric.jpg": {
+      "bytes": 97626,
+      "sha256": "bd9c666d25ffa44929dee12b0e89b0f5dc23499570bbca40db3ab169844e4024"
+    },
+    "screenshots/plate-shelf-9-11-isometric.jpg": {
+      "bytes": 98331,
+      "sha256": "dde32211fd18237c46ecbfa56f70436a896bee8762ff4ab1b6453db1fb16d41c"
+    },
+    "screenshots/shelf-0-2-north.jpg": {
+      "bytes": 89557,
+      "sha256": "81b3842d97dcaecd16bd5f465000a0ad78c5a9ad8a951a0352442071c1b87493"
+    },
+    "screenshots/shelf-3-5-north.jpg": {
+      "bytes": 94082,
+      "sha256": "5673671f8a5ed7870a2a9e3c32954ac65705d9a050109ae010e38b1aa5cb9634"
+    },
+    "screenshots/shelf-6-8-north.jpg": {
+      "bytes": 98120,
+      "sha256": "f0fcd5b0b9111bbe512a24ed69e7b0ecf5e210d3461b653a4d43a86c1f903d8d"
+    },
+    "screenshots/shelf-9-10-north.jpg": {
+      "bytes": 96504,
+      "sha256": "2beee4d87aaa2e14a90949fbd157fe8fa4ff0da5cdf4e5273b2671029d4a1811"
+    },
+    "screenshots/stove-3-stove_fire_1-isometric.jpg": {
+      "bytes": 103926,
+      "sha256": "8b6f26a9fcdd98e80cf2ec77b3e285321048dc228a8438f58cbd82735ca109f3"
+    },
+    "screenshots/stove-4-stove_fire_2-isometric.jpg": {
+      "bytes": 104301,
+      "sha256": "ca355ebb9b6755cad354521e7752ce3f7918e4720a4761938b6cb1a0b4fa6620"
+    },
+    "screenshots/stove-5-stove_fire_3-isometric.jpg": {
+      "bytes": 103713,
+      "sha256": "d6ab41e6cdf997534c9066feec25eb59491d52b8ebadf6e00483ed712a181bac"
+    },
+    "screenshots/stove-after-age1-north.jpg": {
+      "bytes": 98578,
+      "sha256": "74ab8ee91a1853b828505221b44754a82a14d4b371fa77f4197f4face80cdac2"
+    },
+    "screenshots/stove-after-age15-north.jpg": {
+      "bytes": 101031,
+      "sha256": "d5006fc1fd37e4c40d695b2c1dc1eb8a0f5d764dd6d0473e8368d689e51b620a"
+    },
+    "screenshots/stove-after-age17-isometric.jpg": {
+      "bytes": 105204,
+      "sha256": "9d27311b738bbb56d8df1ff1f0547bb3d85991079868281296df3fdaa1900153"
+    },
+    "screenshots/stove-after-age17-north.jpg": {
+      "bytes": 98757,
+      "sha256": "9390664cc1ff145b298818c2bd22c424458a5a6d2724d5b7d1a68a20f1704e21"
+    },
+    "screenshots/stove-after-age19-north.jpg": {
+      "bytes": 99155,
+      "sha256": "41f1e0a68306242f058c0e3b0345ec02c4c7d05b2a661faae2b624a9772901b3"
+    },
+    "screenshots/stove-after-age3-north.jpg": {
+      "bytes": 98712,
+      "sha256": "783b9a6842015390839db1d214e215a62274e31eabfa779511c5d5fb3fdf5896"
+    },
+    "screenshots/stove-after-age9-north.jpg": {
+      "bytes": 99189,
+      "sha256": "e7f0b73721e9e77df7e3a5c7f9c908df309c1fb145c9e88aaf1d4b8a05bebf04"
+    },
+    "screenshots/stove-before-0-isometric.jpg": {
+      "bytes": 102555,
+      "sha256": "5f2336ad771dfae3f861a58439a3dae280de163d96a4decb95de27361428d7dd"
+    },
+    "screenshots/stove-before-0p05-isometric.jpg": {
+      "bytes": 102990,
+      "sha256": "0746207aeec7458c493e24a4a2c15d47fd3e0dbdb1742a4ec89c5308a76ea671"
+    },
+    "screenshots/stove-before-0p05-north.jpg": {
+      "bytes": 98023,
+      "sha256": "3602507a7ee2b340dec8a407f099313619a856efdafac0445b0524dd757c67f0"
+    },
+    "screenshots/stove-before-0p45-isometric.jpg": {
+      "bytes": 103293,
+      "sha256": "cb2da2c227597c4ff1e4fc49db95e3692f429aa2c7c3a3505f538fbe2026c346"
+    },
+    "screenshots/stove-before-0p45-north.jpg": {
+      "bytes": 98273,
+      "sha256": "c23992b9bba501a1db2be087be08f2c38ed4fafd802490d2f9fd037278d8632f"
+    },
+    "screenshots/stove-before-0p75-north.jpg": {
+      "bytes": 100726,
+      "sha256": "ee4ef8a6343f07bd282b1f8f9b118347772cd1778df58c97a272958211db1509"
+    },
+    "screenshots/stove-before-0p83-north.jpg": {
+      "bytes": 99024,
+      "sha256": "5ea4289f12037df923a702f79a4f1c3aa66d903ad73a6c12300bfee3d74299fa"
+    },
+    "screenshots/stove-before-0p875-north.jpg": {
+      "bytes": 99168,
+      "sha256": "bb1e505f6d0b513ed9941bc779749622bd15b0f0bc37fe0665819d7ed5f88fc7"
+    },
+    "screenshots/stove-before-0p9375-north.jpg": {
+      "bytes": 99330,
+      "sha256": "9610b50fa3426738fafb390bb4786c9733157e53ba6b6fcdc3f9f408ecfc0de3"
+    },
+    "screenshots/stove-before-0p95-north.jpg": {
+      "bytes": 99755,
+      "sha256": "05ad6b9b4a1389a6e2f59bff8d37f62b711337b285d9a050788418e5b582edb5"
+    },
+    "screenshots/stove-before-1-north.jpg": {
+      "bytes": 101010,
+      "sha256": "b8dd07a969fd6432b36cb87ae92f9abf98fe15e2c8f385a258baa63c293984ae"
+    },
+    "screenshots/stove-identical-age17-north.jpg": {
+      "bytes": 98421,
+      "sha256": "0b1075904af51021f1c3ac5b233e7fadebb1b8b750b255a5916821a2fc5e78fe"
+    },
+    "stove-candidate-scenes/source-age-1.geo.json": {
+      "bytes": 5706,
+      "sha256": "4201ca331a4c8489276d17845d2ac400eeb3e1e9a5cb474e5c1121c72a50c63d"
+    },
+    "stove-candidate-scenes/source-age-15.geo.json": {
+      "bytes": 5690,
+      "sha256": "b148b64d5ef4b1607964ce76eeead23d8b9eafde1b5b0863fc3df53bae6e164a"
+    },
+    "stove-candidate-scenes/source-age-17.geo.json": {
+      "bytes": 5948,
+      "sha256": "1bff2468b3987ec4a5293c00aaca3b87d07c0f19892afb90357bf4780c5a2525"
+    },
+    "stove-candidate-scenes/source-age-19.geo.json": {
+      "bytes": 5847,
+      "sha256": "ea043dbef70298f11503b4e04f58cd1506158efb7ebc2a351f2312134e987908"
+    },
+    "stove-candidate-scenes/source-age-3.geo.json": {
+      "bytes": 5715,
+      "sha256": "fc85c7483d8f4716fef38a96970f8db2cda5098fb142e188395586ed8345f715"
+    },
+    "stove-candidate-scenes/source-age-9.geo.json": {
+      "bytes": 5728,
+      "sha256": "6a411fff825221b22230768fb28ea6791ae09f85288876434578a04bc7cf3603"
+    },
+    "stove-candidate-scenes/stove-age-1-source-vs-candidate.bbmodel": {
+      "bytes": 15631,
+      "sha256": "924582616460f203b4727a54b592fd53ba7e9d850230442603da373837cfc67d"
+    },
+    "stove-candidate-scenes/stove-age-15-source-vs-candidate.bbmodel": {
+      "bytes": 15670,
+      "sha256": "3a090e1ceaef0cda4050afac53be021a3208c4d7c5c529df9506734c20c319d0"
+    },
+    "stove-candidate-scenes/stove-age-17-source-vs-candidate.bbmodel": {
+      "bytes": 16091,
+      "sha256": "799062056163f27a3e67ddc2985e41c4ed06b99f3ece457ca88313137a8928ee"
+    },
+    "stove-candidate-scenes/stove-age-19-source-vs-candidate.bbmodel": {
+      "bytes": 15854,
+      "sha256": "45b904e616ae733150418bca4b729c75f5dbc603b62fd2d08393d012925b20fa"
+    },
+    "stove-candidate-scenes/stove-age-3-source-vs-candidate.bbmodel": {
+      "bytes": 15653,
+      "sha256": "9475644cd80caaf6f74a03104a4e99039fad3fa748c3c12d30b62633628e7cc3"
+    },
+    "stove-candidate-scenes/stove-age-9-source-vs-candidate.bbmodel": {
+      "bytes": 15665,
+      "sha256": "9ab8b21d795f61bf362bb013a1c6dc1aae7230775f89f356e4ed79a1961d8eba"
+    },
+    "stove-candidate-scenes/stove-identical-age-17-control.bbmodel": {
+      "bytes": 16025,
+      "sha256": "904a047a1f51e107c576d4e25b35e543358737e310968a597bff23cb86db26a7"
+    },
+    "stove-pose-scenes/poses.json": {
+      "bytes": 1939,
+      "sha256": "bc35f101c25d7bbab1d2969ffa05cf6595136c14798a4b6d1dd1ce75f0953ab8"
+    },
+    "stove-pose-scenes/source-pose-0.geo.json": {
+      "bytes": 5690,
+      "sha256": "9d5e968effa98866b744ccfe1f92ebc9d4c587e5e90c4897ca162479358a3a77"
+    },
+    "stove-pose-scenes/source-pose-0p05.geo.json": {
+      "bytes": 5706,
+      "sha256": "4201ca331a4c8489276d17845d2ac400eeb3e1e9a5cb474e5c1121c72a50c63d"
+    },
+    "stove-pose-scenes/source-pose-0p45.geo.json": {
+      "bytes": 5728,
+      "sha256": "6a411fff825221b22230768fb28ea6791ae09f85288876434578a04bc7cf3603"
+    },
+    "stove-pose-scenes/source-pose-0p75.geo.json": {
+      "bytes": 5690,
+      "sha256": "b148b64d5ef4b1607964ce76eeead23d8b9eafde1b5b0863fc3df53bae6e164a"
+    },
+    "stove-pose-scenes/source-pose-0p83.geo.json": {
+      "bytes": 5947,
+      "sha256": "6322f34f2f8db041d276043308f2b8aefbb09664307038783d514116c55b2726"
+    },
+    "stove-pose-scenes/source-pose-0p875.geo.json": {
+      "bytes": 5854,
+      "sha256": "6500beb68c6bb92f675051d8e4573e37bd7852b251297c842bbf5c380239109f"
+    },
+    "stove-pose-scenes/source-pose-0p9375.geo.json": {
+      "bytes": 5845,
+      "sha256": "57fe15ae4f4e8a1bf4040834ea6af41022488615929da3369d8090c7d7936e9d"
+    },
+    "stove-pose-scenes/source-pose-0p95.geo.json": {
+      "bytes": 5847,
+      "sha256": "ea043dbef70298f11503b4e04f58cd1506158efb7ebc2a351f2312134e987908"
+    },
+    "stove-pose-scenes/source-pose-1.geo.json": {
+      "bytes": 5710,
+      "sha256": "a12457da5d82465e69b949f9ee7079ba154984851232e661be3a274b664c6481"
+    },
+    "stove-pose-scenes/stove-source-pose-0-vs-current.bbmodel": {
+      "bytes": 15136,
+      "sha256": "01680c4168689751b9d61c19ffeb2f4428286a8e1a54e641d5d6720bacb0b6ba"
+    },
+    "stove-pose-scenes/stove-source-pose-0p05-vs-current.bbmodel": {
+      "bytes": 15155,
+      "sha256": "4582d96db7bd42e27e39a6224509ef3b321f33ee1919db6f708ae0efbb1f18f0"
+    },
+    "stove-pose-scenes/stove-source-pose-0p45-vs-current.bbmodel": {
+      "bytes": 15174,
+      "sha256": "7a8aa224319227964c5b0571b97c6a1754ee46b7258cb7b34fd64dccb348ead1"
+    },
+    "stove-pose-scenes/stove-source-pose-0p75-vs-current.bbmodel": {
+      "bytes": 15195,
+      "sha256": "dc8433c86b44390b9e8c6392763dbb3f5b14eead616b18a0cb6a7750bfa69183"
+    },
+    "stove-pose-scenes/stove-source-pose-0p83-vs-current.bbmodel": {
+      "bytes": 15450,
+      "sha256": "f1cf7bda5141fcee079e8b9037d571e94a72ab84504485320ca12b8ad3d2b1e7"
+    },
+    "stove-pose-scenes/stove-source-pose-0p875-vs-current.bbmodel": {
+      "bytes": 15317,
+      "sha256": "492d20817657d4e85c6084bb83f48f5c921962494eba258e7bda4499afc84377"
+    },
+    "stove-pose-scenes/stove-source-pose-0p9375-vs-current.bbmodel": {
+      "bytes": 15309,
+      "sha256": "d4f53a813746daea7c92dd41ada90f8dd6ac1fe8a488dc796e0b6ac124697dff"
+    },
+    "stove-pose-scenes/stove-source-pose-0p95-vs-current.bbmodel": {
+      "bytes": 15321,
+      "sha256": "74044db0ab45262278983879329e1c649c89dc1f4cb4f1632f3f42f74e008be8"
+    },
+    "stove-pose-scenes/stove-source-pose-1-vs-current.bbmodel": {
+      "bytes": 14839,
+      "sha256": "0303a18014cb7a293567c79a4414204d3575ab19812ff89decac71cda6bb5bf5"
+    },
+    "verify_scenes.py": {
+      "bytes": 1380,
+      "sha256": "e57c6828018e0080947cb578cb9ce98b89d006458a4e856b19ca346d8ed8ad8e"
+    }
+  }
+}

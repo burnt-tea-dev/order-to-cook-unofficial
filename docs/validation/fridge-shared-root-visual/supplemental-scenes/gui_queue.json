@@ -1,0 +1,40 @@
+{
+  "status": "CAPTURE_PLANNED_NOT_GUI_ACCEPTED",
+  "views": [
+    {
+      "scene": "lower_peak_upper_open_frame3.bbmodel",
+      "sha256": "787826b92168560b6deaa77631cd41bd1c7aa806a7fcacc0d63316b8c3d43da8",
+      "camera": "Isometric Right (2:1)",
+      "source_side": "right",
+      "status": "NOT_RUN"
+    },
+    {
+      "scene": "upper_peak_lower_open_frame3.bbmodel",
+      "sha256": "c02ae224c3b83507254fc6899459ed8372b2e2d4cc7457e128d11643c3574931",
+      "camera": "Isometric Right (2:1)",
+      "source_side": "right",
+      "status": "NOT_RUN"
+    },
+    {
+      "scene": "lower_neutral_active_overrides_upper_peak.bbmodel",
+      "sha256": "353284e9d5854c4b27bae4e301690732942124385a16a84b2e1d79f8685f6a71",
+      "camera": "Isometric Right (2:1)",
+      "source_side": "right",
+      "status": "NOT_RUN"
+    },
+    {
+      "scene": "lower_recovering_overrides_upper_peak.bbmodel",
+      "sha256": "a919e5227385e61bbf28f660dd5e64728d9ba64b58b55afc802f5c66460fa498",
+      "camera": "Isometric Right (2:1)",
+      "source_side": "right",
+      "status": "NOT_RUN"
+    },
+    {
+      "scene": "lower_peak_overrides_upper_recovering.bbmodel",
+      "sha256": "55351e4eedb9174e731370f0f6bc1bff5e4f72e972d8ab026a9a760bca584e6e",
+      "camera": "Isometric Right (2:1)",
+      "source_side": "right",
+      "status": "NOT_RUN"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.qa_java.refrigerator.up_open": {
+      "loop": "hold_on_last_frame",
+      "animation_length": 1,
+      "bones": {
+        "bone2": {
+          "rotation": [
+            0,
+            "-135 * (1 - math.pow(math.cos(math.clamp(q.anim_time, 0, 1) * 90), 3) * math.cos(math.clamp(q.anim_time, 0, 1) * 180))",
+            0
+          ]
+        }
+      }
+    },
+    "animation.qa_java.refrigerator.down_open": {
+      "loop": "hold_on_last_frame",
+      "animation_length": 1,
+      "bones": {
+        "bone3": {
+          "rotation": [
+            0,
+            "-125 * (1 - math.pow(math.cos(math.clamp(q.anim_time, 0, 1) * 90), 3) * math.cos(math.clamp(q.anim_time, 0, 1) * 180))",
+            0
+          ]
+        }
+      }
+    }
+  }
+}

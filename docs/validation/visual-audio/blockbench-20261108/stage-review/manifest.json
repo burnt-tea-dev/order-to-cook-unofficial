@@ -1,0 +1,650 @@
+{
+  "review_date_utc": "2026-11-08",
+  "application": "Blockbench Desktop 5.2.2",
+  "asset_load_commit": "45e1a6d5a845174cfb8ff4be1a463abb4f3ac9d6",
+  "integration_base_commit": "b0d54f4c7f1353788f82307227ac008b83d89c63",
+  "runtime_changes": false,
+  "native_game_client_tested": false,
+  "bds_tested": false,
+  "gui_screenshot_count": 21,
+  "reviewed_formal_cases": {
+    "dining_food_stages": 40,
+    "order_machine_poses": 18,
+    "takeout_bag_poses": 11
+  },
+  "original_java_food_stages_viewed": 40,
+  "independent_blockbench_export_cubes": 50,
+  "inputs": [
+    {
+      "path": "runtime/BP/entities/motorcycle.json",
+      "sha256": "68827b226fb30e4e7ca2238ae7c2a5bc28fd542e10712f1cb33f06be71f2c5f1",
+      "size": 2468
+    },
+    {
+      "path": "runtime/RP/animations/runtime.animation.json",
+      "sha256": "86fcf2a5cdb32fa323b7b6fb838dc5ec11645cf9ecdf1518b2d7fb6cfe75d12e",
+      "size": 1194
+    },
+    {
+      "path": "runtime/RP/entity/motorcycle.entity.json",
+      "sha256": "140517fb919eadf91e533e745035a46e24b5ac8a9458af5ed0def4980ce042d8",
+      "size": 1188
+    },
+    {
+      "path": "runtime/RP/models/blocks/order_machine_idle_0.geo.json",
+      "sha256": "767aabed4b4867054e09f9d7cfd08917bb0751f5c7ba8aa0579644135dd828c7",
+      "size": 4714
+    },
+    {
+      "path": "runtime/RP/models/blocks/order_machine_printing_0.geo.json",
+      "sha256": "f7fc237e3bb144b1f0b11e2471e79accb84fe878170ea37c6850ddf5bda219ee",
+      "size": 5779
+    },
+    {
+      "path": "runtime/RP/models/blocks/order_machine_printing_1.geo.json",
+      "sha256": "a39ff202f87111c1f5a0d7bbf54b5ddfd7e785313d27e13c99a618c8cd4c34d3",
+      "size": 5861
+    },
+    {
+      "path": "runtime/RP/models/blocks/order_machine_printing_10.geo.json",
+      "sha256": "5c93a1d3c8786f2b2c44695ba5b09ed1133e864aac935d29fc0c8ebe78d3baed",
+      "size": 5759
+    },
+    {
+      "path": "runtime/RP/models/blocks/order_machine_printing_11.geo.json",
+      "sha256": "c8ec92670299fba0ad5b69584504bc2f96f1fd4810789b517077ed9b881adf02",
+      "size": 5756
+    },
+    {
+      "path": "runtime/RP/models/blocks/order_machine_printing_12.geo.json",
+      "sha256": "6cb91be4b714980d7de92eb68cf9d1c119b7b6ab8b15de9acf27b6e09aa82478",
+      "size": 5757
+    },
+    {
+      "path": "runtime/RP/models/blocks/order_machine_printing_13.geo.json",
+      "sha256": "5b0ec1d0d4963da5142322fabc41f26fb4c80e64a2367880deccc0801987debb",
+      "size": 5755
+    },
+    {
+      "path": "runtime/RP/models/blocks/order_machine_printing_14.geo.json",
+      "sha256": "82dd60f758d1f9ff0513084f5d448073689928d1310bcb7fbfec892fb27f0553",
+      "size": 5757
+    },
+    {
+      "path": "runtime/RP/models/blocks/order_machine_printing_15.geo.json",
+      "sha256": "36c0a82ad7d4693779dd175bcc98bfc86419364fa0a43690ab1b14c7cfa1bb93",
+      "size": 5755
+    },
+    {
+      "path": "runtime/RP/models/blocks/order_machine_printing_2.geo.json",
+      "sha256": "f7e09c656eef7b7e4b872f9e8c843637ed0f4e9e320d1e4d21e9ab01a5b06f69",
+      "size": 5864
+    },
+    {
+      "path": "runtime/RP/models/blocks/order_machine_printing_3.geo.json",
+      "sha256": "bd476f6c8507d9bb30b18f9be379e7b0cc8cfc31a0901452651f8cd56eb7c876",
+      "size": 5787
+    },
+    {
+      "path": "runtime/RP/models/blocks/order_machine_printing_4.geo.json",
+      "sha256": "095b6c34f6be0b623f4443229fcf834697b71ecf3e22b6b1e74aae7068383d9a",
+      "size": 5858
+    },
+    {
+      "path": "runtime/RP/models/blocks/order_machine_printing_5.geo.json",
+      "sha256": "7addb77001bb49ae3ad202a16708aad1fbc5b5e7cd308ea27f41ac40e3010af3",
+      "size": 5859
+    },
+    {
+      "path": "runtime/RP/models/blocks/order_machine_printing_6.geo.json",
+      "sha256": "b9ae1f621525987c8f16be9840c4c7b7f0844365b2b9e72b495422ee7f8e9e2e",
+      "size": 5762
+    },
+    {
+      "path": "runtime/RP/models/blocks/order_machine_printing_7.geo.json",
+      "sha256": "72bccbe8535324bd2bb900fbb1b0b25c59ebc380445334f643e713d8862ad62f",
+      "size": 5756
+    },
+    {
+      "path": "runtime/RP/models/blocks/order_machine_printing_8.geo.json",
+      "sha256": "ce40f2d0f117ac9373a8c1b38dd5c835f3a71daa3af157199db79a7f9b0d1194",
+      "size": 5758
+    },
+    {
+      "path": "runtime/RP/models/blocks/order_machine_printing_9.geo.json",
+      "sha256": "d51653c44afc34ffd804f15939fe8c8b49055822d8f4477dfa39ae97bbff01eb",
+      "size": 5756
+    },
+    {
+      "path": "runtime/RP/models/blocks/order_machine_waiting_0.geo.json",
+      "sha256": "ca1ace9553d70c770507bdb2939987bf04bfbabdfb4a9cd0774c3409cf4a95dc",
+      "size": 5753
+    },
+    {
+      "path": "runtime/RP/models/blocks/takeout_bag.geo.json",
+      "sha256": "d4a1501f9f89f645de4527f0b89671ad11327d17d756a9fa72d4ffb0ce9e4764",
+      "size": 9982
+    },
+    {
+      "path": "runtime/RP/models/blocks/takeout_bag_1.geo.json",
+      "sha256": "1863bc309d0e4807f07b4016efde4f8fee1756c2c2b1033b85e614db37e71419",
+      "size": 10016
+    },
+    {
+      "path": "runtime/RP/models/blocks/takeout_bag_10.geo.json",
+      "sha256": "f37330c146fdb800de289c3180c81852da85dbaa85690bde1666ceef74539409",
+      "size": 10099
+    },
+    {
+      "path": "runtime/RP/models/blocks/takeout_bag_2.geo.json",
+      "sha256": "2f17dee8e3e122d3ee5235ff53793188417f9b8dfb5e91117c25af28d67ef75d",
+      "size": 10083
+    },
+    {
+      "path": "runtime/RP/models/blocks/takeout_bag_3.geo.json",
+      "sha256": "268467064c1b10d549cc5fcd64f5bfd9cd9bd22d2c9989f44cebada90caa4ca8",
+      "size": 10085
+    },
+    {
+      "path": "runtime/RP/models/blocks/takeout_bag_4.geo.json",
+      "sha256": "8987862264630aa0c60dee9680c7c0bf417ab0d03b9094df6814509537b34406",
+      "size": 10089
+    },
+    {
+      "path": "runtime/RP/models/blocks/takeout_bag_5.geo.json",
+      "sha256": "1b8704cddbc5054f474622d0e8fa92473bc673f7964474e7c994f5104089faae",
+      "size": 10103
+    },
+    {
+      "path": "runtime/RP/models/blocks/takeout_bag_6.geo.json",
+      "sha256": "936ffe34c1bec7da6069924aa9bfb4fe5a3ceac12db0e4f16b7729943f345d78",
+      "size": 10039
+    },
+    {
+      "path": "runtime/RP/models/blocks/takeout_bag_7.geo.json",
+      "sha256": "5d3a35d922d5c3a409f7acdd37972a7261ae5bf2000b0a61a2304e336163e902",
+      "size": 10098
+    },
+    {
+      "path": "runtime/RP/models/blocks/takeout_bag_8.geo.json",
+      "sha256": "575ea29d7ba8b57d8b29044f219c2c37df0b34c1ff12fd03a8499d792b7d4e9d",
+      "size": 10104
+    },
+    {
+      "path": "runtime/RP/models/blocks/takeout_bag_9.geo.json",
+      "sha256": "97716c498b6bd71a31407ea9e7b7e8bd2bcf535a5b4b6b36fa11a069c3e8083a",
+      "size": 10099
+    },
+    {
+      "path": "runtime/RP/models/entity/dining_plate.geo.json",
+      "sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+      "size": 506292
+    },
+    {
+      "path": "runtime/RP/models/entity/motorcycle.geo.json",
+      "sha256": "6755e91fba97a2c4127f94646054d8c0ed7c03dfbde35caffeaaf8066ea75213",
+      "size": 18181
+    },
+    {
+      "path": "runtime/RP/textures/ordertocook/block/order_machine_geo.png",
+      "sha256": "52cd75a693d199455a6de9155c06a600557a99466c215d673145644b8c09cc68",
+      "size": 1326,
+      "dimensions": [
+        64,
+        64
+      ]
+    },
+    {
+      "path": "runtime/RP/textures/ordertocook/block/takeout_bag_placed.png",
+      "sha256": "de229103fba45284a4a9a30b08ce1e8d6b10929c697217b5693a3b42688ab167",
+      "size": 714,
+      "dimensions": [
+        32,
+        32
+      ]
+    },
+    {
+      "path": "runtime/RP/textures/ordertocook/entity/dining_plate_atlas.png",
+      "sha256": "22d7bc1e10344538d11e1d764631b6b1c3c5f31a89ca2143e83fb6af006469f9",
+      "size": 8441,
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "runtime/RP/textures/ordertocook/entity/motorcycle.png",
+      "sha256": "cda5eb327ee9b64783fb818572805799f74e5641f29cc9d161bf88d42edfb416",
+      "size": 3661,
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "tools/convert_assets.py",
+      "sha256": "e9b7f008dcf9039e33c4879de54f67c5db4c061ea4d70b06609e22af6ce1a850",
+      "size": 130294
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/10_1.json",
+      "sha256": "574b4269b842c76d392bd962ff6a27d7f5b52afa7b3de37edb1fff4e1f5fd06d",
+      "size": 13323
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/10_2.json",
+      "sha256": "cdbab42b0b248e4da27ac5127620dfa04f081d01d871a844cc302570a55781e0",
+      "size": 11572
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/10_3.json",
+      "sha256": "d7335677c6395f55e5cb0956384f2c6503f8747d6ea3244f8b4ec6640571c538",
+      "size": 8906
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/10_4.json",
+      "sha256": "9407dfc32cbca291df2d23eabb8ae48d8a71c3e498526b1f2cc8117eff3cbf05",
+      "size": 5854
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/1_1.json",
+      "sha256": "652f44f6f11a644b21da8b966d249e201baad5a9ca9c0602428a5591f3326eee",
+      "size": 6237
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/1_2.json",
+      "sha256": "8664eac0442af13a838004e6d03c89378aea675b0f485d9b983994dd5e9258e1",
+      "size": 7088
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/1_3.json",
+      "sha256": "43a1d79862a005549ac26354c3bd17c219b6f97adbd482400597640abd40a1ef",
+      "size": 6235
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/1_4.json",
+      "sha256": "d45c82a78cdd648e139b233affd7d471d1a468ca8c2ceb725a8323b99530977c",
+      "size": 1995
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_1.json",
+      "sha256": "e63950cb5b497bb060c4da16b2b2772346831c4087d0dc529366421bac99703c",
+      "size": 9223
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_2.json",
+      "sha256": "62b5a756fca8fc36ceccf6227cd16b2a4518cf43f19d5e38e0b4d311e628f9e8",
+      "size": 7439
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_3.json",
+      "sha256": "e49ae1bf574a82524a09fa6b04a3272b97f01c2cd53a8093a7a97d148ad62a3d",
+      "size": 4806
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_4.json",
+      "sha256": "6e67154e23d127e326f79a43c1e551100930e8d0785bf3797ea1943c6092d3af",
+      "size": 3053
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/3_1.json",
+      "sha256": "a1dfae13a9f9060f8a9e65fe85276c1d004800bbfac25642d6dabc133de06ef3",
+      "size": 6852
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/3_2.json",
+      "sha256": "7b1011cd076b0ef64e077da8f00445297036a6e128def81f19dfa90ee3d5b10d",
+      "size": 5968
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/3_3.json",
+      "sha256": "b7e11c21c14c60e3adad6156d88151bf7a626cf51451426475b87a1192e989b4",
+      "size": 5055
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/3_4.json",
+      "sha256": "d45c82a78cdd648e139b233affd7d471d1a468ca8c2ceb725a8323b99530977c",
+      "size": 1995
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/4_1.json",
+      "sha256": "6119636764c8c392f001e8828f26a378756634e0a20deb4820872256c142fb9c",
+      "size": 12580
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/4_2.json",
+      "sha256": "c27fa608805cc4352cbe24f3cf795aa47eb9157eee6bc222a0d15d8bf4676532",
+      "size": 10814
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/4_3.json",
+      "sha256": "38699ee2b96525afeb8314197fca06bd80065baa10860d2c4b47a2d7b2bbbcb6",
+      "size": 7307
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/4_4.json",
+      "sha256": "2574b22e41a99d18986cd14fefb68e7e164fdbec20b78b3a8018f9c18a9458b4",
+      "size": 4655
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/5_1.json",
+      "sha256": "024beef092689d5b0cc1108a5a9ff115b0400fd7f54a6b8f134237068b51d431",
+      "size": 11777
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/5_2.json",
+      "sha256": "562b467781f60a3e5f4fabf63b15f7e5683f59b5c36580eb9fa2ed9f92652c4f",
+      "size": 10898
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/5_3.json",
+      "sha256": "f71ad3f60f01f850ef1c30ba88e808774bd4f4dcf9c416e14e072b1ba5527cb6",
+      "size": 9134
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/5_4.json",
+      "sha256": "3ebe2f3562984ee9baa778bb2ebcacf2a326d9c938d69327894ed3d52db4352a",
+      "size": 5566
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/6_1.json",
+      "sha256": "2edfec870d63ae35ba7269722064cf96d3fb100cc2050e92c8103ac670f9fece",
+      "size": 8794
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/6_2.json",
+      "sha256": "5992fa77bdc0546cb362f104d94c0d60c9e7a87e04d5ab0fea1020f4d9fcb909",
+      "size": 7050
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/6_3.json",
+      "sha256": "7f66a7603a59190c287c9b163f32cfaa0518c5528d085dd05c0832a2d8396a0a",
+      "size": 7050
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/6_4.json",
+      "sha256": "d45c82a78cdd648e139b233affd7d471d1a468ca8c2ceb725a8323b99530977c",
+      "size": 1995
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/7_1.json",
+      "sha256": "cd4e81960221d5c3f6ad25614c3d0ba5f9a232717774a24ed244379814c89c98",
+      "size": 12143
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/7_2.json",
+      "sha256": "e5125489fdd1712652bbe6e28f0f7567642d913ce5da93a431536d634645e275",
+      "size": 9492
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/7_3.json",
+      "sha256": "1053fc55540f9ccb33ec2194803aedc282c0b37c35990ae59f826b400519ab30",
+      "size": 8625
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/7_4.json",
+      "sha256": "d45c82a78cdd648e139b233affd7d471d1a468ca8c2ceb725a8323b99530977c",
+      "size": 1995
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/8_1.json",
+      "sha256": "1ed221e24b778edeb11c6963f96e6990b6c05e5203c169b64f2ac8623c2c024d",
+      "size": 9298
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/8_2.json",
+      "sha256": "f403966bcbcbf2692bbe701af33476ca634913712050fe79026851aabc524d34",
+      "size": 7526
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/8_3.json",
+      "sha256": "5cc5de4c7ffd32ea199678480c977be09bcf907beca24037ae0f537f77526722",
+      "size": 5732
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/8_4.json",
+      "sha256": "6cf8cdf9be5b1a6428c720b3b9e489b131174312d45496e9931c178fea80ae60",
+      "size": 3795
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/9_1.json",
+      "sha256": "d4782bbf520c0356504eb6211048a34822a8191a83012c6b10c24f762a2c5526",
+      "size": 10120
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/9_2.json",
+      "sha256": "74a510ee392b294faba363102507f6b8b6dd1e4a8a61e5b415f0c599c50bf2ec",
+      "size": 9193
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/9_3.json",
+      "sha256": "f7429b895a78b210793b12656b09aceb71b56e3af12d4f7e0f5042dd55f6151a",
+      "size": 12029
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/9_4.json",
+      "sha256": "8a33cfe464fc27a0e907f2b242e7a71ad5392bebc9cfcedec532e87d688f160e",
+      "size": 6058
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/food_plate_variants.png",
+      "sha256": "b233e3750f620834648f08386244ddeceeb6d0ce2f439315e02d424ed79eb2e1",
+      "size": 8476,
+      "dimensions": [
+        160,
+        160
+      ]
+    },
+    {
+      "path": "upstream/reference/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/render/model/MotorcycleModel.java",
+      "sha256": "073119a7a31b8ac7d04e3d98fa41053eb0f80f853a680c036572055b7424ac32",
+      "size": 10095
+    }
+  ],
+  "evidence": [
+    {
+      "path": "evidence/bags-00-05-isometric.png",
+      "sha256": "dee1c458431712e6d87bccdfdd8ae78d2138dcac5591752511b93ed463702052",
+      "size": 109830,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/bags-06-10-isometric.png",
+      "sha256": "167344619371376efd58fb72bf1d74933e78091b41963806fcf9c5897a1c6a3b",
+      "size": 107301,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/blockbench-export-plates-01-08-top.png",
+      "sha256": "02bd6488d5729b85e79f5285d485d28547d433c95201c545706b696a74b315df",
+      "size": 124338,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/dining-01-08-top.png",
+      "sha256": "dd8644174324d4d2b6f7b5e5ab72ede0a2012788bd9b89c6f875f0f7775cfd05",
+      "size": 118816,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/dining-09-16-top.png",
+      "sha256": "d19b379361c7006b9e4da1bf2ddb8b3c0c6a641311c471843a59cf9057df754a",
+      "size": 121986,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/dining-17-24-top.png",
+      "sha256": "b5728a2eb680ee02532e8c18051ca9e7f5c5bff16b7b0e49f0003b3c6a199fe0",
+      "size": 125003,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/dining-25-32-top.png",
+      "sha256": "af7a3bf33dd362ea25539501c28981f02381e29be0de52804ea087836f1048e4",
+      "size": 124319,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/dining-33-40-isometric.png",
+      "sha256": "4f65be8d19abd7b74383696a3bac35858d7a271819bef8540b0053aac26e28e3",
+      "size": 123362,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/dining-33-40-top.png",
+      "sha256": "1673ed2dee85daef1f6571de17bbe69c3cd68bb2a6b03b064ac9ea3cfba04b8e",
+      "size": 125793,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/java-plates-01-08-top.png",
+      "sha256": "767d5f092a244ef6d41f378a780f478e5c6bfb8d8a55e7673b956c18d50786e4",
+      "size": 113419,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/java-plates-09-16-top.png",
+      "sha256": "81617501e44e262dd14d5f938fe763502df5aa9c0b114d358ca063195cd930a7",
+      "size": 113828,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/java-plates-17-24-top.png",
+      "sha256": "5f4b038c8c676248e9d2cfe099e0ae366060a9f564f1248a44288f3df0980e40",
+      "size": 117071,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/java-plates-25-32-top.png",
+      "sha256": "17e08fdfe4dc32b269a27a0aee1430a6cf1642f07cb038f2cf947c8dd557eb1e",
+      "size": 116346,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/java-plates-33-40-isometric.png",
+      "sha256": "105473bb18d88f9a604d4474cc3d7efeb5e29afc15e512fd72076c96eb39da30",
+      "size": 117987,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/java-plates-33-40-top.png",
+      "sha256": "8b05379b12ec68f122b1345d401e4b4b247ea43f09f8eae288adbe19b1f147d7",
+      "size": 116878,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/java-source-zero-area-uv-warnings.png",
+      "sha256": "1626f87d7ace7b460eb3941078cb9cb940a5ceca7bfbb0f3cf7cf6aa3c163839",
+      "size": 105811,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/motorcycle-source-minus45-vs-current-top.png",
+      "sha256": "9ca87789bc59e2aebbdb6ca6ca7d42b27182f09ed46ad7d4ea1c521cedae5a4a",
+      "size": 107646,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/motorcycle-source-plus45-vs-current-top.png",
+      "sha256": "a354537d5cc98445754e7e478ba82293d49448c18b163a05782d8f2535e99937",
+      "size": 107692,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/orders-00-05-isometric.png",
+      "sha256": "9a6a4a3aadbe4d1f789071fb869e6c60968153bf640985b2a63069f5ce4583dd",
+      "size": 130627,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/orders-06-11-isometric.png",
+      "sha256": "fce923ec6fbd85eae79ac6409794a8ceba36cadccc252c995b565a7a865779da",
+      "size": 130863,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "evidence/orders-12-17-isometric.png",
+      "sha256": "0e53de0c31603d3687c855035819f3218a1aea16940c45b727a694698b0bd63e",
+      "size": 133445,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "fixtures/blockbench-export-plates-01-08.geo.json",
+      "sha256": "096cbcce46de7db89ce5d6eda6573ded841779134969a131fc66f16ceb63e759",
+      "size": 20730
+    },
+    {
+      "path": "fixtures/motorcycle_steering_-45.geo.json",
+      "sha256": "45a96c98507015ab20e4a15ce260e838b6a2352a0919418cd7a69297e532165c",
+      "size": 36960
+    },
+    {
+      "path": "fixtures/motorcycle_steering_45.geo.json",
+      "sha256": "1b62782189c2d37277837f5e604298e74bdb227fa69dd909f6c306fbf6d50004",
+      "size": 36953
+    }
+  ]
+}

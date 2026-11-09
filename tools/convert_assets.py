@@ -177,6 +177,49 @@ def convert_java_model(name, identifier, extra_models=()):
     return geometry(identifier, [{"name": "root", "pivot": [0, 0, 0], "cubes": cubes}]), materials
 
 
+WASHING_WATER_RENDERER = Path("forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/WashingTableWaterRenderer.java")
+WASHING_WATER_OPERATION = "Static renderer water quad; reflected X, full original UV on both sides, shared block blend material"
+
+
+def add_washingtable_water(g, materials):
+    """Include the pinned Java renderer's quad, which is absent from its model.
+
+    This is a narrow source parser, not a Java evaluator. Refuse a changed
+    vertex/UV contract rather than silently applying the current projection.
+    """
+    source = SOURCE / WASHING_WATER_RENDERER
+    text = source.read_text(encoding="utf-8")
+    constants = {name: float(value) for name, value in re.findall(
+        r"private static final float (X0|X1|Z0|Z1|Y) = ([\d.]+)f / 16f;", text)}
+    vertices = re.findall(r"emitVertex\(buffer, posMat, entry, (X[01]), Y, (Z[01]), ([01])f, ([01])f,", text)
+    expected = [("X0", "Z0", "0", "0"), ("X1", "Z0", "1", "0"),
+                ("X1", "Z1", "1", "1"), ("X0", "Z1", "0", "1")]
+    texture = re.search(r'new ResourceLocation\(ModConstants.MOD_ID, "textures/(block/[^"\n]+)\.png"\)', text)
+    if (set(constants) != {"X0", "X1", "Z0", "Z1", "Y"} or vertices != expected or texture is None
+            or "RenderType.entityTranslucent(WATER_TEXTURE)" not in text or "RenderSystem.disableCull()" not in text):
+        raise ValueError("Unsupported WashingTableWaterRenderer quad/material contract")
+    x0, x1, z0, z1, y = (constants[key] for key in ("X0", "X1", "Z0", "Z1", "Y"))
+    if not (0 <= x0 < x1 <= 16 and 0 <= z0 < z1 <= 16 and 0 <= y <= 16):
+        raise ValueError("WashingTableWaterRenderer quad is outside its block")
+    tile = texture_tile(f"{NS}:" + texture[1])
+    if tile not in materials:
+        raise ValueError("WashingTableWaterRenderer texture is not declared by its block model")
+    # Bedrock up/down faces have opposite vertex orders. The reverse-winding
+    # underside retains the SAME physical UV corners as the Java no-cull quad.
+    # Both faces have real area; no side faces, depth, UV inset or new pixels.
+    g["minecraft:geometry"][0]["bones"][0]["cubes"].append({
+        "origin": [8-x1, y, z0-8], "size": [x1-x0, 0, z1-z0], "uv": {
+            "up": {"uv": [16, 16], "uv_size": [-16, -16], "material_instance": tile},
+            "down": {"uv": [16, 0], "uv_size": [-16, 16], "material_instance": tile}}})
+    # Material Instance's render_method must be shared by EVERY material on
+    # one block. alpha_test cannot represent the original water alpha (133).
+    for material in materials.values():
+        material["render_method"] = "blend"
+        if material["texture"] == tile:
+            material["face_dimming"] = False
+    return source
+
+
 def normalize_signed_cube(cube):
     """Keep the physical face/texel mapping when making signed sizes legal.
 
@@ -284,7 +327,8 @@ def sample_number(value, seconds):
 def easing_fraction(kind, fraction, args=()):
     """GeckoLib 4 curves used by the pinned source, including easingArgs.
 
-    Verified against core/animation/EasingType.java at GeckoLib 7d6f32d.
+    Verified against core/animation/EasingType.java at GeckoLib 4.8.3
+    e81962eefd04e0cab90445d3df37b477d2767ffd (same blob in 4.8.4).
     In particular its elastic/bounce are not the usual easings.net formulas.
     """
     t = max(0.0, min(1.0, fraction))
@@ -294,7 +338,19 @@ def easing_fraction(kind, fraction, args=()):
         steps = int(args[0]) if args else 2
         if steps < 2:
             raise ValueError("GeckoLib step easing requires at least two steps")
-        return min(steps-1, math.floor(t*steps))/steps
+        # Source step() has a strict upper shortcut, then a binary interval
+        # search. In the default two-step case, .5 stays in interval zero.
+        length = 1/steps
+        if t > (steps-1)*length:
+            return (steps-1)*length
+        left, right = 0, steps-1
+        while right-left != 1:
+            middle = left+(right-left)//2
+            if t >= middle*length:
+                left = middle
+            else:
+                right = middle
+        return left*length
     def elastic(value):
         amount = args[0] if args else 1
         return 1-math.cos(value*math.pi/2)**3*math.cos(value*amount*math.pi)
@@ -341,6 +397,51 @@ def sample_channel(channel, seconds, default):
             b = sample_channel(value, seconds, default)
             return [x+(y-x)*fraction for x, y in zip(a, b)]
     return sample_channel(keys[-1][1], seconds, default)
+
+
+def fridge_root_samples(clips):
+    """Unique common-root transforms, in sampled close-clip time order.
+
+    Open clips have no root channels. Both close controllers author the same
+    root; runtime chooses the last active controller, including neutral poses.
+    Keep full precision until geometry serialization, just like door sampling.
+    """
+    roots = []
+    frame_roots = []
+    for frame in range(11):
+        sampled = []
+        for prefix in ("up_", "down_"):
+            tracks = clips[prefix+"close"]["bones"]["bone"]
+            sampled.append({key: sample_channel(tracks.get(key), frame/10, default)
+                            for key, default in (("position", [0]*3), ("scale", [1]*3), ("rotation", [0]*3))})
+            if "bone" in clips[prefix+"open"]["bones"]:
+                raise ValueError("Refrigerator open clip unexpectedly authors the common root")
+        if sampled[0] != sampled[1]:
+            raise ValueError("Refrigerator close roots differ; shared sample mapping needs review")
+        root = sampled[0]
+        if root["position"][:2] != [0, 0] or root["scale"][:2] != [1, 1] or root["rotation"] != [0]*3:
+            raise ValueError("Refrigerator root no longer has only Z scale/translation")
+        if root not in roots:
+            roots.append(root)
+        frame_roots.append(roots.index(root))
+    if len(roots) != 4 or frame_roots != [0, 0, 0, 0, 1, 2, 3, 0, 0, 0, 0]:
+        raise ValueError("Refrigerator common-root state contract changed")
+    return roots, frame_roots
+
+
+def fridge_pose_clip(clips, half, closing, root):
+    """Combine one door's own source clip with the selected common root."""
+    name = ("up_" if half == "upper" else "down_")+("close" if closing else "open")
+    clip = copy.deepcopy(clips[name])
+    # Preserve the existing opening meshes byte-for-byte at neutral root.
+    if closing or root["scale"] != [1]*3 or root["position"] != [0]*3:
+        clip["bones"]["bone"] = copy.deepcopy(root)
+    return clip
+
+
+def fridge_pose_name(half, closing, frame, root_frame):
+    # Retain the existing neutral identifiers; additional root states are new.
+    return f"refrigerator_{half}_{'close_' if closing else ''}{frame}" + (f"_root_{root_frame}" if root_frame else "")
 
 
 def closest_cuboid_axes(matrix):
@@ -1012,7 +1113,7 @@ def state_condition(states):
 
 
 def block_definition(name, base_geo, materials, states=None, variants=(), collision=True, selection=None,
-                     native_container=None, hidden=False, loot_table=None):
+                     native_container=None, hidden=False, loot_table=None, item_visual=None):
     if native_container is not None:
         materials, variants = copy.deepcopy(materials), copy.deepcopy(variants)
         # Native containers require 1.26.60; since 1.26.20 material occlusion is
@@ -1051,6 +1152,8 @@ def block_definition(name, base_geo, materials, states=None, variants=(), collis
         "minecraft:movable": {"movement_type": "immovable"}, f"{NS}:interact": {}}
     if native_container is not None:
         components["minecraft:block_entity"] = {"dynamic_properties": True, "container": native_container}
+    if item_visual is not None:
+        components["minecraft:item_visual"] = item_visual
     permutations = [{"condition": f"q.block_state('minecraft:cardinal_direction') == '{direction}'",
                      "components": {"minecraft:transformation": {"rotation": [0, rotation, 0]}}}
                     for direction, rotation in (("north", 0), ("south", 180), ("west", 90), ("east", -90))]
@@ -1100,14 +1203,28 @@ def make_blocks():
     block_definition("takeout_bag", f"geometry.{NS}.takeout_bag", mats, {"frame": list(range(11))}, variants,
                      False, {"origin": [-5, 0, -5], "size": [10, 10, 10]}, native_container={"slot_count": 1})
     for name, state, maximum in (("shelf", "papers", 10), ("plate_shelf", "plates", 18), ("washingtable", "plates", 10)):
+        item_visual = None
+        if name == "washingtable":
+            # Java's block-entity renderer does not run for its item. The
+            # separate dry item uses the source parent and alpha-test materials.
+            item_g, item_mats = convert_java_model(f"{NS}:item/washingtable", f"geometry.{NS}.washingtable_item")
+            item_visual = {"geometry": emit_geo("washingtable_item", item_g), "material_instances": item_mats}
         variants = []
         for count in range(maximum+1):
             extra = (f"{NS}:block/{name}_{count}",) if count else ()
             g, mats = convert_java_model(f"{NS}:block/{name}_idle", f"geometry.{NS}.{name}_{count}", extra)
+            if name == "washingtable":
+                renderer_source = add_washingtable_water(g, mats)
             identifier = emit_geo(f"{name}_{count}", g)
+            if name == "washingtable":
+                record(renderer_source, RP / "models/blocks" / f"{name}_{count}.geo.json", WASHING_WATER_OPERATION)
             variants.append({"condition": state_condition({state: count}), "components": {"minecraft:geometry": identifier, "minecraft:material_instances": mats}})
         coll = True if name == "washingtable" else {"origin": [-8, 0, 0], "size": [16, 16, 8]}
-        block_definition(name, f"geometry.{NS}.{name}_0", mats, {state: list(range(maximum+1))}, variants, coll)
+        block_definition(name, f"geometry.{NS}.{name}_0", mats, {state: list(range(maximum+1))}, variants, coll,
+                         item_visual=item_visual)
+        if name == "washingtable":
+            record(renderer_source, BP / "blocks/washingtable.json", WASHING_WATER_OPERATION)
+            record(model_path(f"{NS}:item/washingtable"), BP / "blocks/washingtable.json", "Dry block-item geometry and alpha-test material kept separate from the placed water renderer")
     # Stage zero is drawn by Java's placed-meal renderer. The block fallback
     # retains its terminal geometry; the dining entity plays the actual clip.
     blockstates_source = ASSETS / "blockstates" / "food_plate_display.json"
@@ -1166,39 +1283,41 @@ def make_blocks():
     machine['minecraft:block']['components'].update({
         'minecraft:tick': {'interval_range': [1, 1], 'looping': True}, f'{NS}:machine_timing': {}})
     write_json(machine_path, machine)
-    # Separate source open/close curves; each complete door belongs to one
-    # compartment. Root squash uses each half's closing phase (see adaptations).
+    # Each complete door has its own frame, but both halves receive the same
+    # selected common root. Prebake the cross product rather than introducing
+    # an unverified native scale/translation order or changing collision.
     fridge_source = ASSETS / "geo/block/refrigerator.geo.json"
     fridge_animation = ASSETS / "animations/refrigerator.animation.json"
     fridge = normalize_geo(fridge_source, f"geometry.{NS}.refrigerator_source")
     fridge_clips = read_json(fridge_animation)["animations"]
+    fridge_roots, root_frames = fridge_root_samples(fridge_clips)
     tile = texture_tile(f"{NS}:block/refrigerator")
     # Format >= 1.26.20 requires a numeric AO exponent; 0 disables the effect.
     mats = {"*": {"texture": tile, "render_method": "alpha_test", "ambient_occlusion": 0}}
     variants = []
     upper_variants = []
-    for half, closing, frame in itertools.product(("lower", "upper"), (False, True), range(11)):
-        name = f"refrigerator_{half}_{'close_' if closing else ''}{frame}"
-        clip = fridge_clips[("up_" if half == "upper" else "down_")+("close" if closing else "open")]
+    for half, closing, frame, root_frame in itertools.product(("lower", "upper"), (False, True), range(11), range(len(fridge_roots))):
+        name = fridge_pose_name(half, closing, frame, root_frame)
+        clip = fridge_pose_clip(fridge_clips, half, closing, fridge_roots[root_frame])
         g = bound_fridge_swing(bake_pose(split_fridge_geo(fridge, half), clip, frame/10, f"geometry.{NS}.{name}"), half)
         assert_block_bounds(g)
         identifier = emit_geo(name, g)
         for source in (fridge_source, fridge_animation):
-            record(source, RP / "models/blocks" / f"{name}.geo.json", "Complete independent door; separate GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; per-half close squash; bounded hinge sweep")
+            record(source, RP / "models/blocks" / f"{name}.geo.json", "Complete independent door times four common-root samples; GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; shared cabinet squash; bounded hinge sweep")
         components = {"minecraft:geometry": identifier}
         if half == "upper":
             components["minecraft:loot"] = "loot_tables/empty.json"
-        variant = {"condition": state_condition({"half": half, "closing": closing, "frame": frame}), "components": components}
+        variant = {"condition": state_condition({"half": half, "closing": closing, "frame": frame, "root_frame": root_frame}), "components": components}
         variants.append(variant)
         if half == "upper":
             upper_variants.append(variant)
     # block_entity is not allowed in permutations. Two identifiers give each
     # compartment its actual capacity; the old upper state remains migratable.
     block_definition("refrigerator", f"geometry.{NS}.refrigerator_lower_0", mats,
-                     {"half": ["lower", "upper"], "open": [False, True], "closing": [False, True], "frame": list(range(11))}, variants,
+                     {"half": ["lower", "upper"], "open": [False, True], "closing": [False, True], "frame": list(range(11)), "root_frame": list(range(len(fridge_roots)))}, variants,
                      native_container={"slot_count": 54, "title": f"container.{NS}.refrigerator.lower"})
     block_definition("refrigerator_upper", f"geometry.{NS}.refrigerator_upper_0", mats,
-                     {"half": ["upper"], "open": [False, True], "closing": [False, True], "frame": list(range(11))}, upper_variants,
+                     {"half": ["upper"], "open": [False, True], "closing": [False, True], "frame": list(range(11)), "root_frame": list(range(len(fridge_roots)))}, upper_variants,
                      native_container={"slot_count": 27, "title": f"container.{NS}.refrigerator.upper"},
                      hidden=True, loot_table="loot_tables/empty.json")
     # Shared data keeps script reversal selection tied to the actual baked
@@ -1208,8 +1327,9 @@ def make_blocks():
     pose_data = BP / "scripts/appliance_pose_data.js"
     pose_data.parent.mkdir(parents=True, exist_ok=True)
     pose_data.write_text("// SPDX-License-Identifier: GPL-3.0-only\n// Generated from pinned refrigerator.animation.json by tools/convert_assets.py.\n"
-                        + "export const FRIDGE_POSE_PROGRESS = " + json.dumps(progress, indent=2) + ";\n", encoding="utf-8")
-    record(fridge_animation, pose_data, "Normalized source door angles shared with reversible runtime motion")
+                        + "export const FRIDGE_POSE_PROGRESS = " + json.dumps(progress, indent=2) + ";\n"
+                        + "export const FRIDGE_ROOT_BY_CLOSE_FRAME = " + json.dumps(root_frames) + ";\n", encoding="utf-8")
+    record(fridge_animation, pose_data, "Normalized source door angles and common-root sample mapping for runtime motion")
     write_json(BP / "loot_tables" / "empty.json", {"pools": []})
     # Source drawer/door keyframes plus the original empty_out preview. Preview
     # is visual phase 6 only; it never becomes a saved washing-machine phase.
@@ -1273,8 +1393,29 @@ def make_blocks():
                 material["texture"] = texture_tile(f"{NS}:block/{texture}")
         variants.append({"condition": state_condition({"fire_frame": frame}),
                          "components": {"minecraft:material_instances": frame_mats}})
+    # Keep the canonical neutral/item mesh untouched. Active poses use the
+    # registered Java GeoModel hierarchy, including its 17 original UV faces;
+    # it omits the flattened model's wholly interior upper-lip south face.
+    source = ASSETS / "geo/block/stove.geo.json"
+    animation_source = ASSETS / "animations/stove.animation.json"
+    base = normalize_geo(source, f"geometry.{NS}.stove_source")
+    clip = read_json(animation_source)["animations"]["fire"]
+    for age in range(1, 20):
+        name = f"stove_ignition_{age}"
+        pose = bake_pose(base, clip, age/20, f"geometry.{NS}.{name}")
+        assert_block_bounds(pose)
+        identifier = emit_geo(name, pose)
+        for original in (source, animation_source):
+            record(original, RP / "models/blocks" / f"{name}.geo.json",
+                   f"Registered stove GeoModel fire clip at age {age}/20s; original 17 faces, hierarchy and UV; neutral keeps canonical idle mesh")
+        variants.append({"condition": state_condition({"ignition_frame": age}),
+                         "components": {"minecraft:geometry": identifier}})
+    # The standard wide-state adapter splits 0..19 into a low nibble + bool.
+    # Geometry is independent of texture so a short custom fuel can extinguish
+    # before the source's 20-tick animation countdown finishes.
     block_definition("stove", f"geometry.{NS}.stove", mats,
-                     {"lit": [False, True], "fire_frame": list(range(6))}, variants)
+                     {"lit": [False, True], "fire_frame": list(range(6)),
+                      "ignition_frame": list(range(20))}, variants)
 
 
 def transform3(v, rotation, pivot=(0, 0, 0)):
@@ -1641,14 +1782,48 @@ def make_dining_plate():
 
 
 def make_motorcycle_geo():
-    """Read the original Mojang CubeListBuilder model (41 textured boxes)."""
+    """Convert this pinned motorcycle's neutral model, not a general Java codec.
+
+    See docs/MOTORCYCLE_SOURCE_MAPPING.md for the registered renderer frame,
+    physical-corner UV contract and independent regeneration regression.
+    """
     source = SOURCE / "forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/render/model/MotorcycleModel.java"
     text = source.read_text(encoding="utf-8")
-    pattern = re.compile(r'(\w+)\.addOrReplaceChild\("([^"]+)",\s*(CubeListBuilder\.create\(\).*?),\s*PartPose\.(offset(?:AndRotation)?)\((.*?)\)\);', re.S)
+    # Consume the complete bounded layer body, not a search for familiar calls.
+    # Unrecognized builder state (including whitespace-spelled mirror calls),
+    # extra statements and pose suffixes must never be silently discarded.
+    root_marker = "PartDefinition partdefinition = meshdefinition.getRoot();"
+    return_marker = "return LayerDefinition.create"
+    if text.count(root_marker) != 1 or text.count(return_marker) != 1:
+        raise ValueError("Unsupported motorcycle layer grammar")
+    body, return_text = text.split(root_marker, 1)[1].split(return_marker, 1)
+    if not re.match(r'\s*\(\s*meshdefinition\s*,\s*128\s*,\s*128\s*\)\s*;', return_text):
+        raise ValueError("Unsupported motorcycle layer return grammar")
+    number = r'[+-]?(?:\d+(?:\.\d*)?|\.\d+)[Ff]?'
+    statement_pattern = re.compile(
+        r'(?:PartDefinition\s+(\w+)\s*=\s*)?(\w+)\s*\.\s*addOrReplaceChild\s*'
+        r'\(\s*"(\w+)"\s*,\s*CubeListBuilder\s*\.\s*create\s*\(\s*\)'
+        r'(.*),\s*PartPose\s*\.\s*(offset(?:AndRotation)?)\s*\(([^()]*)\)\s*\)', re.S)
+    cube_pattern = re.compile(
+        r'\s*\.\s*texOffs\s*\(\s*(\d+)\s*,\s*(\d+)\s*\)\s*\.\s*addBox\s*\(\s*'
+        + ''.join('(' + number + r')\s*,\s*' for _ in range(6))
+        + r'new\s+CubeDeformation\s*\(\s*(' + number + r')\s*\)\s*\)')
     bones, pivots = [], {"partdefinition": [0,0,0]}
-    for match in pattern.finditer(text):
-        parent, name, cubes_text, pose_type, pose_text = match.groups()
-        pose = [float(x.rstrip("Ff")) for x in pose_text.split(",")]
+    statements = body.strip().split(';')
+    if statements[-1].strip():
+        raise ValueError("Unsupported motorcycle statement grammar: missing terminator")
+    for statement in statements[:-1]:
+        match = statement_pattern.fullmatch(statement.strip())
+        if match is None:
+            raise ValueError("Unsupported motorcycle statement or pose grammar")
+        alias, parent, name, cubes_text, pose_type, pose_text = match.groups()
+        if (alias and alias != name) or name in pivots or parent not in pivots:
+            raise ValueError("Unsupported motorcycle hierarchy grammar")
+        pose_tokens = [x.strip() for x in pose_text.split(',')]
+        if len(pose_tokens) != (6 if pose_type == "offsetAndRotation" else 3) or not all(
+                re.fullmatch(number, token) for token in pose_tokens):
+            raise ValueError("Unsupported motorcycle pose grammar")
+        pose = [float(x.rstrip("Ff")) for x in pose_tokens]
         parent_offset = pivots[parent]
         origin = [parent_offset[i]+pose[i] for i in range(3)]
         pivots[name] = origin
@@ -1657,13 +1832,24 @@ def make_motorcycle_geo():
         if parent != "partdefinition":
             bone["parent"] = parent
         if pose_type == "offsetAndRotation":
-            bone["rotation"] = [-math.degrees(pose[3]), -math.degrees(pose[4]), math.degrees(pose[5])]
-        for cm in re.finditer(r'\.texOffs\(([^)]+)\)\.addBox\((.*?),\s*new CubeDeformation\(([^)]+)\)\)', cubes_text, re.S):
-            uv = [int(v.strip()) for v in cm.group(1).split(",")]
-            vals = [float(v.strip().rstrip("Ff")) for v in cm.group(2).split(",")]
+            # Only single-axis X/Y rotations occur in the pinned source. Do not
+            # silently extend this repair to unverified Euler orders or Z poses.
+            if pose[5] or sum(angle != 0 for angle in pose[3:]) > 1:
+                raise ValueError("Motorcycle supports reviewed single-axis X/Y poses only; Z requires review")
+            bone["rotation"] = [math.degrees(pose[3]), -math.degrees(pose[4]), 0.0]
+        position = 0
+        while cubes_text[position:].strip():
+            cm = cube_pattern.match(cubes_text, position)
+            if cm is None:
+                raise ValueError("Unsupported motorcycle builder grammar (including mirror calls)")
+            position = cm.end()
+            uv = [int(cm.group(1)), int(cm.group(2))]
+            vals = [float(v.rstrip("Ff")) for v in cm.groups()[2:8]]
             x,y,z,sx,sy,sz = vals
-            cube = {"origin": [-(origin[0]+x+sx), 24-(origin[1]+y+sy), origin[2]+z], "size": [sx,sy,sz], "uv": uv}
-            inflate = float(cm.group(3).strip().rstrip("Ff"))
+            # The retained authored X reflection needs U inversion and an
+            # east/west face exchange: Bedrock box mirror supplies both.
+            cube = {"origin": [-(origin[0]+x+sx), 24-(origin[1]+y+sy), origin[2]+z], "size": [sx,sy,sz], "uv": uv, "mirror": True}
+            inflate = float(cm.group(9).rstrip("Ff"))
             if inflate:
                 cube["inflate"] = inflate
             bone["cubes"].append(cube)
@@ -2062,8 +2248,9 @@ def main():
         "port_assets": [{"source": str(path.relative_to(ROOT)), "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
                         for path in sorted((ROOT / "assets/guidebook").glob("*")) if path.suffix in (".png", ".lang")],
         "adaptations":["Two-part refrigerator with complete independent doors; separate 11-pose open/close source clips; at most 0.126px intermediate hinge translation bounds the sweep",
-            "Original GeckoLib elastic/bounce easing and appliance squash retained in sampled static cuboids; residual descendant shear and unsynchronized cabinet halves remain documented",
-            "Stove uses six original textures selected by saved per-stove fire phases: 15-tick ignition delay, 5-tick burst and four 8-tick cycle frames; original ignition bone squash is not rendered",
+            "Washing table includes the source renderer's static translucent water quad in all 11 plate states; whole-block blend and reverse-winding underside require native sorting/backface review",
+            "Original GeckoLib elastic/bounce easing and appliance squash retained in sampled static cuboids; refrigerator halves share four common-root samples with active-lower controller priority; residual descendant shear, reversal/STOP adaptation and non-atomic block writes remain documented",
+            "Stove keeps six original textures and fuel phases; independent source 20-tick ignition countdown selects finite source-Geo wobble/squash poses at integer ages, published by the existing 10Hz service; neutral/item mesh unchanged; not continuous Java/client-packet or STOP-reset parity",
             "Dishwasher drawer, door, plate-count visibility and wash vibration sampled into 82 poses including look-target preview; preview geometry is shared rather than per-client",
             "Native dining plate uses the original two-part collision and forty block stages; the existing actor handles only stage-zero placement animation; canonical meal records own drops",
             "Seven original customer actions seek from canonical elapsed time; weighted idle variation changes only between completed clips",

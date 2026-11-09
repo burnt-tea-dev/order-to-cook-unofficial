@@ -1,0 +1,181 @@
+{
+  "date": "2026-11-09",
+  "application": "Official Blockbench 5.2.2, cloud-only",
+  "source_candidate_commit": "df6d0ade7fe6e0667c0078e5d417686a89f1159a",
+  "source_candidate_tree": "99c38533938d2b409b561f1ff76b0da0871e303f",
+  "baseline_commit": "ce7e8916ac5627be08a6c366ea933a4ad96ad3bd",
+  "candidate_geometry_sha256": "c94a03d87f3916b374375f2cd03d98f213d5867c0a56464fc6a12c5987490093",
+  "fixtures": {
+    "before": {
+      "manifest_sha256": "62514cdc1a9de55fbf38e4f8ebbd30329128709bb14ba489c4afd6fc9f4e030a",
+      "all_5_scene_hashes_unchanged_after_GUI": {
+        "00_neutral_geometry_uv_control.bbmodel": "5210e26ae80a1b98fccda43d716191ac9074a200ad489145e05497962620036b",
+        "motorcycle_blue.bbmodel": "1cff4cb5545a7e265d722b171ab1f324f64adae7797bba90593cf3cca83518bc",
+        "motorcycle_red.bbmodel": "2a9c0c0436ef819c998331301b8e5622ffad04f319318deabaac8bd3dc03db01",
+        "motorcycle_white.bbmodel": "f433bf74786a009245b05518924597fad77c604e9f0a3d5c1bb3f970818dbf2c",
+        "motorcycle_yellow.bbmodel": "2a5e1ac115b97717816b1e41ce87378a65f5cb413d00dd00e2fce82e0c1b7fba"
+      }
+    },
+    "candidate": {
+      "manifest_sha256": "4f5243fb0297e2f3dfa6ec72744313d928f95a674a9f31bdd393e83ec457e1a9",
+      "all_5_scene_hashes_unchanged_after_GUI": {
+        "00_neutral_geometry_uv_control.bbmodel": "cf10e68bf7efc5b27ca816a66f6e6941ee3e62c94ad681f085a203b1474ee83b",
+        "motorcycle_blue.bbmodel": "e2cc763b8611fba08761582833d2d700e64101fa3faeccbd29d5d5167c9ed26e",
+        "motorcycle_red.bbmodel": "922cf8dfa68fd4fa35fe75cd0ebda6bfaf263248bb19cce0844d2f20bcb9757b",
+        "motorcycle_white.bbmodel": "65a79123072091dec752fc56bbe6b461c599095fa53079289da470c98633ad29",
+        "motorcycle_yellow.bbmodel": "83a95bfa9b20e844f891faed33ed89aebe86bf900178152f7d80f55af3216e40"
+      }
+    }
+  },
+  "images": [
+    {
+      "image": "screenshots/01_before-control-isometric-right-2-1.jpg",
+      "sha256": "052e274277b659d80d2d2f85e9a793aede565b4fcd3c9644777d963efcc4bf0e",
+      "bytes": 86907,
+      "filesystem_saved_utc": "2026-11-09T02:23:11.644825+00:00",
+      "fixture_kind": "before",
+      "scene": "00_neutral_geometry_uv_control.bbmodel",
+      "scene_sha256": "5210e26ae80a1b98fccda43d716191ac9074a200ad489145e05497962620036b",
+      "camera": "Isometric Right (2:1)",
+      "source_display_position": "right and lower",
+      "comparison_display_position": "left and upper",
+      "scene_source_offset_x": -20,
+      "scene_comparison_offset_x": 20,
+      "capture": "Raw unedited official Blockbench app-window JPEG; screenshot bytes saved with native CUA screenshot API."
+    },
+    {
+      "image": "screenshots/02_before-white-isometric-right-2-1.jpg",
+      "sha256": "7c449dfd94ab7336188ddf0a991571ea4b87da3cc1cb07d207fef02df2095549",
+      "bytes": 97351,
+      "filesystem_saved_utc": "2026-11-09T02:23:49.889350+00:00",
+      "fixture_kind": "before",
+      "scene": "motorcycle_white.bbmodel",
+      "scene_sha256": "f433bf74786a009245b05518924597fad77c604e9f0a3d5c1bb3f970818dbf2c",
+      "camera": "Isometric Right (2:1)",
+      "source_display_position": "right and lower",
+      "comparison_display_position": "left and upper",
+      "scene_source_offset_x": -20,
+      "scene_comparison_offset_x": 20,
+      "capture": "Raw unedited official Blockbench app-window JPEG; screenshot bytes saved with native CUA screenshot API."
+    },
+    {
+      "image": "screenshots/03_before-white-top.jpg",
+      "sha256": "20ff37cdddbc57e0d18a3c252fc7e1246e422ee7d6850d6979148fd3f465ae3e",
+      "bytes": 83725,
+      "filesystem_saved_utc": "2026-11-09T02:24:04.049543+00:00",
+      "fixture_kind": "before",
+      "scene": "motorcycle_white.bbmodel",
+      "scene_sha256": "f433bf74786a009245b05518924597fad77c604e9f0a3d5c1bb3f970818dbf2c",
+      "camera": "TOP",
+      "source_display_position": "left",
+      "comparison_display_position": "right",
+      "scene_source_offset_x": -20,
+      "scene_comparison_offset_x": 20,
+      "capture": "Raw unedited official Blockbench app-window JPEG; screenshot bytes saved with native CUA screenshot API."
+    },
+    {
+      "image": "screenshots/04_candidate-control-isometric-right-2-1.jpg",
+      "sha256": "b543235f07fcb6394eec253cac987613d5175f43f3c51d32676bc252969974bf",
+      "bytes": 87263,
+      "filesystem_saved_utc": "2026-11-09T02:26:56.559907+00:00",
+      "fixture_kind": "candidate",
+      "scene": "00_neutral_geometry_uv_control.bbmodel",
+      "scene_sha256": "cf10e68bf7efc5b27ca816a66f6e6941ee3e62c94ad681f085a203b1474ee83b",
+      "camera": "Isometric Right (2:1)",
+      "source_display_position": "right and lower",
+      "comparison_display_position": "left and upper",
+      "scene_source_offset_x": -20,
+      "scene_comparison_offset_x": 20,
+      "capture": "Raw unedited official Blockbench app-window JPEG; screenshot bytes saved with native CUA screenshot API."
+    },
+    {
+      "image": "screenshots/05_candidate-white-isometric-right-2-1.jpg",
+      "sha256": "4fdf9ae9653c749da32035bd651938d3e419e3be6450311c6b76ef80bdd8fa15",
+      "bytes": 97097,
+      "filesystem_saved_utc": "2026-11-09T02:27:11.644115+00:00",
+      "fixture_kind": "candidate",
+      "scene": "motorcycle_white.bbmodel",
+      "scene_sha256": "65a79123072091dec752fc56bbe6b461c599095fa53079289da470c98633ad29",
+      "camera": "Isometric Right (2:1)",
+      "source_display_position": "right and lower",
+      "comparison_display_position": "left and upper",
+      "scene_source_offset_x": -20,
+      "scene_comparison_offset_x": 20,
+      "capture": "Raw unedited official Blockbench app-window JPEG; screenshot bytes saved with native CUA screenshot API."
+    },
+    {
+      "image": "screenshots/06_candidate-white-top.jpg",
+      "sha256": "facb6ad766689c8cd007a1c1bd171cc92a265f693c59753fb20c87d8a234bab1",
+      "bytes": 83860,
+      "filesystem_saved_utc": "2026-11-09T02:27:20.648239+00:00",
+      "fixture_kind": "candidate",
+      "scene": "motorcycle_white.bbmodel",
+      "scene_sha256": "65a79123072091dec752fc56bbe6b461c599095fa53079289da470c98633ad29",
+      "camera": "TOP",
+      "source_display_position": "left",
+      "comparison_display_position": "right",
+      "scene_source_offset_x": -20,
+      "scene_comparison_offset_x": 20,
+      "capture": "Raw unedited official Blockbench app-window JPEG; screenshot bytes saved with native CUA screenshot API."
+    },
+    {
+      "image": "screenshots/07_candidate-red-isometric-right-2-1.jpg",
+      "sha256": "10bde53a4c0fd892719e9b294085afd238339f2293fa162f01acaf847b37b31c",
+      "bytes": 117003,
+      "filesystem_saved_utc": "2026-11-09T02:27:33.940422+00:00",
+      "fixture_kind": "candidate",
+      "scene": "motorcycle_red.bbmodel",
+      "scene_sha256": "922cf8dfa68fd4fa35fe75cd0ebda6bfaf263248bb19cce0844d2f20bcb9757b",
+      "camera": "Isometric Right (2:1)",
+      "source_display_position": "right and lower",
+      "comparison_display_position": "left and upper",
+      "scene_source_offset_x": -20,
+      "scene_comparison_offset_x": 20,
+      "capture": "Raw unedited official Blockbench app-window JPEG; screenshot bytes saved with native CUA screenshot API."
+    },
+    {
+      "image": "screenshots/08_candidate-blue-isometric-right-2-1.jpg",
+      "sha256": "15067eabab714480635d7ebc8cd503cf9114634c19b78a04d1d39875958ec381",
+      "bytes": 114125,
+      "filesystem_saved_utc": "2026-11-09T02:27:50.704654+00:00",
+      "fixture_kind": "candidate",
+      "scene": "motorcycle_blue.bbmodel",
+      "scene_sha256": "e2cc763b8611fba08761582833d2d700e64101fa3faeccbd29d5d5167c9ed26e",
+      "camera": "Isometric Right (2:1)",
+      "source_display_position": "right and lower",
+      "comparison_display_position": "left and upper",
+      "scene_source_offset_x": -20,
+      "scene_comparison_offset_x": 20,
+      "capture": "Raw unedited official Blockbench app-window JPEG; screenshot bytes saved with native CUA screenshot API."
+    },
+    {
+      "image": "screenshots/09_candidate-yellow-isometric-right-2-1.jpg",
+      "sha256": "a46623def67c1ca0c9d45f84f7ec50c235665ab39f480b9aacbe87d294ec3cf3",
+      "bytes": 110851,
+      "filesystem_saved_utc": "2026-11-09T02:28:06.196866+00:00",
+      "fixture_kind": "candidate",
+      "scene": "motorcycle_yellow.bbmodel",
+      "scene_sha256": "83a95bfa9b20e844f891faed33ed89aebe86bf900178152f7d80f55af3216e40",
+      "camera": "Isometric Right (2:1)",
+      "source_display_position": "right and lower",
+      "comparison_display_position": "left and upper",
+      "scene_source_offset_x": -20,
+      "scene_comparison_offset_x": 20,
+      "capture": "Raw unedited official Blockbench app-window JPEG; screenshot bytes saved with native CUA screenshot API."
+    }
+  ],
+  "observations": [
+    "Before white isometric comparison has an inverted/folded front panel and fork relationship relative to source. The minimal control independently exposes the changed static strut angle.",
+    "Candidate white isometric and top comparisons remove that displayed front-column disagreement. Both minimal groups display corresponding shapes and UV pattern placement.",
+    "Candidate white, red, blue and yellow isometric comparisons show complete source and candidate static motorcycle geometry in frame with matching overall form and displayed source texture layout.",
+    "All captured fixtures are neutral static poses. No runtime file or fixture was edited in Blockbench, and all ten prepared scene hashes remained unchanged after the captures."
+  ],
+  "limits": [
+    "Not native Minecraft/client/BDS testing. No user-local machine, LIVE or deployment touched.",
+    "No steering input, wheel phase, animation timing, transparency/culling, light/emissive shader or native gameplay acceptance.",
+    "Explicit per-face review UVs bypass Blockbench box-UV 1/64 margin; the editor expands zero-thickness planes by .001. Neither behavior establishes native rendering.",
+    "Candidate repair targets seven static bone X signs and 41 box UV mirror flags. Mathematical face-corner mismatch count is not a count of visibly wrong pixels.",
+    "Initial v1 fixture UUID collisions were detected before any motorcycle GUI. Only globally unique v2 fixtures were captured. Their scene geometry, UVs, images and group values are unchanged by the UUID-only correction.",
+    "No claim of exact framebuffer equality: screenshots include editor shading and finite rasterization; conclusions are bounded to the captured shape and texture placement."
+  ]
+}

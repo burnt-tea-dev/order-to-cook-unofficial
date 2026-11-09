@@ -1,0 +1,38 @@
+{
+  "status": "FRIDGE_REVIEW_REPRODUCED_NOT_NATIVE_RUNTIME_ACCEPTANCE",
+  "steps": [
+    {
+      "script": "test_tree_chunks.py",
+      "exit_code": 0
+    },
+    {
+      "script": "verify_candidate_math.py",
+      "exit_code": 0
+    },
+    {
+      "script": "verify_control_evidence.py",
+      "exit_code": 0
+    },
+    {
+      "script": "verify_candidate_equivalence.py",
+      "exit_code": 0
+    },
+    {
+      "script": "verify_freeze_equivalence.py",
+      "exit_code": 0
+    },
+    {
+      "script": "verify_calibration.py",
+      "exit_code": 0
+    }
+  ],
+  "candidate_fixtures": 7,
+  "candidate_original_jpegs": 9,
+  "baseline_original_jpegs": 4,
+  "calibration_original_jpegs": 13,
+  "snapshot_blobs_and_full_tree_hashes_verified": true,
+  "deterministic_reports_and_scene_bytes": true,
+  "private_execution_paths_found": 0,
+  "gui_operated": false,
+  "runtime_modified": false
+}

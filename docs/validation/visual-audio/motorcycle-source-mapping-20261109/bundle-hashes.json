@@ -1,0 +1,106 @@
+{
+  "README.md": {
+    "sha256": "e5e7a9c6cd6e3f29e67fbebeb526a04e7572d136156fb00ad283b6a8d9ae2dc2",
+    "bytes": 7245
+  },
+  "before.geo.json": {
+    "sha256": "6755e91fba97a2c4127f94646054d8c0ed7c03dfbde35caffeaaf8066ea75213",
+    "bytes": 18181
+  },
+  "capture-receipt.json": {
+    "sha256": "687eeae723e9577f09e959e4f6dd9cd0e81c480c0f609c97a9e00058ce5f2272",
+    "bytes": 10470
+  },
+  "fixtures/before/00_neutral_geometry_uv_control.bbmodel.gz": {
+    "sha256": "703dd3d27238aeacf75218d369d40679d94cd852b89da29629a68aecbca6303d",
+    "bytes": 5458
+  },
+  "fixtures/before/motorcycle_blue.bbmodel.gz": {
+    "sha256": "1daa0412bd720f9c693bf5cc31c9903b16be5c6d43315fa872317017b458946c",
+    "bytes": 15981
+  },
+  "fixtures/before/motorcycle_red.bbmodel.gz": {
+    "sha256": "02b229b3c3d373e8e0edd830e5267719041dc634297b75632da342815413784f",
+    "bytes": 15790
+  },
+  "fixtures/before/motorcycle_white.bbmodel.gz": {
+    "sha256": "0a162bb1c4b216923b478a82fe60238a82cee2435ceadcf81169f00d71cc0ba2",
+    "bytes": 16492
+  },
+  "fixtures/before/motorcycle_yellow.bbmodel.gz": {
+    "sha256": "ef25c808f4209d45b878f84126bf081b4dff8ccde30f5e9f005fcffcf5d77b64",
+    "bytes": 15817
+  },
+  "fixtures/candidate/00_neutral_geometry_uv_control.bbmodel.gz": {
+    "sha256": "e136b8d0052937bec8a42d4e25a69106a0f6b4e0d450a978782e5b8a1a124fb6",
+    "bytes": 5393
+  },
+  "fixtures/candidate/motorcycle_blue.bbmodel.gz": {
+    "sha256": "c086c0e364900b70d5e50e18d38c3dd5d7b4e321d13ef5f0127a05fd85888c9d",
+    "bytes": 15969
+  },
+  "fixtures/candidate/motorcycle_red.bbmodel.gz": {
+    "sha256": "fbdc1174f83334661c4793b43950135816c78df6048ac2f471392afe790a24cb",
+    "bytes": 15758
+  },
+  "fixtures/candidate/motorcycle_white.bbmodel.gz": {
+    "sha256": "bf3a12b6a83dbaa3253daab100ef7e92178bab1493737f1a3692e31fe513d7c8",
+    "bytes": 16464
+  },
+  "fixtures/candidate/motorcycle_yellow.bbmodel.gz": {
+    "sha256": "da70c3b0e0249cdac7928aefda5fbc09fba424c6b91473f567d3d8933d6190c6",
+    "bytes": 15784
+  },
+  "input-identities.json": {
+    "sha256": "e42b093124c2f9ceaa4ccd492e5e3fbe2475dc7b87a28c9f344f482f1934bd89",
+    "bytes": 3536
+  },
+  "scene-manifest.json": {
+    "sha256": "f73c7859c6aa619523b914281fde2f989c478c934de3714d89b10df1f5fd1830",
+    "bytes": 3677
+  },
+  "screenshots/01_before-control-isometric-right-2-1.jpg": {
+    "sha256": "052e274277b659d80d2d2f85e9a793aede565b4fcd3c9644777d963efcc4bf0e",
+    "bytes": 86907
+  },
+  "screenshots/02_before-white-isometric-right-2-1.jpg": {
+    "sha256": "7c449dfd94ab7336188ddf0a991571ea4b87da3cc1cb07d207fef02df2095549",
+    "bytes": 97351
+  },
+  "screenshots/03_before-white-top.jpg": {
+    "sha256": "20ff37cdddbc57e0d18a3c252fc7e1246e422ee7d6850d6979148fd3f465ae3e",
+    "bytes": 83725
+  },
+  "screenshots/04_candidate-control-isometric-right-2-1.jpg": {
+    "sha256": "b543235f07fcb6394eec253cac987613d5175f43f3c51d32676bc252969974bf",
+    "bytes": 87263
+  },
+  "screenshots/05_candidate-white-isometric-right-2-1.jpg": {
+    "sha256": "4fdf9ae9653c749da32035bd651938d3e419e3be6450311c6b76ef80bdd8fa15",
+    "bytes": 97097
+  },
+  "screenshots/06_candidate-white-top.jpg": {
+    "sha256": "facb6ad766689c8cd007a1c1bd171cc92a265f693c59753fb20c87d8a234bab1",
+    "bytes": 83860
+  },
+  "screenshots/07_candidate-red-isometric-right-2-1.jpg": {
+    "sha256": "10bde53a4c0fd892719e9b294085afd238339f2293fa162f01acaf847b37b31c",
+    "bytes": 117003
+  },
+  "screenshots/08_candidate-blue-isometric-right-2-1.jpg": {
+    "sha256": "15067eabab714480635d7ebc8cd503cf9114634c19b78a04d1d39875958ec381",
+    "bytes": 114125
+  },
+  "screenshots/09_candidate-yellow-isometric-right-2-1.jpg": {
+    "sha256": "a46623def67c1ca0c9d45f84f7ec50c235665ab39f480b9aacbe87d294ec3cf3",
+    "bytes": 110851
+  },
+  "test_verifier.py": {
+    "sha256": "0f5c5eaff1722239ca400254e7b2e37d1b7e9923fd2a274145e0ac1a392f1adc",
+    "bytes": 1931
+  },
+  "verify.py": {
+    "sha256": "c8018e468245402b5dfd802ed21aa73faf9587acb976d057b4ef7547a61d2aaa",
+    "bytes": 7213
+  }
+}

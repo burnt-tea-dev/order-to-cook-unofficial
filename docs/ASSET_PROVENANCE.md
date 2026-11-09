@@ -20,7 +20,7 @@
 
 ## 轉換器與重現
 
-本倉庫的 `upstream/reference/` 隨附上述固定提交的可編輯來源子集：完整的共用 `assets/ordertocook/` 目錄、原工具箱配方、`MotorcycleModel.java` 及上游 `LICENSE.txt`。來源原檔未修改；`upstream/reference/UPSTREAM.json` 記錄提交、作者、授權及子集範圍。它包含轉換器需要的全部上游輸入，因此重產不依賴日後仍可存取的外部下載，也不需要 Java JAR 或完整 Java 建置。
+本倉庫的 `upstream/reference/` 隨附上述固定提交的可編輯來源子集：完整的共用 `assets/ordertocook/` 目錄、原工具箱配方、`MotorcycleModel.java`、`WashingTableWaterRenderer.java` 及上游 `LICENSE.txt`。來源原檔未修改；`upstream/reference/UPSTREAM.json` 記錄提交、作者、授權及子集範圍。它包含轉換器需要的全部上游輸入，因此重產不依賴日後仍可存取的外部下載，也不需要 Java JAR 或完整 Java 建置。
 
 使用本倉庫的 `tools/convert_assets.py`；預設來源就是隨附子集。安裝一次 Pillow 後，資源轉換可以離線執行：
 
@@ -78,9 +78,9 @@ geometry 統一使用 `1.21.0` 格式，以支援原作已使用的逐面 `uv_ro
 
 原下門跨越上下格的分界。alpha.2 把整扇下門留在下半 geometry，最高到 Y=19.5，上半 geometry 只擁有上門；櫃體仍分格。如此上下門可以各自開合而不在 Y=16 斷裂，不需讓上門狀態跟著下門改變。儲物仍分上層 27 格、下層 54 格。
 
-`refrigerator.animation.json` 的上下門 open／close 四段各在 0–1 秒取 11 個姿態，共 **44 個**，保留原 −135°／−125° 開門終點、Elastic 開門、帶 `easingArgs=[0.1]` 的 Bounce 關門與關門機身縮放。採用固定 GeckoLib 4 的實際公式，並非用另一套同名曲線猜測。各半 `frame` 為 0–10，`closing` 選擇活動片段；途中反轉倒播當前片段，端點才改用原另一段。部分中間姿態對完整門片平移不足 0.126 像素以符合原生邊界，保持尺寸、UV、角度及端點。全部生成模型另以四方向及 Float32 運算檢查邊界。
+`refrigerator.animation.json` 的上下門 open／close 四段各在 0–1 秒取 11 個姿態，形成 44 個門姿態，再與四個共同 root 組合成 **176 個模型**，保留原 −135°／−125° 開門終點、Elastic 開門、帶 `easingArgs=[0.1]` 的 Bounce 關門與關門機身縮放。採用固定 GeckoLib 4 的實際公式，並非用另一套同名曲線猜測。各半 `frame` 為 0–10，`closing` 選擇活動片段；途中反轉倒播當前片段，端點才改用原另一段。部分中間姿態對完整門片平移不足 0.126 像素以符合原生邊界，保持尺寸、UV、角度及端點。全部生成模型另以四方向及 Float32 運算檢查邊界。
 
-非均勻縮放完整作用於子部件，再用最接近的靜態立方體表示無法直接輸出的剪切；取樣測試的冰箱最大頂點殘差約 0.087 像素。仍缺上下層各最多 8 件食品陳列，且 Java 關門壓縮整座櫃體，本版只有各自分區跟隨自己的關門片段。有限取樣及分區共用櫃體的差異仍須實機驗收。來源和每個衍生姿態均記入 conversion manifest，沒有另畫門模型。
+非均勻縮放完整作用於子部件，再用最接近的靜態立方體表示無法直接輸出的剪切；完整 own-frame × root 取樣的冰箱最大頂點殘差為 0.201556444 像素，邊界平移另為最多 0.086115 像素。兩半共用 `root_frame`，下門活動 close（含中性）覆寫上門；仍缺上下層各最多 8 件食品陳列，有限取樣、反向／STOP 差異及兩方塊非原子寫入仍須實機驗收。見[共同 root 來源驗證](validation/fridge-shared-root/README.md)。來源和每個衍生姿態均記入 conversion manifest，沒有另畫門模型。
 
 參考：[官方自訂方塊幾何邊界](https://learn.microsoft.com/en-us/minecraft/creator/documents/customblockoversized?view=minecraft-bedrock-stable)、[固定 GeckoLib 曲線實作](https://github.com/bernie-g/geckolib/blob/7d6f32db9168a24e14b327c0ad9f8f87dfc204de/core/src/main/java/software/bernie/geckolib/core/animation/EasingType.java)。
 
@@ -96,6 +96,10 @@ geometry 統一使用 `1.21.0` 格式，以支援原作已使用的逐面 `uv_ro
 
 餐盤架保留 0–18 盤、包裝架保留 0–10 份包材、洗碗檯保留 0–10 盤的原 multipart 外形。`food_plate_display` 方塊與用餐 helper 均保留原 40 個食物／進食階段。Java stage 0 的空 blockstate 另由 `FoodPlatePlacedRenderer` 顯示食物；候選使用該原 Geo 與專用材質，靜態方塊保留完成姿態，用餐 helper 播放原 0.5 秒 `maked` 並按已過時間定位。
 
+洗碗檯的 Java 模型只宣告 water 紋理，沒有水面；水面由固定 Forge `WashingTableWaterRenderer.java` 另畫。本轉換器讀取其 X=3–13、Z=3–12、Y=15.08 像素及完整 0–1 UV，為全部 11 個世界盤數狀態加入同一零厚度薄片。頂／底面使用相反繞序與相同物理 UV 角點，以表達原 renderer 的 no-cull 平面；沒有新增貼圖、體積或水面動畫。來源 Git blob 為 `a47acf4717344c0196066cccbf199c8c21347585`，SHA-256 為 `f6f7b7b7781e30acded9d3e2cf17ad6d8ab01d234dd1e2b2d517fd4ea9130d1d`；每個輸出均有來源清單條目。
+
+原 water.png 的 alpha 固定為 133，不能用只容許全透明／不透明的 `alpha_test`。依官方同方塊所有材質共用 render_method 的限制，世界本體與水面全部使用 `blend`。Java 物品只繼承乾的 idle 模型，故另外生成 `washingtable_item`，由 `minecraft:item_visual` 使用原 `alpha_test` 材質，沒有讓水面溢入物品。全方塊透明排序、背面、盤子與池壁遮擋，以及原生持物／物品欄仍需 Bedrock 客戶端驗證；來源角點測試不是這些驗收的替代。詳見[水面修正契約](validation/UNRELEASED-washingtable-water.md)。
+
 用餐時的 `ordertocook:dining_plate` 是獨立的外觀實體，41 個 geometry 由同一個 client render controller 選取。它使用單張 `dining_plate_atlas.png`，避免把方塊的 per-face material instance 誤當成 entity 可用的多紋理綁定：
 
 | 原紋理 | 原尺寸 | 256×256 atlas 內左上角 | UV 處理 |
@@ -109,7 +113,7 @@ helper 無庫存、重力、物理碰撞或自動掉落。`minecraft:custom_hit_
 
 進食約 5 秒後，第四階段髒盤留在原位直到店主／員工領取；沒有顯示實體自動掉一個髒盤的規則。權威記錄在 `restaurant.pendingDishes`，領取先保存 claim，再由腳本給一個 `dirty_plate`，因此重建 helper 或重複 visual ID 不應再次發盤。提前收盤、同一位置舊盤阻擋新餐及重啟邊界見 [RUNTIME_ADAPTATIONS.md](RUNTIME_ADAPTATIONS.md#餐盤進食收盤與付款)。
 
-打單機的原 blockstate 為空，候選直接使用完整 `order_machine.geo.json` 與 `order_machine_geo.png`。`neworder` 的 1 秒升紙、機身縮放及晃動取樣成 16 個 printing 姿態，加 idle／waiting 共 18 個；idle 隱藏紙，waiting 保留原紙張升到 Y=15 的終點。程式遵循 20 tick 內升紙、PRINTING 共 45 tick 及普通候選單未領完時持續留紙。外賣袋同樣改用原 `takeout_bag_placed.geo.json`、專用 32×32 PNG 與 0.5 秒 `maked`：完成姿態為 frame 0，frame 1–10 每 tick 推進；區塊卸載期間暫停。爐火使用原六張 PNG，由各爐自己的 `fire_frame` 選擇熄火、爆火與四張循環畫格：15 tick 等待、5 tick 爆火、每 8 tick 循環；不再共用全域 flipbook。點火骨骼的非均勻 squash 尚未渲染。
+打單機的原 blockstate 為空，候選直接使用完整 `order_machine.geo.json` 與 `order_machine_geo.png`。`neworder` 的 1 秒升紙、機身縮放及晃動取樣成 16 個 printing 姿態，加 idle／waiting 共 18 個；idle 隱藏紙，waiting 保留原紙張升到 Y=15 的終點。程式遵循 20 tick 內升紙、PRINTING 共 45 tick 及普通候選單未領完時持續留紙。外賣袋同樣改用原 `takeout_bag_placed.geo.json`、專用 32×32 PNG 與 0.5 秒 `maked`：完成姿態為 frame 0，frame 1–10 每 tick 推進；區塊卸載期間暫停。爐火使用原六張 PNG，由各爐自己的 `fire_frame` 選擇熄火、爆火與四張循環畫格：15 tick 等待、5 tick 爆火、每 8 tick 循環；不再共用全域 flipbook。點火骨骼改以註冊的 `stove.geo.json` 與 `fire` 片段生成 age 1–19 的原UV姿態；中立／物品仍保留既有模型。來源獨立20 tick倒數決定姿態，服務每2 tick發布；連續曲線、Java封包起點及STOP後5 tick復位並非等價，詳見[點火來源驗證](validation/stove-ignition/README.md)。
 
 
 ### 顧客、騎乘與保留片段
@@ -122,7 +126,7 @@ helper 無庫存、重力、物理碰撞或自動掉落。`minecraft:custom_hit_
 
 匯入的動畫 JSON 將 GeckoLib `{ "vector": [...] }` 包裝轉為原生向量，正規化 `&` 等識別碼字元，移除原生 schema 不接受的 `easing`／`easingArgs`；保留骨骼姿態與時間。使用 easing 的方塊另由來源原檔取樣，並未因匯入 JSON 移除標籤而失去曲線。顧客原骨骼軌跡保持，action 另加入時鐘定位及末幀保持。來源洗碗動畫引用未定義粒子效果 `3`，該孤立事件不輸出；實際遊戲粒子由服務端音效／粒子邏輯接線。
 
-玩家安坐、拍手與刷盤已由原片段生成可達的native姿勢；原rig及classic／slim64UV入口、上臂／前臂與整臂端點適配、FP相機及共享接線的實際範圍統一查 [PARITY](PARITY.md#玩家動作的來源與骨架)。`preserve_imported_geometry`另保留兩組完整原rig，不代表玩家Geometry.default已切換。5個騎車姿勢／喇叭動作與爐灶完整GeckoLib片段仍只保存。餐盤放置已作實體動畫；冰箱、洗碗機、打單機與外賣袋已用原片段生成方塊姿態，保留JSON本身不會逐幀驅動方塊。線上下載玩家皮膚及女僕模組替換不在本包實作範圍內。
+玩家安坐、拍手與刷盤已由原片段生成可達的native姿勢；原rig及classic／slim64UV入口、上臂／前臂與整臂端點適配、FP相機及共享接線的實際範圍統一查 [PARITY](PARITY.md#玩家動作的來源與骨架)。`preserve_imported_geometry`另保留兩組完整原rig，不代表玩家Geometry.default已切換。5個騎車姿勢／喇叭動作仍只保存；爐灶GeckoLib片段另取樣為可達的點火方塊姿態。餐盤放置已作實體動畫；冰箱、洗碗機、打單機與外賣袋已用原片段生成方塊姿態，保留JSON本身不會逐幀驅動方塊。線上下載玩家皮膚及女僕模組替換不在本包實作範圍內。
 
 ## Block state 與實體契約
 
@@ -138,7 +142,7 @@ helper 無庫存、重力、物理碰撞或自動掉落。`minecraft:custom_hit_
 | food_plate_display | `stage` + 16 × `stage_high`: 0–40 |
 | dishwasher | `phase`: 0–6；6 只作預覽，持久工作 phase 為 0–5；`frame`: 0–15；`plates` + 16 × `plates_high`: 0–16 |
 | refrigerator | `half`: lower／upper；`open`: 目標開關；`closing`: 活動關門片段；`frame`: 0–10 |
-| stove | `lit`: false／true；`fire_frame`: 0–5（原六張貼圖） |
+| stove | `lit`: false／true；`fire_frame`: 0–5（原六張貼圖）；`ignition_frame`: 0–15＋`ignition_frame_high`: false／true（0–19 tick age） |
 
 超過 16 個值的整數狀態拆成低位與高位，以免單一 block state 超出允許值數。`plates_high` 是布林值，`stage_high` 是 0–2；真實數量仍由 script 保存。盤數 16 必須寫低位 0、高位 true，不能寫低位 15、高位 true。未使用的高低位組合不由 script 產生。
 

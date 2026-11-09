@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+"""Record only already-captured, independently inspected raw evidence. No GUI."""
+from pathlib import Path
+import json,hashlib
+from PIL import Image
+W=Path(__file__).resolve().parent
+S=W/'screenshots'
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def info(name):
+ p=S/name
+ with Image.open(p) as im:dimensions=list(im.size);fmt=im.format
+ return {'path':'screenshots/'+name,'sha256':sha(p),'bytes':p.stat().st_size,'dimensions':dimensions,'format':fmt,'pixel_edits':'none; original JPEG bytes only'}
+rows=[
+ ('01_slim_idle4_wrist-isometric-right-2-1.jpg','01_slim_idle4_wrist','Isometric Right (2:1)','Slim seated idle4 at 1.3333s. SOURCE right/lower; RP left/upper. Both complete and unselected. Compound raised wrist/sleeve seam, head/arm pose and bent feet correspond; no newly visible broad missing texture or broken face in this view.'),
+ ('01_slim_idle4_wrist-north.jpg','01_slim_idle4_wrist','North','Slim seated idle4 at 1.3333s. SOURCE right; RP left. Both complete and unselected. The frontal view adds visibility of the raised hand, sleeve, torso, and seated foot alignment. No newly visible broad missing texture or broken face in this view.'),
+ ('04_wide_interrupt_shrink-isometric-right-2-1.jpg','04_wide_interrupt_shrink','Isometric Right (2:1)','Wide interrupt at .375s. SOURCE right/lower; RP left/upper. Both complete and unselected. Bent legs and translated hands remain visually connected in the frozen half-scale pose; no newly visible broad missing texture or broken face. Scale .5 is input provenance, not a screenshot-size measurement.'),
+ ('05_wide_boom_peak-isometric-right-2-1.jpg','05_wide_boom_peak','Isometric Right (2:1)','Wide boom at 5.9157s. SOURCE right/lower; RP left/upper. Both complete and unselected. Enlarged head/body, asymmetrical arms and bent legs remain visible without a new broad missing-texture/face discrepancy. Source 1.6 versus RP 1.5928057554 is a known numerical input difference; the photograph is not used to quantify that tiny difference or prove a native-visible timing defect.'),
+]
+manifest=json.loads((W/'scene-manifest.json').read_text());by={r['id']:r for r in manifest['samples']};frozen=json.loads((W/'scene-freeze-hashes.json').read_text())
+assert all(sha(W/p)==h for p,h in frozen.items())
+observations=[]
+for filename,sid,camera,caption in rows:
+ r=by[sid];row=info(filename);row.update({'scene_id':sid,'scene':r['path'],'scene_sha256':r['sha256'],'rig':r['rig'],'clip':r['clip'],'clip_seconds':r['time'],'query_inputs':r['query_inputs'],'camera':camera,'camera_provenance':'North label visible where applicable; exact preset reported by capture operator. Axis/layout consistent.','source_screen_side':'right/lower'if camera!='North'else'right','rp_screen_side':'left/upper'if camera!='North'else'left','identity_provenance':'Fixed model X -20/+20 layout plus camera/operator record; not inferred by pixel differences between near-identical models.','sides':r['sides'],'caption':caption,'independent_image_inspection':True,'frame_complete':True,'models_unselected':True,'observation_result':'No newly observed broad missing texture or broken face in this view; limited editor observation, not full/native acceptance.'});observations.append(row)
+diag=[]
+for name,stage,caption in [
+ ('renderer-white-diagnostic.jpg','white_customer_viewport','Customer scene title visible, viewport white. Failed editor observation; not evidence of an asset defect or a valid customer-pose comparison.'),
+ ('known-control-renderer-white-diagnostic.jpg','white_known_control_viewport','Known refrigerator-control title visible, viewport also white. Independent control fails in the same editor condition; do not assign the white viewport to customer assets.'),
+ ('known-control-after-editor-restart.jpg','known_control_recovered','Known refrigerator control visible after the operator restarted only their editor with the original executable and same independent profile. Recovery diagnostic only, not customer or new refrigerator acceptance.')]:
+ row=info(name);row.update({'stage':stage,'caption':caption,'independent_image_inspection':True,'counts_as_customer_scene':False});diag.append(row)
+receipt={'status':'4 actual customer photographs reviewed; 3 of 7 prepared scenes observed in these views only','date_utc':'2026-11-08','application':'Blockbench Desktop 5.2.2, version from fixed preparation/capture context rather than these title bars','capture_operator':'parent visual reviewer','image_reviewer':'independent preparation worker; read-only image inspection, no GUI operation','runtime_commit':'d3982c98a71424ff9c449a144e792ad384058f69','prepared_manifest_sha256':sha(W/'scene-manifest.json'),'scene_freeze_manifest_sha256':sha(W/'scene-freeze-hashes.json'),'prepared_manifest_preserved':True,'frozen_scenes_unchanged':True,'counts':{'customer_photographs':len(observations),'unique_customer_scenes':len(set(r['scene_id'] for r in observations)),'diagnostic_photographs':len(diag),'prepared_scenes':7},'customer_observations':observations,'diagnostics':diag,'renderer_recovery':{'operator_report':'Only the operator-owned Blockbench window was closed. The original executable was restarted with the same independent profile, with no new flags, service or settings change. Previous Hardware Acceleration setting was off; this run did not change or diagnose it. No scene was saved.','supported_by_images':'Customer and known control both white before; known control visible after restart.','root_cause':'unknown; restart recovery does not identify a GPU/driver/backend or asset cause','global_render_sides':'Not newly exposed in these submitted screenshots. Frozen textures remain auto; no native material inference.'},'limits':['Static cubes inside one editor, not executed Java renderer or native Bedrock output.','No animation playback, native tick/partial-tick sampling, action_elapsed, controller stop/re-entry or late-join observation.','No native alpha, overlay sorting/culling, sound, particle, multiplayer or entity removal acceptance.','No pixel alignment/rescaling/difference metric; no cross-screenshot size inference.','White-viewport diagnostics are separate from core customer photographs and are not passes.'],'gui_operations_by_this_worker':False,'runtime_changed':False,'source_png_changed':False,'publication':False}
+(W/'gui-receipt.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+'\n')
+print(json.dumps(receipt['counts']))

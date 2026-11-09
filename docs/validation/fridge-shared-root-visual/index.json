@@ -1,0 +1,108 @@
+{
+  "status": "FRIDGE_ONLY_STATIC_EDITOR_REVIEW_NOT_RUNTIME_RELEASE_ACCEPTANCE",
+  "fixture_commit": "e544f563062bf92e58afaa057a9ee52fd7ccbdc8",
+  "later_visual_input_equivalent_commit": "dcee546b7b918e3deb0163ec607f280cef2880d4",
+  "candidate_fixtures": 7,
+  "candidate_photographs": 9,
+  "baseline_comparison_photographs": 4,
+  "files": [
+    {
+      "path": "scenes/lower_closing_upper_open.bbmodel",
+      "sha256": "2d5cbc27ec308b5a528a513c9e1417e7f54ed9ed8bb3bfb32ad0f2f1d2e0a91e",
+      "root_frame": 2,
+      "status": "REVIEWED_AT_RECORDED_STATIC_VIEWS_WITH_FIT_LIMITATIONS"
+    },
+    {
+      "path": "scenes/upper_closing_lower_open.bbmodel",
+      "sha256": "ce772daba3cabc3d724a227645bd9b26b9d93d94a4fc6808d57be527714a76cf",
+      "root_frame": 2,
+      "status": "REVIEWED_AT_RECORDED_STATIC_VIEWS_WITH_FIT_LIMITATIONS"
+    },
+    {
+      "path": "supplemental-scenes/lower_peak_upper_open_frame3.bbmodel",
+      "sha256": "787826b92168560b6deaa77631cd41bd1c7aa806a7fcacc0d63316b8c3d43da8",
+      "root_frame": 2,
+      "status": "REVIEWED_AT_RECORDED_STATIC_VIEWS_WITH_FIT_LIMITATIONS"
+    },
+    {
+      "path": "supplemental-scenes/upper_peak_lower_open_frame3.bbmodel",
+      "sha256": "c02ae224c3b83507254fc6899459ed8372b2e2d4cc7457e128d11643c3574931",
+      "root_frame": 2,
+      "status": "REVIEWED_AT_RECORDED_STATIC_VIEWS_WITH_FIT_LIMITATIONS"
+    },
+    {
+      "path": "supplemental-scenes/lower_neutral_active_overrides_upper_peak.bbmodel",
+      "sha256": "353284e9d5854c4b27bae4e301690732942124385a16a84b2e1d79f8685f6a71",
+      "root_frame": 0,
+      "status": "REVIEWED_AT_RECORDED_STATIC_VIEWS_WITH_FIT_LIMITATIONS"
+    },
+    {
+      "path": "supplemental-scenes/lower_recovering_overrides_upper_peak.bbmodel",
+      "sha256": "a919e5227385e61bbf28f660dd5e64728d9ba64b58b55afc802f5c66460fa498",
+      "root_frame": 3,
+      "status": "REVIEWED_AT_RECORDED_STATIC_VIEWS_WITH_FIT_LIMITATIONS"
+    },
+    {
+      "path": "supplemental-scenes/lower_peak_overrides_upper_recovering.bbmodel",
+      "sha256": "55351e4eedb9174e731370f0f6bc1bff5e4f72e972d8ab026a9a760bca584e6e",
+      "root_frame": 2,
+      "status": "REVIEWED_AT_RECORDED_STATIC_VIEWS_WITH_FIT_LIMITATIONS"
+    }
+  ],
+  "photographs": [
+    {
+      "path": "screenshots/lower_closing_upper_open-isometric-right-2-1.jpg",
+      "sha256": "af610bd65e726073ad06b7a8803ae1a2339e59ad8913ead15124492ff47254fb",
+      "scene": "scenes/lower_closing_upper_open.bbmodel"
+    },
+    {
+      "path": "screenshots/lower_closing_upper_open-top.jpg",
+      "sha256": "41b3920e2254900d6c498015fe92154d6305519411d8ac66bec275d7e4fde906",
+      "scene": "scenes/lower_closing_upper_open.bbmodel"
+    },
+    {
+      "path": "screenshots/upper_closing_lower_open-isometric-right-2-1.jpg",
+      "sha256": "a886faa00b725f25513487423ad9baa17b476792f228a3fb11f7e0657283d392",
+      "scene": "scenes/upper_closing_lower_open.bbmodel"
+    },
+    {
+      "path": "screenshots/upper_closing_lower_open-bottom.jpg",
+      "sha256": "fa8608f1854322aa2f2b8ce584069e2a5c764bc4e1a5227bb0eaa8c71c5fe303",
+      "scene": "scenes/upper_closing_lower_open.bbmodel"
+    },
+    {
+      "path": "screenshots/lower_peak_upper_open_frame3-isometric-right-2-1.jpg",
+      "sha256": "eb2dbfb31cceebe4ecb1116f52aa38fd8ff0b75cddb813559170b68b5cef180e",
+      "scene": "supplemental-scenes/lower_peak_upper_open_frame3.bbmodel"
+    },
+    {
+      "path": "screenshots/upper_peak_lower_open_frame3-isometric-right-2-1.jpg",
+      "sha256": "099e4d3107f4a5299bbf0d6502f75625eb17467a94e6fc140b15840dd2c6e6a8",
+      "scene": "supplemental-scenes/upper_peak_lower_open_frame3.bbmodel"
+    },
+    {
+      "path": "screenshots/lower_neutral_active_overrides_upper_peak-isometric-right-2-1.jpg",
+      "sha256": "4692f233913fdeba4ec9a6204bdcb4a426561b837cfce4bf9b8f650f8b48cb68",
+      "scene": "supplemental-scenes/lower_neutral_active_overrides_upper_peak.bbmodel"
+    },
+    {
+      "path": "screenshots/lower_recovering_overrides_upper_peak-isometric-right-2-1.jpg",
+      "sha256": "172ad15e8469a956e01231ab21f2a620d018333f5edf101087f31a59f76a36b0",
+      "scene": "supplemental-scenes/lower_recovering_overrides_upper_peak.bbmodel"
+    },
+    {
+      "path": "screenshots/lower_peak_overrides_upper_recovering-isometric-right-2-1.jpg",
+      "sha256": "74f5ee25788b5f13b80a88d5dcd38628d1dbdeec1147c7a3bc46845a4b2dad88",
+      "scene": "supplemental-scenes/lower_peak_overrides_upper_recovering.bbmodel"
+    }
+  ],
+  "readme": "README.md",
+  "math": "math-verification.json",
+  "controls": "control-evidence-manifest.json",
+  "supplemental": "supplemental-evidence-manifest.json",
+  "calibration": "calibration-verification.json",
+  "later_commit_equivalence": "dcee-input-equivalence.json",
+  "aggregate_verifier": "verify_review.py",
+  "runtime_freeze_visual_equivalent_commit": "e0f7f54e9c85475abf3975e31f96bf8d25f4c1e4",
+  "freeze_equivalence": "freeze-input-equivalence.json"
+}

@@ -1,0 +1,277 @@
+{
+  "schema": 1,
+  "scope": "Offline preparation and exact single-variable check only. GUI not yet performed.",
+  "base_revision": "ce7e8916ac5627be08a6c366ea933a4ad96ad3bd",
+  "base_scene_path": "docs/validation/visual-audio/blockbench-20261108/remaining-static/scenes/helmet-shell-and-visor.bbmodel",
+  "base_scene_sha256": "5be95f8e613a76e6f467ed0756d46ee0e61504277f0d902cd98a5dc88074e954",
+  "control_scene_sha256": "75b134dfcd81d85972435407453c96215b0a7dbcb4cdcdbc89c0ea89d316e000",
+  "changed_fields": [
+    "name",
+    "elements/0/origin",
+    "elements/1/origin",
+    "elements/2/origin",
+    "elements/3/origin",
+    "elements/4/origin",
+    "elements/5/origin",
+    "elements/6/origin",
+    "elements/7/origin",
+    "elements/8/origin",
+    "elements/9/origin",
+    "elements/10/origin",
+    "elements/11/origin",
+    "elements/12/origin",
+    "elements/13/origin",
+    "elements/14/origin"
+  ],
+  "changes": [
+    {
+      "element_index": 0,
+      "before": [
+        -16,
+        3,
+        -1
+      ],
+      "after": [
+        -11,
+        -24,
+        0
+      ]
+    },
+    {
+      "element_index": 1,
+      "before": [
+        -7,
+        3,
+        -1
+      ],
+      "after": [
+        -11,
+        -24,
+        0
+      ]
+    },
+    {
+      "element_index": 2,
+      "before": [
+        -16,
+        2,
+        1
+      ],
+      "after": [
+        -11,
+        -24,
+        0
+      ]
+    },
+    {
+      "element_index": 3,
+      "before": [
+        -7,
+        2,
+        1
+      ],
+      "after": [
+        -11,
+        -24,
+        0
+      ]
+    },
+    {
+      "element_index": 4,
+      "before": [
+        -7,
+        1,
+        2
+      ],
+      "after": [
+        -11,
+        -24,
+        0
+      ]
+    },
+    {
+      "element_index": 5,
+      "before": [
+        -16,
+        1,
+        2
+      ],
+      "after": [
+        -11,
+        -24,
+        0
+      ]
+    },
+    {
+      "element_index": 6,
+      "before": [
+        -16,
+        5,
+        -4
+      ],
+      "after": [
+        -11,
+        -24,
+        0
+      ]
+    },
+    {
+      "element_index": 7,
+      "before": [
+        -7,
+        5,
+        -4
+      ],
+      "after": [
+        -11,
+        -24,
+        0
+      ]
+    },
+    {
+      "element_index": 8,
+      "before": [
+        -15,
+        5,
+        -5
+      ],
+      "after": [
+        -11,
+        -24,
+        0
+      ]
+    },
+    {
+      "element_index": 9,
+      "before": [
+        -15,
+        5,
+        -6
+      ],
+      "after": [
+        -11,
+        -24,
+        0
+      ]
+    },
+    {
+      "element_index": 10,
+      "before": [
+        -15,
+        8,
+        -4
+      ],
+      "after": [
+        -11,
+        -24,
+        0
+      ]
+    },
+    {
+      "element_index": 11,
+      "before": [
+        -15,
+        7,
+        1
+      ],
+      "after": [
+        -11,
+        -24,
+        0
+      ]
+    },
+    {
+      "element_index": 12,
+      "before": [
+        -15,
+        1,
+        4
+      ],
+      "after": [
+        -11,
+        -24,
+        0
+      ]
+    },
+    {
+      "element_index": 13,
+      "before": [
+        -16,
+        5,
+        -5
+      ],
+      "after": [
+        -11,
+        -24,
+        0
+      ]
+    },
+    {
+      "element_index": 14,
+      "before": [
+        -7,
+        5,
+        -5
+      ],
+      "after": [
+        -11,
+        -24,
+        0
+      ]
+    }
+  ],
+  "unchanged_fields_proof": "Reversing only declared 16 field replacements restores exact parsed original.",
+  "world_corners_checked": 320,
+  "maximum_vertex_component_residual_model_units": 8.881784197001252e-16,
+  "groups_are_identity_transforms": true,
+  "source_position": [
+    -11,
+    0,
+    0
+  ],
+  "rp_position": [
+    11,
+    -24,
+    0
+  ],
+  "native_geometry_preview_translation_y": -24,
+  "runtime_inputs": {
+    "runtime/RP/attachables/helmet.attachable.json": {
+      "sha256": "79d285e211f91f184439b7e2fec109437757c9c065186c8db8c700344a340c4a",
+      "git_blob_sha": "95fe93d910e49c5329e0b444f26383398bef8a19",
+      "size": 758
+    },
+    "runtime/RP/models/entity/helmet_shell.geo.json": {
+      "sha256": "9bd0570579538dfbce91cc36e9b5c215f692c0cc658e5f265c906545decd8f02",
+      "git_blob_sha": "21eae336afa2f60c5e7dac2c2177a3dc0052f495",
+      "size": 29848
+    },
+    "runtime/RP/models/entity/helmet_visor.geo.json": {
+      "sha256": "c5ec3c1f0398348166efed8635a75ba025c81c01627c1095479172faa279fcba",
+      "git_blob_sha": "4bc1a8131dc1d12222620682eb3a639bb128cb15",
+      "size": 6273
+    },
+    "runtime/RP/textures/ordertocook/item/delivery_helmet.png": {
+      "sha256": "0fa0f426368f255c945f74ed9a603aa7523c611282bea4affbdf4a3e96854bba",
+      "git_blob_sha": "3142dc83f1f214b696499f6b1ba01e48afc965b5",
+      "size": 1037
+    },
+    "runtime/RP/textures/ordertocook/item/delivery_helmet_glass.png": {
+      "sha256": "ecbe469b6e4b6c0ad3c9acffb2a5a2ff85ee79b85630b6ae475e52938bbb42f8",
+      "git_blob_sha": "48ab91a1da7000b84da17a3f59c8fa7a260649e9",
+      "size": 471
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/models/item/helmet.json": {
+      "sha256": "d4971693a996e0e1fdb19fee27f809bc2f4dfc7a8b666a0caeed91e5f227ef7f",
+      "git_blob_sha": "07de583504a641baa08f4cf3022e689629d5735b",
+      "size": 11179
+    }
+  },
+  "limits": [
+    "Ordinary common editor renderer, not Java or Bedrock native renderers.",
+    "All five groups and their original hierarchy unchanged.",
+    "Only 15 unrotated source shell cube origins changed; visor active pivots and rotated shell tips unchanged.",
+    "No PNG/alpha/UV/culling/material/order edits.",
+    "No native head binding, wearing pose or transparency acceptance."
+  ]
+}

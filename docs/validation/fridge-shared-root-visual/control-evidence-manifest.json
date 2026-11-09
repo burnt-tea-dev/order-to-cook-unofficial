@@ -1,0 +1,552 @@
+{
+  "status": "TWO_CANDIDATE_CONTROLS_GUI_REVIEWED_NOT_RELEASE_ACCEPTANCE",
+  "canonical_fixture_commit": "e544f563062bf92e58afaa057a9ee52fd7ccbdc8",
+  "canonical_fixture_tree": "bb9f843cdb79a9ea9488acf8db67748cb2e69c21",
+  "source_commit": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+  "screenshots": [
+    {
+      "path": "screenshots/lower_closing_upper_open-isometric-right-2-1.jpg",
+      "sha256": "af610bd65e726073ad06b7a8803ae1a2339e59ad8913ead15124492ff47254fb",
+      "bytes": 89923,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "baseline_path": "baseline-evidence/lower_closing_upper_open-isometric-right-2-1.jpg",
+      "baseline_sha256": "a825d5815364214318312064e65d9aeff42860295af77217e05809cc0e827715",
+      "scene": "scenes/lower_closing_upper_open.bbmodel",
+      "scene_sha256": "2d5cbc27ec308b5a528a513c9e1417e7f54ed9ed8bb3bfb32ad0f2f1d2e0a91e",
+      "source_side": "right",
+      "source_baseline_to_candidate_raw_pixel_check": {
+        "roi_xyxy": [
+          580,
+          260,
+          920,
+          765
+        ],
+        "pixels": 171700,
+        "exact_rgb_pixels": 171539,
+        "exact_rgb_fraction": 0.9990623179965056,
+        "mean_absolute_channel_error_0_to_255": 0.002962531547272374,
+        "max_channel_error": 12,
+        "pixels_max_channel_over_16": 0,
+        "pixels_max_channel_over_32": 0
+      },
+      "result": "VISIBLE_OPPOSITE_HALF_ROOT_DEPTH_GAP_RESOLVED_WITH_FITTED_CUBOID_RESIDUAL_RETAINED"
+    },
+    {
+      "path": "screenshots/lower_closing_upper_open-top.jpg",
+      "sha256": "41b3920e2254900d6c498015fe92154d6305519411d8ac66bec275d7e4fde906",
+      "bytes": 81228,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "baseline_path": "baseline-evidence/lower_closing_upper_open-top.jpg",
+      "baseline_sha256": "f0540e7bc1488ced8694afa9e84b9e090721e1a303e10ca8adabf7ba361fc4a0",
+      "scene": "scenes/lower_closing_upper_open.bbmodel",
+      "scene_sha256": "2d5cbc27ec308b5a528a513c9e1417e7f54ed9ed8bb3bfb32ad0f2f1d2e0a91e",
+      "source_side": "left",
+      "source_baseline_to_candidate_raw_pixel_check": {
+        "roi_xyxy": [
+          130,
+          275,
+          455,
+          555
+        ],
+        "pixels": 91000,
+        "exact_rgb_pixels": 91000,
+        "exact_rgb_fraction": 1.0,
+        "mean_absolute_channel_error_0_to_255": 0.0,
+        "max_channel_error": 0,
+        "pixels_max_channel_over_16": 0,
+        "pixels_max_channel_over_32": 0
+      },
+      "result": "VISIBLE_OPPOSITE_HALF_ROOT_DEPTH_GAP_RESOLVED_WITH_FITTED_CUBOID_RESIDUAL_RETAINED"
+    },
+    {
+      "path": "screenshots/upper_closing_lower_open-isometric-right-2-1.jpg",
+      "sha256": "a886faa00b725f25513487423ad9baa17b476792f228a3fb11f7e0657283d392",
+      "bytes": 89990,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "baseline_path": "baseline-evidence/upper_closing_lower_open-isometric-right-2-1.jpg",
+      "baseline_sha256": "a20cebf0db47a491c337bc19535824c01be1fd01e907ed20f0861afcfb2d04ed",
+      "scene": "scenes/upper_closing_lower_open.bbmodel",
+      "scene_sha256": "ce772daba3cabc3d724a227645bd9b26b9d93d94a4fc6808d57be527714a76cf",
+      "source_side": "right",
+      "source_baseline_to_candidate_raw_pixel_check": {
+        "roi_xyxy": [
+          580,
+          260,
+          920,
+          765
+        ],
+        "pixels": 171700,
+        "exact_rgb_pixels": 171700,
+        "exact_rgb_fraction": 1.0,
+        "mean_absolute_channel_error_0_to_255": 0.0,
+        "max_channel_error": 0,
+        "pixels_max_channel_over_16": 0,
+        "pixels_max_channel_over_32": 0
+      },
+      "result": "VISIBLE_OPPOSITE_HALF_ROOT_DEPTH_GAP_RESOLVED_WITH_FITTED_CUBOID_RESIDUAL_RETAINED"
+    },
+    {
+      "path": "screenshots/upper_closing_lower_open-bottom.jpg",
+      "sha256": "fa8608f1854322aa2f2b8ce584069e2a5c764bc4e1a5227bb0eaa8c71c5fe303",
+      "bytes": 77732,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "baseline_path": "baseline-evidence/upper_closing_lower_open-bottom.jpg",
+      "baseline_sha256": "c8ed02644164800257535786193427e738c0937d05fb4a8c02ea969464cb1452",
+      "scene": "scenes/upper_closing_lower_open.bbmodel",
+      "scene_sha256": "ce772daba3cabc3d724a227645bd9b26b9d93d94a4fc6808d57be527714a76cf",
+      "source_side": "left",
+      "source_baseline_to_candidate_raw_pixel_check": {
+        "roi_xyxy": [
+          35,
+          340,
+          425,
+          740
+        ],
+        "pixels": 156000,
+        "exact_rgb_pixels": 156000,
+        "exact_rgb_fraction": 1.0,
+        "mean_absolute_channel_error_0_to_255": 0.0,
+        "max_channel_error": 0,
+        "pixels_max_channel_over_16": 0,
+        "pixels_max_channel_over_32": 0
+      },
+      "result": "VISIBLE_OPPOSITE_HALF_ROOT_DEPTH_GAP_RESOLVED_WITH_FITTED_CUBOID_RESIDUAL_RETAINED"
+    }
+  ],
+  "measurements": {
+    "roof_top": {
+      "method": "Longest contiguous min(R,G,B)>180 run within y=370..549 at fixed interior columns; no image edits.",
+      "source_before": {
+        "columns": [
+          {
+            "x": 300,
+            "longest_run_y0_y1_inclusive_count": [
+              388,
+              539,
+              152
+            ]
+          },
+          {
+            "x": 320,
+            "longest_run_y0_y1_inclusive_count": [
+              388,
+              539,
+              152
+            ]
+          },
+          {
+            "x": 350,
+            "longest_run_y0_y1_inclusive_count": [
+              388,
+              539,
+              152
+            ]
+          }
+        ],
+        "median_run_pixels": 152
+      },
+      "source_after": {
+        "columns": [
+          {
+            "x": 300,
+            "longest_run_y0_y1_inclusive_count": [
+              388,
+              539,
+              152
+            ]
+          },
+          {
+            "x": 320,
+            "longest_run_y0_y1_inclusive_count": [
+              388,
+              539,
+              152
+            ]
+          },
+          {
+            "x": 350,
+            "longest_run_y0_y1_inclusive_count": [
+              388,
+              539,
+              152
+            ]
+          }
+        ],
+        "median_run_pixels": 152
+      },
+      "canonical_before": {
+        "columns": [
+          {
+            "x": 780,
+            "longest_run_y0_y1_inclusive_count": [
+              382,
+              541,
+              160
+            ]
+          },
+          {
+            "x": 800,
+            "longest_run_y0_y1_inclusive_count": [
+              382,
+              541,
+              160
+            ]
+          },
+          {
+            "x": 830,
+            "longest_run_y0_y1_inclusive_count": [
+              382,
+              541,
+              160
+            ]
+          }
+        ],
+        "median_run_pixels": 160
+      },
+      "canonical_after": {
+        "columns": [
+          {
+            "x": 780,
+            "longest_run_y0_y1_inclusive_count": [
+              388,
+              539,
+              152
+            ]
+          },
+          {
+            "x": 800,
+            "longest_run_y0_y1_inclusive_count": [
+              388,
+              539,
+              152
+            ]
+          },
+          {
+            "x": 830,
+            "longest_run_y0_y1_inclusive_count": [
+              388,
+              539,
+              152
+            ]
+          }
+        ],
+        "median_run_pixels": 152
+      },
+      "source_geometry_depth_model_units": 15.2,
+      "baseline_canonical_depth_model_units": 16,
+      "candidate_canonical_depth_model_units": 15.2
+    },
+    "bottom_panel": {
+      "method": "Longest contiguous run within 5 channel values of the same column at y450, searched y=340..549. This is a flat-color interior span, not an exact silhouette boundary.",
+      "source_before": {
+        "columns": [
+          {
+            "x": 260,
+            "reference_rgb_at_y450": [
+              57,
+              46,
+              63
+            ],
+            "longest_run_y0_y1_inclusive_count": [
+              363,
+              529,
+              167
+            ]
+          },
+          {
+            "x": 280,
+            "reference_rgb_at_y450": [
+              57,
+              46,
+              63
+            ],
+            "longest_run_y0_y1_inclusive_count": [
+              363,
+              529,
+              167
+            ]
+          },
+          {
+            "x": 300,
+            "reference_rgb_at_y450": [
+              57,
+              46,
+              63
+            ],
+            "longest_run_y0_y1_inclusive_count": [
+              363,
+              530,
+              168
+            ]
+          },
+          {
+            "x": 320,
+            "reference_rgb_at_y450": [
+              57,
+              46,
+              63
+            ],
+            "longest_run_y0_y1_inclusive_count": [
+              363,
+              530,
+              168
+            ]
+          },
+          {
+            "x": 340,
+            "reference_rgb_at_y450": [
+              57,
+              46,
+              63
+            ],
+            "longest_run_y0_y1_inclusive_count": [
+              363,
+              530,
+              168
+            ]
+          }
+        ],
+        "median_run_pixels": 168
+      },
+      "source_after": {
+        "columns": [
+          {
+            "x": 260,
+            "reference_rgb_at_y450": [
+              57,
+              46,
+              63
+            ],
+            "longest_run_y0_y1_inclusive_count": [
+              363,
+              529,
+              167
+            ]
+          },
+          {
+            "x": 280,
+            "reference_rgb_at_y450": [
+              57,
+              46,
+              63
+            ],
+            "longest_run_y0_y1_inclusive_count": [
+              363,
+              529,
+              167
+            ]
+          },
+          {
+            "x": 300,
+            "reference_rgb_at_y450": [
+              57,
+              46,
+              63
+            ],
+            "longest_run_y0_y1_inclusive_count": [
+              363,
+              530,
+              168
+            ]
+          },
+          {
+            "x": 320,
+            "reference_rgb_at_y450": [
+              57,
+              46,
+              63
+            ],
+            "longest_run_y0_y1_inclusive_count": [
+              363,
+              530,
+              168
+            ]
+          },
+          {
+            "x": 340,
+            "reference_rgb_at_y450": [
+              57,
+              46,
+              63
+            ],
+            "longest_run_y0_y1_inclusive_count": [
+              363,
+              530,
+              168
+            ]
+          }
+        ],
+        "median_run_pixels": 168
+      },
+      "canonical_before": {
+        "columns": [
+          {
+            "x": 860,
+            "reference_rgb_at_y450": [
+              57,
+              46,
+              63
+            ],
+            "longest_run_y0_y1_inclusive_count": [
+              362,
+              536,
+              175
+            ]
+          },
+          {
+            "x": 880,
+            "reference_rgb_at_y450": [
+              57,
+              46,
+              63
+            ],
+            "longest_run_y0_y1_inclusive_count": [
+              362,
+              536,
+              175
+            ]
+          },
+          {
+            "x": 900,
+            "reference_rgb_at_y450": [
+              57,
+              46,
+              63
+            ],
+            "longest_run_y0_y1_inclusive_count": [
+              362,
+              536,
+              175
+            ]
+          },
+          {
+            "x": 920,
+            "reference_rgb_at_y450": [
+              57,
+              46,
+              63
+            ],
+            "longest_run_y0_y1_inclusive_count": [
+              362,
+              536,
+              175
+            ]
+          },
+          {
+            "x": 940,
+            "reference_rgb_at_y450": [
+              57,
+              46,
+              63
+            ],
+            "longest_run_y0_y1_inclusive_count": [
+              362,
+              537,
+              176
+            ]
+          }
+        ],
+        "median_run_pixels": 175
+      },
+      "canonical_after": {
+        "columns": [
+          {
+            "x": 860,
+            "reference_rgb_at_y450": [
+              57,
+              46,
+              63
+            ],
+            "longest_run_y0_y1_inclusive_count": [
+              363,
+              529,
+              167
+            ]
+          },
+          {
+            "x": 880,
+            "reference_rgb_at_y450": [
+              57,
+              46,
+              63
+            ],
+            "longest_run_y0_y1_inclusive_count": [
+              363,
+              529,
+              167
+            ]
+          },
+          {
+            "x": 900,
+            "reference_rgb_at_y450": [
+              57,
+              46,
+              63
+            ],
+            "longest_run_y0_y1_inclusive_count": [
+              363,
+              530,
+              168
+            ]
+          },
+          {
+            "x": 920,
+            "reference_rgb_at_y450": [
+              57,
+              46,
+              63
+            ],
+            "longest_run_y0_y1_inclusive_count": [
+              363,
+              530,
+              168
+            ]
+          },
+          {
+            "x": 940,
+            "reference_rgb_at_y450": [
+              57,
+              46,
+              63
+            ],
+            "longest_run_y0_y1_inclusive_count": [
+              363,
+              530,
+              168
+            ]
+          }
+        ],
+        "median_run_pixels": 168
+      },
+      "source_geometry_depth_model_units": 13.3,
+      "baseline_canonical_depth_model_units": 14,
+      "candidate_canonical_depth_model_units": 13.3
+    }
+  },
+  "geometry_source_oracle": "math-verification.json",
+  "independent_visual_review": "All four original supplied JPEGs inspected offline. Both opposite-half depth differences disappear in the photographed views; remaining fitted door differences are retained.",
+  "integrity": "Original source geometry is the same pose: independent old/new source affine corner gap 7.105427357601002e-15 model units. Neither old/candidate scenes nor any JPEG was changed.",
+  "scope": "Two full assemblies, four static views only. Supplemental fixtures, all other state combinations and game rendering are not visually accepted by these pictures.",
+  "service_status": "These fixtures retain e544 identity. The separate dcee-input-equivalence receipt verifies unchanged visual inputs at the later service commit; photographs do not validate service exception behavior.",
+  "limits": [
+    "Source Top/Bottom ROIs and upper isometric source ROI are RGB-identical to baseline; lower isometric source ROI has small residuals with maximum channel difference 12. No definite AA/compression cause is inferred.",
+    "Matching source ROIs and independently matching source geometry support comparable framing; metrics do not compare unrelated cameras or infer game rendering.",
+    "Flat-color scanline spans corroborate depth change, not subpixel geometry measurement or universal pixel-parity thresholds.",
+    "Geometric fit residuals, Java float/rendering precision, animation timing, STOP/reset/reopen behavior and non-atomic cross-block updates remain outside this GUI result.",
+    "No Minecraft/BDS/material/gameplay/network result, runtime change or publication by this audit."
+  ],
+  "gui_operated_by_this_verifier": false,
+  "runtime_modified": false
+}

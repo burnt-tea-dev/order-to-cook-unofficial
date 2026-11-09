@@ -1,5 +1,61 @@
 # Changelog
 
+## 0.1.48-alpha.1 (unpublished candidate)
+
+- Correct only the motorcycle static source mapping: seven X-rotation signs and 41 box mirror flags. Preserve original images, hierarchy, pivots, inflation, dimensions and all gameplay/steering/wheel behavior.
+- Add strict fully consumed converter grammar, independent world-corner/physical-UV regeneration tests and source mutations. Preserve nine raw editor photographs and ten reproducible collision-free source/current/candidate scenes. Native rendering and vehicle motion remain untested.
+- Freeze paired .48 identity with stable UUIDs/APIs and append-only payload history. Integrate the reviewed source and evidence onto actual main after #75 merged, preserving its customer/helmet documentation. The .48 candidate remains unpublished; packages bind to its exact source commit, and later source changes require fresh build proofs. [Validation and limits](docs/validation/0.1.48-alpha.1/MOTORCYCLE_STATIC_MAPPING.md).
+
+## 0.1.47-alpha.1
+
+- Restore the refrigerator's common root across both blocks while retaining independent door clips/frames. Prebake 176 own-door/root combinations; preserve lower-close controller priority even at neutral samples and zero-elapsed restored endpoints.
+- Keep cosmetic root recovery running after upper-block storage lookup exceptions. Clear the unavailable half's viewer/motion cache and restore persisted poses without weakening native inventory migration checks or changing cargo.
+- Preserve all textures, facing/collision/selection components, UUIDs and APIs. Record the full-cross-product affine-to-cuboid residual of 0.201556443707 modelpx separately from the maximum 0.086115px bounds translation.
+- Freeze paired 0.1.47 identity with append-only payload history. Keep finite sampling, Java STOP/reversal differences, non-atomic two-block writes and untested native/material timing explicit. This does not publish a Release or claim full parity. See [validation](docs/validation/0.1.47-alpha.1/FRIDGE_SHARED_ROOT.md).
+
+## 0.1.46-alpha.1
+
+- Restore source stove ignition wobble/squash with an independent 20-tick countdown, atomic age/material state writes, 19 generated poses and unchanged two-tick appliance scheduling. Keep fuel, cooking, inventory, textures, idle/item geometry and existing appliance geometry unchanged.
+- Correct the Gecko default step easing exact midpoint in both source evaluators. Preserve source-pose sampling, Java packet/reset, native material and client limitations.
+- Record 19 stove GUI captures, 19 furniture/supply-shelf/helmet captures and two washing-table inactive-pivot controls. Keep the helmet isometric transparency discrepancy explicit.
+- Freeze paired 0.1.46 with stable UUIDs/APIs and append-only payload history. This does not publish a Release or establish full Java parity. See [validation](docs/validation/0.1.46-alpha.1/STOVE_IGNITION.md).
+
+## 0.1.45-alpha.1
+
+- Restore the pinned Java renderer’s washing-table water quad in all 11 plate states, with original RGBA, two physical UV-correct faces and uniform world blend materials. Preserve the dry item through item_visual; body/plates and gameplay scripts stay unchanged.
+- Preserve dine-in bagging guide text through real asset regeneration by synchronizing 12 editable language values, with fallback/repeated-generation/provenance regressions in both Python CI stages.
+- Record 8 cloud Blockbench review scenes and 16 unmodified GUI screenshots. Keep the observed five-plate preview occlusion discrepancy and native sorting/backface/item-display gates explicit; no Minecraft, BDS, LIVE or full-parity acceptance is claimed.
+- Integrate onto merged .44 with unchanged UUIDs/APIs and append-only paired .45 payload identity. See [source and limitations](docs/validation/UNRELEASED-washingtable-water.md).
+
+## 0.1.44-alpha.1
+
+- Add localized, customer-named five-minute, one-minute and expired notices for ordinary carried paper orders and dine-in/delivery bags. Keep severity-first selection, durable per-item flags and fresh flags on newly prepared bags; plates, dropped items and world containers are excluded.
+- Preserve full native stacks and existing tick/legacy deadline semantics. Reject retained terminal/stale/proof-mismatched work; keep orphan paper silent and disclose that self-contained orphan bags cannot reconstruct pruned history. Mark-before-chat suppresses routine replay but does not guarantee atomic or exactly-once delivery.
+- Reuse the existing 20-tick callback with at most 36P inventory reads. Build an ephemeral lookup once per referenced restaurant per pass; CPU/memory scale with its retained record count, without a persistent cache, arbitrary history cap or native performance claim.
+- Integrate reviewed alert source onto merged .43 without changing rename logic/tests or prior visual evidence. Freeze paired .44 identity with unchanged UUIDs/APIs and append-only payload history. No client/LIVE/BDS probe, NPC/vehicle/artwork change or full Java-parity claim. [Contract, source checks and limitations](docs/validation/0.1.44-alpha.1/CARRIED_ORDER_ALERTS.md).
+
+## 0.1.43-alpha.1
+
+- Match current-name restaurant pricing: first/cleared naming is free; confirming a current custom name costs one physical currency unit, including same-name and empty submissions. Preserve cancel separately, custom currencies and denomination change.
+- Restrict renaming to owners and the existing explicit Bedrock admin/Creative override. Revalidate canonical machine, range, ownership, name state and quoted currency after forms; rejected saves refund the exact touched native ItemStacks without resaving a detached record. Cross-layer native atomicity is not claimed.
+- Preserve the optional default/custom marker through JSON and version-1 portable placement. Interpret missing legacy markers using the saved-owner generated name; document unavoidable ambiguity. Malformed explicit markers fail closed without deleting records. Correct obsolete settings help about portable level/statistics loss.
+- Freeze paired 0.1.43 manifests with unchanged UUIDs/APIs and append-only payload history. Retain the separate visual-documentation evidence; no model, texture, animation, NPC, vehicle or deadline-alert changes. Source/adapter checks and independent review are not native/client acceptance. [Rename contract, validation and limitations](docs/validation/0.1.43-alpha.1/RESTAURANT_RENAME.md).
+
+## 0.1.42-alpha.1
+
+- Expose server-global `deliveryRate` through the existing Server/creative/`otc_admin` operator event. Accept only finite JSON probabilities in `0..1`, with default/reset `0.3` and no coercion; preserve malformed saved settings.
+- Apply the current global value at every machine generation entry, with canonical identity validation, and initialize ordinary/portable machines with it. Reload, partial restaurant propagation and later restaurant rollback cannot restore an obsolete generation rate.
+- Preserve existing order types, proof, deadlines and carriers; ordinary walk-ins remain dine-in. Keep .40 uncertain native-write boundaries and .41 count-only no-migration behavior; this is not an atomic multi-record configuration update.
+- No other probability controls, assets, vehicle/NPC changes or native/client acceptance. [Source validation and operator-interface adaptation](docs/validation/0.1.42-alpha.1/DELIVERY_RATE.md).
+
+## 0.1.41-alpha.1
+
+- Honor administrator-global `maxOrderMachinesWithin24` using signed 32-bit integers and Java's effective minimum of one. Missing/invalid saved fields safely default to one; malformed settings remain preserved.
+- Count registered, currently readable same-dimension machines in the existing inclusive [-24,+25] box until the threshold, with metadata-first filtering, self exclusion and current canonical membership. No sorting, world-cell scan, persistent cache or equipment-binding change.
+- A limit of two allows first/second placement and cancels third without consuming the ordinary/portable item. Reset affects future attempts only; count-only commands never rewrite dense restaurant records. Retained removal journals still block their exact position.
+- Extend setting readback, count-aware placement translations and the three guidebook languages. Preserve .40 leather behavior and its uncertain-native-write limitations.
+- Source/adapter evidence only. Registered/unloaded discovery and actual multiplayer ordering remain limitations; no new client, LIVE, BDS, performance or full-parity claim. See [validation](docs/validation/0.1.41-alpha.1/MACHINE_COUNT.md).
+
 ## 0.1.40-alpha.1
 
 - Honor Java's global `countertopConsumeLeather` through the existing server/creative/`otc_admin` configuration event. Strict booleans, default true for legacy/invalid saved field values, persistence and post-form revalidation keep it a world setting.

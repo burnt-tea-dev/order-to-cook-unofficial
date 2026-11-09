@@ -1,0 +1,44 @@
+{
+  "application_version": "5.2.2",
+  "asar_sha256": "6d5d5ae941465ff88a58f158e1e529e428f04deaa8da2a8a40949ed0a2291123",
+  "source_map_sha256": "e51e5a44d2a8b39137ff5af8f52adb9230f481758a18b32460dfed688b74dcc8",
+  "files": {
+    "../js/util/three_custom.js": {
+      "path": "official-source/js__util__three_custom.js.txt",
+      "sha256": "2e4d460ba30003e6906b474f4cbca547e8b5c2d1cdae7bd2737d91196be36131"
+    },
+    "../js/outliner/types/mesh.js": {
+      "path": "official-source/js__outliner__types__mesh.js.txt",
+      "sha256": "c2c13291f6c68dbc4bd5c0fed8ab9573a4c0dee5818fd6a5bfd333a954028427"
+    },
+    "../js/outliner/types/cube.js": {
+      "path": "official-source/js__outliner__types__cube.js.txt",
+      "sha256": "57cad3b3eb30af04fa54d7b41c2e3a58ad26098c8585eaf30344a7f3f1fe430d"
+    },
+    "../js/preview/canvas.js": {
+      "path": "official-source/js__preview__canvas.js.txt",
+      "sha256": "0de2354bf43c8918dd3354ebdd9a6aabcbd9029bf6f4fae5c857b297e07c9c19"
+    },
+    "../js/texturing/textures.js": {
+      "path": "official-source/js__texturing__textures.js.txt",
+      "sha256": "8016bcb9742bb6c666ce085994a61f0a1afc80df280804255162565fcf1e3fa3"
+    },
+    "../js/formats/generic.ts": {
+      "path": "official-source/js__formats__generic.ts.txt",
+      "sha256": "7fc5ef646b66058f8071d033a26c5fe29ddf6d71f1c98bf2c76fc4cc73ccc0f0"
+    },
+    "../js/formats/bbmodel.js": {
+      "path": "official-source/js__formats__bbmodel.js.txt",
+      "sha256": "fac90000f26f16d9b9f7b4303d658b0f1b624d8d4b4b026ab8f4a31df1d42316"
+    },
+    "../js/formats/bedrock/bedrock_animation.js": {
+      "path": "official-source/js__formats__bedrock__bedrock_animation.js.txt",
+      "sha256": "087633fc23e682a15dc4922d5c1f40cb8f0896189aad9daeb944ebb6985f41e1"
+    },
+    "../js/formats/bedrock/bedrock.js": {
+      "path": "official-source/js__formats__bedrock__bedrock.js.txt",
+      "sha256": "d77fa9edfaaa042cd5f72211aea34cce19ff88ec477364d9bbc237355374d347"
+    }
+  },
+  "application_source": "https://github.com/JannisX11/blockbench/tree/v5.2.2"
+}

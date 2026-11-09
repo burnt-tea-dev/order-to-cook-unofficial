@@ -1,0 +1,31 @@
+{
+  "source_affine.py": {
+    "extracted_from": "original 2026-11-08 source-affine review builder",
+    "input_sha256": "7ffdf520a0f8e5032c980446c0763ed816df9e93a5e4ac884dffb346595d3a50",
+    "functions": [
+      "add",
+      "binding",
+      "canonical",
+      "cube_vertices",
+      "easing",
+      "editor",
+      "erotation",
+      "expression",
+      "face_corners",
+      "number",
+      "posed",
+      "read",
+      "rotate",
+      "sample",
+      "selected",
+      "sha",
+      "source_mesh",
+      "write"
+    ],
+    "production_converter_imported": false
+  },
+  "scene_lib.py": {
+    "copied_from": "original 2026-11-08 Blockbench per-face review decoder",
+    "sha256": "d5d32ed323a88c458e0e6077fb7bf76da1bbd7e1b48eb02f42bbf1bb7fe8c4b9"
+  }
+}

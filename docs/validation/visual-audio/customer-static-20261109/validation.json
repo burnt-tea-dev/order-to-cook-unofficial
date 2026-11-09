@@ -1,0 +1,377 @@
+{
+  "status": "PASS offline documentation evidence checks; no new native/client acceptance",
+  "date_utc": "2026-11-09",
+  "base_commit": "ed1b0aa4a213b1e5a898c75d1704687cc22521be",
+  "runtime_unchanged": true,
+  "portable_environments": [
+    {
+      "status": "PASS portable identity, receipt integrity and static pose reproduction only",
+      "public_files_verified": 123,
+      "repository_input_memberships": 34,
+      "original_preparation_artifacts_unchanged": 67,
+      "omitted_original_metadata_receipts": 1,
+      "original_files_preserved": 85,
+      "customer_photographs": 8,
+      "unique_customer_scenes": 7,
+      "renderer_diagnostics": 3,
+      "frozen_scenes_reproduced": 7,
+      "sampled_corner_comparisons": 2240,
+      "max_corner_component_error_model_units": 2.8961721909581684e-11,
+      "python": "3.12.14",
+      "pillow": "12.3.0",
+      "numpy": "2.3.5",
+      "native_acceptance": false,
+      "runtime_changed": false,
+      "images_modified": false
+    },
+    {
+      "status": "PASS portable identity, receipt integrity and static pose reproduction only",
+      "public_files_verified": 123,
+      "repository_input_memberships": 34,
+      "original_preparation_artifacts_unchanged": 67,
+      "omitted_original_metadata_receipts": 1,
+      "original_files_preserved": 85,
+      "customer_photographs": 8,
+      "unique_customer_scenes": 7,
+      "renderer_diagnostics": 3,
+      "frozen_scenes_reproduced": 7,
+      "sampled_corner_comparisons": 2240,
+      "max_corner_component_error_model_units": 2.8961721909581684e-11,
+      "python": "3.12.14",
+      "pillow": "13.0.0",
+      "numpy": "2.3.5",
+      "native_acceptance": false,
+      "runtime_changed": false,
+      "images_modified": false
+    }
+  ],
+  "negative_controls": [
+    {
+      "test": "standalone directory, fake Git fails if called, explicit temporary assembly",
+      "result": "PASS"
+    },
+    {
+      "test": "receipt-query after outer inventory refresh",
+      "result": "PASS expected rejection"
+    },
+    {
+      "test": "tree-proof after outer inventory refresh",
+      "result": "PASS expected rejection"
+    },
+    {
+      "test": "raw-jpeg after outer inventory refresh",
+      "result": "PASS expected rejection"
+    }
+  ],
+  "repository_checks": [
+    {
+      "command": "npm run verify",
+      "result": "PASS on rerun with process affinity restricted to two available CPUs; no code changes",
+      "components": [
+        "Node tests",
+        "tsc --noEmit",
+        "tools/validate_pack.py",
+        "tools/build.py"
+      ],
+      "tests_passed": 937,
+      "tests_failed": 0
+    },
+    {
+      "command": "python -m unittest discover -s tests -p 'test_*.py'",
+      "result": "PASS: 65 tests, including the segmented-player test with existing pinned external inputs; no native files distributed"
+    },
+    {
+      "command": "python tools/check_compliance.py",
+      "result": "PASS: no errors; existing asset-scope clarification remains advisory, not confirmed rights"
+    },
+    {
+      "command": "python tests/check_release_policy.py",
+      "result": "PASS"
+    },
+    {
+      "command": "git diff --check BASE..HEAD",
+      "result": "PASS with narrowly scoped attributes for immutable upstream source excerpts and raw commit objects; their original trailing whitespace is deliberately preserved and hash-checked"
+    }
+  ],
+  "initial_aggregate_attempt": {
+    "command": "npm run verify",
+    "result": "917 passed, two whole-file failures; aggregate stopped before check/build",
+    "files": [
+      "tests/carried-order-alerts.test.js",
+      "tests/delivery-config.test.js"
+    ],
+    "isolated_rerun": "39/39 passed with no code changes",
+    "cause": "Not established. Bounded-concurrency aggregate rerun passed; no runtime defect or fix is inferred."
+  },
+  "repository_test_environment": {
+    "node": "v24.22.1",
+    "python": "3.12.14",
+    "pillow": "12.3.0",
+    "numpy": "2.3.5"
+  },
+  "external_test_inputs": {
+    "humanoid.json": {
+      "sha256": "d3688f959a95f6b39c9bd8b15312a19361256ae161d2d055ba63d810e17a8ca8",
+      "bytes": 4610,
+      "source_commit": "15701fa9c13923f12662984c32c124327e40e3d3",
+      "purpose": "Existing CI segmented-model test input only; never included in runtime or package."
+    },
+    "mobs.json": {
+      "sha256": "0279492e5f6a7b5bbafb4fbaa80290146acb79332d06ac39619376a4831ff464",
+      "bytes": 28846,
+      "source_commit": "15701fa9c13923f12662984c32c124327e40e3d3",
+      "purpose": "Existing CI segmented-model test input only; never included in runtime or package."
+    }
+  },
+  "not_run": [
+    "New Blockbench GUI operation",
+    "Minecraft client or BDS",
+    "Java/Bedrock native renderer or native animation clock",
+    "LIVE or user computer",
+    "Network fetch or remote repository write"
+  ],
+  "publication_blob_limit_bytes": 131072,
+  "largest_added_artifact": {
+    "path": "frozen/samples/05_wide_boom_peak.json",
+    "bytes": 91855
+  },
+  "assembler_safety_followup": {
+    "original_candidate": "7fc71eb960e75b2d8884ddee7bff555c297cdb6c",
+    "finding": "Disposable copies demonstrated that new source-child, dot-dot source-child and symlink-parent output paths were accepted. Original source and images were not modified by the investigation.",
+    "fix": "Canonical source/destination containment checks, explicit rejection of dot-dot components and every symlink component, nonexistent output under an existing real parent, and complete payload/path preflight before mkdir or writes.",
+    "rejected_path_cases": [
+      {
+        "case": "source",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      },
+      {
+        "case": "source-child",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      },
+      {
+        "case": "source-deep-child",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      },
+      {
+        "case": "source-parent",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      },
+      {
+        "case": "source-ancestor",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      },
+      {
+        "case": "dotdot-source",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      },
+      {
+        "case": "dotdot-source-child",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      },
+      {
+        "case": "dotdot-source-ancestor",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      },
+      {
+        "case": "dotdot-external",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      },
+      {
+        "case": "existing-directory",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "FileExistsError"
+      },
+      {
+        "case": "existing-file",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "FileExistsError"
+      },
+      {
+        "case": "file-parent",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      },
+      {
+        "case": "symlink-destination-directory",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      },
+      {
+        "case": "symlink-destination-file",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      },
+      {
+        "case": "dangling-symlink-destination",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      },
+      {
+        "case": "symlink-parent-source",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      },
+      {
+        "case": "symlink-parent-external",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      },
+      {
+        "case": "dangling-symlink-parent",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      },
+      {
+        "case": "nonexistent-parent",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      },
+      {
+        "case": "valid-external-sibling",
+        "result": "PASS",
+        "files_restored_exactly": 85,
+        "source_unchanged": true
+      }
+    ],
+    "scope": "Only public assembly helper, this validation record and its integrity inventory changed. Raw frozen artifacts and runtime unchanged; no native acceptance.",
+    "inventory_fix": "Exclude only the exact root integrity inventory, reject all unlisted files including nested inventory names and cache directories, and reject every symlink in the public bundle.",
+    "additional_preflight_controls": [
+      {
+        "case": "nested-inventory-name",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "AssertionError"
+      },
+      {
+        "case": "pycache-file",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "AssertionError"
+      },
+      {
+        "case": "file-symlink",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      },
+      {
+        "case": "directory-symlink",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      },
+      {
+        "case": "dangling-symlink",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      },
+      {
+        "case": "corrupt-gzip",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "AssertionError"
+      },
+      {
+        "case": "manifest-traversal",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "AssertionError"
+      },
+      {
+        "case": "manifest-duplicate",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      },
+      {
+        "case": "manifest-file-dir-conflict",
+        "rejected": true,
+        "write_or_mkdir_calls": 0,
+        "complete_sandbox_unchanged": true,
+        "error_type": "ValueError"
+      }
+    ],
+    "cli_controls": [
+      {
+        "case": "source-child",
+        "exit_code": 1,
+        "source_unchanged": true,
+        "rejected_sandbox_unchanged": true
+      },
+      {
+        "case": "dotdot-child",
+        "exit_code": 1,
+        "source_unchanged": true,
+        "rejected_sandbox_unchanged": true
+      },
+      {
+        "case": "symlink-parent",
+        "exit_code": 1,
+        "source_unchanged": true,
+        "rejected_sandbox_unchanged": true
+      },
+      {
+        "case": "valid-sibling",
+        "exit_code": 0,
+        "source_unchanged": true,
+        "rejected_sandbox_unchanged": false
+      }
+    ]
+  }
+}

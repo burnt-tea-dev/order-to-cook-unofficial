@@ -2,9 +2,25 @@
 
 **简体中文** · [繁體中文](README.md) · [English](README.en.md)
 
+0.1.48-alpha.1 是**已整合至 #75 合并后主线、尚未发布的候选**。修正小电驴 7 根静态骨骼 X 旋转符号及 41 个 box UV 镜像配置，保留原贴图与全部玩法、转向／轮速行为。9 张原始共同编辑器图片支持有限静态对照，不代表原生或动态车辆验收。配对身份已冻结，套件绑定整合后的确切候选提交；来源再次变更时必须重新验证并重建。[范围、身份与限制](docs/validation/0.1.48-alpha.1/MOTORCYCLE_STATIC_MAPPING.md)。
+
+0.1.47 候选补回冰箱共同根变形：上下门保留各自姿态，两半共用原关门 root 样本；下门 close 按 controller 顺序覆盖上门，包括中性样本。也修正上半读取抛异常时下半保留旧变形的问题，不削弱库存迁移保护。配对身份已冻结但尚未发布；有限采样、SRT 剪切近似、反转／STOP 差异与两方块非原子写入仍需保留。[来源、版本与验证](docs/validation/0.1.47-alpha.1/FRIDGE_SHARED_ROOT.md)。
+
+0.1.46 补回炉灶点火时原版骨骼的倾斜与伸缩：独立20 tick倒数，19个来源姿态沿用每2 tick更新，不改燃料、烹饪或物品。这是有限采样，并非Java连续动画／封包／STOP复位完全等价。[来源、版本与验证](docs/validation/0.1.46-alpha.1/STOVE_IGNITION.md)及[38张云端Blockbench图](docs/validation/visual-audio/blockbench-20261108/remaining-static/README.md)涵盖灶台前后与家具／供应架／头盔局部对照；原生透明材质、实际穿戴及客户端仍未验收。
+
+0.1.45 源码候选补回洗碗台原版 renderer 的水面，11 个盘数状态保留原位置与贴图；物品另用干台模型，不误加世界水面。同步三语装袋指南来源，避免重新生成资产时退回旧外送文字。[源码／测试](docs/validation/0.1.45-alpha.1/WASHING_WATER.md)及[16 张 Blockbench 前后图](docs/validation/visual-audio/blockbench-20261108/washing-water/README.md)保留透明排序与原生物品显示的未验收边界，不代表 Java 100% 还原。
+
+0.1.44 源码候选补上随身纸单及堂食／外送包裹的具名期限提醒：剩 5 分钟、1 分钟及超时各一次，不必选中物品；标记随实体物品保存，新打包物重新开始。沿用每 20 tick 检查，一般背包最多 36 格，餐盘及世界容器不提醒。保留记录会排除已完成／取消／旧补印纸单；孤立包裹不能恢复已裁掉的历史。保存与聊天不是原子事务，CPU 成本另随被引用餐厅的保留记录数增加，没有原生性能或完整 Java 等价声明。见[源码验证、成本及适配边界](docs/validation/0.1.44-alpha.1/CARRIED_ORDER_ALERTS.md)。尚未发布，未做本轮原生／客户端验收。
+
+0.1.43 补上餐厅命名收费：当前无自定义名称免费，有名称时每次确认收 1 单位当前实物货币，同名及清除也收费；清除后下次恢复免费。普通员工不可改名，保留本包店主／管理员权限。新旧存档、portable 命名状态、完整物品退款与无法恢复的旧名称歧义见 [命名修复报告](docs/validation/0.1.43-alpha.1/RESTAURANT_RENAME.md)。仅源码／adapter 验证，尚未发布，也未做本轮原生／客户端验收。
+
+0.1.42 接入全局 `deliveryRate`（默认 `0.3`）：`0` 让打单机只生成堂食候选，`1` 只生成外送。现有订单与普通到店单不改类型；重新加载或部分餐厅设置保存失败后，后续候选仍读当前全局值。[管理入口与源码证据](docs/validation/0.1.42-alpha.1/DELIVERY_RATE.md)。
+
+0.1.41 接入全局 `maxOrderMachinesWithin24`：默认／最低 `1`；`2` 允许附近两台、阻挡第三台。原有各轴 [-24, +25] 放置盒、已登记／可读取范围、portable 完整物品取消与设备球形绑定保持。重设 `1` 只影响后续放置。源码／adapter 验证不等于原生排序、性能或完整还原。[设置与证据](docs/validation/0.1.41-alpha.1/MACHINE_COUNT.md)。
+
 0.1.40 接入全局 `countertopConsumeLeather`：默认 `true` 仍消耗一份包材；`false` 让外送与明确选择的堂食袋不需要包装架，装盘仍需干净餐盘。仅完成源码／adapter 验证，未做原生／客户端验收。[行为与证据](docs/validation/0.1.40-alpha.1/LEATHER_CONFIG.md)。
 
-0.1.39 修正新打单机的默认放置范围：旧机器减新位置，各轴 [-24, +25] 含端点。设备半径 24 的球形查找、portable 数据与旧有密集餐厅保持不变；仍不发现未登记／未加载机器，也不提供 Java 可调机器数量。仅有源码和 adapter 验证，未做原生／客户端验收。[来源与边界](docs/validation/0.1.39-alpha.1/MACHINE_PLACEMENT.md)。
+0.1.39 修正新打单机的默认放置范围：旧机器减新位置，各轴 [-24, +25] 含端点。设备半径 24 的球形查找、portable 数据与旧有密集餐厅保持不变；仍不发现未登记／未加载机器；目前候选另接入以下可调数量。仅有源码和 adapter 验证，未做原生／客户端验收。[来源与边界](docs/validation/0.1.39-alpha.1/MACHINE_PLACEMENT.md)。
 
 0.1.38 让堂食可选择打包带走：普通点击和持票快捷仍默认装盘；潜行点击操作台才打开装盘／打包选择。打包只使用包材，不改订单类型、期限、报酬或到店统计；交付后不生成用餐盘、脏盘或爆炸加成。此变更仅完成源码和原生 I/O doubles 回归，未做客户端／正式世界验收。[范围与证据](docs/validation/0.1.38-alpha.1/DINE_IN_TAKEOUT.md)。
 
@@ -28,7 +44,7 @@
 
 历史 `0.1.2-alpha.3` 的限定客户端记录含冰箱几何、手洗粒子和进度灰字 FAIL，不能作为本版验收结果：[历史实机记录](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [按钮可读性修复](docs/validation/UNRELEASED-button-contrast.md)。
 
-**当前源码的视觉／音效改动**：修正冰箱内壁与开关曲线、洗碗机变形及预览、餐盘初始食物、顾客时序、打单机／外卖袋动画，以及已确认的声音和粒子差异。修正与可复现证据见 [VISUAL_AUDIO_PARITY.md](docs/VISUAL_AUDIO_PARITY.md)。本轮尚未执行 Blockbench 交互检查或 Java／Bedrock 客户端画面复验；离线对照不改写上述历史实测结果，也不代表完整一比一完成。
+**当前源码的视觉／音效改动**：修正冰箱内壁与开关曲线、洗碗机变形及预览、餐盘初始食物、顾客时序、打单机／外卖袋动画，以及已确认的声音和粒子差异。修正与可复现证据见 [VISUAL_AUDIO_PARITY.md](docs/VISUAL_AUDIO_PARITY.md)。已完成部分云端 Blockbench 交互检查，包括[顾客与设备抽样](docs/validation/visual-audio/blockbench-20261108/README.md)及[餐盘、订单机与袋子有限姿态](docs/validation/visual-audio/blockbench-20261108/stage-review/README.md)。全项视觉与 Java／Bedrock 客户端画面复验仍未完成；这些证据不改写上述历史实测结果，也不代表完整一比一完成。
 
 
 原作作者：**breezeth** — [CurseForge](https://www.curseforge.com/minecraft/mc-mods/order-to-cook) · [Java 源代码](https://github.com/breezeth-CN/OrdertoCook)。本项目由 `casama233`／`burnt-tea-dev` 维护，保留上游 GPLv3、作者署名和素材来源。有关补充素材使用范围的询问尚未收到回复，作为非阻塞事项记录；作者未回复不阻止功能开发，但实际许可证冲突仍须处理。
@@ -55,7 +71,7 @@
 
 ## 生存模式开店步骤
 
-1. **建立餐厅。** 合成并放置打单机、菜单立牌、操作台、包装架、餐盘架、椅子和洗碗池。新打单机的放置使用盒形限制：另一台已登记且目前可读取的打单机，若“旧位置减新位置”的 X／Y／Z 都在 **[-24, +25]** 内（含边界），便会取消放置，不分所有者；任一轴相隔 26 格即可避开该台。斜向距离超过 24 格并不保证可放。设备的最近餐厅绑定仍使用 **半径 24 格的球形**，旧有密集餐厅不会被删除或搬移。未登记／未加载机器的发现及 Java 可调机器数量仍未实现。[来源与验证](docs/validation/0.1.39-alpha.1/MACHINE_PLACEMENT.md)。
+1. **建立餐厅。** 合成并放置打单机、菜单立牌、操作台、包装架、餐盘架、椅子和洗碗池。新放置会计算已登记、目前可读取的其他机器，不分所有者；“旧位置减新位置”的 X／Y／Z 都在 **[-24, +25]** 内（含边界）便计入，数量达全局 `maxOrderMachinesWithin24`（默认／最低 `1`）时取消。任一轴相隔 26 格即可排除该台，斜向超过 24 格并不保证可放。设备绑定仍找 **半径 24 格球形** 内最近餐厅；旧有密集餐厅不删除或迁移。未登记／未加载机器的发现仍未实现。[设置与验证](docs/validation/0.1.41-alpha.1/MACHINE_COUNT.md)。
 2. **设置菜单。** 用食品点击立牌加入菜式，不消耗食品。空手／潜行点击可管理菜单。每道菜只计算一份营养，不按手上堆叠数累加。
 3. **补货。** 默认包材设置下用皮革补包装架；用干净餐盘补餐盘架。两架必须在操作台 **5 格内**；操作台、椅子与相关冰箱必须在餐厅附近 **24 格内**。
 4. **营业和接单。** 点击打单机开启营业并选择一张候选单。接下一单后，同批其他候选会消失；到店顾客的独立订单不受影响。
@@ -168,6 +184,15 @@
 
 `example:your_dish` 是示例 ID，必须换成实际已安装物品。空货币 ID 恢复默认 oTc 币。自定义货币每件视作 1 单位；切换仅影响之后的付款，不自动兑换已持有的旧币。
 
+管理员可设置**本世界所有后续放置**的全局机器数量：
+
+```mcfunction
+/scriptevent ordertocook:config {"maxOrderMachinesWithin24":2}
+/scriptevent ordertocook:config {"maxOrderMachinesWithin24":1}
+```
+
+Server 事件、创造模式与 `otc_admin` 玩家可使用。只接受 signed 32-bit 范围 `-2147483648..2147483647` 的 JSON 整数；小于 `1` 一律保存／生效为 `1`，不是无上限。旧存档缺值或字段无效时使用 `1`，加载不自动改写文档。设置 `2` 时可在另一台合格机器旁放置，但已有两台便阻挡。每次读取最新全局值，不看店主或 portable 快照。重设 `1` 不删除、迁移或停用密集旧餐厅；只改数量的指令也不重写餐厅记录。共用设备仍在原球形范围找最近餐厅，密集布局可能改变控制设备的餐厅。[保存、发现与原生排序边界](docs/validation/0.1.41-alpha.1/MACHINE_COUNT.md)。
+
 管理员可切换**本世界所有餐厅**的皮革消耗：
 
 ```mcfunction
@@ -175,7 +200,19 @@
 /scriptevent ordertocook:config {"countertopConsumeLeather":true}
 ```
 
-只接受 JSON 布尔值。Java 默认为 `true`；旧存档缺少字段或字段类型错误时安全使用默认值，不自动改写存档。`false` 让外送与明确选择的堂食袋完全跳过包装架；不改现有架子库存或成品，装盘仍需并消耗干净盘。设置跨 worldLoad 保留，菜单关闭后制作时会重读最新值。设置文档损坏时停止初始化而不清除数据。这是全局设置，不是附近餐厅选项；Java 可调机器数量与配送比例仍未接入管理入口。[范围与保存边界](docs/validation/0.1.40-alpha.1/LEATHER_CONFIG.md)。
+只接受 JSON 布尔值。Java 默认为 `true`；旧存档缺少字段或字段类型错误时安全使用默认值，不自动改写存档。`false` 让外送与明确选择的堂食袋完全跳过包装架；不改现有架子库存或成品，装盘仍需并消耗干净盘。设置跨 worldLoad 保留，菜单关闭后制作时会重读最新值。设置文档损坏时停止初始化而不清除数据。这是全局设置，不是附近餐厅选项。[范围与保存边界](docs/validation/0.1.40-alpha.1/LEATHER_CONFIG.md)。
+
+管理员可设置**全世界餐厅后续打单机候选单**的配送概率：
+
+```mcfunction
+/scriptevent ordertocook:config {"deliveryRate":0}
+/scriptevent ordertocook:config {"deliveryRate":1}
+/scriptevent ordertocook:config {"deliveryRate":0.3}
+```
+
+只接受 `0..1` 的有限 JSON 数字，不转换字符串／布尔值；最后一条恢复 Java 默认值。Server／创造模式／`otc_admin` 权限不变。这是 Bedrock 沿用的管理事件入口；Java 已核对的入口是启动时加载全局配置文件，不是玩家 GUI 或已验证的即时文件重载。旧存档缺值／无效字段使用 `0.3`，不自动改写原始文档；损坏文档保留并停止初始化。
+
+设置跨 worldLoad 保留，现有、新放、portable 还原机器的首次营业、管理员刷新及原生 tick 刷新都使用当前全局值。设置本身不重抽或重定型候选／已接／已备妥／已完成单，不改 proof、期限、承载物；普通到店单仍是堂食。全局提交后若某餐厅保存失败，提交不撤销，旧餐厅快照也不能控制下次生成。写入前失败或静默未写不改即时设置；写入后异常／读回失败可能使存档比内存新，直到重载才生效。这不是所有设置传播的原子事务。[证据与边界](docs/validation/0.1.42-alpha.1/DELIVERY_RATE.md)。
 
 可以测试其他刷新周期／升级门槛，例如：
 

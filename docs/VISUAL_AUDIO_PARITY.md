@@ -22,7 +22,7 @@ Java 各水平 blockstate 的 north/east/south/west 為 0/90/180/270 度。
 | 操作台 countertop | 原幾何、UV、四向、木材聲音族；成品冒煙位置修正 | 本體一個；台上帶身份成品由既有顯示記錄處理。 |
 | 包裝架 shelf | 原 0–10 份包材外形、四向 | 本體＋尚存皮革；未改容量。 |
 | 餐盤架 plate_shelf | 原 0–18 盤外形、高低位 state、四向 | 本體＋尚存乾淨盤；未改容量。 |
-| 洗碗池 washingtable | 原 0–10 髒盤、四向；水花／泡泡改為池內旋轉座標 | 本體＋尚存髒盤；原手洗操作仍為點擊開始。 |
+| 洗碗池 washingtable | 原 0–10 髒盤、四向；補入原 renderer 的靜態半透明水面，物品保留乾檯；水花／泡泡改為池內旋轉座標 | 本體＋尚存髒盤；原手洗操作仍為點擊開始。世界材質共用 blend，透明排序／背面尚待原生驗收，見[水面契約](validation/UNRELEASED-washingtable-water.md)。 |
 | 椅子 chair | 原背板、腿、UV、四向；既有乘座 helper 保留 | 本體一個，既有騎乘清理。 |
 | 洗碗機 dishwasher | 修負 X cuboid 的物理面／UV、非均勻變形、盤數可見性與預覽；見下節 | 本體＋機內盤子，clear_out／ready 為乾淨盤；未新增自動掉落。 |
 | 冰箱 refrigerator | 修負 Z 內壁、上下門、獨立開關曲線；見下節 | 拆任一半只給一個冰箱＋原生庫存，頂半 loot 為空。 |
@@ -62,9 +62,9 @@ Java 各水平 blockstate 的 north/east/south/west 為 0/90/180/270 度。
 來源原點、角點和每個角的 UV 有獨立對照。原 96×96 貼圖 bytes 不變。
 
 櫃體仍在 Y=16 分為兩格，原下門最高 Y=19.5，整扇門不再被櫃體切線裁斷。
-上下門各有 **11 個 open＋11 個 close** 姿態，共 44 個；使用來源的 `easeInElastic`、
+上下門各有 **11 個 open＋11 個 close** 門姿態，與四個共同 root 組合共 176 個模型；使用來源的 `easeInElastic`、
 `easeInBounce` 和 `easingArgs`，不是把關門當成線性開門的逆放。完整一程仍為 20 tick。
-關門原有的 Z 壓縮到 0.95 及 0.25 像素位移已參與烘焙。
+關門原有的 Z 壓縮到 0.95 及 0.25 像素位移以 `root_frame` 同步作用到兩半，包括另一扇完全打開的門。下門 close 活動時覆寫上門 root，即使下門的當前樣本是中性。
 
 觀看者計數仍逐層分開。完整開／關使用各自原片段；**中途改目標沿當前片段反向**，
 不把當前角度瞬間跳到另一曲線的端點。`closing` state 表示正在使用 close 片段，
@@ -78,10 +78,9 @@ Java 各水平 blockstate 的 north/east/south/west 為 0/90/180/270 度。
 方塊是有限姿態，不是 GeckoLib 每幀骨骼 renderer。門片某些中間角度需至多 0.126 像素
 整片平移，以留在 Bedrock 幾何範圍；原尺寸、UV 和端點不變。非均勻父縮放加子旋轉會產生
 剪切，靜態 cuboid 只能近似。與來源完整 affine 變換的最大頂點差，冰箱為
-0.086177 像素、洗碗機為 0.259642 像素；這是數學量測，不是遊戲畫面驗收。
+本次完整 own-frame × root 量測為 0.201556444 像素（舊 0.086177 上限不再適用）、洗碗機既有量測為 0.259642 像素；這是數學量測，不是遊戲畫面驗收。
 
-Java 的根骨骼讓整台櫃體一起壓縮；本版仍是正在關閉的那一半櫃體變形，沒有同步另一半的根變形。
-原食品陳列尚未加入。這兩項明列為剩餘差異，不能以 44 個模型檔代替驗收。
+兩半現在共用根樣本；完整 176 姿態的邊界平移最大為 0.086115 像素，與 affine→cuboid 殘差分開量測，櫃體接縫差為零。兩個方塊寫入仍非原子，失敗後下一次成功 tick 才收斂；下方 anchor 不可讀時整個站點暫停。原食品陳列尚未加入，Java 的 STOP/reset 及 reopen 起點也非完全等價。見[共同 root 修復驗證](validation/fridge-shared-root/README.md)，不能以模型數量代替原生驗收。
 
 來源：[RefrigeratorBlockEntity.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/RefrigeratorBlockEntity.java)
 及同提交 `refrigerator.geo.json`、`refrigerator.animation.json`。
@@ -197,3 +196,34 @@ python tests/check_release_policy.py
 
 生成物來自轉換器；日後應改固定來源旁的轉換規則，不在數十個 `.geo.json` 手工重複修補。
 候選保留 BP／RP UUID，版本為 `[0,1,6]`；完整建置與本輪實測指紋以驗證記錄為準。
+
+## Later stove ignition repair
+
+Version .46 restores the registered Java stove renderer’s sampled ignition poses rather than only its texture phases. [Source/service and version scope](validation/0.1.46-alpha.1/STOVE_IGNITION.md) and [actual cloud editor comparisons](validation/visual-audio/blockbench-20261108/remaining-static/README.md) retain the 10Hz publication, continuous animation, packet/reset and native-rendering limitations. Other unreviewed assets and real clients remain open.
+
+## Later customer static-pose review
+
+[Seven frozen customer scenes and eight original editor photographs](validation/visual-audio/customer-static-20261109/README.md) add independently inspected wrist, eating, shrink, boom, spawn-rebound, standing-take and synthetic idle3 body-turn samples. This is source/RP data in the same Blockbench cube renderer, not native Java/Bedrock acceptance. The original preparation and earlier GUI receipts remain unchanged; three renderer diagnostics are separate. No runtime change is proposed, and the known mathematical 1 ms pre/post edge is not a demonstrated native defect.
+
+### Additional customer frozen poses (2026-11-09)
+
+[Seven additional customer scenes and nine original model photographs](validation/visual-audio/customer-remaining-20261109/README.md)
+now have separate capture and independent pixel-review records, plus one Render
+Sides Auto diagnostic. The source/RP pair uses the same Blockbench renderer;
+scene05's shared sleeve stippling is retained with a reproducible coplanar-overlap
+diagnostic, not treated as a verified port-only bug. Historical preparation
+receipts remain unchanged. Portable identity/static checks reconstruct all seven
+scenes byte-for-byte using authenticated prior-bundle dependencies. No runtime,
+version, native rendering, playback, transition, query-convention, material,
+sound or particle acceptance is added.
+
+### Later helmet inactive-pivot diagnostic (2026-11-09)
+
+A separate [helmet A → B → A control](validation/visual-audio/blockbench-20261108/helmet-pivot-control/README.md) records reversible visor-preview behavior after changing only fifteen inactive SOURCE shell cube origins. Independent inspection covers all three original photographs, exact scene differences, unchanged runtime/source inputs and 320 matching corners. This is a common-editor preview diagnostic, not a runtime repair, proof of an internal sorting algorithm or native/worn-head transparency acceptance. The earlier static-review result is retained unchanged.
+
+## 小電驢靜態來源映射補驗（2026-11-09）
+
+[9 張原始 Blockbench 圖與可重現 fixture](validation/visual-audio/motorcycle-source-mapping-20261109/README.md)
+確認舊版前柱的 V 形折位；候選修正 7 根靜態骨骼的 X 旋轉符號與 41 個 box UV 鏡像。
+白色前後斜視／頂視、最小辨識控制及紅藍黃候選色均保留原圖。這是中立姿態的模型與
+貼圖配置驗證，不代表轉向、輪速、發光、透明／背面或原生遊戲已通過；既有動態差距仍保留。

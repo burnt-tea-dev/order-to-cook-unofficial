@@ -1,0 +1,136 @@
+{
+  "application": "Blockbench Desktop 5.2.2",
+  "upstream_commit": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+  "latest_assets_checked_commit": "7373238756b6fefdcac37458bfaeaa0887b0ed9b",
+  "runtime_changes": false,
+  "java_client_tested": false,
+  "bedrock_client_tested": false,
+  "bds_tested": false,
+  "preview_adapters_are_not_runtime": true,
+  "source_inputs": [
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "size": 4965
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
+      "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
+      "size": 144802
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/refrigerator.png",
+      "sha256": "a545ea6a2c2ef3c25d48fd65051bf00e01382b01a97ef4f295b6d3b171e02039",
+      "size": 2138,
+      "dimensions": [
+        96,
+        96
+      ]
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/dishwasher.png",
+      "sha256": "7c85e91a5fb2a8baff87528cec4512cf63dc4004ee209aad8ba169755eb97c90",
+      "size": 2162,
+      "dimensions": [
+        64,
+        64
+      ]
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "size": 4950
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
+      "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
+      "size": 6848
+    }
+  ],
+  "preview_files": [
+    {
+      "path": "java-dishwasher.animation.json",
+      "sha256": "f0bd24ecc3d8a416bfe77858cbc62d753b493f59545d5de0f8e9d072625e0461",
+      "size": 10786
+    },
+    {
+      "path": "java-refrigerator-open.animation.json",
+      "sha256": "9541b48a3a31311470b9184135afb7c48ef65e41888878a817fedce7325f762a",
+      "size": 801
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "bedrock-dishwasher-empty-isometric.png",
+      "sha256": "41f729742cd2c669f42be546f6ead5e80cf792ea5f35b20dfdbbb752980bef67",
+      "size": 94359,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "java-dishwasher-clean-out-078.png",
+      "sha256": "bad3c5ca81e2fe9413c44e258840a768e802ab84e377d1ba94f39ded4a69f15b",
+      "size": 106229,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "java-dishwasher-dirty-in-050.png",
+      "sha256": "6c9b127c4a2e970d61d992d254e169fe400a6fc5d16cab0c0da8a21bf6af2cd6",
+      "size": 106577,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "java-dishwasher-empty-isometric.png",
+      "sha256": "9ce29521c8e2fcbbeee8c88cdaac1e147f47188ad52c3ed9f7bad528b6d8b417",
+      "size": 107847,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "java-dishwasher-empty-out-070.png",
+      "sha256": "cd11f0286dfcad64b610fceb6eff83a6c8b218ec905ea52ceab51d6551ce6c7b",
+      "size": 106818,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "java-refrigerator-lower-open-070.png",
+      "sha256": "636ba68e1ec3e6e701f50e317dcd6712386136e533f14382e09d682eec269ea6",
+      "size": 90784,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "java-refrigerator-neutral.png",
+      "sha256": "4666abd5276db1798d402e3135fdd8acdd94020aaeec2dcd840684b85f3287a7",
+      "size": 101071,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "java-refrigerator-upper-open-060.png",
+      "sha256": "84a6a9ecec70d97ebffbebb8e0632527a4742c755d7a72e6a0695a55edf8ef00",
+      "size": 90369,
+      "dimensions": [
+        1188,
+        848
+      ]
+    }
+  ]
+}

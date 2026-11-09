@@ -1,0 +1,15 @@
+{
+  "original_sha256": "60ce23b4f61b20e551d2b419fbd566901217c02ac8459d656e4f5e0886d7345e",
+  "adapted_sha256": "9790973a81193ddf624ff9af42f2e1c673f40879806f0a6ba36d3178a3df4c30",
+  "replacements": [
+    {
+      "old": " for r in read(ROOT/'source-evidence/gecko-cache-provenance.json')['records']:\n  p=ROOT/'source-evidence'/Path(r['cachePath']).name\n  if p.exists():data=p.read_bytes();assert hashlib.sha1(b'blob '+str(len(data)).encode()+b'\\0'+data).hexdigest()==r['blobSha'];checks+=1",
+      "new": " for r in read(ROOT/'public-geckolib-sources.json')['records']:\n  p=ROOT/r['file'];data=p.read_bytes();assert sha(p)==r['sha256'] and len(data)==r['bytes'];assert hashlib.sha1(b'blob '+str(len(data)).encode()+b'\\0'+data).hexdigest()==r['git_blob'];checks+=1"
+    },
+    {
+      "old": "['python','-B'",
+      "new": "[__import__('sys').executable,'-B'"
+    }
+  ],
+  "scope": "Only public provenance projection and current interpreter. All pose, UV, hierarchy, inflate, texture and fresh-process checks remain unchanged."
+}

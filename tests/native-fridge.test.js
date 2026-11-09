@@ -129,6 +129,19 @@ test('migration refuses an occupied destination instead of overwriting either ph
   const old = new MetadataItem('minecraft:apple', 9, 'old'), existing = new MetadataItem('minecraft:apple', 3, 'native');
   f.helper.container.setItem(0, old); f.upper.container.setItem(0, existing);
   assert.throws(() => f.service.getStorage(f.station), /目的格已有物品/);
+  const lowerContainer = f.lower.container, upperContainer = f.upper.container, helperContainer = f.helper.container;
+  const beforeNative = f.station.nativeFridge;
+  f.lower.setPermutation(f.lower.permutation.withState('ordertocook:closing', true).withState('ordertocook:frame', 4));
+  f.service.tick();
+  advance(f.service, f, 2);
+  assert.equal(f.lower.permutation.getState('ordertocook:frame'), 5);
+  assert.equal(f.lower.permutation.getState('ordertocook:root_frame'), 2);
+  assert.equal(f.upper.permutation.getState('ordertocook:root_frame'), 2);
+  assert.equal(f.station.nativeFridge, beforeNative, 'Failed migration cannot be marked complete.');
+  assert.equal(f.lower.container, lowerContainer); assert.equal(f.upper.container, upperContainer);
+  assert.equal(f.helper.container, helperContainer);
+  assert.equal(lowerContainer.emptySlotsCount, 54);
+
   assert.equal(fingerprint(f.helper.container.getItem(0)), fingerprint(old));
   assert.equal(fingerprint(f.upper.container.getItem(0)), fingerprint(existing));
   assert.equal(f.station.storageId, f.helper.id); assert.equal(f.helper.isValid, true); assert.equal(f.dimension.drops.length, 0);

@@ -1,0 +1,237 @@
+{
+  "baseline_commit": "8979974bd4e1117e583bcbc705592065b3163a3d",
+  "candidate_commit": "46fd0f32035f73013acfae8f9aeb6ed241a61b4e",
+  "upstream_commit": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+  "inputs": [
+    {
+      "path": "runtime/BP/blocks/washingtable.json",
+      "sha256": "bd2c551dc6cb82d2394c5d06b96fb13978b151cdcc2a6e0194b3c7d8f3f3c6d0"
+    },
+    {
+      "path": "runtime/RP/models/blocks/washingtable_0.geo.json",
+      "sha256": "83a4e63d7ff441f601e803d1ebfb90ffd54b0218fd87dafcdf80db244130d6da"
+    },
+    {
+      "path": "runtime/RP/models/blocks/washingtable_1.geo.json",
+      "sha256": "a64bb11b52814febe9587168826302dadbb3cb165e33c998d23e9fd7aa00e4b9"
+    },
+    {
+      "path": "runtime/RP/models/blocks/washingtable_10.geo.json",
+      "sha256": "ba1f19ed3a111aa5372fd4746b958b657e0691aa22781d0f460bafa2943414de"
+    },
+    {
+      "path": "runtime/RP/models/blocks/washingtable_2.geo.json",
+      "sha256": "6567b88729d3e2ec136e46a5b9f7a1a495860ac8387a0917a8596b6d0e2f19e6"
+    },
+    {
+      "path": "runtime/RP/models/blocks/washingtable_3.geo.json",
+      "sha256": "4a41a0557087da8868ff2c5aa4e5758684b334a02d3c765e0a1c5d177e7e3b1d"
+    },
+    {
+      "path": "runtime/RP/models/blocks/washingtable_4.geo.json",
+      "sha256": "c3aa35aaa0298310bc02614e342811d79e343d45edd9e9b7ee7590f76cddbca5"
+    },
+    {
+      "path": "runtime/RP/models/blocks/washingtable_5.geo.json",
+      "sha256": "c7507e67dd39e00a786f5c67baa12747718a1c4d8f38ab25d54ca02d64e6ea51"
+    },
+    {
+      "path": "runtime/RP/models/blocks/washingtable_6.geo.json",
+      "sha256": "7f9c89b410e6298cb6c861abd3c022670c932d3e65da098c7ef7a4c0c5681c4e"
+    },
+    {
+      "path": "runtime/RP/models/blocks/washingtable_7.geo.json",
+      "sha256": "d7314fea6e91b3192132a2adb9d39e964a2c6874552ae35ce48f779d2a816363"
+    },
+    {
+      "path": "runtime/RP/models/blocks/washingtable_8.geo.json",
+      "sha256": "fafdf9b3d3fc1858c2a968063958b40251bc757aadaeadb752fb69384b2c6d58"
+    },
+    {
+      "path": "runtime/RP/models/blocks/washingtable_9.geo.json",
+      "sha256": "8d821c149be120ad98a84cc08f3726f483a3de1998bae12dce32cb9a5848c198"
+    },
+    {
+      "path": "runtime/RP/models/blocks/washingtable_item.geo.json",
+      "sha256": "9675bae03ce0ef5e8dd931536a42dde51382a5d396d22b9a255e526a5adef522"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/blockstates/washingtable.json",
+      "sha256": "6617dda3e3912d7a59f3cfff91f67b89c9ed9b925befdbd22d4c74d7686cf3bf"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/washingtable.json",
+      "sha256": "ff76102f64a35836ef78aea36b110894ab851e45ca7e561d87e6bb5979415a05"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/washingtable_1.json",
+      "sha256": "9dc62e21dc44858ae70f5e21610197003ddf0b8ddf325c98dc424a943067f75b"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/washingtable_10.json",
+      "sha256": "6e9cf660c8f977ee3b75e41e2a6cffdb791fbd85c5fbcf555b7436e3a5393ab8"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/washingtable_2.json",
+      "sha256": "cb23d6239498846b66281f39706d8c8c59e148c3898dfe96c8359028b246949d"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/washingtable_3.json",
+      "sha256": "267ab947d34de447889ab12fe68c27e3e52c1f7724d11c882499e90b9058ec8f"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/washingtable_4.json",
+      "sha256": "61d9f1073df55223cd7033d7bd28979f97b609ab119589c907796fc22c6b38b4"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/washingtable_5.json",
+      "sha256": "f75b3788d04b6e473fcc9ac3184180a18679d5a992de888c593944305eb1a053"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/washingtable_6.json",
+      "sha256": "11260d651013cda2bcf754c4be8b18a64923d1c9d391211bb7fddead0fce87e9"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/washingtable_7.json",
+      "sha256": "f3724c9be871d42a8eda00db66f68a0743aee5d04507b9a06b6b23f0fda9399e"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/washingtable_8.json",
+      "sha256": "4c48ae2c3297f78b894e7cf13357875581888b0109307e828bcfcd97ef8d88df"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/washingtable_9.json",
+      "sha256": "cc39cd7c417aba38fca447bd71125079af3f35ae198e10aa149eb90bf7ff2adf"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/washingtable_idle.json",
+      "sha256": "573d98e4c77c21e751d1f41c8368eda41ea8fd1545b51e9d04b738d0103c3d97"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/models/item/washingtable.json",
+      "sha256": "12dea488fba4e70a2586b498e9deeade14f7e94be0f4bdf3edc2c33c70e316ed"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/washingtable.png",
+      "sha256": "a989f3aa1efa69dcaa2128ffd7793943afb3336ac9304bd84288839237c4384d"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/water.png",
+      "sha256": "f22fa4929726cd53ea4fa1d593425438c1634b1e34afd55cc0df43631c7a0485"
+    },
+    {
+      "path": "upstream/reference/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/WashingTableWaterRenderer.java",
+      "sha256": "f6f7b7b7781e30acded9d3e2cf17ad6d8ab01d234dd1e2b2d517fd4ea9130d1d"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "fixtures/before-washingtable_0.geo.json",
+      "sha256": "55cf82d0ecafc972258eedf1e27f69e64ddd47905c7fd27d4661029f62109f3f"
+    },
+    {
+      "path": "fixtures/before-washingtable_10.geo.json",
+      "sha256": "1b702aa98b1b7f05ac9d85eba77ce926047b1612a39ad06ee238d3c1e7f1fb5e"
+    },
+    {
+      "path": "fixtures/before-washingtable_5.geo.json",
+      "sha256": "1da7f1c14e74f9a9b8a91554ade2b02939c466c8bf6f8dd859f07646c3bd32f4"
+    },
+    {
+      "path": "scenes/water-after-0.bbmodel",
+      "sha256": "4c055e048c17b010f6177515e48c67a9f141a4044655743b3a55194efde249c9"
+    },
+    {
+      "path": "scenes/water-after-10.bbmodel",
+      "sha256": "a37a96463189b32d64102d36e69465be7aef1c51ba716e6f12d36e9ef47360a2"
+    },
+    {
+      "path": "scenes/water-after-5.bbmodel",
+      "sha256": "1c23d4e8571148e87672004871df6ef2f5ebf210545705a1e95ad2633ba1df37"
+    },
+    {
+      "path": "scenes/water-before-0.bbmodel",
+      "sha256": "9ca94783cadcad1d676f956b193eb1d7c343556ab226408b5acd24ca4711ef0c"
+    },
+    {
+      "path": "scenes/water-before-10.bbmodel",
+      "sha256": "ce8d4d3b9375d9d78f16326bbeb71c5afa73ad42ce6e8020f7f1b916e8092027"
+    },
+    {
+      "path": "scenes/water-before-5.bbmodel",
+      "sha256": "31fdc75f7ad5d8298340566e3933a8340580177749d973b507ced2b5e4fdf7b3"
+    },
+    {
+      "path": "scenes/water-identical-candidates-5.bbmodel",
+      "sha256": "61193d1387f51621a476ab0ecc6e4471994e82e3e03f6d309efbb86f2bd0c231"
+    },
+    {
+      "path": "scenes/water-item-dry-source-and-candidate.bbmodel",
+      "sha256": "8b377ed787aef8fd9ab65cae86aec9f85ec0d7c94e60c4ef4b3dd1b6a43c6ce8"
+    },
+    {
+      "path": "screenshots/after-0-isometric.png",
+      "sha256": "87fc5acfb5514d2e621a4d7c82d5a1b1a5d36fdd005c0396f7beae83ea29a75d"
+    },
+    {
+      "path": "screenshots/after-0-top.png",
+      "sha256": "11a52832fa7516ff015119478773c3ac0f7690df83c85441cb938ca4c25d50a1"
+    },
+    {
+      "path": "screenshots/after-10-isometric.png",
+      "sha256": "ad252f4cb8b0adaca0ef562f3753f9c3747bfd646bf952e402ae2d48ac4236b3"
+    },
+    {
+      "path": "screenshots/after-10-top.png",
+      "sha256": "1c9b01df8078db8ffab18a4b93b3a7b712f06581f4d3ce31459a4665ee5bbf38"
+    },
+    {
+      "path": "screenshots/after-5-isometric.png",
+      "sha256": "29fb49f04a19f5075b19a8ac500c3537bdba79af3f9e69a29faf2761d3ebbcb0"
+    },
+    {
+      "path": "screenshots/after-5-top.png",
+      "sha256": "a2dd1cc44d7ff2693298b1dbf142fc9e8b7ae2e410af411eb6389ad10798374b"
+    },
+    {
+      "path": "screenshots/before-0-isometric.png",
+      "sha256": "a941b9704d3602d7d8022e32f65b6e8cf0b9cc47312af5cdebd1624d0fc7021d"
+    },
+    {
+      "path": "screenshots/before-0-top.png",
+      "sha256": "9aa501b73279a00ff7ac469339dadf4f7de605227520c4d40c3615ec86843c7f"
+    },
+    {
+      "path": "screenshots/before-10-isometric.png",
+      "sha256": "479e6399a43eb7fb5b6bc222a6e16a80ca115ed760062985ed6ed35cc577663b"
+    },
+    {
+      "path": "screenshots/before-10-top.png",
+      "sha256": "65b6e0a1f311cf23ccc5fb4c8e720eb847b3bf8b4139de93e4313f2687e142f0"
+    },
+    {
+      "path": "screenshots/before-5-isometric.png",
+      "sha256": "a57eb8114805c7d13398a41dae0c171913f2f56a979c5ca425b4d9297d79a920"
+    },
+    {
+      "path": "screenshots/before-5-top.png",
+      "sha256": "89cd201722d9916a07e3b7a48a71e8d587e4c0191f52253b997414c4d0ba2b16"
+    },
+    {
+      "path": "screenshots/dry-item-isometric.png",
+      "sha256": "4cdd42ce002c0410ee2485802ff56ba10c45a180455bff14be8e5de7c5224541"
+    },
+    {
+      "path": "screenshots/dry-item-top.png",
+      "sha256": "7841c7c3932727babf3b2c7d6c1f1c8cfdbee537e23173d22716facfda216f26"
+    },
+    {
+      "path": "screenshots/identical-candidates-5-isometric.png",
+      "sha256": "149a532aacbdb95bc3a80970478e0553d88b982c17f2fb6b35c763fa143a3eff"
+    },
+    {
+      "path": "screenshots/identical-candidates-5-top.png",
+      "sha256": "39f0a7bc6a8ec0ce8cd38e597d607727b0a0aeb7c6c6795dba2b173fab6cf74c"
+    }
+  ]
+}

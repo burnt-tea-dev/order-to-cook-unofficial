@@ -1,0 +1,472 @@
+{
+  "status": "CONFIRMED_BLOCKBENCH_DOOR_MESH_CUBE_TRANSPARENT_FACE_ORDER_EFFECT",
+  "scope": "Isolated identity endpoint, phase 1 frame 15, empty_in at 0.6667 seconds; not native rendering parity.",
+  "case": "dishwasher_1_15",
+  "source_pin": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+  "canonical_pin": "625dd3fe0e4cc944240d32678d65c91dc4f5a220",
+  "capture_report": {
+    "application": "Official Blockbench 5.2.2",
+    "view": "orthographic North",
+    "same_zoom_and_camera": true,
+    "unselected": true,
+    "models_saved": false
+  },
+  "screenshots": [
+    {
+      "path": "screenshots/dish-phase1-frame15-baseline-north.jpg",
+      "sha256": "71213df9224ed372e066ddd39a2d3d9486644fc327bf83094d528f04a7b48dd7",
+      "bytes": 84445,
+      "format": "JPEG",
+      "width": 1188,
+      "height": 848,
+      "capture_provenance": "Actual Blockbench 5.2.2 North capture, same camera and zoom, unselected; model files not saved."
+    },
+    {
+      "path": "screenshots/dish-phase1-frame15-door-face-order-only-north.jpg",
+      "sha256": "9f703f11d76a94f856b8219c991f08d9e94affc36eff8f556ea6f4134b17bf03",
+      "bytes": 85758,
+      "format": "JPEG",
+      "width": 1188,
+      "height": 848,
+      "capture_provenance": "Actual Blockbench 5.2.2 North capture, same camera and zoom, unselected; model files not saved."
+    }
+  ],
+  "controlled_variable": {
+    "path": "$.elements[3].faces",
+    "name": "group5 original cube 1",
+    "bone": "group5",
+    "cube_one_based": 1,
+    "uuid": "d6e757b6-4fde-56f5-9f06-753e8177f1f5",
+    "baseline_face_order": [
+      "north",
+      "east",
+      "south",
+      "west",
+      "up",
+      "down"
+    ],
+    "control_face_order": [
+      "east",
+      "west",
+      "up",
+      "down",
+      "south",
+      "north"
+    ],
+    "all_structured_values_equal": true,
+    "only_dictionary_key_order_changed": true
+  },
+  "visual_result": "Source right window gains the canonical left four-band arrangement when only source door face order changes; canonical remains invariant.",
+  "pixel_analysis": {
+    "coordinate_convention": "Original 1188x848 JPEG pixels, top-left origin, half-open [x0,y0,x1,y1)",
+    "original_rgb_decoding_only": true,
+    "resampling_warping_color_normalization": false,
+    "crops_saved": false,
+    "rois": {
+      "canonical_model": [
+        190,
+        260,
+        393,
+        463
+      ],
+      "source_model": [
+        795,
+        260,
+        998,
+        463
+      ],
+      "canonical_window": [
+        254,
+        361,
+        329,
+        412
+      ],
+      "source_window": [
+        859,
+        361,
+        934,
+        412
+      ]
+    },
+    "canonical_to_source_translation_pixels": [
+      605,
+      0
+    ],
+    "same_position_baseline_to_control": {
+      "canonical_model": {
+        "pixel_count": 41209,
+        "changed_rgb_pixels": 0,
+        "mean_absolute_channel_difference_0_to_255": 0.0,
+        "maximum_channel_difference": 0,
+        "p95_absolute_channel_difference": 0.0
+      },
+      "source_model": {
+        "pixel_count": 41209,
+        "changed_rgb_pixels": 4430,
+        "mean_absolute_channel_difference_0_to_255": 1.1569236493646209,
+        "maximum_channel_difference": 51,
+        "p95_absolute_channel_difference": 9.0
+      },
+      "canonical_window": {
+        "pixel_count": 3825,
+        "changed_rgb_pixels": 0,
+        "mean_absolute_channel_difference_0_to_255": 0.0,
+        "maximum_channel_difference": 0,
+        "p95_absolute_channel_difference": 0.0
+      },
+      "source_window": {
+        "pixel_count": 3825,
+        "changed_rgb_pixels": 3825,
+        "mean_absolute_channel_difference_0_to_255": 12.046535947712417,
+        "maximum_channel_difference": 51,
+        "p95_absolute_channel_difference": 31.0
+      }
+    },
+    "same_scale_canonical_to_source_window": {
+      "baseline": {
+        "pixel_count": 3825,
+        "changed_rgb_pixels": 3825,
+        "mean_absolute_channel_difference_0_to_255": 12.069978213507625,
+        "maximum_channel_difference": 53,
+        "p95_absolute_channel_difference": 30.0
+      },
+      "control": {
+        "pixel_count": 3825,
+        "changed_rgb_pixels": 1486,
+        "mean_absolute_channel_difference_0_to_255": 0.8490631808278867,
+        "maximum_channel_difference": 13,
+        "p95_absolute_channel_difference": 4.0
+      }
+    },
+    "sampled_center_rows": [
+      {
+        "y": 365,
+        "canonical_x": 291,
+        "source_x": 896,
+        "baseline_canonical_rgb": [
+          87,
+          81,
+          93
+        ],
+        "baseline_source_rgb": [
+          75,
+          63,
+          83
+        ],
+        "control_canonical_rgb": [
+          87,
+          81,
+          93
+        ],
+        "control_source_rgb": [
+          87,
+          81,
+          93
+        ]
+      },
+      {
+        "y": 369,
+        "canonical_x": 291,
+        "source_x": 896,
+        "baseline_canonical_rgb": [
+          85,
+          79,
+          91
+        ],
+        "baseline_source_rgb": [
+          76,
+          64,
+          84
+        ],
+        "control_canonical_rgb": [
+          85,
+          79,
+          91
+        ],
+        "control_source_rgb": [
+          85,
+          79,
+          91
+        ]
+      },
+      {
+        "y": 378,
+        "canonical_x": 291,
+        "source_x": 896,
+        "baseline_canonical_rgb": [
+          67,
+          61,
+          75
+        ],
+        "baseline_source_rgb": [
+          76,
+          64,
+          84
+        ],
+        "control_canonical_rgb": [
+          67,
+          61,
+          75
+        ],
+        "control_source_rgb": [
+          67,
+          61,
+          75
+        ]
+      },
+      {
+        "y": 381,
+        "canonical_x": 291,
+        "source_x": 896,
+        "baseline_canonical_rgb": [
+          67,
+          61,
+          75
+        ],
+        "baseline_source_rgb": [
+          76,
+          64,
+          84
+        ],
+        "control_canonical_rgb": [
+          67,
+          61,
+          75
+        ],
+        "control_source_rgb": [
+          67,
+          61,
+          75
+        ]
+      },
+      {
+        "y": 390,
+        "canonical_x": 291,
+        "source_x": 896,
+        "baseline_canonical_rgb": [
+          105,
+          99,
+          111
+        ],
+        "baseline_source_rgb": [
+          112,
+          101,
+          115
+        ],
+        "control_canonical_rgb": [
+          105,
+          99,
+          111
+        ],
+        "control_source_rgb": [
+          105,
+          99,
+          111
+        ]
+      },
+      {
+        "y": 394,
+        "canonical_x": 291,
+        "source_x": 896,
+        "baseline_canonical_rgb": [
+          105,
+          99,
+          111
+        ],
+        "baseline_source_rgb": [
+          108,
+          100,
+          115
+        ],
+        "control_canonical_rgb": [
+          105,
+          99,
+          111
+        ],
+        "control_source_rgb": [
+          105,
+          99,
+          111
+        ]
+      },
+      {
+        "y": 403,
+        "canonical_x": 291,
+        "source_x": 896,
+        "baseline_canonical_rgb": [
+          127,
+          124,
+          133
+        ],
+        "baseline_source_rgb": [
+          108,
+          100,
+          115
+        ],
+        "control_canonical_rgb": [
+          127,
+          124,
+          133
+        ],
+        "control_source_rgb": [
+          127,
+          124,
+          133
+        ]
+      },
+      {
+        "y": 407,
+        "canonical_x": 291,
+        "source_x": 896,
+        "baseline_canonical_rgb": [
+          127,
+          124,
+          133
+        ],
+        "baseline_source_rgb": [
+          108,
+          100,
+          115
+        ],
+        "control_canonical_rgb": [
+          127,
+          124,
+          133
+        ],
+        "control_source_rgb": [
+          127,
+          124,
+          133
+        ]
+      }
+    ],
+    "viewport_strip_y_half_open": [
+      120,
+      740
+    ],
+    "viewport_changed_pixel_count": 4430,
+    "viewport_changed_bbox_half_open": [
+      856,
+      360,
+      936,
+      416
+    ],
+    "metric_is_acceptance_threshold": false,
+    "residual_caveat": "Not exact pixel parity. Small remaining JPEG/edge sampling differences do not establish a new asset defect; each residual cause was not determined."
+  },
+  "limits": [
+    "No Minecraft/Bedrock or Java runtime was run or visually accepted.",
+    "No claim of universal transparent ordering, exact pixels or all-pose parity.",
+    "No production geometry, PNG, alpha, material or renderer change.",
+    "Other phase sightings may share this mechanism but are not individually controlled by this endpoint test."
+  ],
+  "runtime_modified": false,
+  "original_evidence_manifest_sha256": "fdecc9efe23228cea0c5d1259807da6fe469f385690270ff4379a3b302f055ca",
+  "original_preparation_manifest_sha256": "d8ccc878dfe80415300dc1f1b2adfe930ab355aae10816f90359bc71ec242cff",
+  "fixtures": [
+    {
+      "path": "dish-phase1-frame15-baseline.bbmodel",
+      "sha256": "f2ac0f16808b38d8d418dbbb6dfede25ad6d29cace02f31d313ef3e51c5b86e6",
+      "bytes": 50568
+    },
+    {
+      "path": "dish-phase1-frame15-door-face-order-only.bbmodel",
+      "sha256": "0a60808e82a60fc8ea308c58a3891e7cbb681c8201fa20a33434765b3c2f9573",
+      "bytes": 50568
+    }
+  ],
+  "extraction": {
+    "whole_sheet_outliner_indices": [
+      6,
+      7
+    ],
+    "whole_sheet_element_indices": [
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47
+    ],
+    "group_count": 24,
+    "element_count": 12,
+    "translation": [
+      -56,
+      -21,
+      0
+    ],
+    "source_offset": [
+      -24,
+      0,
+      0
+    ],
+    "canonical_offset": [
+      24,
+      0,
+      0
+    ],
+    "inverse_translation_recovers_selected_bytes": true,
+    "source_mesh_vertices_unchanged": true,
+    "all_existing_ids_names_and_textures_retained": true
+  },
+  "target": {
+    "bone": "group5",
+    "source_cube_one_based": 1,
+    "source_name": "group5 original cube 1",
+    "source_element_uuid": "d6e757b6-4fde-56f5-9f06-753e8177f1f5",
+    "whole_sheet_element_index": 39,
+    "isolated_element_index": 3,
+    "canonical_cube": "group5_0",
+    "canonical_element_index": 9,
+    "front_face": "north",
+    "rear_face": "south",
+    "source_face_order": [
+      "north",
+      "east",
+      "south",
+      "west",
+      "up",
+      "down"
+    ],
+    "official_cube_face_order": [
+      "east",
+      "west",
+      "up",
+      "down",
+      "south",
+      "north"
+    ]
+  },
+  "proof": {
+    "structured_values_identical": true,
+    "only_order_differences": [
+      {
+        "path": "$.elements[3].faces",
+        "baseline": [
+          "north",
+          "east",
+          "south",
+          "west",
+          "up",
+          "down"
+        ],
+        "control": [
+          "east",
+          "west",
+          "up",
+          "down",
+          "south",
+          "north"
+        ]
+      }
+    ],
+    "restore_single_face_order_recovers_baseline_bytes": true,
+    "vertices_uvs_winding_normals_materials_textures_ids_pose_camera_unchanged_between_pair": true
+  }
+}

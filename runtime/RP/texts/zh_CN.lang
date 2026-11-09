@@ -100,7 +100,7 @@ otc.guide.group.compatibility.title=其他 Addon 与差异
 otc.guide.group.compatibility.summary=已支持的公开食品数据以及仍需开发的兼容功能。
 otc.guide.page.placing_station.title=布置第一家餐厅
 otc.guide.page.placing_station.step1=先合成并放置打单机、菜单立牌、操作台、椅子、包装架、餐盘架和洗碗池。
-otc.guide.page.placing_station.step2=设备绑定仍用半径 24 格的球形范围。新打单机若与已登记、已加载的另一台各轴坐标差都在 -24 到 +25 格内（旧机器减新位置，含边界），便不能放置；斜向距离超过 24 格仍可能被挡，任一轴相隔 26 格即可避开该台。
+otc.guide.page.placing_station.step2=设备绑定仍用半径 24 格的球形范围。新打单机计算已登记、已加载的其他机器，各轴坐标差须在 -24 到 +25 格内（旧机器减新位置，含边界）。数量达到全局 maxOrderMachinesWithin24（默认 1，最低 1）便不能放置；斜向超过 24 格仍可能计入，任一轴相隔 26 格即可排除该台。
 otc.guide.page.placing_station.step3=包装架与餐盘架须在操作台 5 格内；完成订单时会检查此供给范围。
 otc.guide.page.first_menu.title=设置初始菜单
 otc.guide.page.first_menu.step1=首次放置立牌会有四道默认菜；可手持可识别的食物点击立牌加入新菜。
@@ -202,4 +202,10 @@ otc.guide.page.limitations.title=Bedrock 差异与信息
 otc.guide.page.limitations.step1=本指南是 Order To Cook 的独立教学书。它使用基岩版表单，不修改 Cookery 原指南或替代其配方页。
 otc.guide.page.limitations.step2=冰箱整理遵守 Bedrock 原生堆叠上限，仍没有食品限定或每格 128 件；炉灶与操作台采用单页控制，玩家动画与载具仍有平台差异。
 otc.guide.page.limitations.step3=本移植由 burnt-tea-dev 维护，保留原作者 breezeth 的 GPLv3 署名。可在本页打开完整来源与许可声明。
-otc.error.machine_placement_conflict=无法放置：另一台已登记、已加载的打单机位于放置盒形范围内（旧机器减新位置，各轴 -24 到 +25，含边界）。请在任一轴相隔至少 26 格。
+otc.error.machine_placement_conflict=无法放置：放置盒形范围内已达全局上限 %s 台（旧机器减新位置，各轴 -24 到 +25，含边界）。请移到计入的已登记、已加载机器较少处；任一轴相隔 26 格即可排除该台。
+
+## Carried paper/bag expiry alerts (pinned Java messages).
+message.ordertocook.order_expiring_soon_5=%s的订单即将在 5 分钟内过期！
+message.ordertocook.order_expiring_soon_1=%s的订单即将在 1 分钟内过期！
+message.ordertocook.order_expired_named=%s的订单已超时！
+keyword.ordertocook.customer=顾客

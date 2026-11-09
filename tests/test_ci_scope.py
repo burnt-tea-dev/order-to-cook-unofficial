@@ -93,6 +93,18 @@ class ScopeTests(unittest.TestCase):
         (self.repo / 'README.md').symlink_to('runtime/BP/scripts/main.js')
         self.assertTrue(self.required(self.commit()))
 
+    def test_both_asset_regression_entrypoints_install_review_dependencies(self):
+        # Stove tests import the independent source review evaluator, which uses
+        # NumPy as well as Pillow. A pre-provisioned devbox must not hide this.
+        for name in ['build.yml', 'prepare-candidate.yml']:
+            with self.subTest(workflow=name):
+                workflow = (ROOT / '.github/workflows' / name).read_text()
+                install = 'python -m pip install Pillow==12.3.0 numpy==2.3.5'
+                regression = 'python -m unittest discover -s tests -p test_appliance_geometry.py'
+                self.assertEqual(workflow.count(install), 1)
+                self.assertEqual(workflow.count(regression), 1)
+                self.assertLess(workflow.index(install), workflow.index(regression))
+
     def test_cli_missing_or_malformed_event_keeps_full_checks(self):
         event_path = self.repo / 'event.json'
         for contents in ['not json', '[]', '{"pull_request": false}']:

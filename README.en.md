@@ -2,9 +2,25 @@
 
 [简体中文](README.zh-CN.md) · [繁體中文](README.md) · **English**
 
+0.1.48-alpha.1 is an **unpublished candidate integrated onto merged #75 main**. It corrects seven static motorcycle X-angle signs and 41 physical box-UV mirror mappings while retaining every original texture and all gameplay/steering/wheel behavior. Nine original common-editor photographs support the bounded static comparison, not native or moving-vehicle acceptance. Paired identity is frozen; packages are built from the exact integrated candidate commit. Any later source change requires fresh build proofs. [Scope, identity and limits](docs/validation/0.1.48-alpha.1/MOTORCYCLE_STATIC_MAPPING.md).
+
+0.1.47 restores a shared refrigerator root across both independently posed doors, with lower-close controller priority including neutral samples. Cosmetic recovery now continues when reading the upper block throws, without weakening inventory migration safeguards. The paired candidate identity is frozen, not published; finite sampling, SRT shear approximation, reversal/STOP differences and non-atomic two-block writes remain. [Source, identity and validation](docs/validation/0.1.47-alpha.1/FRIDGE_SHARED_ROOT.md).
+
+0.1.46 restores the source stove ignition wobble and squash with an independent 20-tick countdown and 19 sampled poses, retaining the existing two-tick service cadence, fuel, cooking and items. This is not exact continuous Java animation, packet-start or STOP/reset parity. See [source, identity and validation](docs/validation/0.1.46-alpha.1/STOVE_IGNITION.md) and [38 cloud Blockbench captures](docs/validation/visual-audio/blockbench-20261108/remaining-static/README.md), including furniture, supply shelves and local helmet comparisons. Native transparency, worn-player binding and game-client acceptance remain open.
+
+Version 0.1.45 restores the source renderer’s water plane in all 11 washing-table plate states, preserving body geometry and original pixels. A separate dry item visual avoids adding world-only water to the item. Synchronize the three bagging-guide sources so asset regeneration preserves the completed dine-in wording. [Source/tests](docs/validation/0.1.45-alpha.1/WASHING_WATER.md) and [16 Blockbench before/after screenshots](docs/validation/visual-audio/blockbench-20261108/washing-water/README.md) retain native transparency/item-display limits; this is not a claim of complete Java parity.
+
+Version 0.1.44 adds customer-named five-minute, one-minute and expired alerts for carried papers and dine-in/delivery bags, without selecting them. Flags travel with each physical item; newly prepared bags start fresh. The existing 20-tick pass checks at most 36 ordinary slots per player; plates and world containers stay silent. Retained records suppress terminal/stale papers, but orphan bags cannot recover pruned history. Item persistence and chat are not atomic. CPU cost additionally scales with the retained records of referenced restaurants, with no native performance or complete Java-parity claim. See [source validation, costs and adaptation limits](docs/validation/0.1.44-alpha.1/CARRIED_ORDER_ALERTS.md). This local candidate is unreleased and has no new native/client acceptance.
+
+Version 0.1.43 restores restaurant naming fees: no current custom name means free; each confirmation with a custom name costs one unit of the current physical currency, including same-name confirmation and clearing. Clearing makes the next naming free again. Ordinary staff cannot rename; the existing owner/admin policy remains. Legacy/portable naming state, full-stack refunds and the unavoidable generated-name ambiguity are documented in [the rename report](docs/validation/0.1.43-alpha.1/RESTAURANT_RENAME.md). Source/adapter checks only; this candidate is unreleased and has no new native/client acceptance.
+
+Version 0.1.42 exposes global `deliveryRate` (default `0.3`): `0` generates only dine-in machine offers, `1` only delivery. Existing orders and ordinary walk-ins keep their types. Future offers use the current global value even after reload or partial restaurant-config propagation. [Operator interface and source evidence](docs/validation/0.1.42-alpha.1/DELIVERY_RATE.md).
+
+Version 0.1.41 honors global `maxOrderMachinesWithin24`: default/minimum `1`; `2` permits two nearby machines and blocks a third. The existing [-24, +25] per-axis placement box, registered/live discovery, full portable-item cancellation and equipment sphere stay unchanged. Resetting to `1` affects only future attempts. Source/adapter checks do not establish native ordering, performance or full parity. [Configuration and evidence](docs/validation/0.1.41-alpha.1/MACHINE_COUNT.md).
+
 Version 0.1.40 honors the global `countertopConsumeLeather` setting. Default `true` still uses one packaging supply; `false` lets delivery and explicitly selected dine-in bags be prepared without any rack, while plates still need a clean plate. Only source/adapter checks are complete, not native/client acceptance. [Behavior and evidence](docs/validation/0.1.40-alpha.1/LEATHER_CONFIG.md).
 
-Version 0.1.39 corrects default new-machine placement to inclusive [-24, +25] bounds on every axis (existing minus new). Equipment’s 24-block sphere, portable data and existing dense restaurants stay unchanged. Unregistered/unloaded discovery and Java’s configurable count remain unimplemented. Source/adapter checks only, without native or client acceptance. [Source and limits](docs/validation/0.1.39-alpha.1/MACHINE_PLACEMENT.md).
+Version 0.1.39 corrects default new-machine placement to inclusive [-24, +25] bounds on every axis (existing minus new). Equipment’s 24-block sphere, portable data and existing dense restaurants stay unchanged. Unregistered/unloaded discovery remains unimplemented; the current candidate adds the configurable count below. Source/adapter checks only, without native or client acceptance. [Source and limits](docs/validation/0.1.39-alpha.1/MACHINE_PLACEMENT.md).
 
 Version 0.1.38 lets dine-in orders be packed to go. Normal countertop clicks and held-ticket shortcuts still default to plating; sneak-click for the explicit plate/bag choice. Bags use packaging without changing the order type, deadline, payment or walk-in statistics, and leave no dining/dirty plate or boom bonus. This change has source and native-I/O-double regression coverage only, not client/live-world acceptance. [Scope and evidence](docs/validation/0.1.38-alpha.1/DINE_IN_TAKEOUT.md).
 
@@ -28,7 +44,7 @@ Current source checks restaurant permission before claiming a station and uses t
 
 Historical `0.1.2-alpha.3` client evidence includes refrigerator geometry, hand-washing particles and greyed progression text FAILs; it does not certify this version: [historical client record](docs/validation/0.1.2-alpha.3/client-20261101-linux-dot.md) · [button-contrast correction](docs/validation/UNRELEASED-button-contrast.md).
 
-**Current source visual/audio changes.** It fixes refrigerator interior UVs and door curves, dishwasher deformation and preview, the initial meal model, customer timing, printer/bag animations, and confirmed sound/particle differences. See [VISUAL_AUDIO_PARITY.md](docs/VISUAL_AUDIO_PARITY.md) for fixes and reproducible evidence. Interactive Blockbench inspection and Java/Bedrock client comparisons have **not been run for this candidate**; offline comparisons do not replace the historical client results or establish complete parity.
+**Current source visual/audio changes.** It fixes refrigerator interior UVs and door curves, dishwasher deformation and preview, the initial meal model, customer timing, printer/bag animations, and confirmed sound/particle differences. See [VISUAL_AUDIO_PARITY.md](docs/VISUAL_AUDIO_PARITY.md) for fixes and reproducible evidence. Partial cloud Blockbench inspection is documented for [customer/equipment samples](docs/validation/visual-audio/blockbench-20261108/README.md) and [finite plate/printer/bag stages](docs/validation/visual-audio/blockbench-20261108/stage-review/README.md). Full visual and Java/Bedrock client acceptance remain incomplete; these findings do not replace the historical client results or establish complete parity.
 
 
 Original by **breezeth**: [CurseForge](https://www.curseforge.com/minecraft/mc-mods/order-to-cook) · [Java source](https://github.com/breezeth-CN/OrdertoCook). Maintained by `casama233` / `burnt-tea-dev`, retaining upstream GPLv3, author attribution and asset provenance. A request about supplementary asset scope has not received a response and is recorded as non-blocking; development continues, but actual licensing conflicts still require resolution.
@@ -55,7 +71,7 @@ Personal progression counts completed order settlements only after this feature 
 
 ## Survival restaurant walkthrough
 
-1. **Set up a restaurant.** Craft/place an order printer, menu stand, preparation counter, packaging rack, plate rack, chairs and washing basin. New machine placement uses a box: it is cancelled if another registered, currently readable machine has **existing minus new** X/Y/Z offsets all in **[-24, +25]**, inclusive, regardless of owner. A 26-block gap on any one axis clears that machine; a diagonal distance over 24 does not guarantee placement. Equipment still finds the nearest restaurant within a **24-block spherical radius**. Existing dense restaurants are not removed or moved. Unregistered/unloaded-machine discovery and Java’s configurable machine count remain unimplemented. [Source and validation](docs/validation/0.1.39-alpha.1/MACHINE_PLACEMENT.md).
+1. **Set up a restaurant.** Craft/place an order printer, menu stand, preparation counter, packaging rack, plate rack, chairs and washing basin. New placement counts other registered, currently readable machines whose **existing minus new** X/Y/Z offsets all lie in **[-24, +25]**, inclusive, regardless of owner. It is cancelled when that count reaches global `maxOrderMachinesWithin24` (default/minimum `1`). A 26-block gap on one axis excludes that machine; a diagonal distance over 24 does not guarantee placement. Equipment still finds the nearest restaurant within a **24-block spherical radius**. Existing dense restaurants are not removed or migrated. Unregistered/unloaded discovery remains unimplemented. [Configuration and validation](docs/validation/0.1.41-alpha.1/MACHINE_COUNT.md).
 2. **Configure the menu.** Click the stand with food to register a dish without consuming it. Empty-hand/sneak-click to manage the menu. Each dish counts a single nutritional value regardless of stack size.
 3. **Restock supplies.** With the default leather setting, supply leather to the packaging rack; supply clean plates to the plate rack. Both racks must be within **5 blocks** of the counter; the counter, chairs and relevant freezers must be within **24 blocks** of the restaurant.
 4. **Open and accept orders.** Click the printer to open, then choose a candidate order. Accepting one removes the other candidates in that batch; independent walk-in orders remain.
@@ -168,6 +184,15 @@ Catalog/provider foods are recognized automatically. Administrators can still ex
 
 `example:your_dish` is a placeholder and must be replaced by an installed item ID. Empty currency ID restores oTc coins. Each configured currency item counts as one unit; switching affects future payments but does not convert existing coins.
 
+Administrators can set the global machine-placement count for **every future placement in this world**:
+
+```mcfunction
+/scriptevent ordertocook:config {"maxOrderMachinesWithin24":2}
+/scriptevent ordertocook:config {"maxOrderMachinesWithin24":1}
+```
+
+Server events, creative players and `otc_admin` players can use this entry. Only JSON integers in the signed 32-bit range `-2147483648..2147483647` are accepted; values below `1` are saved/effective as `1`, never unlimited. Missing or invalid saved fields use `1` without rewriting the document on load. A value of `2` permits placement with one other qualifying machine but blocks placement with two. Every attempt reads the current global value, regardless of restaurant owner or portable snapshot. Resetting to `1` does not remove, migrate or deactivate existing dense restaurants. Count-only commands do not rewrite restaurant records. Shared equipment still chooses the nearest restaurant in its original sphere, so dense layouts can change its controlling restaurant. [Persistence, discovery and native-ordering limits](docs/validation/0.1.41-alpha.1/MACHINE_COUNT.md).
+
 Administrators can disable or restore leather consumption for **all restaurants in this world**:
 
 ```mcfunction
@@ -175,7 +200,19 @@ Administrators can disable or restore leather consumption for **all restaurants 
 /scriptevent ordertocook:config {"countertopConsumeLeather":true}
 ```
 
-Only JSON booleans are accepted. The Java default is `true`; missing or invalid saved field values safely use that default without an automatic rewrite. `false` skips the packaging rack entirely for delivery and explicit dine-in bags. Existing rack stock and prepared bags are unchanged; plates still require and consume a clean plate. The setting persists across worldLoad and is read again after a picker/carrier form closes. Malformed saved settings stop initialization without erasing them. This is a world setting, not a nearby-restaurant preference. Machine-count and delivery-rate configuration are still not exposed. [Scope and save limits](docs/validation/0.1.40-alpha.1/LEATHER_CONFIG.md).
+Only JSON booleans are accepted. The Java default is `true`; missing or invalid saved field values safely use that default without an automatic rewrite. `false` skips the packaging rack entirely for delivery and explicit dine-in bags. Existing rack stock and prepared bags are unchanged; plates still require and consume a clean plate. The setting persists across worldLoad and is read again after a picker/carrier form closes. Malformed saved settings stop initialization without erasing them. This is a world setting, not a nearby-restaurant preference. [Scope and save limits](docs/validation/0.1.40-alpha.1/LEATHER_CONFIG.md).
+
+Administrators can set delivery probability for **future machine-generated offers in every restaurant**:
+
+```mcfunction
+/scriptevent ordertocook:config {"deliveryRate":0}
+/scriptevent ordertocook:config {"deliveryRate":1}
+/scriptevent ordertocook:config {"deliveryRate":0.3}
+```
+
+Only finite JSON numbers in `0..1` are accepted, with no string/boolean coercion. The last command restores the Java default. Server events, creative players and `otc_admin` players retain access. This reuses Bedrock's operator event; Java's verified interface is a global config file loaded at startup, not a player GUI or verified live file reload. Missing/invalid saved fields use `0.3` without rewriting raw settings; malformed documents stop initialization and remain preserved.
+
+The value persists globally and governs first opening, administrator refresh and native-tick refresh for existing, new and portable/restored machines. Changing it does not reroll/retype offered, accepted, packed or completed orders, alter their proof/deadlines/carriers, or turn ordinary walk-ins into delivery. A global commit followed by a restaurant-save failure remains committed: the next generation uses the global rate despite an old restaurant snapshot. Pre-write failure or a silent non-write leaves live settings unchanged; write-then-throw/readback failure may leave disk newer than live memory until reload. This is not atomic propagation of all settings. [Evidence and limits](docs/validation/0.1.42-alpha.1/DELIVERY_RATE.md).
 
 You may temporarily override refresh intervals and nutrition thresholds:
 

@@ -2,12 +2,12 @@
 // Bedrock adaptation of Order To Cook by breezeth-CN; see THIRD_PARTY_NOTICES.md.
 import { BlockPermutation, EquipmentSlot, ItemStack, MolangVariableMap, system, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
-import { advanceDoorMotion, dishwasherFrame, APPLIANCE_TICK_INTERVAL, FRIDGE_MOTION_TICKS, FRIDGE_LAST_FRAME } from "./appliance_motion.js";
+import { advanceDoorMotion, fridgeRootFrame, dishwasherFrame, APPLIANCE_TICK_INTERVAL, FRIDGE_MOTION_TICKS, FRIDGE_LAST_FRAME } from "./appliance_motion.js";
 import { formatEquipmentInspection, INSPECTION_TYPES } from "./equipment_inspection.js";
 import { createNativeFridgeStorage, compactFridgeInventory, FRIDGE_UPPER, isFridge, isUpperFridge } from "./native_fridge.js";
 import { createStoveControls } from "./stove_controls.js";
 import { SMOKING_RECIPES } from "./smoking_recipes.js";
-import { initializeStoveFire, igniteStoveFire, advanceStoveFire, stoveFireFrame } from "./stove_fire.js";
+import { initializeStoveFire, igniteStoveFire, advanceStoveFire, stoveFireFrame, stoveIgnitionFrame } from "./stove_fire.js";
 
 export { SMOKING_RECIPES };
 import { playEffects, plateSound, fridgeDoorEffects, dishwasherTakeEffects, dishwasherTimedEffects, washingEffectBeat, handwashingEffects } from "./audiovisual.js";
@@ -381,8 +381,22 @@ export function createApplianceService(ctx) {
       setState(block, `${NS}plates_high`, d.plates === 16);
     }
     if (station.typeId === STOVE) {
-      setState(block, `${NS}lit`, d.litTime > 0);
-      setState(block, `${NS}fire_frame`, stoveFireFrame(d));
+      // Commit texture and both halves of the pose age atomically. Separate
+      // writes can briefly bind a new texture to the previous ignition pose.
+      const age = stoveIgnitionFrame(d);
+      const states = { [`${NS}lit`]: d.litTime > 0, [`${NS}fire_frame`]: stoveFireFrame(d),
+        [`${NS}ignition_frame`]: age % 16, [`${NS}ignition_frame_high`]: age >= 16 };
+      try {
+        let permutation = block.permutation;
+        let changed = false;
+        for (const [state, value] of Object.entries(states)) {
+          if (permutation.getState(state) !== value) {
+            permutation = permutation.withState(state, value);
+            changed = true;
+          }
+        }
+        if (changed) block.setPermutation(permutation);
+      } catch { /* Missing resources cannot change the saved cooking state. */ }
     }
   }
 
@@ -524,6 +538,7 @@ export function createApplianceService(ctx) {
 
   function tickFridge(station, ticks) {
     const compartments = viewers.get(station.id);
+    const poses = {};
     for (const half of ["lower", "upper"]) {
       const block = fridgeBlock(station, half);
       const key = `${station.id}:${half}`;
@@ -542,12 +557,22 @@ export function createApplianceService(ctx) {
       };
       const motion = advanceDoorMotion(previous, open, ticks);
       doorPositions.set(key, motion);
+      poses[half] = { block, motion, open };
+    }
+    const root = fridgeRootFrame(poses.upper?.motion, poses.lower?.motion);
+    for (const half of ["lower", "upper"]) {
+      if (!poses[half]) continue;
+      const { block, motion, open } = poses[half];
       fridgeDoors(station, half, open);
-      // Switch the clip selector and frame together; mismatched intermediate
-      // permutations would briefly show the opposite end of the door stroke.
+      // Each block gets one coherent door/root pose. Cross-block writes are not
+      // atomic: compare actual states every tick so a failed write is retried
+      // at the current pose on the next loaded tick, including idle endpoints.
       try {
-        if (block.permutation.getState(`${NS}closing`) !== motion.closing || storedFrame !== motion.frame)
-          block.setPermutation(block.permutation.withState(`${NS}closing`, motion.closing).withState(`${NS}frame`, motion.frame));
+        if (block.permutation.getState(`${NS}closing`) !== motion.closing ||
+            block.permutation.getState(`${NS}frame`) !== motion.frame ||
+            block.permutation.getState(`${NS}root_frame`) !== root)
+          block.setPermutation(block.permutation.withState(`${NS}closing`, motion.closing)
+            .withState(`${NS}frame`, motion.frame).withState(`${NS}root_frame`, root));
       } catch { /* Missing resources do not change stored food. */ }
     }
     if (compartments && !compartments.lower.size && !compartments.upper.size) viewers.delete(station.id);
@@ -776,6 +801,7 @@ export function createApplianceService(ctx) {
     if (!inventory) return;
     let changed = syncStoveInputs(station, inventory);
     for (let step = 0; step < ticks; step++) {
+      if (d.fireAnimationTicks > 0) changed = true;
       const effect = advanceStoveFire(d);
       if (effect) stoveFeedback(station, effect);
       if (d.litTime > 0) { d.litTime--; changed = true; }
@@ -1059,7 +1085,15 @@ export function createApplianceService(ctx) {
         }
         if (station.typeId === STOVE && delta) tickStove(station, delta);
         else if (station.typeId === DISHWASHER && delta) { tickDishwasher(station, delta); updateVisual(station); }
-        if (station.typeId === FRIDGE) { nativeFridge.ensure(station); tickFridge(station, delta); }
+        if (station.typeId === FRIDGE) {
+          try { nativeFridge.ensure(station); }
+          catch (error) {
+            // Storage recovery failures must not retain an unreadable half's
+            // viewers/motion or its shared root on the still-loaded half.
+            console.warn(`[OrderToCook] ${station.id}: ${String(error)}`);
+          }
+          tickFridge(station, delta);
+        }
         else if (!delta) updateVisual(station);
       } catch (error) {
         // Do not reset invalid state or erase missing inventories on recovery.

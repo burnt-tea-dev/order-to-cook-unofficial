@@ -1,0 +1,1344 @@
+{
+  "status": "FINAL_FREEZE_VISUAL_INPUTS_IDENTICAL_NOT_ADDITIONAL_GUI_ACCEPTANCE",
+  "original_fixture_commit": "e544f563062bf92e58afaa057a9ee52fd7ccbdc8",
+  "service_commit": "dcee546b7b918e3deb0163ec607f280cef2880d4",
+  "freeze_commit": "e0f7f54e9c85475abf3975e31f96bf8d25f4c1e4",
+  "freeze_tree": "a523979692bdf30b84ccdcb5bd2d4d79e29aaf29",
+  "checked_inputs": [
+    {
+      "path": "runtime/BP/blocks/refrigerator.json",
+      "fixture_blob": "3cc490efb08b0f8f341237f115203e45ab5f3602",
+      "dcee_blob": "3cc490efb08b0f8f341237f115203e45ab5f3602",
+      "freeze_blob": "3cc490efb08b0f8f341237f115203e45ab5f3602",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/BP/blocks/refrigerator_upper.json",
+      "fixture_blob": "f003486e9a079f9ae515720929eb6e08dd78e9a9",
+      "dcee_blob": "f003486e9a079f9ae515720929eb6e08dd78e9a9",
+      "freeze_blob": "f003486e9a079f9ae515720929eb6e08dd78e9a9",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/BP/scripts/appliance_motion.js",
+      "fixture_blob": "6b75b874c9dc640373de47ebb437607bac71f50a",
+      "dcee_blob": "6b75b874c9dc640373de47ebb437607bac71f50a",
+      "freeze_blob": "6b75b874c9dc640373de47ebb437607bac71f50a",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/BP/scripts/appliance_pose_data.js",
+      "fixture_blob": "76205299fdd1cc08c12d43889c092c39fa6c6577",
+      "dcee_blob": "76205299fdd1cc08c12d43889c092c39fa6c6577",
+      "freeze_blob": "76205299fdd1cc08c12d43889c092c39fa6c6577",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/BP/scripts/appliances.js",
+      "fixture_blob": "cdfc528c4f13cb5d05069144912d67115219bdc3",
+      "dcee_blob": "2d3e86a546195f22e214cbbf50731834af084fe6",
+      "freeze_blob": "2d3e86a546195f22e214cbbf50731834af084fe6",
+      "same_as_fixture": false
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_0.geo.json",
+      "fixture_blob": "ad3bbadad1c0ebc9f4d44807a0bf5c1c1af0315d",
+      "dcee_blob": "ad3bbadad1c0ebc9f4d44807a0bf5c1c1af0315d",
+      "freeze_blob": "ad3bbadad1c0ebc9f4d44807a0bf5c1c1af0315d",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_0_root_1.geo.json",
+      "fixture_blob": "fd3d65042d0f28c76f114d9542841b1a963b1f5b",
+      "dcee_blob": "fd3d65042d0f28c76f114d9542841b1a963b1f5b",
+      "freeze_blob": "fd3d65042d0f28c76f114d9542841b1a963b1f5b",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_0_root_2.geo.json",
+      "fixture_blob": "f660b2e57f046cfab9bff93570705e7a05b35b43",
+      "dcee_blob": "f660b2e57f046cfab9bff93570705e7a05b35b43",
+      "freeze_blob": "f660b2e57f046cfab9bff93570705e7a05b35b43",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_0_root_3.geo.json",
+      "fixture_blob": "e0749f64af7de1c3cdf42fbe458aa9f9bd0c2b02",
+      "dcee_blob": "e0749f64af7de1c3cdf42fbe458aa9f9bd0c2b02",
+      "freeze_blob": "e0749f64af7de1c3cdf42fbe458aa9f9bd0c2b02",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_1.geo.json",
+      "fixture_blob": "54c2cb8730cd301479deb7b6b4e7c68bf87d9c97",
+      "dcee_blob": "54c2cb8730cd301479deb7b6b4e7c68bf87d9c97",
+      "freeze_blob": "54c2cb8730cd301479deb7b6b4e7c68bf87d9c97",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_10.geo.json",
+      "fixture_blob": "5f2478c3b59d32a2089261706eafc15b07df1095",
+      "dcee_blob": "5f2478c3b59d32a2089261706eafc15b07df1095",
+      "freeze_blob": "5f2478c3b59d32a2089261706eafc15b07df1095",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_10_root_1.geo.json",
+      "fixture_blob": "735e4aa42f9c342bf71fe4434d2724d12e93e9ba",
+      "dcee_blob": "735e4aa42f9c342bf71fe4434d2724d12e93e9ba",
+      "freeze_blob": "735e4aa42f9c342bf71fe4434d2724d12e93e9ba",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_10_root_2.geo.json",
+      "fixture_blob": "bfcb3cd13cd1daf2bca5e88cfc2e5c7421833dd1",
+      "dcee_blob": "bfcb3cd13cd1daf2bca5e88cfc2e5c7421833dd1",
+      "freeze_blob": "bfcb3cd13cd1daf2bca5e88cfc2e5c7421833dd1",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_10_root_3.geo.json",
+      "fixture_blob": "cfee5d40ee98ac22d1bf77525051c9b7b09812eb",
+      "dcee_blob": "cfee5d40ee98ac22d1bf77525051c9b7b09812eb",
+      "freeze_blob": "cfee5d40ee98ac22d1bf77525051c9b7b09812eb",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_1_root_1.geo.json",
+      "fixture_blob": "7791d0ff4bed72be34ef0cf2383d18fde984d2ce",
+      "dcee_blob": "7791d0ff4bed72be34ef0cf2383d18fde984d2ce",
+      "freeze_blob": "7791d0ff4bed72be34ef0cf2383d18fde984d2ce",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_1_root_2.geo.json",
+      "fixture_blob": "c7354e8fc59ef5b6c51198b7b5231e13a01e9dce",
+      "dcee_blob": "c7354e8fc59ef5b6c51198b7b5231e13a01e9dce",
+      "freeze_blob": "c7354e8fc59ef5b6c51198b7b5231e13a01e9dce",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_1_root_3.geo.json",
+      "fixture_blob": "610ff59471ed8a22a0c004cb0f6bc6237b88a70c",
+      "dcee_blob": "610ff59471ed8a22a0c004cb0f6bc6237b88a70c",
+      "freeze_blob": "610ff59471ed8a22a0c004cb0f6bc6237b88a70c",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_2.geo.json",
+      "fixture_blob": "03b7c620f8b53942af9be975812f22cecd528df9",
+      "dcee_blob": "03b7c620f8b53942af9be975812f22cecd528df9",
+      "freeze_blob": "03b7c620f8b53942af9be975812f22cecd528df9",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_2_root_1.geo.json",
+      "fixture_blob": "8e4e340b2b8bde4c6c3ec7764b4f688de65b790b",
+      "dcee_blob": "8e4e340b2b8bde4c6c3ec7764b4f688de65b790b",
+      "freeze_blob": "8e4e340b2b8bde4c6c3ec7764b4f688de65b790b",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_2_root_2.geo.json",
+      "fixture_blob": "d8d2db217893d69f5553f921b776d92f0fc82933",
+      "dcee_blob": "d8d2db217893d69f5553f921b776d92f0fc82933",
+      "freeze_blob": "d8d2db217893d69f5553f921b776d92f0fc82933",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_2_root_3.geo.json",
+      "fixture_blob": "d297a01e62a13205405d15d268cefe6ce792434a",
+      "dcee_blob": "d297a01e62a13205405d15d268cefe6ce792434a",
+      "freeze_blob": "d297a01e62a13205405d15d268cefe6ce792434a",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_3.geo.json",
+      "fixture_blob": "9e3aa3ab5ffdf57d661f5bfbd4cf9fe59a5de0d9",
+      "dcee_blob": "9e3aa3ab5ffdf57d661f5bfbd4cf9fe59a5de0d9",
+      "freeze_blob": "9e3aa3ab5ffdf57d661f5bfbd4cf9fe59a5de0d9",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_3_root_1.geo.json",
+      "fixture_blob": "67cc2f7386309fb7739d43db1fb201f61845ece8",
+      "dcee_blob": "67cc2f7386309fb7739d43db1fb201f61845ece8",
+      "freeze_blob": "67cc2f7386309fb7739d43db1fb201f61845ece8",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_3_root_2.geo.json",
+      "fixture_blob": "48056acf548755ce1ba9d35c5f9e6aceaf7da2d2",
+      "dcee_blob": "48056acf548755ce1ba9d35c5f9e6aceaf7da2d2",
+      "freeze_blob": "48056acf548755ce1ba9d35c5f9e6aceaf7da2d2",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_3_root_3.geo.json",
+      "fixture_blob": "07a3535c7a98d1a4722e8bde80c1d2fdc2ef85b2",
+      "dcee_blob": "07a3535c7a98d1a4722e8bde80c1d2fdc2ef85b2",
+      "freeze_blob": "07a3535c7a98d1a4722e8bde80c1d2fdc2ef85b2",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_4.geo.json",
+      "fixture_blob": "d4b3811ea31807316640a76ba60c4bc252dd0673",
+      "dcee_blob": "d4b3811ea31807316640a76ba60c4bc252dd0673",
+      "freeze_blob": "d4b3811ea31807316640a76ba60c4bc252dd0673",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_4_root_1.geo.json",
+      "fixture_blob": "6bc185354827c519abefc1bb5582edadce2c748a",
+      "dcee_blob": "6bc185354827c519abefc1bb5582edadce2c748a",
+      "freeze_blob": "6bc185354827c519abefc1bb5582edadce2c748a",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_4_root_2.geo.json",
+      "fixture_blob": "56537503c881f92b10480427ebff03aec9b4f05c",
+      "dcee_blob": "56537503c881f92b10480427ebff03aec9b4f05c",
+      "freeze_blob": "56537503c881f92b10480427ebff03aec9b4f05c",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_4_root_3.geo.json",
+      "fixture_blob": "c2780b4fb378967662e87bda11932c5c5d7466f2",
+      "dcee_blob": "c2780b4fb378967662e87bda11932c5c5d7466f2",
+      "freeze_blob": "c2780b4fb378967662e87bda11932c5c5d7466f2",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_5.geo.json",
+      "fixture_blob": "0f649fbc0ac8b3d826cc270a6b18cc420232544c",
+      "dcee_blob": "0f649fbc0ac8b3d826cc270a6b18cc420232544c",
+      "freeze_blob": "0f649fbc0ac8b3d826cc270a6b18cc420232544c",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_5_root_1.geo.json",
+      "fixture_blob": "599999dccf3ac576efe579780d0914101365acf0",
+      "dcee_blob": "599999dccf3ac576efe579780d0914101365acf0",
+      "freeze_blob": "599999dccf3ac576efe579780d0914101365acf0",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_5_root_2.geo.json",
+      "fixture_blob": "c8fb3ee8fb0cf17bfbff10e9123d2f5b934dc6a7",
+      "dcee_blob": "c8fb3ee8fb0cf17bfbff10e9123d2f5b934dc6a7",
+      "freeze_blob": "c8fb3ee8fb0cf17bfbff10e9123d2f5b934dc6a7",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_5_root_3.geo.json",
+      "fixture_blob": "35c8ea75cd980c2af2d99f33a6f0c41302e81f07",
+      "dcee_blob": "35c8ea75cd980c2af2d99f33a6f0c41302e81f07",
+      "freeze_blob": "35c8ea75cd980c2af2d99f33a6f0c41302e81f07",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_6.geo.json",
+      "fixture_blob": "925f1c130cfd49353336dbafd2f26729fe41a8cc",
+      "dcee_blob": "925f1c130cfd49353336dbafd2f26729fe41a8cc",
+      "freeze_blob": "925f1c130cfd49353336dbafd2f26729fe41a8cc",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_6_root_1.geo.json",
+      "fixture_blob": "5f74a33c351996ac6d2d2823fdf9bcc50a645e15",
+      "dcee_blob": "5f74a33c351996ac6d2d2823fdf9bcc50a645e15",
+      "freeze_blob": "5f74a33c351996ac6d2d2823fdf9bcc50a645e15",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_6_root_2.geo.json",
+      "fixture_blob": "34cba2289861b30328b98e148bd9b81a00451693",
+      "dcee_blob": "34cba2289861b30328b98e148bd9b81a00451693",
+      "freeze_blob": "34cba2289861b30328b98e148bd9b81a00451693",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_6_root_3.geo.json",
+      "fixture_blob": "3c600340722461797f90a8d5f8043da36d2d95ad",
+      "dcee_blob": "3c600340722461797f90a8d5f8043da36d2d95ad",
+      "freeze_blob": "3c600340722461797f90a8d5f8043da36d2d95ad",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_7.geo.json",
+      "fixture_blob": "56be6ba54b2c87a6a3cc520269d3236ad53b5971",
+      "dcee_blob": "56be6ba54b2c87a6a3cc520269d3236ad53b5971",
+      "freeze_blob": "56be6ba54b2c87a6a3cc520269d3236ad53b5971",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_7_root_1.geo.json",
+      "fixture_blob": "e3639383c669dd06de4c6bc52c57626e9382ff65",
+      "dcee_blob": "e3639383c669dd06de4c6bc52c57626e9382ff65",
+      "freeze_blob": "e3639383c669dd06de4c6bc52c57626e9382ff65",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_7_root_2.geo.json",
+      "fixture_blob": "7f53ebfdac03ee8c67f8b1f44ca9139e63b01d3d",
+      "dcee_blob": "7f53ebfdac03ee8c67f8b1f44ca9139e63b01d3d",
+      "freeze_blob": "7f53ebfdac03ee8c67f8b1f44ca9139e63b01d3d",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_7_root_3.geo.json",
+      "fixture_blob": "532acaea66246692ae9f5d8d54063d0a419ab30a",
+      "dcee_blob": "532acaea66246692ae9f5d8d54063d0a419ab30a",
+      "freeze_blob": "532acaea66246692ae9f5d8d54063d0a419ab30a",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_8.geo.json",
+      "fixture_blob": "13d3b6d7c994fd53b52cc31e2a603d398db1a7f1",
+      "dcee_blob": "13d3b6d7c994fd53b52cc31e2a603d398db1a7f1",
+      "freeze_blob": "13d3b6d7c994fd53b52cc31e2a603d398db1a7f1",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_8_root_1.geo.json",
+      "fixture_blob": "d8a34652a01288752703e78eb2f7cbb328b9c535",
+      "dcee_blob": "d8a34652a01288752703e78eb2f7cbb328b9c535",
+      "freeze_blob": "d8a34652a01288752703e78eb2f7cbb328b9c535",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_8_root_2.geo.json",
+      "fixture_blob": "fc850d5b163f51714d60f69da04f1f7bd5fd05d9",
+      "dcee_blob": "fc850d5b163f51714d60f69da04f1f7bd5fd05d9",
+      "freeze_blob": "fc850d5b163f51714d60f69da04f1f7bd5fd05d9",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_8_root_3.geo.json",
+      "fixture_blob": "6196e5d3f043cf3bfb5d25f99bcd36a27456a475",
+      "dcee_blob": "6196e5d3f043cf3bfb5d25f99bcd36a27456a475",
+      "freeze_blob": "6196e5d3f043cf3bfb5d25f99bcd36a27456a475",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_9.geo.json",
+      "fixture_blob": "a5b08e7582ba9a1c3a81ff80e9c339dd1c682f7e",
+      "dcee_blob": "a5b08e7582ba9a1c3a81ff80e9c339dd1c682f7e",
+      "freeze_blob": "a5b08e7582ba9a1c3a81ff80e9c339dd1c682f7e",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_9_root_1.geo.json",
+      "fixture_blob": "5dcae5edc41686e5403c811868705bd7d42424c2",
+      "dcee_blob": "5dcae5edc41686e5403c811868705bd7d42424c2",
+      "freeze_blob": "5dcae5edc41686e5403c811868705bd7d42424c2",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_9_root_2.geo.json",
+      "fixture_blob": "829fc8de24b25ceed1edf1b7588415cca6f0ac41",
+      "dcee_blob": "829fc8de24b25ceed1edf1b7588415cca6f0ac41",
+      "freeze_blob": "829fc8de24b25ceed1edf1b7588415cca6f0ac41",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_9_root_3.geo.json",
+      "fixture_blob": "579c9f7f64d60bc6acfb398e3f957c8cd442565e",
+      "dcee_blob": "579c9f7f64d60bc6acfb398e3f957c8cd442565e",
+      "freeze_blob": "579c9f7f64d60bc6acfb398e3f957c8cd442565e",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_0.geo.json",
+      "fixture_blob": "c2a410012f4721aecae41c8c8ef6684282caa427",
+      "dcee_blob": "c2a410012f4721aecae41c8c8ef6684282caa427",
+      "freeze_blob": "c2a410012f4721aecae41c8c8ef6684282caa427",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_0_root_1.geo.json",
+      "fixture_blob": "8f1dc64973e77ad279f9e4758e471d6ba6eb6dc3",
+      "dcee_blob": "8f1dc64973e77ad279f9e4758e471d6ba6eb6dc3",
+      "freeze_blob": "8f1dc64973e77ad279f9e4758e471d6ba6eb6dc3",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_0_root_2.geo.json",
+      "fixture_blob": "83e8c9a3b6cf3b0326694ae7c45009232e856eaa",
+      "dcee_blob": "83e8c9a3b6cf3b0326694ae7c45009232e856eaa",
+      "freeze_blob": "83e8c9a3b6cf3b0326694ae7c45009232e856eaa",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_0_root_3.geo.json",
+      "fixture_blob": "d0189cb99f70d4542d98176cdb0ca1125a7148ee",
+      "dcee_blob": "d0189cb99f70d4542d98176cdb0ca1125a7148ee",
+      "freeze_blob": "d0189cb99f70d4542d98176cdb0ca1125a7148ee",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_1.geo.json",
+      "fixture_blob": "8aedd8e4922b1e7acc0daa8fc192048554bb53bd",
+      "dcee_blob": "8aedd8e4922b1e7acc0daa8fc192048554bb53bd",
+      "freeze_blob": "8aedd8e4922b1e7acc0daa8fc192048554bb53bd",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_10.geo.json",
+      "fixture_blob": "c2edbb30c4f722d422c6973e64dc39cab063a9cf",
+      "dcee_blob": "c2edbb30c4f722d422c6973e64dc39cab063a9cf",
+      "freeze_blob": "c2edbb30c4f722d422c6973e64dc39cab063a9cf",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_10_root_1.geo.json",
+      "fixture_blob": "04b02ab4cfc7a2b8d699cebcb06fee1bd50edbea",
+      "dcee_blob": "04b02ab4cfc7a2b8d699cebcb06fee1bd50edbea",
+      "freeze_blob": "04b02ab4cfc7a2b8d699cebcb06fee1bd50edbea",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_10_root_2.geo.json",
+      "fixture_blob": "f7d693f6b3f997de915929605c2cc3c5f8261b2a",
+      "dcee_blob": "f7d693f6b3f997de915929605c2cc3c5f8261b2a",
+      "freeze_blob": "f7d693f6b3f997de915929605c2cc3c5f8261b2a",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_10_root_3.geo.json",
+      "fixture_blob": "c9495aba62c5878bc7779cd50682ad5bd6d166c0",
+      "dcee_blob": "c9495aba62c5878bc7779cd50682ad5bd6d166c0",
+      "freeze_blob": "c9495aba62c5878bc7779cd50682ad5bd6d166c0",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_1_root_1.geo.json",
+      "fixture_blob": "7001933d8e61ada7e43582ac13a8514764d08703",
+      "dcee_blob": "7001933d8e61ada7e43582ac13a8514764d08703",
+      "freeze_blob": "7001933d8e61ada7e43582ac13a8514764d08703",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_1_root_2.geo.json",
+      "fixture_blob": "70fbd5c15f8a4db590d3fdd04dd046d78f1cb6ce",
+      "dcee_blob": "70fbd5c15f8a4db590d3fdd04dd046d78f1cb6ce",
+      "freeze_blob": "70fbd5c15f8a4db590d3fdd04dd046d78f1cb6ce",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_1_root_3.geo.json",
+      "fixture_blob": "6606d195e3e1861b3029301901392f653bd22e2f",
+      "dcee_blob": "6606d195e3e1861b3029301901392f653bd22e2f",
+      "freeze_blob": "6606d195e3e1861b3029301901392f653bd22e2f",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_2.geo.json",
+      "fixture_blob": "ed290485116241eeb01adf0dc03fdd123a7957d1",
+      "dcee_blob": "ed290485116241eeb01adf0dc03fdd123a7957d1",
+      "freeze_blob": "ed290485116241eeb01adf0dc03fdd123a7957d1",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_2_root_1.geo.json",
+      "fixture_blob": "9abb2718903a09394a8d9d5517d6e113c7c5d417",
+      "dcee_blob": "9abb2718903a09394a8d9d5517d6e113c7c5d417",
+      "freeze_blob": "9abb2718903a09394a8d9d5517d6e113c7c5d417",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_2_root_2.geo.json",
+      "fixture_blob": "139a524e651d433831a677302539e3b4a6faa20d",
+      "dcee_blob": "139a524e651d433831a677302539e3b4a6faa20d",
+      "freeze_blob": "139a524e651d433831a677302539e3b4a6faa20d",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_2_root_3.geo.json",
+      "fixture_blob": "387710a16a79a034588ac65532849e769eb389d8",
+      "dcee_blob": "387710a16a79a034588ac65532849e769eb389d8",
+      "freeze_blob": "387710a16a79a034588ac65532849e769eb389d8",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_3.geo.json",
+      "fixture_blob": "f3ae625de875f9677c27b91ceb9c4ec1bf4d5c72",
+      "dcee_blob": "f3ae625de875f9677c27b91ceb9c4ec1bf4d5c72",
+      "freeze_blob": "f3ae625de875f9677c27b91ceb9c4ec1bf4d5c72",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_3_root_1.geo.json",
+      "fixture_blob": "2b0e5a5886921d7103eb6fc56bf53e7476cf3853",
+      "dcee_blob": "2b0e5a5886921d7103eb6fc56bf53e7476cf3853",
+      "freeze_blob": "2b0e5a5886921d7103eb6fc56bf53e7476cf3853",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_3_root_2.geo.json",
+      "fixture_blob": "ca487eadf397a3eb9f9f2edd1a3d59712e2ef111",
+      "dcee_blob": "ca487eadf397a3eb9f9f2edd1a3d59712e2ef111",
+      "freeze_blob": "ca487eadf397a3eb9f9f2edd1a3d59712e2ef111",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_3_root_3.geo.json",
+      "fixture_blob": "df73c084d2b01dccce2fb21d11af23658eb544be",
+      "dcee_blob": "df73c084d2b01dccce2fb21d11af23658eb544be",
+      "freeze_blob": "df73c084d2b01dccce2fb21d11af23658eb544be",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_4.geo.json",
+      "fixture_blob": "6756ae89d1bcacc8a58225df32737260a3c91d2f",
+      "dcee_blob": "6756ae89d1bcacc8a58225df32737260a3c91d2f",
+      "freeze_blob": "6756ae89d1bcacc8a58225df32737260a3c91d2f",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_4_root_1.geo.json",
+      "fixture_blob": "7f07603661f1bde13c1d7a82c528b944c1fa2299",
+      "dcee_blob": "7f07603661f1bde13c1d7a82c528b944c1fa2299",
+      "freeze_blob": "7f07603661f1bde13c1d7a82c528b944c1fa2299",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_4_root_2.geo.json",
+      "fixture_blob": "2be3a90473cce3b276a06d25c5b8524fb06c6c11",
+      "dcee_blob": "2be3a90473cce3b276a06d25c5b8524fb06c6c11",
+      "freeze_blob": "2be3a90473cce3b276a06d25c5b8524fb06c6c11",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_4_root_3.geo.json",
+      "fixture_blob": "b6ccab0de97175be8df3f1b34d009863bbeee8ce",
+      "dcee_blob": "b6ccab0de97175be8df3f1b34d009863bbeee8ce",
+      "freeze_blob": "b6ccab0de97175be8df3f1b34d009863bbeee8ce",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_5.geo.json",
+      "fixture_blob": "1b5350cd552d8bcdf6f46bc11cf40e5cf30535b5",
+      "dcee_blob": "1b5350cd552d8bcdf6f46bc11cf40e5cf30535b5",
+      "freeze_blob": "1b5350cd552d8bcdf6f46bc11cf40e5cf30535b5",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_5_root_1.geo.json",
+      "fixture_blob": "acaefc789d5511ac8bc1fad5b549756fc1969b89",
+      "dcee_blob": "acaefc789d5511ac8bc1fad5b549756fc1969b89",
+      "freeze_blob": "acaefc789d5511ac8bc1fad5b549756fc1969b89",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_5_root_2.geo.json",
+      "fixture_blob": "e410eda73869cee4f374a9fb0bec41a593e8a446",
+      "dcee_blob": "e410eda73869cee4f374a9fb0bec41a593e8a446",
+      "freeze_blob": "e410eda73869cee4f374a9fb0bec41a593e8a446",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_5_root_3.geo.json",
+      "fixture_blob": "1789f21d32f7e2ae3fb3c3a7b040a086f19f5970",
+      "dcee_blob": "1789f21d32f7e2ae3fb3c3a7b040a086f19f5970",
+      "freeze_blob": "1789f21d32f7e2ae3fb3c3a7b040a086f19f5970",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_6.geo.json",
+      "fixture_blob": "4c0eca8da8656e38ab7f811307a004b4c6d7e25d",
+      "dcee_blob": "4c0eca8da8656e38ab7f811307a004b4c6d7e25d",
+      "freeze_blob": "4c0eca8da8656e38ab7f811307a004b4c6d7e25d",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_6_root_1.geo.json",
+      "fixture_blob": "68992f0ab0c4b2e7fe477ad120956e4a87d8b5af",
+      "dcee_blob": "68992f0ab0c4b2e7fe477ad120956e4a87d8b5af",
+      "freeze_blob": "68992f0ab0c4b2e7fe477ad120956e4a87d8b5af",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_6_root_2.geo.json",
+      "fixture_blob": "f6750d4b22fdb97274f53aea830a0d1b12f3d85f",
+      "dcee_blob": "f6750d4b22fdb97274f53aea830a0d1b12f3d85f",
+      "freeze_blob": "f6750d4b22fdb97274f53aea830a0d1b12f3d85f",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_6_root_3.geo.json",
+      "fixture_blob": "6d747434ad2ef057eed52e5f379efbe9c3eddb1c",
+      "dcee_blob": "6d747434ad2ef057eed52e5f379efbe9c3eddb1c",
+      "freeze_blob": "6d747434ad2ef057eed52e5f379efbe9c3eddb1c",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_7.geo.json",
+      "fixture_blob": "9cde37d5f4367cff8e6710e6188a793346d125a9",
+      "dcee_blob": "9cde37d5f4367cff8e6710e6188a793346d125a9",
+      "freeze_blob": "9cde37d5f4367cff8e6710e6188a793346d125a9",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_7_root_1.geo.json",
+      "fixture_blob": "67ccfa9687de387605ffad94086385f6d6dfea9d",
+      "dcee_blob": "67ccfa9687de387605ffad94086385f6d6dfea9d",
+      "freeze_blob": "67ccfa9687de387605ffad94086385f6d6dfea9d",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_7_root_2.geo.json",
+      "fixture_blob": "257cf0b3fcb95049f19030b6e639947d1341f567",
+      "dcee_blob": "257cf0b3fcb95049f19030b6e639947d1341f567",
+      "freeze_blob": "257cf0b3fcb95049f19030b6e639947d1341f567",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_7_root_3.geo.json",
+      "fixture_blob": "ba68ae2a73dbfeb55b9ba30a0e651171bf4b2629",
+      "dcee_blob": "ba68ae2a73dbfeb55b9ba30a0e651171bf4b2629",
+      "freeze_blob": "ba68ae2a73dbfeb55b9ba30a0e651171bf4b2629",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_8.geo.json",
+      "fixture_blob": "abe0e61f19ff153379866a46abe4a52d30de77fc",
+      "dcee_blob": "abe0e61f19ff153379866a46abe4a52d30de77fc",
+      "freeze_blob": "abe0e61f19ff153379866a46abe4a52d30de77fc",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_8_root_1.geo.json",
+      "fixture_blob": "b3cda14311b84c556c65178ac7b494bf19e6d15a",
+      "dcee_blob": "b3cda14311b84c556c65178ac7b494bf19e6d15a",
+      "freeze_blob": "b3cda14311b84c556c65178ac7b494bf19e6d15a",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_8_root_2.geo.json",
+      "fixture_blob": "6ae20d43b5413f02c4c120a3a8047b592ab67d82",
+      "dcee_blob": "6ae20d43b5413f02c4c120a3a8047b592ab67d82",
+      "freeze_blob": "6ae20d43b5413f02c4c120a3a8047b592ab67d82",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_8_root_3.geo.json",
+      "fixture_blob": "77e99fd0c8f8b2d325bf2227d79720de2d2e480b",
+      "dcee_blob": "77e99fd0c8f8b2d325bf2227d79720de2d2e480b",
+      "freeze_blob": "77e99fd0c8f8b2d325bf2227d79720de2d2e480b",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_9.geo.json",
+      "fixture_blob": "6d8472c7bc50cc12df6007e8ba8337e589d05886",
+      "dcee_blob": "6d8472c7bc50cc12df6007e8ba8337e589d05886",
+      "freeze_blob": "6d8472c7bc50cc12df6007e8ba8337e589d05886",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_9_root_1.geo.json",
+      "fixture_blob": "f03b16df19b2c211d4a3e23defecc03d1d42116d",
+      "dcee_blob": "f03b16df19b2c211d4a3e23defecc03d1d42116d",
+      "freeze_blob": "f03b16df19b2c211d4a3e23defecc03d1d42116d",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_9_root_2.geo.json",
+      "fixture_blob": "5f0f664b8902670440a7c0e3b33fa246c4fd0968",
+      "dcee_blob": "5f0f664b8902670440a7c0e3b33fa246c4fd0968",
+      "freeze_blob": "5f0f664b8902670440a7c0e3b33fa246c4fd0968",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_lower_close_9_root_3.geo.json",
+      "fixture_blob": "7c1159539f92c9a7a30b986674d2002826807b7e",
+      "dcee_blob": "7c1159539f92c9a7a30b986674d2002826807b7e",
+      "freeze_blob": "7c1159539f92c9a7a30b986674d2002826807b7e",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_0.geo.json",
+      "fixture_blob": "80ffa64197cac9d8a2b4e1d81b0c5a74db781a0b",
+      "dcee_blob": "80ffa64197cac9d8a2b4e1d81b0c5a74db781a0b",
+      "freeze_blob": "80ffa64197cac9d8a2b4e1d81b0c5a74db781a0b",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_0_root_1.geo.json",
+      "fixture_blob": "88f2d93562c32c945812fcad9c0c1b6bb8d7a50d",
+      "dcee_blob": "88f2d93562c32c945812fcad9c0c1b6bb8d7a50d",
+      "freeze_blob": "88f2d93562c32c945812fcad9c0c1b6bb8d7a50d",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_0_root_2.geo.json",
+      "fixture_blob": "52f0c2b1392e466d511cf35110fddd15dd8637c1",
+      "dcee_blob": "52f0c2b1392e466d511cf35110fddd15dd8637c1",
+      "freeze_blob": "52f0c2b1392e466d511cf35110fddd15dd8637c1",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_0_root_3.geo.json",
+      "fixture_blob": "5696bfba68a614475d19c7a4db59aa87a593a69e",
+      "dcee_blob": "5696bfba68a614475d19c7a4db59aa87a593a69e",
+      "freeze_blob": "5696bfba68a614475d19c7a4db59aa87a593a69e",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_1.geo.json",
+      "fixture_blob": "e76e07858622559886c651dea800da4fd49322ff",
+      "dcee_blob": "e76e07858622559886c651dea800da4fd49322ff",
+      "freeze_blob": "e76e07858622559886c651dea800da4fd49322ff",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_10.geo.json",
+      "fixture_blob": "19caa46ab664a25c3e0eb23ee8c34f112c0c9a0d",
+      "dcee_blob": "19caa46ab664a25c3e0eb23ee8c34f112c0c9a0d",
+      "freeze_blob": "19caa46ab664a25c3e0eb23ee8c34f112c0c9a0d",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_10_root_1.geo.json",
+      "fixture_blob": "c3ea942f9711e7fe1b0406e088bb97f86927bc96",
+      "dcee_blob": "c3ea942f9711e7fe1b0406e088bb97f86927bc96",
+      "freeze_blob": "c3ea942f9711e7fe1b0406e088bb97f86927bc96",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_10_root_2.geo.json",
+      "fixture_blob": "d2b580f0ee8c86e9875d96b2b5fe53ac548c805c",
+      "dcee_blob": "d2b580f0ee8c86e9875d96b2b5fe53ac548c805c",
+      "freeze_blob": "d2b580f0ee8c86e9875d96b2b5fe53ac548c805c",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_10_root_3.geo.json",
+      "fixture_blob": "0e011181566871f5340e6f05e1ade74ae4cfb758",
+      "dcee_blob": "0e011181566871f5340e6f05e1ade74ae4cfb758",
+      "freeze_blob": "0e011181566871f5340e6f05e1ade74ae4cfb758",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_1_root_1.geo.json",
+      "fixture_blob": "73fde51798228844c91b3e8e01be34a4cb34fdb1",
+      "dcee_blob": "73fde51798228844c91b3e8e01be34a4cb34fdb1",
+      "freeze_blob": "73fde51798228844c91b3e8e01be34a4cb34fdb1",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_1_root_2.geo.json",
+      "fixture_blob": "470fe4d5a21488f83a33668a0ab8e0b3063df943",
+      "dcee_blob": "470fe4d5a21488f83a33668a0ab8e0b3063df943",
+      "freeze_blob": "470fe4d5a21488f83a33668a0ab8e0b3063df943",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_1_root_3.geo.json",
+      "fixture_blob": "91164d0baac91f9493c41218a0144735c789b927",
+      "dcee_blob": "91164d0baac91f9493c41218a0144735c789b927",
+      "freeze_blob": "91164d0baac91f9493c41218a0144735c789b927",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_2.geo.json",
+      "fixture_blob": "66d5246ba376ba9b3136f3beffb902d47b7e5ac9",
+      "dcee_blob": "66d5246ba376ba9b3136f3beffb902d47b7e5ac9",
+      "freeze_blob": "66d5246ba376ba9b3136f3beffb902d47b7e5ac9",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_2_root_1.geo.json",
+      "fixture_blob": "4c6e0e2ba25b22c0c2579fd26f22651aaff066f4",
+      "dcee_blob": "4c6e0e2ba25b22c0c2579fd26f22651aaff066f4",
+      "freeze_blob": "4c6e0e2ba25b22c0c2579fd26f22651aaff066f4",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_2_root_2.geo.json",
+      "fixture_blob": "3e53dd609402f11c1407ba8d32a5c3a1cf8dfaae",
+      "dcee_blob": "3e53dd609402f11c1407ba8d32a5c3a1cf8dfaae",
+      "freeze_blob": "3e53dd609402f11c1407ba8d32a5c3a1cf8dfaae",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_2_root_3.geo.json",
+      "fixture_blob": "4a31fa7f252f8b4c2c354011b638341a12af6d56",
+      "dcee_blob": "4a31fa7f252f8b4c2c354011b638341a12af6d56",
+      "freeze_blob": "4a31fa7f252f8b4c2c354011b638341a12af6d56",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_3.geo.json",
+      "fixture_blob": "bd1965bfddd77ee2fc7f9e15dbc73bd5c5f043b8",
+      "dcee_blob": "bd1965bfddd77ee2fc7f9e15dbc73bd5c5f043b8",
+      "freeze_blob": "bd1965bfddd77ee2fc7f9e15dbc73bd5c5f043b8",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_3_root_1.geo.json",
+      "fixture_blob": "80508a626fcde8de921e2975a7b1116998c2f457",
+      "dcee_blob": "80508a626fcde8de921e2975a7b1116998c2f457",
+      "freeze_blob": "80508a626fcde8de921e2975a7b1116998c2f457",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_3_root_2.geo.json",
+      "fixture_blob": "57638ee84cc72c7b4904f0bb9e32b58d2b5950ae",
+      "dcee_blob": "57638ee84cc72c7b4904f0bb9e32b58d2b5950ae",
+      "freeze_blob": "57638ee84cc72c7b4904f0bb9e32b58d2b5950ae",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_3_root_3.geo.json",
+      "fixture_blob": "58950bfda1c241dd8bc0a4d20e6dcac308f61a63",
+      "dcee_blob": "58950bfda1c241dd8bc0a4d20e6dcac308f61a63",
+      "freeze_blob": "58950bfda1c241dd8bc0a4d20e6dcac308f61a63",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_4.geo.json",
+      "fixture_blob": "53e922f485e704f49b307111837b322aaff6672b",
+      "dcee_blob": "53e922f485e704f49b307111837b322aaff6672b",
+      "freeze_blob": "53e922f485e704f49b307111837b322aaff6672b",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_4_root_1.geo.json",
+      "fixture_blob": "551516579f111d669f22711d203322379cc558d8",
+      "dcee_blob": "551516579f111d669f22711d203322379cc558d8",
+      "freeze_blob": "551516579f111d669f22711d203322379cc558d8",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_4_root_2.geo.json",
+      "fixture_blob": "4755871d69266953a897841e9a68d002623e1a7a",
+      "dcee_blob": "4755871d69266953a897841e9a68d002623e1a7a",
+      "freeze_blob": "4755871d69266953a897841e9a68d002623e1a7a",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_4_root_3.geo.json",
+      "fixture_blob": "8bc75d00c2d4ca7d19fbaf2ca3571833550c83dc",
+      "dcee_blob": "8bc75d00c2d4ca7d19fbaf2ca3571833550c83dc",
+      "freeze_blob": "8bc75d00c2d4ca7d19fbaf2ca3571833550c83dc",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_5.geo.json",
+      "fixture_blob": "f3ba91af5db0345645830befcc770f4230b7aaee",
+      "dcee_blob": "f3ba91af5db0345645830befcc770f4230b7aaee",
+      "freeze_blob": "f3ba91af5db0345645830befcc770f4230b7aaee",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_5_root_1.geo.json",
+      "fixture_blob": "f8f855716b9409ee2c95a4cb258fe0850b83f041",
+      "dcee_blob": "f8f855716b9409ee2c95a4cb258fe0850b83f041",
+      "freeze_blob": "f8f855716b9409ee2c95a4cb258fe0850b83f041",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_5_root_2.geo.json",
+      "fixture_blob": "fe11738b07992c9b17032f595d9e9c8cbc33b43c",
+      "dcee_blob": "fe11738b07992c9b17032f595d9e9c8cbc33b43c",
+      "freeze_blob": "fe11738b07992c9b17032f595d9e9c8cbc33b43c",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_5_root_3.geo.json",
+      "fixture_blob": "9f4770074f3ca76c07a2943cc056c338e79c1357",
+      "dcee_blob": "9f4770074f3ca76c07a2943cc056c338e79c1357",
+      "freeze_blob": "9f4770074f3ca76c07a2943cc056c338e79c1357",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_6.geo.json",
+      "fixture_blob": "7d4a4974da8a29049c9112e9a1462de4b6e793bb",
+      "dcee_blob": "7d4a4974da8a29049c9112e9a1462de4b6e793bb",
+      "freeze_blob": "7d4a4974da8a29049c9112e9a1462de4b6e793bb",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_6_root_1.geo.json",
+      "fixture_blob": "8c11355fad6debbc9377f1d5be3681dc152fbcfd",
+      "dcee_blob": "8c11355fad6debbc9377f1d5be3681dc152fbcfd",
+      "freeze_blob": "8c11355fad6debbc9377f1d5be3681dc152fbcfd",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_6_root_2.geo.json",
+      "fixture_blob": "035ce9443248a0c760869a5aecdb6047fc7b2b07",
+      "dcee_blob": "035ce9443248a0c760869a5aecdb6047fc7b2b07",
+      "freeze_blob": "035ce9443248a0c760869a5aecdb6047fc7b2b07",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_6_root_3.geo.json",
+      "fixture_blob": "a4d63178d455377ca2936477b32d7c5a9ff724d0",
+      "dcee_blob": "a4d63178d455377ca2936477b32d7c5a9ff724d0",
+      "freeze_blob": "a4d63178d455377ca2936477b32d7c5a9ff724d0",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_7.geo.json",
+      "fixture_blob": "a602abc0ebe0f66094344625762d44268e9ffcfb",
+      "dcee_blob": "a602abc0ebe0f66094344625762d44268e9ffcfb",
+      "freeze_blob": "a602abc0ebe0f66094344625762d44268e9ffcfb",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_7_root_1.geo.json",
+      "fixture_blob": "83616bf6fc8deed87c5c23bdec837cf6c24549d5",
+      "dcee_blob": "83616bf6fc8deed87c5c23bdec837cf6c24549d5",
+      "freeze_blob": "83616bf6fc8deed87c5c23bdec837cf6c24549d5",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_7_root_2.geo.json",
+      "fixture_blob": "6542f4c9b6ab07244d43cbfd135e4b763aaeef37",
+      "dcee_blob": "6542f4c9b6ab07244d43cbfd135e4b763aaeef37",
+      "freeze_blob": "6542f4c9b6ab07244d43cbfd135e4b763aaeef37",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_7_root_3.geo.json",
+      "fixture_blob": "2930aa5379b30e86886a8aa538767c36ea4ac64d",
+      "dcee_blob": "2930aa5379b30e86886a8aa538767c36ea4ac64d",
+      "freeze_blob": "2930aa5379b30e86886a8aa538767c36ea4ac64d",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_8.geo.json",
+      "fixture_blob": "49bcb6f52f9cbed9239c9e581443472686aa03ec",
+      "dcee_blob": "49bcb6f52f9cbed9239c9e581443472686aa03ec",
+      "freeze_blob": "49bcb6f52f9cbed9239c9e581443472686aa03ec",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_8_root_1.geo.json",
+      "fixture_blob": "a508a1cc8a40f430afcc27886a7960ab3d7d50d9",
+      "dcee_blob": "a508a1cc8a40f430afcc27886a7960ab3d7d50d9",
+      "freeze_blob": "a508a1cc8a40f430afcc27886a7960ab3d7d50d9",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_8_root_2.geo.json",
+      "fixture_blob": "3c8a9372be3232a2aa600d3cd45a22c7e51d0f47",
+      "dcee_blob": "3c8a9372be3232a2aa600d3cd45a22c7e51d0f47",
+      "freeze_blob": "3c8a9372be3232a2aa600d3cd45a22c7e51d0f47",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_8_root_3.geo.json",
+      "fixture_blob": "f2d33f09530652458b6e73776cabb69790996e91",
+      "dcee_blob": "f2d33f09530652458b6e73776cabb69790996e91",
+      "freeze_blob": "f2d33f09530652458b6e73776cabb69790996e91",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_9.geo.json",
+      "fixture_blob": "8f61b061600da69e2a5cf6d03daa8cb152124a33",
+      "dcee_blob": "8f61b061600da69e2a5cf6d03daa8cb152124a33",
+      "freeze_blob": "8f61b061600da69e2a5cf6d03daa8cb152124a33",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_9_root_1.geo.json",
+      "fixture_blob": "1c493d53f9d374217ea58bf74aaa31ea583ff6b1",
+      "dcee_blob": "1c493d53f9d374217ea58bf74aaa31ea583ff6b1",
+      "freeze_blob": "1c493d53f9d374217ea58bf74aaa31ea583ff6b1",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_9_root_2.geo.json",
+      "fixture_blob": "68dbb32c458d99dfd4110672daa9c122984c4331",
+      "dcee_blob": "68dbb32c458d99dfd4110672daa9c122984c4331",
+      "freeze_blob": "68dbb32c458d99dfd4110672daa9c122984c4331",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_9_root_3.geo.json",
+      "fixture_blob": "2e6ee4670c1ac7986b545df83c945f7160d25387",
+      "dcee_blob": "2e6ee4670c1ac7986b545df83c945f7160d25387",
+      "freeze_blob": "2e6ee4670c1ac7986b545df83c945f7160d25387",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_0.geo.json",
+      "fixture_blob": "320e838a5e86b0936dc7356374d761c1bea69ba2",
+      "dcee_blob": "320e838a5e86b0936dc7356374d761c1bea69ba2",
+      "freeze_blob": "320e838a5e86b0936dc7356374d761c1bea69ba2",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_0_root_1.geo.json",
+      "fixture_blob": "0bdc4ed4e57ba24fec74c56decefdc9adba08a6f",
+      "dcee_blob": "0bdc4ed4e57ba24fec74c56decefdc9adba08a6f",
+      "freeze_blob": "0bdc4ed4e57ba24fec74c56decefdc9adba08a6f",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_0_root_2.geo.json",
+      "fixture_blob": "078f7585bf6648ca9ecb0055563c91783e34105e",
+      "dcee_blob": "078f7585bf6648ca9ecb0055563c91783e34105e",
+      "freeze_blob": "078f7585bf6648ca9ecb0055563c91783e34105e",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_0_root_3.geo.json",
+      "fixture_blob": "134b39bd2f79986dfe746ef781d56753b486b822",
+      "dcee_blob": "134b39bd2f79986dfe746ef781d56753b486b822",
+      "freeze_blob": "134b39bd2f79986dfe746ef781d56753b486b822",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_1.geo.json",
+      "fixture_blob": "aaec2aa8c6ab18d96413ce72ff773b425b92995d",
+      "dcee_blob": "aaec2aa8c6ab18d96413ce72ff773b425b92995d",
+      "freeze_blob": "aaec2aa8c6ab18d96413ce72ff773b425b92995d",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_10.geo.json",
+      "fixture_blob": "a492cd30de19169880cca20371ed77298a8e749a",
+      "dcee_blob": "a492cd30de19169880cca20371ed77298a8e749a",
+      "freeze_blob": "a492cd30de19169880cca20371ed77298a8e749a",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_10_root_1.geo.json",
+      "fixture_blob": "ba31fdf101b98f7ca32e92e2a7b784bdea07a685",
+      "dcee_blob": "ba31fdf101b98f7ca32e92e2a7b784bdea07a685",
+      "freeze_blob": "ba31fdf101b98f7ca32e92e2a7b784bdea07a685",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_10_root_2.geo.json",
+      "fixture_blob": "5e4602923e3615c045d85c5554404dd9541b690b",
+      "dcee_blob": "5e4602923e3615c045d85c5554404dd9541b690b",
+      "freeze_blob": "5e4602923e3615c045d85c5554404dd9541b690b",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_10_root_3.geo.json",
+      "fixture_blob": "b541578f972ba10aeb45ac706d8772b5a794b6db",
+      "dcee_blob": "b541578f972ba10aeb45ac706d8772b5a794b6db",
+      "freeze_blob": "b541578f972ba10aeb45ac706d8772b5a794b6db",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_1_root_1.geo.json",
+      "fixture_blob": "28c823e59cf0fb93b0e7263412ebb9f474a6969b",
+      "dcee_blob": "28c823e59cf0fb93b0e7263412ebb9f474a6969b",
+      "freeze_blob": "28c823e59cf0fb93b0e7263412ebb9f474a6969b",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_1_root_2.geo.json",
+      "fixture_blob": "587ff860a72927f174a98155888b6829556c447e",
+      "dcee_blob": "587ff860a72927f174a98155888b6829556c447e",
+      "freeze_blob": "587ff860a72927f174a98155888b6829556c447e",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_1_root_3.geo.json",
+      "fixture_blob": "ef1a7ec4e0a9c04c28a1077e96a60e3f6ffb65d7",
+      "dcee_blob": "ef1a7ec4e0a9c04c28a1077e96a60e3f6ffb65d7",
+      "freeze_blob": "ef1a7ec4e0a9c04c28a1077e96a60e3f6ffb65d7",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_2.geo.json",
+      "fixture_blob": "8438c9a0fd98cf79063654d55f6ae9b3a4a66921",
+      "dcee_blob": "8438c9a0fd98cf79063654d55f6ae9b3a4a66921",
+      "freeze_blob": "8438c9a0fd98cf79063654d55f6ae9b3a4a66921",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_2_root_1.geo.json",
+      "fixture_blob": "0e3b8486799ea48fb76520804d472fe2964c22f9",
+      "dcee_blob": "0e3b8486799ea48fb76520804d472fe2964c22f9",
+      "freeze_blob": "0e3b8486799ea48fb76520804d472fe2964c22f9",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_2_root_2.geo.json",
+      "fixture_blob": "ac77d38083f80ac4a4128bbdf5379695a3044adc",
+      "dcee_blob": "ac77d38083f80ac4a4128bbdf5379695a3044adc",
+      "freeze_blob": "ac77d38083f80ac4a4128bbdf5379695a3044adc",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_2_root_3.geo.json",
+      "fixture_blob": "3c51f7b03a95281f8489232ffdbfd6fd661350a1",
+      "dcee_blob": "3c51f7b03a95281f8489232ffdbfd6fd661350a1",
+      "freeze_blob": "3c51f7b03a95281f8489232ffdbfd6fd661350a1",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_3.geo.json",
+      "fixture_blob": "77f8bf269f994f599c4da490812670fcd9f1140b",
+      "dcee_blob": "77f8bf269f994f599c4da490812670fcd9f1140b",
+      "freeze_blob": "77f8bf269f994f599c4da490812670fcd9f1140b",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_3_root_1.geo.json",
+      "fixture_blob": "f4f54798d2fc9ae2e18c8db58e177d2ae64c59ff",
+      "dcee_blob": "f4f54798d2fc9ae2e18c8db58e177d2ae64c59ff",
+      "freeze_blob": "f4f54798d2fc9ae2e18c8db58e177d2ae64c59ff",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_3_root_2.geo.json",
+      "fixture_blob": "fe1590e8985f5c9ae0f52d3302e1795573d36af7",
+      "dcee_blob": "fe1590e8985f5c9ae0f52d3302e1795573d36af7",
+      "freeze_blob": "fe1590e8985f5c9ae0f52d3302e1795573d36af7",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_3_root_3.geo.json",
+      "fixture_blob": "87ac6ffd7e430f4958da4f6a300c2184095cc580",
+      "dcee_blob": "87ac6ffd7e430f4958da4f6a300c2184095cc580",
+      "freeze_blob": "87ac6ffd7e430f4958da4f6a300c2184095cc580",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_4.geo.json",
+      "fixture_blob": "e0c7c885d1602af0108eef57df15bfaf56f715c6",
+      "dcee_blob": "e0c7c885d1602af0108eef57df15bfaf56f715c6",
+      "freeze_blob": "e0c7c885d1602af0108eef57df15bfaf56f715c6",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_4_root_1.geo.json",
+      "fixture_blob": "ee95224b7275045924e61f2491c29d99f63701aa",
+      "dcee_blob": "ee95224b7275045924e61f2491c29d99f63701aa",
+      "freeze_blob": "ee95224b7275045924e61f2491c29d99f63701aa",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_4_root_2.geo.json",
+      "fixture_blob": "272233762afff9128f88ba1bf72dd655c0a22d28",
+      "dcee_blob": "272233762afff9128f88ba1bf72dd655c0a22d28",
+      "freeze_blob": "272233762afff9128f88ba1bf72dd655c0a22d28",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_4_root_3.geo.json",
+      "fixture_blob": "cbc98a864e9d013ff8b36afedcc786ec1d45f9e2",
+      "dcee_blob": "cbc98a864e9d013ff8b36afedcc786ec1d45f9e2",
+      "freeze_blob": "cbc98a864e9d013ff8b36afedcc786ec1d45f9e2",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_5.geo.json",
+      "fixture_blob": "d4c5bb8d953d83bc4839374b9ed8bca7fcd3bed2",
+      "dcee_blob": "d4c5bb8d953d83bc4839374b9ed8bca7fcd3bed2",
+      "freeze_blob": "d4c5bb8d953d83bc4839374b9ed8bca7fcd3bed2",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_5_root_1.geo.json",
+      "fixture_blob": "aa0cf605a9950f1bb7167bb41381a2e78a11bb33",
+      "dcee_blob": "aa0cf605a9950f1bb7167bb41381a2e78a11bb33",
+      "freeze_blob": "aa0cf605a9950f1bb7167bb41381a2e78a11bb33",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_5_root_2.geo.json",
+      "fixture_blob": "21c9b0dde3f28b5ecfd0c9ea63bc520892e024aa",
+      "dcee_blob": "21c9b0dde3f28b5ecfd0c9ea63bc520892e024aa",
+      "freeze_blob": "21c9b0dde3f28b5ecfd0c9ea63bc520892e024aa",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_5_root_3.geo.json",
+      "fixture_blob": "9c26948964b1df574cc3bc6fe743029aca35ae93",
+      "dcee_blob": "9c26948964b1df574cc3bc6fe743029aca35ae93",
+      "freeze_blob": "9c26948964b1df574cc3bc6fe743029aca35ae93",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_6.geo.json",
+      "fixture_blob": "cca2b9b44247834058bf521696726eb1ed747fda",
+      "dcee_blob": "cca2b9b44247834058bf521696726eb1ed747fda",
+      "freeze_blob": "cca2b9b44247834058bf521696726eb1ed747fda",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_6_root_1.geo.json",
+      "fixture_blob": "e18dc1e93ad3bfc388672a7c859e8355caa6e5c2",
+      "dcee_blob": "e18dc1e93ad3bfc388672a7c859e8355caa6e5c2",
+      "freeze_blob": "e18dc1e93ad3bfc388672a7c859e8355caa6e5c2",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_6_root_2.geo.json",
+      "fixture_blob": "454b21b220fe2183026c7c2851cfc99e051f4686",
+      "dcee_blob": "454b21b220fe2183026c7c2851cfc99e051f4686",
+      "freeze_blob": "454b21b220fe2183026c7c2851cfc99e051f4686",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_6_root_3.geo.json",
+      "fixture_blob": "b6a2cec6102d9a3818dda383e7006b221b982247",
+      "dcee_blob": "b6a2cec6102d9a3818dda383e7006b221b982247",
+      "freeze_blob": "b6a2cec6102d9a3818dda383e7006b221b982247",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_7.geo.json",
+      "fixture_blob": "a1391c5bb28366cbbcbc4dd6a5df705e1e35bd9d",
+      "dcee_blob": "a1391c5bb28366cbbcbc4dd6a5df705e1e35bd9d",
+      "freeze_blob": "a1391c5bb28366cbbcbc4dd6a5df705e1e35bd9d",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_7_root_1.geo.json",
+      "fixture_blob": "fe6339711e08ca90b29e2074185782ad64bf03c4",
+      "dcee_blob": "fe6339711e08ca90b29e2074185782ad64bf03c4",
+      "freeze_blob": "fe6339711e08ca90b29e2074185782ad64bf03c4",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_7_root_2.geo.json",
+      "fixture_blob": "4e694639074446feca6308cd921d5247c0ca499c",
+      "dcee_blob": "4e694639074446feca6308cd921d5247c0ca499c",
+      "freeze_blob": "4e694639074446feca6308cd921d5247c0ca499c",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_7_root_3.geo.json",
+      "fixture_blob": "fcf4845d8bc3addee120711734388df6661d5626",
+      "dcee_blob": "fcf4845d8bc3addee120711734388df6661d5626",
+      "freeze_blob": "fcf4845d8bc3addee120711734388df6661d5626",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_8.geo.json",
+      "fixture_blob": "88b50f34c204b2619d541c5fa89905c9814dad1e",
+      "dcee_blob": "88b50f34c204b2619d541c5fa89905c9814dad1e",
+      "freeze_blob": "88b50f34c204b2619d541c5fa89905c9814dad1e",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_8_root_1.geo.json",
+      "fixture_blob": "f7d505ba0941d91ba04e1a79c6dbc7add5fa4102",
+      "dcee_blob": "f7d505ba0941d91ba04e1a79c6dbc7add5fa4102",
+      "freeze_blob": "f7d505ba0941d91ba04e1a79c6dbc7add5fa4102",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_8_root_2.geo.json",
+      "fixture_blob": "83033e902bdb37d2100fb1cb6feb79183686dcbb",
+      "dcee_blob": "83033e902bdb37d2100fb1cb6feb79183686dcbb",
+      "freeze_blob": "83033e902bdb37d2100fb1cb6feb79183686dcbb",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_8_root_3.geo.json",
+      "fixture_blob": "94d3230d0af05084392f177198bb1fa1adccaed9",
+      "dcee_blob": "94d3230d0af05084392f177198bb1fa1adccaed9",
+      "freeze_blob": "94d3230d0af05084392f177198bb1fa1adccaed9",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_9.geo.json",
+      "fixture_blob": "278fadd3b9d01f53e571e1f150fd56669b03a13f",
+      "dcee_blob": "278fadd3b9d01f53e571e1f150fd56669b03a13f",
+      "freeze_blob": "278fadd3b9d01f53e571e1f150fd56669b03a13f",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_9_root_1.geo.json",
+      "fixture_blob": "e3a990c47ae78f303d8a74015609a677ddf944b9",
+      "dcee_blob": "e3a990c47ae78f303d8a74015609a677ddf944b9",
+      "freeze_blob": "e3a990c47ae78f303d8a74015609a677ddf944b9",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_9_root_2.geo.json",
+      "fixture_blob": "d17be4382d36776bb9f4a8b98c8ae011fcc0339f",
+      "dcee_blob": "d17be4382d36776bb9f4a8b98c8ae011fcc0339f",
+      "freeze_blob": "d17be4382d36776bb9f4a8b98c8ae011fcc0339f",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/models/blocks/refrigerator_upper_close_9_root_3.geo.json",
+      "fixture_blob": "e817c8748f56fe9d16121afbc1909242004e50ca",
+      "dcee_blob": "e817c8748f56fe9d16121afbc1909242004e50ca",
+      "freeze_blob": "e817c8748f56fe9d16121afbc1909242004e50ca",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/textures/ordertocook/block/refrigerator.png",
+      "fixture_blob": "10a90abddb4bf8d9203aafadf873e6b5dd8182c6",
+      "dcee_blob": "10a90abddb4bf8d9203aafadf873e6b5dd8182c6",
+      "freeze_blob": "10a90abddb4bf8d9203aafadf873e6b5dd8182c6",
+      "same_as_fixture": true
+    },
+    {
+      "path": "runtime/RP/textures/terrain_texture.json",
+      "fixture_blob": "8e568bb76f66cdabc4f6b3c4c642c54783ae84e9",
+      "dcee_blob": "8e568bb76f66cdabc4f6b3c4c642c54783ae84e9",
+      "freeze_blob": "8e568bb76f66cdabc4f6b3c4c642c54783ae84e9",
+      "same_as_fixture": true
+    },
+    {
+      "path": "tools/convert_assets.py",
+      "fixture_blob": "099cb1e10c7ff9f7e7f563ab382d154774bf1a46",
+      "dcee_blob": "099cb1e10c7ff9f7e7f563ab382d154774bf1a46",
+      "freeze_blob": "099cb1e10c7ff9f7e7f563ab382d154774bf1a46",
+      "same_as_fixture": true
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
+      "fixture_blob": "a8c06567396965b28ef214d50760b6953f525387",
+      "dcee_blob": "a8c06567396965b28ef214d50760b6953f525387",
+      "freeze_blob": "a8c06567396965b28ef214d50760b6953f525387",
+      "same_as_fixture": true
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json",
+      "fixture_blob": "30a92337a06df621d66c3156d1d81be537626a65",
+      "dcee_blob": "30a92337a06df621d66c3156d1d81be537626a65",
+      "freeze_blob": "30a92337a06df621d66c3156d1d81be537626a65",
+      "same_as_fixture": true
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/block/refrigerator.png",
+      "fixture_blob": "10a90abddb4bf8d9203aafadf873e6b5dd8182c6",
+      "dcee_blob": "10a90abddb4bf8d9203aafadf873e6b5dd8182c6",
+      "freeze_blob": "10a90abddb4bf8d9203aafadf873e6b5dd8182c6",
+      "same_as_fixture": true
+    }
+  ],
+  "checked_input_count": 187,
+  "changed_paths_since_service_commit": [
+    "CHANGELOG.md",
+    "README.en.md",
+    "README.md",
+    "README.zh-CN.md",
+    "baseline.json",
+    "docs/PARITY.md",
+    "docs/validation/0.1.47-alpha.1/FRIDGE_SHARED_ROOT.md",
+    "docs/validation/fridge-shared-root/README.md",
+    "package-lock.json",
+    "package.json",
+    "release-history.json",
+    "runtime/BP/manifest.json",
+    "runtime/RP/manifest.json"
+  ],
+  "runtime_only_changes_since_service_commit": [
+    "runtime/BP/manifest.json",
+    "runtime/RP/manifest.json"
+  ],
+  "unchanged_content": "All geometry, animations, textures, materials, BP blocks/scripts and source assets. RP manifest identity is deliberately excluded from the unchanged visual-content claim.",
+  "candidate_fixtures": 7,
+  "original_candidate_photographs": 9,
+  "limits": "The original fixture/capture identity stays e544. This proves exact visual-input equivalence at the final freeze, not service behavior, new screenshots or native/game/client acceptance.",
+  "images_or_scenes_rewritten": false,
+  "runtime_modified_by_this_check": false
+}
