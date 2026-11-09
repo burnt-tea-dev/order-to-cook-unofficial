@@ -1,0 +1,554 @@
+{
+  "status": "PASS bounded selection checks",
+  "scene_count": 7,
+  "hand_stated_landmark_records": 40,
+  "new_scenes_equal_to_any_declared_same_rig_prior_static_pose": 0,
+  "seated_take_phase_max_corner_component_difference_model_units": 1.381480864541448,
+  "prior_scope": "Only the documented sample instants in prior-coverage.json; no blanket novelty claim across all frames.",
+  "scenes": [
+    {
+      "id": "01_slim_sit1_counterphase",
+      "hand_stated_landmarks": {
+        "right_arm.rotation": [
+          -20,
+          0,
+          0
+        ],
+        "left_arm.rotation": [
+          -10,
+          0,
+          0
+        ],
+        "right_foot.rotation": [
+          50,
+          0,
+          0
+        ],
+        "left_foot.rotation": [
+          30,
+          0,
+          0
+        ],
+        "right_foot.position": [
+          0,
+          1.5,
+          -0.75
+        ],
+        "left_foot.position": [
+          0,
+          1.5,
+          -0.25
+        ]
+      },
+      "same_rig_prior_differences": [
+        {
+          "previous_id": "01_slim_idle4_wrist",
+          "max_corner_component_difference_model_units": 9.251903627017793
+        },
+        {
+          "previous_id": "03_slim_eat_hand_extreme",
+          "max_corner_component_difference_model_units": 9.535536441329048
+        },
+        {
+          "previous_id": "06_slim_spawn_rebound",
+          "max_corner_component_difference_model_units": 6.391982700474692
+        },
+        {
+          "previous_id": "earlier_slim_neutral_0",
+          "max_corner_component_difference_model_units": 10.84004406523437
+        },
+        {
+          "previous_id": "earlier_slim_customer_sit_1_1.5",
+          "max_corner_component_difference_model_units": 2.013639173072275
+        },
+        {
+          "previous_id": "earlier_slim_customer_sit_4_2",
+          "max_corner_component_difference_model_units": 9.251903627017793
+        }
+      ],
+      "note": "A geometric difference is not proof of useful visible novelty or native parity. Old approximate times are checked at their recorded decimals only."
+    },
+    {
+      "id": "02_wide_wait1_phase0",
+      "hand_stated_landmarks": {
+        "right_arm.rotation": [
+          -10,
+          0,
+          0
+        ],
+        "left_arm.rotation": [
+          -20,
+          0,
+          0
+        ],
+        "body.position": [
+          0,
+          -2,
+          0
+        ]
+      },
+      "same_rig_prior_differences": [
+        {
+          "previous_id": "02_wide_idle3_body_turn",
+          "max_corner_component_difference_model_units": 19.47450761956647
+        },
+        {
+          "previous_id": "04_wide_interrupt_shrink",
+          "max_corner_component_difference_model_units": 11.593004963517554
+        },
+        {
+          "previous_id": "05_wide_boom_peak",
+          "max_corner_component_difference_model_units": 15.889934629111442
+        },
+        {
+          "previous_id": "07_wide_standtake_wrist",
+          "max_corner_component_difference_model_units": 9.865198564596978
+        },
+        {
+          "previous_id": "earlier_wide_neutral_0",
+          "max_corner_component_difference_model_units": 3.6413980723198103
+        },
+        {
+          "previous_id": "earlier_wide_customer_sit_1_0.58",
+          "max_corner_component_difference_model_units": 10.4151946688071
+        },
+        {
+          "previous_id": "earlier_wide_npc_sitspawn_0.31",
+          "max_corner_component_difference_model_units": 15.042343391950661
+        },
+        {
+          "previous_id": "earlier_wide_npc_standspawn_0.31",
+          "max_corner_component_difference_model_units": 4.716814406957749
+        },
+        {
+          "previous_id": "earlier_wide_npc_sittake_1",
+          "max_corner_component_difference_model_units": 19.88567413116728
+        },
+        {
+          "previous_id": "earlier_wide_npc_standtake_0.53",
+          "max_corner_component_difference_model_units": 26.71077177851594
+        },
+        {
+          "previous_id": "earlier_wide_npc_standtake_1.5",
+          "max_corner_component_difference_model_units": 26.505055119452646
+        },
+        {
+          "previous_id": "earlier_wide_npc_standtake_3",
+          "max_corner_component_difference_model_units": 18.25
+        },
+        {
+          "previous_id": "earlier_wide_npc_eat&scale_interrupt_0.25",
+          "max_corner_component_difference_model_units": 10.500770592151804
+        },
+        {
+          "previous_id": "earlier_wide_npc_eat&scale_2.53",
+          "max_corner_component_difference_model_units": 10.129014789350348
+        },
+        {
+          "previous_id": "earlier_wide_npc_eat&boom_5.81",
+          "max_corner_component_difference_model_units": 12.14486349419201
+        },
+        {
+          "previous_id": "earlier_wide_npc_eat&boom_6",
+          "max_corner_component_difference_model_units": 20.25
+        }
+      ],
+      "note": "A geometric difference is not proof of useful visible novelty or native parity. Old approximate times are checked at their recorded decimals only."
+    },
+    {
+      "id": "03_slim_sit2_head_query",
+      "hand_stated_landmarks": {
+        "head.rotation": [
+          -15,
+          30,
+          0
+        ],
+        "right_arm.rotation": [
+          -15,
+          0,
+          0
+        ],
+        "left_arm.rotation": [
+          -15,
+          0,
+          0
+        ],
+        "right_foot.rotation": [
+          40,
+          0,
+          0
+        ],
+        "left_foot.rotation": [
+          40,
+          0,
+          0
+        ],
+        "right_foot.position": [
+          0,
+          1.5,
+          -0.5
+        ],
+        "left_foot.position": [
+          0,
+          1.5,
+          -0.5
+        ]
+      },
+      "same_rig_prior_differences": [
+        {
+          "previous_id": "01_slim_idle4_wrist",
+          "max_corner_component_difference_model_units": 9.707996454427263
+        },
+        {
+          "previous_id": "03_slim_eat_hand_extreme",
+          "max_corner_component_difference_model_units": 9.436128034026988
+        },
+        {
+          "previous_id": "06_slim_spawn_rebound",
+          "max_corner_component_difference_model_units": 6.109306873189851
+        },
+        {
+          "previous_id": "earlier_slim_neutral_0",
+          "max_corner_component_difference_model_units": 9.875426347333889
+        },
+        {
+          "previous_id": "earlier_slim_customer_sit_1_1.5",
+          "max_corner_component_difference_model_units": 4.6689926204609264
+        },
+        {
+          "previous_id": "earlier_slim_customer_sit_4_2",
+          "max_corner_component_difference_model_units": 9.707996454427263
+        }
+      ],
+      "note": "A geometric difference is not proof of useful visible novelty or native parity. Old approximate times are checked at their recorded decimals only."
+    },
+    {
+      "id": "04_wide_wait4_yaw",
+      "hand_stated_landmarks": {
+        "head.rotation": [
+          0,
+          -20,
+          0
+        ],
+        "right_arm.rotation": [
+          -19.62933333333333,
+          0,
+          0
+        ],
+        "left_arm.rotation": [
+          -10.370666666666667,
+          0,
+          0
+        ],
+        "right_hand.rotation": [
+          0,
+          0,
+          0
+        ],
+        "right_hand.position": [
+          0,
+          0,
+          0
+        ]
+      },
+      "same_rig_prior_differences": [
+        {
+          "previous_id": "02_wide_idle3_body_turn",
+          "max_corner_component_difference_model_units": 19.56070151570153
+        },
+        {
+          "previous_id": "04_wide_interrupt_shrink",
+          "max_corner_component_difference_model_units": 11.593004963517554
+        },
+        {
+          "previous_id": "05_wide_boom_peak",
+          "max_corner_component_difference_model_units": 15.889934629111442
+        },
+        {
+          "previous_id": "07_wide_standtake_wrist",
+          "max_corner_component_difference_model_units": 9.060103692930193
+        },
+        {
+          "previous_id": "earlier_wide_neutral_0",
+          "max_corner_component_difference_model_units": 3.5740791232026163
+        },
+        {
+          "previous_id": "earlier_wide_customer_sit_1_0.58",
+          "max_corner_component_difference_model_units": 10.4151946688071
+        },
+        {
+          "previous_id": "earlier_wide_npc_sitspawn_0.31",
+          "max_corner_component_difference_model_units": 15.042343391950661
+        },
+        {
+          "previous_id": "earlier_wide_npc_standspawn_0.31",
+          "max_corner_component_difference_model_units": 5.167548000515609
+        },
+        {
+          "previous_id": "earlier_wide_npc_sittake_1",
+          "max_corner_component_difference_model_units": 19.971868027302342
+        },
+        {
+          "previous_id": "earlier_wide_npc_standtake_0.53",
+          "max_corner_component_difference_model_units": 26.63713944097522
+        },
+        {
+          "previous_id": "earlier_wide_npc_standtake_1.5",
+          "max_corner_component_difference_model_units": 26.591249015587707
+        },
+        {
+          "previous_id": "earlier_wide_npc_standtake_3",
+          "max_corner_component_difference_model_units": 18.25
+        },
+        {
+          "previous_id": "earlier_wide_npc_eat&scale_interrupt_0.25",
+          "max_corner_component_difference_model_units": 10.500770592151804
+        },
+        {
+          "previous_id": "earlier_wide_npc_eat&scale_2.53",
+          "max_corner_component_difference_model_units": 10.129014789350348
+        },
+        {
+          "previous_id": "earlier_wide_npc_eat&boom_5.81",
+          "max_corner_component_difference_model_units": 12.14486349419201
+        },
+        {
+          "previous_id": "earlier_wide_npc_eat&boom_6",
+          "max_corner_component_difference_model_units": 20.25
+        }
+      ],
+      "note": "A geometric difference is not proof of useful visible novelty or native parity. Old approximate times are checked at their recorded decimals only."
+    },
+    {
+      "id": "05_wide_eat_left_wrist",
+      "hand_stated_landmarks": {
+        "head.rotation": [
+          32.5,
+          0,
+          0
+        ],
+        "torso.rotation": [
+          15,
+          0,
+          0
+        ],
+        "left_hand.rotation": [
+          0,
+          0,
+          52.5
+        ],
+        "left_hand.position": [
+          0.75,
+          1.5,
+          0
+        ],
+        "right_hand.rotation": [
+          0,
+          0,
+          -35
+        ],
+        "right_hand.position": [
+          -0.3333333333333333,
+          1.1666666666666667,
+          0
+        ],
+        "body.scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "same_rig_prior_differences": [
+        {
+          "previous_id": "02_wide_idle3_body_turn",
+          "max_corner_component_difference_model_units": 12.89658847340306
+        },
+        {
+          "previous_id": "04_wide_interrupt_shrink",
+          "max_corner_component_difference_model_units": 10.601544363747571
+        },
+        {
+          "previous_id": "05_wide_boom_peak",
+          "max_corner_component_difference_model_units": 15.511606581826289
+        },
+        {
+          "previous_id": "07_wide_standtake_wrist",
+          "max_corner_component_difference_model_units": 10.207885756703543
+        },
+        {
+          "previous_id": "earlier_wide_neutral_0",
+          "max_corner_component_difference_model_units": 10.207885756703543
+        },
+        {
+          "previous_id": "earlier_wide_customer_sit_1_0.58",
+          "max_corner_component_difference_model_units": 10.425101747218559
+        },
+        {
+          "previous_id": "earlier_wide_npc_sitspawn_0.31",
+          "max_corner_component_difference_model_units": 8.10491909415762
+        },
+        {
+          "previous_id": "earlier_wide_npc_standspawn_0.31",
+          "max_corner_component_difference_model_units": 10.207885756703543
+        },
+        {
+          "previous_id": "earlier_wide_npc_sittake_1",
+          "max_corner_component_difference_model_units": 14.842400233472631
+        },
+        {
+          "previous_id": "earlier_wide_npc_standtake_0.53",
+          "max_corner_component_difference_model_units": 22.746801260857918
+        },
+        {
+          "previous_id": "earlier_wide_npc_standtake_1.5",
+          "max_corner_component_difference_model_units": 22.46290200425643
+        },
+        {
+          "previous_id": "earlier_wide_npc_standtake_3",
+          "max_corner_component_difference_model_units": 19.241502763430308
+        },
+        {
+          "previous_id": "earlier_wide_npc_eat&scale_interrupt_0.25",
+          "max_corner_component_difference_model_units": 3.656806219094693
+        },
+        {
+          "previous_id": "earlier_wide_npc_eat&scale_2.53",
+          "max_corner_component_difference_model_units": 2.825831805763987
+        },
+        {
+          "previous_id": "earlier_wide_npc_eat&boom_5.81",
+          "max_corner_component_difference_model_units": 6.872121471287539
+        },
+        {
+          "previous_id": "earlier_wide_npc_eat&boom_6",
+          "max_corner_component_difference_model_units": 21.241502763430308
+        }
+      ],
+      "note": "A geometric difference is not proof of useful visible novelty or native parity. Old approximate times are checked at their recorded decimals only."
+    },
+    {
+      "id": "06_slim_sittake_phase0",
+      "hand_stated_landmarks": {
+        "right_arm.rotation": [
+          -170.4542,
+          2.9932,
+          -17.2501
+        ],
+        "left_arm.rotation": [
+          -175.3001,
+          -1.7082,
+          19.9298
+        ],
+        "right_foot.rotation": [
+          30,
+          0,
+          0
+        ],
+        "left_foot.rotation": [
+          50,
+          0,
+          0
+        ],
+        "right_hand.rotation": [
+          0,
+          0,
+          0
+        ],
+        "left_hand.rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      "same_rig_prior_differences": [
+        {
+          "previous_id": "01_slim_idle4_wrist",
+          "max_corner_component_difference_model_units": 19.93181142128673
+        },
+        {
+          "previous_id": "03_slim_eat_hand_extreme",
+          "max_corner_component_difference_model_units": 13.99484305451503
+        },
+        {
+          "previous_id": "06_slim_spawn_rebound",
+          "max_corner_component_difference_model_units": 15.408155780007384
+        },
+        {
+          "previous_id": "earlier_slim_neutral_0",
+          "max_corner_component_difference_model_units": 18.34182391435571
+        },
+        {
+          "previous_id": "earlier_slim_customer_sit_1_1.5",
+          "max_corner_component_difference_model_units": 19.88567413116728
+        },
+        {
+          "previous_id": "earlier_slim_customer_sit_4_2",
+          "max_corner_component_difference_model_units": 19.97687507824265
+        }
+      ],
+      "note": "A geometric difference is not proof of useful visible novelty or native parity. Old approximate times are checked at their recorded decimals only."
+    },
+    {
+      "id": "07_slim_sittake_phase05",
+      "hand_stated_landmarks": {
+        "right_arm.rotation": [
+          -170.149,
+          1.728,
+          -9.8511
+        ],
+        "left_arm.rotation": [
+          -175.1179,
+          -1.0809,
+          12.4538
+        ],
+        "right_foot.rotation": [
+          43.333333333333336,
+          0,
+          0
+        ],
+        "left_foot.rotation": [
+          36.666666666666664,
+          0,
+          0
+        ],
+        "right_hand.rotation": [
+          0,
+          0,
+          0
+        ],
+        "left_hand.rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      "same_rig_prior_differences": [
+        {
+          "previous_id": "01_slim_idle4_wrist",
+          "max_corner_component_difference_model_units": 20.274291703290185
+        },
+        {
+          "previous_id": "03_slim_eat_hand_extreme",
+          "max_corner_component_difference_model_units": 14.715351493865768
+        },
+        {
+          "previous_id": "06_slim_spawn_rebound",
+          "max_corner_component_difference_model_units": 15.750636062010837
+        },
+        {
+          "previous_id": "earlier_slim_neutral_0",
+          "max_corner_component_difference_model_units": 18.62438450561643
+        },
+        {
+          "previous_id": "earlier_slim_customer_sit_1_1.5",
+          "max_corner_component_difference_model_units": 20.228154413170735
+        },
+        {
+          "previous_id": "earlier_slim_customer_sit_4_2",
+          "max_corner_component_difference_model_units": 20.319355360246103
+        }
+      ],
+      "note": "A geometric difference is not proof of useful visible novelty or native parity. Old approximate times are checked at their recorded decimals only."
+    }
+  ]
+}

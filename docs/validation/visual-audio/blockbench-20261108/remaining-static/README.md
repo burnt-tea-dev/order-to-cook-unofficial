@@ -69,3 +69,7 @@ Run `python docs/validation/visual-audio/blockbench-20261108/remaining-static/ve
 This batch supplies 38 application captures: 19 stove pose captures and 19 static captures. The separate washing control supplies two more. Neither this count nor the 40 prepared static state pairs means all OTC models, camera angles, animation timing, native materials, player binding or gameplay have been accepted.
 
 Scene packaging note: an input-discovery run initially executed builders in one Python process and advanced their shared deterministic UUID sequence. Each builder is now reproduced in its own process, as in ordinary preparation. An independent structural comparison found only consistent UUID renaming in the nine baseline and seven candidate/control projects, with geometry, UVs, texture bytes and hierarchy unchanged. The manifest records the reproducible standalone form, not an assertion that editor-internal object IDs appeared in the screenshots.
+
+## Later helmet-only pivot diagnostic (2026-11-09)
+
+The historical helmet result above remains unchanged. A subsequent [helmet A → B → A inactive-pivot control](../helmet-pivot-control/README.md) now records three original editor captures: changing only fifteen zero-rotation SOURCE shell origins changes the visor preview, and returning to the original restores the discrepancy. All geometry, UVs, PNGs, groups and RP content are unchanged. This supports pivot-dependent editor preview behavior, not a native transparency pass or runtime asset repair.

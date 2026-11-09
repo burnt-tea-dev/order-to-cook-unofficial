@@ -1,0 +1,36 @@
+{
+  "status": "Candidate verification record; static evidence only",
+  "python": "3.12.14",
+  "pillow": "13.0.0",
+  "numpy": "2.3.5",
+  "public_verifier": "PASS: exact restoration and fresh-process reproduction; 73 frozen file hashes, 83 preserved originals, 2 omitted original metadata receipts, 9 model photographs / 7 scenes and 1 settings diagnostic; 51 repository input memberships; 2240 corners, 1680 UV records",
+  "negative_tests": "PASS 16 path/inventory/corruption/decompression/dependency tests, including ordinary/linked enclosing Git repository rejection and standalone sibling restoration",
+  "maximum_new_public_blob_bytes": 90170,
+  "native_tested": false,
+  "runtime_changed": false,
+  "version_changed": false,
+  "photos_reencoded": false,
+  "main_ci": "Not rerun by this bundle verifier; baseline main CI is separate from local candidate validation",
+  "npm_run_verify": "Initial default-concurrency npm run verify failed at four test files (894 passed); check/build not reached in that invocation. Cause not proven. Full rerun with --test-concurrency=1 passed all 937; npm run check and npm run build separately passed. No full-default-concurrency pass is claimed.",
+  "sequential_javascript": {
+    "command": "node --test --test-concurrency=1 tests/*.test.js",
+    "passed": 937,
+    "failed": 0
+  },
+  "check": "PASS npm run check: TypeScript and validate_pack, 519 JSON files, no errors",
+  "build": "PASS npm run build; generated packs are local ignored artifacts, not part of this docs commit",
+  "runtime_tree_sha256": "102621a6b1873ccde386b2848252a5ea6fd5f8edb46e98c3d1eabdb652debe98",
+  "python_tests": {
+    "test_ci_scope.py": 9,
+    "test_appliance_geometry.py": 33,
+    "test_fridge_shared_root.py": 3,
+    "test_dining_assets.py": 4,
+    "test_guide_languages.py": 3,
+    "total_passed": 52,
+    "not_run": "test_segmented_player.py requires separate native-reference fixture provisioning; no native environment used"
+  },
+  "optimization_guard": "PASS: python -O invocation rejected before verification",
+  "whitespace": "PASS git diff --cached --check",
+  "privacy_scan": "No private workspace/home path, acquisition URL, credential or localhost endpoint found in newly published content",
+  "assembler_review_correction": "Reject assembly anywhere inside a Git repository enclosing either source bundle. Detect .git files/directories without executing Git or reading metadata. Standalone sibling bundles remain supported."
+}

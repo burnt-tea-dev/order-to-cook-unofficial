@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "scope": "Docs-only inactive-pivot control; no runtime asset change.",
+  "original_scene_dependency": "../remaining-static/scenes/helmet-shell-and-visor.bbmodel",
+  "original_scene_sha256": "5be95f8e613a76e6f467ed0756d46ee0e61504277f0d902cd98a5dc88074e954",
+  "capture_sequence": [
+    "helmet-original-isometric-right-2-1.jpg",
+    "helmet-pivot-control-isometric-right-2-1.jpg",
+    "helmet-original-return-isometric-right-2-1.jpg"
+  ],
+  "artifacts": {
+    "preparation.json": {
+      "bytes": 5634,
+      "sha256": "15c79994a9b071bfbfdaa2ae3dd8e1b94f5d1a28776d538cdfad8580a4b25771"
+    },
+    "gui-observations.json": {
+      "bytes": 2552,
+      "sha256": "2cd7410af47a12181a6fb884a514ac15c37a0a9c22246f593f30ab9e712af42e"
+    },
+    "scenes/helmet-pivot-control.bbmodel": {
+      "bytes": 68525,
+      "sha256": "75b134dfcd81d85972435407453c96215b0a7dbcb4cdcdbc89c0ea89d316e000"
+    },
+    "screenshots/helmet-original-isometric-right-2-1.jpg": {
+      "bytes": 94589,
+      "sha256": "e33578698fb470a79bc1c645a4eabacd993d7808b30f1f523692d70cf0106d33"
+    },
+    "screenshots/helmet-original-return-isometric-right-2-1.jpg": {
+      "bytes": 96326,
+      "sha256": "ae42452504ce9e3cae7795c6bda69518f91bff140e8c7473d61360aa91355080"
+    },
+    "screenshots/helmet-pivot-control-isometric-right-2-1.jpg": {
+      "bytes": 97216,
+      "sha256": "41052af34d774abeb1c45266d63d379dab638cbd0af4f3425e70cd8e75228fab"
+    },
+    "independent-review.json": {
+      "bytes": 1517,
+      "sha256": "f5c9eb0ce0d2a39cc9a029696bef246d39754bc38f3727e7104dbd08239ee827"
+    }
+  }
+}

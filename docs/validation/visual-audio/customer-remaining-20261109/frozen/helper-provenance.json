@@ -1,0 +1,9 @@
+{
+  "based_on": "otc-customer-visual-prep-20261108 frozen helpers; independently written original pose/matrix verifier is reused, not claimed to be newly independent from that earlier verifier.",
+  "prior_helpers": {
+    "build_review.py": "bd1dee45009b56dacbc2e559ba90e3d87c5ce875601ae5947f4542eade95df14",
+    "verify_review.py": "3cc917d2f6fff541b8a90b58213372d59d319e8c899341bbb0fae8a18096263f",
+    "decode_cubes.cjs": "a0eebe4c04453a4d83c5407d7643103af448a494967cf9a4eb183d6339c57b0a"
+  },
+  "changes": "Only declared cases, isolated UUID namespace, baseline metadata and additional strict structural/UV/pose checks are changed. No production converter is imported or executed."
+}

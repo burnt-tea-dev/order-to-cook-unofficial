@@ -1,0 +1,313 @@
+{
+  "status": "PASS offline/source-code-derived only",
+  "input_hash_checks": 41,
+  "clips": 15,
+  "bone_channel_tracks": 165,
+  "constant_catmullrom_tracks": 18,
+  "scene_count": 7,
+  "sampled_corner_comparisons": 2240,
+  "max_corner_component_error_model_units": 7.105427357601002e-15,
+  "max_channel_error": 7.105427357601002e-15,
+  "max_group_pivot_error": 3.552713678800501e-15,
+  "independently_checked_face_uv_records": 1680,
+  "verified_parent_edges": 140,
+  "cube_order_inflate_and_texture_bytes": "preserved",
+  "pngs": [
+    {
+      "rig": "wide",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9"
+    },
+    {
+      "rig": "slim",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249"
+    }
+  ],
+  "boom_prepost": [
+    {
+      "seconds": 5.8611,
+      "source_scale": 1.2,
+      "rp_json_scale": 1.2
+    },
+    {
+      "seconds": 5.9,
+      "source_scale": 1.484981684981685,
+      "rp_json_scale": 1.4798561151079137
+    },
+    {
+      "seconds": 5.9157,
+      "source_scale": 1.6,
+      "rp_json_scale": 1.5928057553956834
+    },
+    {
+      "seconds": 5.9162,
+      "source_scale": 0.8,
+      "rp_json_scale": 1.5964028776978416
+    },
+    {
+      "seconds": 5.9167,
+      "source_scale": 0.0,
+      "rp_json_scale": 0.0
+    },
+    {
+      "seconds": 6.0,
+      "source_scale": 0.0,
+      "rp_json_scale": 0.0
+    }
+  ],
+  "shared_shrink": {
+    "npc_sittake": {
+      "starts": 1.75,
+      "ends": 2,
+      "at_half_interval": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "npc_standtake": {
+      "starts": 2.75,
+      "ends": 3,
+      "at_half_interval": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "npc_eat&scale": {
+      "starts": 5.25,
+      "ends": 5.5,
+      "at_half_interval": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "npc_eat&scale_interrupt": {
+      "starts": 0.25,
+      "ends": 0.5,
+      "at_half_interval": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    }
+  },
+  "samples": [
+    {
+      "id": "01_slim_sit1_counterphase",
+      "side": "SOURCE",
+      "root_scale": [
+        1,
+        1,
+        1
+      ],
+      "root_rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "01_slim_sit1_counterphase",
+      "side": "RP",
+      "root_scale": [
+        1,
+        1,
+        1
+      ],
+      "root_rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "02_wide_wait1_phase0",
+      "side": "SOURCE",
+      "root_scale": [
+        1,
+        1,
+        1
+      ],
+      "root_rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "02_wide_wait1_phase0",
+      "side": "RP",
+      "root_scale": [
+        1,
+        1,
+        1
+      ],
+      "root_rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "03_slim_sit2_head_query",
+      "side": "SOURCE",
+      "root_scale": [
+        1,
+        1,
+        1
+      ],
+      "root_rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "03_slim_sit2_head_query",
+      "side": "RP",
+      "root_scale": [
+        1,
+        1,
+        1
+      ],
+      "root_rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "04_wide_wait4_yaw",
+      "side": "SOURCE",
+      "root_scale": [
+        1,
+        1,
+        1
+      ],
+      "root_rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "04_wide_wait4_yaw",
+      "side": "RP",
+      "root_scale": [
+        1,
+        1,
+        1
+      ],
+      "root_rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "05_wide_eat_left_wrist",
+      "side": "SOURCE",
+      "root_scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "root_rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "05_wide_eat_left_wrist",
+      "side": "RP",
+      "root_scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "root_rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "06_slim_sittake_phase0",
+      "side": "SOURCE",
+      "root_scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "root_rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "06_slim_sittake_phase0",
+      "side": "RP",
+      "root_scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "root_rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "07_slim_sittake_phase05",
+      "side": "SOURCE",
+      "root_scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "root_rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "07_slim_sittake_phase05",
+      "side": "RP",
+      "root_scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "root_rotation": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "fresh_process_reproduction": "byte-identical",
+  "gui_tested": false,
+  "bedrock_native_tested": false,
+  "java_native_tested": false
+}

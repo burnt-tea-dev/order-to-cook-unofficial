@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-11-09T01:43:48.656372+00:00",
+  "operator": "visual review operator",
+  "environment": "authorized cloud desktop, official Blockbench 5.2.2; no game client",
+  "window_id": 44040196,
+  "method": "Directly open seven frozen bbmodel files, observe actual editor viewport, capture original full-window JPEG bytes. No asset edits or saves. Each own tab closed after capture.",
+  "final_observed_state": "New Tab, no modal, responsive viewport; handed back to Tavern reviewer",
+  "frozen_manifest_sha256": "460e22c0b7e85abc1c1c57899556013e34cdf451d47fc5aa334f82c4fc121157",
+  "frozen_files_verified_after_gui": 73,
+  "frozen_mismatches": [],
+  "global_render_sides": "Auto, settings visibly checked and captured; unchanged",
+  "grid": "off",
+  "panels": "hidden",
+  "planned_model_views": 8,
+  "actual_model_views": 9,
+  "diagnostic_views": 1,
+  "camera": "Isometric Right (2:1); North controls on scenes03 and05. Source at X-20 is screen right/lower in ISO and right in North; RP at X+20 screen left/upper in ISO and left in North.",
+  "zoom_scroll_down_pixels": {
+    "01": 900,
+    "02": 1000,
+    "03": 900,
+    "04": 1000,
+    "05": 900,
+    "06": 900,
+    "07": 900
+  },
+  "observations": {
+    "01": "Complete pair visible, counterphase feet and arms distinguishable.",
+    "02": "Complete standing pair visible; arms, hands and unbent legs visible.",
+    "03": "Complete ISO and North pair visible; turned head with front-facing body visible under declared synthetic inputs.",
+    "04": "Complete standing pair visible; head yaw and shoulders visible.",
+    "05": "Complete ISO and North pair visible. Shared teal striping/stippling near sleeve/forearm junction in both source and RP was retained as a diagnostic, not dismissed or called a runtime bug. Independent image/geometry review remains needed.",
+    "06": "Complete slim seated-take phase0 pair with arms and feet visible.",
+    "07": "Complete slim seated-take phase0.5 pair visible using same UI camera preset and scroll amount as06; no claim of exact camera matrices or pixel equivalence."
+  },
+  "limits": [
+    "Both sides use one common Blockbench CubeRenderer, not independent native engines.",
+    "Static pose snapshots only; no playback, controller timing, transitions, native look-at queries, game alpha/material ordering, LIVE, Minecraft client or BDS was exercised.",
+    "Occluded inner surfaces are not accepted by these views.",
+    "Seven new cases supplement earlier frozen customer cases and do not imply every rig/clip is covered."
+  ],
+  "screenshots": [
+    {
+      "path": "screenshots/01_slim_sit1_counterphase-isometric-right-2-1.jpg",
+      "sha256": "30362ff049fe2602f1abc34e1bffa4a97b758a087a52e7cbbcdc29b68050df0f",
+      "size": 89184,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "file_mtime_utc": "2026-11-09T01:37:37.567804+00:00",
+      "classification": "model-gui-observation"
+    },
+    {
+      "path": "screenshots/02_wide_wait1_phase0-isometric-right-2-1.jpg",
+      "sha256": "851a200fe0306a6b21818bdf8abfc2f10c0156405885fdcf7b4932a4d39ab33e",
+      "size": 84043,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "file_mtime_utc": "2026-11-09T01:38:10.808264+00:00",
+      "classification": "model-gui-observation"
+    },
+    {
+      "path": "screenshots/03_slim_sit2_head_query-isometric-right-2-1.jpg",
+      "sha256": "5e21a42859212f4c905133394835e02513517f1874544ea9061e0afcf51b3fa3",
+      "size": 88422,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "file_mtime_utc": "2026-11-09T01:38:33.236572+00:00",
+      "classification": "model-gui-observation"
+    },
+    {
+      "path": "screenshots/03_slim_sit2_head_query-north.jpg",
+      "sha256": "bccad1c714542c5821f622eb94e3358940cd7617d736a5989b5d025b8405cb60",
+      "size": 86297,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "file_mtime_utc": "2026-11-09T01:38:41.804689+00:00",
+      "classification": "model-gui-observation"
+    },
+    {
+      "path": "screenshots/04_wide_wait4_yaw-isometric-right-2-1.jpg",
+      "sha256": "b5217e37786dfc6221121490ba9f53b6381aa9158f77275337a2f0218bd55a38",
+      "size": 83970,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "file_mtime_utc": "2026-11-09T01:39:18.665197+00:00",
+      "classification": "model-gui-observation"
+    },
+    {
+      "path": "screenshots/05_wide_eat_left_wrist-isometric-right-2-1.jpg",
+      "sha256": "9d2f1dc1d9e4f85fcdda3dcf549c2b8e487c82d44f198ac44dc21fb258345c60",
+      "size": 84802,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "file_mtime_utc": "2026-11-09T01:39:53.021670+00:00",
+      "classification": "model-gui-observation"
+    },
+    {
+      "path": "screenshots/05_wide_eat_left_wrist-north-sleeve-control.jpg",
+      "sha256": "bdff50392c4fee335c74b2e19f50099ea59dfd11888e52a0a8b6f458ef443441",
+      "size": 83850,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "file_mtime_utc": "2026-11-09T01:40:04.541828+00:00",
+      "classification": "model-gui-observation"
+    },
+    {
+      "path": "screenshots/06_slim_sittake_phase0-isometric-right-2-1.jpg",
+      "sha256": "f24d374a055e6ff9adbac90469b8270af7562ec258b6fd18fe217e0fb0f7c5ed",
+      "size": 90170,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "file_mtime_utc": "2026-11-09T01:40:29.442169+00:00",
+      "classification": "model-gui-observation"
+    },
+    {
+      "path": "screenshots/07_slim_sittake_phase05-isometric-right-2-1.jpg",
+      "sha256": "37e2efed5aec13fefe3b6984f78c4f5afc2c25e49bd3647bbbb90ed08d051414",
+      "size": 89938,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "file_mtime_utc": "2026-11-09T01:42:51.096083+00:00",
+      "classification": "model-gui-observation"
+    },
+    {
+      "path": "screenshots/editor-render-sides-auto.jpg",
+      "sha256": "715a46f92b488b54ee7ca116abaef8804665443edefe425180e44b301d85dfd4",
+      "size": 60705,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "file_mtime_utc": "2026-11-09T01:36:36.302966+00:00",
+      "classification": "editor-setting-diagnostic"
+    }
+  ],
+  "public_projection": {
+    "original_receipt_sha256": "f1298d6dc551f76d5178648e4a20b829e27785accf853c03769c886c6045c3b4",
+    "change": "Only operator label generalized. Original capture receipt retained privately unchanged, not published or reconstructible.",
+    "original_receipt_bytes": 6160
+  }
+}

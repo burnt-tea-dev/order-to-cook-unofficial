@@ -204,3 +204,19 @@ Version .46 restores the registered Java stove renderer’s sampled ignition pos
 ## Later customer static-pose review
 
 [Seven frozen customer scenes and eight original editor photographs](validation/visual-audio/customer-static-20261109/README.md) add independently inspected wrist, eating, shrink, boom, spawn-rebound, standing-take and synthetic idle3 body-turn samples. This is source/RP data in the same Blockbench cube renderer, not native Java/Bedrock acceptance. The original preparation and earlier GUI receipts remain unchanged; three renderer diagnostics are separate. No runtime change is proposed, and the known mathematical 1 ms pre/post edge is not a demonstrated native defect.
+
+### Additional customer frozen poses (2026-11-09)
+
+[Seven additional customer scenes and nine original model photographs](validation/visual-audio/customer-remaining-20261109/README.md)
+now have separate capture and independent pixel-review records, plus one Render
+Sides Auto diagnostic. The source/RP pair uses the same Blockbench renderer;
+scene05's shared sleeve stippling is retained with a reproducible coplanar-overlap
+diagnostic, not treated as a verified port-only bug. Historical preparation
+receipts remain unchanged. Portable identity/static checks reconstruct all seven
+scenes byte-for-byte using authenticated prior-bundle dependencies. No runtime,
+version, native rendering, playback, transition, query-convention, material,
+sound or particle acceptance is added.
+
+### Later helmet inactive-pivot diagnostic (2026-11-09)
+
+A separate [helmet A → B → A control](validation/visual-audio/blockbench-20261108/helmet-pivot-control/README.md) records reversible visor-preview behavior after changing only fifteen inactive SOURCE shell cube origins. Independent inspection covers all three original photographs, exact scene differences, unchanged runtime/source inputs and 320 matching corners. This is a common-editor preview diagnostic, not a runtime repair, proof of an internal sorting algorithm or native/worn-head transparency acceptance. The earlier static-review result is retained unchanged.
