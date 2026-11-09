@@ -1,0 +1,471 @@
+{
+  "schema": 1,
+  "runtime_commit": "dbb2574154a54cc5ad69e75e71d23900a98a79fe",
+  "published_docs_base_commit": "78c615f219314f719489987d59b51c678cc42095",
+  "docs_tree": "6d54021e860eab653b721440a2236631ac6f9fff",
+  "java_commit": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+  "gecko_commit": "e81962eefd04e0cab90445d3df37b477d2767ffd",
+  "files": {
+    "inputs/source/geo/block/order_machine.geo.json": {
+      "sha256": "8b6de1609098ebf4cf8a04a5e6041fe4969bc70311537c6fec9d4bc5622696cc",
+      "bytes": 1799,
+      "git_blob": "129679fd14accc614b7dbc4b55850f882830c1ec",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/common/src/main/resources/assets/ordertocook/geo/block/order_machine.geo.json"
+    },
+    "inputs/source/animations/order_machine.animation.json": {
+      "sha256": "a315908ff0c2b16df728d8e2fe0413072a4ee1cbf31d71751a75781a6eb6e71f",
+      "bytes": 750,
+      "git_blob": "19534b31cdb268a28d5bbe4de25e2574dc579dcb",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/common/src/main/resources/assets/ordertocook/animations/order_machine.animation.json"
+    },
+    "inputs/source/textures/block/order_machine_geo.png": {
+      "sha256": "52cd75a693d199455a6de9155c06a600557a99466c215d673145644b8c09cc68",
+      "bytes": 1326,
+      "git_blob": "06824b60ff95b723b927f23bbd0fe548522a5496",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/common/src/main/resources/assets/ordertocook/textures/block/order_machine_geo.png"
+    },
+    "inputs/source/geo/block/takeout_bag_placed.geo.json": {
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "bytes": 2818,
+      "git_blob": "0d405d085e72c17f83bcde45533657a1c6028728",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json"
+    },
+    "inputs/source/animations/takeout_bag_placed.animation.json": {
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "bytes": 721,
+      "git_blob": "70021bd4536fd1a00633a0915b83ef2434045747",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json"
+    },
+    "inputs/source/textures/block/takeout_bag_placed.png": {
+      "sha256": "de229103fba45284a4a9a30b08ce1e8d6b10929c697217b5693a3b42688ab167",
+      "bytes": 714,
+      "git_blob": "aec694ef70422675d21f069f7f7d96b2d19917cc",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/common/src/main/resources/assets/ordertocook/textures/block/takeout_bag_placed.png"
+    },
+    "inputs/source/geo/block/food_plate_placed.geo.json": {
+      "sha256": "067b2b8dc2ca9ed0a708dcc2d048236e27fd6efcbfef6f3221b60854d3338f12",
+      "bytes": 4349,
+      "git_blob": "10e606bbd2d61fc18e2dac9d1b3e6a372039aec7",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/common/src/main/resources/assets/ordertocook/geo/block/food_plate_placed.geo.json"
+    },
+    "inputs/source/animations/food_plate_placed.animation.json": {
+      "sha256": "44339024ec51373f4e9e27663d33e2d2eba573248ceb23e1c97fc781c720ba63",
+      "bytes": 725,
+      "git_blob": "d150148635094efa106b031dec01ed34b8720b90",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/common/src/main/resources/assets/ordertocook/animations/food_plate_placed.animation.json"
+    },
+    "inputs/source/textures/block/food_plate_placed.png": {
+      "sha256": "d7e566f83d24676b6b047018f6dd4302dba16ea0d1ea326fd5d2755946a0d27a",
+      "bytes": 613,
+      "git_blob": "4269d6cfb5051c48df0f2f84f41fa878bac1abd1",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/common/src/main/resources/assets/ordertocook/textures/block/food_plate_placed.png"
+    },
+    "inputs/runtime/BP/blocks/order_machine.json": {
+      "sha256": "5e11f5ae3cc815c5a875610fd2615b13f0e1e2ec29edd628f86c4bfea86c73b7",
+      "bytes": 7671,
+      "git_blob": "60a7c276886f92904b263d12b52aef970a74e065",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/dbb2574154a54cc5ad69e75e71d23900a98a79fe/runtime/BP/blocks/order_machine.json"
+    },
+    "inputs/runtime/BP/blocks/takeout_bag.json": {
+      "sha256": "a4f024e6a9fb50b923f35993941126de99ab049856bbca8369b7fcf8051bc23b",
+      "bytes": 5299,
+      "git_blob": "2c06aba3738f4f0d53720e2eb175df613e7cf795",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/dbb2574154a54cc5ad69e75e71d23900a98a79fe/runtime/BP/blocks/takeout_bag.json"
+    },
+    "inputs/runtime/BP/blocks/dining_plate_block.json": {
+      "sha256": "7e5a51abc39aa3793224ab54acd5042090cb1804a3841a07c35bda72845489e9",
+      "bytes": 14519,
+      "git_blob": "b25b26e5da9a8c1493269cc8a0321d10ce6d170d",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/dbb2574154a54cc5ad69e75e71d23900a98a79fe/runtime/BP/blocks/dining_plate_block.json"
+    },
+    "inputs/runtime/BP/entities/dining_plate.json": {
+      "sha256": "f889e512fa376e2988d19e3806c334c9300f9451d1676e93a1847f8fd8bea230",
+      "bytes": 1699,
+      "git_blob": "0e11691aa82b71b61693ddc61e3dfed0af2eb907",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/dbb2574154a54cc5ad69e75e71d23900a98a79fe/runtime/BP/entities/dining_plate.json"
+    },
+    "inputs/runtime/BP/scripts/main.js": {
+      "sha256": "391b1bc8eb3d24528eaf9f9cd6cb6d94fc8193f721aeec400753ad9d9e31893e",
+      "bytes": 101069,
+      "git_blob": "89573ce440e2ab6c4f94fdd0ceaa1086b70bbf24",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/dbb2574154a54cc5ad69e75e71d23900a98a79fe/runtime/BP/scripts/main.js"
+    },
+    "inputs/runtime/BP/scripts/dining.js": {
+      "sha256": "0d56513dce8a9aec03b157774bdeac563f1bff8b2e90d643ff3178f7ef7e71ae",
+      "bytes": 26427,
+      "git_blob": "5c5a9b456cc8b0c16ed74e20632b97d0db6823c5",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/dbb2574154a54cc5ad69e75e71d23900a98a79fe/runtime/BP/scripts/dining.js"
+    },
+    "inputs/runtime/RP/textures/terrain_texture.json": {
+      "sha256": "25868565cbdcf7f4cb67c2f23b13fde43714795524956ac22f513bd615332f9e",
+      "bytes": 4561,
+      "git_blob": "8e568bb76f66cdabc4f6b3c4c642c54783ae84e9",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/dbb2574154a54cc5ad69e75e71d23900a98a79fe/runtime/RP/textures/terrain_texture.json"
+    },
+    "inputs/runtime/RP/entity/dining_plate.entity.json": {
+      "sha256": "b75fa84926a9fd111bdb498ff6651c118f64c349d77291277d2233aac7b7b685",
+      "bytes": 3068,
+      "git_blob": "f5766e62524698b2f098e02b1fb75ceaa9b44372",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/dbb2574154a54cc5ad69e75e71d23900a98a79fe/runtime/RP/entity/dining_plate.entity.json"
+    },
+    "inputs/runtime/RP/render_controllers/dining_plate.render_controllers.json": {
+      "sha256": "7a39048d4700dc22241417ce55d32b831bef82c391ef8fb4dc42326403d3b19c",
+      "bytes": 1729,
+      "git_blob": "8738616e5ddc60dfc2a5527f8ba34e499a5c3db8",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/dbb2574154a54cc5ad69e75e71d23900a98a79fe/runtime/RP/render_controllers/dining_plate.render_controllers.json"
+    },
+    "inputs/runtime/RP/animations/food_plate_placed.animation.json": {
+      "sha256": "ec7465ff7cbbd04cf5f0c8ae318823de76fc3968f7e7ceb2b2058a74dfd503a3",
+      "bytes": 1224,
+      "git_blob": "abb0343fa6cb9399ec333d239ca31d4211a4134c",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/dbb2574154a54cc5ad69e75e71d23900a98a79fe/runtime/RP/animations/food_plate_placed.animation.json"
+    },
+    "inputs/runtime/RP/models/entity/dining_plate.geo.json": {
+      "sha256": "81eb93a4cd81140532c492057e5aeb087e2ec268de1b03ba2579f0ddd5c40469",
+      "bytes": 506292,
+      "git_blob": "0619c2b6c632deea61b7d40234e3dc87761a9a94",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/dbb2574154a54cc5ad69e75e71d23900a98a79fe/runtime/RP/models/entity/dining_plate.geo.json"
+    },
+    "inputs/runtime/RP/models/blocks/order_machine_printing_2.geo.json": {
+      "sha256": "f7e09c656eef7b7e4b872f9e8c843637ed0f4e9e320d1e4d21e9ab01a5b06f69",
+      "bytes": 5864,
+      "git_blob": "bcf66f11673c1248e1c453749c0cf89f4fa51493",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/dbb2574154a54cc5ad69e75e71d23900a98a79fe/runtime/RP/models/blocks/order_machine_printing_2.geo.json"
+    },
+    "inputs/runtime/RP/models/blocks/order_machine_printing_4.geo.json": {
+      "sha256": "095b6c34f6be0b623f4443229fcf834697b71ecf3e22b6b1e74aae7068383d9a",
+      "bytes": 5858,
+      "git_blob": "49c776508fecf82f3e67dcfa633e56eba9961a2c",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/dbb2574154a54cc5ad69e75e71d23900a98a79fe/runtime/RP/models/blocks/order_machine_printing_4.geo.json"
+    },
+    "inputs/runtime/RP/models/blocks/order_machine_idle_0.geo.json": {
+      "sha256": "767aabed4b4867054e09f9d7cfd08917bb0751f5c7ba8aa0579644135dd828c7",
+      "bytes": 4714,
+      "git_blob": "466d4a1b74fed56c3abfccfb50bb2975cd7c8c3d",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/dbb2574154a54cc5ad69e75e71d23900a98a79fe/runtime/RP/models/blocks/order_machine_idle_0.geo.json"
+    },
+    "inputs/runtime/RP/models/blocks/order_machine_waiting_0.geo.json": {
+      "sha256": "ca1ace9553d70c770507bdb2939987bf04bfbabdfb4a9cd0774c3409cf4a95dc",
+      "bytes": 5753,
+      "git_blob": "810decc1137d7e46cd3a84d2373ffbbd4cc557d4",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/dbb2574154a54cc5ad69e75e71d23900a98a79fe/runtime/RP/models/blocks/order_machine_waiting_0.geo.json"
+    },
+    "inputs/runtime/RP/models/blocks/takeout_bag_3.geo.json": {
+      "sha256": "268467064c1b10d549cc5fcd64f5bfd9cd9bd22d2c9989f44cebada90caa4ca8",
+      "bytes": 10085,
+      "git_blob": "5a869169d18422deb0f7cab8115b839e2c174c10",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/dbb2574154a54cc5ad69e75e71d23900a98a79fe/runtime/RP/models/blocks/takeout_bag_3.geo.json"
+    },
+    "inputs/runtime/RP/models/blocks/takeout_bag_7.geo.json": {
+      "sha256": "5d3a35d922d5c3a409f7acdd37972a7261ae5bf2000b0a61a2304e336163e902",
+      "bytes": 10098,
+      "git_blob": "1cdac530ba62cabd6cbb4a04f85834ae852b7f23",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/dbb2574154a54cc5ad69e75e71d23900a98a79fe/runtime/RP/models/blocks/takeout_bag_7.geo.json"
+    },
+    "inputs/runtime/RP/models/blocks/takeout_bag.geo.json": {
+      "sha256": "d4a1501f9f89f645de4527f0b89671ad11327d17d756a9fa72d4ffb0ce9e4764",
+      "bytes": 9982,
+      "git_blob": "a4d3798a9b5b3706794a874e29e2d588631750ea",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/dbb2574154a54cc5ad69e75e71d23900a98a79fe/runtime/RP/models/blocks/takeout_bag.geo.json"
+    },
+    "inputs/runtime/RP/textures/ordertocook/block/order_machine_geo.png": {
+      "sha256": "52cd75a693d199455a6de9155c06a600557a99466c215d673145644b8c09cc68",
+      "bytes": 1326,
+      "git_blob": "06824b60ff95b723b927f23bbd0fe548522a5496",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/dbb2574154a54cc5ad69e75e71d23900a98a79fe/runtime/RP/textures/ordertocook/block/order_machine_geo.png"
+    },
+    "inputs/runtime/RP/textures/ordertocook/block/takeout_bag_placed.png": {
+      "sha256": "de229103fba45284a4a9a30b08ce1e8d6b10929c697217b5693a3b42688ab167",
+      "bytes": 714,
+      "git_blob": "aec694ef70422675d21f069f7f7d96b2d19917cc",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/dbb2574154a54cc5ad69e75e71d23900a98a79fe/runtime/RP/textures/ordertocook/block/takeout_bag_placed.png"
+    },
+    "inputs/runtime/RP/textures/ordertocook/entity/dining_plate_atlas.png": {
+      "sha256": "22d7bc1e10344538d11e1d764631b6b1c3c5f31a89ca2143e83fb6af006469f9",
+      "bytes": 8441,
+      "git_blob": "2890579d267147719d2ee4ea6593f4f3695dbb59",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/dbb2574154a54cc5ad69e75e71d23900a98a79fe/runtime/RP/textures/ordertocook/entity/dining_plate_atlas.png"
+    },
+    "source/context/ASSET_PROVENANCE.md": {
+      "sha256": "baf23169102a6c43bf547af95872fc7ed0b594302c5b67f15aaf5cff294f30f3",
+      "bytes": 24956,
+      "git_blob": "a24f0ca644e1c7589b86cfc230842b0794a13e99",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/78c615f219314f719489987d59b51c678cc42095/docs/ASSET_PROVENANCE.md"
+    },
+    "source/context/dining.test.js": {
+      "sha256": "ef9e29d8ad2ce8a6a3aca3ffda52d2d42d11ea97144f877206a0d92e6a3c654c",
+      "bytes": 26756,
+      "git_blob": "84494aa5250a34fe7b2b24bcf14a2a0da60dd96f",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/78c615f219314f719489987d59b51c678cc42095/tests/dining.test.js"
+    },
+    "source/context/source.lock.json": {
+      "sha256": "2222a2d53450fdc2ca81abe4088e2581405ae8409b16fbd479324992c8f5c909",
+      "bytes": 636,
+      "git_blob": "bd63d0794b80dfccb5977cdeec1a5ce9d3726e8b",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/78c615f219314f719489987d59b51c678cc42095/upstream/source.lock.json"
+    },
+    "source/context/UPSTREAM.json": {
+      "sha256": "95b12921130ebd020bec778e622bdcd749edec4d0b93d93ac94fe3df6b05d3a5",
+      "bytes": 873,
+      "git_blob": "0d21fa024fca35991ebd6d0c44057e0106dc7c74",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/78c615f219314f719489987d59b51c678cc42095/upstream/reference/UPSTREAM.json"
+    },
+    "source/otc/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/TakeoutBagBlockEntity.java": {
+      "sha256": "860bbc569dce351a9527f4ad29fc46f1644260fcee22e1403a58ea543edaeff5",
+      "bytes": 2238,
+      "git_blob": "fe1cae2ed440f22f94d1eabdd63adc76e18d5e6e",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/TakeoutBagBlockEntity.java"
+    },
+    "source/otc/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/FoodPlateBlockEntity.java": {
+      "sha256": "49bb08c9ba2dce2060bcae6424df608338424a709e07ea4a66e89cdd5dc55279",
+      "bytes": 5849,
+      "git_blob": "aee950e0ee09fd0bd2b254c2b19a106595490fe7",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/FoodPlateBlockEntity.java"
+    },
+    "source/otc/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/OrderMachineBlockEntity.java": {
+      "sha256": "f36704103ad8b15a6489324f4141f8601158074a46dc596543b4e2fcb33319e7",
+      "bytes": 38423,
+      "git_blob": "ee99331b7bb41bc1467ad238ae9eeded34d6a9bb",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/OrderMachineBlockEntity.java"
+    },
+    "source/otc/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/OrderToCookModClient.java": {
+      "sha256": "6d032cbd6e6303c38229b15716724e8df99053191a8eddb4b4c4d4f7d833d674",
+      "bytes": 25972,
+      "git_blob": "9ce9ceabf37b4d39a390f75ac44fced8516043fe",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/OrderToCookModClient.java"
+    },
+    "source/otc/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/TakeoutBagPlacedRenderer.java": {
+      "sha256": "143fa0ec3e7f863a7a15aff5beec845fc61b0c57b7edb2f8829431aef38f86d8",
+      "bytes": 367,
+      "git_blob": "b1c2aab1cc7f51f3f862be6134c5fb74fda8aed4",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/TakeoutBagPlacedRenderer.java"
+    },
+    "source/otc/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/FoodPlatePlacedRenderer.java": {
+      "sha256": "6b4537a38d0e630e760eb952689a56d99a39086995b06a82069fb66e2ffcceec",
+      "bytes": 1188,
+      "git_blob": "b0b5ff19bf1a621781333928dec0a4a16fbe0470",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/FoodPlatePlacedRenderer.java"
+    },
+    "source/otc/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/OrderMachineGeoModel.java": {
+      "sha256": "29e10b2e4566f4397d25246787734a8b7c26c95c2397f108454878e5d5112190",
+      "bytes": 1148,
+      "git_blob": "8922f1e458c097e12d70725606da196ece5e2920",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/OrderMachineGeoModel.java"
+    },
+    "source/otc/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/OrderMachineRenderer.java": {
+      "sha256": "c9e2fbfdc6d9de30c981daf57ea846bc1a50df08d0596efb271ce8f519530ce2",
+      "bytes": 1571,
+      "git_blob": "b392efb4556eb323cb81d15a901280fe0079a6ea",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/OrderMachineRenderer.java"
+    },
+    "source/otc/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/FoodPlatePlacedGeoModel.java": {
+      "sha256": "469db016cc0a70ca0bc5edd325e4810b939a3ff727db81287783bfa1cdbaa0a9",
+      "bytes": 1144,
+      "git_blob": "f98a012c955658cdfed659a18aa7bbecbc9a625a",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/FoodPlatePlacedGeoModel.java"
+    },
+    "source/otc/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/TakeoutBagPlacedGeoModel.java": {
+      "sha256": "53b399e188af28e3be991770df935d324111ad4c3bac003ed544915dbaf02c79",
+      "bytes": 1153,
+      "git_blob": "25a67a82ecedde6dd7fa1f5023c1b26d6a4313ba",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/TakeoutBagPlacedGeoModel.java"
+    },
+    "source/dependency/OTC-build.gradle": {
+      "sha256": "be31c2aa95f57ea1212e6ea747b55163999f4db04bc4b8cf5bbf6300271b0d4e",
+      "bytes": 5795,
+      "git_blob": "ccf66c688e70ef237700931ba45c84eec9363fcb",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/build.gradle"
+    },
+    "source/dependency/OTC-gradle.properties": {
+      "sha256": "4951a4affd08accde7a11a8848cdb07d66106c70731916b8b8e6f94091875fd2",
+      "bytes": 242,
+      "git_blob": "b5cc71076bdb6799f57a43a71ab3b4f92f13b512",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/gradle.properties"
+    },
+    "source/dependency/Gecko-gradle.properties": {
+      "sha256": "f29f80e0fa53983571a744a1f73bf800cb58a04f47a1fabd933a6d0f0b19f264",
+      "bytes": 858,
+      "git_blob": "8ef52c2b6a56efd52520349f887c665292526832",
+      "url": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/gradle.properties"
+    },
+    "source/gecko/RenderUtils.java": {
+      "sha256": "a0cc169417d819d64f81382334962ce737521d2bb0a4b21719a8682e9d2a1982",
+      "bytes": 12516,
+      "git_blob": "99a6fe538afa8eaf52bbfac77dd037220ffe6de6",
+      "url": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/Forge/src/main/java/software/bernie/geckolib/util/RenderUtils.java"
+    },
+    "source/gecko/AnimationController.java": {
+      "sha256": "851d9a8e5fa8f54971c678823354385cacf9ffd241cc7eecabaabc79b67799ed",
+      "bytes": 32879,
+      "git_blob": "6314af8aad401339a60c217ec56f0fb40a31a561",
+      "url": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/core/src/main/java/software/bernie/geckolib/core/animation/AnimationController.java"
+    },
+    "source/gecko/BakedAnimationsAdapter.java": {
+      "sha256": "ec30c7cdb195f597688abab0e13dae009a3eb512bc3269fc991814771c1ecbec",
+      "bytes": 10239,
+      "git_blob": "8a3277e679ac7fc0481d175e992cc7626bfffe4e",
+      "url": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/Forge/src/main/java/software/bernie/geckolib/loading/json/typeadapter/BakedAnimationsAdapter.java"
+    },
+    "source/gecko/SinDegrees.java": {
+      "sha256": "0bec9b471363c7765d5e84c72dfbd02c60f4f7209de2c7f7e693c9f464d82c22",
+      "bytes": 570,
+      "git_blob": "128690325446592bef32aa2d72dba59710e0f60d",
+      "url": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/core/src/main/java/software/bernie/geckolib/core/molang/functions/SinDegrees.java"
+    },
+    "source/gecko/EasingType.java": {
+      "sha256": "a70347c881123c272f05425faba7adf5e415d33d69c0b53758da9b0a6fc94673",
+      "bytes": 16078,
+      "git_blob": "2f77c97fb96966e918603486892a40c63e8f2716",
+      "url": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/core/src/main/java/software/bernie/geckolib/core/animation/EasingType.java"
+    },
+    "source/gecko/GeoBlockRenderer.java": {
+      "sha256": "6758380c099b74701175284120f1c7f2f886afc5fed541543bf25473a34a3de1",
+      "bytes": 10696,
+      "git_blob": "a01627b0301515e184c7fac0503417f9b0394b55",
+      "url": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/Forge/src/main/java/software/bernie/geckolib/renderer/GeoBlockRenderer.java"
+    },
+    "source/gecko/GeoRenderer.java": {
+      "sha256": "dd385b33667c825e0bd325c710b5f11ff9a3f7caddb20b4fb69ef19f9bf95a56",
+      "bytes": 17222,
+      "git_blob": "148da7ec67480553f99822e082956b63cd163960",
+      "url": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/Forge/src/main/java/software/bernie/geckolib/renderer/GeoRenderer.java"
+    },
+    "source/blockbench/js__formats__bedrock__bedrock.js.txt": {
+      "sha256": "d77fa9edfaaa042cd5f72211aea34cce19ff88ec477364d9bbc237355374d347",
+      "bytes": 55849,
+      "git_blob": "f27d89e774003486b1161b0578971f686fece0a8",
+      "source_map_entry": "js/formats/bedrock/bedrock.js",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/78c615f219314f719489987d59b51c678cc42095/docs/validation/visual-audio/customer-static-20261109/frozen/official-source/js__formats__bedrock__bedrock.js.txt"
+    },
+    "source/blockbench/js__formats__generic.ts.txt": {
+      "sha256": "7fc5ef646b66058f8071d033a26c5fe29ddf6d71f1c98bf2c76fc4cc73ccc0f0",
+      "bytes": 924,
+      "git_blob": "6729669140308357ee5ea76f539d7d4096ea9061",
+      "source_map_entry": "js/formats/generic.ts",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/78c615f219314f719489987d59b51c678cc42095/docs/validation/visual-audio/customer-static-20261109/frozen/official-source/js__formats__generic.ts.txt"
+    },
+    "source/blockbench/js__outliner__types__group.js.txt": {
+      "sha256": "edc6a16fed27d9f4855e17df362c6d5e1efc5e8a8928c697ba0f257ab9ce98ff",
+      "bytes": 27210,
+      "git_blob": "1b54277b899c9ad8ce387782915493b18fbe1745",
+      "source_map_entry": "js/outliner/types/group.js",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/78c615f219314f719489987d59b51c678cc42095/docs/validation/visual-audio/customer-static-20261109/frozen/official-source/js__outliner__types__group.js.txt"
+    },
+    "source/blockbench/js__outliner__types__cube.js.txt": {
+      "sha256": "57cad3b3eb30af04fa54d7b41c2e3a58ad26098c8585eaf30344a7f3f1fe430d",
+      "bytes": 53781,
+      "git_blob": "70cb939ab827f999f9178fac05839a2ecb005d5b",
+      "source_map_entry": "js/outliner/types/cube.js",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/78c615f219314f719489987d59b51c678cc42095/docs/validation/visual-audio/customer-static-20261109/frozen/official-source/js__outliner__types__cube.js.txt"
+    },
+    "licenses/OTC-GPL-3.0.txt": {
+      "sha256": "696c076d802085303a80e326029e8f13fee6a275113fab081a0bba51cb527449",
+      "bytes": 35149,
+      "git_blob": "9355dc07d2d5a0c5f77e304f45142c0872681b8b",
+      "notice": "See licenses/NOTICE.md and corresponding full license."
+    },
+    "licenses/GeckoLib-MIT.txt": {
+      "sha256": "80343d98f6fc340c0700b1844689c2fd42c70f48ea0b363dcd2477cc98e91dd6",
+      "bytes": 1070,
+      "git_blob": "8b8d5db1d7e183f6560cfed32d0fced85104a488",
+      "notice": "See licenses/NOTICE.md and corresponding full license."
+    },
+    "licenses/Blockbench-GPL-3.0.txt": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149,
+      "git_blob": "f288702d2fa16d3cdf0035b15a9fcbc552cd88e7",
+      "notice": "See licenses/NOTICE.md and corresponding full license."
+    },
+    "source/gecko/FaceUV.java": {
+      "sha256": "ad7f0f7d45a4bc83f61b7867d556dbd49e7ecb67554eee623a9e6c74a167ed0e",
+      "bytes": 2168,
+      "git_blob": "4968ea4d708ca114281ada901af5b5123cc9ce7d",
+      "url": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/Forge/src/main/java/software/bernie/geckolib/loading/json/raw/FaceUV.java"
+    },
+    "source/gecko/BakedModelFactory.java": {
+      "sha256": "b796329a436509289a560bd50a8dc4598419618f219782ba47dcee9e55168e64",
+      "bytes": 10842,
+      "git_blob": "9cbe1d210a0dc147a618e32f44bd9b0e4b8d3391",
+      "url": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/Forge/src/main/java/software/bernie/geckolib/loading/object/BakedModelFactory.java"
+    },
+    "source/gecko/GeoQuad.java": {
+      "sha256": "e745c68cb36ebf5b827f8bec310e007afa05e9841e89f751bed3cdbec3e28206",
+      "bytes": 2081,
+      "git_blob": "c5e4ac9ac36284f5bae9caed64e3122dd1483141",
+      "url": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/Forge/src/main/java/software/bernie/geckolib/cache/object/GeoQuad.java"
+    },
+    "source/blockbench/js__io__format.ts.txt": {
+      "sha256": "6e1fe2faf85aebbec01999979acec5d1c9be9aaa70898baf9d65b2d0c7435f1c",
+      "bytes": 21546,
+      "git_blob": "c77e0df4d60086edea4b229b73b1e6275063149d",
+      "source_map_entry": "js/io/format.ts",
+      "url": "https://github.com/burnt-tea-dev/order-to-cook-unofficial/blob/78c615f219314f719489987d59b51c678cc42095/docs/validation/visual-audio/customer-static-20261109/frozen/official-source/js__io__format.ts.txt"
+    },
+    "source/gecko/GeoModel.java": {
+      "sha256": "19051a1da581191cc84e399ec1bb04a0d18c0d7a9a60a61f474e48a3262257e0",
+      "bytes": 11138,
+      "git_blob": "61f82c12a1b87ded87c05c539e4a0bf22d590b77",
+      "url": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/Forge/src/main/java/software/bernie/geckolib/model/GeoModel.java"
+    },
+    "licenses/NOTICE.md": {
+      "sha256": "613da201181dd83cc203cc01a7a3bc4228690867333041b1739e8cc6fe2185c4",
+      "bytes": 673,
+      "git_blob": "0c351930310afa6e03bef4410b61acb9e31791e4",
+      "notice": "See licenses/NOTICE.md and corresponding full license."
+    },
+    "fridge/source-java/RefrigeratorRenderer.java": {
+      "sha256": "21e55bb8d7144b13c6a12a9ac9c44ed221384a4266da67ce164aac9bc5b3f232",
+      "bytes": 4606,
+      "git_blob": "18da51d575d2f9b9bfb7a2b9e752d1dd90a60367",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/RefrigeratorRenderer.java"
+    },
+    "fridge/source-java/RefrigeratorBlockEntity.java": {
+      "sha256": "416a28eb7c2c5c1ed3867b1039173032223607bbe9808b1dcf84a60730889b91",
+      "bytes": 22778,
+      "git_blob": "3a9cffa65bdd24f62057aae039138de5a86c8e36",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/RefrigeratorBlockEntity.java"
+    },
+    "fridge/source-java/RefrigeratorGeoModel.java": {
+      "sha256": "cb63e97db83954be460915d59d68491816b393d80e83f367a87f902759b391ea",
+      "bytes": 1191,
+      "git_blob": "2efc01bbeb3b7faee15f62dd995a7fd2dbaea6bf",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/renderer/RefrigeratorGeoModel.java"
+    },
+    "fridge/source-java/refrigerator.geo.json": {
+      "sha256": "f92edd724ba07db7f7efc901a36899e3bee806a23fcf043c9cba315f4adcecf5",
+      "bytes": 4965,
+      "git_blob": "30a92337a06df621d66c3156d1d81be537626a65",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/common/src/main/resources/assets/ordertocook/geo/block/refrigerator.geo.json"
+    },
+    "fridge/source-java/refrigerator.animation.json": {
+      "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",
+      "bytes": 4950,
+      "git_blob": "a8c06567396965b28ef214d50760b6953f525387",
+      "url": "https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json"
+    },
+    "fridge/official-api/armor_stand.entity.json": {
+      "sha256": "5feac17b5a8737ff2539461bff535e10283256655ef628406914d11730102ca2",
+      "bytes": 1977,
+      "git_blob": "cb84dbdc94263187d734e3de23c042720a9f30c9",
+      "url": "https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/entity/armor_stand.entity.json"
+    },
+    "fridge/official-api/armor_stand.geo.json": {
+      "sha256": "a634d983c5c9fac15d0e8a3c6d9d820fa60a769c4c6bfcbcd76dbbe06ba82b95",
+      "bytes": 2865,
+      "git_blob": "6b32b12f0477a1de00f50234a82c34c968d8bab8",
+      "url": "https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/models/entity/armor_stand.geo.json"
+    },
+    "fridge/official-api/armor_stand.behavior.json": {
+      "sha256": "80c3fc7910daf2ba328591fec07c678f5a9983c9c9c8d695c17279b96e391941",
+      "bytes": 1348,
+      "git_blob": "6497405f81b631a5f494bfab70d9df07178856fa",
+      "url": "https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/behavior_pack/entities/armor_stand.json"
+    },
+    "fridge/official-api/Mojang-LICENSE.md": {
+      "sha256": "ca18c0dede68ce24ea1cd6f9df0813579b6f9f979787983a50baec99345f975d",
+      "bytes": 222,
+      "git_blob": "ed3f1b782fb19fbc5d69f5b1343b056fc23c61fd",
+      "url": "https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/LICENSE.md"
+    }
+  }
+}

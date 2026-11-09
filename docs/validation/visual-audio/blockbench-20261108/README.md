@@ -90,3 +90,11 @@
 ## Stove ignition and remaining static assets
 
 The [next review batch](remaining-static/README.md) records 19 stove source/baseline/candidate captures and 19 furniture, shelf and helmet captures, with exact scene/input identities. It supplements rather than replaces the limits above. The [paired .46 report](../../0.1.46-alpha.1/STOVE_IGNITION.md) separates source/service tests, finite poses, editor observations and native acceptance.
+
+## Later placement and pose comparisons
+
+The [2026-11-09 six-scene comparison](../placement-poses-20261109/README.md) adds
+source/runtime printer and bag positive/negative poses plus settled/rebound
+stage-zero plates. It keeps exact source pixels, physical UVs and the intentional
+plate anchor offset. These bounded results supplement the earlier formal-only
+mesh and CPU samples; native material, clock and actor-facing checks remain open.

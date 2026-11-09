@@ -228,3 +228,10 @@ The recorded pixel-tool versions are in `provenance/pixel-tool-versions.json`;
 JPEG decoder changes can alter tiny residual counts. The preserved original
 JPEGs and reported tool versions remain the evidence identity, rather than an
 unqualified cross-decoder pixel promise.
+
+## Separate item-display source/API review
+
+The [2026-11-09 item-display contract](../visual-audio/FRIDGE_ITEM_DISPLAY_CONTRACT_20261109.md)
+documents the Java 8+8 selection and root/closing-state behavior, official Bedrock
+held-item support, and the remaining custom-holder rendering and safety tests.
+It adds no runtime display and does not change these cabinet/door observations.
