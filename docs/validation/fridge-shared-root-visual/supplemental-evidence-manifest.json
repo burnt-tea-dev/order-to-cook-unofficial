@@ -1,0 +1,612 @@
+{
+  "status": "FIVE_SUPPLEMENTAL_VIEWS_REVIEWED_NOT_FULL_RUNTIME_ACCEPTANCE",
+  "canonical_fixture_commit": "e544f563062bf92e58afaa057a9ee52fd7ccbdc8",
+  "canonical_fixture_tree": "bb9f843cdb79a9ea9488acf8db67748cb2e69c21",
+  "source_commit": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+  "screenshots": [
+    {
+      "path": "screenshots/lower_peak_upper_open_frame3-isometric-right-2-1.jpg",
+      "sha256": "eb2dbfb31cceebe4ecb1116f52aa38fd8ff0b75cddb813559170b68b5cef180e",
+      "bytes": 88316,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "scene": "supplemental-scenes/lower_peak_upper_open_frame3.bbmodel",
+      "scene_sha256": "787826b92168560b6deaa77631cd41bd1c7aa806a7fcacc0d63316b8c3d43da8",
+      "source_side": "right",
+      "camera": "Isometric Right (2:1)",
+      "root_frame": 2,
+      "source_controller_order": [
+        {
+          "half": "upper",
+          "clip": "up_open",
+          "time_seconds": 0.3,
+          "sampled_channels": {
+            "bone2": {
+              "rotation": [
+                0.0,
+                -78.86999175714647,
+                0.0
+              ]
+            }
+          }
+        },
+        {
+          "half": "lower",
+          "clip": "down_close",
+          "time_seconds": 0.5,
+          "sampled_channels": {
+            "bone": {
+              "position": [
+                0,
+                0,
+                0.25
+              ],
+              "scale": [
+                1,
+                1,
+                0.95
+              ]
+            },
+            "bone3": {
+              "rotation": [
+                0.0,
+                -11.718749999999986,
+                0.0
+              ]
+            }
+          }
+        }
+      ],
+      "canonical_inputs": [
+        {
+          "half": "lower",
+          "path": "runtime/RP/models/blocks/refrigerator_lower_close_5_root_2.geo.json",
+          "sha256": "a151537d83685a4be0a786719c52445d3e1db76c5f7011f660527e598862a965",
+          "states": {
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:half": "lower",
+            "ordertocook:open": false,
+            "ordertocook:closing": true,
+            "ordertocook:frame": 5,
+            "ordertocook:root_frame": 2
+          },
+          "assembly_offset": [
+            24,
+            0,
+            0
+          ],
+          "resolved_transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "inverse_assembly_placement_verified": true
+        },
+        {
+          "half": "upper",
+          "path": "runtime/RP/models/blocks/refrigerator_upper_3_root_2.geo.json",
+          "sha256": "533a2e85deac8bd31efd320a0c62ccc63a3579e52a8ca48738c1045e4036fee9",
+          "states": {
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:half": "upper",
+            "ordertocook:open": true,
+            "ordertocook:closing": false,
+            "ordertocook:frame": 3,
+            "ordertocook:root_frame": 2
+          },
+          "assembly_offset": [
+            24,
+            16,
+            0
+          ],
+          "resolved_transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "inverse_assembly_placement_verified": true
+        }
+      ],
+      "result": "REVIEWED_STATIC_VIEW_NO_NEW_BROAD_SURFACE_OR_SHARED_DEPTH_DISCREPANCY_FIT_RESIDUAL_RETAINED",
+      "capture_zoom_note": "zoom down 1100",
+      "independently_inspected": true
+    },
+    {
+      "path": "screenshots/upper_peak_lower_open_frame3-isometric-right-2-1.jpg",
+      "sha256": "099e4d3107f4a5299bbf0d6502f75625eb17467a94e6fc140b15840dd2c6e6a8",
+      "bytes": 88236,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "scene": "supplemental-scenes/upper_peak_lower_open_frame3.bbmodel",
+      "scene_sha256": "c02ae224c3b83507254fc6899459ed8372b2e2d4cc7457e128d11643c3574931",
+      "source_side": "right",
+      "camera": "Isometric Right (2:1)",
+      "root_frame": 2,
+      "source_controller_order": [
+        {
+          "half": "upper",
+          "clip": "up_close",
+          "time_seconds": 0.5,
+          "sampled_channels": {
+            "bone": {
+              "position": [
+                0,
+                0,
+                0.25
+              ],
+              "scale": [
+                1,
+                1,
+                0.95
+              ]
+            },
+            "bone2": {
+              "rotation": [
+                0.0,
+                -12.656249999999986,
+                0.0
+              ]
+            }
+          }
+        },
+        {
+          "half": "lower",
+          "clip": "down_open",
+          "time_seconds": 0.3,
+          "sampled_channels": {
+            "bone3": {
+              "rotation": [
+                0.0,
+                -73.02777014550598,
+                0.0
+              ]
+            }
+          }
+        }
+      ],
+      "canonical_inputs": [
+        {
+          "half": "lower",
+          "path": "runtime/RP/models/blocks/refrigerator_lower_3_root_2.geo.json",
+          "sha256": "878e4536be7e3da4c4754fe5ac5e9a86e2f06b2d0e8b3b78226a9388ae43bc80",
+          "states": {
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:half": "lower",
+            "ordertocook:open": true,
+            "ordertocook:closing": false,
+            "ordertocook:frame": 3,
+            "ordertocook:root_frame": 2
+          },
+          "assembly_offset": [
+            24,
+            0,
+            0
+          ],
+          "resolved_transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "inverse_assembly_placement_verified": true
+        },
+        {
+          "half": "upper",
+          "path": "runtime/RP/models/blocks/refrigerator_upper_close_5_root_2.geo.json",
+          "sha256": "299caa903f730a1fd575af38499dbfb60e8742fac3deec3f9c2f9549e6dc4043",
+          "states": {
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:half": "upper",
+            "ordertocook:open": false,
+            "ordertocook:closing": true,
+            "ordertocook:frame": 5,
+            "ordertocook:root_frame": 2
+          },
+          "assembly_offset": [
+            24,
+            16,
+            0
+          ],
+          "resolved_transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "inverse_assembly_placement_verified": true
+        }
+      ],
+      "result": "REVIEWED_STATIC_VIEW_NO_NEW_BROAD_SURFACE_OR_SHARED_DEPTH_DISCREPANCY_FIT_RESIDUAL_RETAINED",
+      "capture_zoom_note": "zoom down 1100",
+      "independently_inspected": true
+    },
+    {
+      "path": "screenshots/lower_neutral_active_overrides_upper_peak-isometric-right-2-1.jpg",
+      "sha256": "4692f233913fdeba4ec9a6204bdcb4a426561b837cfce4bf9b8f650f8b48cb68",
+      "bytes": 91966,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "scene": "supplemental-scenes/lower_neutral_active_overrides_upper_peak.bbmodel",
+      "scene_sha256": "353284e9d5854c4b27bae4e301690732942124385a16a84b2e1d79f8685f6a71",
+      "source_side": "right",
+      "camera": "Isometric Right (2:1)",
+      "root_frame": 0,
+      "source_controller_order": [
+        {
+          "half": "upper",
+          "clip": "up_close",
+          "time_seconds": 0.5,
+          "sampled_channels": {
+            "bone": {
+              "position": [
+                0,
+                0,
+                0.25
+              ],
+              "scale": [
+                1,
+                1,
+                0.95
+              ]
+            },
+            "bone2": {
+              "rotation": [
+                0.0,
+                -12.656249999999986,
+                0.0
+              ]
+            }
+          }
+        },
+        {
+          "half": "lower",
+          "clip": "down_close",
+          "time_seconds": 0.1,
+          "sampled_channels": {
+            "bone": {
+              "position": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "scale": [
+                1.0,
+                1.0,
+                1.0
+              ]
+            },
+            "bone3": {
+              "rotation": [
+                0.0,
+                -115.546875,
+                0.0
+              ]
+            }
+          }
+        }
+      ],
+      "canonical_inputs": [
+        {
+          "half": "lower",
+          "path": "runtime/RP/models/blocks/refrigerator_lower_close_1.geo.json",
+          "sha256": "ad0df22067adb43eff490af9bfae317b477a5346b91b725d20d5f70eea43ffcc",
+          "states": {
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:half": "lower",
+            "ordertocook:open": false,
+            "ordertocook:closing": true,
+            "ordertocook:frame": 1,
+            "ordertocook:root_frame": 0
+          },
+          "assembly_offset": [
+            24,
+            0,
+            0
+          ],
+          "resolved_transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "inverse_assembly_placement_verified": true
+        },
+        {
+          "half": "upper",
+          "path": "runtime/RP/models/blocks/refrigerator_upper_close_5.geo.json",
+          "sha256": "0d3a97c68b184a349ea4e8bd9ffaed383672bae410bf069887de4169a2835c14",
+          "states": {
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:half": "upper",
+            "ordertocook:open": false,
+            "ordertocook:closing": true,
+            "ordertocook:frame": 5,
+            "ordertocook:root_frame": 0
+          },
+          "assembly_offset": [
+            24,
+            16,
+            0
+          ],
+          "resolved_transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "inverse_assembly_placement_verified": true
+        }
+      ],
+      "result": "REVIEWED_STATIC_VIEW_NO_NEW_BROAD_SURFACE_OR_SHARED_DEPTH_DISCREPANCY_FIT_RESIDUAL_RETAINED",
+      "capture_zoom_note": "zoom down 1000",
+      "independently_inspected": true
+    },
+    {
+      "path": "screenshots/lower_recovering_overrides_upper_peak-isometric-right-2-1.jpg",
+      "sha256": "172ad15e8469a956e01231ab21f2a620d018333f5edf101087f31a59f76a36b0",
+      "bytes": 88465,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "scene": "supplemental-scenes/lower_recovering_overrides_upper_peak.bbmodel",
+      "scene_sha256": "a919e5227385e61bbf28f660dd5e64728d9ba64b58b55afc802f5c66460fa498",
+      "source_side": "right",
+      "camera": "Isometric Right (2:1)",
+      "root_frame": 3,
+      "source_controller_order": [
+        {
+          "half": "upper",
+          "clip": "up_close",
+          "time_seconds": 0.5,
+          "sampled_channels": {
+            "bone": {
+              "position": [
+                0,
+                0,
+                0.25
+              ],
+              "scale": [
+                1,
+                1,
+                0.95
+              ]
+            },
+            "bone2": {
+              "rotation": [
+                0.0,
+                -12.656249999999986,
+                0.0
+              ]
+            }
+          }
+        },
+        {
+          "half": "lower",
+          "clip": "down_close",
+          "time_seconds": 0.6,
+          "sampled_channels": {
+            "bone": {
+              "position": [
+                0.0,
+                0.0,
+                0.10002999400119975
+              ],
+              "scale": [
+                1.0,
+                1.0,
+                0.97999400119976
+              ]
+            },
+            "bone3": {
+              "rotation": [
+                0.0,
+                -11.375000000000014,
+                0.0
+              ]
+            }
+          }
+        }
+      ],
+      "canonical_inputs": [
+        {
+          "half": "lower",
+          "path": "runtime/RP/models/blocks/refrigerator_lower_close_6_root_3.geo.json",
+          "sha256": "58ceaa41b7630ca7008f8aa79eafdf3962db13bb3d8bf88f5747ae58b46d35b4",
+          "states": {
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:half": "lower",
+            "ordertocook:open": false,
+            "ordertocook:closing": true,
+            "ordertocook:frame": 6,
+            "ordertocook:root_frame": 3
+          },
+          "assembly_offset": [
+            24,
+            0,
+            0
+          ],
+          "resolved_transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "inverse_assembly_placement_verified": true
+        },
+        {
+          "half": "upper",
+          "path": "runtime/RP/models/blocks/refrigerator_upper_close_5_root_3.geo.json",
+          "sha256": "4eac0213b04f751ccb791c04af4fd3c9d29dcbee7f4cf5564d7259c5afaf3622",
+          "states": {
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:half": "upper",
+            "ordertocook:open": false,
+            "ordertocook:closing": true,
+            "ordertocook:frame": 5,
+            "ordertocook:root_frame": 3
+          },
+          "assembly_offset": [
+            24,
+            16,
+            0
+          ],
+          "resolved_transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "inverse_assembly_placement_verified": true
+        }
+      ],
+      "result": "REVIEWED_STATIC_VIEW_NO_NEW_BROAD_SURFACE_OR_SHARED_DEPTH_DISCREPANCY_FIT_RESIDUAL_RETAINED",
+      "capture_zoom_note": "zoom down 1100",
+      "independently_inspected": true
+    },
+    {
+      "path": "screenshots/lower_peak_overrides_upper_recovering-isometric-right-2-1.jpg",
+      "sha256": "74f5ee25788b5f13b80a88d5dcd38628d1dbdeec1147c7a3bc46845a4b2dad88",
+      "bytes": 88136,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "scene": "supplemental-scenes/lower_peak_overrides_upper_recovering.bbmodel",
+      "scene_sha256": "55351e4eedb9174e731370f0f6bc1bff5e4f72e972d8ab026a9a760bca584e6e",
+      "source_side": "right",
+      "camera": "Isometric Right (2:1)",
+      "root_frame": 2,
+      "source_controller_order": [
+        {
+          "half": "upper",
+          "clip": "up_close",
+          "time_seconds": 0.6,
+          "sampled_channels": {
+            "bone": {
+              "position": [
+                0.0,
+                0.0,
+                0.10002999400119975
+              ],
+              "scale": [
+                1.0,
+                1.0,
+                0.97999400119976
+              ]
+            },
+            "bone2": {
+              "rotation": [
+                0.0,
+                -12.28500000000001,
+                0.0
+              ]
+            }
+          }
+        },
+        {
+          "half": "lower",
+          "clip": "down_close",
+          "time_seconds": 0.5,
+          "sampled_channels": {
+            "bone": {
+              "position": [
+                0,
+                0,
+                0.25
+              ],
+              "scale": [
+                1,
+                1,
+                0.95
+              ]
+            },
+            "bone3": {
+              "rotation": [
+                0.0,
+                -11.718749999999986,
+                0.0
+              ]
+            }
+          }
+        }
+      ],
+      "canonical_inputs": [
+        {
+          "half": "lower",
+          "path": "runtime/RP/models/blocks/refrigerator_lower_close_5_root_2.geo.json",
+          "sha256": "a151537d83685a4be0a786719c52445d3e1db76c5f7011f660527e598862a965",
+          "states": {
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:half": "lower",
+            "ordertocook:open": false,
+            "ordertocook:closing": true,
+            "ordertocook:frame": 5,
+            "ordertocook:root_frame": 2
+          },
+          "assembly_offset": [
+            24,
+            0,
+            0
+          ],
+          "resolved_transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "inverse_assembly_placement_verified": true
+        },
+        {
+          "half": "upper",
+          "path": "runtime/RP/models/blocks/refrigerator_upper_close_6_root_2.geo.json",
+          "sha256": "5b72223a57915bb779aaa2be90be047dcaa0a3e3c4ca4c240756aeba61d86e1a",
+          "states": {
+            "minecraft:cardinal_direction": "north",
+            "ordertocook:half": "upper",
+            "ordertocook:open": false,
+            "ordertocook:closing": true,
+            "ordertocook:frame": 6,
+            "ordertocook:root_frame": 2
+          },
+          "assembly_offset": [
+            24,
+            16,
+            0
+          ],
+          "resolved_transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "inverse_assembly_placement_verified": true
+        }
+      ],
+      "result": "REVIEWED_STATIC_VIEW_NO_NEW_BROAD_SURFACE_OR_SHARED_DEPTH_DISCREPANCY_FIT_RESIDUAL_RETAINED",
+      "capture_zoom_note": "zoom down 1100",
+      "independently_inspected": true
+    }
+  ],
+  "scope": "Five supplied original JPEGs inspected independently; full models, no selection, source right/canonical left. No new broad missing-surface or common-depth discrepancy in these views. Different zoom for neutral case prevents cross-image pixel-size comparison. Existing affine-fit residual remains.",
+  "gui_operated_by_this_check": false,
+  "runtime_modified": false
+}

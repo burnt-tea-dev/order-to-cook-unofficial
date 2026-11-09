@@ -1,0 +1,255 @@
+{
+  "status": "EDITOR_CALIBRATION_AND_RECOVERY_NOT_NATIVE_MATERIAL_ACCEPTANCE",
+  "application": "Blockbench Desktop 5.2.2",
+  "screenshots": [
+    {
+      "path": "calibration/screenshots/control-fridge-cavity-isometric-right-2-1-fail.jpg",
+      "sha256": "6903cf545b59966ba6bad7b1a6e8f38c6343650ea229a5b14d6a318c1206cdcd",
+      "role": "original_front_only_failure",
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "calibration/screenshots/control-fridge-cavity-north-fail.jpg",
+      "sha256": "fcef9dd12e6bd629f11420f0b2f585f76d1c74987bba084593ff72d7d577e512",
+      "role": "original_front_only_failure",
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "calibration/screenshots/fridge-auto-only-isometric-right-2-1.jpg",
+      "sha256": "025191698eb6f1ea1d6d9986b23e8e9a031c9ce7a6059a055ef5cf0d28ab3189",
+      "role": "calibration_model_view",
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "calibration/screenshots/fridge-auto-only-north.jpg",
+      "sha256": "b9ae34a4eeec68a0e17fbf578b20b8ebe9c86650d43281065aa11aeb07d94be8",
+      "role": "calibration_model_view",
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "calibration/screenshots/fridge-direct-canonical-isometric-right-2-1.jpg",
+      "sha256": "b0f27adff1658ffe0230e5907e4234c3d2c757d2118b833883f9696a8d114953",
+      "role": "calibration_model_view",
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "calibration/screenshots/fridge-direct-canonical-north.jpg",
+      "sha256": "90a50398fe82f42d1b2bd106ada835cd7208d80e791822d93675c0b23d4062db",
+      "role": "calibration_model_view",
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "calibration/screenshots/fridge-direct-source-isometric-right-2-1.jpg",
+      "sha256": "4362ba6d44d79e7d890477bc213f2aae1fab1aed3f3333876d777b00f1da9d0b",
+      "role": "calibration_model_view",
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "calibration/screenshots/fridge-direct-source-north.jpg",
+      "sha256": "89c3ee41268423d14eb8cae3c25da492fa9f0c7f78fe00a39106ab2493edf3a0",
+      "role": "calibration_model_view",
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "calibration/screenshots/fridge-software-recovery-isometric-right-2-1.jpg",
+      "sha256": "0c2a74eb8149403b00231f43b8123d47a199f6bdbc7744e971c8872cf881fc34",
+      "role": "calibration_model_view",
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "calibration/screenshots/fridge-software-recovery-north.jpg",
+      "sha256": "efafd444e11d8aae1840ff0bd05a5cf13fac63703b85f7678c79cc5685d159b6",
+      "role": "calibration_model_view",
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "calibration/screenshots/global-render-sides-auto.jpg",
+      "sha256": "c2f16e88345afc3177c4e8944b04c9405b59f3982f8100c266028c6ef57514ea",
+      "role": "settings_evidence",
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "calibration/screenshots/recovery-hardware-acceleration-off.jpg",
+      "sha256": "fcb0f7d27d76b3305ac1ef89e9582f79f7eb4399d59176e9473471684b5d2d54",
+      "role": "settings_evidence",
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "calibration/screenshots/recovery-viewport-white-diagnostic.jpg",
+      "sha256": "706e67f008a0165337ef722747a415f419f7a57af7c38e5ed84efe454e73090e",
+      "role": "renderer_failure_diagnostic",
+      "dimensions": [
+        1188,
+        848
+      ]
+    }
+  ],
+  "direct_geo_original_pixel_comparisons": {
+    "north": {
+      "roi_xyxy": [
+        480,
+        104,
+        840,
+        480
+      ],
+      "full_roi": {
+        "pixels": 135360,
+        "exact_rgb_pixels": 134684,
+        "exact_rgb_fraction": 0.9950059101654847,
+        "mean_absolute_channel_error_0_to_255": 0.010985520094562648,
+        "root_mean_square_channel_error": 0.1951881252928035,
+        "max_channel_error": 14,
+        "pixels_max_channel_over_16": 0,
+        "pixels_max_channel_over_32": 0
+      },
+      "foreground_union_rgb_max_over_55": {
+        "pixels": 98887,
+        "exact_rgb_pixels": 98211,
+        "exact_rgb_fraction": 0.9931639143669037,
+        "mean_absolute_channel_error_0_to_255": 0.01503736588226966,
+        "root_mean_square_channel_error": 0.22836469590140016,
+        "max_channel_error": 14,
+        "pixels_max_channel_over_16": 0,
+        "pixels_max_channel_over_32": 0
+      },
+      "alignment": "Same original coordinates, no registration, resizing, rotation, filtering or saved crop."
+    },
+    "isometric-right-2-1": {
+      "roi_xyxy": [
+        440,
+        135,
+        750,
+        710
+      ],
+      "full_roi": {
+        "pixels": 178250,
+        "exact_rgb_pixels": 177336,
+        "exact_rgb_fraction": 0.9948723702664797,
+        "mean_absolute_channel_error_0_to_255": 0.012377746610565685,
+        "root_mean_square_channel_error": 0.2530080833275471,
+        "max_channel_error": 33,
+        "pixels_max_channel_over_16": 4,
+        "pixels_max_channel_over_32": 1
+      },
+      "foreground_union_rgb_max_over_55": {
+        "pixels": 98959,
+        "exact_rgb_pixels": 98055,
+        "exact_rgb_fraction": 0.9908649036469649,
+        "mean_absolute_channel_error_0_to_255": 0.022153956015454213,
+        "root_mean_square_channel_error": 0.33923639247346177,
+        "max_channel_error": 33,
+        "pixels_max_channel_over_16": 4,
+        "pixels_max_channel_over_32": 1
+      },
+      "alignment": "Same original coordinates, no registration, resizing, rotation, filtering or saved crop."
+    }
+  },
+  "hardware_acceleration_recovery_original_pixel_comparisons": {
+    "north": {
+      "roi_xyxy": [
+        300,
+        175,
+        995,
+        480
+      ],
+      "full_roi": {
+        "pixels": 211975,
+        "exact_rgb_pixels": 211975,
+        "exact_rgb_fraction": 1.0,
+        "mean_absolute_channel_error_0_to_255": 0.0,
+        "root_mean_square_channel_error": 0.0,
+        "max_channel_error": 0,
+        "pixels_max_channel_over_16": 0,
+        "pixels_max_channel_over_32": 0
+      },
+      "foreground_union_rgb_max_over_55": {
+        "pixels": 124912,
+        "exact_rgb_pixels": 124912,
+        "exact_rgb_fraction": 1.0,
+        "mean_absolute_channel_error_0_to_255": 0.0,
+        "root_mean_square_channel_error": 0.0,
+        "max_channel_error": 0,
+        "pixels_max_channel_over_16": 0,
+        "pixels_max_channel_over_32": 0
+      },
+      "alignment": "Same original coordinates, no registration, resizing, rotation, filtering or saved crop."
+    },
+    "isometric-right-2-1": {
+      "roi_xyxy": [
+        335,
+        150,
+        855,
+        745
+      ],
+      "full_roi": {
+        "pixels": 309400,
+        "exact_rgb_pixels": 309400,
+        "exact_rgb_fraction": 1.0,
+        "mean_absolute_channel_error_0_to_255": 0.0,
+        "root_mean_square_channel_error": 0.0,
+        "max_channel_error": 0,
+        "pixels_max_channel_over_16": 0,
+        "pixels_max_channel_over_32": 0
+      },
+      "foreground_union_rgb_max_over_55": {
+        "pixels": 107395,
+        "exact_rgb_pixels": 107395,
+        "exact_rgb_fraction": 1.0,
+        "mean_absolute_channel_error_0_to_255": 0.0,
+        "root_mean_square_channel_error": 0.0,
+        "max_channel_error": 0,
+        "pixels_max_channel_over_16": 0,
+        "pixels_max_channel_over_32": 0
+      },
+      "alignment": "Same original coordinates, no registration, resizing, rotation, filtering or saved crop."
+    }
+  },
+  "auto_only_change": "Exactly two texture render_sides values front to auto; every other original scene byte unchanged.",
+  "source_endpoint_change": "Only source bone3 Y=-125 and bone2 Y=-135; original source Geo/PNG retained.",
+  "canonical_assembly_change": "Prefix lower_/upper_ bone names and parents; upper Y+16; reverse check exact.",
+  "rendering_evidence": "Official Texture default auto; global Auto preview is double-sided without a format override. The pinned Java model uses entityCutoutNoCull. Neither establishes Minecraft Bedrock material behavior.",
+  "interaction_note": "During the source direct import an accidental Create Group was immediately undone, without save, before loading the original PNG. Canonical import did not have that step. Both direct tabs showed texture-loading dirty markers and were not saved. On-disk fixture hashes remained unchanged.",
+  "recovery_note": "After reported GPU-process failures and a white viewport, Hardware Acceleration was disabled through the official editor Settings and the application restarted. The supplied Settings image confirms off. Repeated both-open control model ROIs match the earlier Auto-only images exactly. This recovers the editor renderer, not an asset or game fix.",
+  "limits": [
+    "The graphics backend/driver is not independently identified by the settings screenshot.",
+    "Direct-Geo JPEGs are not losslessly identical; small residuals are retained without assigning an unproved cause.",
+    "All image computations use untouched originals and in-memory arrays only.",
+    "No running animation, other pose, native-world transparency, game/client/BDS or network acceptance."
+  ]
+}

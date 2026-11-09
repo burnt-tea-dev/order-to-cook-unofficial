@@ -28,3 +28,4 @@ export const FRIDGE_POSE_PROGRESS = {
     0.0
   ]
 };
+export const FRIDGE_ROOT_BY_CLOSE_FRAME = [0, 0, 0, 0, 1, 2, 3, 0, 0, 0, 0];

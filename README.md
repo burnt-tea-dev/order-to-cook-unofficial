@@ -2,6 +2,8 @@
 
 [简体中文](README.zh-CN.md) · **繁體中文** · [English](README.en.md)
 
+0.1.47 候選補回冰箱共同根變形：上下門保持各自姿態，整座櫃體共用四個原關門 root 樣本；同時關門依 Java controller 順序由下門覆寫，包含中性樣本。也修正上半讀取例外時下半保留舊變形的問題，不更動庫存遷移保護。有限取樣、SRT 剪切近似、反向／STOP 與兩方塊非原子寫入仍有差異；已凍結新的配對身份但尚未發布，也不代表原生驗收。[來源、版本與驗證](docs/validation/0.1.47-alpha.1/FRIDGE_SHARED_ROOT.md)。
+
 0.1.46 補回爐灶點火時原版骨骼的傾斜與伸縮：獨立20 tick倒數，19個來源姿態沿用每2 tick更新，不改燃料、烹飪或物品。這是有限取樣，並非Java連續動畫／封包／STOP復位完全等價。[來源、版本與驗證](docs/validation/0.1.46-alpha.1/STOVE_IGNITION.md)及[38張雲端Blockbench圖](docs/validation/visual-audio/blockbench-20261108/remaining-static/README.md)涵蓋灶台前後與家具／供應架／頭盔局部對照；原生透明材質、實際穿戴及客戶端仍未驗收。
 
 0.1.45 來源候選補回洗碗檯原版 renderer 的水面，11 個盤數狀態保留原位置與貼圖；物品另用乾檯模型，不誤加世界水面。同步三語裝袋指南來源，避免重新生成資產時退回舊外送文字。[來源／測試](docs/validation/0.1.45-alpha.1/WASHING_WATER.md)及[16 張 Blockbench 前後圖](docs/validation/visual-audio/blockbench-20261108/washing-water/README.md)保留透明排序與原生物品顯示的未驗收界線，不代表 Java 100% 還原。

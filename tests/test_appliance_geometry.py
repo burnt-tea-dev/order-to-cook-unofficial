@@ -297,15 +297,20 @@ class ApplianceGeometryTests(unittest.TestCase):
             self.clips[clip], frame/10,
             f"geometry.ordertocook.refrigerator_{half}_{'close_' if closing else ''}{frame}")
 
-    def test_all_44_committed_fridge_poses_reproduce_from_the_converter(self):
+    def test_all_176_committed_fridge_poses_reproduce_from_the_converter(self):
+        roots, _ = converter.fridge_root_samples(self.clips)
         for half in ("lower", "upper"):
             for closing in (False, True):
                 for frame in range(11):
-                    with self.subTest(half=half, closing=closing, frame=frame):
-                        result = converter.bound_fridge_swing(self.pose(half, frame, closing), half)
-                        converter.assert_block_bounds(result)
-                        expected = converter.read_json(ROOT / f"runtime/RP/models/blocks/refrigerator_{half}_{'close_' if closing else ''}{frame}.geo.json")
-                        self.assertEqual(result, expected)
+                    for root_frame, root in enumerate(roots):
+                        with self.subTest(half=half, closing=closing, frame=frame, root_frame=root_frame):
+                            name = converter.fridge_pose_name(half, closing, frame, root_frame)
+                            clip = converter.fridge_pose_clip(self.clips, half, closing, root)
+                            result = converter.bound_fridge_swing(converter.bake_pose(
+                                converter.split_fridge_geo(self.source, half), clip, frame/10, f'geometry.ordertocook.{name}'), half)
+                            converter.assert_block_bounds(result)
+                            expected = converter.read_json(ROOT / f"runtime/RP/models/blocks/{name}.geo.json")
+                            self.assertEqual(result, expected)
 
     def test_guard_preserves_door_sizes_uvs_angles_and_cabinet(self):
         for half, frame, closing, axis in (("lower", 2, True, 2), ("upper", 3, False, 2), ("upper", 6, False, 0)):

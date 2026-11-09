@@ -1,0 +1,67 @@
+{
+  "poses": 176,
+  "facings": 4,
+  "vertices_per_facing": 8448,
+  "affine_to_fit_max_px": 0.20155644370746567,
+  "bounds_shift_max_px": 0.08611500000000305,
+  "affine_to_bounded_max_px": 0.20155644370746567,
+  "cabinet_seam_max_px": 0,
+  "uv_changed_cubes": 0,
+  "shifted_poses": [
+    {
+      "pose": "refrigerator_lower_close_2",
+      "shift_px": 0.07983899999999977
+    },
+    {
+      "pose": "refrigerator_upper_3",
+      "shift_px": 0.08611500000000305
+    },
+    {
+      "pose": "refrigerator_upper_6",
+      "shift_px": 0.04842800000000125
+    },
+    {
+      "pose": "refrigerator_upper_6_root_1",
+      "shift_px": 0.008167000000001146
+    }
+  ],
+  "affine_to_fit_max_px_at": [
+    "upper",
+    false,
+    5,
+    2,
+    "bone2",
+    [
+      0,
+      0,
+      1
+    ],
+    0
+  ],
+  "affine_to_bounded_max_px_at": [
+    "upper",
+    false,
+    5,
+    2,
+    "bone2",
+    [
+      0,
+      0,
+      1
+    ],
+    0
+  ],
+  "bounds_shift_max_px_at": [
+    "upper",
+    false,
+    3,
+    0,
+    "bone2",
+    [
+      0,
+      0,
+      1
+    ],
+    0
+  ]
+}

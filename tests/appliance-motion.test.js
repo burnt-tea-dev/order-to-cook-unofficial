@@ -151,3 +151,179 @@ test('dishwasher unload and restart resume the persisted pose and generate no se
   assert.equal(player.container.getItem(0).typeId, 'ordertocook:clean_plate'); assert.equal(player.container.getItem(0).amount, 16);
   assert.equal(env.dimension.drops.length, 0);
 });
+
+function pairedFridge() {
+  const env = makeEnvironment(), service = appliances.createApplianceService(env.ctx);
+  const lower = place(env, 'ordertocook:refrigerator', undefined, { 'ordertocook:half': 'lower' });
+  service.onPlace(lower); service.tick();
+  const upper = env.dimension.getBlock({ x: 0, y: 1, z: 0 });
+  const lowerPlayer = new FakePlayer(env.dimension), upperPlayer = new FakePlayer(env.dimension);
+  return { env, service, lower, upper, lowerPlayer, upperPlayer };
+}
+const roots = (lower, upper, expected) => {
+  assert.equal(state(lower, 'root_frame'), expected, 'lower shared root');
+  assert.equal(state(upper, 'root_frame'), expected, 'upper shared root');
+};
+
+test('shared root selector uses last active controller, including neutral lower samples', async () => {
+  const { fridgeRootFrame } = await import('../runtime/BP/scripts/appliance_motion.js');
+  const close = frame => ({ closing: true, position: 20 - frame * 2, frame });
+  assert.equal(fridgeRootFrame(close(4), undefined), 1);
+  assert.equal(fridgeRootFrame(close(5), close(6)), 3);
+  assert.equal(fridgeRootFrame(close(6), close(1)), 0);
+  // A zero-elapsed restore can retain an active close at either endpoint.
+  assert.equal(fridgeRootFrame(close(5), close(0)), 0);
+  assert.equal(fridgeRootFrame(close(5), close(10)), 0);
+  assert.equal(fridgeRootFrame(close(6), { ...close(4), closing: false }), 3);
+  for (const bad of [undefined, { closing: true, position: NaN, frame: 4 },
+    { closing: true, position: -1, frame: 4 }, { closing: true, position: 21, frame: 4 },
+    { closing: true, position: 12, frame: -1 }, { closing: true, position: 12, frame: 4.5 }])
+    assert.equal(fridgeRootFrame(undefined, bad), 0);
+});
+
+test('a closing half drives the fully open half and preserves native inventory identity', () => {
+  const { env, service, lower, upper, lowerPlayer, upperPlayer } = pairedFridge();
+  const containers = [lower, upper].map(block => block.getComponent('minecraft:inventory').container);
+  containers[0].setItem(0, new FakeItem('minecraft:apple', 6));
+  containers[1].setItem(0, new FakeItem('minecraft:carrot', 3));
+  opened(service, lower, lowerPlayer); opened(service, upper, upperPlayer); advance(service, env, 20);
+  closed(service, upper, upperPlayer); advance(service, env, 8);
+  assert.equal(state(lower, 'frame'), 10); assert.equal(state(lower, 'closing'), false);
+  assert.equal(state(upper, 'frame'), 4); roots(lower, upper, 1);
+  advance(service, env, 2); roots(lower, upper, 2);
+  advance(service, env, 2); roots(lower, upper, 3);
+  advance(service, env, 2); roots(lower, upper, 0);
+  assert.equal(lower.getComponent('minecraft:inventory').container, containers[0]);
+  assert.equal(upper.getComponent('minecraft:inventory').container, containers[1]);
+  assert.equal(containers[0].getItem(0).amount, 6); assert.equal(containers[1].getItem(0).amount, 3);
+});
+
+test('staggered closes use lower precedence even while its root is neutral', () => {
+  const { env, service, lower, upper, lowerPlayer, upperPlayer } = pairedFridge();
+  opened(service, lower, lowerPlayer); opened(service, upper, upperPlayer); advance(service, env, 20);
+  closed(service, upper, upperPlayer); advance(service, env, 8); roots(lower, upper, 1);
+  closed(service, lower, lowerPlayer); advance(service, env, 2);
+  assert.equal(state(upper, 'frame'), 5); assert.equal(state(lower, 'frame'), 1); roots(lower, upper, 0);
+  advance(service, env, 6);
+  assert.equal(state(upper, 'frame'), 8); assert.equal(state(lower, 'frame'), 4); roots(lower, upper, 1);
+  advance(service, env, 12); roots(lower, upper, 0);
+});
+
+test('closing-clip reversal keeps bounded behavior and updates the shared root', () => {
+  const { env, service, lower, upper, lowerPlayer } = pairedFridge();
+  opened(service, lower, lowerPlayer); advance(service, env, 20);
+  closed(service, lower, lowerPlayer); advance(service, env, 12); roots(lower, upper, 3);
+  opened(service, lower, lowerPlayer); advance(service, env, 2);
+  assert.equal(state(lower, 'closing'), true); assert.equal(state(lower, 'frame'), 5); roots(lower, upper, 2);
+  advance(service, env, 2); roots(lower, upper, 1);
+  advance(service, env, 8); assert.equal(state(lower, 'closing'), false); roots(lower, upper, 0);
+});
+
+test('missing upper half cannot leave its deformation on the remaining half', () => {
+  const { env, service, lower, upper, upperPlayer } = pairedFridge();
+  opened(service, upper, upperPlayer); advance(service, env, 20);
+  closed(service, upper, upperPlayer); advance(service, env, 10); roots(lower, upper, 2);
+  const getBlock = env.dimension.getBlock;
+  env.dimension.getBlock = location => location.y === 1 ? undefined : getBlock.call(env.dimension, location);
+  advance(service, env, 1); assert.equal(state(lower, 'root_frame'), 0);
+  env.dimension.getBlock = getBlock;
+  advance(service, env, 1); roots(lower, upper, 3); // Resumes upper's persisted close pose, not deleted cache.
+});
+
+test('restart and unload derive shared root from persisted door clips, not stale root states', () => {
+  const { env, service, lower, upper } = pairedFridge();
+  lower.setPermutation(lower.permutation.withState('ordertocook:frame', 5).withState('ordertocook:closing', true).withState('ordertocook:root_frame', 3));
+  upper.setPermutation(upper.permutation.withState('ordertocook:root_frame', 1));
+  const restarted = appliances.createApplianceService(env.ctx);
+  env.system.currentTick += 100; restarted.tick(); roots(lower, upper, 2);
+  const getBlock = env.dimension.getBlock;
+  env.dimension.getBlock = () => undefined; advance(restarted, env, 200);
+  lower.setPermutation(lower.permutation.withState('ordertocook:frame', 4).withState('ordertocook:root_frame', 3));
+  env.dimension.getBlock = getBlock; advance(restarted, env, 1); roots(lower, upper, 1);
+  advance(restarted, env, 20); roots(lower, upper, 0);
+  for (const endpoint of [0, 10]) {
+    lower.setPermutation(lower.permutation.withState('ordertocook:closing', true).withState('ordertocook:frame', endpoint));
+    upper.setPermutation(upper.permutation.withState('ordertocook:closing', true).withState('ordertocook:frame', 5));
+    const restored = appliances.createApplianceService(env.ctx);
+    env.system.currentTick += 100; restored.tick();
+    assert.equal(state(lower, 'closing'), true);
+    roots(lower, upper, 0); // Lower's active neutral endpoint still overwrites upper.
+  }
+});
+
+test('partial root write failure retries next tick and idle neutral poses do not rewrite', () => {
+  const { env, service, lower, upper, lowerPlayer } = pairedFridge();
+  opened(service, lower, lowerPlayer); advance(service, env, 20);
+  closed(service, lower, lowerPlayer); advance(service, env, 6);
+  const setPermutation = upper.setPermutation.bind(upper);
+  let failed = false, writes = 0;
+  upper.setPermutation = permutation => {
+    writes++;
+    if (!failed && permutation.getState('ordertocook:root_frame') === 1) { failed = true; throw Error('transient pose write'); }
+    setPermutation(permutation);
+  };
+  advance(service, env, 1);
+  assert.equal(failed, true); assert.equal(state(lower, 'root_frame'), 1); assert.equal(state(upper, 'root_frame'), 0);
+  advance(service, env, 1); roots(lower, upper, 1); // Retry even when the rounded pose has not changed.
+  advance(service, env, 4); roots(lower, upper, 3);
+  let failedNeutral = false;
+  upper.setPermutation = permutation => {
+    writes++;
+    if (!failedNeutral && permutation.getState('ordertocook:root_frame') === 0) {
+      failedNeutral = true; throw Error('transient neutral write');
+    }
+    setPermutation(permutation);
+  };
+  // A capped large tick reaches the neutral endpoint in one update.
+  env.system.currentTick += 20; service.tick();
+  assert.equal(failedNeutral, true);
+  assert.equal(state(lower, 'root_frame'), 0); assert.equal(state(upper, 'root_frame'), 3);
+  advance(service, env, 1); roots(lower, upper, 0);
+  const settledWrites = writes; let lowerWrites = 0;
+  const setLower = lower.setPermutation.bind(lower);
+  lower.setPermutation = permutation => { lowerWrites++; setLower(permutation); };
+  advance(service, env, 40);
+  assert.equal(writes, settledWrites); assert.equal(lowerWrites, 0);
+});
+
+
+test('throwing upper lookup clears its shared deformation without touching cargo', () => {
+  const { env, service, lower, upper, upperPlayer } = pairedFridge();
+  const containers = [lower, upper].map(block => block.getComponent('minecraft:inventory').container);
+  containers[0].setItem(0, new FakeItem('minecraft:apple', 6));
+  containers[1].setItem(0, new FakeItem('minecraft:carrot', 3));
+  opened(service, upper, upperPlayer); advance(service, env, 20);
+  closed(service, upper, upperPlayer); advance(service, env, 10); roots(lower, upper, 2);
+  const getBlock = env.dimension.getBlock;
+  try {
+    env.dimension.getBlock = location => {
+      if (location.y === 1) throw Error('upper chunk unavailable');
+      return getBlock.call(env.dimension, location);
+    };
+    advance(service, env, 1); assert.equal(state(lower, 'root_frame'), 0);
+  } finally { env.dimension.getBlock = getBlock; }
+  advance(service, env, 1); roots(lower, upper, 3);
+  assert.equal(lower.getComponent('minecraft:inventory').container, containers[0]);
+  assert.equal(upper.getComponent('minecraft:inventory').container, containers[1]);
+  assert.equal(containers[0].getItem(0).amount, 6); assert.equal(containers[1].getItem(0).amount, 3);
+});
+
+test('throwing upper lookup clears viewers and restores persisted motion instead of its old cache', () => {
+  const { env, service, lower, upper, upperPlayer } = pairedFridge();
+  opened(service, upper, upperPlayer); advance(service, env, 20);
+  assert.equal(state(upper, 'open'), true); assert.equal(state(upper, 'frame'), 10);
+  const getBlock = env.dimension.getBlock;
+  try {
+    env.dimension.getBlock = location => {
+      if (location.y === 1) throw Error('upper chunk unavailable');
+      return getBlock.call(env.dimension, location);
+    };
+    advance(service, env, 1);
+    upper.setPermutation(upper.permutation.withState('ordertocook:closing', true).withState('ordertocook:frame', 4));
+  } finally { env.dimension.getBlock = getBlock; }
+  advance(service, env, 1);
+  assert.equal(state(upper, 'open'), false, 'Unavailable half must lose its native viewer.');
+  assert.equal(state(upper, 'closing'), true);
+  assert.equal(state(upper, 'frame'), 5, 'Restore uses persisted close frame4, not cached open frame10.');
+  roots(lower, upper, 2);
+});

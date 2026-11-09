@@ -12,6 +12,8 @@ Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedro
 
 基準：[官方作品頁](https://www.curseforge.com/minecraft/mc-mods/order-to-cook)，Java [e59e3dbcabe19b783d9adb933db5fcb8bc1e4642](https://github.com/breezeth-CN/OrdertoCook/tree/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642)。證據分層：源碼對照、單元／服務回歸、原生伺服器探針、客戶端驗收。前三者不能代替最後一層。
 
+0.1.47 候選已將冰箱共同 root 修復凍結為新配對身份，讓上下兩個方塊使用同一樣本，仍由各自 frame 決定門角。四個 root × 44 個 door pose 共 176 模型，active lower close 覆寫 upper，包含中性樣本。原生排序、非原子寫入、STOP／反轉差異與視覺驗收仍未關閉，見[來源測試與量測](validation/fridge-shared-root/README.md)及[.47 配對身份與驗證](validation/0.1.47-alpha.1/FRIDGE_SHARED_ROOT.md)。
+
 ## 核心玩法
 
 0.1.44 來源候選補上隨身紙單／外帶包的 5 分鐘、1 分鐘及逾時具名提醒，狀態保存在實體物品，不要求選中；新打包物不繼承紙單的提醒旗標。沿用每 20 tick 排程，通常比 Java 逐 tick 觀察晚不到 20 tick；一般背包最多 36 格，餐盤、掉落物及世界容器不走此提醒。保留紀錄會擋掉已完成／取消／已打包補印紙單；孤立紙單不提醒，自含期限的孤立包裹仍提醒，但不能重建已裁掉的完成／取消歷史。這些防舊物政策、臨時查表成本及保存／聊天非原子性都是明示適配，並非 Java 100% 等同。見[來源驗證與界線](validation/0.1.44-alpha.1/CARRIED_ORDER_ALERTS.md)。

@@ -39,6 +39,12 @@
           8,
           9,
           10
+        ],
+        "ordertocook:root_frame": [
+          0,
+          1,
+          2,
+          3
         ]
       }
     },
@@ -128,288 +134,1146 @@
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 0",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 0 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_0"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 1",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 0 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_0_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 0 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_0_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 0 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_0_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 1 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_1"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 2",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 1 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_1_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 1 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_1_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 1 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_1_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 2 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_2"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 3",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 2 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_2_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 2 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_2_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 2 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_2_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 3 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_3"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 4",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 3 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_3_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 3 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_3_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 3 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_3_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 4 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_4"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 5",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 4 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_4_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 4 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_4_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 4 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_4_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 5 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_5"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 6",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 5 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_5_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 5 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_5_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 5 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_5_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 6 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_6"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 7",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 6 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_6_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 6 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_6_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 6 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_6_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 7 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_7"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 8",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 7 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_7_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 7 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_7_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 7 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_7_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 8 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_8"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 9",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 8 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_8_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 8 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_8_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 8 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_8_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 9 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_9"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 10",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 9 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_9_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 9 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_9_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 9 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_9_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 10 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_10"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 0",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 10 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_10_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 10 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_10_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 10 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_10_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 0 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_0"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 1",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 0 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_0_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 0 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_0_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 0 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_0_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 1 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_1"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 2",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 1 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_1_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 1 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_1_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 1 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_1_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 2 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_2"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 3",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 2 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_2_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 2 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_2_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 2 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_2_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 3 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_3"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 4",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 3 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_3_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 3 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_3_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 3 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_3_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 4 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_4"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 5",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 4 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_4_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 4 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_4_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 4 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_4_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 5 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_5"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 6",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 5 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_5_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 5 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_5_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 5 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_5_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 6 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_6"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 7",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 6 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_6_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 6 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_6_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 6 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_6_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 7 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_7"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 8",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 7 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_7_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 7 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_7_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 7 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_7_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 8 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_8"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 9",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 8 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_8_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 8 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_8_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 8 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_8_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 9 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_9"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 10",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 9 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_9_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 9 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_9_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 9 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_9_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 10 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_10"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 0",
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 10 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_10_root_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 10 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_10_root_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'lower' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 10 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_lower_close_10_root_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 0 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_0",
           "minecraft:loot": "loot_tables/empty.json"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 1",
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 0 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_0_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 0 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_0_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 0 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_0_root_3",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 1 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_1",
           "minecraft:loot": "loot_tables/empty.json"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 2",
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 1 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_1_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 1 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_1_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 1 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_1_root_3",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 2 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_2",
           "minecraft:loot": "loot_tables/empty.json"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 3",
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 2 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_2_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 2 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_2_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 2 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_2_root_3",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 3 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_3",
           "minecraft:loot": "loot_tables/empty.json"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 4",
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 3 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_3_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 3 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_3_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 3 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_3_root_3",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 4 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_4",
           "minecraft:loot": "loot_tables/empty.json"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 5",
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 4 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_4_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 4 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_4_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 4 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_4_root_3",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 5 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_5",
           "minecraft:loot": "loot_tables/empty.json"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 6",
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 5 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_5_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 5 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_5_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 5 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_5_root_3",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 6 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_6",
           "minecraft:loot": "loot_tables/empty.json"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 7",
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 6 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_6_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 6 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_6_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 6 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_6_root_3",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 7 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_7",
           "minecraft:loot": "loot_tables/empty.json"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 8",
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 7 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_7_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 7 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_7_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 7 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_7_root_3",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 8 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_8",
           "minecraft:loot": "loot_tables/empty.json"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 9",
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 8 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_8_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 8 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_8_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 8 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_8_root_3",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 9 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_9",
           "minecraft:loot": "loot_tables/empty.json"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 10",
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 9 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_9_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 9 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_9_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 9 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_9_root_3",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 10 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_10",
           "minecraft:loot": "loot_tables/empty.json"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 0",
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 10 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_10_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 10 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_10_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == false && q.block_state('ordertocook:frame') == 10 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_10_root_3",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 0 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_0",
           "minecraft:loot": "loot_tables/empty.json"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 1",
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 0 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_0_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 0 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_0_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 0 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_0_root_3",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 1 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_1",
           "minecraft:loot": "loot_tables/empty.json"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 2",
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 1 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_1_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 1 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_1_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 1 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_1_root_3",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 2 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_2",
           "minecraft:loot": "loot_tables/empty.json"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 3",
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 2 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_2_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 2 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_2_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 2 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_2_root_3",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 3 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_3",
           "minecraft:loot": "loot_tables/empty.json"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 4",
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 3 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_3_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 3 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_3_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 3 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_3_root_3",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 4 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_4",
           "minecraft:loot": "loot_tables/empty.json"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 5",
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 4 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_4_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 4 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_4_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 4 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_4_root_3",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 5 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_5",
           "minecraft:loot": "loot_tables/empty.json"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 6",
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 5 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_5_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 5 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_5_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 5 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_5_root_3",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 6 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_6",
           "minecraft:loot": "loot_tables/empty.json"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 7",
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 6 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_6_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 6 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_6_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 6 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_6_root_3",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 7 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_7",
           "minecraft:loot": "loot_tables/empty.json"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 8",
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 7 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_7_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 7 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_7_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 7 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_7_root_3",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 8 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_8",
           "minecraft:loot": "loot_tables/empty.json"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 9",
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 8 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_8_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 8 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_8_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 8 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_8_root_3",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 9 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_9",
           "minecraft:loot": "loot_tables/empty.json"
         }
       },
       {
-        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 10",
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 9 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_9_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 9 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_9_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 9 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_9_root_3",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 10 && q.block_state('ordertocook:root_frame') == 0",
         "components": {
           "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_10",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 10 && q.block_state('ordertocook:root_frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_10_root_1",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 10 && q.block_state('ordertocook:root_frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_10_root_2",
+          "minecraft:loot": "loot_tables/empty.json"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:half') == 'upper' && q.block_state('ordertocook:closing') == true && q.block_state('ordertocook:frame') == 10 && q.block_state('ordertocook:root_frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.refrigerator_upper_close_10_root_3",
           "minecraft:loot": "loot_tables/empty.json"
         }
       }

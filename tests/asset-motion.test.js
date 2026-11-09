@@ -20,9 +20,9 @@ function rotate(point, angles = [0, 0, 0], pivot = [0, 0, 0]) {
   return [x, y, z].map((value, axis) => value + pivot[axis]);
 }
 
-test('all 126 generated appliance poses fit the stable bounds after parent rotations', () => {
-  const paths = readdirSync(new URL('runtime/RP/models/blocks/', root)).filter(name => /^(refrigerator_(lower|upper)_(?:close_)?\d+|dishwasher_\d+_\d+)\.geo\.json$/.test(name));
-  assert.equal(paths.length, 126);
+test('all 258 generated appliance poses fit the stable bounds after parent rotations', () => {
+  const paths = readdirSync(new URL('runtime/RP/models/blocks/', root)).filter(name => /^(refrigerator_(lower|upper)_(?:close_)?\d+(?:_root_[1-3])?|dishwasher_\d+_\d+)\.geo\.json$/.test(name));
+  assert.equal(paths.length, 258);
   for (const path of paths) {
     const geometry = json(`runtime/RP/models/blocks/${path}`)['minecraft:geometry'][0];
     const bones = new Map(geometry.bones.map(entry => [entry.name, entry]));
