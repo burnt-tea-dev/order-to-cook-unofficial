@@ -1,0 +1,128 @@
+{
+  "prior_snapshot_commit": "d3982c98a71424ff9c449a144e792ad384058f69",
+  "snapshot_commit": "dd3153ed9c9755702244696c5271dcd35feb6d13",
+  "main_commit_checked_locally": "36e9d6eac9594ed598a7cf528189b7c942f3bafa",
+  "snapshot_tree": "ad3435cf0cb126c1f3e8a06be57ca01ae90741fb",
+  "main_tree": "ad3435cf0cb126c1f3e8a06be57ca01ae90741fb",
+  "files": [
+    {
+      "path": "upstream/source.lock.json",
+      "prior_sha256": "2222a2d53450fdc2ca81abe4088e2581405ae8409b16fbd479324992c8f5c909",
+      "working_tree_sha256": "2222a2d53450fdc2ca81abe4088e2581405ae8409b16fbd479324992c8f5c909",
+      "snapshot_git_bytes_equal": true,
+      "main_git_bytes_equal": true
+    },
+    {
+      "path": "tools/convert_assets.py",
+      "prior_sha256": "b97ec53d05b067e4c0e4f2b684d92c30ad19c2d16505c26d9a364ffe2ead9523",
+      "working_tree_sha256": "b97ec53d05b067e4c0e4f2b684d92c30ad19c2d16505c26d9a364ffe2ead9523",
+      "snapshot_git_bytes_equal": true,
+      "main_git_bytes_equal": true
+    },
+    {
+      "path": "tests/asset-motion.test.js",
+      "prior_sha256": "0fd86bc16e9dc1f78685e51699b318ac5bd19e683dfbf692c369be9882f9ce5d",
+      "working_tree_sha256": "0fd86bc16e9dc1f78685e51699b318ac5bd19e683dfbf692c369be9882f9ce5d",
+      "snapshot_git_bytes_equal": true,
+      "main_git_bytes_equal": true
+    },
+    {
+      "path": "runtime/RP/entity/customer.entity.json",
+      "prior_sha256": "54117245491fbad4560bfa374ef62612062a67a6081e10229f5ea63569cfac16",
+      "working_tree_sha256": "54117245491fbad4560bfa374ef62612062a67a6081e10229f5ea63569cfac16",
+      "snapshot_git_bytes_equal": true,
+      "main_git_bytes_equal": true
+    },
+    {
+      "path": "runtime/RP/animation_controllers/customer.animation_controllers.json",
+      "prior_sha256": "2b024e01dcdf472a53322f62d202f73b6e6c6f1ef1d63560c880b3020cf1e2ee",
+      "working_tree_sha256": "2b024e01dcdf472a53322f62d202f73b6e6c6f1ef1d63560c880b3020cf1e2ee",
+      "snapshot_git_bytes_equal": true,
+      "main_git_bytes_equal": true
+    },
+    {
+      "path": "runtime/RP/models/entity/customer.geo.json",
+      "prior_sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+      "working_tree_sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+      "snapshot_git_bytes_equal": true,
+      "main_git_bytes_equal": true
+    },
+    {
+      "path": "runtime/RP/models/entity/customer_slim.geo.json",
+      "prior_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+      "working_tree_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+      "snapshot_git_bytes_equal": true,
+      "main_git_bytes_equal": true
+    },
+    {
+      "path": "runtime/RP/animations/npc.animation.json",
+      "prior_sha256": "101a5507f2aa2d04ceae3e9ea84b8201fa69feb85baf46fb075980db63bc4b9e",
+      "working_tree_sha256": "101a5507f2aa2d04ceae3e9ea84b8201fa69feb85baf46fb075980db63bc4b9e",
+      "snapshot_git_bytes_equal": true,
+      "main_git_bytes_equal": true
+    },
+    {
+      "path": "runtime/RP/animations/npc.transition.animation.json",
+      "prior_sha256": "5870c333007cc844905cb524e14b7b36ba0c2e093cbefc44766b2f5ed3059581",
+      "working_tree_sha256": "5870c333007cc844905cb524e14b7b36ba0c2e093cbefc44766b2f5ed3059581",
+      "snapshot_git_bytes_equal": true,
+      "main_git_bytes_equal": true
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+      "prior_sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+      "working_tree_sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+      "snapshot_git_bytes_equal": true,
+      "main_git_bytes_equal": true
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+      "prior_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+      "working_tree_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+      "snapshot_git_bytes_equal": true,
+      "main_git_bytes_equal": true
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/animations/npc.animation.json",
+      "prior_sha256": "19691dda1b484ca6a256a1dc5e306304a8e6b0e0cad6c9d60f7d0daf88588734",
+      "working_tree_sha256": "19691dda1b484ca6a256a1dc5e306304a8e6b0e0cad6c9d60f7d0daf88588734",
+      "snapshot_git_bytes_equal": true,
+      "main_git_bytes_equal": true
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/animations/npc.transition.animation.json",
+      "prior_sha256": "723940ed47a56c9050c08334951c05dedcfc69727388802454693faceea64417",
+      "working_tree_sha256": "723940ed47a56c9050c08334951c05dedcfc69727388802454693faceea64417",
+      "snapshot_git_bytes_equal": true,
+      "main_git_bytes_equal": true
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+      "prior_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+      "working_tree_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+      "snapshot_git_bytes_equal": true,
+      "main_git_bytes_equal": true
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+      "prior_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+      "working_tree_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+      "snapshot_git_bytes_equal": true,
+      "main_git_bytes_equal": true
+    },
+    {
+      "path": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+      "prior_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+      "working_tree_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+      "snapshot_git_bytes_equal": true,
+      "main_git_bytes_equal": true
+    },
+    {
+      "path": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+      "prior_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+      "working_tree_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+      "snapshot_git_bytes_equal": true,
+      "main_git_bytes_equal": true
+    }
+  ]
+}

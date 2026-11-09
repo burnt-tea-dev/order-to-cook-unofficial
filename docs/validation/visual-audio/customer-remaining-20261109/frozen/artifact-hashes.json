@@ -1,0 +1,297 @@
+{
+  "scope": "Frozen preparation files only; no GUI receipt or screenshot. This file excludes itself.",
+  "files": {
+    "GUI_REVIEW.md": {
+      "sha256": "8fb2dc6ef5cbdbb677e7f70bc027486cc2c2ec0d6620d63cc6abbb4e715c6d21",
+      "size": 2257
+    },
+    "README.md": {
+      "sha256": "a632b41d0fbe387aabda366e1132a456d95bad62f1a2bd446c737cf704a80108",
+      "size": 9530
+    },
+    "build_review.py": {
+      "sha256": "119c92d7bbd27a581d45e008ad6334722b0d4f88361e249f51fe409f6ab836df",
+      "size": 9826
+    },
+    "decode_cubes.cjs": {
+      "sha256": "a0eebe4c04453a4d83c5407d7643103af448a494967cf9a4eb183d6339c57b0a",
+      "size": 1605
+    },
+    "helper-provenance.json": {
+      "sha256": "4abfffba05105d959ee9218433ee26a3ea373d900b7db5bc639577e9987147f3",
+      "size": 687
+    },
+    "input-equivalence.json": {
+      "sha256": "ce9bc272d51a9f84877b75bc4712a191b843dd62df9bc1ae91aed2068280b7aa",
+      "size": 6396
+    },
+    "input-manifest.json": {
+      "sha256": "26d51a1960c92871f97704de314d9bf72c4acbd25e5ebb1fe4c2de327c56c47e",
+      "size": 4600
+    },
+    "inputs/runtime/RP/animation_controllers/customer.animation_controllers.json": {
+      "sha256": "2b024e01dcdf472a53322f62d202f73b6e6c6f1ef1d63560c880b3020cf1e2ee",
+      "size": 11772
+    },
+    "inputs/runtime/RP/animations/npc.animation.json": {
+      "sha256": "101a5507f2aa2d04ceae3e9ea84b8201fa69feb85baf46fb075980db63bc4b9e",
+      "size": 30344
+    },
+    "inputs/runtime/RP/animations/npc.transition.animation.json": {
+      "sha256": "5870c333007cc844905cb524e14b7b36ba0c2e093cbefc44766b2f5ed3059581",
+      "size": 42223
+    },
+    "inputs/runtime/RP/entity/customer.entity.json": {
+      "sha256": "54117245491fbad4560bfa374ef62612062a67a6081e10229f5ea63569cfac16",
+      "size": 1890
+    },
+    "inputs/runtime/RP/models/entity/customer.geo.json": {
+      "sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+      "size": 36330
+    },
+    "inputs/runtime/RP/models/entity/customer_slim.geo.json": {
+      "sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+      "size": 36271
+    },
+    "inputs/runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png": {
+      "sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+      "size": 2497
+    },
+    "inputs/runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png": {
+      "sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+      "size": 2611
+    },
+    "inputs/tests/asset-motion.test.js": {
+      "sha256": "0fd86bc16e9dc1f78685e51699b318ac5bd19e683dfbf692c369be9882f9ce5d",
+      "size": 9529
+    },
+    "inputs/tools/convert_assets.py": {
+      "sha256": "b97ec53d05b067e4c0e4f2b684d92c30ad19c2d16505c26d9a364ffe2ead9523",
+      "size": 139154
+    },
+    "inputs/upstream/reference/common/src/main/resources/assets/ordertocook/animations/npc.animation.json": {
+      "sha256": "19691dda1b484ca6a256a1dc5e306304a8e6b0e0cad6c9d60f7d0daf88588734",
+      "size": 12748
+    },
+    "inputs/upstream/reference/common/src/main/resources/assets/ordertocook/animations/npc.transition.animation.json": {
+      "sha256": "723940ed47a56c9050c08334951c05dedcfc69727388802454693faceea64417",
+      "size": 20794
+    },
+    "inputs/upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json": {
+      "sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+      "size": 10074
+    },
+    "inputs/upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json": {
+      "sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+      "size": 10024
+    },
+    "inputs/upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png": {
+      "sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+      "size": 2497
+    },
+    "inputs/upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png": {
+      "sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+      "size": 2611
+    },
+    "inputs/upstream/source.lock.json": {
+      "sha256": "2222a2d53450fdc2ca81abe4088e2581405ae8409b16fbd479324992c8f5c909",
+      "size": 636
+    },
+    "licenses/Blockbench-GPL-3.0.txt": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "size": 35149
+    },
+    "licenses/GeckoLib-MIT.txt": {
+      "sha256": "80343d98f6fc340c0700b1844689c2fd42c70f48ea0b363dcd2477cc98e91dd6",
+      "size": 1070
+    },
+    "licenses/NOTICE.md": {
+      "sha256": "796006c8e1df273094d63966fcd589c502ecd74db97a944d446eaf0a401aaefd",
+      "size": 855
+    },
+    "licenses/OTC-GPL-3.0.txt": {
+      "sha256": "696c076d802085303a80e326029e8f13fee6a275113fab081a0bba51cb527449",
+      "size": 35149
+    },
+    "official-provenance.json": {
+      "sha256": "117f8fe3f3ff3b1ecbb6a2caf97734a47eaee62e7e69961c2180dd91249beb39",
+      "size": 1810
+    },
+    "official-source/js__animations__keyframe.js.txt": {
+      "sha256": "b1ba35bcb8222d578f2fe104292916ee87f833352303d089f165befba26d3063",
+      "size": 55776
+    },
+    "official-source/js__animations__timeline_animators.js.txt": {
+      "sha256": "aa173d3bd5b84979d7f074f211b352175b65bb4057add6531ebafab55a1515bc",
+      "size": 37513
+    },
+    "official-source/js__formats__bedrock__bedrock.js.txt": {
+      "sha256": "d77fa9edfaaa042cd5f72211aea34cce19ff88ec477364d9bbc237355374d347",
+      "size": 55849
+    },
+    "official-source/js__formats__bedrock__bedrock_animation.js.txt": {
+      "sha256": "087633fc23e682a15dc4922d5c1f40cb8f0896189aad9daeb944ebb6985f41e1",
+      "size": 25743
+    },
+    "official-source/js__formats__generic.ts.txt": {
+      "sha256": "7fc5ef646b66058f8071d033a26c5fe29ddf6d71f1c98bf2c76fc4cc73ccc0f0",
+      "size": 924
+    },
+    "official-source/js__io__format.ts.txt": {
+      "sha256": "6e1fe2faf85aebbec01999979acec5d1c9be9aaa70898baf9d65b2d0c7435f1c",
+      "size": 21546
+    },
+    "official-source/js__outliner__types__cube.js.txt": {
+      "sha256": "57cad3b3eb30af04fa54d7b41c2e3a58ad26098c8585eaf30344a7f3f1fe430d",
+      "size": 53781
+    },
+    "official-source/js__outliner__types__group.js.txt": {
+      "sha256": "edc6a16fed27d9f4855e17df362c6d5e1efc5e8a8928c697ba0f257ab9ce98ff",
+      "size": 27210
+    },
+    "prior-coverage.json": {
+      "sha256": "f6e232bd3fa9a880a33c89ee87c987e6ce74d7fc8d90f487222c5f4014a6a342",
+      "size": 3146
+    },
+    "samples/01_slim_sit1_counterphase.json": {
+      "sha256": "d9ec58f3d2bfc08f4d585b22588bdc22fa0fc8f618f3ac54182ea6d2d5463973",
+      "size": 84023
+    },
+    "samples/02_wide_wait1_phase0.json": {
+      "sha256": "dad9e60693eb4b7896f634f41fec619754f1cefafde0592f1fde94ce87fa0eb2",
+      "size": 82643
+    },
+    "samples/03_slim_sit2_head_query.json": {
+      "sha256": "7570a74d416159756d8f03626b08d8b83f70fb4a38d066711e26f0de2306411e",
+      "size": 84388
+    },
+    "samples/04_wide_wait4_yaw.json": {
+      "sha256": "42d7fc3fc1c244739013b308627c74575c2e89805d0b292acfc1b43b41e35ab1",
+      "size": 83432
+    },
+    "samples/05_wide_eat_left_wrist.json": {
+      "sha256": "398c8db20d833416b909808e2ffe965a3433fc22c91efe9014fea71e8f036bf3",
+      "size": 87275
+    },
+    "samples/06_slim_sittake_phase0.json": {
+      "sha256": "d36c6f916cb67890383453519f845ad23863bece0c8623840c72c3ce172f5c4a",
+      "size": 86569
+    },
+    "samples/07_slim_sittake_phase05.json": {
+      "sha256": "00cb52bd316e38a50a4e34e8b0d037e809654420a250a74eb1d9b559083347fb",
+      "size": 86855
+    },
+    "scene-freeze-hashes.json": {
+      "sha256": "54f8d54ccc508a458a478768a0b020490c98fb59ae0c2e9b34d4f0e4730f09b6",
+      "size": 778
+    },
+    "scene-manifest.json": {
+      "sha256": "803b8459200a765932920f063e7cbe977419b10d484e136a4202fdee0565acce",
+      "size": 16099
+    },
+    "scenes/01_slim_sit1_counterphase.bbmodel": {
+      "sha256": "48c4fa6103f4c85cb905ff71ca756cb2c4792bf94c598a17a037d85539cf8b11",
+      "size": 77246
+    },
+    "scenes/02_wide_wait1_phase0.bbmodel": {
+      "sha256": "ff2f93acae0816d41642b25eedb73000c1287c94967ab9910cf508c63a89267b",
+      "size": 76902
+    },
+    "scenes/03_slim_sit2_head_query.bbmodel": {
+      "sha256": "32e98329a09612dd3ad5c8cfac294def5bb18619694c9084b528684516ccb1a0",
+      "size": 77234
+    },
+    "scenes/04_wide_wait4_yaw.bbmodel": {
+      "sha256": "9abcf488d5f3778a5646f3459e8e51db9741f6fd292d82c6e732bc46151d0c0b",
+      "size": 76987
+    },
+    "scenes/05_wide_eat_left_wrist.bbmodel": {
+      "sha256": "caf8094c609e8e2f721ebaa60b0110076817398f51024a7d083f99339673fe7a",
+      "size": 77900
+    },
+    "scenes/06_slim_sittake_phase0.bbmodel": {
+      "sha256": "e0e32b7e9e021b6faaa3b3b37095f8eb7c3d9dc6940b3757a684c9de7e50fe75",
+      "size": 77351
+    },
+    "scenes/07_slim_sittake_phase05.bbmodel": {
+      "sha256": "d78a7a4d769b39117fc19bdc128d5ef943941231c5d10766e1d1f0591cdc4e63",
+      "size": 77680
+    },
+    "selection-verification.json": {
+      "sha256": "f11a3d97a16bc5272f27012646656620f5424d87c92156a74da575547edcc200",
+      "size": 16868
+    },
+    "source-evidence/4.8.3-gradle.properties": {
+      "sha256": "f29f80e0fa53983571a744a1f73bf800cb58a04f47a1fabd933a6d0f0b19f264",
+      "size": 858
+    },
+    "source-evidence/AnimationController.java": {
+      "sha256": "851d9a8e5fa8f54971c678823354385cacf9ffd241cc7eecabaabc79b67799ed",
+      "size": 32879
+    },
+    "source-evidence/BakedAnimationsAdapter.java": {
+      "sha256": "ec30c7cdb195f597688abab0e13dae009a3eb512bc3269fc991814771c1ecbec",
+      "size": 10239
+    },
+    "source-evidence/CosDegrees.java": {
+      "sha256": "1fd96cd4e114cb9a5abc23a7ef87c03f4db5407573016d44f1a284a15e9bb359",
+      "size": 576
+    },
+    "source-evidence/CustomerEntity.java": {
+      "sha256": "5b10255e4c8bf42b92c2b8bc38d15204e73aeb9f14c0403c0667993b48f81e23",
+      "size": 24711
+    },
+    "source-evidence/CustomerEntityModel.java": {
+      "sha256": "71cbe8f0299807844dc5451018fc90ac869aef63feba4048c4c38448bc650fb0",
+      "size": 11899
+    },
+    "source-evidence/CustomerEntityRenderer.java": {
+      "sha256": "81ceb962253cb745236b7fad3eec6aefa592986e453104415cd7655d3b69607e",
+      "size": 488
+    },
+    "source-evidence/EasingType.java": {
+      "sha256": "a70347c881123c272f05425faba7adf5e415d33d69c0b53758da9b0a6fc94673",
+      "size": 16078
+    },
+    "source-evidence/RenderUtils.java": {
+      "sha256": "a0cc169417d819d64f81382334962ce737521d2bb0a4b21719a8682e9d2a1982",
+      "size": 12516
+    },
+    "source-evidence/SinDegrees.java": {
+      "sha256": "0bec9b471363c7765d5e84c72dfbd02c60f4f7209de2c7f7e693c9f464d82c22",
+      "size": 570
+    },
+    "source-evidence/cos-provenance.json": {
+      "sha256": "0edd4d7438cbf89dd3f2c6c27b48d24e356ebb03f5eda8f1f2c363641f159c05",
+      "size": 285
+    },
+    "source-evidence/customer-provenance.json": {
+      "sha256": "3cedac5399022f296159ecbcabe8faf8f12729cebc748ccc4e49d3f4df88723f",
+      "size": 1219
+    },
+    "source-evidence/gecko-cache-provenance.json": {
+      "sha256": "3aa6c3061d0b1a88df0e644a6fddfdbe2d3a51c7f33028c64de58c5e176a6be5",
+      "size": 4359
+    },
+    "source-evidence/input-upstream-provenance.json": {
+      "sha256": "1ca5755ec8671c72ffec5b475004963e57a72d65d1bc11fe4666117f6c3084ee",
+      "size": 2585
+    },
+    "source-evidence/render-provenance.json": {
+      "sha256": "5aacb5270215b663df950c02793f68acb79f358e88b3846da2d7bc5079442a79",
+      "size": 271
+    },
+    "verification.json": {
+      "sha256": "95937bb9e3a9306b06d6c60adc5991896ea11f81189b7bc4558eb5035327ad8f",
+      "size": 5220
+    },
+    "verify_review.py": {
+      "sha256": "60ce23b4f61b20e551d2b419fbd566901217c02ac8459d656e4f5e0886d7345e",
+      "size": 15065
+    },
+    "verify_selection.py": {
+      "sha256": "4dec9e1c9559d3502ca69f69eaa84fcf61c6ae0c9129f51deb0f849a314c8417",
+      "size": 4847
+    }
+  }
+}

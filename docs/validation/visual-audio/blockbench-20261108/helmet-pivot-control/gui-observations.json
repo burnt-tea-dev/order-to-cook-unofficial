@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-11-09T01:59:09.179088+00:00",
+  "method": "Actual official Blockbench 5.2.2 cloud desktop; opened original and review-only pivot control directly, then switched back to original. No editing or saving of scenes.",
+  "camera": "Isometric Right (2:1), no additional zoom or camera drag; same preset for original/control. No claim of calibrated matrix/pixel equality.",
+  "controls": "Grid off; both side panels hidden. No texture/material/render-side change.",
+  "sequence": [
+    "helmet-original-isometric-right-2-1.jpg",
+    "helmet-pivot-control-isometric-right-2-1.jpg",
+    "helmet-original-return-isometric-right-2-1.jpg"
+  ],
+  "observation": "Original source at screen right/lower shows checkerboard/background through visor rather than the rear shell seen in RP at left/upper. With only fifteen zero-rotation source shell origins changed, rear shell is visible through both visors. Switching back to original restores the original right/lower discrepancy.",
+  "unchanged_after_gui": "Both scene SHA-256 identities still equal preparation.json. Original PNG, geometry, UVs, active rotations, all groups and complete RP side unchanged between original/control.",
+  "conclusion": "The observed editor preview difference depends on inactive cube pivots despite unchanged transformed geometry, supporting a preview sorting effect. This is not a native asset repair or proof of internal renderer algorithm.",
+  "limits": [
+    "Single editor/common renderer, not Java or Bedrock game engines.",
+    "No worn helmet/head binding, native alpha blending, materials, culling, light response or game acceptance.",
+    "No runtime/production changes.",
+    "Full-window original JPEG bytes; no retouching, cropping, alignment or re-encoding."
+  ],
+  "screenshots": [
+    {
+      "path": "screenshots/helmet-original-isometric-right-2-1.jpg",
+      "sha256": "e33578698fb470a79bc1c645a4eabacd993d7808b30f1f523692d70cf0106d33",
+      "bytes": 94589,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "screenshots/helmet-original-return-isometric-right-2-1.jpg",
+      "sha256": "ae42452504ce9e3cae7795c6bda69518f91bff140e8c7473d61360aa91355080",
+      "bytes": 96326,
+      "dimensions": [
+        1188,
+        848
+      ]
+    },
+    {
+      "path": "screenshots/helmet-pivot-control-isometric-right-2-1.jpg",
+      "sha256": "41052af34d774abeb1c45266d63d379dab638cbd0af4f3425e70cd8e75228fab",
+      "bytes": 97216,
+      "dimensions": [
+        1188,
+        848
+      ]
+    }
+  ]
+}

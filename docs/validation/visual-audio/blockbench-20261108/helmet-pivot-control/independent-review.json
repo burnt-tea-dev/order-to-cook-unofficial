@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "review_scope": "Independent inspection of all three original images and frozen data, not a second GUI execution.",
+  "images_actually_viewed": [
+    "screenshots/helmet-original-isometric-right-2-1.jpg",
+    "screenshots/helmet-pivot-control-isometric-right-2-1.jpg",
+    "screenshots/helmet-original-return-isometric-right-2-1.jpg"
+  ],
+  "observation": "A and returned A show background through the lower-right SOURCE visor where the upper-left RP visor shows rear shell; B shows rear shell through both.",
+  "data_checks": {
+    "changed_fields": 16,
+    "inactive_source_origins": 15,
+    "corners_compared": 320,
+    "maximum_vertex_component_residual_model_units": 8.881784197001252e-16,
+    "unchanged_runtime_source_identities": 6,
+    "all_groups_unchanged": 5,
+    "full_rp_side_unchanged": true,
+    "faces_uvs_textures_active_rotations_unchanged": true,
+    "control_reconstructed_byte_exact_in_memory": true,
+    "original_preparation_bytes_preserved": true,
+    "original_gui_record_bytes_preserved": true,
+    "original_capture_bytes_preserved": true,
+    "total_cubes": 40
+  },
+  "conclusion": "Pivot-dependent common-editor preview behavior. Not a runtime fix or proof of the internal renderer algorithm.",
+  "limits": [
+    "The capture procedure and post-GUI no-save checks are the separately recorded GUI operator observations.",
+    "Independent review did not execute another GUI session.",
+    "No native Java/Bedrock, worn-head, material or transparency acceptance."
+  ]
+}

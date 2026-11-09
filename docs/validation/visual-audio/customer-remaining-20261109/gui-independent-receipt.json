@@ -1,0 +1,566 @@
+{
+  "review_scope": "All ten original full-window JPEG files inspected directly, plus original wide/slim PNG pixels. Independent review of capture, not independent native engine execution.",
+  "capture_receipt_sha256": "f1298d6dc551f76d5178648e4a20b829e27785accf853c03769c886c6045c3b4",
+  "prepared_status_promoted": false,
+  "native_acceptance": false,
+  "photographs": [
+    {
+      "path": "screenshots/01_slim_sit1_counterphase-isometric-right-2-1.jpg",
+      "sha256": "30362ff049fe2602f1abc34e1bffa4a97b758a087a52e7cbbcdc29b68050df0f",
+      "size": 89184,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "file_mtime_utc": "2026-11-09T01:37:37.567804+00:00",
+      "classification": "model-gui-observation",
+      "scene_id": "01_slim_sit1_counterphase",
+      "caption": "Complete slim seated pair. Counterphase bent feet and hanging arms are visible; inner joint faces remain occluded.",
+      "original_pixels_independently_inspected": true,
+      "scene_sha256": "48c4fa6103f4c85cb905ff71ca756cb2c4792bf94c598a17a037d85539cf8b11",
+      "clip": "customer_sit_1",
+      "time": 0.75,
+      "query_inputs": {
+        "q.anim_time": 0.75
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "slim",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+          "geometry_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "slim",
+          "geometry": "runtime/RP/models/entity/customer_slim.geo.json",
+          "geometry_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "source_screen_side": "right/lower",
+      "rp_screen_side": "left/upper"
+    },
+    {
+      "path": "screenshots/02_wide_wait1_phase0-isometric-right-2-1.jpg",
+      "sha256": "851a200fe0306a6b21818bdf8abfc2f10c0156405885fdcf7b4932a4d39ab33e",
+      "size": 84043,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "file_mtime_utc": "2026-11-09T01:38:10.808264+00:00",
+      "classification": "model-gui-observation",
+      "scene_id": "02_wide_wait1_phase0",
+      "caption": "Complete wide standing pair, asymmetric hanging arms, hands and straight legs. No broad missing texture is visible in this view.",
+      "original_pixels_independently_inspected": true,
+      "scene_sha256": "ff2f93acae0816d41642b25eedb73000c1287c94967ab9910cf508c63a89267b",
+      "clip": "customer_wait_1",
+      "time": 0.0,
+      "query_inputs": {
+        "q.anim_time": 0.0
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "wide",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+          "geometry_sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "wide",
+          "geometry": "runtime/RP/models/entity/customer.geo.json",
+          "geometry_sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "source_screen_side": "right/lower",
+      "rp_screen_side": "left/upper"
+    },
+    {
+      "path": "screenshots/03_slim_sit2_head_query-isometric-right-2-1.jpg",
+      "sha256": "5e21a42859212f4c905133394835e02513517f1874544ea9061e0afcf51b3fa3",
+      "size": 88422,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "file_mtime_utc": "2026-11-09T01:38:33.236572+00:00",
+      "classification": "model-gui-observation",
+      "scene_id": "03_slim_sit2_head_query",
+      "caption": "Complete slim seated pair with turned/pitched head and forward-facing torso under declared synthetic inputs. Isometric shows head top and lateral silhouette.",
+      "original_pixels_independently_inspected": true,
+      "scene_sha256": "32e98329a09612dd3ad5c8cfac294def5bb18619694c9084b528684516ccb1a0",
+      "clip": "customer_sit_2",
+      "time": 0.375,
+      "query_inputs": {
+        "q.anim_time": 0.375,
+        "query.target_x_rotation": 15,
+        "query.target_y_rotation": -30
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "slim",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+          "geometry_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "slim",
+          "geometry": "runtime/RP/models/entity/customer_slim.geo.json",
+          "geometry_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "source_screen_side": "right/lower",
+      "rp_screen_side": "left/upper"
+    },
+    {
+      "path": "screenshots/03_slim_sit2_head_query-north.jpg",
+      "sha256": "bccad1c714542c5821f622eb94e3358940cd7617d736a5989b5d025b8405cb60",
+      "size": 86297,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "file_mtime_utc": "2026-11-09T01:38:41.804689+00:00",
+      "classification": "model-gui-observation",
+      "scene_id": "03_slim_sit2_head_query",
+      "caption": "North control shows both faces, shoulders, hanging hands and seated feet. The head orientation is a synthetic frozen input, not observed native tracking.",
+      "original_pixels_independently_inspected": true,
+      "scene_sha256": "32e98329a09612dd3ad5c8cfac294def5bb18619694c9084b528684516ccb1a0",
+      "clip": "customer_sit_2",
+      "time": 0.375,
+      "query_inputs": {
+        "q.anim_time": 0.375,
+        "query.target_x_rotation": 15,
+        "query.target_y_rotation": -30
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "slim",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+          "geometry_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "slim",
+          "geometry": "runtime/RP/models/entity/customer_slim.geo.json",
+          "geometry_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "source_screen_side": "right",
+      "rp_screen_side": "left"
+    },
+    {
+      "path": "screenshots/04_wide_wait4_yaw-isometric-right-2-1.jpg",
+      "sha256": "b5217e37786dfc6221121490ba9f53b6381aa9158f77275337a2f0218bd55a38",
+      "size": 83970,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "file_mtime_utc": "2026-11-09T01:39:18.665197+00:00",
+      "classification": "model-gui-observation",
+      "scene_id": "04_wide_wait4_yaw",
+      "caption": "Complete wide standing pair with head yaw, shoulders and hands visible. Snapshot does not test the prior wrist gesture or its return.",
+      "original_pixels_independently_inspected": true,
+      "scene_sha256": "9abcf488d5f3778a5646f3459e8e51db9741f6fd292d82c6e732bc46151d0c0b",
+      "clip": "customer_wait_4",
+      "time": 3.7778,
+      "query_inputs": {
+        "q.anim_time": 3.7778
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "wide",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+          "geometry_sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "wide",
+          "geometry": "runtime/RP/models/entity/customer.geo.json",
+          "geometry_sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "source_screen_side": "right/lower",
+      "rp_screen_side": "left/upper"
+    },
+    {
+      "path": "screenshots/05_wide_eat_left_wrist-isometric-right-2-1.jpg",
+      "sha256": "9d2f1dc1d9e4f85fcdda3dcf549c2b8e487c82d44f198ac44dc21fb258345c60",
+      "size": 84802,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "file_mtime_utc": "2026-11-09T01:39:53.021670+00:00",
+      "classification": "model-gui-observation",
+      "scene_id": "05_wide_eat_left_wrist",
+      "caption": "Complete wide seated eating pair. Bent hands near face, pitched head and teal stippling at sleeve/forearm joins on BOTH figures. Retained for diagnosis.",
+      "original_pixels_independently_inspected": true,
+      "scene_sha256": "caf8094c609e8e2f721ebaa60b0110076817398f51024a7d083f99339673fe7a",
+      "clip": "npc_eat&scale",
+      "time": 4.0,
+      "query_inputs": {
+        "q.anim_time": 4.0
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "wide",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+          "geometry_sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "wide",
+          "geometry": "runtime/RP/models/entity/customer.geo.json",
+          "geometry_sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "source_screen_side": "right/lower",
+      "rp_screen_side": "left/upper"
+    },
+    {
+      "path": "screenshots/05_wide_eat_left_wrist-north-sleeve-control.jpg",
+      "sha256": "bdff50392c4fee335c74b2e19f50099ea59dfd11888e52a0a8b6f458ef443441",
+      "size": 83850,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "file_mtime_utc": "2026-11-09T01:40:04.541828+00:00",
+      "classification": "model-gui-observation",
+      "scene_id": "05_wide_eat_left_wrist",
+      "caption": "North control confirms teal seam stippling on both figures and frontal hand/forearm overlap. No texture cleanup or render-side override was applied.",
+      "original_pixels_independently_inspected": true,
+      "scene_sha256": "caf8094c609e8e2f721ebaa60b0110076817398f51024a7d083f99339673fe7a",
+      "clip": "npc_eat&scale",
+      "time": 4.0,
+      "query_inputs": {
+        "q.anim_time": 4.0
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "wide",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+          "geometry_sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "wide",
+          "geometry": "runtime/RP/models/entity/customer.geo.json",
+          "geometry_sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "source_screen_side": "right",
+      "rp_screen_side": "left"
+    },
+    {
+      "path": "screenshots/06_slim_sittake_phase0-isometric-right-2-1.jpg",
+      "sha256": "f24d374a055e6ff9adbac90469b8270af7562ec258b6fd18fe217e0fb0f7c5ed",
+      "size": 90170,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "file_mtime_utc": "2026-11-09T01:40:29.442169+00:00",
+      "classification": "model-gui-observation",
+      "scene_id": "06_slim_sittake_phase0",
+      "caption": "Complete slim seated-take pair at phase0, with raised arms/hands and counterphase feet. No frame is interpreted as live animation.",
+      "original_pixels_independently_inspected": true,
+      "scene_sha256": "e0e32b7e9e021b6faaa3b3b37095f8eb7c3d9dc6940b3757a684c9de7e50fe75",
+      "clip": "npc_sittake",
+      "time": 0.0,
+      "query_inputs": {
+        "q.anim_time": 0.0
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "slim",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+          "geometry_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "slim",
+          "geometry": "runtime/RP/models/entity/customer_slim.geo.json",
+          "geometry_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "source_screen_side": "right/lower",
+      "rp_screen_side": "left/upper"
+    },
+    {
+      "path": "screenshots/07_slim_sittake_phase05-isometric-right-2-1.jpg",
+      "sha256": "37e2efed5aec13fefe3b6984f78c4f5afc2c25e49bd3647bbbb90ed08d051414",
+      "size": 89938,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "file_mtime_utc": "2026-11-09T01:42:51.096083+00:00",
+      "classification": "model-gui-observation",
+      "scene_id": "07_slim_sittake_phase05",
+      "caption": "Complete slim seated-take pair at phase0.5. The arm splay and foot phase differ from scene06. Preset and scroll amount were the same by operator record, not proof of equal camera matrices.",
+      "original_pixels_independently_inspected": true,
+      "scene_sha256": "d78a7a4d769b39117fc19bdc128d5ef943941231c5d10766e1d1f0591cdc4e63",
+      "clip": "npc_sittake",
+      "time": 0.5,
+      "query_inputs": {
+        "q.anim_time": 0.5
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "slim",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+          "geometry_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "slim",
+          "geometry": "runtime/RP/models/entity/customer_slim.geo.json",
+          "geometry_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "source_screen_side": "right/lower",
+      "rp_screen_side": "left/upper"
+    },
+    {
+      "path": "screenshots/editor-render-sides-auto.jpg",
+      "sha256": "715a46f92b488b54ee7ca116abaef8804665443edefe425180e44b301d85dfd4",
+      "size": 60705,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "file_mtime_utc": "2026-11-09T01:36:36.302966+00:00",
+      "classification": "editor-setting-diagnostic",
+      "scene_id": null,
+      "caption": "Render Sides setting visibly reads Auto. This is an editor-setting diagnostic, not a model acceptance photo or a native material test.",
+      "original_pixels_independently_inspected": true
+    }
+  ]
+}

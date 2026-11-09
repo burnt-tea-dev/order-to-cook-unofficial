@@ -1,0 +1,138 @@
+{
+  "classification": "Shared positive-area coplanar arm/hand face overlap; consistent with editor depth competition, not proof of exact rasterizer root cause or native defect. No source/RP geometry, UV, inflate or PNG difference identified.",
+  "rows": [
+    {
+      "side": "SOURCE",
+      "limb": "right",
+      "cube": 0,
+      "parallel_surface": "z-min",
+      "max_plane_distance": 1.3057509161819148e-15,
+      "overlap_area_model_units_squared": 5.085803848247508
+    },
+    {
+      "side": "SOURCE",
+      "limb": "right",
+      "cube": 0,
+      "parallel_surface": "z-max",
+      "max_plane_distance": 1.1209949839538136e-15,
+      "overlap_area_model_units_squared": 5.08580384824751
+    },
+    {
+      "side": "SOURCE",
+      "limb": "right",
+      "cube": 1,
+      "parallel_surface": "z-min",
+      "max_plane_distance": 2.8746686176933306e-15,
+      "overlap_area_model_units_squared": 5.739155603461802
+    },
+    {
+      "side": "SOURCE",
+      "limb": "right",
+      "cube": 1,
+      "parallel_surface": "z-max",
+      "max_plane_distance": 1.9377098419553303e-15,
+      "overlap_area_model_units_squared": 5.7391556034618025
+    },
+    {
+      "side": "SOURCE",
+      "limb": "left",
+      "cube": 0,
+      "parallel_surface": "z-min",
+      "max_plane_distance": 2.3794197414954053e-15,
+      "overlap_area_model_units_squared": 7.484731989279426
+    },
+    {
+      "side": "SOURCE",
+      "limb": "left",
+      "cube": 0,
+      "parallel_surface": "z-max",
+      "max_plane_distance": 1.78373841559037e-15,
+      "overlap_area_model_units_squared": 7.4847319892794255
+    },
+    {
+      "side": "SOURCE",
+      "limb": "left",
+      "cube": 1,
+      "parallel_surface": "z-min",
+      "max_plane_distance": 1.4854120501785352e-15,
+      "overlap_area_model_units_squared": 8.476163771818554
+    },
+    {
+      "side": "SOURCE",
+      "limb": "left",
+      "cube": 1,
+      "parallel_surface": "z-max",
+      "max_plane_distance": 1.4854120501785352e-15,
+      "overlap_area_model_units_squared": 8.476163771818554
+    },
+    {
+      "side": "RP",
+      "limb": "right",
+      "cube": 0,
+      "parallel_surface": "z-min",
+      "max_plane_distance": 1.3057509161819148e-15,
+      "overlap_area_model_units_squared": 5.085803848247508
+    },
+    {
+      "side": "RP",
+      "limb": "right",
+      "cube": 0,
+      "parallel_surface": "z-max",
+      "max_plane_distance": 1.1209949839538136e-15,
+      "overlap_area_model_units_squared": 5.08580384824751
+    },
+    {
+      "side": "RP",
+      "limb": "right",
+      "cube": 1,
+      "parallel_surface": "z-min",
+      "max_plane_distance": 2.8746686176933306e-15,
+      "overlap_area_model_units_squared": 5.739155603461802
+    },
+    {
+      "side": "RP",
+      "limb": "right",
+      "cube": 1,
+      "parallel_surface": "z-max",
+      "max_plane_distance": 1.9377098419553303e-15,
+      "overlap_area_model_units_squared": 5.7391556034618025
+    },
+    {
+      "side": "RP",
+      "limb": "left",
+      "cube": 0,
+      "parallel_surface": "z-min",
+      "max_plane_distance": 2.3794197414954053e-15,
+      "overlap_area_model_units_squared": 7.484731989279426
+    },
+    {
+      "side": "RP",
+      "limb": "left",
+      "cube": 0,
+      "parallel_surface": "z-max",
+      "max_plane_distance": 1.78373841559037e-15,
+      "overlap_area_model_units_squared": 7.4847319892794255
+    },
+    {
+      "side": "RP",
+      "limb": "left",
+      "cube": 1,
+      "parallel_surface": "z-min",
+      "max_plane_distance": 1.4854120501785352e-15,
+      "overlap_area_model_units_squared": 8.476163771818554
+    },
+    {
+      "side": "RP",
+      "limb": "left",
+      "cube": 1,
+      "parallel_surface": "z-max",
+      "max_plane_distance": 1.4854120501785352e-15,
+      "overlap_area_model_units_squared": 8.476163771818554
+    }
+  ],
+  "skin_alpha_values": [
+    0,
+    255
+  ],
+  "limits": "No draw-order, depth-buffer, transparency or GPU instrumentation. JPEG artifacts also prevent assigning every pixel to one mechanism. Both figures use the same CubeRenderer."
+}
