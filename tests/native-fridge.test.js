@@ -208,6 +208,55 @@ async function emulatePlayerBreak(f, block) {
   return permutation;
 }
 
+test('breaking either half and restarting recovery preserve a rejected legacy helper and its exact cargo', async () => {
+  const observations = [], expected = [];
+  for (const mismatch of ['station', 'dimension', 'location', 'type']) for (const half of ['lower', 'upper']) {
+    const f = setup({ legacy: true, nativeUpper: true }); seedLegacy(f);
+    if (mismatch === 'station') f.helper.setDynamicProperty('ordertocook:station_id', 'someone-else');
+    if (mismatch === 'dimension') f.helper.dimension = { ...f.dimension, id: 'minecraft:nether' };
+    if (mismatch === 'location') f.helper.location = { x: 50, y: 0, z: 50 };
+    if (mismatch === 'type') f.helper.typeId = 'minecraft:chest_minecart';
+    const snapshot = () => JSON.stringify(Array.from({ length: 81 }, (_, slot) => fingerprint(f.helper.container.getItem(slot))));
+    const before = snapshot();
+    assert.throws(() => f.service.getStorage(f.station), /身份不符/);
+    try { await emulatePlayerBreak(f, half === 'lower' ? f.lower : f.upper); }
+    catch (error) { assert.match(String(error), /身份不符/); }
+    const observe = phase => {
+      const scenario = `${mismatch}/${half}/${phase}`;
+      observations.push({ scenario, helperPreserved: f.helper.isValid, cargoPreserved: snapshot() === before,
+        foreignDrops: f.dimension.drops.filter(drop => drop.stack.typeId !== LOWER).length,
+        savedReferencePreserved: f.records.get(f.station.id)?.storageId === f.helper.id });
+      expected.push({ scenario, helperPreserved: true, cargoPreserved: true, foreignDrops: 0, savedReferencePreserved: true });
+    };
+    observe('break');
+    // Recreate the service to discard its transient maps, then let the ordinary
+    // orphan scan and its next retry see both removed halves. This is a service
+    // restart with adapter doubles, not a native chunk or disk-reload test.
+    const restarted = appliances.createApplianceService(f.ctx);
+    restarted.tick(); advance(restarted, f, 101);
+    observe('recovery');
+  }
+  assert.deepEqual(observations, expected);
+});
+
+test('matching legacy refrigerator helpers still drop full cargo once and retire on break or recovery', async () => {
+  for (const half of ['lower', 'upper']) for (const removal of ['player-adapter', 'command-recovery']) {
+    const f = setup({ legacy: true, nativeUpper: true }), entries = seedLegacy(f);
+    const expected = entries.map(([, item]) => fingerprint(item)).sort();
+    const block = half === 'lower' ? f.lower : f.upper;
+    if (removal === 'player-adapter') await emulatePlayerBreak(f, block);
+    else { block.setType('minecraft:air'); f.service.tick(); }
+    const cargo = () => f.dimension.drops.filter(drop => drop.stack.typeId !== LOWER).map(drop => fingerprint(drop.stack)).sort();
+    assert.deepEqual(cargo(), expected, `${half}/${removal}`);
+    assert.equal(f.lower.isAir, true); assert.equal(f.upper.isAir, true);
+    assert.equal(f.helper.isValid, false); assert.equal(f.records.has(f.station.id), false);
+    const restarted = appliances.createApplianceService(f.ctx);
+    restarted.tick(); advance(restarted, f, 101);
+    assert.deepEqual(cargo(), expected, `${half}/${removal}/restart`);
+    assert.equal(f.dimension.spawnCount, 1);
+  }
+});
+
 test('breaking either half spills each native stack once and drops only one refrigerator item', async () => {
   for (const half of ['lower', 'upper']) {
     const f = setup();

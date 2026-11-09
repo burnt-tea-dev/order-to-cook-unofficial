@@ -327,14 +327,18 @@ export function createApplianceService(ctx) {
     try { const entity = gameWorld.getEntity(id); return entity?.isValid ? entity : undefined; } catch { return undefined; }
   }
 
+  function assertStorageIdentity(entity, station) {
+    if (entity.typeId !== STORAGE || entity.getDynamicProperty(`${NS}station_id`) !== station.id ||
+        entity.dimension.id !== station.dimensionId || squaredDistance(entity.location, center(station.location, 0.1)) > 1.5 ** 2) {
+      throw new Error("設備儲物身份不符；保留原引用及兩邊物品。");
+    }
+  }
+
   function ensureStorage(station, create = true) {
     let entity = findEntity(station.storageId);
     const block = loadedStation(station);
     if (!block) return undefined;
-    if (entity && (entity.typeId !== STORAGE || entity.getDynamicProperty(`${NS}station_id`) !== station.id ||
-        entity.dimension.id !== station.dimensionId || squaredDistance(entity.location, center(station.location, 0.1)) > 1.5 ** 2)) {
-      throw new Error("設備儲物身份不符；保留原引用及兩邊物品。");
-    }
+    if (entity) assertStorageIdentity(entity, station);
     if (!entity) {
       const candidates = block.dimension.getEntities({ type: STORAGE, location: center(station.location), maxDistance: 1.5 });
       entity = candidates.find(candidate => candidate.getDynamicProperty(`${NS}station_id`) === station.id);
@@ -999,6 +1003,9 @@ export function createApplianceService(ctx) {
       }
       const entity = findEntity(station.storageId);
       if (entity) {
+        // Breaking must not bypass the identity check that already rejects use.
+        // The block is gone here, so validate the saved anchor without loading it.
+        assertStorageIdentity(entity, station);
         const inventory = entity.getComponent("minecraft:inventory")?.container;
         if (!inventory || dropContainerContents(inventory, block.dimension, center(baseLocation))) entity.remove();
       }
@@ -1048,6 +1055,8 @@ export function createApplianceService(ctx) {
         // Explosion/commands may bypass a player-break callback. Spill exact cargo
         // once; retain any undropped slots if a chunk boundary prevents spawning.
         try {
+          // Recovery must not spill a helper rejected by the break/use paths.
+          assertStorageIdentity(entity, { id: anchor.stationId, dimensionId: anchor.dimensionId, location: anchor.location });
           const inventory = entity.getComponent("minecraft:inventory")?.container;
           if (!inventory || dropContainerContents(inventory, dimension, center(anchor.location))) {
             entity.remove();
