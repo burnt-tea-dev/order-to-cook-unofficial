@@ -1782,14 +1782,48 @@ def make_dining_plate():
 
 
 def make_motorcycle_geo():
-    """Read the original Mojang CubeListBuilder model (41 textured boxes)."""
+    """Convert this pinned motorcycle's neutral model, not a general Java codec.
+
+    See docs/MOTORCYCLE_SOURCE_MAPPING.md for the registered renderer frame,
+    physical-corner UV contract and independent regeneration regression.
+    """
     source = SOURCE / "forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/render/model/MotorcycleModel.java"
     text = source.read_text(encoding="utf-8")
-    pattern = re.compile(r'(\w+)\.addOrReplaceChild\("([^"]+)",\s*(CubeListBuilder\.create\(\).*?),\s*PartPose\.(offset(?:AndRotation)?)\((.*?)\)\);', re.S)
+    # Consume the complete bounded layer body, not a search for familiar calls.
+    # Unrecognized builder state (including whitespace-spelled mirror calls),
+    # extra statements and pose suffixes must never be silently discarded.
+    root_marker = "PartDefinition partdefinition = meshdefinition.getRoot();"
+    return_marker = "return LayerDefinition.create"
+    if text.count(root_marker) != 1 or text.count(return_marker) != 1:
+        raise ValueError("Unsupported motorcycle layer grammar")
+    body, return_text = text.split(root_marker, 1)[1].split(return_marker, 1)
+    if not re.match(r'\s*\(\s*meshdefinition\s*,\s*128\s*,\s*128\s*\)\s*;', return_text):
+        raise ValueError("Unsupported motorcycle layer return grammar")
+    number = r'[+-]?(?:\d+(?:\.\d*)?|\.\d+)[Ff]?'
+    statement_pattern = re.compile(
+        r'(?:PartDefinition\s+(\w+)\s*=\s*)?(\w+)\s*\.\s*addOrReplaceChild\s*'
+        r'\(\s*"(\w+)"\s*,\s*CubeListBuilder\s*\.\s*create\s*\(\s*\)'
+        r'(.*),\s*PartPose\s*\.\s*(offset(?:AndRotation)?)\s*\(([^()]*)\)\s*\)', re.S)
+    cube_pattern = re.compile(
+        r'\s*\.\s*texOffs\s*\(\s*(\d+)\s*,\s*(\d+)\s*\)\s*\.\s*addBox\s*\(\s*'
+        + ''.join('(' + number + r')\s*,\s*' for _ in range(6))
+        + r'new\s+CubeDeformation\s*\(\s*(' + number + r')\s*\)\s*\)')
     bones, pivots = [], {"partdefinition": [0,0,0]}
-    for match in pattern.finditer(text):
-        parent, name, cubes_text, pose_type, pose_text = match.groups()
-        pose = [float(x.rstrip("Ff")) for x in pose_text.split(",")]
+    statements = body.strip().split(';')
+    if statements[-1].strip():
+        raise ValueError("Unsupported motorcycle statement grammar: missing terminator")
+    for statement in statements[:-1]:
+        match = statement_pattern.fullmatch(statement.strip())
+        if match is None:
+            raise ValueError("Unsupported motorcycle statement or pose grammar")
+        alias, parent, name, cubes_text, pose_type, pose_text = match.groups()
+        if (alias and alias != name) or name in pivots or parent not in pivots:
+            raise ValueError("Unsupported motorcycle hierarchy grammar")
+        pose_tokens = [x.strip() for x in pose_text.split(',')]
+        if len(pose_tokens) != (6 if pose_type == "offsetAndRotation" else 3) or not all(
+                re.fullmatch(number, token) for token in pose_tokens):
+            raise ValueError("Unsupported motorcycle pose grammar")
+        pose = [float(x.rstrip("Ff")) for x in pose_tokens]
         parent_offset = pivots[parent]
         origin = [parent_offset[i]+pose[i] for i in range(3)]
         pivots[name] = origin
@@ -1798,13 +1832,24 @@ def make_motorcycle_geo():
         if parent != "partdefinition":
             bone["parent"] = parent
         if pose_type == "offsetAndRotation":
-            bone["rotation"] = [-math.degrees(pose[3]), -math.degrees(pose[4]), math.degrees(pose[5])]
-        for cm in re.finditer(r'\.texOffs\(([^)]+)\)\.addBox\((.*?),\s*new CubeDeformation\(([^)]+)\)\)', cubes_text, re.S):
-            uv = [int(v.strip()) for v in cm.group(1).split(",")]
-            vals = [float(v.strip().rstrip("Ff")) for v in cm.group(2).split(",")]
+            # Only single-axis X/Y rotations occur in the pinned source. Do not
+            # silently extend this repair to unverified Euler orders or Z poses.
+            if pose[5] or sum(angle != 0 for angle in pose[3:]) > 1:
+                raise ValueError("Motorcycle supports reviewed single-axis X/Y poses only; Z requires review")
+            bone["rotation"] = [math.degrees(pose[3]), -math.degrees(pose[4]), 0.0]
+        position = 0
+        while cubes_text[position:].strip():
+            cm = cube_pattern.match(cubes_text, position)
+            if cm is None:
+                raise ValueError("Unsupported motorcycle builder grammar (including mirror calls)")
+            position = cm.end()
+            uv = [int(cm.group(1)), int(cm.group(2))]
+            vals = [float(v.rstrip("Ff")) for v in cm.groups()[2:8]]
             x,y,z,sx,sy,sz = vals
-            cube = {"origin": [-(origin[0]+x+sx), 24-(origin[1]+y+sy), origin[2]+z], "size": [sx,sy,sz], "uv": uv}
-            inflate = float(cm.group(3).strip().rstrip("Ff"))
+            # The retained authored X reflection needs U inversion and an
+            # east/west face exchange: Bedrock box mirror supplies both.
+            cube = {"origin": [-(origin[0]+x+sx), 24-(origin[1]+y+sy), origin[2]+z], "size": [sx,sy,sz], "uv": uv, "mirror": True}
+            inflate = float(cm.group(9).rstrip("Ff"))
             if inflate:
                 cube["inflate"] = inflate
             bone["cubes"].append(cube)

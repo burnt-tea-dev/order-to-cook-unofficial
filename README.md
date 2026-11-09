@@ -2,6 +2,8 @@
 
 [简体中文](README.zh-CN.md) · **繁體中文** · [English](README.en.md)
 
+0.1.48-alpha.1 是**已整合至 #75 合併後主線、尚未發布的候選**。修正小電驢 7 根靜態骨骼 X 旋轉符號及 41 個 box UV 鏡像配置，保留原貼圖與全部玩法、轉向／輪速行為。9 張原始共同編輯器圖支援有限靜態比對，不代表原生或動態車輛驗收。配對身份已凍結，套件綁定整合後的確切候選提交；來源再次變更時必須重新驗證並重建。[範圍、身份與限制](docs/validation/0.1.48-alpha.1/MOTORCYCLE_STATIC_MAPPING.md)。
+
 0.1.47 候選補回冰箱共同根變形：上下門保持各自姿態，整座櫃體共用四個原關門 root 樣本；同時關門依 Java controller 順序由下門覆寫，包含中性樣本。也修正上半讀取例外時下半保留舊變形的問題，不更動庫存遷移保護。有限取樣、SRT 剪切近似、反向／STOP 與兩方塊非原子寫入仍有差異；已凍結新的配對身份但尚未發布，也不代表原生驗收。[來源、版本與驗證](docs/validation/0.1.47-alpha.1/FRIDGE_SHARED_ROOT.md)。
 
 0.1.46 補回爐灶點火時原版骨骼的傾斜與伸縮：獨立20 tick倒數，19個來源姿態沿用每2 tick更新，不改燃料、烹飪或物品。這是有限取樣，並非Java連續動畫／封包／STOP復位完全等價。[來源、版本與驗證](docs/validation/0.1.46-alpha.1/STOVE_IGNITION.md)及[38張雲端Blockbench圖](docs/validation/visual-audio/blockbench-20261108/remaining-static/README.md)涵蓋灶台前後與家具／供應架／頭盔局部對照；原生透明材質、實際穿戴及客戶端仍未驗收。

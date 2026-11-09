@@ -1,0 +1,65 @@
+{
+  "baseline_commit": "ce7e8916ac5627be08a6c366ea933a4ad96ad3bd",
+  "source_candidate_commit": "df6d0ade7fe6e0667c0078e5d417686a89f1159a",
+  "source_candidate_tree": "99c38533938d2b409b561f1ff76b0da0871e303f",
+  "before_geometry": {
+    "repository_path": "runtime/RP/models/entity/motorcycle.geo.json",
+    "bundle_path": "before.geo.json",
+    "sha256": "6755e91fba97a2c4127f94646054d8c0ed7c03dfbde35caffeaaf8066ea75213",
+    "git_blob": "9a6106a17947ce89cfd187f4c9f04905e133a3f7"
+  },
+  "current_inputs": {
+    "runtime/RP/models/entity/motorcycle.geo.json": {
+      "sha256": "c94a03d87f3916b374375f2cd03d98f213d5867c0a56464fc6a12c5987490093",
+      "git_blob": "02ca5ceefb94651fa4fae49c8079e798493e4215"
+    },
+    "tests/motorcycle_oracle.py": {
+      "sha256": "03f2af5de38601143d4e79ee4558f419b9843ecbd559f73f924802d57df01d7a",
+      "git_blob": "d318e0a38ef395a89e0b1ea315a9efbbf9b6b3a0"
+    },
+    "tests/test_motorcycle_mapping.py": {
+      "sha256": "1f48c84f95a8520a3e7e3ae056fd6e94c747726240dd6d29b14404061fd22c16",
+      "git_blob": "a648b9b5a852f4de7f74c0b9af91976ebf94960e"
+    },
+    "tools/review_motorcycle.py": {
+      "sha256": "33c776b927f8fb90ed86962e1a4190cf3d3919861657a104f21c193b9e5ac2fd",
+      "git_blob": "2d2742ceae0254e04bfec40d35521754e8ec3c15"
+    },
+    "upstream/reference/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/render/model/MotorcycleModel.java": {
+      "sha256": "073119a7a31b8ac7d04e3d98fa41053eb0f80f853a680c036572055b7424ac32",
+      "git_blob": "dd11bf9ca6a3c6d22a10150c2647d7a32ea78fe7"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/motorcycle.png": {
+      "sha256": "cda5eb327ee9b64783fb818572805799f74e5641f29cc9d161bf88d42edfb416",
+      "git_blob": "87d3d7ff188bded39e3c5f60715398685c5b44e8"
+    },
+    "runtime/RP/textures/ordertocook/entity/motorcycle.png": {
+      "sha256": "cda5eb327ee9b64783fb818572805799f74e5641f29cc9d161bf88d42edfb416",
+      "git_blob": "87d3d7ff188bded39e3c5f60715398685c5b44e8"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/electric_motorcycle_red.png": {
+      "sha256": "c4d910313d97857dd5e933ce3b09ea1280bdc18b9ad0d4d83126b22878c55b7b",
+      "git_blob": "95f800974245a0cc2a19c657a04b47c7962ca268"
+    },
+    "runtime/RP/textures/ordertocook/entity/electric_motorcycle_red.png": {
+      "sha256": "c4d910313d97857dd5e933ce3b09ea1280bdc18b9ad0d4d83126b22878c55b7b",
+      "git_blob": "95f800974245a0cc2a19c657a04b47c7962ca268"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/electric_motorcycle_blue.png": {
+      "sha256": "95c848da09ee3ac2573ccbba50520302141d555e5b66ae7646897a957742ba14",
+      "git_blob": "51683b3b016f83782f9d83706d69595ea0809aaf"
+    },
+    "runtime/RP/textures/ordertocook/entity/electric_motorcycle_blue.png": {
+      "sha256": "95c848da09ee3ac2573ccbba50520302141d555e5b66ae7646897a957742ba14",
+      "git_blob": "51683b3b016f83782f9d83706d69595ea0809aaf"
+    },
+    "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/electric_motorcycle_yellow.png": {
+      "sha256": "cd3cf73890ab0ed758bf659c2660b2d9991cb619eb5753e104191ceea4b66162",
+      "git_blob": "9aef97187d9dbacc3f0eabefa1907ff498f613f3"
+    },
+    "runtime/RP/textures/ordertocook/entity/electric_motorcycle_yellow.png": {
+      "sha256": "cd3cf73890ab0ed758bf659c2660b2d9991cb619eb5753e104191ceea4b66162",
+      "git_blob": "9aef97187d9dbacc3f0eabefa1907ff498f613f3"
+    }
+  }
+}

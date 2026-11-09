@@ -38,6 +38,7 @@
                 45,
                 0
               ],
+              "mirror": true,
               "inflate": 0.01
             },
             {
@@ -54,7 +55,8 @@
               "uv": [
                 43,
                 40
-              ]
+              ],
+              "mirror": true
             },
             {
               "origin": [
@@ -71,6 +73,7 @@
                 0,
                 0
               ],
+              "mirror": true,
               "inflate": 0.005
             },
             {
@@ -87,7 +90,8 @@
               "uv": [
                 43,
                 58
-              ]
+              ],
+              "mirror": true
             },
             {
               "origin": [
@@ -103,7 +107,8 @@
               "uv": [
                 45,
                 32
-              ]
+              ],
+              "mirror": true
             }
           ]
         },
@@ -129,7 +134,8 @@
               "uv": [
                 66,
                 71
-              ]
+              ],
+              "mirror": true
             },
             {
               "origin": [
@@ -145,12 +151,13 @@
               "uv": [
                 57,
                 71
-              ]
+              ],
+              "mirror": true
             }
           ],
           "parent": "body",
           "rotation": [
-            22.001579,
+            -22.001579,
             0.0,
             0.0
           ]
@@ -177,12 +184,13 @@
               "uv": [
                 9,
                 88
-              ]
+              ],
+              "mirror": true
             }
           ],
           "parent": "body",
           "rotation": [
-            -45.000105,
+            45.000105,
             0.0,
             0.0
           ]
@@ -209,12 +217,13 @@
               "uv": [
                 0,
                 88
-              ]
+              ],
+              "mirror": true
             }
           ],
           "parent": "body",
           "rotation": [
-            -45.000105,
+            45.000105,
             0.0,
             0.0
           ]
@@ -242,12 +251,13 @@
                 0,
                 40
               ],
+              "mirror": true,
               "inflate": 0.005
             }
           ],
           "parent": "body",
           "rotation": [
-            45.000105,
+            -45.000105,
             0.0,
             0.0
           ]
@@ -275,12 +285,13 @@
                 45,
                 14
               ],
+              "mirror": true,
               "inflate": 0.01
             }
           ],
           "parent": "body",
           "rotation": [
-            22.001579,
+            -22.001579,
             0.0,
             0.0
           ]
@@ -308,6 +319,7 @@
                 88,
                 7
               ],
+              "mirror": true,
               "inflate": 0.015
             },
             {
@@ -324,7 +336,8 @@
               "uv": [
                 78,
                 10
-              ]
+              ],
+              "mirror": true
             },
             {
               "origin": [
@@ -340,7 +353,8 @@
               "uv": [
                 0,
                 22
-              ]
+              ],
+              "mirror": true
             },
             {
               "origin": [
@@ -357,6 +371,7 @@
                 93,
                 62
               ],
+              "mirror": true,
               "inflate": 0.015
             },
             {
@@ -374,6 +389,7 @@
                 77,
                 7
               ],
+              "mirror": true,
               "inflate": 0.015
             }
           ],
@@ -401,7 +417,8 @@
               "uv": [
                 0,
                 59
-              ]
+              ],
+              "mirror": true
             }
           ]
         },
@@ -427,7 +444,8 @@
               "uv": [
                 72,
                 19
-              ]
+              ],
+              "mirror": true
             }
           ],
           "parent": "handle",
@@ -459,7 +477,8 @@
               "uv": [
                 72,
                 24
-              ]
+              ],
+              "mirror": true
             }
           ],
           "parent": "handle",
@@ -491,7 +510,8 @@
               "uv": [
                 0,
                 72
-              ]
+              ],
+              "mirror": true
             }
           ],
           "parent": "handle",
@@ -523,7 +543,8 @@
               "uv": [
                 72,
                 14
-              ]
+              ],
+              "mirror": true
             }
           ],
           "parent": "handle",
@@ -555,7 +576,8 @@
               "uv": [
                 93,
                 66
-              ]
+              ],
+              "mirror": true
             },
             {
               "origin": [
@@ -571,7 +593,8 @@
               "uv": [
                 38,
                 88
-              ]
+              ],
+              "mirror": true
             },
             {
               "origin": [
@@ -588,6 +611,7 @@
                 72,
                 58
               ],
+              "mirror": true,
               "inflate": 0.001
             },
             {
@@ -604,7 +628,8 @@
               "uv": [
                 88,
                 90
-              ]
+              ],
+              "mirror": true
             },
             {
               "origin": [
@@ -621,6 +646,7 @@
                 75,
                 74
               ],
+              "mirror": true,
               "inflate": 0.001
             }
           ]
@@ -648,6 +674,7 @@
                 18,
                 91
               ],
+              "mirror": true,
               "inflate": 0.002
             },
             {
@@ -665,6 +692,7 @@
                 75,
                 66
               ],
+              "mirror": true,
               "inflate": 0.002
             },
             {
@@ -682,6 +710,7 @@
                 75,
                 90
               ],
+              "mirror": true,
               "inflate": 0.002
             },
             {
@@ -699,6 +728,7 @@
                 72,
                 32
               ],
+              "mirror": true,
               "inflate": 0.002
             },
             {
@@ -716,12 +746,13 @@
                 19,
                 84
               ],
+              "mirror": true,
               "inflate": 0.002
             }
           ],
           "parent": "front_t",
           "rotation": [
-            45.000105,
+            -45.000105,
             0.0,
             0.0
           ]
@@ -748,7 +779,8 @@
               "uv": [
                 40,
                 71
-              ]
+              ],
+              "mirror": true
             },
             {
               "origin": [
@@ -764,7 +796,8 @@
               "uv": [
                 91,
                 24
-              ]
+              ],
+              "mirror": true
             },
             {
               "origin": [
@@ -781,6 +814,7 @@
                 78,
                 0
               ],
+              "mirror": true,
               "inflate": 0.001
             },
             {
@@ -797,7 +831,8 @@
               "uv": [
                 91,
                 55
-              ]
+              ],
+              "mirror": true
             },
             {
               "origin": [
@@ -814,6 +849,7 @@
                 75,
                 82
               ],
+              "mirror": true,
               "inflate": 0.001
             }
           ]
@@ -841,6 +877,7 @@
                 51,
                 94
               ],
+              "mirror": true,
               "inflate": 0.002
             },
             {
@@ -858,6 +895,7 @@
                 0,
                 80
               ],
+              "mirror": true,
               "inflate": 0.002
             },
             {
@@ -875,6 +913,7 @@
                 91,
                 32
               ],
+              "mirror": true,
               "inflate": 0.002
             },
             {
@@ -892,6 +931,7 @@
                 19,
                 76
               ],
+              "mirror": true,
               "inflate": 0.002
             },
             {
@@ -909,12 +949,13 @@
                 84,
                 40
               ],
+              "mirror": true,
               "inflate": 0.002
             }
           ],
           "parent": "rear_t",
           "rotation": [
-            45.000105,
+            -45.000105,
             0.0,
             0.0
           ]

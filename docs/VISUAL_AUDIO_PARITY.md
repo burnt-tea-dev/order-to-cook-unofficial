@@ -220,3 +220,10 @@ sound or particle acceptance is added.
 ### Later helmet inactive-pivot diagnostic (2026-11-09)
 
 A separate [helmet A → B → A control](validation/visual-audio/blockbench-20261108/helmet-pivot-control/README.md) records reversible visor-preview behavior after changing only fifteen inactive SOURCE shell cube origins. Independent inspection covers all three original photographs, exact scene differences, unchanged runtime/source inputs and 320 matching corners. This is a common-editor preview diagnostic, not a runtime repair, proof of an internal sorting algorithm or native/worn-head transparency acceptance. The earlier static-review result is retained unchanged.
+
+## 小電驢靜態來源映射補驗（2026-11-09）
+
+[9 張原始 Blockbench 圖與可重現 fixture](validation/visual-audio/motorcycle-source-mapping-20261109/README.md)
+確認舊版前柱的 V 形折位；候選修正 7 根靜態骨骼的 X 旋轉符號與 41 個 box UV 鏡像。
+白色前後斜視／頂視、最小辨識控制及紅藍黃候選色均保留原圖。這是中立姿態的模型與
+貼圖配置驗證，不代表轉向、輪速、發光、透明／背面或原生遊戲已通過；既有動態差距仍保留。
