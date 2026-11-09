@@ -75,6 +75,34 @@ test('motorcycle custom-item duplicate callback consumes and spawns exactly once
   assert.equal(bikes[0].getProperty('ordertocook:color'), 2); assert.equal(bikes[0].container.size, 54);
 });
 
+test('creative-mode motorcycle placement keeps the colored item and deduplicates same-tick use', () => {
+  const env = makeEnvironment(), player = new FakePlayer(env.dimension), service = entityServices.createEntityService(env.ctx);
+  player.getGameMode = () => 'Creative';
+  for (let x = -3; x <= 3; x++) for (let z = 0; z <= 5; z++) place(env, 'minecraft:stone', { x, y: -1, z });
+  const bikeItem = new FakeItem('ordertocook:motorcycle', 2);
+  bikeItem.setDynamicProperty('ordertocook:color', 3);
+  player.container.setItem(0, bikeItem);
+  service.onItemUse(player, bikeItem); service.onItemUse(player, bikeItem);
+  const bikes = env.dimension.getEntities({ type: 'ordertocook:motorcycle' });
+  assert.equal(bikes.length, 1);
+  assert.equal(bikes[0].getProperty('ordertocook:color'), 3);
+  assert.equal(player.container.getItem(0).amount, 2);
+  assert.equal(player.container.getItem(0).getDynamicProperty('ordertocook:color'), 3);
+});
+
+test('motorcycle recoloring consumes dye in survival but not creative mode', () => {
+  for (const [mode, expectedAmount] of [['Survival', 1], ['Creative', 2]]) {
+    const env = makeEnvironment(), player = new FakePlayer(env.dimension), service = entityServices.createEntityService(env.ctx);
+    player.getGameMode = () => mode;
+    const bike = env.dimension.spawnEntity('ordertocook:motorcycle', { x: 1.5, y: 0, z: 0.5 });
+    const dye = new FakeItem('minecraft:red_dye', 2);
+    player.container.setItem(0, dye);
+    assert.equal(service.onEntityInteract(player, bike), true);
+    assert.equal(bike.getProperty('ordertocook:color'), 1);
+    assert.equal(player.container.getItem(0).amount, expectedAmount, mode);
+  }
+});
+
 test('order cleanup removes its NPC and empty chair helper together', () => {
   const env = makeEnvironment(), fixture = restaurantFixture(env); const service = entityServices.createEntityService(env.ctx);
   service.spawnCustomer(fixture.restaurant, fixture.order); service.cleanupOrder(fixture.order.id);
