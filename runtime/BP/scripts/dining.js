@@ -71,6 +71,17 @@ export function createDiningService(ctx) {
   const lastStages = new Map();
   const blockMeals = new Set();
   let lastSweepAt = -Infinity;
+  let lookupTick;
+  let mealIndexes = new WeakMap();
+
+  function clearMealIndexes() {
+    lookupTick = undefined;
+    mealIndexes = new WeakMap();
+  }
+
+  function cellKey(dimensionId, location) {
+    return `${dimensionId}:${Math.floor(location.x)}:${Math.floor(location.y)}:${Math.floor(location.z)}`;
+  }
 
   function foodTicks(meal, now) {
     const saved = gameWorld.getDynamicProperty(FOOD_CLOCK + meal.token);
@@ -129,6 +140,7 @@ export function createDiningService(ctx) {
       } else unique.set(meal.id, meal);
     }
     if (changed) {
+      clearMealIndexes();
       restaurant.pendingDishes = [...retained, ...unique.values()];
       ctx.saveRestaurant(restaurant);
     }
@@ -146,6 +158,7 @@ export function createDiningService(ctx) {
       ...timing, ...anchor, foodStartedAt: timing.startedAt, dueAt: timing.finishAt, variant: clampVariant(order.platedVariant),
       token: `${restaurant.id}|${order.id}`, status: 'eating', reactionPending: true };
     if (meal.boomBonus > 0 && playerId) meal.bonusPlayerId = playerId;
+    clearMealIndexes();
     restaurant.pendingDishes.push(meal);
     return meal; // The caller saves payment + meal in the same restaurant record.
   }
@@ -241,6 +254,7 @@ export function createDiningService(ctx) {
     // A claimed plate remains the restart source for its unfinished reaction,
     // including when completed order history has already been pruned.
     if (meal.reactionPending || meal.bonusPlayerId) return false;
+    clearMealIndexes();
     restaurant.pendingDishes = restaurant.pendingDishes.filter(value => value?.id !== meal.id);
     ctx.saveRestaurant(restaurant);
     return true;
@@ -270,6 +284,9 @@ export function createDiningService(ctx) {
   }
 
   function tick(now = Date.now()) {
+    // The existing housekeeping pass also releases the last lookup batch when
+    // no native food callback remains. No new interval or saved index is needed.
+    clearMealIndexes();
     for (const restaurant of ctx.restaurants()) {
       if (restaurant.removing) continue;
       try {
@@ -286,8 +303,13 @@ export function createDiningService(ctx) {
           if (foodTicks(meal, now) >= FOOD_TICKS && meal.status !== 'dirty') {
             meal.status = 'dirty'; ctx.saveRestaurant(restaurant);
           }
-          const order = restaurant.orders?.find(order => order.id === meal.id);
-          ctx.resumeCustomerMeal?.(restaurant, order || { id: meal.id, type: 'dine_in', status: 'completed', meal }, meal);
+          // A persisted false means the customer reaction has already settled.
+          // Its unclaimed dirty plate still reconciles, but cannot need another
+          // all-dimension customer search. Legacy unknowns and owed bonuses retry.
+          if (meal.reactionPending !== false || meal.bonusPlayerId) {
+            const order = restaurant.orders?.find(order => order.id === meal.id);
+            ctx.resumeCustomerMeal?.(restaurant, order || { id: meal.id, type: 'dine_in', status: 'completed', meal }, meal);
+          }
           syncVisual(restaurant, meal, now);
         }
       } catch (error) { console.warn(`[OrderToCook] Dining ${restaurant.id}: ${String(error)}`); }
@@ -321,17 +343,56 @@ export function createDiningService(ctx) {
     return meal ? { restaurant, meal } : undefined;
   }
 
+  function indexMeals(restaurant) {
+    const tick = ctx.system?.currentTick;
+    if (!Number.isSafeInteger(tick)) return undefined;
+    if (tick !== lookupTick) { clearMealIndexes(); lookupTick = tick; }
+    const dishes = restaurant.pendingDishes;
+    const cached = mealIndexes.get(restaurant);
+    if (cached?.dishes === dishes && cached.length === dishes.length) return cached.cells;
+    const cells = new Map();
+    for (let index = 0; index < dishes.length; index++) {
+      const meal = dishes[index];
+      if (!validMeal(meal) || meal.status === 'claiming') continue;
+      const key = cellKey(meal.dimensionId, meal.location), previous = cells.get(key);
+      // Strict comparison preserves the original stable-sort tie: earlier rows
+      // in the authoritative pendingDishes array win equal startedAt values.
+      if (!previous || meal.startedAt < previous.meal.startedAt) cells.set(key, { meal, index });
+    }
+    mealIndexes.set(restaurant, { dishes, length: dishes.length, cells });
+    return cells;
+  }
+
   /** Native plate lookup, with the existing supporting-table pickup shortcut. */
   function atBlock(block, includeSupport = block.typeId !== DINING_BLOCK) {
-    const candidates = [];
-    for (const restaurant of ctx.restaurants()) for (const meal of restaurant.pendingDishes || []) {
-      if (!validMeal(meal) || meal.status === 'claiming' || meal.dimensionId !== block.dimension.id) continue;
-      const anchor = floorLocation(meal.location);
-      if (anchor.x === block.location.x && anchor.z === block.location.z &&
-          (anchor.y === block.location.y || (includeSupport && anchor.y === block.location.y + 1))) candidates.push({ restaurant, meal });
+    const key = cellKey(block.dimension.id, block.location);
+    const supportKey = includeSupport ? cellKey(block.dimension.id, { ...block.location, y: block.location.y + 1 }) : undefined;
+    let selected;
+    // Enumerate the canonical restaurant list on EVERY lookup. Store rollback,
+    // deletion and portable replacement can replace whole records outside this
+    // service; a global negative/location cache would miss those same-tick edits.
+    for (const restaurant of ctx.restaurants()) {
+      if (!restaurant.pendingDishes?.length) continue;
+      const cells = indexMeals(restaurant);
+      let candidate;
+      if (cells) {
+        candidate = cells.get(key);
+        const above = supportKey && cells.get(supportKey);
+        if (above && (!candidate || above.meal.startedAt < candidate.meal.startedAt ||
+            (above.meal.startedAt === candidate.meal.startedAt && above.index < candidate.index))) candidate = above;
+      } else {
+        // Dependency-injected callers without a native tick keep an uncached
+        // lookup, so a missing clock never creates a cache with unlimited life.
+        for (const meal of restaurant.pendingDishes) {
+          if (!validMeal(meal) || meal.status === 'claiming') continue;
+          const mealKey = cellKey(meal.dimensionId, meal.location);
+          if (mealKey !== key && mealKey !== supportKey) continue;
+          if (!candidate || meal.startedAt < candidate.meal.startedAt) candidate = { meal };
+        }
+      }
+      if (candidate && (!selected || candidate.meal.startedAt < selected.meal.startedAt)) selected = { restaurant, meal: candidate.meal };
     }
-    candidates.sort((a, b) => a.meal.startedAt - b.meal.startedAt);
-    return candidates[0];
+    return selected;
   }
 
   function reservePlateSlot(player) {
@@ -399,6 +460,7 @@ export function createDiningService(ctx) {
       if (![5, 6, 7].includes(Number(action))) continue;
       const timing = { startedAt: now, finishAt: now + 500, action: 7, clock: 'loaded' };
       if (meal) {
+        clearMealIndexes();
         // Customer reaction and food consumption have independent Java clocks.
         meal.foodStartedAt ??= meal.startedAt;
         // Adopting an old reaction must not restart the independent food.
@@ -428,6 +490,7 @@ export function createDiningService(ctx) {
     const dropped = !reservation;
     const previousStatus = meal.status;
     const early = foodTicks(meal, now) < FOOD_TICKS;
+    clearMealIndexes();
     meal.status = 'claiming';
     meal.claimedAt = now;
     meal.claimedBy = player.id;
@@ -465,6 +528,7 @@ export function createDiningService(ctx) {
   function releaseMeal(restaurant, meal, dimension, now, reason) {
     if (meal.status !== 'claiming') {
       const previousStatus = meal.status;
+      clearMealIndexes();
       meal.status = 'claiming'; meal.claimedAt = now; meal.claimedBy = reason;
       ctx.saveRestaurant(restaurant);
       const outcome = dropPlate(dimension, meal.location);

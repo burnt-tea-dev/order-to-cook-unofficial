@@ -409,6 +409,10 @@ export function createApplianceService(ctx) {
   function updateDishwasherPreviews(stations) {
     const idle = new Map(stations.filter(station => station.typeId === DISHWASHER && station.appliance?.phase === 0)
       .map(station => [`${station.dimensionId}:${station.location.x}:${station.location.y}:${station.location.z}`, station]));
+    if (!idle.size) {
+      dishwasherPreviews.clear();
+      return;
+    }
     const next = new Map();
     for (const player of gameWorld.getAllPlayers()) {
       try {
