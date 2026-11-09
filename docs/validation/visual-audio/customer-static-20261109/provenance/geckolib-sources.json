@@ -1,0 +1,49 @@
+{
+  "status": "Sanitized public projection, not the original acquisition receipt",
+  "commit": "e81962eefd04e0cab90445d3df37b477d2767ffd",
+  "original_receipt_sha256": "3aa6c3061d0b1a88df0e644a6fddfdbe2d3a51c7f33028c64de58c5e176a6be5",
+  "records": [
+    {
+      "file": "source-evidence/BakedAnimationsAdapter.java",
+      "source_path": "Forge/src/main/java/software/bernie/geckolib/loading/json/typeadapter/BakedAnimationsAdapter.java",
+      "git_blob": "8a3277e679ac7fc0481d175e992cc7626bfffe4e",
+      "sha256": "ec30c7cdb195f597688abab0e13dae009a3eb512bc3269fc991814771c1ecbec",
+      "bytes": 10239,
+      "url": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/Forge/src/main/java/software/bernie/geckolib/loading/json/typeadapter/BakedAnimationsAdapter.java"
+    },
+    {
+      "file": "source-evidence/SinDegrees.java",
+      "source_path": "core/src/main/java/software/bernie/geckolib/core/molang/functions/SinDegrees.java",
+      "git_blob": "128690325446592bef32aa2d72dba59710e0f60d",
+      "sha256": "0bec9b471363c7765d5e84c72dfbd02c60f4f7209de2c7f7e693c9f464d82c22",
+      "bytes": 570,
+      "url": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/core/src/main/java/software/bernie/geckolib/core/molang/functions/SinDegrees.java"
+    },
+    {
+      "file": "source-evidence/EasingType.java",
+      "source_path": "core/src/main/java/software/bernie/geckolib/core/animation/EasingType.java",
+      "git_blob": "2f77c97fb96966e918603486892a40c63e8f2716",
+      "sha256": "a70347c881123c272f05425faba7adf5e415d33d69c0b53758da9b0a6fc94673",
+      "bytes": 16078,
+      "url": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/core/src/main/java/software/bernie/geckolib/core/animation/EasingType.java"
+    },
+    {
+      "file": "source-evidence/AnimationController.java",
+      "source_path": "core/src/main/java/software/bernie/geckolib/core/animation/AnimationController.java",
+      "git_blob": "6314af8aad401339a60c217ec56f0fb40a31a561",
+      "sha256": "851d9a8e5fa8f54971c678823354385cacf9ffd241cc7eecabaabc79b67799ed",
+      "bytes": 32879,
+      "url": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/core/src/main/java/software/bernie/geckolib/core/animation/AnimationController.java"
+    },
+    {
+      "file": "source-evidence/4.8.3-gradle.properties",
+      "source_path": "gradle.properties",
+      "git_blob": "8ef52c2b6a56efd52520349f887c665292526832",
+      "sha256": "f29f80e0fa53983571a744a1f73bf800cb58a04f47a1fabd933a6d0f0b19f264",
+      "bytes": 858,
+      "url": "https://github.com/bernie-g/geckolib/blob/e81962eefd04e0cab90445d3df37b477d2767ffd/gradle.properties"
+    }
+  ],
+  "omitted_record_count": 7,
+  "scope": "Only bundled source files used by the customer audit are projected. Acquisition locations and unrelated/unbundled records are omitted. Raw Java/properties bytes are unchanged."
+}

@@ -1,0 +1,356 @@
+{
+  "status": "4 actual customer photographs reviewed; 3 of 7 prepared scenes observed in these views only",
+  "date_utc": "2026-11-08",
+  "application": "Blockbench Desktop 5.2.2, version from fixed preparation/capture context rather than these title bars",
+  "capture_operator": "parent visual reviewer",
+  "image_reviewer": "independent preparation worker; read-only image inspection, no GUI operation",
+  "runtime_commit": "d3982c98a71424ff9c449a144e792ad384058f69",
+  "prepared_manifest_sha256": "98f584e678584bb9ff78406b3cfe5e5fb4b7b21cfccac422bd52a91cae2ee669",
+  "scene_freeze_manifest_sha256": "018399ad313f62aec26372c35dafdae9b8ea7511fe4db936bb14b5ca278694df",
+  "prepared_manifest_preserved": true,
+  "frozen_scenes_unchanged": true,
+  "counts": {
+    "customer_photographs": 4,
+    "unique_customer_scenes": 3,
+    "diagnostic_photographs": 3,
+    "prepared_scenes": 7
+  },
+  "customer_observations": [
+    {
+      "path": "screenshots/01_slim_idle4_wrist-isometric-right-2-1.jpg",
+      "sha256": "827ce2852463d83b272b8eb618ffd778dbec860ef2300b70acabc116438e5200",
+      "bytes": 90780,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "format": "JPEG",
+      "pixel_edits": "none; original JPEG bytes only",
+      "scene_id": "01_slim_idle4_wrist",
+      "scene": "scenes/01_slim_idle4_wrist.bbmodel",
+      "scene_sha256": "ec50aa64d85bf982d30a55067db1a13e2bc6516c7b94004f35db802c9bec7dc9",
+      "rig": "slim",
+      "clip": "customer_sit_4",
+      "clip_seconds": 1.3333,
+      "query_inputs": {
+        "q.anim_time": 1.3333
+      },
+      "camera": "Isometric Right (2:1)",
+      "camera_provenance": "North label visible where applicable; exact preset reported by capture operator. Axis/layout consistent.",
+      "source_screen_side": "right/lower",
+      "rp_screen_side": "left/upper",
+      "identity_provenance": "Fixed model X -20/+20 layout plus camera/operator record; not inferred by pixel differences between near-identical models.",
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "slim",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+          "geometry_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "slim",
+          "geometry": "runtime/RP/models/entity/customer_slim.geo.json",
+          "geometry_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "caption": "Slim seated idle4 at 1.3333s. SOURCE right/lower; RP left/upper. Both complete and unselected. Compound raised wrist/sleeve seam, head/arm pose and bent feet correspond; no newly visible broad missing texture or broken face in this view.",
+      "independent_image_inspection": true,
+      "frame_complete": true,
+      "models_unselected": true,
+      "observation_result": "No newly observed broad missing texture or broken face in this view; limited editor observation, not full/native acceptance."
+    },
+    {
+      "path": "screenshots/01_slim_idle4_wrist-north.jpg",
+      "sha256": "27115eaeda25312a50b1042a8bed42d13a3ac9825c4639745798e7b145ddcd93",
+      "bytes": 84288,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "format": "JPEG",
+      "pixel_edits": "none; original JPEG bytes only",
+      "scene_id": "01_slim_idle4_wrist",
+      "scene": "scenes/01_slim_idle4_wrist.bbmodel",
+      "scene_sha256": "ec50aa64d85bf982d30a55067db1a13e2bc6516c7b94004f35db802c9bec7dc9",
+      "rig": "slim",
+      "clip": "customer_sit_4",
+      "clip_seconds": 1.3333,
+      "query_inputs": {
+        "q.anim_time": 1.3333
+      },
+      "camera": "North",
+      "camera_provenance": "North label visible where applicable; exact preset reported by capture operator. Axis/layout consistent.",
+      "source_screen_side": "right",
+      "rp_screen_side": "left",
+      "identity_provenance": "Fixed model X -20/+20 layout plus camera/operator record; not inferred by pixel differences between near-identical models.",
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "slim",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+          "geometry_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "slim",
+          "geometry": "runtime/RP/models/entity/customer_slim.geo.json",
+          "geometry_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "caption": "Slim seated idle4 at 1.3333s. SOURCE right; RP left. Both complete and unselected. The frontal view adds visibility of the raised hand, sleeve, torso, and seated foot alignment. No newly visible broad missing texture or broken face in this view.",
+      "independent_image_inspection": true,
+      "frame_complete": true,
+      "models_unselected": true,
+      "observation_result": "No newly observed broad missing texture or broken face in this view; limited editor observation, not full/native acceptance."
+    },
+    {
+      "path": "screenshots/04_wide_interrupt_shrink-isometric-right-2-1.jpg",
+      "sha256": "8708d9418c2dbbb35172ae072f508b04ff7a944eadd8d1c861b2cbd54359f85d",
+      "bytes": 82183,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "format": "JPEG",
+      "pixel_edits": "none; original JPEG bytes only",
+      "scene_id": "04_wide_interrupt_shrink",
+      "scene": "scenes/04_wide_interrupt_shrink.bbmodel",
+      "scene_sha256": "5ddd4aea8aba4cb94071dd19bc773d0e0793814353c8fd0f3359311c5211f3bc",
+      "rig": "wide",
+      "clip": "npc_eat&scale_interrupt",
+      "clip_seconds": 0.375,
+      "query_inputs": {
+        "q.anim_time": 0.375
+      },
+      "camera": "Isometric Right (2:1)",
+      "camera_provenance": "North label visible where applicable; exact preset reported by capture operator. Axis/layout consistent.",
+      "source_screen_side": "right/lower",
+      "rp_screen_side": "left/upper",
+      "identity_provenance": "Fixed model X -20/+20 layout plus camera/operator record; not inferred by pixel differences between near-identical models.",
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "wide",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+          "geometry_sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "wide",
+          "geometry": "runtime/RP/models/entity/customer.geo.json",
+          "geometry_sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "caption": "Wide interrupt at .375s. SOURCE right/lower; RP left/upper. Both complete and unselected. Bent legs and translated hands remain visually connected in the frozen half-scale pose; no newly visible broad missing texture or broken face. Scale .5 is input provenance, not a screenshot-size measurement.",
+      "independent_image_inspection": true,
+      "frame_complete": true,
+      "models_unselected": true,
+      "observation_result": "No newly observed broad missing texture or broken face in this view; limited editor observation, not full/native acceptance."
+    },
+    {
+      "path": "screenshots/05_wide_boom_peak-isometric-right-2-1.jpg",
+      "sha256": "3f61bb08ed6304cba39b30e3f6df3bae99a9decea97f75a8ee2b3b88060ed236",
+      "bytes": 87075,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "format": "JPEG",
+      "pixel_edits": "none; original JPEG bytes only",
+      "scene_id": "05_wide_boom_peak",
+      "scene": "scenes/05_wide_boom_peak.bbmodel",
+      "scene_sha256": "1a49ee776b998dbbca6e71992e5b408ff6ac1de0022911feac1b230a5e46673a",
+      "rig": "wide",
+      "clip": "npc_eat&boom",
+      "clip_seconds": 5.9157,
+      "query_inputs": {
+        "q.anim_time": 5.9157
+      },
+      "camera": "Isometric Right (2:1)",
+      "camera_provenance": "North label visible where applicable; exact preset reported by capture operator. Axis/layout consistent.",
+      "source_screen_side": "right/lower",
+      "rp_screen_side": "left/upper",
+      "identity_provenance": "Fixed model X -20/+20 layout plus camera/operator record; not inferred by pixel differences between near-identical models.",
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "wide",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+          "geometry_sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "wide",
+          "geometry": "runtime/RP/models/entity/customer.geo.json",
+          "geometry_sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "caption": "Wide boom at 5.9157s. SOURCE right/lower; RP left/upper. Both complete and unselected. Enlarged head/body, asymmetrical arms and bent legs remain visible without a new broad missing-texture/face discrepancy. Source 1.6 versus RP 1.5928057554 is a known numerical input difference; the photograph is not used to quantify that tiny difference or prove a native-visible timing defect.",
+      "independent_image_inspection": true,
+      "frame_complete": true,
+      "models_unselected": true,
+      "observation_result": "No newly observed broad missing texture or broken face in this view; limited editor observation, not full/native acceptance."
+    }
+  ],
+  "diagnostics": [
+    {
+      "path": "screenshots/renderer-white-diagnostic.jpg",
+      "sha256": "c9064c5a63bc75f6222700d5f44193b3935eca52d2beb25f4f36f3e12e6a817a",
+      "bytes": 51815,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "format": "JPEG",
+      "pixel_edits": "none; original JPEG bytes only",
+      "stage": "white_customer_viewport",
+      "caption": "Customer scene title visible, viewport white. Failed editor observation; not evidence of an asset defect or a valid customer-pose comparison.",
+      "independent_image_inspection": true,
+      "counts_as_customer_scene": false
+    },
+    {
+      "path": "screenshots/known-control-renderer-white-diagnostic.jpg",
+      "sha256": "e659283314cf5103dd491527d7cad6c0f29d1c0e10facdf94e0b1683b4cd5963",
+      "bytes": 53721,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "format": "JPEG",
+      "pixel_edits": "none; original JPEG bytes only",
+      "stage": "white_known_control_viewport",
+      "caption": "Known refrigerator-control title visible, viewport also white. Independent control fails in the same editor condition; do not assign the white viewport to customer assets.",
+      "independent_image_inspection": true,
+      "counts_as_customer_scene": false
+    },
+    {
+      "path": "screenshots/known-control-after-editor-restart.jpg",
+      "sha256": "fb92e5a4531836dc3be28177a214c08b1c9af9063e5d05c1f77768168aa5ef4e",
+      "bytes": 88291,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "format": "JPEG",
+      "pixel_edits": "none; original JPEG bytes only",
+      "stage": "known_control_recovered",
+      "caption": "Known refrigerator control visible after the operator restarted only their editor with the original executable and same independent profile. Recovery diagnostic only, not customer or new refrigerator acceptance.",
+      "independent_image_inspection": true,
+      "counts_as_customer_scene": false
+    }
+  ],
+  "renderer_recovery": {
+    "operator_report": "Only the operator-owned Blockbench window was closed. The original executable was restarted with the same independent profile, with no new flags, service or settings change. Previous Hardware Acceleration setting was off; this run did not change or diagnose it. No scene was saved.",
+    "supported_by_images": "Customer and known control both white before; known control visible after restart.",
+    "root_cause": "unknown; restart recovery does not identify a GPU/driver/backend or asset cause",
+    "global_render_sides": "Not newly exposed in these submitted screenshots. Frozen textures remain auto; no native material inference."
+  },
+  "limits": [
+    "Static cubes inside one editor, not executed Java renderer or native Bedrock output.",
+    "No animation playback, native tick/partial-tick sampling, action_elapsed, controller stop/re-entry or late-join observation.",
+    "No native alpha, overlay sorting/culling, sound, particle, multiplayer or entity removal acceptance.",
+    "No pixel alignment/rescaling/difference metric; no cross-screenshot size inference.",
+    "White-viewport diagnostics are separate from core customer photographs and are not passes."
+  ],
+  "gui_operations_by_this_worker": false,
+  "runtime_changed": false,
+  "source_png_changed": false,
+  "publication": false
+}

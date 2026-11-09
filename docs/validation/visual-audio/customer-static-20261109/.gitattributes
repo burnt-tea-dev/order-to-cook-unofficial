@@ -1,0 +1,5 @@
+# Immutable, hash-bound upstream source excerpts and raw signed commit objects.
+# Preserve upstream whitespace rather than rewriting provenance bytes.
+frozen/official-source/*.txt -whitespace
+frozen/source-evidence/RenderUtils.java -whitespace
+provenance/objects/*.commit -whitespace

@@ -1,0 +1,868 @@
+{
+  "status": "Public packaging record, not a replacement of preparation history",
+  "original_file_count": 86,
+  "all_original_png_jpeg_scenes_samples_preserved": true,
+  "omitted_metadata_files": [
+    "source-evidence/gecko-cache-provenance.json"
+  ],
+  "files": [
+    {
+      "original_path": "GUI_REVIEW.md",
+      "bytes": 3797,
+      "sha256": "73d86ec35021e9d4e19645cdf4a8b0456b0583438f97411d465726c05c0ad0a4",
+      "git_blob": "908300c6434f09148fd2ed80453f70fccbc43c79",
+      "storage": "original-bytes",
+      "published_path": "frozen/GUI_REVIEW.md",
+      "published_bytes": 3797,
+      "published_sha256": "73d86ec35021e9d4e19645cdf4a8b0456b0583438f97411d465726c05c0ad0a4"
+    },
+    {
+      "original_path": "README.md",
+      "bytes": 14749,
+      "sha256": "8ee76ca187f06ad911eadfdb5ce54c51037b520694098551eb8733635211a123",
+      "git_blob": "22e9ce9d3d600c127281c3f45ccc445cc9c530c5",
+      "storage": "original-bytes",
+      "published_path": "frozen/README.md",
+      "published_bytes": 14749,
+      "published_sha256": "8ee76ca187f06ad911eadfdb5ce54c51037b520694098551eb8733635211a123"
+    },
+    {
+      "original_path": "artifact-hashes.json",
+      "bytes": 7961,
+      "sha256": "72b6a32e0788708e79dbf73afb5ec32e1b03bab877eac649a5e6877f9b5d8128",
+      "git_blob": "546e8439bcc3a18afb3bd97ba5f44d2103e403e9",
+      "storage": "original-bytes",
+      "published_path": "frozen/artifact-hashes.json",
+      "published_bytes": 7961,
+      "published_sha256": "72b6a32e0788708e79dbf73afb5ec32e1b03bab877eac649a5e6877f9b5d8128"
+    },
+    {
+      "original_path": "build_review.py",
+      "bytes": 9065,
+      "sha256": "bd1dee45009b56dacbc2e559ba90e3d87c5ce875601ae5947f4542eade95df14",
+      "git_blob": "9dee581b5b32edc06b502e79184afda183f95b18",
+      "storage": "original-bytes",
+      "published_path": "frozen/build_review.py",
+      "published_bytes": 9065,
+      "published_sha256": "bd1dee45009b56dacbc2e559ba90e3d87c5ce875601ae5947f4542eade95df14"
+    },
+    {
+      "original_path": "decode_cubes.cjs",
+      "bytes": 1605,
+      "sha256": "a0eebe4c04453a4d83c5407d7643103af448a494967cf9a4eb183d6339c57b0a",
+      "git_blob": "0194e22544540e7e7b5b947b1467ce7d87073eea",
+      "storage": "original-bytes",
+      "published_path": "frozen/decode_cubes.cjs",
+      "published_bytes": 1605,
+      "published_sha256": "a0eebe4c04453a4d83c5407d7643103af448a494967cf9a4eb183d6339c57b0a"
+    },
+    {
+      "original_path": "earlier-input-equivalence.json",
+      "bytes": 2505,
+      "sha256": "543716039a165f965f87d02a645f69f9cb1a8fbb405167ad3488e9f1711b63f1",
+      "git_blob": "a52378d21cc9365d9095b3bb1dc2a504c478d571",
+      "storage": "original-bytes",
+      "published_path": "frozen/earlier-input-equivalence.json",
+      "published_bytes": 2505,
+      "published_sha256": "543716039a165f965f87d02a645f69f9cb1a8fbb405167ad3488e9f1711b63f1"
+    },
+    {
+      "original_path": "gui-receipt-completion.json",
+      "bytes": 11814,
+      "sha256": "d80c8aa3c6f60d7e00fc02efd7401cac62dc6210221fdff7a8c8f7524bb25845",
+      "git_blob": "01f2d5d7d77b0d18ee1c2534265a45ef4ef8cc88",
+      "storage": "original-bytes",
+      "published_path": "frozen/gui-receipt-completion.json",
+      "published_bytes": 11814,
+      "published_sha256": "d80c8aa3c6f60d7e00fc02efd7401cac62dc6210221fdff7a8c8f7524bb25845"
+    },
+    {
+      "original_path": "gui-receipt.json",
+      "bytes": 16367,
+      "sha256": "456f7aa18495fcb1a019b59e645a47923a959a1a9196a4daecd33a6a60f8cdb6",
+      "git_blob": "99e7e279dfaf48caf676596f8f2c8b7b3ce4086b",
+      "storage": "original-bytes",
+      "published_path": "frozen/gui-receipt.json",
+      "published_bytes": 16367,
+      "published_sha256": "456f7aa18495fcb1a019b59e645a47923a959a1a9196a4daecd33a6a60f8cdb6"
+    },
+    {
+      "original_path": "gui-verification.json",
+      "bytes": 524,
+      "sha256": "b83226a701f7437c4b45b5e96c2d58368bd773e2377a04fbe7c20978418d9183",
+      "git_blob": "6faf0193790246d4f06b3d5780a835e21c0a51e4",
+      "storage": "original-bytes",
+      "published_path": "frozen/gui-verification.json",
+      "published_bytes": 524,
+      "published_sha256": "b83226a701f7437c4b45b5e96c2d58368bd773e2377a04fbe7c20978418d9183"
+    },
+    {
+      "original_path": "input-manifest.json",
+      "bytes": 4383,
+      "sha256": "a56e3689c319ed01f50ded850f2c008d27de9428ddc71018b5a75502bacf9699",
+      "git_blob": "984a885508e8525cf9e4850f70b53fa320d5af0d",
+      "storage": "original-bytes",
+      "published_path": "frozen/input-manifest.json",
+      "published_bytes": 4383,
+      "published_sha256": "a56e3689c319ed01f50ded850f2c008d27de9428ddc71018b5a75502bacf9699"
+    },
+    {
+      "original_path": "inputs/runtime/RP/animation_controllers/customer.animation_controllers.json",
+      "bytes": 11772,
+      "sha256": "2b024e01dcdf472a53322f62d202f73b6e6c6f1ef1d63560c880b3020cf1e2ee",
+      "git_blob": "a298cb485495697062689e65f2d0788563aa6b76",
+      "storage": "original-bytes",
+      "published_path": "frozen/inputs/runtime/RP/animation_controllers/customer.animation_controllers.json",
+      "published_bytes": 11772,
+      "published_sha256": "2b024e01dcdf472a53322f62d202f73b6e6c6f1ef1d63560c880b3020cf1e2ee"
+    },
+    {
+      "original_path": "inputs/runtime/RP/animations/npc.animation.json",
+      "bytes": 30344,
+      "sha256": "101a5507f2aa2d04ceae3e9ea84b8201fa69feb85baf46fb075980db63bc4b9e",
+      "git_blob": "9ebc84145b928bc7aa8e600ffbe72bebae5f5596",
+      "storage": "original-bytes",
+      "published_path": "frozen/inputs/runtime/RP/animations/npc.animation.json",
+      "published_bytes": 30344,
+      "published_sha256": "101a5507f2aa2d04ceae3e9ea84b8201fa69feb85baf46fb075980db63bc4b9e"
+    },
+    {
+      "original_path": "inputs/runtime/RP/animations/npc.transition.animation.json",
+      "bytes": 42223,
+      "sha256": "5870c333007cc844905cb524e14b7b36ba0c2e093cbefc44766b2f5ed3059581",
+      "git_blob": "46b722f49ab5bb6310d0db867c037730008dd249",
+      "storage": "original-bytes",
+      "published_path": "frozen/inputs/runtime/RP/animations/npc.transition.animation.json",
+      "published_bytes": 42223,
+      "published_sha256": "5870c333007cc844905cb524e14b7b36ba0c2e093cbefc44766b2f5ed3059581"
+    },
+    {
+      "original_path": "inputs/runtime/RP/entity/customer.entity.json",
+      "bytes": 1890,
+      "sha256": "54117245491fbad4560bfa374ef62612062a67a6081e10229f5ea63569cfac16",
+      "git_blob": "b6821218370d9f0f2f5b348b444da96fce1a649a",
+      "storage": "original-bytes",
+      "published_path": "frozen/inputs/runtime/RP/entity/customer.entity.json",
+      "published_bytes": 1890,
+      "published_sha256": "54117245491fbad4560bfa374ef62612062a67a6081e10229f5ea63569cfac16"
+    },
+    {
+      "original_path": "inputs/runtime/RP/models/entity/customer.geo.json",
+      "bytes": 36330,
+      "sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+      "git_blob": "81cdda044297cd96803d779649e08c734dfc898f",
+      "storage": "original-bytes",
+      "published_path": "frozen/inputs/runtime/RP/models/entity/customer.geo.json",
+      "published_bytes": 36330,
+      "published_sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a"
+    },
+    {
+      "original_path": "inputs/runtime/RP/models/entity/customer_slim.geo.json",
+      "bytes": 36271,
+      "sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+      "git_blob": "14a683096f72e4b2c869549ab113e8c85a3d7360",
+      "storage": "original-bytes",
+      "published_path": "frozen/inputs/runtime/RP/models/entity/customer_slim.geo.json",
+      "published_bytes": 36271,
+      "published_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72"
+    },
+    {
+      "original_path": "inputs/runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+      "bytes": 2497,
+      "sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+      "git_blob": "ae63bb7db4fbeb4f8b9b2fa925ebc34a555eb1d2",
+      "storage": "original-bytes",
+      "published_path": "frozen/inputs/runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+      "published_bytes": 2497,
+      "published_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9"
+    },
+    {
+      "original_path": "inputs/runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+      "bytes": 2611,
+      "sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+      "git_blob": "7600c48b681fe81c4bdbaf927cd58f4844abb430",
+      "storage": "original-bytes",
+      "published_path": "frozen/inputs/runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+      "published_bytes": 2611,
+      "published_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249"
+    },
+    {
+      "original_path": "inputs/tests/asset-motion.test.js",
+      "bytes": 9529,
+      "sha256": "0fd86bc16e9dc1f78685e51699b318ac5bd19e683dfbf692c369be9882f9ce5d",
+      "git_blob": "46795f5ae8ffc6b925379999e261346eadfc3b0b",
+      "storage": "original-bytes",
+      "published_path": "frozen/inputs/tests/asset-motion.test.js",
+      "published_bytes": 9529,
+      "published_sha256": "0fd86bc16e9dc1f78685e51699b318ac5bd19e683dfbf692c369be9882f9ce5d"
+    },
+    {
+      "original_path": "inputs/tools/convert_assets.py",
+      "bytes": 139154,
+      "sha256": "b97ec53d05b067e4c0e4f2b684d92c30ad19c2d16505c26d9a364ffe2ead9523",
+      "git_blob": "099cb1e10c7ff9f7e7f563ab382d154774bf1a46",
+      "storage": "gzip-original-bytes",
+      "published_path": "frozen/inputs/tools/convert_assets.py.gz",
+      "published_bytes": 39390,
+      "published_sha256": "88680a0b8f04d18bcea81924874d5ded5045166437b36f83bc90a1a06ff93b23"
+    },
+    {
+      "original_path": "inputs/upstream/reference/common/src/main/resources/assets/ordertocook/animations/npc.animation.json",
+      "bytes": 12748,
+      "sha256": "19691dda1b484ca6a256a1dc5e306304a8e6b0e0cad6c9d60f7d0daf88588734",
+      "git_blob": "173d58cf9b0d8917caffb5ca8fd90aa95f6dd514",
+      "storage": "original-bytes",
+      "published_path": "frozen/inputs/upstream/reference/common/src/main/resources/assets/ordertocook/animations/npc.animation.json",
+      "published_bytes": 12748,
+      "published_sha256": "19691dda1b484ca6a256a1dc5e306304a8e6b0e0cad6c9d60f7d0daf88588734"
+    },
+    {
+      "original_path": "inputs/upstream/reference/common/src/main/resources/assets/ordertocook/animations/npc.transition.animation.json",
+      "bytes": 20794,
+      "sha256": "723940ed47a56c9050c08334951c05dedcfc69727388802454693faceea64417",
+      "git_blob": "eb683696113df00f3d23fbf474d0286ee2a66089",
+      "storage": "original-bytes",
+      "published_path": "frozen/inputs/upstream/reference/common/src/main/resources/assets/ordertocook/animations/npc.transition.animation.json",
+      "published_bytes": 20794,
+      "published_sha256": "723940ed47a56c9050c08334951c05dedcfc69727388802454693faceea64417"
+    },
+    {
+      "original_path": "inputs/upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+      "bytes": 10074,
+      "sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+      "git_blob": "63627c77ae154eb1e84f694c758b6ef516c0c8ca",
+      "storage": "original-bytes",
+      "published_path": "frozen/inputs/upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+      "published_bytes": 10074,
+      "published_sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973"
+    },
+    {
+      "original_path": "inputs/upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+      "bytes": 10024,
+      "sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+      "git_blob": "9ef00daf2aa210efe50c5140ef3712e667d66edb",
+      "storage": "original-bytes",
+      "published_path": "frozen/inputs/upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+      "published_bytes": 10024,
+      "published_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f"
+    },
+    {
+      "original_path": "inputs/upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+      "bytes": 2497,
+      "sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+      "git_blob": "ae63bb7db4fbeb4f8b9b2fa925ebc34a555eb1d2",
+      "storage": "original-bytes",
+      "published_path": "frozen/inputs/upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+      "published_bytes": 2497,
+      "published_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9"
+    },
+    {
+      "original_path": "inputs/upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+      "bytes": 2611,
+      "sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+      "git_blob": "7600c48b681fe81c4bdbaf927cd58f4844abb430",
+      "storage": "original-bytes",
+      "published_path": "frozen/inputs/upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+      "published_bytes": 2611,
+      "published_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249"
+    },
+    {
+      "original_path": "inputs/upstream/source.lock.json",
+      "bytes": 636,
+      "sha256": "2222a2d53450fdc2ca81abe4088e2581405ae8409b16fbd479324992c8f5c909",
+      "git_blob": "bd63d0794b80dfccb5977cdeec1a5ce9d3726e8b",
+      "storage": "original-bytes",
+      "published_path": "frozen/inputs/upstream/source.lock.json",
+      "published_bytes": 636,
+      "published_sha256": "2222a2d53450fdc2ca81abe4088e2581405ae8409b16fbd479324992c8f5c909"
+    },
+    {
+      "original_path": "licenses/Blockbench-GPL-3.0.txt",
+      "bytes": 35149,
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "git_blob": "f288702d2fa16d3cdf0035b15a9fcbc552cd88e7",
+      "storage": "original-bytes",
+      "published_path": "frozen/licenses/Blockbench-GPL-3.0.txt",
+      "published_bytes": 35149,
+      "published_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+    },
+    {
+      "original_path": "licenses/GeckoLib-MIT.txt",
+      "bytes": 1070,
+      "sha256": "80343d98f6fc340c0700b1844689c2fd42c70f48ea0b363dcd2477cc98e91dd6",
+      "git_blob": "8b8d5db1d7e183f6560cfed32d0fced85104a488",
+      "storage": "original-bytes",
+      "published_path": "frozen/licenses/GeckoLib-MIT.txt",
+      "published_bytes": 1070,
+      "published_sha256": "80343d98f6fc340c0700b1844689c2fd42c70f48ea0b363dcd2477cc98e91dd6"
+    },
+    {
+      "original_path": "licenses/NOTICE.md",
+      "bytes": 855,
+      "sha256": "796006c8e1df273094d63966fcd589c502ecd74db97a944d446eaf0a401aaefd",
+      "git_blob": "bc5f511fc71acadae24dc32fa5deadab6280ec65",
+      "storage": "original-bytes",
+      "published_path": "frozen/licenses/NOTICE.md",
+      "published_bytes": 855,
+      "published_sha256": "796006c8e1df273094d63966fcd589c502ecd74db97a944d446eaf0a401aaefd"
+    },
+    {
+      "original_path": "licenses/OTC-GPL-3.0.txt",
+      "bytes": 35149,
+      "sha256": "696c076d802085303a80e326029e8f13fee6a275113fab081a0bba51cb527449",
+      "git_blob": "9355dc07d2d5a0c5f77e304f45142c0872681b8b",
+      "storage": "original-bytes",
+      "published_path": "frozen/licenses/OTC-GPL-3.0.txt",
+      "published_bytes": 35149,
+      "published_sha256": "696c076d802085303a80e326029e8f13fee6a275113fab081a0bba51cb527449"
+    },
+    {
+      "original_path": "official-provenance.json",
+      "bytes": 1810,
+      "sha256": "117f8fe3f3ff3b1ecbb6a2caf97734a47eaee62e7e69961c2180dd91249beb39",
+      "git_blob": "30fd9ce98e06eb5a7333ff95ab6bf298b2da9be1",
+      "storage": "original-bytes",
+      "published_path": "frozen/official-provenance.json",
+      "published_bytes": 1810,
+      "published_sha256": "117f8fe3f3ff3b1ecbb6a2caf97734a47eaee62e7e69961c2180dd91249beb39"
+    },
+    {
+      "original_path": "official-source/js__animations__keyframe.js.txt",
+      "bytes": 55776,
+      "sha256": "b1ba35bcb8222d578f2fe104292916ee87f833352303d089f165befba26d3063",
+      "git_blob": "61eacaa893d93da12a9fe29c813df7586823ed69",
+      "storage": "original-bytes",
+      "published_path": "frozen/official-source/js__animations__keyframe.js.txt",
+      "published_bytes": 55776,
+      "published_sha256": "b1ba35bcb8222d578f2fe104292916ee87f833352303d089f165befba26d3063"
+    },
+    {
+      "original_path": "official-source/js__animations__timeline_animators.js.txt",
+      "bytes": 37513,
+      "sha256": "aa173d3bd5b84979d7f074f211b352175b65bb4057add6531ebafab55a1515bc",
+      "git_blob": "851cd595c53d184d50df05776ed92f1bc4fd864a",
+      "storage": "original-bytes",
+      "published_path": "frozen/official-source/js__animations__timeline_animators.js.txt",
+      "published_bytes": 37513,
+      "published_sha256": "aa173d3bd5b84979d7f074f211b352175b65bb4057add6531ebafab55a1515bc"
+    },
+    {
+      "original_path": "official-source/js__formats__bedrock__bedrock.js.txt",
+      "bytes": 55849,
+      "sha256": "d77fa9edfaaa042cd5f72211aea34cce19ff88ec477364d9bbc237355374d347",
+      "git_blob": "f27d89e774003486b1161b0578971f686fece0a8",
+      "storage": "original-bytes",
+      "published_path": "frozen/official-source/js__formats__bedrock__bedrock.js.txt",
+      "published_bytes": 55849,
+      "published_sha256": "d77fa9edfaaa042cd5f72211aea34cce19ff88ec477364d9bbc237355374d347"
+    },
+    {
+      "original_path": "official-source/js__formats__bedrock__bedrock_animation.js.txt",
+      "bytes": 25743,
+      "sha256": "087633fc23e682a15dc4922d5c1f40cb8f0896189aad9daeb944ebb6985f41e1",
+      "git_blob": "ede0f8c0fecf24628390433b13082c5657b552e4",
+      "storage": "original-bytes",
+      "published_path": "frozen/official-source/js__formats__bedrock__bedrock_animation.js.txt",
+      "published_bytes": 25743,
+      "published_sha256": "087633fc23e682a15dc4922d5c1f40cb8f0896189aad9daeb944ebb6985f41e1"
+    },
+    {
+      "original_path": "official-source/js__formats__generic.ts.txt",
+      "bytes": 924,
+      "sha256": "7fc5ef646b66058f8071d033a26c5fe29ddf6d71f1c98bf2c76fc4cc73ccc0f0",
+      "git_blob": "6729669140308357ee5ea76f539d7d4096ea9061",
+      "storage": "original-bytes",
+      "published_path": "frozen/official-source/js__formats__generic.ts.txt",
+      "published_bytes": 924,
+      "published_sha256": "7fc5ef646b66058f8071d033a26c5fe29ddf6d71f1c98bf2c76fc4cc73ccc0f0"
+    },
+    {
+      "original_path": "official-source/js__io__format.ts.txt",
+      "bytes": 21546,
+      "sha256": "6e1fe2faf85aebbec01999979acec5d1c9be9aaa70898baf9d65b2d0c7435f1c",
+      "git_blob": "c77e0df4d60086edea4b229b73b1e6275063149d",
+      "storage": "original-bytes",
+      "published_path": "frozen/official-source/js__io__format.ts.txt",
+      "published_bytes": 21546,
+      "published_sha256": "6e1fe2faf85aebbec01999979acec5d1c9be9aaa70898baf9d65b2d0c7435f1c"
+    },
+    {
+      "original_path": "official-source/js__outliner__types__cube.js.txt",
+      "bytes": 53781,
+      "sha256": "57cad3b3eb30af04fa54d7b41c2e3a58ad26098c8585eaf30344a7f3f1fe430d",
+      "git_blob": "70cb939ab827f999f9178fac05839a2ecb005d5b",
+      "storage": "original-bytes",
+      "published_path": "frozen/official-source/js__outliner__types__cube.js.txt",
+      "published_bytes": 53781,
+      "published_sha256": "57cad3b3eb30af04fa54d7b41c2e3a58ad26098c8585eaf30344a7f3f1fe430d"
+    },
+    {
+      "original_path": "official-source/js__outliner__types__group.js.txt",
+      "bytes": 27210,
+      "sha256": "edc6a16fed27d9f4855e17df362c6d5e1efc5e8a8928c697ba0f257ab9ce98ff",
+      "git_blob": "1b54277b899c9ad8ce387782915493b18fbe1745",
+      "storage": "original-bytes",
+      "published_path": "frozen/official-source/js__outliner__types__group.js.txt",
+      "published_bytes": 27210,
+      "published_sha256": "edc6a16fed27d9f4855e17df362c6d5e1efc5e8a8928c697ba0f257ab9ce98ff"
+    },
+    {
+      "original_path": "record_gui_receipt.py",
+      "bytes": 6457,
+      "sha256": "cd46f03631aca53dc6a1e570444faa2f2143473b6e2da33aca3eb9b65de35734",
+      "git_blob": "e1409a8e8827032e8332db0a2d29b400bd4e6113",
+      "storage": "original-bytes",
+      "published_path": "frozen/record_gui_receipt.py",
+      "published_bytes": 6457,
+      "published_sha256": "cd46f03631aca53dc6a1e570444faa2f2143473b6e2da33aca3eb9b65de35734"
+    },
+    {
+      "original_path": "samples/01_slim_idle4_wrist.json",
+      "bytes": 85197,
+      "sha256": "3349902a6391fe05bfccfa5b970f4c6bd3871c8fa8abe134a7d19609fc917f72",
+      "git_blob": "1f740d414f43d7addd6a5a351022ce04ecd19bf8",
+      "storage": "original-bytes",
+      "published_path": "frozen/samples/01_slim_idle4_wrist.json",
+      "published_bytes": 85197,
+      "published_sha256": "3349902a6391fe05bfccfa5b970f4c6bd3871c8fa8abe134a7d19609fc917f72"
+    },
+    {
+      "original_path": "samples/02_wide_idle3_body_turn.json",
+      "bytes": 82963,
+      "sha256": "166556fbdce180241e70f3e7f55660095deea218cf8e4c0b56439c6789a40030",
+      "git_blob": "816730823547dd5753be5c958024f6beb0bad1f9",
+      "storage": "original-bytes",
+      "published_path": "frozen/samples/02_wide_idle3_body_turn.json",
+      "published_bytes": 82963,
+      "published_sha256": "166556fbdce180241e70f3e7f55660095deea218cf8e4c0b56439c6789a40030"
+    },
+    {
+      "original_path": "samples/03_slim_eat_hand_extreme.json",
+      "bytes": 86782,
+      "sha256": "8693e499ebb706aabba4ae329490ba5597c1335573eb29be1ebc9ec17142f51f",
+      "git_blob": "7e4cc14e05c43e3fc3e9e4b580f8ff12bdaf59fb",
+      "storage": "original-bytes",
+      "published_path": "frozen/samples/03_slim_eat_hand_extreme.json",
+      "published_bytes": 86782,
+      "published_sha256": "8693e499ebb706aabba4ae329490ba5597c1335573eb29be1ebc9ec17142f51f"
+    },
+    {
+      "original_path": "samples/04_wide_interrupt_shrink.json",
+      "bytes": 87305,
+      "sha256": "699cbe6b2d83fe2bac8acd1212ca0472e35ef23b39f42367c077cb46195a7abe",
+      "git_blob": "0495d23e9d4e0435feeba27558256a2052a05e9b",
+      "storage": "original-bytes",
+      "published_path": "frozen/samples/04_wide_interrupt_shrink.json",
+      "published_bytes": 87305,
+      "published_sha256": "699cbe6b2d83fe2bac8acd1212ca0472e35ef23b39f42367c077cb46195a7abe"
+    },
+    {
+      "original_path": "samples/05_wide_boom_peak.json",
+      "bytes": 91855,
+      "sha256": "78e7f17d37bde85b25d020653256f3b4f10780a442c0b3c583d4aaa724b62561",
+      "git_blob": "8baa5249a1046616fe72094f157042946ff203b7",
+      "storage": "original-bytes",
+      "published_path": "frozen/samples/05_wide_boom_peak.json",
+      "published_bytes": 91855,
+      "published_sha256": "78e7f17d37bde85b25d020653256f3b4f10780a442c0b3c583d4aaa724b62561"
+    },
+    {
+      "original_path": "samples/06_slim_spawn_rebound.json",
+      "bytes": 84126,
+      "sha256": "92e5d41fb6a9c214860b2f562951d45ecc486e39270b48c1517390eeb93865c7",
+      "git_blob": "19af808449fe92b414f02b9e6381f4e5ff5494af",
+      "storage": "original-bytes",
+      "published_path": "frozen/samples/06_slim_spawn_rebound.json",
+      "published_bytes": 84126,
+      "published_sha256": "92e5d41fb6a9c214860b2f562951d45ecc486e39270b48c1517390eeb93865c7"
+    },
+    {
+      "original_path": "samples/07_wide_standtake_wrist.json",
+      "bytes": 84789,
+      "sha256": "0e523f691d02c5f0120214599f539567075500213e0bcef432b04a80e2b4ee00",
+      "git_blob": "cec8d3f68e8bd25059c2d8f6e674f7c7dede213a",
+      "storage": "original-bytes",
+      "published_path": "frozen/samples/07_wide_standtake_wrist.json",
+      "published_bytes": 84789,
+      "published_sha256": "0e523f691d02c5f0120214599f539567075500213e0bcef432b04a80e2b4ee00"
+    },
+    {
+      "original_path": "scene-freeze-hashes.json",
+      "bytes": 777,
+      "sha256": "018399ad313f62aec26372c35dafdae9b8ea7511fe4db936bb14b5ca278694df",
+      "git_blob": "23cddad4d4a8697ada06054bdfb0f42f291b0819",
+      "storage": "original-bytes",
+      "published_path": "frozen/scene-freeze-hashes.json",
+      "published_bytes": 777,
+      "published_sha256": "018399ad313f62aec26372c35dafdae9b8ea7511fe4db936bb14b5ca278694df"
+    },
+    {
+      "original_path": "scene-manifest.json",
+      "bytes": 15413,
+      "sha256": "98f584e678584bb9ff78406b3cfe5e5fb4b7b21cfccac422bd52a91cae2ee669",
+      "git_blob": "6f691927b54123338df260cc90463856a4247b62",
+      "storage": "original-bytes",
+      "published_path": "frozen/scene-manifest.json",
+      "published_bytes": 15413,
+      "published_sha256": "98f584e678584bb9ff78406b3cfe5e5fb4b7b21cfccac422bd52a91cae2ee669"
+    },
+    {
+      "original_path": "scenes/01_slim_idle4_wrist.bbmodel",
+      "bytes": 77744,
+      "sha256": "ec50aa64d85bf982d30a55067db1a13e2bc6516c7b94004f35db802c9bec7dc9",
+      "git_blob": "2d326d22fd4d20f714647022e471ef368945f24c",
+      "storage": "original-bytes",
+      "published_path": "frozen/scenes/01_slim_idle4_wrist.bbmodel",
+      "published_bytes": 77744,
+      "published_sha256": "ec50aa64d85bf982d30a55067db1a13e2bc6516c7b94004f35db802c9bec7dc9"
+    },
+    {
+      "original_path": "scenes/02_wide_idle3_body_turn.bbmodel",
+      "bytes": 76961,
+      "sha256": "a09b008aa9272a140b627ea7114659137d6bc94cb293a18bf937456d3aad73c2",
+      "git_blob": "ee7dc916be44a7af0b365db326bb29972bce6a7c",
+      "storage": "original-bytes",
+      "published_path": "frozen/scenes/02_wide_idle3_body_turn.bbmodel",
+      "published_bytes": 76961,
+      "published_sha256": "a09b008aa9272a140b627ea7114659137d6bc94cb293a18bf937456d3aad73c2"
+    },
+    {
+      "original_path": "scenes/03_slim_eat_hand_extreme.bbmodel",
+      "bytes": 77727,
+      "sha256": "37d43a93b05ebbae5e79231a79e9f14868ce7756212efd4436d31cebf4392c18",
+      "git_blob": "a689ab419160d033bc6bf5d2404d18e6667548c9",
+      "storage": "original-bytes",
+      "published_path": "frozen/scenes/03_slim_eat_hand_extreme.bbmodel",
+      "published_bytes": 77727,
+      "published_sha256": "37d43a93b05ebbae5e79231a79e9f14868ce7756212efd4436d31cebf4392c18"
+    },
+    {
+      "original_path": "scenes/04_wide_interrupt_shrink.bbmodel",
+      "bytes": 77934,
+      "sha256": "5ddd4aea8aba4cb94071dd19bc773d0e0793814353c8fd0f3359311c5211f3bc",
+      "git_blob": "e3d4bd98dbab3b11bee053613909f2666f10150a",
+      "storage": "original-bytes",
+      "published_path": "frozen/scenes/04_wide_interrupt_shrink.bbmodel",
+      "published_bytes": 77934,
+      "published_sha256": "5ddd4aea8aba4cb94071dd19bc773d0e0793814353c8fd0f3359311c5211f3bc"
+    },
+    {
+      "original_path": "scenes/05_wide_boom_peak.bbmodel",
+      "bytes": 81778,
+      "sha256": "1a49ee776b998dbbca6e71992e5b408ff6ac1de0022911feac1b230a5e46673a",
+      "git_blob": "a63d7eda71ac7eefe3bebe66fcff9809e55ea7a8",
+      "storage": "original-bytes",
+      "published_path": "frozen/scenes/05_wide_boom_peak.bbmodel",
+      "published_bytes": 81778,
+      "published_sha256": "1a49ee776b998dbbca6e71992e5b408ff6ac1de0022911feac1b230a5e46673a"
+    },
+    {
+      "original_path": "scenes/06_slim_spawn_rebound.bbmodel",
+      "bytes": 77366,
+      "sha256": "a80ec5f58e5682df6db103feecdb622e3bcbd7e63709cae73a6c80e080a1655e",
+      "git_blob": "c7c3d4a2ee3584014c1ee3e06f95769f3045cb20",
+      "storage": "original-bytes",
+      "published_path": "frozen/scenes/06_slim_spawn_rebound.bbmodel",
+      "published_bytes": 77366,
+      "published_sha256": "a80ec5f58e5682df6db103feecdb622e3bcbd7e63709cae73a6c80e080a1655e"
+    },
+    {
+      "original_path": "scenes/07_wide_standtake_wrist.bbmodel",
+      "bytes": 77135,
+      "sha256": "0a502d3dfe5d2131ea9fff7fdde0acfd11f6c62998e57acbbf855eab664328db",
+      "git_blob": "e63eb77836fdccfe58cf71b5ca9ad6647946a074",
+      "storage": "original-bytes",
+      "published_path": "frozen/scenes/07_wide_standtake_wrist.bbmodel",
+      "published_bytes": 77135,
+      "published_sha256": "0a502d3dfe5d2131ea9fff7fdde0acfd11f6c62998e57acbbf855eab664328db"
+    },
+    {
+      "original_path": "screenshots/01_slim_idle4_wrist-isometric-right-2-1.jpg",
+      "bytes": 90780,
+      "sha256": "827ce2852463d83b272b8eb618ffd778dbec860ef2300b70acabc116438e5200",
+      "git_blob": "c5129b065b07a8909a5d3d02049ca72b6501f0bf",
+      "storage": "original-bytes",
+      "published_path": "frozen/screenshots/01_slim_idle4_wrist-isometric-right-2-1.jpg",
+      "published_bytes": 90780,
+      "published_sha256": "827ce2852463d83b272b8eb618ffd778dbec860ef2300b70acabc116438e5200"
+    },
+    {
+      "original_path": "screenshots/01_slim_idle4_wrist-north.jpg",
+      "bytes": 84288,
+      "sha256": "27115eaeda25312a50b1042a8bed42d13a3ac9825c4639745798e7b145ddcd93",
+      "git_blob": "a29bda3f7fec0b2498b82f0ff794a2980f714cfd",
+      "storage": "original-bytes",
+      "published_path": "frozen/screenshots/01_slim_idle4_wrist-north.jpg",
+      "published_bytes": 84288,
+      "published_sha256": "27115eaeda25312a50b1042a8bed42d13a3ac9825c4639745798e7b145ddcd93"
+    },
+    {
+      "original_path": "screenshots/02_wide_idle3_body_turn-isometric-right-2-1.jpg",
+      "bytes": 82512,
+      "sha256": "31a5dab51de07a223ffe08bf580b3295e30337eaf1cbc9809bf0c7dd63e04302",
+      "git_blob": "89639b16ab990c0765515e6eea4c673305e7d174",
+      "storage": "original-bytes",
+      "published_path": "frozen/screenshots/02_wide_idle3_body_turn-isometric-right-2-1.jpg",
+      "published_bytes": 82512,
+      "published_sha256": "31a5dab51de07a223ffe08bf580b3295e30337eaf1cbc9809bf0c7dd63e04302"
+    },
+    {
+      "original_path": "screenshots/03_slim_eat_hand_extreme-isometric-right-2-1.jpg",
+      "bytes": 89446,
+      "sha256": "a60848ffa3fe2b88b14d4355cf9eb1cec155ca53b50e36e3654eb12e554ddb19",
+      "git_blob": "a044cd5f09b0d7b1daa3dd0a98cf2063eeb6a873",
+      "storage": "original-bytes",
+      "published_path": "frozen/screenshots/03_slim_eat_hand_extreme-isometric-right-2-1.jpg",
+      "published_bytes": 89446,
+      "published_sha256": "a60848ffa3fe2b88b14d4355cf9eb1cec155ca53b50e36e3654eb12e554ddb19"
+    },
+    {
+      "original_path": "screenshots/04_wide_interrupt_shrink-isometric-right-2-1.jpg",
+      "bytes": 82183,
+      "sha256": "8708d9418c2dbbb35172ae072f508b04ff7a944eadd8d1c861b2cbd54359f85d",
+      "git_blob": "189604d12ffb8e0ed998286e1499585d71542620",
+      "storage": "original-bytes",
+      "published_path": "frozen/screenshots/04_wide_interrupt_shrink-isometric-right-2-1.jpg",
+      "published_bytes": 82183,
+      "published_sha256": "8708d9418c2dbbb35172ae072f508b04ff7a944eadd8d1c861b2cbd54359f85d"
+    },
+    {
+      "original_path": "screenshots/05_wide_boom_peak-isometric-right-2-1.jpg",
+      "bytes": 87075,
+      "sha256": "3f61bb08ed6304cba39b30e3f6df3bae99a9decea97f75a8ee2b3b88060ed236",
+      "git_blob": "2a8e1768c0cd586059cdb4d866eccc0698f9ebcd",
+      "storage": "original-bytes",
+      "published_path": "frozen/screenshots/05_wide_boom_peak-isometric-right-2-1.jpg",
+      "published_bytes": 87075,
+      "published_sha256": "3f61bb08ed6304cba39b30e3f6df3bae99a9decea97f75a8ee2b3b88060ed236"
+    },
+    {
+      "original_path": "screenshots/06_slim_spawn_rebound-isometric-right-2-1.jpg",
+      "bytes": 88903,
+      "sha256": "eac10487c3abed1b654be586fdb43fe657a40adf3f4a7b90448c00929097f2e1",
+      "git_blob": "f92f43f0474844ffa9482a7d3820ca576da7ffa7",
+      "storage": "original-bytes",
+      "published_path": "frozen/screenshots/06_slim_spawn_rebound-isometric-right-2-1.jpg",
+      "published_bytes": 88903,
+      "published_sha256": "eac10487c3abed1b654be586fdb43fe657a40adf3f4a7b90448c00929097f2e1"
+    },
+    {
+      "original_path": "screenshots/07_wide_standtake_wrist-isometric-right-2-1.jpg",
+      "bytes": 85047,
+      "sha256": "1f7130b94cc741ea5137db3971216f85927487eb193d3fd4e12b40da2b6eeec9",
+      "git_blob": "e50ff68a0cd50476c7481b6296131878970c6767",
+      "storage": "original-bytes",
+      "published_path": "frozen/screenshots/07_wide_standtake_wrist-isometric-right-2-1.jpg",
+      "published_bytes": 85047,
+      "published_sha256": "1f7130b94cc741ea5137db3971216f85927487eb193d3fd4e12b40da2b6eeec9"
+    },
+    {
+      "original_path": "screenshots/known-control-after-editor-restart.jpg",
+      "bytes": 88291,
+      "sha256": "fb92e5a4531836dc3be28177a214c08b1c9af9063e5d05c1f77768168aa5ef4e",
+      "git_blob": "98bc42af6734e5069180c2441a5ecf32ed2386ee",
+      "storage": "original-bytes",
+      "published_path": "frozen/screenshots/known-control-after-editor-restart.jpg",
+      "published_bytes": 88291,
+      "published_sha256": "fb92e5a4531836dc3be28177a214c08b1c9af9063e5d05c1f77768168aa5ef4e"
+    },
+    {
+      "original_path": "screenshots/known-control-renderer-white-diagnostic.jpg",
+      "bytes": 53721,
+      "sha256": "e659283314cf5103dd491527d7cad6c0f29d1c0e10facdf94e0b1683b4cd5963",
+      "git_blob": "d870fa7734723cf63adce40c40a732677a30a53f",
+      "storage": "original-bytes",
+      "published_path": "frozen/screenshots/known-control-renderer-white-diagnostic.jpg",
+      "published_bytes": 53721,
+      "published_sha256": "e659283314cf5103dd491527d7cad6c0f29d1c0e10facdf94e0b1683b4cd5963"
+    },
+    {
+      "original_path": "screenshots/renderer-white-diagnostic.jpg",
+      "bytes": 51815,
+      "sha256": "c9064c5a63bc75f6222700d5f44193b3935eca52d2beb25f4f36f3e12e6a817a",
+      "git_blob": "81f352c3959535005410d3b76e5382e444514b2f",
+      "storage": "original-bytes",
+      "published_path": "frozen/screenshots/renderer-white-diagnostic.jpg",
+      "published_bytes": 51815,
+      "published_sha256": "c9064c5a63bc75f6222700d5f44193b3935eca52d2beb25f4f36f3e12e6a817a"
+    },
+    {
+      "original_path": "source-evidence/4.8.3-gradle.properties",
+      "bytes": 858,
+      "sha256": "f29f80e0fa53983571a744a1f73bf800cb58a04f47a1fabd933a6d0f0b19f264",
+      "git_blob": "8ef52c2b6a56efd52520349f887c665292526832",
+      "storage": "original-bytes",
+      "published_path": "frozen/source-evidence/4.8.3-gradle.properties",
+      "published_bytes": 858,
+      "published_sha256": "f29f80e0fa53983571a744a1f73bf800cb58a04f47a1fabd933a6d0f0b19f264"
+    },
+    {
+      "original_path": "source-evidence/AnimationController.java",
+      "bytes": 32879,
+      "sha256": "851d9a8e5fa8f54971c678823354385cacf9ffd241cc7eecabaabc79b67799ed",
+      "git_blob": "6314af8aad401339a60c217ec56f0fb40a31a561",
+      "storage": "original-bytes",
+      "published_path": "frozen/source-evidence/AnimationController.java",
+      "published_bytes": 32879,
+      "published_sha256": "851d9a8e5fa8f54971c678823354385cacf9ffd241cc7eecabaabc79b67799ed"
+    },
+    {
+      "original_path": "source-evidence/BakedAnimationsAdapter.java",
+      "bytes": 10239,
+      "sha256": "ec30c7cdb195f597688abab0e13dae009a3eb512bc3269fc991814771c1ecbec",
+      "git_blob": "8a3277e679ac7fc0481d175e992cc7626bfffe4e",
+      "storage": "original-bytes",
+      "published_path": "frozen/source-evidence/BakedAnimationsAdapter.java",
+      "published_bytes": 10239,
+      "published_sha256": "ec30c7cdb195f597688abab0e13dae009a3eb512bc3269fc991814771c1ecbec"
+    },
+    {
+      "original_path": "source-evidence/CosDegrees.java",
+      "bytes": 576,
+      "sha256": "1fd96cd4e114cb9a5abc23a7ef87c03f4db5407573016d44f1a284a15e9bb359",
+      "git_blob": "42ce7a59442deed29f7fcb908cda2d43509ee91e",
+      "storage": "original-bytes",
+      "published_path": "frozen/source-evidence/CosDegrees.java",
+      "published_bytes": 576,
+      "published_sha256": "1fd96cd4e114cb9a5abc23a7ef87c03f4db5407573016d44f1a284a15e9bb359"
+    },
+    {
+      "original_path": "source-evidence/CustomerEntity.java",
+      "bytes": 24711,
+      "sha256": "5b10255e4c8bf42b92c2b8bc38d15204e73aeb9f14c0403c0667993b48f81e23",
+      "git_blob": "14f10a1fb043fdc030dcaed8c0c2e01e0e1d8a53",
+      "storage": "original-bytes",
+      "published_path": "frozen/source-evidence/CustomerEntity.java",
+      "published_bytes": 24711,
+      "published_sha256": "5b10255e4c8bf42b92c2b8bc38d15204e73aeb9f14c0403c0667993b48f81e23"
+    },
+    {
+      "original_path": "source-evidence/CustomerEntityModel.java",
+      "bytes": 11899,
+      "sha256": "71cbe8f0299807844dc5451018fc90ac869aef63feba4048c4c38448bc650fb0",
+      "git_blob": "945213b89ce2b90a383ef11b1116b9b038a01e6d",
+      "storage": "original-bytes",
+      "published_path": "frozen/source-evidence/CustomerEntityModel.java",
+      "published_bytes": 11899,
+      "published_sha256": "71cbe8f0299807844dc5451018fc90ac869aef63feba4048c4c38448bc650fb0"
+    },
+    {
+      "original_path": "source-evidence/CustomerEntityRenderer.java",
+      "bytes": 488,
+      "sha256": "81ceb962253cb745236b7fad3eec6aefa592986e453104415cd7655d3b69607e",
+      "git_blob": "7766e92f8246e6908026c91b501f6f479164d3b4",
+      "storage": "original-bytes",
+      "published_path": "frozen/source-evidence/CustomerEntityRenderer.java",
+      "published_bytes": 488,
+      "published_sha256": "81ceb962253cb745236b7fad3eec6aefa592986e453104415cd7655d3b69607e"
+    },
+    {
+      "original_path": "source-evidence/EasingType.java",
+      "bytes": 16078,
+      "sha256": "a70347c881123c272f05425faba7adf5e415d33d69c0b53758da9b0a6fc94673",
+      "git_blob": "2f77c97fb96966e918603486892a40c63e8f2716",
+      "storage": "original-bytes",
+      "published_path": "frozen/source-evidence/EasingType.java",
+      "published_bytes": 16078,
+      "published_sha256": "a70347c881123c272f05425faba7adf5e415d33d69c0b53758da9b0a6fc94673"
+    },
+    {
+      "original_path": "source-evidence/RenderUtils.java",
+      "bytes": 12516,
+      "sha256": "a0cc169417d819d64f81382334962ce737521d2bb0a4b21719a8682e9d2a1982",
+      "git_blob": "99a6fe538afa8eaf52bbfac77dd037220ffe6de6",
+      "storage": "original-bytes",
+      "published_path": "frozen/source-evidence/RenderUtils.java",
+      "published_bytes": 12516,
+      "published_sha256": "a0cc169417d819d64f81382334962ce737521d2bb0a4b21719a8682e9d2a1982"
+    },
+    {
+      "original_path": "source-evidence/SinDegrees.java",
+      "bytes": 570,
+      "sha256": "0bec9b471363c7765d5e84c72dfbd02c60f4f7209de2c7f7e693c9f464d82c22",
+      "git_blob": "128690325446592bef32aa2d72dba59710e0f60d",
+      "storage": "original-bytes",
+      "published_path": "frozen/source-evidence/SinDegrees.java",
+      "published_bytes": 570,
+      "published_sha256": "0bec9b471363c7765d5e84c72dfbd02c60f4f7209de2c7f7e693c9f464d82c22"
+    },
+    {
+      "original_path": "source-evidence/cos-provenance.json",
+      "bytes": 285,
+      "sha256": "0edd4d7438cbf89dd3f2c6c27b48d24e356ebb03f5eda8f1f2c363641f159c05",
+      "git_blob": "dc42e533b06316d5a77375551c5b43d3edf9ef47",
+      "storage": "original-bytes",
+      "published_path": "frozen/source-evidence/cos-provenance.json",
+      "published_bytes": 285,
+      "published_sha256": "0edd4d7438cbf89dd3f2c6c27b48d24e356ebb03f5eda8f1f2c363641f159c05"
+    },
+    {
+      "original_path": "source-evidence/customer-provenance.json",
+      "bytes": 1219,
+      "sha256": "3cedac5399022f296159ecbcabe8faf8f12729cebc748ccc4e49d3f4df88723f",
+      "git_blob": "3a85f9950fdea80590c69c44653f12a544e44a8f",
+      "storage": "original-bytes",
+      "published_path": "frozen/source-evidence/customer-provenance.json",
+      "published_bytes": 1219,
+      "published_sha256": "3cedac5399022f296159ecbcabe8faf8f12729cebc748ccc4e49d3f4df88723f"
+    },
+    {
+      "original_path": "source-evidence/gecko-cache-provenance.json",
+      "bytes": 4359,
+      "sha256": "3aa6c3061d0b1a88df0e644a6fddfdbe2d3a51c7f33028c64de58c5e176a6be5",
+      "git_blob": "1e12c5e8b7b4ade7efca57e5d87c3b8888112655",
+      "storage": "omitted-provenance-metadata",
+      "reason": "Historical acquisition-location labels and unrelated source records are not published. Public projection retains the five bundled source identities; original metadata is retained unchanged privately."
+    },
+    {
+      "original_path": "source-evidence/input-upstream-provenance.json",
+      "bytes": 2585,
+      "sha256": "1ca5755ec8671c72ffec5b475004963e57a72d65d1bc11fe4666117f6c3084ee",
+      "git_blob": "7537d90cd8a4f8c79df1274cb4798a2d89b6ea05",
+      "storage": "original-bytes",
+      "published_path": "frozen/source-evidence/input-upstream-provenance.json",
+      "published_bytes": 2585,
+      "published_sha256": "1ca5755ec8671c72ffec5b475004963e57a72d65d1bc11fe4666117f6c3084ee"
+    },
+    {
+      "original_path": "source-evidence/render-provenance.json",
+      "bytes": 271,
+      "sha256": "5aacb5270215b663df950c02793f68acb79f358e88b3846da2d7bc5079442a79",
+      "git_blob": "5431190455630234dab7e8011e914169aa0cc58c",
+      "storage": "original-bytes",
+      "published_path": "frozen/source-evidence/render-provenance.json",
+      "published_bytes": 271,
+      "published_sha256": "5aacb5270215b663df950c02793f68acb79f358e88b3846da2d7bc5079442a79"
+    },
+    {
+      "original_path": "verification.json",
+      "bytes": 5203,
+      "sha256": "76cf0215cfbfb3107de358ee4becb06220ff7d010943e6010b0a6ff62827b059",
+      "git_blob": "a7ee525c611ae1aaa15b0eb936e6ec7b41bf5f9e",
+      "storage": "original-bytes",
+      "published_path": "frozen/verification.json",
+      "published_bytes": 5203,
+      "published_sha256": "76cf0215cfbfb3107de358ee4becb06220ff7d010943e6010b0a6ff62827b059"
+    },
+    {
+      "original_path": "verify_gui_receipt.py",
+      "bytes": 2475,
+      "sha256": "ba914358f43532fe57bc2e64bdc4269215282c6dce4b6331f3af7ad5e92d85be",
+      "git_blob": "8cbf330d5ff04ac08ce0e55848be1c62e32a4852",
+      "storage": "original-bytes",
+      "published_path": "frozen/verify_gui_receipt.py",
+      "published_bytes": 2475,
+      "published_sha256": "ba914358f43532fe57bc2e64bdc4269215282c6dce4b6331f3af7ad5e92d85be"
+    },
+    {
+      "original_path": "verify_review.py",
+      "bytes": 11553,
+      "sha256": "3cc917d2f6fff541b8a90b58213372d59d319e8c899341bbb0fae8a18096263f",
+      "git_blob": "35169e00ddc198fc12f9f528a3d55c8a403f56c2",
+      "storage": "original-bytes",
+      "published_path": "frozen/verify_review.py",
+      "published_bytes": 11553,
+      "published_sha256": "3cc917d2f6fff541b8a90b58213372d59d319e8c899341bbb0fae8a18096263f"
+    }
+  ]
+}
