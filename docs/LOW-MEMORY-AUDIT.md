@@ -65,7 +65,9 @@ pendingDishes 陣列替換或長度變化亦會重建。同 tick 的 queue、mig
 基線 RP 為 546 檔、7,843,095 bytes；79 張 PNG 按 width×height×4 的 RGBA8 base level
 合計 3,569,808 bytes（含 pack icon）。這些是檔案／像素算術，沒有包含 atlas、mipmap、
 引擎複製或真實載入集合，不能稱為 GPU／RAM 實測。410 個 geo JSON 合計 3,213 cubes；
-最大 stage-zero 餐盤模型 293 cubes。沒有量測出需要犧牲 Java 視覺的資源瓶頸，故不降貼圖或砍模型。
+`dining_plate.geo.json` 內 41 個 geometry 定義合計 293 cubes，單一定義最多 14 cubes；
+全 RP 單一定義最多的是 motorcycle（41 cubes）。沒有量測出需要犧牲 Java 視覺的資源瓶頸，
+故不降貼圖或砍模型。
 
 ## 驗證
 
