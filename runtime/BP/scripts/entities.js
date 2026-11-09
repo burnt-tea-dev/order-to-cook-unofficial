@@ -651,6 +651,9 @@ export function createEntityService(ctx) {
     finally { activeForms.delete(player.id); }
   }
 
+  // Java uses instabuild for both motorcycle placement and recoloring.
+  function isCreative(player) { return player.getGameMode?.() === 'Creative'; }
+
   function consumeItem(player, typeId) {
     const inventory = playerInventory(player);
     const slot = player.selectedSlotIndex;
@@ -683,7 +686,7 @@ export function createEntityService(ctx) {
       property(entity, "light", true);
       entity.setDynamicProperty(`${NS}owner_id`, player.id);
       entity.setDynamicProperty(`${NS}hit_count`, 0);
-      if (!consumeItem(player, MOTORCYCLE)) { entity.remove(); return undefined; }
+      if (!isCreative(player) && !consumeItem(player, MOTORCYCLE)) { entity.remove(); return undefined; }
       notify(player, "小電驢已放置：右鍵上車，蹲下右鍵開保溫箱及車輛面板。");
       return entity;
     } catch (error) {
@@ -734,7 +737,7 @@ export function createEntityService(ctx) {
     if (player.isSneaking) { void openMotorcycle(player, entity); return true; }
     const held = playerInventory(player)?.getItem(player.selectedSlotIndex);
     if (held && DYES[held.typeId] !== undefined) {
-      if (consumeItem(player, held.typeId)) {
+      if (isCreative(player) || consumeItem(player, held.typeId)) {
         property(entity, "color", DYES[held.typeId]);
         notify(player, `已染成${COLORS[DYES[held.typeId]]}。`);
       }
