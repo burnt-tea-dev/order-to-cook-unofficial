@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.48-alpha.1 (unpublished candidate)
+
+- Correct only the motorcycle static source mapping: seven X-rotation signs and 41 box mirror flags. Preserve original images, hierarchy, pivots, inflation, dimensions and all gameplay/steering/wheel behavior.
+- Add strict fully consumed converter grammar, independent world-corner/physical-UV regeneration tests and source mutations. Preserve nine raw editor photographs and ten reproducible collision-free source/current/candidate scenes. Native rendering and vehicle motion remain untested.
+- Freeze paired .48 identity with stable UUIDs/APIs and append-only payload history. Integrate the reviewed source and evidence onto actual main after #75 merged, preserving its customer/helmet documentation. The .48 candidate remains unpublished; packages bind to its exact source commit, and later source changes require fresh build proofs. [Validation and limits](docs/validation/0.1.48-alpha.1/MOTORCYCLE_STATIC_MAPPING.md).
+
 ## 0.1.47-alpha.1
 
 - Restore the refrigerator's common root across both blocks while retaining independent door clips/frames. Prebake 176 own-door/root combinations; preserve lower-close controller priority even at neutral samples and zero-elapsed restored endpoints.
