@@ -1,0 +1,265 @@
+{
+  "schema": 1,
+  "runtime_commit": "dbb2574154a54cc5ad69e75e71d23900a98a79fe",
+  "java_commit": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+  "gecko": "4.8.3 / e81962eefd04e0cab90445d3df37b477d2767ffd",
+  "fixture_space": "Block-local centered modelpx, not world screenshot; both sides preserve own Y origin",
+  "editor_preview_material": "Double sides explicitly set for common geometry/UV inspection; not proof of native alpha_test/entity_alphatest or lighting",
+  "camera": "Recorded editor camera settings, raw images and bounded observations are in gui-evidence.json.",
+  "scenes": [
+    {
+      "id": "01_printer_frame2",
+      "family": "printer",
+      "time": 0.13333333333333333,
+      "frame": 2,
+      "path": "scenes/01_printer_frame2.bbmodel",
+      "sha256": "ca21066ce764de0cc4fc98b1adb9f9d7cb4e188ee98f30b8651b9047d9cde486",
+      "source_geometry": "inputs/source/geo/block/order_machine.geo.json",
+      "runtime_geometry": "inputs/runtime/RP/models/blocks/order_machine_printing_2.geo.json",
+      "source_texture": "inputs/source/textures/block/order_machine_geo.png",
+      "runtime_texture": "inputs/runtime/RP/textures/ordertocook/block/order_machine_geo.png",
+      "source_texture_sha256": "52cd75a693d199455a6de9155c06a600557a99466c215d673145644b8c09cc68",
+      "runtime_texture_sha256": "52cd75a693d199455a6de9155c06a600557a99466c215d673145644b8c09cc68",
+      "source_pose": {
+        "order": {
+          "rotation": [
+            0,
+            0,
+            2.4731634777267764
+          ],
+          "scale": [
+            1.0433333333333334,
+            1.0433333333333334,
+            1.0433333333333334
+          ]
+        },
+        "group": {
+          "position": [
+            0,
+            -0.8,
+            -0.25
+          ]
+        }
+      },
+      "world_parent_y_modelpx": {
+        "source": 0,
+        "runtime": 0
+      },
+      "editor_assembly_offsets_x": {
+        "SOURCE": -18,
+        "RP": 18
+      },
+      "status": "frozen numeric fixture; bounded static GUI comparison completed"
+    },
+    {
+      "id": "02_printer_frame4",
+      "family": "printer",
+      "time": 0.26666666666666666,
+      "frame": 4,
+      "path": "scenes/02_printer_frame4.bbmodel",
+      "sha256": "7237104f9f62845719128d7235bb708ee8fbb1bf1ccb519ed0ba4db998b3cecd",
+      "source_geometry": "inputs/source/geo/block/order_machine.geo.json",
+      "runtime_geometry": "inputs/runtime/RP/models/blocks/order_machine_printing_4.geo.json",
+      "source_texture": "inputs/source/textures/block/order_machine_geo.png",
+      "runtime_texture": "inputs/runtime/RP/textures/ordertocook/block/order_machine_geo.png",
+      "source_texture_sha256": "52cd75a693d199455a6de9155c06a600557a99466c215d673145644b8c09cc68",
+      "runtime_texture_sha256": "52cd75a693d199455a6de9155c06a600557a99466c215d673145644b8c09cc68",
+      "source_pose": {
+        "order": {
+          "rotation": [
+            0,
+            0,
+            -1.7972102313330847
+          ],
+          "scale": [
+            0.9566666666666667,
+            0.9566666666666667,
+            0.9566666666666667
+          ]
+        },
+        "group": {
+          "position": [
+            0,
+            0.3999999999999999,
+            0.25
+          ]
+        }
+      },
+      "world_parent_y_modelpx": {
+        "source": 0,
+        "runtime": 0
+      },
+      "editor_assembly_offsets_x": {
+        "SOURCE": -18,
+        "RP": 18
+      },
+      "status": "frozen numeric fixture; bounded static GUI comparison completed"
+    },
+    {
+      "id": "03_bag_frame3",
+      "family": "bag",
+      "time": 0.1,
+      "frame": 3,
+      "path": "scenes/03_bag_frame3.bbmodel",
+      "sha256": "7d36193b4d03b919678ff249643bdcaf627dabb4a2709df4dcf920f74a2e38ea",
+      "source_geometry": "inputs/source/geo/block/takeout_bag_placed.geo.json",
+      "runtime_geometry": "inputs/runtime/RP/models/blocks/takeout_bag_3.geo.json",
+      "source_texture": "inputs/source/textures/block/takeout_bag_placed.png",
+      "runtime_texture": "inputs/runtime/RP/textures/ordertocook/block/takeout_bag_placed.png",
+      "source_texture_sha256": "de229103fba45284a4a9a30b08ce1e8d6b10929c697217b5693a3b42688ab167",
+      "runtime_texture_sha256": "de229103fba45284a4a9a30b08ce1e8d6b10929c697217b5693a3b42688ab167",
+      "source_pose": {
+        "group": {
+          "rotation": [
+            0,
+            0,
+            2.3635386072292994
+          ],
+          "scale": [
+            0.9999700059988003,
+            0.9999700059988003,
+            0.9999700059988003
+          ],
+          "position": [
+            0,
+            0.4,
+            0
+          ]
+        }
+      },
+      "world_parent_y_modelpx": {
+        "source": 0,
+        "runtime": 0
+      },
+      "editor_assembly_offsets_x": {
+        "SOURCE": -18,
+        "RP": 18
+      },
+      "status": "frozen numeric fixture; bounded static GUI comparison completed"
+    },
+    {
+      "id": "04_bag_frame7",
+      "family": "bag",
+      "time": 0.3,
+      "frame": 7,
+      "path": "scenes/04_bag_frame7.bbmodel",
+      "sha256": "631840665e424e37e6bf2bc02cf1f3da5d267a5588ddf3881cd265ad1ccd5743",
+      "source_geometry": "inputs/source/geo/block/takeout_bag_placed.geo.json",
+      "runtime_geometry": "inputs/runtime/RP/models/blocks/takeout_bag_7.geo.json",
+      "source_texture": "inputs/source/textures/block/takeout_bag_placed.png",
+      "runtime_texture": "inputs/runtime/RP/textures/ordertocook/block/takeout_bag_placed.png",
+      "source_texture_sha256": "de229103fba45284a4a9a30b08ce1e8d6b10929c697217b5693a3b42688ab167",
+      "runtime_texture_sha256": "de229103fba45284a4a9a30b08ce1e8d6b10929c697217b5693a3b42688ab167",
+      "source_pose": {
+        "group": {
+          "rotation": [
+            0,
+            0,
+            -1.0392304845413265
+          ],
+          "scale": [
+            0.9799819927971188,
+            0.9799819927971188,
+            0.9799819927971188
+          ],
+          "position": [
+            0,
+            0.2,
+            0
+          ]
+        }
+      },
+      "world_parent_y_modelpx": {
+        "source": 0,
+        "runtime": 0
+      },
+      "editor_assembly_offsets_x": {
+        "SOURCE": -18,
+        "RP": 18
+      },
+      "status": "frozen numeric fixture; bounded static GUI comparison completed"
+    },
+    {
+      "id": "05_plate_settled",
+      "family": "plate",
+      "time": 0.5,
+      "path": "scenes/05_plate_settled.bbmodel",
+      "sha256": "ff95c2bd088d0bfbe56da8db0920f9d074f34ee1504bdd6da58d1777f0dff6d7",
+      "source_geometry": "inputs/source/geo/block/food_plate_placed.geo.json",
+      "runtime_geometry": "inputs/runtime/RP/models/entity/dining_plate.geo.json",
+      "source_texture": "inputs/source/textures/block/food_plate_placed.png",
+      "runtime_texture": "inputs/runtime/RP/textures/ordertocook/entity/dining_plate_atlas.png",
+      "source_texture_sha256": "d7e566f83d24676b6b047018f6dd4302dba16ea0d1ea326fd5d2755946a0d27a",
+      "runtime_texture_sha256": "22d7bc1e10344538d11e1d764631b6b1c3c5f31a89ca2143e83fb6af006469f9",
+      "source_pose": {
+        "group2": {
+          "rotation": [
+            0,
+            0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "position": [
+            0,
+            0.0,
+            0
+          ]
+        }
+      },
+      "world_parent_y_modelpx": {
+        "source": 0,
+        "runtime": 0.2
+      },
+      "editor_assembly_offsets_x": {
+        "SOURCE": -18,
+        "RP": 18
+      },
+      "status": "frozen numeric fixture; bounded static GUI comparison completed"
+    },
+    {
+      "id": "06_plate_rebound",
+      "family": "plate",
+      "time": 0.1667,
+      "path": "scenes/06_plate_rebound.bbmodel",
+      "sha256": "e32ffeba6387e27686440312a41d23257711528519da02f4626bfe6853423e9f",
+      "source_geometry": "inputs/source/geo/block/food_plate_placed.geo.json",
+      "runtime_geometry": "inputs/runtime/RP/models/entity/dining_plate.geo.json",
+      "source_texture": "inputs/source/textures/block/food_plate_placed.png",
+      "runtime_texture": "inputs/runtime/RP/textures/ordertocook/entity/dining_plate_atlas.png",
+      "source_texture_sha256": "d7e566f83d24676b6b047018f6dd4302dba16ea0d1ea326fd5d2755946a0d27a",
+      "runtime_texture_sha256": "22d7bc1e10344538d11e1d764631b6b1c3c5f31a89ca2143e83fb6af006469f9",
+      "source_pose": {
+        "group2": {
+          "rotation": [
+            0,
+            0,
+            0.4600534644287719
+          ],
+          "scale": [
+            1.05,
+            1.05,
+            1.05
+          ],
+          "position": [
+            0,
+            0.33330000000000004,
+            0
+          ]
+        }
+      },
+      "world_parent_y_modelpx": {
+        "source": 0,
+        "runtime": 0.2
+      },
+      "editor_assembly_offsets_x": {
+        "SOURCE": -18,
+        "RP": 18
+      },
+      "status": "frozen numeric fixture; bounded static GUI comparison completed"
+    }
+  ]
+}

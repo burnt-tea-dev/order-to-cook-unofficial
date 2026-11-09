@@ -53,6 +53,12 @@ Java 各水平 blockstate 的 north/east/south/west 為 0/90/180/270 度。
 來源：固定 Java 的 `OrderMachineRenderer.java`、`OrderMachineBlockEntity.java`、
 `OrderMachineBlock.java`、`TakeoutBagPlacedRenderer.java` 及對應 `*.animation.json`。
 
+2026-11-09 補充：[六個放置／姿態比較](validation/visual-audio/placement-poses-20261109/README.md)
+核對打單機兩個實際 NORTH 有限幀、外送袋正負晃動及 stage 0 餐盤。
+數值與編輯器證據分開記錄；六景已有八張原始 GUI 比較圖及相機／Double 控制證據。
+畫面左側為 RP、右側為 SOURCE；未見新增外形／可見 UV 差異，餐盤保留既有 +0.2 像素偏移。
+這些有限視角不取代原生時序、材質、actor 朝向與互動驗收。
+
 ## 冰箱
 
 ### 修正
@@ -84,6 +90,10 @@ Java 各水平 blockstate 的 north/east/south/west 為 0/90/180/270 度。
 
 來源：[RefrigeratorBlockEntity.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/RefrigeratorBlockEntity.java)
 及同提交 `refrigerator.geo.json`、`refrigerator.animation.json`。
+
+2026-11-09 補充：[食品陳列來源／API 契約](validation/visual-audio/FRIDGE_ITEM_DISPLAY_CONTRACT_20261109.md)
+釐清每半部前八個非空疊、關門期間可見及共同 root。Bedrock 有原生 held-item／attachable
+能力，但自訂 holder 的通用呈現、普通取出／掉落與生命週期仍未驗證；本次沒有新增實作。
 
 ## 洗碗機
 
@@ -132,6 +142,10 @@ stage 0 從舊的乾淨盤替代品改回原 `food_plate_placed.geo.json` 的九
 
 來源：[FoodPlateBlockEntity.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/FoodPlateBlockEntity.java)、
 同提交 `FoodPlatePlacedRenderer.java` 和共用 `food_plate_display.json`。
+
+2026-11-09 補充的[餐盤 settled／rebound 比較](validation/visual-audio/placement-poses-20261109/README.md)
+保留九個 cube、原 PNG→atlas 像素與刻意 +0.2 model-pixel 高度。此偏移是既有防穿插設計，
+不是本次新增缺陷；anchor-local 比較不證明原生 actor yaw、接地觀感或切換時沒有跳動。
 
 ## 顧客兩套外觀、等待與七種動作
 

@@ -1,0 +1,209 @@
+{
+  "format_version": "1.26.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "ordertocook:takeout_bag",
+      "menu_category": {
+        "category": "construction"
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:cardinal_direction"
+          ],
+          "y_rotation_offset": 180
+        }
+      },
+      "states": {
+        "ordertocook:frame": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.ordertocook.takeout_bag",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "ordertocook_block_takeout_bag_placed",
+          "render_method": "alpha_test",
+          "ambient_occlusion": 0
+        }
+      },
+      "minecraft:collision_box": false,
+      "minecraft:selection_box": {
+        "origin": [
+          -5,
+          0,
+          -5
+        ],
+        "size": [
+          10,
+          10,
+          10
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:loot": "loot_tables/blocks/takeout_bag.json",
+      "minecraft:destruction_particles": {
+        "texture": "ordertocook_block_takeout_bag_placed",
+        "particle_count": 50
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#9b9286",
+      "minecraft:movable": {
+        "movement_type": "immovable"
+      },
+      "ordertocook:interact": {},
+      "minecraft:block_entity": {
+        "dynamic_properties": true,
+        "container": {
+          "slot_count": 1
+        }
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              -90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:frame') == 0",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.takeout_bag"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:frame') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.takeout_bag_1"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:frame') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.takeout_bag_2"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:frame') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.takeout_bag_3"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:frame') == 4",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.takeout_bag_4"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:frame') == 5",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.takeout_bag_5"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:frame') == 6",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.takeout_bag_6"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:frame') == 7",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.takeout_bag_7"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:frame') == 8",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.takeout_bag_8"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:frame') == 9",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.takeout_bag_9"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:frame') == 10",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.takeout_bag_10"
+        }
+      },
+      {
+        "condition": "q.block_state('ordertocook:frame') > 0",
+        "components": {
+          "minecraft:tick": {
+            "interval_range": [
+              1,
+              1
+            ],
+            "looping": true
+          },
+          "ordertocook:bag_motion": {}
+        }
+      }
+    ]
+  }
+}

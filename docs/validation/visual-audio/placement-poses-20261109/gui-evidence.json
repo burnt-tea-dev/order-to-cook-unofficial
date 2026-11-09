@@ -1,0 +1,773 @@
+{
+  "schema": 1,
+  "status": "COMPLETED: six bounded static GUI comparisons",
+  "completed_at_utc": "2026-11-09T06:15:05.345884+00:00",
+  "gui_run": true,
+  "native_run": false,
+  "runtime_changed": false,
+  "scene_count": 6,
+  "primary_image_count": 8,
+  "control_image_count": 17,
+  "editor": {
+    "application": "Blockbench",
+    "version": "5.2.2",
+    "version_evidence": "screenshots/controls/editor_version.jpg"
+  },
+  "capture_method": "Original full-window JPEG screenshots saved unchanged. No crop, resize, recompression, pixel edits, labels or renderer substitutes.",
+  "timestamp_semantics": "UTC recorded after screenshot bytes returned; not a camera shutter clock.",
+  "camera_method": "Position, focal point and Orthographic projection were entered and read in the Save Angle dialog, then the corresponding preset was applied. No subsequent pan, orbit or zoom was reported. A separate numeric zoom value is not claimed.",
+  "screen_mapping": {
+    "left": "RP",
+    "right": "SOURCE",
+    "evidence": "screenshots/controls/source_screen_mapping.jpg",
+    "basis": "Selecting the SOURCE X=-18 root outlines the screen-right assembly in the GUI control. The recorded negative-Z cameras retain that order. Mapping is based on camera and selection evidence, not assembly X labels alone."
+  },
+  "cameras": {
+    "printer": {
+      "preset_label": "OTC_QA_PRINTER",
+      "projection": "Orthographic",
+      "position": [
+        0,
+        24,
+        -80
+      ],
+      "focal_point": [
+        0,
+        8,
+        0
+      ],
+      "definition_evidence": "screenshots/controls/printer_camera_definition.jpg"
+    },
+    "bag_oblique": {
+      "preset_label": "OTC_QA_BAG",
+      "projection": "Orthographic",
+      "position": [
+        -30,
+        25,
+        -80
+      ],
+      "focal_point": [
+        0,
+        8,
+        0
+      ],
+      "definition_evidence": "screenshots/controls/bag_camera_definition.jpg"
+    },
+    "plate_front": {
+      "preset_label": "OTC_QA_PLATE",
+      "projection": "Orthographic",
+      "position": [
+        0,
+        4,
+        -80
+      ],
+      "focal_point": [
+        0,
+        4,
+        0
+      ],
+      "definition_evidence": "screenshots/controls/plate_camera_definition.jpg"
+    }
+  },
+  "images": {
+    "screenshots/controls/01_source_texture.jpg": {
+      "original_relative_path": "evidence/01_source_texture.jpg",
+      "sha256": "d09d17664ddc990893d294c7c2ef4cab06812d3494971be6c8b036a071aa37b6",
+      "bytes": 79515,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T05:11:23.027Z",
+      "original_bytes_unchanged": true,
+      "role": "control"
+    },
+    "screenshots/controls/01_runtime_texture.jpg": {
+      "original_relative_path": "evidence/01_runtime_texture.jpg",
+      "sha256": "64698049d7c323d192485c49d2298eb32c6ad08384772f309b1145a2be8f4abb",
+      "bytes": 78694,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T05:11:37.880Z",
+      "original_bytes_unchanged": true,
+      "role": "control"
+    },
+    "screenshots/controls/printer_camera_definition.jpg": {
+      "original_relative_path": "evidence/printer_camera_definition.jpg",
+      "sha256": "fb002a8feda729c62a2772c2096cd269f1a2bbc50547576a28a1324a02e05db6",
+      "bytes": 80014,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T05:12:37.327Z",
+      "original_bytes_unchanged": true,
+      "role": "control"
+    },
+    "screenshots/01_printer_frame2_paired.jpg": {
+      "original_relative_path": "01_printer_frame2_paired.jpg",
+      "sha256": "9017eb0fbe6c047e3e008b65aa9ba0babe179c6ed7795056575c34be6393b60b",
+      "bytes": 91928,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T05:13:05.913Z",
+      "original_bytes_unchanged": true,
+      "role": "primary"
+    },
+    "screenshots/controls/source_screen_mapping.jpg": {
+      "original_relative_path": "evidence/source_screen_mapping.jpg",
+      "sha256": "e4ed1047c9d76c686a117a607428490ea89879b1c0de33accd4b279a45cd3044",
+      "bytes": 110262,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T05:13:22.741Z",
+      "original_bytes_unchanged": true,
+      "role": "control"
+    },
+    "screenshots/controls/editor_version.jpg": {
+      "original_relative_path": "evidence/editor_version.jpg",
+      "sha256": "cd50af017373098d8466b60dc5eef5482a0c6e67c4885924d93fb53366b687cf",
+      "bytes": 109194,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T05:13:44.048Z",
+      "original_bytes_unchanged": true,
+      "role": "control"
+    },
+    "screenshots/controls/02_source_texture.jpg": {
+      "original_relative_path": "evidence/02_source_texture.jpg",
+      "sha256": "6d4d881cec8122b57ca93754136dec10673bcce6f7d7df214416214a9ac19fa5",
+      "bytes": 78957,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T05:14:33.235Z",
+      "original_bytes_unchanged": true,
+      "role": "control"
+    },
+    "screenshots/controls/02_runtime_texture.jpg": {
+      "original_relative_path": "evidence/02_runtime_texture.jpg",
+      "sha256": "72e43c4dd77c67f32a65877cf4769a0a97bafcbb3df486ed4aa4d9956cb4c590",
+      "bytes": 78141,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T05:14:40.426Z",
+      "original_bytes_unchanged": true,
+      "role": "control"
+    },
+    "screenshots/02_printer_frame4_paired.jpg": {
+      "original_relative_path": "02_printer_frame4_paired.jpg",
+      "sha256": "6ed9198394d88a35f32c7a64ff7d938116f5a19b8bd3e8792eabf9e6fb7284a7",
+      "bytes": 90245,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T05:14:55.865Z",
+      "original_bytes_unchanged": true,
+      "role": "primary"
+    },
+    "screenshots/controls/03_source_texture.jpg": {
+      "original_relative_path": "evidence/03_source_texture.jpg",
+      "sha256": "da5199162febf84132d536ef35ea33beb91548c8f5320a68e47d60ef97c2f993",
+      "bytes": 76326,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T06:01:00.476Z",
+      "original_bytes_unchanged": true,
+      "role": "control"
+    },
+    "screenshots/controls/03_runtime_texture.jpg": {
+      "original_relative_path": "evidence/03_runtime_texture.jpg",
+      "sha256": "636bb114e1e439c778f74dcbf92ef056017545ae10aae239b920255f45b258ad",
+      "bytes": 75593,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T06:01:08.224Z",
+      "original_bytes_unchanged": true,
+      "role": "control"
+    },
+    "screenshots/controls/bag_camera_definition.jpg": {
+      "original_relative_path": "evidence/bag_camera_definition.jpg",
+      "sha256": "bf1a81b98bb6e27c50cdbc88a04e3b326ce6ff92a435c63de0d06fec7f937a5c",
+      "bytes": 73805,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T06:01:50.743Z",
+      "original_bytes_unchanged": true,
+      "role": "control"
+    },
+    "screenshots/03_bag_frame3_paired.jpg": {
+      "original_relative_path": "03_bag_frame3_paired.jpg",
+      "sha256": "06485b74fc19013bba9c5adeb224f02fc5a85044520bcac4ec49d401bd2fb4e7",
+      "bytes": 84346,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T06:02:25.634Z",
+      "original_bytes_unchanged": true,
+      "role": "primary"
+    },
+    "screenshots/controls/04_source_texture.jpg": {
+      "original_relative_path": "evidence/04_source_texture.jpg",
+      "sha256": "6a1ee4c5bd56461a7ab8c96f9c539b23ed13f545cb856be93099d4d192bdc546",
+      "bytes": 76179,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T06:03:15.253Z",
+      "original_bytes_unchanged": true,
+      "role": "control"
+    },
+    "screenshots/controls/04_runtime_texture.jpg": {
+      "original_relative_path": "evidence/04_runtime_texture.jpg",
+      "sha256": "0b777678d90d5d385e2e9864b289641081da86f1e1660250da9b7f6794a083b9",
+      "bytes": 75384,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T06:03:23.523Z",
+      "original_bytes_unchanged": true,
+      "role": "control"
+    },
+    "screenshots/04_bag_frame7_paired.jpg": {
+      "original_relative_path": "04_bag_frame7_paired.jpg",
+      "sha256": "d1b6eccb36b73127561d9bd6c8165fbb33ce83e6b1c36bece216889f90114608",
+      "bytes": 83829,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T06:03:45.658Z",
+      "original_bytes_unchanged": true,
+      "role": "primary"
+    },
+    "screenshots/controls/05_source_texture.jpg": {
+      "original_relative_path": "evidence/05_source_texture.jpg",
+      "sha256": "61b50fb5ca5e6d02e7f6bbb348c85279a545b99bad14eaf30ab0135622c68bc7",
+      "bytes": 82465,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T06:04:41.439Z",
+      "original_bytes_unchanged": true,
+      "role": "control"
+    },
+    "screenshots/controls/05_runtime_texture.jpg": {
+      "original_relative_path": "evidence/05_runtime_texture.jpg",
+      "sha256": "8e7451288c7b03b7295c283100913847620649519f51670442b13676ee374b79",
+      "bytes": 81282,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T06:05:05.655Z",
+      "original_bytes_unchanged": true,
+      "role": "control"
+    },
+    "screenshots/controls/plate_camera_definition.jpg": {
+      "original_relative_path": "evidence/plate_camera_definition.jpg",
+      "sha256": "db418e9f71ac9676c5537e96ebd8c1d0ab6e54617f2743423743caa16ffdcad8",
+      "bytes": 80339,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T06:06:03.218Z",
+      "original_bytes_unchanged": true,
+      "role": "control"
+    },
+    "screenshots/05_plate_settled_front.jpg": {
+      "original_relative_path": "05_plate_settled_front.jpg",
+      "sha256": "6ed5e7bb6a14eb38f6f35698bdd171aab0b66ad64712e2ed2b6eedd50bcaa8cb",
+      "bytes": 79648,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T06:07:51.282Z",
+      "original_bytes_unchanged": true,
+      "role": "primary"
+    },
+    "screenshots/05_plate_settled_oblique.jpg": {
+      "original_relative_path": "05_plate_settled_oblique.jpg",
+      "sha256": "5c966469cefcabfd5b34f747fb572486ad26f03cf06aa28b81c6034d2a0c2121",
+      "bytes": 85129,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T06:08:37.708Z",
+      "original_bytes_unchanged": true,
+      "role": "primary"
+    },
+    "screenshots/controls/06_source_texture.jpg": {
+      "original_relative_path": "evidence/06_source_texture.jpg",
+      "sha256": "44b1740cbe669d78cd85bbf9149e0f2c9966b7946d13cb6d1c7d7a6a3c4e5e27",
+      "bytes": 82705,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T06:09:56.718Z",
+      "original_bytes_unchanged": true,
+      "role": "control"
+    },
+    "screenshots/controls/06_runtime_texture.jpg": {
+      "original_relative_path": "evidence/06_runtime_texture.jpg",
+      "sha256": "d61483bddb0a9b5aec446153a98673c86f1a6429962289c4dbe82607528e7317",
+      "bytes": 81459,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T06:10:13.987Z",
+      "original_bytes_unchanged": true,
+      "role": "control"
+    },
+    "screenshots/06_plate_rebound_front.jpg": {
+      "original_relative_path": "06_plate_rebound_front.jpg",
+      "sha256": "65f46376b76bf4ca4729efa5bbba0e8afc1e605b8752c139a03daf5812547fca",
+      "bytes": 79383,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T06:10:50.020Z",
+      "original_bytes_unchanged": true,
+      "role": "primary"
+    },
+    "screenshots/06_plate_rebound_oblique.jpg": {
+      "original_relative_path": "06_plate_rebound_oblique.jpg",
+      "sha256": "776679e0d46fe0e597c9b6e7b46d80d82ccc6752c89e61f23b49fe8e37cbc4c8",
+      "bytes": 85992,
+      "format": "JPEG",
+      "dimensions": [
+        1188,
+        848
+      ],
+      "timestamp_utc": "2026-11-09T06:12:38.129Z",
+      "original_bytes_unchanged": true,
+      "role": "primary"
+    }
+  },
+  "scenes": [
+    {
+      "id": "01_printer_frame2",
+      "scene_path": "scenes/01_printer_frame2.bbmodel",
+      "scene_sha256": "ca21066ce764de0cc4fc98b1adb9f9d7cb4e188ee98f30b8651b9047d9cde486",
+      "serialized_project_name": "01_printer_frame2 | SOURCE X-18 | RP X+18",
+      "gui_project_title": "01_printer_frame2 - Blockbench",
+      "gui_tab": "01_printer_frame2.bbmodel",
+      "time": 0.13333333333333333,
+      "status": "completed bounded static GUI comparison",
+      "editor_version": "5.2.2",
+      "gui_root_groups_visible": [
+        "SOURCE | block-center origin | Java Y=0",
+        "RP | block-center origin | NORTH rotation=0"
+      ],
+      "hierarchy_group_names_from_frozen_file": [
+        "SOURCE | block-center origin | Java Y=0",
+        "SOURCE order",
+        "SOURCE group2",
+        "SOURCE group",
+        "RP | block-center origin | NORTH rotation=0",
+        "RP order",
+        "RP group2",
+        "RP group"
+      ],
+      "selection_at_main_capture": "none; no outline/gizmo; GUI count 0/6",
+      "texture_control": {
+        "source": "Inside and Outside",
+        "runtime": "Inside and Outside",
+        "serialized_equivalent": "double",
+        "observed_in": "actual Texture Properties dialogs; cancelled without edits",
+        "render_mode": "Default",
+        "source_evidence": "screenshots/controls/01_source_texture.jpg",
+        "runtime_evidence": "screenshots/controls/01_runtime_texture.jpg",
+        "source_uv_size": [
+          64,
+          64
+        ],
+        "runtime_uv_size": [
+          64,
+          64
+        ]
+      },
+      "views": [
+        {
+          "image": "screenshots/01_printer_frame2_paired.jpg",
+          "camera_key": "printer",
+          "screen_mapping": {
+            "left": "RP",
+            "right": "SOURCE"
+          },
+          "whole_assemblies_in_frame": true,
+          "unselected": true
+        }
+      ],
+      "finding": "Matched visible paper opening, low paper projection, body silhouette and texture pattern in positive authored wobble; no visible source/runtime mismatch."
+    },
+    {
+      "id": "02_printer_frame4",
+      "scene_path": "scenes/02_printer_frame4.bbmodel",
+      "scene_sha256": "7237104f9f62845719128d7235bb708ee8fbb1bf1ccb519ed0ba4db998b3cecd",
+      "serialized_project_name": "02_printer_frame4 | SOURCE X-18 | RP X+18",
+      "gui_project_title": "02_printer_frame4 - Blockbench",
+      "gui_tab": "02_printer_frame4.bbmodel",
+      "time": 0.26666666666666666,
+      "status": "completed bounded static GUI comparison",
+      "editor_version": "5.2.2",
+      "gui_root_groups_visible": [
+        "SOURCE | block-center origin | Java Y=0",
+        "RP | block-center origin | NORTH rotation=0"
+      ],
+      "hierarchy_group_names_from_frozen_file": [
+        "SOURCE | block-center origin | Java Y=0",
+        "SOURCE order",
+        "SOURCE group2",
+        "SOURCE group",
+        "RP | block-center origin | NORTH rotation=0",
+        "RP order",
+        "RP group2",
+        "RP group"
+      ],
+      "selection_at_main_capture": "none; no outline/gizmo; GUI count 0/6",
+      "texture_control": {
+        "source": "Inside and Outside",
+        "runtime": "Inside and Outside",
+        "serialized_equivalent": "double",
+        "observed_in": "actual Texture Properties dialogs; cancelled without edits",
+        "render_mode": "Default",
+        "source_evidence": "screenshots/controls/02_source_texture.jpg",
+        "runtime_evidence": "screenshots/controls/02_runtime_texture.jpg",
+        "source_uv_size": [
+          64,
+          64
+        ],
+        "runtime_uv_size": [
+          64,
+          64
+        ]
+      },
+      "views": [
+        {
+          "image": "screenshots/02_printer_frame4_paired.jpg",
+          "camera_key": "printer",
+          "screen_mapping": {
+            "left": "RP",
+            "right": "SOURCE"
+          },
+          "whole_assemblies_in_frame": true,
+          "unselected": true
+        }
+      ],
+      "finding": "Matched visible raised paper texture, opposite wobble and smaller frozen body form; no visible source/runtime mismatch."
+    },
+    {
+      "id": "03_bag_frame3",
+      "scene_path": "scenes/03_bag_frame3.bbmodel",
+      "scene_sha256": "7d36193b4d03b919678ff249643bdcaf627dabb4a2709df4dcf920f74a2e38ea",
+      "serialized_project_name": "03_bag_frame3 | SOURCE X-18 | RP X+18",
+      "gui_project_title": "03_bag_frame3 - Blockbench",
+      "gui_tab": "03_bag_frame3.bbmodel",
+      "time": 0.1,
+      "status": "completed bounded static GUI comparison",
+      "editor_version": "5.2.2",
+      "gui_root_groups_visible": [
+        "SOURCE | block-center origin | Java Y=0",
+        "RP | block-center origin | NORTH rotation=0"
+      ],
+      "hierarchy_group_names_from_frozen_file": [
+        "SOURCE | block-center origin | Java Y=0",
+        "SOURCE group",
+        "RP | block-center origin | NORTH rotation=0",
+        "RP group"
+      ],
+      "selection_at_main_capture": "none; no outline/gizmo; GUI count 0/10",
+      "texture_control": {
+        "source": "Inside and Outside",
+        "runtime": "Inside and Outside",
+        "serialized_equivalent": "double",
+        "observed_in": "actual Texture Properties dialogs; cancelled without edits",
+        "render_mode": "Default",
+        "source_evidence": "screenshots/controls/03_source_texture.jpg",
+        "runtime_evidence": "screenshots/controls/03_runtime_texture.jpg",
+        "source_uv_size": [
+          32,
+          32
+        ],
+        "runtime_uv_size": [
+          32,
+          32
+        ]
+      },
+      "views": [
+        {
+          "image": "screenshots/03_bag_frame3_paired.jpg",
+          "camera_key": "bag_oblique",
+          "screen_mapping": {
+            "left": "RP",
+            "right": "SOURCE"
+          },
+          "whole_assemblies_in_frame": true,
+          "unselected": true
+        }
+      ],
+      "finding": "Matched carrot panel, folded side, upper handle-region texture and silhouette in positive authored wobble; no visible source/runtime mismatch."
+    },
+    {
+      "id": "04_bag_frame7",
+      "scene_path": "scenes/04_bag_frame7.bbmodel",
+      "scene_sha256": "631840665e424e37e6bf2bc02cf1f3da5d267a5588ddf3881cd265ad1ccd5743",
+      "serialized_project_name": "04_bag_frame7 | SOURCE X-18 | RP X+18",
+      "gui_project_title": "04_bag_frame7 - Blockbench",
+      "gui_tab": "04_bag_frame7.bbmodel",
+      "time": 0.3,
+      "status": "completed bounded static GUI comparison",
+      "editor_version": "5.2.2",
+      "gui_root_groups_visible": [
+        "SOURCE | block-center origin | Java Y=0",
+        "RP | block-center origin | NORTH rotation=0"
+      ],
+      "hierarchy_group_names_from_frozen_file": [
+        "SOURCE | block-center origin | Java Y=0",
+        "SOURCE group",
+        "RP | block-center origin | NORTH rotation=0",
+        "RP group"
+      ],
+      "selection_at_main_capture": "none; no outline/gizmo; GUI count 0/10",
+      "texture_control": {
+        "source": "Inside and Outside",
+        "runtime": "Inside and Outside",
+        "serialized_equivalent": "double",
+        "observed_in": "actual Texture Properties dialogs; cancelled without edits",
+        "render_mode": "Default",
+        "source_evidence": "screenshots/controls/04_source_texture.jpg",
+        "runtime_evidence": "screenshots/controls/04_runtime_texture.jpg",
+        "source_uv_size": [
+          32,
+          32
+        ],
+        "runtime_uv_size": [
+          32,
+          32
+        ]
+      },
+      "views": [
+        {
+          "image": "screenshots/04_bag_frame7_paired.jpg",
+          "camera_key": "bag_oblique",
+          "screen_mapping": {
+            "left": "RP",
+            "right": "SOURCE"
+          },
+          "whole_assemblies_in_frame": true,
+          "unselected": true
+        }
+      ],
+      "finding": "Matched carrot panel, attached folded side, upper handle-region texture and opposite lean; no visible source/runtime mismatch."
+    },
+    {
+      "id": "05_plate_settled",
+      "scene_path": "scenes/05_plate_settled.bbmodel",
+      "scene_sha256": "ff95c2bd088d0bfbe56da8db0920f9d074f34ee1504bdd6da58d1777f0dff6d7",
+      "serialized_project_name": "05_plate_settled | SOURCE X-18 | RP X+18",
+      "gui_project_title": "05_plate_settled - Blockbench",
+      "gui_tab": "05_plate_settled.bbmodel",
+      "time": 0.5,
+      "status": "completed bounded static GUI comparison",
+      "editor_version": "5.2.2",
+      "gui_root_groups_visible": [
+        "SOURCE | block-center origin | Java Y=0",
+        "RP | block-center origin | helper Y=+.2",
+        "SOURCE REFERENCE ONLY | top plane block-local Y=0",
+        "RP REFERENCE ONLY | top plane block-local Y=0"
+      ],
+      "hierarchy_group_names_from_frozen_file": [
+        "SOURCE | block-center origin | Java Y=0",
+        "SOURCE group2",
+        "SOURCE group3",
+        "SOURCE group",
+        "RP | block-center origin | helper Y=+.2",
+        "RP group2",
+        "RP group3",
+        "RP group",
+        "SOURCE REFERENCE ONLY | top plane block-local Y=0",
+        "RP REFERENCE ONLY | top plane block-local Y=0"
+      ],
+      "selection_at_main_capture": "none; no outline/gizmo; GUI count 0/20",
+      "texture_control": {
+        "source": "Inside and Outside",
+        "runtime": "Inside and Outside",
+        "serialized_equivalent": "double",
+        "observed_in": "actual Texture Properties dialogs; cancelled without edits",
+        "render_mode": "Default",
+        "source_evidence": "screenshots/controls/05_source_texture.jpg",
+        "runtime_evidence": "screenshots/controls/05_runtime_texture.jpg",
+        "source_uv_size": [
+          32,
+          32
+        ],
+        "runtime_uv_size": [
+          256,
+          256
+        ]
+      },
+      "views": [
+        {
+          "image": "screenshots/05_plate_settled_front.jpg",
+          "camera_key": "plate_front",
+          "screen_mapping": {
+            "left": "RP",
+            "right": "SOURCE"
+          },
+          "whole_assemblies_in_frame": true,
+          "unselected": true
+        },
+        {
+          "image": "screenshots/05_plate_settled_oblique.jpg",
+          "camera_key": "bag_oblique",
+          "screen_mapping": {
+            "left": "RP",
+            "right": "SOURCE"
+          },
+          "whole_assemblies_in_frame": true,
+          "unselected": true
+        }
+      ],
+      "finding": "Front view shows both complete assembly silhouettes and aligned reference top edges, with a small visible gap under screen-left RP and source meeting its support edge. This agrees with the documented intentional +0.2-modelpx RP parent offset. Oblique view shows matching top/side texels and tiered shape. No newly discovered geometry/UV defect."
+    },
+    {
+      "id": "06_plate_rebound",
+      "scene_path": "scenes/06_plate_rebound.bbmodel",
+      "scene_sha256": "e32ffeba6387e27686440312a41d23257711528519da02f4626bfe6853423e9f",
+      "serialized_project_name": "06_plate_rebound | SOURCE X-18 | RP X+18",
+      "gui_project_title": "06_plate_rebound - Blockbench",
+      "gui_tab": "06_plate_rebound.bbmodel",
+      "time": 0.1667,
+      "status": "completed bounded static GUI comparison",
+      "editor_version": "5.2.2",
+      "gui_root_groups_visible": [
+        "SOURCE | block-center origin | Java Y=0",
+        "RP | block-center origin | helper Y=+.2",
+        "SOURCE REFERENCE ONLY | top plane block-local Y=0",
+        "RP REFERENCE ONLY | top plane block-local Y=0"
+      ],
+      "hierarchy_group_names_from_frozen_file": [
+        "SOURCE | block-center origin | Java Y=0",
+        "SOURCE group2",
+        "SOURCE group3",
+        "SOURCE group",
+        "RP | block-center origin | helper Y=+.2",
+        "RP group2",
+        "RP group3",
+        "RP group",
+        "SOURCE REFERENCE ONLY | top plane block-local Y=0",
+        "RP REFERENCE ONLY | top plane block-local Y=0"
+      ],
+      "selection_at_main_capture": "none; no outline/gizmo; GUI count 0/20",
+      "texture_control": {
+        "source": "Inside and Outside",
+        "runtime": "Inside and Outside",
+        "serialized_equivalent": "double",
+        "observed_in": "actual Texture Properties dialogs; cancelled without edits",
+        "render_mode": "Default",
+        "source_evidence": "screenshots/controls/06_source_texture.jpg",
+        "runtime_evidence": "screenshots/controls/06_runtime_texture.jpg",
+        "source_uv_size": [
+          32,
+          32
+        ],
+        "runtime_uv_size": [
+          256,
+          256
+        ]
+      },
+      "views": [
+        {
+          "image": "screenshots/06_plate_rebound_front.jpg",
+          "camera_key": "plate_front",
+          "screen_mapping": {
+            "left": "RP",
+            "right": "SOURCE"
+          },
+          "whole_assemblies_in_frame": true,
+          "unselected": true
+        },
+        {
+          "image": "screenshots/06_plate_rebound_oblique.jpg",
+          "camera_key": "bag_oblique",
+          "screen_mapping": {
+            "left": "RP",
+            "right": "SOURCE"
+          },
+          "whole_assemblies_in_frame": true,
+          "unselected": true
+        }
+      ],
+      "finding": "Front and oblique views show matching slightly tilted/enlarged tiered forms, both reference supports and retained RP vertical offset. No newly discovered geometry/UV defect; no demand for animated source/support contact."
+    }
+  ],
+  "source_record_hashes": {
+    "capture_allowlist_sha256": "d383ca404e4e0264bf9d6d1b1a00113ad549520f67fdac2783970447683551db",
+    "capture_report_sha256": "c32b1dcaa3b78d5c38ec39773d15af1a91937b0eef024108b6ec742651a336eb",
+    "capture_index_sha256": "614b505fb846e1fe06ad3172547049a96115cb80e0fda3dd7026a24a2af63ffc",
+    "frozen_preparation_artifact_index_sha256": "596a5ab9e8bfc1b60bfe6e614b6463edb3663075d1b734bfcc01173b38dd1004"
+  },
+  "projection": "Only the 25 original model/control JPEGs are copied unchanged. This metadata selects scene identities, visible groups, camera and texture controls, capture hashes and bounded observations from the capture records, with package-relative paths. Acquisition locations and unrelated session/operational data are omitted. Original record hashes identify the acquisition records; this is not an unmodified copy of them.",
+  "limitations": [
+    "Static frozen fixtures only; not animation playback, Java/Bedrock native rendering or engine clocks.",
+    "Double/Inside and Outside is common-editor geometry/UV control, not emulation of Java entityCutoutNoCull, RP alpha_test/entity_alphatest, alpha cutoff, lighting, AO, culling or contact shadows.",
+    "Plate +0.2 model-pixel parent Y offset is intentional anti-z-fighting; not normalized or classified as a new bug. Native floating/jump remains unproved.",
+    "Plate direction is anchor-local common model direction, not proof of native NORTH actor yaw. Printer/bag source provenance verifies NORTH rotation zero.",
+    "No conclusions about timing, STOP/re-entry, reset, late loading, transitions, interactions, multiplayer or effects.",
+    "A whole 3D assembly being in frame does not make every occluded cube face simultaneously visible. Plate frontal silhouette is supplemented by an oblique view for top/side surfaces.",
+    "Screenshot observations are bounded visual findings, not pixelwise renderer equivalence."
+  ]
+}
