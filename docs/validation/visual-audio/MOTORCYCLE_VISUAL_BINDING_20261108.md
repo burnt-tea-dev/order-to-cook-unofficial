@@ -1,5 +1,12 @@
 # Motorcycle visual binding audit
 
+**Later coordinate correction:** this is the historical .41/.42 audit. After
+the .48 neutral-model repair, the current mapping preserves Java X and negates
+Y; the X/Y-both-negative statement below must not be reused for the new model.
+The [bounded .51 presentation repair](../MOTORCYCLE_PRESENTATION_20261109.md)
+corrects active X sign and adds a TP idle base. Input-driven steering and signed
+wheel state remain unbound; no later native/client acceptance is implied.
+
 ## Result and scope
 
 Source inspection confirms two visible differences, not a completed runtime fix:

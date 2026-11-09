@@ -5,6 +5,7 @@ import { orderRemainingMs, orderCarrier } from './core.js';
 import { ActionFormData } from "@minecraft/server-ui";
 import { containerCapacity, dropContainerContents, itemLabel, openContainerForm, playerInventory } from "./appliances.js";
 import { playEffects, customerCompletionEffects, customerPortalEffects, customerExplosionEffects, customerUnsuccessfulEffects, motorcycleHitEffects } from "./audiovisual.js";
+import { createMotorcyclePresentation } from "./motorcycle_presentation.js";
 
 const NS = "ordertocook:";
 const CUSTOMER = `${NS}customer`;
@@ -93,6 +94,7 @@ export function createEntityService(ctx) {
   const hornTimes = new Map();
   const chairClaps = new Map();
   const chairIdles = new Map();
+  const motorcyclePresentation = createMotorcyclePresentation();
   const retryTimes = new Map();
   const entityInteractions = new Map();
   const chairClaims = new Set();
@@ -743,7 +745,10 @@ export function createEntityService(ctx) {
     if (player.getComponent("minecraft:riding")?.entityRidingOn) { void openMotorcycle(player, entity); return true; }
     const rideable = entity.getComponent("minecraft:rideable");
     if (rideable?.getRiders().length) { notify(player, "這輛小電驢已有駕駛。"); return true; }
-    if (rideable?.addRider(player)) notify(player, "用移動鍵駕駛、跳躍鍵鳴笛、蹲下離座。遙控器可切換車燈。");
+    if (rideable?.addRider(player)) {
+      motorcyclePresentation.start(player, true);
+      notify(player, "用移動鍵駕駛、跳躍鍵鳴笛、蹲下離座。遙控器可切換車燈。");
+    }
     return true;
   }
 
@@ -879,6 +884,7 @@ export function createEntityService(ctx) {
     const now = gameSystem.currentTick;
     if (now === lastTick || now < readyTick) return;
     lastTick = now;
+    motorcyclePresentation.tick();
     for (const [id, session] of chairClaps) {
       if (now >= session.until || playerChair(session.player)?.id !== session.seatId) stopChairClap(id);
     }
@@ -954,7 +960,10 @@ export function createEntityService(ctx) {
   }
 
   function init() {
-    gameWorld.afterEvents.playerSpawn.subscribe(event => gameSystem.run(() => chairIdleAnimation(event.player)));
+    gameWorld.afterEvents.playerSpawn.subscribe(event => gameSystem.run(() => {
+      chairIdleAnimation(event.player);
+      motorcyclePresentation.start(event.player);
+    }));
     gameSystem.afterEvents.scriptEventReceive.subscribe(event => {
       if (event.id !== `${NS}reaction_finished` || event.sourceEntity?.typeId !== CUSTOMER) return;
       const entity = event.sourceEntity, action = Number(event.message);
@@ -998,6 +1007,7 @@ export function createEntityService(ctx) {
     gameWorld.afterEvents.playerLeave.subscribe(event => {
       stopChairClap(event.playerId, false);
       stopChairIdle(event.playerId);
+      motorcyclePresentation.stop(event.playerId);
       activeForms.delete(event.playerId);
       lastUse.delete(event.playerId);
       for (const key of entityInteractions.keys()) if (key.startsWith(`${event.playerId}:`)) entityInteractions.delete(key);
@@ -1006,7 +1016,10 @@ export function createEntityService(ctx) {
       readyTick = gameSystem.currentTick + 40;
       // Restore mounted players on a script reload; reconnects use playerSpawn.
       // No new polling interval or saved player state is needed for the pose.
-      for (const player of gameWorld.getAllPlayers()) chairIdleAnimation(player);
+      for (const player of gameWorld.getAllPlayers()) {
+        chairIdleAnimation(player);
+        motorcyclePresentation.start(player);
+      }
       gameSystem.runInterval(tick, 5);
     });
   }

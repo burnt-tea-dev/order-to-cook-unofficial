@@ -5546,6 +5546,18 @@
       "output": "RP/texts/zh_TW.lang",
       "sha256": "2a234126eb36b4878a982882e1474370288223ed654734d9c317a7baed8d88bf",
       "operation": "Bedrock localization keys; additional port labels and Traditional Chinese translations"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/drive.animation.json",
+      "output": "RP/animations/motorcycle_player.animation.json",
+      "sha256": "4b1d97058b3164bf9027c90ea6a6cd221e4bd06ff5fcde51a2e159e3812a092c",
+      "operation": "GeckoLib 4.8.3 idle spline sampled at 20 TPS and source knots; classic native TP rigid limb endpoints and inverse-parent head rotation; no reverse selector, FP, world offset or helmet"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+      "output": "RP/animations/motorcycle_player.animation.json",
+      "sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+      "operation": "Original active rider rig pivots and segmented limb endpoints"
     }
   ],
   "port_assets": [

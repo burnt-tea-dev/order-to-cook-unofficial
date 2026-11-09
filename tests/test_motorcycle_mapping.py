@@ -160,5 +160,15 @@ class MotorcycleMapping(unittest.TestCase):
                                      'rotation': 0} for f,q in rpfaces(cube).items()})
 
 
+def load_tests(loader, tests, pattern):
+    # The existing CI command selects this file explicitly. Include the dynamic
+    # mapping and rider regressions here instead of leaving new suites unrun.
+    import test_motorcycle_presentation
+    import test_motorcycle_rider
+    tests.addTests(loader.loadTestsFromModule(test_motorcycle_presentation))
+    tests.addTests(loader.loadTestsFromModule(test_motorcycle_rider))
+    return tests
+
+
 if __name__ == '__main__':
     unittest.main()

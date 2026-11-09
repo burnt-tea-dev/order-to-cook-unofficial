@@ -1097,6 +1097,136 @@ def make_player_chair_clap_animation():
     record(ASSETS / 'geo/drive_idle.geo.json', destination, "Original active player rig pivots and segmented limb endpoints")
 
 
+def motorcycle_idle_keyframes(channel):
+    """Decode the pinned drive-idle channel as GeckoLib 4.8.3 does.
+
+    BakedAnimationsAdapter expands pre at t-.001 and uses the destination
+    post's lerp_mode. Its spline anchors are previous-frame end (the current
+    start value) and next-frame end. This bounded reader rejects other easing
+    rather than silently treating a new source curve as linear.
+    """
+    def vector(value):
+        if isinstance(value, dict) and set(value) == {'vector'}:
+            value = value['vector']
+        if not isinstance(value, list) or len(value) != 3 or any(
+                type(number) not in (int, float) or not math.isfinite(number) for number in value):
+            raise ValueError('Motorcycle idle requires finite constant 3D vectors')
+        return list(value)
+
+    if isinstance(channel, list) or isinstance(channel, dict) and set(channel) == {'vector'}:
+        return [(0.0, vector(channel), 'linear')]
+    if not isinstance(channel, dict):
+        raise ValueError('Unsupported motorcycle idle channel')
+    frames = []
+    for key, value in channel.items():
+        time = float(key)
+        if not math.isfinite(time) or time < 0:
+            raise ValueError('Unsupported motorcycle idle timestamp')
+        if isinstance(value, dict) and ('pre' in value or 'post' in value):
+            if set(value) - {'pre', 'post', 'lerp_mode'}:
+                raise ValueError('Unsupported motorcycle idle keyframe metadata')
+            if 'pre' in value:
+                frames.append((time - .001 if time else time, vector(value['pre']), 'linear'))
+            if 'post' in value:
+                mode = value.get('lerp_mode', 'linear')
+                if mode not in ('linear', 'catmullrom'):
+                    raise ValueError('Unsupported motorcycle idle interpolation')
+                frames.append((time, vector(value['post']), mode))
+        else:
+            frames.append((time, vector(value), 'linear'))
+    if not frames:
+        raise ValueError('Empty motorcycle idle channel')
+    return sorted(frames, key=lambda frame: frame[0])
+
+
+def sample_motorcycle_idle_channel(frames, seconds):
+    """Source spline values; emitted Bedrock frames interpolate at 20 TPS."""
+    for index, (time, end, mode) in enumerate(frames):
+        if seconds <= time:
+            if index == 0 or seconds == time:
+                return list(end)
+            start_time, start, _ = frames[index - 1]
+            fraction = (seconds - start_time) / (time - start_time)
+            if mode == 'linear':
+                return [a + (b-a)*fraction for a, b in zip(start, end)]
+            # Gecko's addSplineArgs selects the previous frame's end, not
+            # a second-previous key; do not substitute an editor spline.
+            following = frames[index + 1][1] if index + 1 < len(frames) else end
+            return [.5 * (2*a + (b-a)*fraction + (2*a-5*a+4*b-c)*fraction**2 +
+                          (3*a-a-3*b+c)*fraction**3) for a, b, c in zip(start, end, following)]
+    return list(frames[-1][1])
+
+
+def motorcycle_idle_pose(original, rig):
+    """Classic native rigid-limb TP adaptation of the source idle only.
+
+    No Java renderer/world offset, body yaw, first-person rig, reverse selector
+    or helmet layer is inferred here. The known idle torso is fixed X only;
+    head yaw needs full inverse-parent composition even with that fixed torso.
+    """
+    if original.get('loop') is not True or original.get('animation_length') != 8:
+        raise ValueError('Motorcycle idle timing changed; review the source controller')
+    frames = {name: {channel: motorcycle_idle_keyframes(value) for channel, value in channels.items()}
+              for name, channels in original['bones'].items()}
+    if any(channel not in ('rotation', 'position', 'scale') for channels in frames.values() for channel in channels):
+        raise ValueError('Unsupported motorcycle idle channel type')
+    times = {tick / 20 for tick in range(161)}
+    times.update(time for channels in frames.values() for channel in channels.values() for time, _, _ in channel)
+    if any(time < 0 or time > 8 for time in times):
+        raise ValueError('Motorcycle idle key outside its clip')
+    sampled = {'bones': {name: {channel: {f'{time:g}': sample_motorcycle_idle_channel(values, time)
+                                         for time in sorted(times)} for channel, values in channels.items()}
+                        for name, channels in frames.items()}}
+    torso = sampled['bones']['torso']
+    torso_rotation = sample_channel(torso.get('rotation'), 0, [0]*3)
+    torso_position = sample_channel(torso.get('position'), 0, [0]*3)
+    if torso_rotation[1:] != [0, 0] or any(
+            sample_channel(torso.get('rotation'), time, [0]*3) != torso_rotation or
+            sample_channel(torso.get('position'), time, [0]*3) != torso_position for time in times):
+        raise ValueError('Motorcycle idle requires the reviewed fixed X torso')
+    bones, _ = player_action_pose(sampled, rig, 8)
+    inverse_torso = [-torso_rotation[0], 0, 0]
+    bones['head']['position'] = {}
+    for time in sorted(times):
+        key = f'{time:g}'
+        head = sampled['bones'].get('head', {})
+        rotation = sample_channel(head.get('rotation'), time, [0]*3)
+        axes = [geometry_transform3(geometry_transform3([int(i == j) for i in range(3)], rotation), inverse_torso)
+                for j in range(3)]
+        local_rotation, _ = closest_cuboid_axes([[axes[j][i] for j in range(3)] for i in range(3)])
+        bones['head']['rotation'][key] = local_rotation
+        position = sample_channel(head.get('position'), time, [0]*3)
+        pivot = [a+b-c for a, b, c in zip(rig['head']['pivot'], position, torso_position)]
+        pivot = geometry_transform3(pivot, inverse_torso, rig['torso']['pivot'])
+        bones['head']['position'][key] = [a-b for a, b in zip(pivot, rig['head']['pivot'])]
+    result = rounded(bones)
+    # Constant sampled channels need one vector, not 163 identical keyframes.
+    for channels in result.values():
+        for name, values in list(channels.items()):
+            if isinstance(values, dict) and values:
+                first = next(iter(values.values()))
+                if all(value == first for value in values.values()):
+                    channels[name] = first
+    return result
+
+
+def make_player_motorcycle_animation():
+    source = ASSETS / 'animations/drive.animation.json'
+    original = read_json(source)['animations']['drive_idle']
+    rig_source = ASSETS / 'geo/drive_idle.geo.json'
+    rig = {bone['name']: bone for bone in read_json(rig_source)['minecraft:geometry'][0]['bones']}
+    destination = RP / 'animations/motorcycle_player.animation.json'
+    write_json(destination, {'format_version': '1.8.0', 'animations': {
+        f'animation.{NS}.player.motorcycle_idle': {
+            'animation_length': 8, 'loop': True,
+            'blend_weight': "!query.is_first_person && query.is_riding_any_entity_of_type('ordertocook:motorcycle')",
+            'override_previous_animation': True, 'bones': motorcycle_idle_pose(original, rig)},
+        f'animation.{NS}.player.motorcycle_idle_stop': {'animation_length': .05}
+    }})
+    record(source, destination, 'GeckoLib 4.8.3 idle spline sampled at 20 TPS and source knots; classic native TP rigid limb endpoints and inverse-parent head rotation; no reverse selector, FP, world offset or helmet')
+    record(rig_source, destination, 'Original active rider rig pivots and segmented limb endpoints')
+
+
 def emit_geo(name, g):
     dest = RP / "models" / "blocks" / (name + ".geo.json")
     write_json(dest, g)
@@ -1953,9 +2083,12 @@ def make_entities(animation_names):
             "left_leg":{"rotation":["-math.cos(q.modified_distance_moved * 38.17) * 28",0,0]},
             "right_arm":{"rotation":["-math.cos(q.modified_distance_moved * 38.17) * 14",0,0]},
             "left_arm":{"rotation":["math.cos(q.modified_distance_moved * 38.17) * 14",0,0]}}},
+        # Reviewed Java-model mapping preserves X roll and negates Y yaw.
+        # The existing unsigned phase/magnitude remains a native adaptation;
+        # this sign correction does not supply Java internal-speed reversal.
         f"animation.{NS}.motorcycle.drive": {"loop":True,"bones":{
-            "front_t":{"rotation":["q.modified_distance_moved * -114.6",0,0]},
-            "rear_t":{"rotation":["q.modified_distance_moved * -114.6",0,0]}}}}})
+            "front_t":{"rotation":["q.modified_distance_moved * 114.6",0,0]},
+            "rear_t":{"rotation":["q.modified_distance_moved * 114.6",0,0]}}}}})
     stages = {}
     action_transitions = [{f"action_{action}": f"q.property('{NS}:action') == {action}"} for action in action_clips]
     idle_transitions = [{"select": f"q.property('{NS}:action') == 0"}]
@@ -2233,6 +2366,7 @@ def main():
     animations=convert_animations()
     make_player_handwashing_animation()
     make_player_chair_clap_animation()
+    make_player_motorcycle_animation()
     make_blocks()
     make_customer_names()
     make_items()

@@ -1,5 +1,10 @@
 # Motorcycle input and wheel-state evidence
 
+The later [bounded presentation repair](../MOTORCYCLE_PRESENTATION_20261109.md)
+only corrects the model-local wheel X sign and adds a third-person idle base.
+It leaves the input/hidden-speed contract gaps below open; the historical
+negative active-expression example describes the pre-repair source.
+
 This read-only follow-up inspected addon `dbb2574154a54cc5ad69e75e71d23900a98a79fe`
 (0.1.48-alpha.1) against the pinned Java source
 `e59e3dbcabe19b783d9adb933db5fcb8bc1e4642`. It changes no runtime, dependencies,
