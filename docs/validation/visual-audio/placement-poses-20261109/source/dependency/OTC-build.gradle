@@ -1,0 +1,166 @@
+plugins {
+    id 'net.minecraftforge.gradle' version '6.0.53'
+    id 'org.spongepowered.mixin' version '0.7.38'
+    id 'maven-publish'
+}
+
+def localProps = new Properties()
+file("gradle.properties").withInputStream { localProps.load(it) }
+
+version = localProps.getProperty("mod_version")
+group = localProps.getProperty("maven_group")
+
+base {
+    archivesName = localProps.getProperty("archives_base_name")
+}
+
+repositories {
+    flatDir { dirs 'libs' }
+    exclusiveContent {
+        forRepository { maven { name = 'Modrinth'; url = 'https://api.modrinth.com/maven' } }
+        forRepositories(fg.repository)
+        filter { includeGroup 'maven.modrinth' }
+    }
+    maven { name = 'MinecraftForge'; url = 'https://maven.minecraftforge.net/' }
+    maven { name = 'GeckoLib'; url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+    maven { name = 'BlameJared'; url = 'https://maven.blamejared.com' }
+    maven { url = 'https://mirrors.cloud.tencent.com/nexus/repository/maven-public/' }
+    maven { url = 'https://maven.aliyun.com/repository/public' }
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs = [
+                    "${project(':common').projectDir}/src/main/resources",
+                    "${projectDir}/src/main/resources"
+            ]
+        }
+    }
+    client {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+    }
+}
+
+configurations {
+    clientImplementation.extendsFrom implementation
+    clientCompileOnly.extendsFrom compileOnly
+    clientRuntimeOnly.extendsFrom runtimeOnly
+}
+
+minecraft {
+    mappings channel: 'official', version: localProps.getProperty("minecraft_version")
+
+    runs {
+        client {
+            workingDirectory project.file('runs/client')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                ordertocook {
+                    source sourceSets.main
+                    source sourceSets.client
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('runs/server')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            args '--nogui'
+            mods {
+                ordertocook {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${localProps.getProperty('minecraft_version')}-${localProps.getProperty('forge_version')}"
+
+    implementation project(':common')
+    implementation "blue.endless:jankson:1.2.3"
+    minecraftLibrary "blue.endless:jankson:1.2.3"
+    jarJar "blue.endless:jankson:[1.2.3,1.3)"
+    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${localProps.getProperty('minecraft_version')}:${localProps.getProperty('geckolib_version')}")
+    compileOnly fg.deobf('maven.modrinth:jade:11.13.1+forge')
+
+    // Optional local compatibility-test dependency. Forge production jars must be
+    // remapped before they can run in the official-mappings development client.
+    if (file('libs/touhoulittlemaid-1.5.3-forge+mc1.20.1.jar').exists()) {
+        compileOnly fg.deobf('local:touhoulittlemaid:1.5.3-forge+mc1.20.1')
+        if (!providers.gradleProperty('withoutMaid').isPresent()) {
+            runtimeOnly fg.deobf('local:touhoulittlemaid:1.5.3-forge+mc1.20.1')
+        }
+    }
+
+    if (!providers.gradleProperty("ordertocook.skipJeiRuntime").map { it.toBoolean() }.getOrElse(false)) {
+        runtimeOnly fg.deobf("mezz.jei:jei-${localProps.getProperty('minecraft_version')}-forge:${localProps.getProperty('jei_version')}")
+    }
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+}
+
+mixin {
+    add sourceSets.main, "ordertocook-refmap.json"
+    add sourceSets.client, "ordertocook-refmap.json"
+    config "ordertocook.mixins.json"
+}
+
+jarJar.enable()
+
+def fabric1201RecipesDir = rootProject.findProject(':fabric-1.20.1') != null
+        ? rootProject.project(':fabric-1.20.1').file('src/main/resources/data/ordertocook/recipes')
+        : file('../fabric-1.20.1/src/main/resources/data/ordertocook/recipes')
+
+processResources {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    inputs.property "version", project.version
+    from(fabric1201RecipesDir) {
+        into "data/ordertocook/recipes"
+    }
+    filesMatching("META-INF/mods.toml") {
+        expand "version": inputs.properties.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 17
+    options.encoding = 'UTF-8'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+    withSourcesJar()
+}
+
+tasks.withType(Jar).configureEach {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    if (name == 'jar') {
+        archiveFileName = "ordertocook-${project.version}-forge1.20.1-dev.jar"
+        from sourceSets.client.output
+    } else if (name == 'jarJar') {
+        archiveFileName = "ordertocook-${project.version}-forge1.20.1.jar"
+        from sourceSets.client.output
+    }
+    manifest {
+        attributes([
+                "Specification-Title"     : "ordertocook",
+                "Specification-Vendor"    : "breezeth",
+                "Specification-Version"   : "1",
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : project.jar.archiveVersion,
+                "Implementation-Vendor"   : "breezeth",
+                "MixinConfigs"            : "ordertocook.mixins.json"
+        ])
+    }
+    // 排除 jankson 的 module-info 避免与 structure_gel 等模组产生模块冲突
+    exclude 'module-info.class'
+}

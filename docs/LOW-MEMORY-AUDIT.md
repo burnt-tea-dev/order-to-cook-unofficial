@@ -81,3 +81,7 @@ pendingDishes 陣列替換或長度變化亦會重建。同 tick 的 queue、mig
 這是程式審核、正式服務接 API doubles 的操作數與離線驗證；未執行 BDS、Minecraft 客戶端、
 用戶本機或 LIVE。手機 FPS、實際常駐 RAM、GC、GPU、熱降頻、多人與觸控均未實測。
 候選及 Draft PR 不代表遊戲驗收或已發佈。
+
+## 獨立驗收補充
+
+[獨立重現、80,000 次差分、負控制與計時原始數據](validation/low-memory-20261109/README.md) 已補齊。稀疏查詢時建立索引可能更慢，並非所有負載均改善；原生 BDS／手機性能仍未測。

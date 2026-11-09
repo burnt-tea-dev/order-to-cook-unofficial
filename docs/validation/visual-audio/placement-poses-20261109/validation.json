@@ -1,0 +1,401 @@
+{
+  "status": "PASS: bounded numeric/source/editor-package checks only",
+  "gui_run": false,
+  "native_run": false,
+  "runtime_changed": false,
+  "bindings": {
+    "printer": {
+      "north_rotation": [
+        0,
+        0,
+        0
+      ],
+      "terrain_alias": "ordertocook_block_order_machine_geo",
+      "texture": "textures/ordertocook/block/order_machine_geo",
+      "material": {
+        "texture": "ordertocook_block_order_machine_geo",
+        "render_method": "alpha_test",
+        "ambient_occlusion": false
+      },
+      "original_png_bytes_identical": true
+    },
+    "bag": {
+      "north_rotation": [
+        0,
+        0,
+        0
+      ],
+      "terrain_alias": "ordertocook_block_takeout_bag_placed",
+      "texture": "textures/ordertocook/block/takeout_bag_placed",
+      "material": {
+        "texture": "ordertocook_block_takeout_bag_placed",
+        "render_method": "alpha_test",
+        "ambient_occlusion": 0
+      },
+      "original_png_bytes_identical": true
+    },
+    "plate": {
+      "geometry": "geometry.ordertocook.dining_plate_0",
+      "material": "entity_alphatest",
+      "atlas_virtual_dimensions": [
+        256,
+        256
+      ],
+      "atlas_png_dimensions": [
+        256,
+        256
+      ],
+      "source_virtual_dimensions": [
+        32,
+        32
+      ],
+      "source_png_dimensions": [
+        32,
+        32
+      ],
+      "atlas_tile_box_pixels": [
+        2,
+        2,
+        34,
+        34
+      ],
+      "entire_tile_RGBA_identical": true,
+      "helper_offset_modelpx": 0.2,
+      "yaw_contract": "saved customer yaw + 180; scene chooses model-local zero, native actor yaw NOT proved"
+    }
+  },
+  "scenes": [
+    {
+      "id": "01_printer_frame2",
+      "max_corner_residual_modelpx": 7.416426699435874e-07,
+      "observed_y_delta_modelpx": [
+        -7.416426699435874e-07,
+        5.88577472093732e-07
+      ],
+      "allowed_intentional_y_modelpx": 0,
+      "max_uv_residual_virtualpx": 0,
+      "cube_count": 3,
+      "face_count": 14,
+      "editor_geometry_and_uv_against_oracle": "pass",
+      "official_Blockbench_parseCube_agreement": "pass",
+      "original_embedded_texture_bytes": "pass"
+    },
+    {
+      "id": "02_printer_frame4",
+      "max_corner_residual_modelpx": 7.068301046686543e-07,
+      "observed_y_delta_modelpx": [
+        -5.608588651284663e-07,
+        6.827882099713634e-07
+      ],
+      "allowed_intentional_y_modelpx": 0,
+      "max_uv_residual_virtualpx": 0,
+      "cube_count": 3,
+      "face_count": 14,
+      "editor_geometry_and_uv_against_oracle": "pass",
+      "official_Blockbench_parseCube_agreement": "pass",
+      "original_embedded_texture_bytes": "pass"
+    },
+    {
+      "id": "03_bag_frame3",
+      "max_corner_residual_modelpx": 6.737284778957076e-07,
+      "observed_y_delta_modelpx": [
+        -3.2683255213328266e-08,
+        1.7910859595460238e-07
+      ],
+      "allowed_intentional_y_modelpx": 0,
+      "max_uv_residual_virtualpx": 0,
+      "cube_count": 5,
+      "face_count": 30,
+      "editor_geometry_and_uv_against_oracle": "pass",
+      "official_Blockbench_parseCube_agreement": "pass",
+      "original_embedded_texture_bytes": "pass"
+    },
+    {
+      "id": "04_bag_frame7",
+      "max_corner_residual_modelpx": 6.79868989550414e-07,
+      "observed_y_delta_modelpx": [
+        -4.278902133725282e-07,
+        3.997421238466359e-08
+      ],
+      "allowed_intentional_y_modelpx": 0,
+      "max_uv_residual_virtualpx": 0,
+      "cube_count": 5,
+      "face_count": 30,
+      "editor_geometry_and_uv_against_oracle": "pass",
+      "official_Blockbench_parseCube_agreement": "pass",
+      "original_embedded_texture_bytes": "pass"
+    },
+    {
+      "id": "05_plate_settled",
+      "max_corner_residual_modelpx": 1.6653345369377348e-16,
+      "observed_y_delta_modelpx": [
+        0.19999999999999996,
+        0.20000000000000018
+      ],
+      "allowed_intentional_y_modelpx": 0.2,
+      "max_uv_residual_virtualpx": 8.881784197001252e-16,
+      "cube_count": 9,
+      "face_count": 54,
+      "editor_geometry_and_uv_against_oracle": "pass",
+      "official_Blockbench_parseCube_agreement": "pass",
+      "original_embedded_texture_bytes": "pass"
+    },
+    {
+      "id": "06_plate_rebound",
+      "max_corner_residual_modelpx": 7.216449660063518e-16,
+      "observed_y_delta_modelpx": [
+        0.1999999999999993,
+        0.20000000000000018
+      ],
+      "allowed_intentional_y_modelpx": 0.2,
+      "max_uv_residual_virtualpx": 8.881784197001252e-16,
+      "cube_count": 9,
+      "face_count": 54,
+      "editor_geometry_and_uv_against_oracle": "pass",
+      "official_Blockbench_parseCube_agreement": "pass",
+      "original_embedded_texture_bytes": "pass"
+    }
+  ],
+  "controls_numerical_only": {
+    "printer": {
+      "0.125": {
+        "order": {
+          "rotation": [
+            0,
+            0,
+            2.8671304453935553
+          ],
+          "scale": [
+            1.05,
+            1.05,
+            1.05
+          ]
+        },
+        "group": {
+          "position": [
+            0,
+            -0.875,
+            -0.28125
+          ]
+        }
+      },
+      "0.25": {
+        "order": {
+          "rotation": [
+            0,
+            0,
+            -1.8796107497601506
+          ],
+          "scale": [
+            0.95,
+            0.95,
+            0.95
+          ]
+        },
+        "group": {
+          "position": [
+            0,
+            0.25,
+            0.1875
+          ]
+        }
+      },
+      "0.375": {
+        "order": {
+          "rotation": [
+            0,
+            0,
+            0.1295026899541048
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "group": {
+          "position": [
+            0,
+            1.375,
+            0.65625
+          ]
+        }
+      },
+      "0.4167": {
+        "order": {
+          "rotation": [
+            0,
+            0,
+            0.0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "group": {
+          "position": [
+            0,
+            1.7503000000000002,
+            0.8126250000000002
+          ]
+        }
+      },
+      "1": {
+        "order": {
+          "rotation": [
+            0,
+            0,
+            -0.0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "group": {
+          "position": [
+            0,
+            7,
+            3.0
+          ]
+        }
+      },
+      "idle_no_paper": {
+        "max_corner_residual_modelpx": 0,
+        "observed_y_delta_modelpx": [
+          0.0,
+          0.0
+        ],
+        "allowed_intentional_y_modelpx": 0,
+        "max_uv_residual_virtualpx": 0,
+        "cube_count": 2,
+        "face_count": 12
+      },
+      "waiting_paper_0_7_3": {
+        "max_corner_residual_modelpx": 1.7763568394002505e-15,
+        "observed_y_delta_modelpx": [
+          0.0,
+          1.7763568394002505e-15
+        ],
+        "allowed_intentional_y_modelpx": 0,
+        "max_uv_residual_virtualpx": 0,
+        "cube_count": 3,
+        "face_count": 14
+      }
+    },
+    "bag": {
+      "0.1667": {
+        "group": {
+          "rotation": [
+            0,
+            0,
+            0.4600534644287719
+          ],
+          "scale": [
+            1.1,
+            1.1,
+            1.1
+          ],
+          "position": [
+            0,
+            0.33330000000000004,
+            0
+          ]
+        }
+      },
+      "0.3333": {
+        "group": {
+          "rotation": [
+            0,
+            0,
+            -0.4494088624156195
+          ],
+          "scale": [
+            0.95,
+            0.95,
+            0.95
+          ],
+          "position": [
+            0,
+            0.16670000000000001,
+            0
+          ]
+        }
+      },
+      "0.5": {
+        "group": {
+          "rotation": [
+            0,
+            0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "position": [
+            0,
+            0.0,
+            0
+          ]
+        }
+      },
+      "frame0_settled": {
+        "max_corner_residual_modelpx": 0,
+        "observed_y_delta_modelpx": [
+          0.0,
+          0.0
+        ],
+        "allowed_intentional_y_modelpx": 0,
+        "max_uv_residual_virtualpx": 0,
+        "cube_count": 5,
+        "face_count": 30
+      }
+    }
+  },
+  "negative_mutations": [
+    {
+      "mutation": "printer wobble sign inverted",
+      "detected": true,
+      "reason": "('corner mismatch', 0.9079874378497408, 3e-06)"
+    },
+    {
+      "mutation": "printer child paper translation omitted",
+      "detected": true,
+      "reason": "('corner mismatch', 0.8338893465720094, 3e-06)"
+    },
+    {
+      "mutation": "bag root scale lost on one cube",
+      "detected": true,
+      "reason": "('corner mismatch', 0.16011775446865162, 3e-06)"
+    },
+    {
+      "mutation": "plate intentional helper offset normalized away",
+      "detected": true,
+      "reason": "('corner mismatch', 0.2, 3e-06)"
+    },
+    {
+      "mutation": "plate atlas one physical corner shifted 1px",
+      "detected": true,
+      "reason": "('physical UV mismatch', 1.0)"
+    },
+    {
+      "mutation": "sine mistakenly evaluated in radians",
+      "detected": true,
+      "reason": "('corner mismatch', 0.5020787794965123, 3e-06)"
+    }
+  ],
+  "tolerance_modelpx": 3e-06,
+  "limitations": [
+    "Frozen clip-local times; no runtime clock/reset/transition validation",
+    "Double-sided common editor preview does not emulate native alpha-test/light/AO/culling",
+    "Java and native float GPU arithmetic not executed; formula comparison uses doubles, tolerates six-decimal RP output",
+    "Plate actor yaw/world contact and actor-to-block transition require native client"
+  ],
+  "finding": "No new geometry or physical-UV mismatch in the six bounded cases. Plate +0.2 modelpx is intentional and preserved."
+}
+

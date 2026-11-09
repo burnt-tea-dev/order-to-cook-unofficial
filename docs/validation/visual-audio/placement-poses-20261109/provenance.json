@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "publication_base_commit": "78c615f219314f719489987d59b51c678cc42095",
+  "publication_base_tree": "6d54021e860eab653b721440a2236631ac6f9fff",
+  "runtime_commit": "dbb2574154a54cc5ad69e75e71d23900a98a79fe",
+  "original_acquisition_docs_snapshot_commit": "d06461f29dc75fc6f4f1820dfa46807bcc769c03",
+  "original_acquisition_docs_snapshot_tree": "6d54021e860eab653b721440a2236631ac6f9fff",
+  "original_preparation_artifact_index_sha256": "596a5ab9e8bfc1b60bfe6e614b6463edb3663075d1b734bfcc01173b38dd1004",
+  "original_preparation_input_manifest_sha256": "147be8319fc88612c9cd4b6b24e0e1f3d67c00861d9e730abbcd6bda4e8450ba",
+  "original_preparation_scene_manifest_sha256": "e5cf7b47d5b40f93646ea95cf71a78c758db9cf9b53d575c61458e21484f8e15",
+  "original_numeric_validation_sha256": "f28b8ca79dfa92fcd29dbed7994e4f960b693b4850e2f43da3e94881ee2d22c3",
+  "projection": {
+    "input_manifest": "Retains exact bytes, SHA-256 and Git blob identities, replacing acquisition checkout paths with pinned public URLs. No source, runtime, scene or texture bytes are edited.",
+    "scene_manifest": "Camera and status descriptions reference the completed bounded static GUI comparison in gui-evidence.json; all fixture paths, hashes, poses and source identities are retained.",
+    "blockbench_provenance": "Retains application/source-map identity and only the five bundled source-map entries; paths are package-relative.",
+    "omissions": "One-time input collector, coordination queue, internal reports and redundant acquisition receipts are not public verification dependencies and are omitted.",
+    "scripts": "Numeric oracle and scene construction remain independent of production conversion. Public verifier adds package-local identity and path validation.",
+    "fridge": "Concise contract and selected exact source/license records accompany official API URLs. Acquisition paths and internal audit/report metadata are omitted.",
+    "gui_evidence": "The 25 original model/control JPEGs are unchanged. gui-evidence.json is an explicit selection of capture identities, camera/texture controls and observations with package-relative paths; acquisition locations and unrelated operational data are omitted. Original capture-record hashes are retained."
+  },
+  "trust_boundary": "Hashes check package consistency and exact known input identities, not a signature or a fresh remote-source fetch. The verifier runs only bundled review code and a pinned official parseCube excerpt in a minimal data-only Node VM. It does not launch Blockbench, plugins, a native client or a network connection."
+}

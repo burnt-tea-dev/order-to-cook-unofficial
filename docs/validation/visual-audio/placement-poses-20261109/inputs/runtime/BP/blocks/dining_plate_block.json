@@ -1,0 +1,482 @@
+{
+  "format_version": "1.26.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "ordertocook:dining_plate_block",
+      "menu_category": {
+        "category": "none",
+        "is_hidden_in_commands": true
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:cardinal_direction"
+          ],
+          "y_rotation_offset": 180
+        }
+      },
+      "states": {
+        "ordertocook:stage": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "ordertocook:stage_high": [
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.ordertocook.dining_plate_empty",
+        "bone_visibility": {
+          "root": false
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "ordertocook_dining_plate",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:collision_box": [
+        {
+          "origin": [
+            -7,
+            0,
+            -7
+          ],
+          "size": [
+            14,
+            2,
+            14
+          ]
+        },
+        {
+          "origin": [
+            -5,
+            2,
+            -5
+          ],
+          "size": [
+            10,
+            3,
+            10
+          ]
+        }
+      ],
+      "minecraft:selection_box": {
+        "origin": [
+          -7,
+          0,
+          -7
+        ],
+        "size": [
+          14,
+          5,
+          14
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.1
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:loot": "loot_tables/empty.json",
+      "minecraft:destruction_particles": {
+        "texture": "ordertocook_dining_plate",
+        "particle_count": 0
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#9b9286",
+      "minecraft:movable": {
+        "movement_type": "immovable"
+      },
+      "ordertocook:interact": {},
+      "ordertocook:meal_tick": {},
+      "minecraft:tick": {
+        "interval_range": [
+          1,
+          1
+        ],
+        "looping": true
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              -90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 1",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_1"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 2",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_2"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 3",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_3"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 4",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_4",
+          "minecraft:tick": {
+            "interval_range": [
+              1,
+              1
+            ],
+            "looping": false
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 5",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_5"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 6",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_6"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 7",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_7"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 8",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_8",
+          "minecraft:tick": {
+            "interval_range": [
+              1,
+              1
+            ],
+            "looping": false
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 9",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_9"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 10",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_10"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 11",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_11"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 12",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_12",
+          "minecraft:tick": {
+            "interval_range": [
+              1,
+              1
+            ],
+            "looping": false
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 13",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_13"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 14",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_14"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 15",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_15"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 16",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_16",
+          "minecraft:tick": {
+            "interval_range": [
+              1,
+              1
+            ],
+            "looping": false
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 17",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_17"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 18",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_18"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 19",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_19"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 20",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_20",
+          "minecraft:tick": {
+            "interval_range": [
+              1,
+              1
+            ],
+            "looping": false
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 21",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_21"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 22",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_22"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 23",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_23"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 24",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_24",
+          "minecraft:tick": {
+            "interval_range": [
+              1,
+              1
+            ],
+            "looping": false
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 25",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_25"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 26",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_26"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 27",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_27"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 28",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_28",
+          "minecraft:tick": {
+            "interval_range": [
+              1,
+              1
+            ],
+            "looping": false
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 29",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_29"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 30",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_30"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 31",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_31"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 32",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_32",
+          "minecraft:tick": {
+            "interval_range": [
+              1,
+              1
+            ],
+            "looping": false
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 33",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_33"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 34",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_34"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 35",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_35"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 36",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_36",
+          "minecraft:tick": {
+            "interval_range": [
+              1,
+              1
+            ],
+            "looping": false
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 37",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_37"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 38",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_38"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 39",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_39"
+        }
+      },
+      {
+        "condition": "(q.block_state('ordertocook:stage') + 16 * q.block_state('ordertocook:stage_high')) == 40",
+        "components": {
+          "minecraft:geometry": "geometry.ordertocook.dining_plate_40",
+          "minecraft:tick": {
+            "interval_range": [
+              1,
+              1
+            ],
+            "looping": false
+          }
+        }
+      }
+    ]
+  }
+}
