@@ -1,0 +1,631 @@
+{
+  "status": "Eight original customer JPEGs independently inspected; limited static editor observations only",
+  "date_utc": "2026-11-09",
+  "artifact_root": "frozen",
+  "review_method": "Read-only original-image pixel inspection independent of capture; no GUI/app operation, image editing or runtime changes by this reviewer.",
+  "application": "Blockbench Desktop 5.2.2 from capture/preparation record, not a version established by title-bar pixels.",
+  "historical_receipts": [
+    {
+      "path": "gui-receipt.json",
+      "sha256": "456f7aa18495fcb1a019b59e645a47923a959a1a9196a4daecd33a6a60f8cdb6"
+    },
+    {
+      "path": "gui-receipt-completion.json",
+      "sha256": "d80c8aa3c6f60d7e00fc02efd7401cac62dc6210221fdff7a8c8f7524bb25845"
+    }
+  ],
+  "prepared_manifest_sha256": "98f584e678584bb9ff78406b3cfe5e5fb4b7b21cfccac422bd52a91cae2ee669",
+  "customer_observations": [
+    {
+      "path": "screenshots/01_slim_idle4_wrist-isometric-right-2-1.jpg",
+      "sha256": "827ce2852463d83b272b8eb618ffd778dbec860ef2300b70acabc116438e5200",
+      "bytes": 90780,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "format": "JPEG",
+      "scene_id": "01_slim_idle4_wrist",
+      "scene": "scenes/01_slim_idle4_wrist.bbmodel",
+      "scene_sha256": "ec50aa64d85bf982d30a55067db1a13e2bc6516c7b94004f35db802c9bec7dc9",
+      "rig": "slim",
+      "clip": "customer_sit_4",
+      "clip_seconds": 1.3333,
+      "query_inputs": {
+        "q.anim_time": 1.3333
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "slim",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+          "geometry_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "slim",
+          "geometry": "runtime/RP/models/entity/customer_slim.geo.json",
+          "geometry_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "source_screen_side": "right/lower",
+      "rp_screen_side": "left/upper",
+      "camera": "Isometric Right (2:1)",
+      "camera_evidence": "North label visible; isometric preset reported by capture operator and consistent with axes/layout.",
+      "identity_evidence": "SOURCE X=-20 and RP X=+20 in frozen scene, combined with camera record; not identification by pixel differences.",
+      "frame_complete": true,
+      "models_unselected": true,
+      "independent_original_image_inspection": true,
+      "caption": "Both full seated slim figures are visible, with pitched heads, a raised right hand/wrist near the face, hanging opposite arm and bent legs/feet. Skin and sleeves remain visible. Inner hand/joint faces are partly occluded.",
+      "observation_result": "No newly observed broad missing texture or broken face in this submitted view. Occluded faces and native rendering remain untested."
+    },
+    {
+      "path": "screenshots/01_slim_idle4_wrist-north.jpg",
+      "sha256": "27115eaeda25312a50b1042a8bed42d13a3ac9825c4639745798e7b145ddcd93",
+      "bytes": 84288,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "format": "JPEG",
+      "scene_id": "01_slim_idle4_wrist",
+      "scene": "scenes/01_slim_idle4_wrist.bbmodel",
+      "scene_sha256": "ec50aa64d85bf982d30a55067db1a13e2bc6516c7b94004f35db802c9bec7dc9",
+      "rig": "slim",
+      "clip": "customer_sit_4",
+      "clip_seconds": 1.3333,
+      "query_inputs": {
+        "q.anim_time": 1.3333
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "slim",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+          "geometry_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "slim",
+          "geometry": "runtime/RP/models/entity/customer_slim.geo.json",
+          "geometry_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "source_screen_side": "right",
+      "rp_screen_side": "left",
+      "camera": "North",
+      "camera_evidence": "North label visible; isometric preset reported by capture operator and consistent with axes/layout.",
+      "identity_evidence": "SOURCE X=-20 and RP X=+20 in frozen scene, combined with camera record; not identification by pixel differences.",
+      "frame_complete": true,
+      "models_unselected": true,
+      "independent_original_image_inspection": true,
+      "caption": "The North view shows both complete slim figures from the front, including the raised hand, face, sleeves, torso and separated seated feet. No selection outline or transform gizmo appears on either figure.",
+      "observation_result": "No newly observed broad missing texture or broken face in this submitted view. Occluded faces and native rendering remain untested."
+    },
+    {
+      "path": "screenshots/04_wide_interrupt_shrink-isometric-right-2-1.jpg",
+      "sha256": "8708d9418c2dbbb35172ae072f508b04ff7a944eadd8d1c861b2cbd54359f85d",
+      "bytes": 82183,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "format": "JPEG",
+      "scene_id": "04_wide_interrupt_shrink",
+      "scene": "scenes/04_wide_interrupt_shrink.bbmodel",
+      "scene_sha256": "5ddd4aea8aba4cb94071dd19bc773d0e0793814353c8fd0f3359311c5211f3bc",
+      "rig": "wide",
+      "clip": "npc_eat&scale_interrupt",
+      "clip_seconds": 0.375,
+      "query_inputs": {
+        "q.anim_time": 0.375
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "wide",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+          "geometry_sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "wide",
+          "geometry": "runtime/RP/models/entity/customer.geo.json",
+          "geometry_sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "source_screen_side": "right/lower",
+      "rp_screen_side": "left/upper",
+      "camera": "Isometric Right (2:1)",
+      "camera_evidence": "North label visible; isometric preset reported by capture operator and consistent with axes/layout.",
+      "identity_evidence": "SOURCE X=-20 and RP X=+20 in frozen scene, combined with camera record; not identification by pixel differences.",
+      "frame_complete": true,
+      "models_unselected": true,
+      "independent_original_image_inspection": true,
+      "caption": "Both full wide figures show lowered heads, bent hands/arms and seated legs/feet without a broad visible missing-texture or broken-face discrepancy. The 0.5 scale is fixed-input provenance, not measured from screenshot zoom.",
+      "observation_result": "No newly observed broad missing texture or broken face in this submitted view. Occluded faces and native rendering remain untested."
+    },
+    {
+      "path": "screenshots/05_wide_boom_peak-isometric-right-2-1.jpg",
+      "sha256": "3f61bb08ed6304cba39b30e3f6df3bae99a9decea97f75a8ee2b3b88060ed236",
+      "bytes": 87075,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "format": "JPEG",
+      "scene_id": "05_wide_boom_peak",
+      "scene": "scenes/05_wide_boom_peak.bbmodel",
+      "scene_sha256": "1a49ee776b998dbbca6e71992e5b408ff6ac1de0022911feac1b230a5e46673a",
+      "rig": "wide",
+      "clip": "npc_eat&boom",
+      "clip_seconds": 5.9157,
+      "query_inputs": {
+        "q.anim_time": 5.9157
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "wide",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+          "geometry_sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "wide",
+          "geometry": "runtime/RP/models/entity/customer.geo.json",
+          "geometry_sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "source_screen_side": "right/lower",
+      "rp_screen_side": "left/upper",
+      "camera": "Isometric Right (2:1)",
+      "camera_evidence": "North label visible; isometric preset reported by capture operator and consistent with axes/layout.",
+      "identity_evidence": "SOURCE X=-20 and RP X=+20 in frozen scene, combined with camera record; not identification by pixel differences.",
+      "frame_complete": true,
+      "models_unselected": true,
+      "independent_original_image_inspection": true,
+      "caption": "Both full wide seated figures show head/body, asymmetric bent arms and legs/feet without a broad visible missing-texture or broken-face discrepancy. Source 1.6 versus RP 1.5928057554 is a mathematical input difference, not a difference measured in this JPEG or a proven native timing defect.",
+      "observation_result": "No newly observed broad missing texture or broken face in this submitted view. Occluded faces and native rendering remain untested."
+    },
+    {
+      "path": "screenshots/03_slim_eat_hand_extreme-isometric-right-2-1.jpg",
+      "sha256": "a60848ffa3fe2b88b14d4355cf9eb1cec155ca53b50e36e3654eb12e554ddb19",
+      "bytes": 89446,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "format": "JPEG",
+      "scene_id": "03_slim_eat_hand_extreme",
+      "scene": "scenes/03_slim_eat_hand_extreme.bbmodel",
+      "scene_sha256": "37d43a93b05ebbae5e79231a79e9f14868ce7756212efd4436d31cebf4392c18",
+      "rig": "slim",
+      "clip": "npc_eat&scale",
+      "clip_seconds": 3.0,
+      "query_inputs": {
+        "q.anim_time": 3.0
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "slim",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+          "geometry_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "slim",
+          "geometry": "runtime/RP/models/entity/customer_slim.geo.json",
+          "geometry_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "source_screen_side": "right/lower",
+      "rp_screen_side": "left/upper",
+      "camera": "Isometric Right (2:1)",
+      "camera_evidence": "North label visible; isometric preset reported by capture operator and consistent with axes/layout.",
+      "identity_evidence": "SOURCE X=-20 and RP X=+20 in frozen scene, combined with camera record; not identification by pixel differences.",
+      "frame_complete": true,
+      "models_unselected": true,
+      "independent_original_image_inspection": true,
+      "caption": "Both full slim figures show lowered heads, bent hands/wrists near the chest and face, sleeve texture, and seated legs/feet. Some inner hand and joint surfaces are hidden by overlapping geometry; those faces are not accepted from this view.",
+      "observation_result": "No newly observed broad missing texture or broken face in this submitted view. Occluded faces and native rendering remain untested."
+    },
+    {
+      "path": "screenshots/07_wide_standtake_wrist-isometric-right-2-1.jpg",
+      "sha256": "1f7130b94cc741ea5137db3971216f85927487eb193d3fd4e12b40da2b6eeec9",
+      "bytes": 85047,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "format": "JPEG",
+      "scene_id": "07_wide_standtake_wrist",
+      "scene": "scenes/07_wide_standtake_wrist.bbmodel",
+      "scene_sha256": "0a502d3dfe5d2131ea9fff7fdde0acfd11f6c62998e57acbbf855eab664328db",
+      "rig": "wide",
+      "clip": "npc_standtake",
+      "clip_seconds": 2.5,
+      "query_inputs": {
+        "q.anim_time": 2.5
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "wide",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+          "geometry_sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "wide",
+          "geometry": "runtime/RP/models/entity/customer.geo.json",
+          "geometry_sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "source_screen_side": "right/lower",
+      "rp_screen_side": "left/upper",
+      "camera": "Isometric Right (2:1)",
+      "camera_evidence": "North label visible; isometric preset reported by capture operator and consistent with axes/layout.",
+      "identity_evidence": "SOURCE X=-20 and RP X=+20 in frozen scene, combined with camera record; not identification by pixel differences.",
+      "frame_complete": true,
+      "models_unselected": true,
+      "independent_original_image_inspection": true,
+      "caption": "Both full standing wide figures show asymmetric arms, a bent right wrist/hand, front torso, legs and feet. No broad visible missing-texture or broken-face difference appears. The earlier hop and later removal are not observed.",
+      "observation_result": "No newly observed broad missing texture or broken face in this submitted view. Occluded faces and native rendering remain untested."
+    },
+    {
+      "path": "screenshots/06_slim_spawn_rebound-isometric-right-2-1.jpg",
+      "sha256": "eac10487c3abed1b654be586fdb43fe657a40adf3f4a7b90448c00929097f2e1",
+      "bytes": 88903,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "format": "JPEG",
+      "scene_id": "06_slim_spawn_rebound",
+      "scene": "scenes/06_slim_spawn_rebound.bbmodel",
+      "scene_sha256": "a80ec5f58e5682df6db103feecdb622e3bcbd7e63709cae73a6c80e080a1655e",
+      "rig": "slim",
+      "clip": "npc_sitspawn",
+      "clip_seconds": 0.25,
+      "query_inputs": {
+        "q.anim_time": 0.25
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "slim",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+          "geometry_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "slim",
+          "geometry": "runtime/RP/models/entity/customer_slim.geo.json",
+          "geometry_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "source_screen_side": "right/lower",
+      "rp_screen_side": "left/upper",
+      "camera": "Isometric Right (2:1)",
+      "camera_evidence": "North label visible; isometric preset reported by capture operator and consistent with axes/layout.",
+      "identity_evidence": "SOURCE X=-20 and RP X=+20 in frozen scene, combined with camera record; not identification by pixel differences.",
+      "frame_complete": true,
+      "models_unselected": true,
+      "independent_original_image_inspection": true,
+      "caption": "Both full slim seated figures show head, torso, hanging arms, bent legs and feet without a broad visible missing-texture or broken-face difference. The 2.6-unit rebound and 1.875-degree body roll are fixed-input values, not pixel measurements or observed motion.",
+      "observation_result": "No newly observed broad missing texture or broken face in this submitted view. Occluded faces and native rendering remain untested."
+    },
+    {
+      "path": "screenshots/02_wide_idle3_body_turn-isometric-right-2-1.jpg",
+      "sha256": "31a5dab51de07a223ffe08bf580b3295e30337eaf1cbc9809bf0c7dd63e04302",
+      "bytes": 82512,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "format": "JPEG",
+      "scene_id": "02_wide_idle3_body_turn",
+      "scene": "scenes/02_wide_idle3_body_turn.bbmodel",
+      "scene_sha256": "a09b008aa9272a140b627ea7114659137d6bc94cb293a18bf937456d3aad73c2",
+      "rig": "wide",
+      "clip": "customer_wait_3",
+      "clip_seconds": 0.5833,
+      "query_inputs": {
+        "q.anim_time": 0.5833,
+        "query.target_x_rotation": 15,
+        "query.target_y_rotation": -30
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "wide",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+          "geometry_sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "wide",
+          "geometry": "runtime/RP/models/entity/customer.geo.json",
+          "geometry_sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "source_screen_side": "right/lower",
+      "rp_screen_side": "left/upper",
+      "camera": "Isometric Right (2:1)",
+      "camera_evidence": "North label visible; isometric preset reported by capture operator and consistent with axes/layout.",
+      "identity_evidence": "SOURCE X=-20 and RP X=+20 in frozen scene, combined with camera record; not identification by pixel differences.",
+      "frame_complete": true,
+      "models_unselected": true,
+      "independent_original_image_inspection": true,
+      "caption": "Both full wide figures show the turned/tilted body and raised left hand near the head, with the other arm and both legs/feet visible. The target_x_rotation=15 and target_y_rotation=-30 values are declared synthetic inputs, not an observed native look-at target.",
+      "observation_result": "No newly observed broad missing texture or broken face in this submitted view. Occluded faces and native rendering remain untested."
+    }
+  ],
+  "diagnostics": [
+    {
+      "path": "screenshots/renderer-white-diagnostic.jpg",
+      "sha256": "c9064c5a63bc75f6222700d5f44193b3935eca52d2beb25f4f36f3e12e6a817a",
+      "bytes": 51815,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "format": "JPEG",
+      "pixel_edits": "none; original JPEG bytes only",
+      "stage": "white_customer_viewport",
+      "caption": "Customer scene title visible, viewport white. Failed editor observation; not evidence of an asset defect or a valid customer-pose comparison.",
+      "independent_image_inspection": true,
+      "counts_as_customer_scene": false
+    },
+    {
+      "path": "screenshots/known-control-renderer-white-diagnostic.jpg",
+      "sha256": "e659283314cf5103dd491527d7cad6c0f29d1c0e10facdf94e0b1683b4cd5963",
+      "bytes": 53721,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "format": "JPEG",
+      "pixel_edits": "none; original JPEG bytes only",
+      "stage": "white_known_control_viewport",
+      "caption": "Known refrigerator-control title visible, viewport also white. Independent control fails in the same editor condition; do not assign the white viewport to customer assets.",
+      "independent_image_inspection": true,
+      "counts_as_customer_scene": false
+    },
+    {
+      "path": "screenshots/known-control-after-editor-restart.jpg",
+      "sha256": "fb92e5a4531836dc3be28177a214c08b1c9af9063e5d05c1f77768168aa5ef4e",
+      "bytes": 88291,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "format": "JPEG",
+      "pixel_edits": "none; original JPEG bytes only",
+      "stage": "known_control_recovered",
+      "caption": "Known refrigerator control visible after the operator restarted only their editor with the original executable and same independent profile. Recovery diagnostic only, not customer or new refrigerator acceptance.",
+      "independent_image_inspection": true,
+      "counts_as_customer_scene": false
+    }
+  ],
+  "counts": {
+    "customer_photographs": 8,
+    "unique_customer_scenes": 7,
+    "separate_renderer_diagnostics": 3
+  },
+  "renderer_recovery": {
+    "operator_report": "Only the operator-owned Blockbench window was closed. The original executable was restarted with the same independent profile, with no new flags, service or settings change. Previous Hardware Acceleration setting was off; this run did not change or diagnose it. No scene was saved.",
+    "supported_by_images": "Customer and known control both white before; known control visible after restart.",
+    "root_cause": "unknown; restart recovery does not identify a GPU/driver/backend or asset cause",
+    "global_render_sides": "Not newly exposed in these submitted screenshots. Frozen textures remain auto; no native material inference."
+  },
+  "global_render_sides": "Not exposed in these photographs. Frozen texture fields are auto; no native material acceptance follows.",
+  "limits": [
+    "Static cubes inside one editor, not executed Java renderer or native Bedrock output.",
+    "No animation playback, native tick/partial-tick sampling, action_elapsed, controller stop/re-entry or late-join observation.",
+    "No native alpha, overlay sorting/culling, sound, particle, multiplayer or entity removal acceptance.",
+    "No pixel alignment/rescaling/difference metric; no cross-screenshot size inference.",
+    "White-viewport diagnostics are separate from core customer photographs and are not passes.",
+    "Only scene 02 has nonzero synthetic target queries: X=15, Y=-30. No native look-at observation.",
+    "Known Gecko pre/post 1 ms mathematical edge is not a demonstrated runtime bug.",
+    "Complete frame means both model silhouettes and editor window are retained; it does not mean every occluded model face is visible."
+  ],
+  "runtime_changed": false,
+  "native_acceptance": false,
+  "prepared_status_promoted": false,
+  "original_image_bytes_modified": false
+}

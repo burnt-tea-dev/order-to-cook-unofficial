@@ -1,0 +1,409 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.ordertocook.customer": {
+      "initial_state": "select",
+      "states": {
+        "select": {
+          "on_entry": [
+            "v.idle_variant = q.property('ordertocook:animation_variant');"
+          ],
+          "transitions": [
+            {
+              "action_1": "q.property('ordertocook:action') == 1"
+            },
+            {
+              "action_2": "q.property('ordertocook:action') == 2"
+            },
+            {
+              "action_3": "q.property('ordertocook:action') == 3"
+            },
+            {
+              "action_4": "q.property('ordertocook:action') == 4"
+            },
+            {
+              "action_5": "q.property('ordertocook:action') == 5"
+            },
+            {
+              "action_6": "q.property('ordertocook:action') == 6"
+            },
+            {
+              "action_7": "q.property('ordertocook:action') == 7"
+            },
+            {
+              "seated": "q.property('ordertocook:stage') == 'seated'"
+            },
+            {
+              "waiting": "1.0"
+            }
+          ]
+        },
+        "waiting": {
+          "animations": [
+            {
+              "waiting1": "v.idle_variant == 1"
+            },
+            {
+              "waiting2": "v.idle_variant == 2"
+            },
+            {
+              "waiting3": "v.idle_variant == 3"
+            },
+            {
+              "waiting4": "v.idle_variant == 4"
+            }
+          ],
+          "blend_transition": 0,
+          "transitions": [
+            {
+              "action_1": "q.property('ordertocook:action') == 1"
+            },
+            {
+              "action_2": "q.property('ordertocook:action') == 2"
+            },
+            {
+              "action_3": "q.property('ordertocook:action') == 3"
+            },
+            {
+              "action_4": "q.property('ordertocook:action') == 4"
+            },
+            {
+              "action_5": "q.property('ordertocook:action') == 5"
+            },
+            {
+              "action_6": "q.property('ordertocook:action') == 6"
+            },
+            {
+              "action_7": "q.property('ordertocook:action') == 7"
+            },
+            {
+              "select": "q.property('ordertocook:stage') == 'seated'"
+            },
+            {
+              "waiting_reset": "q.all_animations_finished"
+            }
+          ]
+        },
+        "waiting_reset": {
+          "on_entry": [
+            "v.idle_roll = math.random(0, 1);",
+            "v.idle_variant = v.idle_roll < 0.55 ? 1 : (v.idle_roll < 0.7 ? 2 : (v.idle_roll < 0.85 ? 3 : 4));"
+          ],
+          "transitions": [
+            {
+              "action_1": "q.property('ordertocook:action') == 1"
+            },
+            {
+              "action_2": "q.property('ordertocook:action') == 2"
+            },
+            {
+              "action_3": "q.property('ordertocook:action') == 3"
+            },
+            {
+              "action_4": "q.property('ordertocook:action') == 4"
+            },
+            {
+              "action_5": "q.property('ordertocook:action') == 5"
+            },
+            {
+              "action_6": "q.property('ordertocook:action') == 6"
+            },
+            {
+              "action_7": "q.property('ordertocook:action') == 7"
+            },
+            {
+              "select": "q.property('ordertocook:stage') == 'seated'"
+            },
+            {
+              "waiting": "1.0"
+            }
+          ]
+        },
+        "seated": {
+          "animations": [
+            {
+              "seated1": "v.idle_variant == 1"
+            },
+            {
+              "seated2": "v.idle_variant == 2"
+            },
+            {
+              "seated3": "v.idle_variant == 3"
+            },
+            {
+              "seated4": "v.idle_variant == 4"
+            }
+          ],
+          "blend_transition": 0,
+          "transitions": [
+            {
+              "action_1": "q.property('ordertocook:action') == 1"
+            },
+            {
+              "action_2": "q.property('ordertocook:action') == 2"
+            },
+            {
+              "action_3": "q.property('ordertocook:action') == 3"
+            },
+            {
+              "action_4": "q.property('ordertocook:action') == 4"
+            },
+            {
+              "action_5": "q.property('ordertocook:action') == 5"
+            },
+            {
+              "action_6": "q.property('ordertocook:action') == 6"
+            },
+            {
+              "action_7": "q.property('ordertocook:action') == 7"
+            },
+            {
+              "select": "q.property('ordertocook:stage') != 'seated'"
+            },
+            {
+              "seated_reset": "q.all_animations_finished"
+            }
+          ]
+        },
+        "seated_reset": {
+          "on_entry": [
+            "v.idle_roll = math.random(0, 1);",
+            "v.idle_variant = v.idle_roll < 0.55 ? 1 : (v.idle_roll < 0.7 ? 2 : (v.idle_roll < 0.85 ? 3 : 4));"
+          ],
+          "transitions": [
+            {
+              "action_1": "q.property('ordertocook:action') == 1"
+            },
+            {
+              "action_2": "q.property('ordertocook:action') == 2"
+            },
+            {
+              "action_3": "q.property('ordertocook:action') == 3"
+            },
+            {
+              "action_4": "q.property('ordertocook:action') == 4"
+            },
+            {
+              "action_5": "q.property('ordertocook:action') == 5"
+            },
+            {
+              "action_6": "q.property('ordertocook:action') == 6"
+            },
+            {
+              "action_7": "q.property('ordertocook:action') == 7"
+            },
+            {
+              "select": "q.property('ordertocook:stage') != 'seated'"
+            },
+            {
+              "seated": "1.0"
+            }
+          ]
+        },
+        "action_1": {
+          "animations": [
+            "action1"
+          ],
+          "blend_transition": 0,
+          "transitions": [
+            {
+              "action_2": "q.property('ordertocook:action') == 2"
+            },
+            {
+              "action_3": "q.property('ordertocook:action') == 3"
+            },
+            {
+              "action_4": "q.property('ordertocook:action') == 4"
+            },
+            {
+              "action_5": "q.property('ordertocook:action') == 5"
+            },
+            {
+              "action_6": "q.property('ordertocook:action') == 6"
+            },
+            {
+              "action_7": "q.property('ordertocook:action') == 7"
+            },
+            {
+              "select": "q.property('ordertocook:action') == 0"
+            }
+          ]
+        },
+        "action_2": {
+          "animations": [
+            "action2"
+          ],
+          "blend_transition": 0,
+          "transitions": [
+            {
+              "action_1": "q.property('ordertocook:action') == 1"
+            },
+            {
+              "action_3": "q.property('ordertocook:action') == 3"
+            },
+            {
+              "action_4": "q.property('ordertocook:action') == 4"
+            },
+            {
+              "action_5": "q.property('ordertocook:action') == 5"
+            },
+            {
+              "action_6": "q.property('ordertocook:action') == 6"
+            },
+            {
+              "action_7": "q.property('ordertocook:action') == 7"
+            },
+            {
+              "select": "q.property('ordertocook:action') == 0"
+            }
+          ]
+        },
+        "action_3": {
+          "animations": [
+            "action3"
+          ],
+          "blend_transition": 0,
+          "transitions": [
+            {
+              "action_1": "q.property('ordertocook:action') == 1"
+            },
+            {
+              "action_2": "q.property('ordertocook:action') == 2"
+            },
+            {
+              "action_4": "q.property('ordertocook:action') == 4"
+            },
+            {
+              "action_5": "q.property('ordertocook:action') == 5"
+            },
+            {
+              "action_6": "q.property('ordertocook:action') == 6"
+            },
+            {
+              "action_7": "q.property('ordertocook:action') == 7"
+            },
+            {
+              "select": "q.property('ordertocook:action') == 0"
+            }
+          ]
+        },
+        "action_4": {
+          "animations": [
+            "action4"
+          ],
+          "blend_transition": 0,
+          "transitions": [
+            {
+              "action_1": "q.property('ordertocook:action') == 1"
+            },
+            {
+              "action_2": "q.property('ordertocook:action') == 2"
+            },
+            {
+              "action_3": "q.property('ordertocook:action') == 3"
+            },
+            {
+              "action_5": "q.property('ordertocook:action') == 5"
+            },
+            {
+              "action_6": "q.property('ordertocook:action') == 6"
+            },
+            {
+              "action_7": "q.property('ordertocook:action') == 7"
+            },
+            {
+              "select": "q.property('ordertocook:action') == 0"
+            }
+          ]
+        },
+        "action_5": {
+          "animations": [
+            "action5"
+          ],
+          "blend_transition": 0,
+          "transitions": [
+            {
+              "action_1": "q.property('ordertocook:action') == 1"
+            },
+            {
+              "action_2": "q.property('ordertocook:action') == 2"
+            },
+            {
+              "action_3": "q.property('ordertocook:action') == 3"
+            },
+            {
+              "action_4": "q.property('ordertocook:action') == 4"
+            },
+            {
+              "action_6": "q.property('ordertocook:action') == 6"
+            },
+            {
+              "action_7": "q.property('ordertocook:action') == 7"
+            },
+            {
+              "select": "q.property('ordertocook:action') == 0"
+            }
+          ]
+        },
+        "action_6": {
+          "animations": [
+            "action6"
+          ],
+          "blend_transition": 0,
+          "transitions": [
+            {
+              "action_1": "q.property('ordertocook:action') == 1"
+            },
+            {
+              "action_2": "q.property('ordertocook:action') == 2"
+            },
+            {
+              "action_3": "q.property('ordertocook:action') == 3"
+            },
+            {
+              "action_4": "q.property('ordertocook:action') == 4"
+            },
+            {
+              "action_5": "q.property('ordertocook:action') == 5"
+            },
+            {
+              "action_7": "q.property('ordertocook:action') == 7"
+            },
+            {
+              "select": "q.property('ordertocook:action') == 0"
+            }
+          ]
+        },
+        "action_7": {
+          "animations": [
+            "action7"
+          ],
+          "blend_transition": 0,
+          "transitions": [
+            {
+              "action_1": "q.property('ordertocook:action') == 1"
+            },
+            {
+              "action_2": "q.property('ordertocook:action') == 2"
+            },
+            {
+              "action_3": "q.property('ordertocook:action') == 3"
+            },
+            {
+              "action_4": "q.property('ordertocook:action') == 4"
+            },
+            {
+              "action_5": "q.property('ordertocook:action') == 5"
+            },
+            {
+              "action_6": "q.property('ordertocook:action') == 6"
+            },
+            {
+              "select": "q.property('ordertocook:action') == 0"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

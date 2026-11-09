@@ -200,3 +200,7 @@ python tests/check_release_policy.py
 ## Later stove ignition repair
 
 Version .46 restores the registered Java stove renderer’s sampled ignition poses rather than only its texture phases. [Source/service and version scope](validation/0.1.46-alpha.1/STOVE_IGNITION.md) and [actual cloud editor comparisons](validation/visual-audio/blockbench-20261108/remaining-static/README.md) retain the 10Hz publication, continuous animation, packet/reset and native-rendering limitations. Other unreviewed assets and real clients remain open.
+
+## Later customer static-pose review
+
+[Seven frozen customer scenes and eight original editor photographs](validation/visual-audio/customer-static-20261109/README.md) add independently inspected wrist, eating, shrink, boom, spawn-rebound, standing-take and synthetic idle3 body-turn samples. This is source/RP data in the same Blockbench cube renderer, not native Java/Bedrock acceptance. The original preparation and earlier GUI receipts remain unchanged; three renderer diagnostics are separate. No runtime change is proposed, and the known mathematical 1 ms pre/post edge is not a demonstrated native defect.
