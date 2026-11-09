@@ -55,7 +55,9 @@ Java 各水平 blockstate 的 north/east/south/west 為 0/90/180/270 度。
 
 2026-11-09 補充：[六個放置／姿態比較](validation/visual-audio/placement-poses-20261109/README.md)
 核對打單機兩個實際 NORTH 有限幀、外送袋正負晃動及 stage 0 餐盤。
-數值與編輯器證據分開記錄；不取代原生時序、材質與互動驗收。
+數值與編輯器證據分開記錄；六景已有八張原始 GUI 比較圖及相機／Double 控制證據。
+畫面左側為 RP、右側為 SOURCE；未見新增外形／可見 UV 差異，餐盤保留既有 +0.2 像素偏移。
+這些有限視角不取代原生時序、材質、actor 朝向與互動驗收。
 
 ## 冰箱
 

@@ -43,6 +43,92 @@ def check_record(name, row):
     assert hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest() == row['git_blob'], ('Git blob mismatch', name)
 
 
+def check_gui_evidence(index, scenes):
+    """Check capture identity and associations, not the truth of pixel observations."""
+    from PIL import Image
+
+    gui = read('gui-evidence.json')
+    assert gui['schema'] == 1 and gui['status'] == 'COMPLETED: six bounded static GUI comparisons'
+    assert gui['gui_run'] is True and gui['native_run'] is False and gui['runtime_changed'] is False
+    assert (gui['scene_count'], gui['primary_image_count'], gui['control_image_count']) == (6, 8, 17)
+    assert gui['editor']['application'] == 'Blockbench' and gui['editor']['version'] == '5.2.2'
+    assert gui['source_record_hashes'] == {
+        'capture_allowlist_sha256': 'd383ca404e4e0264bf9d6d1b1a00113ad549520f67fdac2783970447683551db',
+        'capture_report_sha256': 'c32b1dcaa3b78d5c38ec39773d15af1a91937b0eef024108b6ec742651a336eb',
+        'capture_index_sha256': '614b505fb846e1fe06ad3172547049a96115cb80e0fda3dd7026a24a2af63ffc',
+        'frozen_preparation_artifact_index_sha256': '596a5ab9e8bfc1b60bfe6e614b6463edb3663075d1b734bfcc01173b38dd1004',
+    }
+    expected_cameras = {
+        'printer': ([0, 24, -80], [0, 8, 0], 'printer_camera_definition.jpg'),
+        'bag_oblique': ([-30, 25, -80], [0, 8, 0], 'bag_camera_definition.jpg'),
+        'plate_front': ([0, 4, -80], [0, 4, 0], 'plate_camera_definition.jpg'),
+    }
+    assert set(gui['cameras']) == set(expected_cameras)
+    controls = {gui['editor']['version_evidence'], gui['screen_mapping']['evidence']}
+    assert gui['editor']['version_evidence'] == 'screenshots/controls/editor_version.jpg'
+    assert gui['screen_mapping']['evidence'] == 'screenshots/controls/source_screen_mapping.jpg'
+    assert (gui['screen_mapping']['left'], gui['screen_mapping']['right']) == ('RP', 'SOURCE')
+    for key, (position, focal_point, filename) in expected_cameras.items():
+        camera = gui['cameras'][key]
+        assert camera['projection'] == 'Orthographic'
+        assert camera['position'] == position and camera['focal_point'] == focal_point
+        assert camera['definition_evidence'] == 'screenshots/controls/' + filename
+        controls.add(camera['definition_evidence'])
+    images = gui['images']
+    assert len(images) == 25
+    assert set(images) == {p for p in index if p.startswith('screenshots/')}
+    for path, capture in images.items():
+        image_path = local_file(path)
+        original = capture['original_relative_path']
+        mapped = 'screenshots/controls/' + original.removeprefix('evidence/') if original.startswith('evidence/') else 'screenshots/' + original
+        assert path == mapped
+        assert capture['role'] == ('control' if original.startswith('evidence/') else 'primary')
+        assert capture['sha256'] == index[path] == sha(image_path)
+        assert capture['bytes'] == image_path.stat().st_size
+        assert capture['original_bytes_unchanged'] is True
+        assert capture['format'] == 'JPEG' and capture['dimensions'] == [1188, 848]
+        with Image.open(image_path) as image:
+            assert image.format == 'JPEG' and list(image.size) == capture['dimensions']
+            image.load()
+    by_id = {scene['id']: scene for scene in scenes}
+    assert len(gui['scenes']) == 6 and {s['id'] for s in gui['scenes']} == set(by_id)
+    primary = set()
+    for observation in gui['scenes']:
+        sid = observation['id']; scene = by_id[sid]
+        assert observation['scene_path'] == scene['path'] and observation['scene_sha256'] == scene['sha256']
+        assert observation['time'] == scene['time'] and observation['editor_version'] == '5.2.2'
+        assert observation['status'] == 'completed bounded static GUI comparison'
+        frozen = read(scene['path'])
+        assert observation['serialized_project_name'] == frozen['name']
+        assert observation['gui_project_title'] == sid + ' - Blockbench'
+        assert observation['gui_tab'] == sid + '.bbmodel'
+        assert observation['hierarchy_group_names_from_frozen_file'] == [g['name'] for g in frozen['groups']]
+        groups = {g['uuid']: g for g in frozen['groups']}
+        assert observation['gui_root_groups_visible'] == [groups[g['uuid']]['name'] for g in frozen['outliner']]
+        assert all(g['visibility'] for g in frozen['groups']) and all(e['visibility'] for e in frozen['elements'])
+        assert observation['selection_at_main_capture'] == 'none; no outline/gizmo; GUI count 0/' + str(len(frozen['elements']))
+        texture = observation['texture_control']
+        assert texture['source'] == texture['runtime'] == 'Inside and Outside'
+        assert texture['serialized_equivalent'] == 'double' and texture['render_mode'] == 'Default'
+        for i, label in enumerate(('source', 'runtime')):
+            file = 'screenshots/controls/' + sid[:2] + '_' + label + '_texture.jpg'
+            assert texture[label + '_evidence'] == file
+            assert texture[label + '_uv_size'] == [frozen['textures'][i]['uv_width'], frozen['textures'][i]['uv_height']]
+            assert frozen['textures'][i]['render_sides'] == 'double'
+            controls.add(file)
+        expected_views = [(sid + '_front.jpg', 'plate_front'), (sid + '_oblique.jpg', 'bag_oblique')] if scene['family'] == 'plate' else [(sid + '_paired.jpg', 'printer' if scene['family'] == 'printer' else 'bag_oblique')]
+        assert len(observation['views']) == len(expected_views)
+        for view, (filename, camera_key) in zip(observation['views'], expected_views):
+            assert view['image'] == 'screenshots/' + filename and view['camera_key'] == camera_key
+            assert view['screen_mapping'] == {'left': 'RP', 'right': 'SOURCE'}
+            assert view['whole_assemblies_in_frame'] is True and view['unselected'] is True
+            primary.add(view['image'])
+    assert len(primary) == 8 and len(controls) == 17 and primary.isdisjoint(controls)
+    assert primary == {p for p, row in images.items() if row['role'] == 'primary'}
+    assert controls == {p for p, row in images.items() if row['role'] == 'control'}
+    return {'gui_scenes': 6, 'primary_gui_images': len(primary), 'gui_control_images': len(controls)}
+
+
 def check_public_integrity():
     actual = set()
     for p in ROOT.rglob('*'):
@@ -70,7 +156,7 @@ def check_public_integrity():
     assert provenance['original_preparation_artifact_index_sha256'] == '596a5ab9e8bfc1b60bfe6e614b6463edb3663075d1b734bfcc01173b38dd1004'
     assert sha(local_file('validation.json')) == provenance['original_numeric_validation_sha256']
     assert read('validation.json')['gui_run'] is False  # saved numeric-only run, not a GUI claim
-    assert set(provenance['projection']) == {'input_manifest', 'scene_manifest', 'blockbench_provenance', 'omissions', 'scripts', 'fridge'}
+    assert set(provenance['projection']) == {'input_manifest', 'scene_manifest', 'blockbench_provenance', 'omissions', 'scripts', 'fridge', 'gui_evidence'}
     official = read('source/blockbench/official-provenance.json')
     assert official['application'] == 'Blockbench5.2.2'
     assert official['source_map_sha256'] == 'e51e5a44d2a8b39137ff5af8f52adb9230f481758a18b32460dfed688b74dcc8'
@@ -90,7 +176,8 @@ def check_public_integrity():
     assert {s['path'] for s in scenes} == {p for p in index if p.startswith('scenes/')}
     for scene in scenes:
         assert sha(local_file(scene['path'])) == scene['sha256']
-    return {'files': len(index), 'exact_inputs': len(m['files']), 'fridge_sources': len(fridge), 'scenes': len(scenes)}
+    gui = check_gui_evidence(index, scenes)
+    return {'files': len(index), 'exact_inputs': len(m['files']), 'fridge_sources': len(fridge), 'scenes': len(scenes), **gui}
 
 
 if __name__ == '__main__':

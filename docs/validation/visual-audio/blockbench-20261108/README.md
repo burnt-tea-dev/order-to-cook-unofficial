@@ -96,5 +96,7 @@ The [next review batch](remaining-static/README.md) records 19 stove source/base
 The [2026-11-09 six-scene comparison](../placement-poses-20261109/README.md) adds
 source/runtime printer and bag positive/negative poses plus settled/rebound
 stage-zero plates. It keeps exact source pixels, physical UVs and the intentional
-plate anchor offset. These bounded results supplement the earlier formal-only
-mesh and CPU samples; native material, clock and actor-facing checks remain open.
+plate anchor offset. The completed six-scene editor review includes eight original
+paired JPEGs and 17 raw camera, texture, version and screen-mapping controls.
+These bounded results supplement the earlier formal-only mesh and CPU samples;
+native material, clock and actor-facing checks remain open.

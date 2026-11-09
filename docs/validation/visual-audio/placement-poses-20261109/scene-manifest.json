@@ -5,7 +5,7 @@
   "gecko": "4.8.3 / e81962eefd04e0cab90445d3df37b477d2767ffd",
   "fixture_space": "Block-local centered modelpx, not world screenshot; both sides preserve own Y origin",
   "editor_preview_material": "Double sides explicitly set for common geometry/UV inspection; not proof of native alpha_test/entity_alphatest or lighting",
-  "camera": "GUI evidence is pending and not included; this manifest identifies immutable scene inputs.",
+  "camera": "Recorded editor camera settings, raw images and bounded observations are in gui-evidence.json.",
   "scenes": [
     {
       "id": "01_printer_frame2",
@@ -49,7 +49,7 @@
         "SOURCE": -18,
         "RP": 18
       },
-      "status": "frozen numeric fixture; GUI evidence pending and not included"
+      "status": "frozen numeric fixture; bounded static GUI comparison completed"
     },
     {
       "id": "02_printer_frame4",
@@ -93,7 +93,7 @@
         "SOURCE": -18,
         "RP": 18
       },
-      "status": "frozen numeric fixture; GUI evidence pending and not included"
+      "status": "frozen numeric fixture; bounded static GUI comparison completed"
     },
     {
       "id": "03_bag_frame3",
@@ -135,7 +135,7 @@
         "SOURCE": -18,
         "RP": 18
       },
-      "status": "frozen numeric fixture; GUI evidence pending and not included"
+      "status": "frozen numeric fixture; bounded static GUI comparison completed"
     },
     {
       "id": "04_bag_frame7",
@@ -177,7 +177,7 @@
         "SOURCE": -18,
         "RP": 18
       },
-      "status": "frozen numeric fixture; GUI evidence pending and not included"
+      "status": "frozen numeric fixture; bounded static GUI comparison completed"
     },
     {
       "id": "05_plate_settled",
@@ -218,7 +218,7 @@
         "SOURCE": -18,
         "RP": 18
       },
-      "status": "frozen numeric fixture; GUI evidence pending and not included"
+      "status": "frozen numeric fixture; bounded static GUI comparison completed"
     },
     {
       "id": "06_plate_rebound",
@@ -259,7 +259,7 @@
         "SOURCE": -18,
         "RP": 18
       },
-      "status": "frozen numeric fixture; GUI evidence pending and not included"
+      "status": "frozen numeric fixture; bounded static GUI comparison completed"
     }
   ]
 }

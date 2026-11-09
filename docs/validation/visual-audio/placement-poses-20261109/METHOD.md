@@ -60,7 +60,7 @@ angle mapping and reverses the up/down UV rectangle endpoints. Generic/free uses
 per_texture_uv_size; the format default Euler order is ZYX (format.ts:717).
 The builder is checked against exact official parseCube in a data-only harness.
 The numeric harness loads no GUI application, custom plugin or remote prompt.
-GUI evidence is pending and is not included in this package.
+The separate completed static GUI comparison is recorded in [gui-evidence.json](gui-evidence.json).
 
 The independent source oracle applies matrices to original source corners. The
 editor builder instead embeds the uniform scale and child translation in cube
@@ -84,7 +84,9 @@ entityCutoutNoCull, runtime terrain alpha_test and entity_alphatest. Double in
 both editor halves is a declared comparison control, not a native material
 emulator. Native actor yaw, contact appearance and all temporal semantics remain
 outside this static proof. The numeric checks make no screenshot or camera claim.
-GUI observations and actual camera settings are pending and not included.
+GUI observations and actual camera settings are recorded separately in
+[gui-evidence.json](gui-evidence.json), with eight original primary views and
+17 raw controls. These are bounded image observations, not a native-renderer run.
 
 ## Public package and replay boundary
 
@@ -93,13 +95,18 @@ Acquisition paths and unrelated reports are omitted. The public input and scene
 manifests are declared projections, with original manifest hashes retained in
 `provenance.json`. They are not presented as the unmodified acquisition records.
 The saved `validation.json` is the original successful numeric-only run, and its
-`gui_run: false` describes that run. GUI evidence remains pending; no captures
-are included in this package.
+`gui_run: false` describes that run. The later static GUI record is separate and
+does not rewrite the numeric report. Its public metadata omits acquisition
+locations and unrelated operational data, while retaining original record hashes.
+All 25 copied JPEGs preserve their original bytes.
 
 `verify_integrity.py` checks the full package inventory, relative paths, exact input
 SHA-256/Git blobs, source-map selection and scene identities before the numeric
 verifier invokes the official parseCube excerpt. It rejects missing, extra,
-changed or symlinked files and paths outside this package. No network, production
-converter, installed Blockbench application or renderer is used. Run Python with
+changed or nonregular entries and paths outside this package. GUI checks bind
+all image bytes, JPEG dimensions, scene identities, visible groups, camera settings
+and control associations. Metadata checks do not independently establish the
+visual observations. No network, production converter, installed Blockbench
+application or renderer is used by the verifier. Run Python with
 `-B`; verification writes only its report to stdout. Pillow and Node must already
 be available. Hashes are consistency checks, not a signature or fresh remote audit.
