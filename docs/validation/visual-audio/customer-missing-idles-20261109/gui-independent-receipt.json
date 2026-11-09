@@ -1,0 +1,542 @@
+{
+  "status": "Independent inspection of nine original full-window JPEGs; bounded static observations only",
+  "capture_receipt_original_sha256": "eda6d9054d9b4e2b47d3550d3385dab1b2e54b104bf532202d772c1dd716cdf0",
+  "preparation_manifest_sha256": "59b4a9bd2a5ac037649a1fa35761c9f578a5e25aab3252c31aabcf4e2de41ea6",
+  "prepared_status_promoted": false,
+  "native_acceptance": false,
+  "photographs": [
+    {
+      "path": "screenshots/01_wide_wait2-isometric-right-2-1.jpg",
+      "sha256": "421633bd2074d518ddcb6e401551a235d038ff4757cd1a24c6e670a0f1c0ad45",
+      "bytes": 89385,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "scene_id": "01_wide_wait2_head_query",
+      "scene_sha256": "fc95a0c1e7f4a07bc8689b1fcd1ae81ebd1800d97686c455dbad1e972fa38e31",
+      "camera": "Isometric Right (2:1)",
+      "source_display_position": "right and lower",
+      "rp_display_position": "left and upper",
+      "clip": "customer_wait_2",
+      "time": 0.375,
+      "query_inputs": {
+        "q.anim_time": 0.375,
+        "query.target_x_rotation": 15,
+        "query.target_y_rotation": -30
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "wide",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+          "geometry_sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "wide",
+          "geometry": "runtime/RP/models/entity/customer.geo.json",
+          "geometry_sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "original_pixels_independently_inspected": true,
+      "caption": "Complete unselected wide standing pair. Isometric shows the turned/pitched head, hair top, shoulder tops, hanging arms and straight trouser/boot silhouette. No broad missing texture or source/RP-only broken face is visible; rear and inner surfaces remain obscured.",
+      "complete_figures": true,
+      "unselected": true
+    },
+    {
+      "path": "screenshots/01_wide_wait2-north.jpg",
+      "sha256": "5b820dc6abbb35bf62a8a81e7d6c05e6109a7b4b0fe1bfe0ab6946a5c48a5f31",
+      "bytes": 87918,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "scene_id": "01_wide_wait2_head_query",
+      "scene_sha256": "fc95a0c1e7f4a07bc8689b1fcd1ae81ebd1800d97686c455dbad1e972fa38e31",
+      "camera": "NORTH",
+      "source_display_position": "right",
+      "rp_display_position": "left",
+      "clip": "customer_wait_2",
+      "time": 0.375,
+      "query_inputs": {
+        "q.anim_time": 0.375,
+        "query.target_x_rotation": 15,
+        "query.target_y_rotation": -30
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "wide",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+          "geometry_sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "wide",
+          "geometry": "runtime/RP/models/entity/customer.geo.json",
+          "geometry_sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "original_pixels_independently_inspected": true,
+      "caption": "Complete unselected wide standing pair. North label is visible. Faces, front shirt, hanging hands and straight legs are visible on both figures; head-to-neck underfaces and rear faces remain obscured. No new port-only difference is established in this view.",
+      "complete_figures": true,
+      "unselected": true
+    },
+    {
+      "path": "screenshots/02_slim_wait2-isometric-right-2-1.jpg",
+      "sha256": "93c6126932bbe7d61a53245d7f1ef288ec00fd76e3e228aca47c436eecd78efd",
+      "bytes": 91051,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "scene_id": "02_slim_wait2_head_query",
+      "scene_sha256": "072e6cb4f681f9b61d25d840b30a5796e562500afa256ff3b02acae9388fdf32",
+      "camera": "Isometric Right (2:1)",
+      "source_display_position": "right and lower",
+      "rp_display_position": "left and upper",
+      "clip": "customer_wait_2",
+      "time": 0.375,
+      "query_inputs": {
+        "q.anim_time": 0.375,
+        "query.target_x_rotation": 15,
+        "query.target_y_rotation": -30
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "slim",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+          "geometry_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "slim",
+          "geometry": "runtime/RP/models/entity/customer_slim.geo.json",
+          "geometry_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "original_pixels_independently_inspected": true,
+      "caption": "Complete unselected slim standing pair. Isometric shows hair top, turned head, narrow sleeves/arms, green shirt, brown trousers and boots. No broad missing texture or source/RP-only broken face is visible; inner joints and rear surfaces remain obscured.",
+      "complete_figures": true,
+      "unselected": true
+    },
+    {
+      "path": "screenshots/02_slim_wait2-north.jpg",
+      "sha256": "26ba822fb7b7ba0d348a51f1e50df61b4262d814c2a17b91390e9793ef30c946",
+      "bytes": 89246,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "scene_id": "02_slim_wait2_head_query",
+      "scene_sha256": "072e6cb4f681f9b61d25d840b30a5796e562500afa256ff3b02acae9388fdf32",
+      "camera": "NORTH",
+      "source_display_position": "right",
+      "rp_display_position": "left",
+      "clip": "customer_wait_2",
+      "time": 0.375,
+      "query_inputs": {
+        "q.anim_time": 0.375,
+        "query.target_x_rotation": 15,
+        "query.target_y_rotation": -30
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "slim",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+          "geometry_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "slim",
+          "geometry": "runtime/RP/models/entity/customer_slim.geo.json",
+          "geometry_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "original_pixels_independently_inspected": true,
+      "caption": "Complete unselected slim standing pair. North label is visible. Both faces, shirt fronts, hanging hands and straight legs are visible; head and neck inner surfaces remain obscured. No new port-only difference is established in this view.",
+      "complete_figures": true,
+      "unselected": true
+    },
+    {
+      "path": "screenshots/03_wide_sit3-isometric-right-2-1.jpg",
+      "sha256": "78b06fd42cf0f0faab79a40b22badb325158bfcfeb4b16c236fa2b192c4d292c",
+      "bytes": 86504,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "scene_id": "03_wide_sit3_body_query",
+      "scene_sha256": "c714e37176d13a924b239b9da2aa26110a7238eb84bbe47f6fe605f70961d5ec",
+      "camera": "Isometric Right (2:1)",
+      "source_display_position": "right and lower",
+      "rp_display_position": "left and upper",
+      "clip": "customer_sit_3",
+      "time": 0.5833,
+      "query_inputs": {
+        "q.anim_time": 0.5833,
+        "query.target_x_rotation": 15,
+        "query.target_y_rotation": -30
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "wide",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+          "geometry_sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "wide",
+          "geometry": "runtime/RP/models/entity/customer.geo.json",
+          "geometry_sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "original_pixels_independently_inspected": true,
+      "caption": "Complete unselected wide seated pair. Isometric shows a turned/tilted torso, left hand raised near the head, hanging opposite arm, bent legs and forward feet. The raised hand/head and inner shoulder surfaces overlap. No new port-only broad missing texture or broken face is visible.",
+      "complete_figures": true,
+      "unselected": true
+    },
+    {
+      "path": "screenshots/03_wide_sit3-north.jpg",
+      "sha256": "69031a603c388c000ba26553e89865ba70fe0341f876050ed6f4bde0c04d7629",
+      "bytes": 87949,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "scene_id": "03_wide_sit3_body_query",
+      "scene_sha256": "c714e37176d13a924b239b9da2aa26110a7238eb84bbe47f6fe605f70961d5ec",
+      "camera": "NORTH",
+      "source_display_position": "right",
+      "rp_display_position": "left",
+      "clip": "customer_sit_3",
+      "time": 0.5833,
+      "query_inputs": {
+        "q.anim_time": 0.5833,
+        "query.target_x_rotation": 15,
+        "query.target_y_rotation": -30
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "wide",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+          "geometry_sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "wide",
+          "geometry": "runtime/RP/models/entity/customer.geo.json",
+          "geometry_sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "original_pixels_independently_inspected": true,
+      "caption": "Complete unselected wide seated pair. North label is visible. Faces, front shirt, raised left hand and both boot fronts are visible; interior thigh/torso and hand/head surfaces remain obscured. No new port-only difference is established in this view.",
+      "complete_figures": true,
+      "unselected": true
+    },
+    {
+      "path": "screenshots/04_slim_sit3-isometric-right-2-1.jpg",
+      "sha256": "baa0714158e6bf0ab999bfd2302c411f581e4081032cab771fe54a7945e8750e",
+      "bytes": 90178,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "scene_id": "04_slim_sit3_body_query",
+      "scene_sha256": "b023f7b525a22b410c07f046a4e2a6809b21788f451fdb380c8da43b95e715ae",
+      "camera": "Isometric Right (2:1)",
+      "source_display_position": "right and lower",
+      "rp_display_position": "left and upper",
+      "clip": "customer_sit_3",
+      "time": 0.5833,
+      "query_inputs": {
+        "q.anim_time": 0.5833,
+        "query.target_x_rotation": 15,
+        "query.target_y_rotation": -30
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "slim",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+          "geometry_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "slim",
+          "geometry": "runtime/RP/models/entity/customer_slim.geo.json",
+          "geometry_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "original_pixels_independently_inspected": true,
+      "caption": "Complete unselected slim seated pair. Isometric shows the turned/tilted torso, raised left hand near the head, narrow sleeves, bent legs and boots. Hand/head and inner shoulder overlap obscures some faces. No new port-only broad missing texture or broken face is visible.",
+      "complete_figures": true,
+      "unselected": true
+    },
+    {
+      "path": "screenshots/04_slim_sit3-north.jpg",
+      "sha256": "0059a1207fbc64ad06e271ea6852e1016581ec6e7720432589300ee76db818d9",
+      "bytes": 89911,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "scene_id": "04_slim_sit3_body_query",
+      "scene_sha256": "b023f7b525a22b410c07f046a4e2a6809b21788f451fdb380c8da43b95e715ae",
+      "camera": "NORTH",
+      "source_display_position": "right",
+      "rp_display_position": "left",
+      "clip": "customer_sit_3",
+      "time": 0.5833,
+      "query_inputs": {
+        "q.anim_time": 0.5833,
+        "query.target_x_rotation": 15,
+        "query.target_y_rotation": -30
+      },
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "slim",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+          "geometry_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "slim",
+          "geometry": "runtime/RP/models/entity/customer_slim.geo.json",
+          "geometry_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ],
+      "original_pixels_independently_inspected": true,
+      "caption": "Complete unselected slim seated pair. North label is visible. Faces, front shirt, raised left hand and both boot fronts are visible; inner limb and rear surfaces remain obscured. No new port-only difference is established in this view.",
+      "complete_figures": true,
+      "unselected": true
+    },
+    {
+      "path": "screenshots/09_editor-render-sides-auto.jpg",
+      "sha256": "a1d31179dc6a98e8574a2dc8c34c6ca29fa577f86f9e3d7c2fffefe4b67c66bc",
+      "bytes": 60290,
+      "dimensions": [
+        1188,
+        848
+      ],
+      "scene_id": null,
+      "scene_sha256": null,
+      "camera": null,
+      "source_display_position": null,
+      "rp_display_position": null,
+      "clip": null,
+      "time": null,
+      "query_inputs": null,
+      "sides": null,
+      "original_pixels_independently_inspected": true,
+      "caption": "The settings dialog visibly shows Render Sides set to Auto. This is an editor-setting diagnostic, not a model acceptance photograph or a native material test.",
+      "render_sides_visible": "Auto"
+    }
+  ],
+  "identity_basis": "Source X=-20 and RP X=+20 from frozen scene layout and capture record; screen mapping follows the recorded cameras. Near-identical pixels alone are not identity evidence.",
+  "application_and_camera_scope": "Blockbench Desktop 5.2.2 and exact Isometric Right (2:1) preset are operator provenance, not established by the title bars. North labels and Auto are visible. Equal camera matrices across scenes are not asserted.",
+  "pose_scope": "Clip times and target_x_rotation=15,target_y_rotation=-30 are declared synthetic frozen inputs, not observed native clocks, tracking or query conventions. Both sides share one ordinary CubeRenderer.",
+  "limits": [
+    "Only the surfaces visible in these eight model views were inspected.",
+    "Screenshots do not independently authenticate capture timestamps or continuous motion.",
+    "No native renderer, query, controller, transitions, sound, particle, transparency/culling or multiplayer acceptance."
+  ]
+}

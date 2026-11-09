@@ -1,0 +1,246 @@
+{
+  "runtime_modified": false,
+  "gui_run": false,
+  "native_run": false,
+  "snapshot_commit": "dbb2574154a54cc5ad69e75e71d23900a98a79fe",
+  "main_commit_checked_locally": "dbb2574154a54cc5ad69e75e71d23900a98a79fe",
+  "samples": [
+    {
+      "id": "01_wide_wait2_head_query",
+      "rig": "wide",
+      "clip": "customer_wait_2",
+      "time": 0.375,
+      "query": {
+        "target_x_rotation": 15,
+        "target_y_rotation": -30
+      },
+      "why": "Previously unsampled standing idle2 posture: head-only [-15,30,0] query, symmetric arms -15, body Y -2, undeformed legs; wide silhouette and sleeve geometry. Synthetic look inputs do not establish native query conventions.",
+      "path": "scenes/01_wide_wait2_head_query.bbmodel",
+      "sha256": "fc95a0c1e7f4a07bc8689b1fcd1ae81ebd1800d97686c455dbad1e972fa38e31",
+      "status": "prepared, not GUI tested",
+      "clock_scope": "Frozen local clip seconds; q.anim_time equals sample time only for evaluating authored expressions. Runtime anim_time_update/action_elapsed not evaluated.",
+      "query_inputs": {
+        "q.anim_time": 0.375,
+        "query.target_x_rotation": 15,
+        "query.target_y_rotation": -30
+      },
+      "scope": "prepared static cube snapshot, not Java renderer/Bedrock native output or GUI acceptance",
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "wide",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+          "geometry_sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "wide",
+          "geometry": "runtime/RP/models/entity/customer.geo.json",
+          "geometry_sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ]
+    },
+    {
+      "id": "02_slim_wait2_head_query",
+      "rig": "slim",
+      "clip": "customer_wait_2",
+      "time": 0.375,
+      "query": {
+        "target_x_rotation": 15,
+        "target_y_rotation": -30
+      },
+      "why": "Previously unsampled standing idle2 posture: head-only [-15,30,0] query, symmetric arms -15, body Y -2, undeformed legs; slim silhouette and sleeve geometry. Synthetic look inputs do not establish native query conventions.",
+      "path": "scenes/02_slim_wait2_head_query.bbmodel",
+      "sha256": "072e6cb4f681f9b61d25d840b30a5796e562500afa256ff3b02acae9388fdf32",
+      "status": "prepared, not GUI tested",
+      "clock_scope": "Frozen local clip seconds; q.anim_time equals sample time only for evaluating authored expressions. Runtime anim_time_update/action_elapsed not evaluated.",
+      "query_inputs": {
+        "q.anim_time": 0.375,
+        "query.target_x_rotation": 15,
+        "query.target_y_rotation": -30
+      },
+      "scope": "prepared static cube snapshot, not Java renderer/Bedrock native output or GUI acceptance",
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "slim",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+          "geometry_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "slim",
+          "geometry": "runtime/RP/models/entity/customer_slim.geo.json",
+          "geometry_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ]
+    },
+    {
+      "id": "03_wide_sit3_body_query",
+      "rig": "wide",
+      "clip": "customer_sit_3",
+      "time": 0.5833,
+      "query": {
+        "target_x_rotation": 15,
+        "target_y_rotation": -30
+      },
+      "why": "Previously unsampled seated idle3 posture: body [-15,30,0] query with seated legs, left-arm authored splay [-157.5348,-6.8699,16.134], right arm -17.7773333333; wide leg/torso and raised sleeve/hand geometry. Synthetic look inputs do not establish native query conventions.",
+      "path": "scenes/03_wide_sit3_body_query.bbmodel",
+      "sha256": "c714e37176d13a924b239b9da2aa26110a7238eb84bbe47f6fe605f70961d5ec",
+      "status": "prepared, not GUI tested",
+      "clock_scope": "Frozen local clip seconds; q.anim_time equals sample time only for evaluating authored expressions. Runtime anim_time_update/action_elapsed not evaluated.",
+      "query_inputs": {
+        "q.anim_time": 0.5833,
+        "query.target_x_rotation": 15,
+        "query.target_y_rotation": -30
+      },
+      "scope": "prepared static cube snapshot, not Java renderer/Bedrock native output or GUI acceptance",
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "wide",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+          "geometry_sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "wide",
+          "geometry": "runtime/RP/models/entity/customer.geo.json",
+          "geometry_sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+          "skin_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ]
+    },
+    {
+      "id": "04_slim_sit3_body_query",
+      "rig": "slim",
+      "clip": "customer_sit_3",
+      "time": 0.5833,
+      "query": {
+        "target_x_rotation": 15,
+        "target_y_rotation": -30
+      },
+      "why": "Previously unsampled seated idle3 posture: body [-15,30,0] query with seated legs, left-arm authored splay [-157.5348,-6.8699,16.134], right arm -17.7773333333; slim leg/torso and raised sleeve/hand geometry. Synthetic look inputs do not establish native query conventions.",
+      "path": "scenes/04_slim_sit3_body_query.bbmodel",
+      "sha256": "b023f7b525a22b410c07f046a4e2a6809b21788f451fdb380c8da43b95e715ae",
+      "status": "prepared, not GUI tested",
+      "clock_scope": "Frozen local clip seconds; q.anim_time equals sample time only for evaluating authored expressions. Runtime anim_time_update/action_elapsed not evaluated.",
+      "query_inputs": {
+        "q.anim_time": 0.5833,
+        "query.target_x_rotation": 15,
+        "query.target_y_rotation": -30
+      },
+      "scope": "prepared static cube snapshot, not Java renderer/Bedrock native output or GUI acceptance",
+      "sides": [
+        {
+          "label": "SOURCE",
+          "offset_x": -20,
+          "rig": "slim",
+          "geometry": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+          "geometry_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+          "skin": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        },
+        {
+          "label": "RP",
+          "offset_x": 20,
+          "rig": "slim",
+          "geometry": "runtime/RP/models/entity/customer_slim.geo.json",
+          "geometry_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+          "skin": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+          "skin_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+          "physical_texture_dimensions": [
+            64,
+            64
+          ],
+          "virtual_uv_dimensions": [
+            64,
+            64
+          ],
+          "render_sides": "auto"
+        }
+      ]
+    }
+  ],
+  "freeze_note": "Scene bytes frozen before GUI handoff; later documentation does not regenerate or relabel them."
+}

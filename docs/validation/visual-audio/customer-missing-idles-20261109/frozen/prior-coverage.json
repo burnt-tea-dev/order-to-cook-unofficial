@@ -1,0 +1,191 @@
+{
+  "source": "Earlier prior-coverage.json plus seven remaining-batch frozen samples; the two public customer evidence directories were read. Approximate earlier UI times remain bounded decimal-time comparisons.",
+  "samples": [
+    {
+      "id": "01_slim_idle4_wrist",
+      "rig": "slim",
+      "clip": "customer_sit_4",
+      "time": 1.3333
+    },
+    {
+      "id": "02_wide_idle3_body_turn",
+      "rig": "wide",
+      "clip": "customer_wait_3",
+      "time": 0.5833,
+      "query": {
+        "target_x_rotation": 15,
+        "target_y_rotation": -30
+      }
+    },
+    {
+      "id": "03_slim_eat_hand_extreme",
+      "rig": "slim",
+      "clip": "npc_eat&scale",
+      "time": 3.0
+    },
+    {
+      "id": "04_wide_interrupt_shrink",
+      "rig": "wide",
+      "clip": "npc_eat&scale_interrupt",
+      "time": 0.375
+    },
+    {
+      "id": "05_wide_boom_peak",
+      "rig": "wide",
+      "clip": "npc_eat&boom",
+      "time": 5.9157
+    },
+    {
+      "id": "06_slim_spawn_rebound",
+      "rig": "slim",
+      "clip": "npc_sitspawn",
+      "time": 0.25
+    },
+    {
+      "id": "07_wide_standtake_wrist",
+      "rig": "wide",
+      "clip": "npc_standtake",
+      "time": 2.5
+    },
+    {
+      "id": "earlier_wide_neutral_0",
+      "rig": "wide",
+      "clip": "neutral",
+      "time": 0
+    },
+    {
+      "id": "earlier_slim_neutral_0",
+      "rig": "slim",
+      "clip": "neutral",
+      "time": 0
+    },
+    {
+      "id": "earlier_wide_customer_sit_1_0.58",
+      "rig": "wide",
+      "clip": "customer_sit_1",
+      "time": 0.58
+    },
+    {
+      "id": "earlier_slim_customer_sit_1_1.5",
+      "rig": "slim",
+      "clip": "customer_sit_1",
+      "time": 1.5
+    },
+    {
+      "id": "earlier_slim_customer_sit_4_2",
+      "rig": "slim",
+      "clip": "customer_sit_4",
+      "time": 2
+    },
+    {
+      "id": "earlier_wide_npc_sitspawn_0.31",
+      "rig": "wide",
+      "clip": "npc_sitspawn",
+      "time": 0.31
+    },
+    {
+      "id": "earlier_wide_npc_standspawn_0.31",
+      "rig": "wide",
+      "clip": "npc_standspawn",
+      "time": 0.31
+    },
+    {
+      "id": "earlier_wide_npc_sittake_1",
+      "rig": "wide",
+      "clip": "npc_sittake",
+      "time": 1
+    },
+    {
+      "id": "earlier_wide_npc_standtake_0.53",
+      "rig": "wide",
+      "clip": "npc_standtake",
+      "time": 0.53
+    },
+    {
+      "id": "earlier_wide_npc_standtake_1.5",
+      "rig": "wide",
+      "clip": "npc_standtake",
+      "time": 1.5
+    },
+    {
+      "id": "earlier_wide_npc_standtake_3",
+      "rig": "wide",
+      "clip": "npc_standtake",
+      "time": 3
+    },
+    {
+      "id": "earlier_wide_npc_eat&scale_interrupt_0.25",
+      "rig": "wide",
+      "clip": "npc_eat&scale_interrupt",
+      "time": 0.25
+    },
+    {
+      "id": "earlier_wide_npc_eat&scale_2.53",
+      "rig": "wide",
+      "clip": "npc_eat&scale",
+      "time": 2.53
+    },
+    {
+      "id": "earlier_wide_npc_eat&boom_5.81",
+      "rig": "wide",
+      "clip": "npc_eat&boom",
+      "time": 5.81
+    },
+    {
+      "id": "earlier_wide_npc_eat&boom_6",
+      "rig": "wide",
+      "clip": "npc_eat&boom",
+      "time": 6
+    },
+    {
+      "id": "01_slim_sit1_counterphase",
+      "rig": "slim",
+      "clip": "customer_sit_1",
+      "time": 0.75
+    },
+    {
+      "id": "02_wide_wait1_phase0",
+      "rig": "wide",
+      "clip": "customer_wait_1",
+      "time": 0.0
+    },
+    {
+      "id": "03_slim_sit2_head_query",
+      "rig": "slim",
+      "clip": "customer_sit_2",
+      "time": 0.375,
+      "query": {
+        "target_x_rotation": 15,
+        "target_y_rotation": -30
+      }
+    },
+    {
+      "id": "04_wide_wait4_yaw",
+      "rig": "wide",
+      "clip": "customer_wait_4",
+      "time": 3.7778
+    },
+    {
+      "id": "05_wide_eat_left_wrist",
+      "rig": "wide",
+      "clip": "npc_eat&scale",
+      "time": 4.0
+    },
+    {
+      "id": "06_slim_sittake_phase0",
+      "rig": "slim",
+      "clip": "npc_sittake",
+      "time": 0.0
+    },
+    {
+      "id": "07_slim_sittake_phase05",
+      "rig": "slim",
+      "clip": "npc_sittake",
+      "time": 0.5
+    }
+  ],
+  "source_manifest_hashes": {
+    "earlier_prior_coverage": "f6e232bd3fa9a880a33c89ee87c987e6ce74d7fc8d90f487222c5f4014a6a342",
+    "remaining_scene_manifest": "803b8459200a765932920f063e7cbe977419b10d484e136a4202fdee0565acce"
+  }
+}

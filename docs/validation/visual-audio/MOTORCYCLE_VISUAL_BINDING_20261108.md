@@ -15,6 +15,12 @@ The inspected Bedrock baseline is `45e1a6d5a845174cfb8ff4be1a463abb4f3ac9d6`
 or version was changed in this audit.
 No Minecraft client, player input or native vehicle motion was tested.
 
+The [0.1.48 input-contract follow-up](MOTORCYCLE_INPUT_CONTRACT_20261109.md)
+adds pinned official protocol and experimental-API evidence. Protocol movement
+signs are documented, but their Script API bridge remains unverified; native
+motion also cannot reconstruct Java's internal-speed state. No dynamic fix or
+native acceptance follows from that later audit.
+
 ## Fixed Java evidence
 
 Upstream commit: `e59e3dbcabe19b783d9adb933db5fcb8bc1e4642`.

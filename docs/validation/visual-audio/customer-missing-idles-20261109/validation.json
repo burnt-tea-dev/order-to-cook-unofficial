@@ -1,0 +1,57 @@
+{
+  "status": "PASS bounded public-bundle verification; native acceptance remains open",
+  "input_baseline_commit": "dbb2574154a54cc5ad69e75e71d23900a98a79fe",
+  "documentation_base_commit": "151c2a1550bfe912a0c808245b7003356c4f6c68",
+  "commands": [
+    "python -B verify_public_bundle.py",
+    "python -B test_public_bundle.py",
+    "python -B check_public_docs.py"
+  ],
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "pillow": "13.0.0",
+    "node": "v24.22.1"
+  },
+  "replay": {
+    "status": "PASS offline identities, receipt bindings and static reproduction",
+    "historical_preparation_files": 73,
+    "original_files_reconstructible": 78,
+    "original_files_explicitly_omitted": 6,
+    "reused_exact_artifacts": 44,
+    "repository_input_memberships": 17,
+    "current_input_comparison": {
+      "unchanged": 16,
+      "changed_context_only": [
+        "tools/convert_assets.py"
+      ]
+    },
+    "model_photos_independently_inspected": 8,
+    "setting_diagnostics": 1,
+    "corner_comparisons": 1280,
+    "face_uv_records": 960,
+    "max_corner_component_error_model_units": 4.440892098500626e-15,
+    "fresh_process_reproduction": "byte-identical",
+    "write_scope": "Owned TemporaryDirectory only; no assemble output option",
+    "automated_image_quality_judgment": false,
+    "native_acceptance": false
+  },
+  "guardrails": "PASS: unsafe/traversal/symlink paths, gzip excess/truncation/trailing/concatenation, dependency blob mismatch, conflicting originals and arbitrary output option rejected. Packaging controls are not extra visual coverage.",
+  "public_docs": {
+    "status": "PASS local links and public-text privacy checks",
+    "local_markdown_links_checked": 25,
+    "text_files_scanned": 39,
+    "compressed_context_scanned": true,
+    "scope": "Pattern scan and local-link existence, plus prior manual inspection of all nine original photographs; not a general secret-detection guarantee."
+  },
+  "original_images": {
+    "model_photographs_individually_inspected": 8,
+    "setting_diagnostics_individually_inspected": 1,
+    "pixels_modified": false,
+    "conclusion": "No new port-only broad missing texture or broken face established on visible surfaces. Occluded faces remain unreviewed."
+  },
+  "preservation": "Original 73 preparation files remain unchanged; public projections are separate and explicitly labelled. Scene, sample, PNG and JPEG bytes are unchanged.",
+  "repository_scope": "Only the new customer-missing-idles evidence directory and one added VISUAL_AUDIO_PARITY index section. No runtime, version, old evidence or motorcycle document changes.",
+  "aggregate_verification": "Not run by this bundle step; required separately before publication.",
+  "native_acceptance": false
+}
