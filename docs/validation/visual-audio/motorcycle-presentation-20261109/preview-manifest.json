@@ -1,0 +1,614 @@
+{
+  "upstream_commit": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+  "before_commit": "8008294306180ece040b908684bf4fa11afb75c8",
+  "before_animation_sha256": "86fcf2a5cdb32fa323b7b6fb838dc5ec11645cf9ecdf1518b2d7fb6cfe75d12e",
+  "before_drive_clip": {
+    "loop": true,
+    "bones": {
+      "front_t": {
+        "rotation": [
+          "q.modified_distance_moved * -114.6",
+          0,
+          0
+        ]
+      },
+      "rear_t": {
+        "rotation": [
+          "q.modified_distance_moved * -114.6",
+          0,
+          0
+        ]
+      }
+    }
+  },
+  "active_drive_clip": {
+    "loop": true,
+    "bones": {
+      "front_t": {
+        "rotation": [
+          "q.modified_distance_moved * 114.6",
+          0,
+          0
+        ]
+      },
+      "rear_t": {
+        "rotation": [
+          "q.modified_distance_moved * 114.6",
+          0,
+          0
+        ]
+      }
+    }
+  },
+  "scope": "Offline CPU geometry/UV comparisons. No GUI, Minecraft client, BDS, player input or native Molang execution.",
+  "coordinate_frame": "(Java X, 24 - Java Y, Java Z); renderer constant +0.016 model-pixel Y normalized as in MOTORCYCLE_SOURCE_MAPPING.md.",
+  "rendering": "Depth buffer, nearest texel, common neutral lighting, double-sided inspection, alpha >= 128. No native shader/culling claim.",
+  "active_contract": "Constructed nonnegative query distances isolate the active X sign. Gain 114.6 is retained, not identified with Java internal speed.",
+  "reference_contract": "Signed wheel/steering samples are explicitly unwired coordinate references, not input or reverse-control implementation.",
+  "inputs": {
+    "upstream/reference/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/render/model/MotorcycleModel.java": "073119a7a31b8ac7d04e3d98fa41053eb0f80f853a680c036572055b7424ac32",
+    "runtime/RP/models/entity/motorcycle.geo.json": "c94a03d87f3916b374375f2cd03d98f213d5867c0a56464fc6a12c5987490093",
+    "runtime/RP/animations/runtime.animation.json": "3ff5fc3ed21690c385419761e00670c6e1638d1b8abcdcc4ec2f5fc63612d845",
+    "runtime/RP/entity/motorcycle.entity.json": "140517fb919eadf91e533e745035a46e24b5ac8a9458af5ed0def4980ce042d8",
+    "runtime/RP/textures/ordertocook/entity/motorcycle.png": "cda5eb327ee9b64783fb818572805799f74e5641f29cc9d161bf88d42edfb416",
+    "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/motorcycle.png": "cda5eb327ee9b64783fb818572805799f74e5641f29cc9d161bf88d42edfb416",
+    "tests/motorcycle_oracle.py": "03f2af5de38601143d4e79ee4558f419b9843ecbd559f73f924802d57df01d7a",
+    "tests/test_motorcycle_presentation.py": "7e99847910daf36228b1d84a44f5cfddb8dd352797d8770779c38920ae29127d",
+    "tools/render_visual_review.py": "9edf2579de7fc92189c72ff88693ed6e7567d9578991e56ab4815bdca6a7ae80",
+    "tools/review_motorcycle_presentation.py": "5dc8908e982a5304600be3dabfc5a64e59ae7e07c3b3eb8b40fdbd62a8997693"
+  },
+  "active_sheet": {
+    "file": "active-wheel-sign.png",
+    "camera": [
+      6,
+      2.6,
+      -2.5
+    ],
+    "poses": [
+      {
+        "source_steer_degrees": 0,
+        "source_wheel_degrees": 15,
+        "synthetic_modified_distance": 0.13089005235602094,
+        "before": {
+          "max_corner_residual_pixels": 3.4336178767169434,
+          "max_uv_residual_pixels": 0.0,
+          "corner_checks": 328,
+          "affected_boxes": [
+            "front_t/0",
+            "front_t/1",
+            "front_t/2",
+            "front_t/3",
+            "front_t/4",
+            "cube_r10/0",
+            "cube_r10/1",
+            "cube_r10/2",
+            "cube_r10/3",
+            "cube_r10/4",
+            "rear_t/0",
+            "rear_t/1",
+            "rear_t/2",
+            "rear_t/3",
+            "rear_t/4",
+            "cube_r11/0",
+            "cube_r11/1",
+            "cube_r11/2",
+            "cube_r11/3",
+            "cube_r11/4"
+          ]
+        },
+        "candidate": {
+          "max_corner_residual_pixels": 1.2905530328994086e-07,
+          "max_uv_residual_pixels": 0.0,
+          "corner_checks": 328,
+          "affected_boxes": []
+        }
+      },
+      {
+        "source_steer_degrees": 0,
+        "source_wheel_degrees": 60,
+        "synthetic_modified_distance": 0.5235602094240838,
+        "before": {
+          "max_corner_residual_pixels": 11.489109411809986,
+          "max_uv_residual_pixels": 0.0,
+          "corner_checks": 328,
+          "affected_boxes": [
+            "front_t/0",
+            "front_t/1",
+            "front_t/2",
+            "front_t/3",
+            "front_t/4",
+            "cube_r10/0",
+            "cube_r10/1",
+            "cube_r10/2",
+            "cube_r10/3",
+            "cube_r10/4",
+            "rear_t/0",
+            "rear_t/1",
+            "rear_t/2",
+            "rear_t/3",
+            "rear_t/4",
+            "cube_r11/0",
+            "cube_r11/1",
+            "cube_r11/2",
+            "cube_r11/3",
+            "cube_r11/4"
+          ]
+        },
+        "candidate": {
+          "max_corner_residual_pixels": 1.2905530328994086e-07,
+          "max_uv_residual_pixels": 0.0,
+          "corner_checks": 328,
+          "affected_boxes": []
+        }
+      },
+      {
+        "source_steer_degrees": 0,
+        "source_wheel_degrees": 120,
+        "synthetic_modified_distance": 1.0471204188481675,
+        "before": {
+          "max_corner_residual_pixels": 11.489109438563776,
+          "max_uv_residual_pixels": 0.0,
+          "corner_checks": 328,
+          "affected_boxes": [
+            "front_t/0",
+            "front_t/1",
+            "front_t/2",
+            "front_t/3",
+            "front_t/4",
+            "cube_r10/0",
+            "cube_r10/1",
+            "cube_r10/2",
+            "cube_r10/3",
+            "cube_r10/4",
+            "rear_t/0",
+            "rear_t/1",
+            "rear_t/2",
+            "rear_t/3",
+            "rear_t/4",
+            "cube_r11/0",
+            "cube_r11/1",
+            "cube_r11/2",
+            "cube_r11/3",
+            "cube_r11/4"
+          ]
+        },
+        "candidate": {
+          "max_corner_residual_pixels": 1.2905530328994086e-07,
+          "max_uv_residual_pixels": 0.0,
+          "corner_checks": 328,
+          "affected_boxes": []
+        }
+      }
+    ]
+  },
+  "reference_sheet": {
+    "file": "unwired-signed-steering-reference.png",
+    "camera": [
+      4,
+      5.3,
+      -6
+    ],
+    "poses": [
+      {
+        "source_steer_degrees": -45,
+        "source_wheel_degrees": 0,
+        "reference": {
+          "max_corner_residual_pixels": 1.2905530328994086e-07,
+          "max_uv_residual_pixels": 0.0,
+          "corner_checks": 328,
+          "affected_boxes": []
+        }
+      },
+      {
+        "source_steer_degrees": 45,
+        "source_wheel_degrees": 0,
+        "reference": {
+          "max_corner_residual_pixels": 1.2905530328994086e-07,
+          "max_uv_residual_pixels": 0.0,
+          "corner_checks": 328,
+          "affected_boxes": []
+        }
+      },
+      {
+        "source_steer_degrees": 0,
+        "source_wheel_degrees": -60,
+        "reference": {
+          "max_corner_residual_pixels": 1.2905530328994086e-07,
+          "max_uv_residual_pixels": 0.0,
+          "corner_checks": 328,
+          "affected_boxes": []
+        }
+      },
+      {
+        "source_steer_degrees": 0,
+        "source_wheel_degrees": 60,
+        "reference": {
+          "max_corner_residual_pixels": 1.2905530328994086e-07,
+          "max_uv_residual_pixels": 0.0,
+          "corner_checks": 328,
+          "affected_boxes": []
+        }
+      },
+      {
+        "source_steer_degrees": -45,
+        "source_wheel_degrees": 120,
+        "reference": {
+          "max_corner_residual_pixels": 1.2905530328994086e-07,
+          "max_uv_residual_pixels": 0.0,
+          "corner_checks": 328,
+          "affected_boxes": []
+        }
+      },
+      {
+        "source_steer_degrees": 45,
+        "source_wheel_degrees": -60,
+        "reference": {
+          "max_corner_residual_pixels": 1.2905530328994086e-07,
+          "max_uv_residual_pixels": 0.0,
+          "corner_checks": 328,
+          "affected_boxes": []
+        }
+      }
+    ]
+  },
+  "animations": [
+    {
+      "file": "active-positive-phase.gif",
+      "frame_duration_ms": 100,
+      "camera": [
+        6,
+        2.6,
+        -2.5
+      ],
+      "reference_only": false,
+      "frames": [
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 0,
+          "synthetic_modified_distance": 0.0
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 15,
+          "synthetic_modified_distance": 0.13089005235602094
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 30,
+          "synthetic_modified_distance": 0.2617801047120419
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 45,
+          "synthetic_modified_distance": 0.39267015706806285
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 60,
+          "synthetic_modified_distance": 0.5235602094240838
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 75,
+          "synthetic_modified_distance": 0.6544502617801048
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 90,
+          "synthetic_modified_distance": 0.7853403141361257
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 105,
+          "synthetic_modified_distance": 0.9162303664921466
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 120,
+          "synthetic_modified_distance": 1.0471204188481675
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 135,
+          "synthetic_modified_distance": 1.1780104712041886
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 150,
+          "synthetic_modified_distance": 1.3089005235602096
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 165,
+          "synthetic_modified_distance": 1.4397905759162304
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 180,
+          "synthetic_modified_distance": 1.5706806282722514
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 195,
+          "synthetic_modified_distance": 1.7015706806282724
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 210,
+          "synthetic_modified_distance": 1.8324607329842932
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 225,
+          "synthetic_modified_distance": 1.9633507853403143
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 240,
+          "synthetic_modified_distance": 2.094240837696335
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 255,
+          "synthetic_modified_distance": 2.2251308900523563
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 270,
+          "synthetic_modified_distance": 2.356020942408377
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 285,
+          "synthetic_modified_distance": 2.486910994764398
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 300,
+          "synthetic_modified_distance": 2.617801047120419
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 315,
+          "synthetic_modified_distance": 2.74869109947644
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 330,
+          "synthetic_modified_distance": 2.8795811518324608
+        },
+        {
+          "selected_source_steer_degrees": 0,
+          "selected_source_wheel_degrees": 345,
+          "synthetic_modified_distance": 3.010471204188482
+        }
+      ]
+    },
+    {
+      "file": "unwired-signed-reference.gif",
+      "frame_duration_ms": 100,
+      "camera": [
+        4,
+        5.3,
+        -6
+      ],
+      "reference_only": true,
+      "frames": [
+        {
+          "selected_source_steer_degrees": 0.0,
+          "selected_source_wheel_degrees": 0.0
+        },
+        {
+          "selected_source_steer_degrees": 8.779064490725771,
+          "selected_source_wheel_degrees": 23.41083864193539
+        },
+        {
+          "selected_source_steer_degrees": 17.22075445642904,
+          "selected_source_wheel_degrees": 45.922011883810775
+        },
+        {
+          "selected_source_steer_degrees": 25.000660485882097,
+          "selected_source_wheel_degrees": 66.66842796235227
+        },
+        {
+          "selected_source_steer_degrees": 31.819805153394636,
+          "selected_source_wheel_degrees": 84.85281374238569
+        },
+        {
+          "selected_source_steer_degrees": 37.41613255361454,
+          "selected_source_wheel_degrees": 99.77635347630543
+        },
+        {
+          "selected_source_steer_degrees": 41.5745789630079,
+          "selected_source_wheel_degrees": 110.86554390135441
+        },
+        {
+          "selected_source_steer_degrees": 44.13533761814537,
+          "selected_source_wheel_degrees": 117.69423364838765
+        },
+        {
+          "selected_source_steer_degrees": 45.0,
+          "selected_source_wheel_degrees": 120.0
+        },
+        {
+          "selected_source_steer_degrees": 44.13533761814537,
+          "selected_source_wheel_degrees": 117.69423364838765
+        },
+        {
+          "selected_source_steer_degrees": 41.5745789630079,
+          "selected_source_wheel_degrees": 110.86554390135441
+        },
+        {
+          "selected_source_steer_degrees": 37.416132553614545,
+          "selected_source_wheel_degrees": 99.77635347630546
+        },
+        {
+          "selected_source_steer_degrees": 31.81980515339464,
+          "selected_source_wheel_degrees": 84.8528137423857
+        },
+        {
+          "selected_source_steer_degrees": 25.000660485882097,
+          "selected_source_wheel_degrees": 66.66842796235227
+        },
+        {
+          "selected_source_steer_degrees": 17.220754456429045,
+          "selected_source_wheel_degrees": 45.92201188381079
+        },
+        {
+          "selected_source_steer_degrees": 8.779064490725787,
+          "selected_source_wheel_degrees": 23.410838641935435
+        },
+        {
+          "selected_source_steer_degrees": 5.5109105961630896e-15,
+          "selected_source_wheel_degrees": 1.469576158976824e-14
+        },
+        {
+          "selected_source_steer_degrees": -8.779064490725776,
+          "selected_source_wheel_degrees": -23.410838641935403
+        },
+        {
+          "selected_source_steer_degrees": -17.220754456429034,
+          "selected_source_wheel_degrees": -45.92201188381076
+        },
+        {
+          "selected_source_steer_degrees": -25.000660485882086,
+          "selected_source_wheel_degrees": -66.66842796235224
+        },
+        {
+          "selected_source_steer_degrees": -31.819805153394636,
+          "selected_source_wheel_degrees": -84.85281374238569
+        },
+        {
+          "selected_source_steer_degrees": -37.41613255361454,
+          "selected_source_wheel_degrees": -99.77635347630543
+        },
+        {
+          "selected_source_steer_degrees": -41.574578963007895,
+          "selected_source_wheel_degrees": -110.86554390135439
+        },
+        {
+          "selected_source_steer_degrees": -44.135337618145364,
+          "selected_source_wheel_degrees": -117.69423364838764
+        },
+        {
+          "selected_source_steer_degrees": -45.0,
+          "selected_source_wheel_degrees": -120.0
+        },
+        {
+          "selected_source_steer_degrees": -44.13533761814537,
+          "selected_source_wheel_degrees": -117.69423364838765
+        },
+        {
+          "selected_source_steer_degrees": -41.5745789630079,
+          "selected_source_wheel_degrees": -110.8655439013544
+        },
+        {
+          "selected_source_steer_degrees": -37.416132553614545,
+          "selected_source_wheel_degrees": -99.77635347630546
+        },
+        {
+          "selected_source_steer_degrees": -31.819805153394647,
+          "selected_source_wheel_degrees": -84.85281374238572
+        },
+        {
+          "selected_source_steer_degrees": -25.000660485882097,
+          "selected_source_wheel_degrees": -66.66842796235227
+        },
+        {
+          "selected_source_steer_degrees": -17.220754456429066,
+          "selected_source_wheel_degrees": -45.922011883810846
+        },
+        {
+          "selected_source_steer_degrees": -8.779064490725792,
+          "selected_source_wheel_degrees": -23.410838641935445
+        }
+      ]
+    }
+  ],
+  "rider": {
+    "file": "rider-tp-pose-reference.png",
+    "camera": [
+      4,
+      2.1,
+      -7
+    ],
+    "poses": [
+      {
+        "seconds": 0,
+        "checked_points": 12,
+        "max_endpoint_residual_pixels": 5.38623239663861e-06
+      },
+      {
+        "seconds": 0.5,
+        "checked_points": 12,
+        "max_endpoint_residual_pixels": 4.96211335295684e-06
+      },
+      {
+        "seconds": 5,
+        "checked_points": 12,
+        "max_endpoint_residual_pixels": 5.91661683102269e-06
+      },
+      {
+        "seconds": 7,
+        "checked_points": 12,
+        "max_endpoint_residual_pixels": 4.695246546690218e-06
+      }
+    ],
+    "scope": "Bounded model-local base-mesh preview; endpoint/head agreement, not surface/UV or source segmentation parity.",
+    "source_cube_selection": {
+      "torso": 1,
+      "head": 0,
+      "right_arm": 0,
+      "right_hand": 0,
+      "left_arm": 0,
+      "left_hand": 0,
+      "right_leg": 0,
+      "right_foot": 0,
+      "left_leg": 0,
+      "left_foot": 0
+    },
+    "native_cube_selection": {
+      "body": 0,
+      "head": 0,
+      "rightArm": 0,
+      "leftArm": 0,
+      "rightLeg": 0,
+      "leftLeg": 0
+    },
+    "native_geometry": {
+      "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/models/entity/humanoid.custom.geo.json",
+      "sha256": "d3688f959a95f6b39c9bd8b15312a19361256ae161d2d055ba63d810e17a8ca8",
+      "identifier": "geometry.humanoid.custom",
+      "bytes": 4610,
+      "redistributed": false
+    },
+    "inputs": {
+      "upstream/reference/common/src/main/resources/assets/ordertocook/animations/drive.animation.json": "4b1d97058b3164bf9027c90ea6a6cd221e4bd06ff5fcde51a2e159e3812a092c",
+      "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+      "runtime/RP/animations/motorcycle_player.animation.json": "2a4932690c8848536679c384205b75ee7a8c123b3732a4b40f2adafb1e2b487b",
+      "tests/test_motorcycle_rider.py": "c2c37fce56ee1f1fa7a4b60b1f66205171318742599c13d94569f3ece57b7150"
+    }
+  },
+  "outputs": {
+    "active-positive-phase.gif": {
+      "sha256": "9ad515c0684cfd09068d9cc3982f7cbb9316c9cad9f375f201924ddf9e75f256",
+      "bytes": 701716
+    },
+    "active-wheel-sign.png": {
+      "sha256": "0faa365857c41be2867edd7797f4ac6188541805a0443df075d48cb2f923bb92",
+      "bytes": 98634
+    },
+    "rider-tp-pose-reference.png": {
+      "sha256": "13f77333699c4936a6e85cc8fb24bf50e00f5bd63961b7eb090520019776cc8a",
+      "bytes": 67116
+    },
+    "unwired-signed-reference.gif": {
+      "sha256": "be7f67438d076349cd5b8c0391dc233ad373bd651980908f2d436e1af5e06932",
+      "bytes": 720844
+    },
+    "unwired-signed-steering-reference.png": {
+      "sha256": "15e4bbafd05b462bb08fe0f7e7142e3cea59f1ad4eb84ea2c1a37e0de0514f18",
+      "bytes": 109043
+    }
+  }
+}
