@@ -1,0 +1,190 @@
+{
+  "status": "PASS offline/source-code-derived only",
+  "input_hash_checks": 41,
+  "clips": 15,
+  "bone_channel_tracks": 165,
+  "constant_catmullrom_tracks": 18,
+  "scene_count": 4,
+  "sampled_corner_comparisons": 1280,
+  "max_corner_component_error_model_units": 4.440892098500626e-15,
+  "max_channel_error": 0,
+  "max_group_pivot_error": 0,
+  "independently_checked_face_uv_records": 960,
+  "verified_parent_edges": 80,
+  "cube_order_inflate_and_texture_bytes": "preserved",
+  "pngs": [
+    {
+      "rig": "wide",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9"
+    },
+    {
+      "rig": "slim",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249"
+    }
+  ],
+  "unique_group_cube_uuids_across_scenes": 248,
+  "structure_mutation_rejections": [
+    {
+      "mutation": "cube_uuid_collision",
+      "reason": "duplicate group/cube UUID"
+    },
+    {
+      "mutation": "cross_type_uuid_collision",
+      "reason": "duplicate group/cube UUID"
+    },
+    {
+      "mutation": "group_uuid_collision",
+      "reason": "duplicate group/cube UUID"
+    },
+    {
+      "mutation": "duplicate_outliner_reference",
+      "reason": "duplicate cube reference"
+    },
+    {
+      "mutation": "missing_cube_reference",
+      "reason": "missing outliner reference"
+    },
+    {
+      "mutation": "missing_expected_parent",
+      "reason": "wrong or missing parent chain"
+    },
+    {
+      "mutation": "unknown_group_reference",
+      "reason": "unknown group reference"
+    }
+  ],
+  "samples": [
+    {
+      "id": "01_wide_wait2_head_query",
+      "side": "SOURCE",
+      "root_scale": [
+        1,
+        1,
+        1
+      ],
+      "root_rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "01_wide_wait2_head_query",
+      "side": "RP",
+      "root_scale": [
+        1,
+        1,
+        1
+      ],
+      "root_rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "02_slim_wait2_head_query",
+      "side": "SOURCE",
+      "root_scale": [
+        1,
+        1,
+        1
+      ],
+      "root_rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "02_slim_wait2_head_query",
+      "side": "RP",
+      "root_scale": [
+        1,
+        1,
+        1
+      ],
+      "root_rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "03_wide_sit3_body_query",
+      "side": "SOURCE",
+      "root_scale": [
+        1,
+        1,
+        1
+      ],
+      "root_rotation": [
+        -15.0,
+        30.0,
+        0.0
+      ]
+    },
+    {
+      "id": "03_wide_sit3_body_query",
+      "side": "RP",
+      "root_scale": [
+        1,
+        1,
+        1
+      ],
+      "root_rotation": [
+        -15.0,
+        30.0,
+        0.0
+      ]
+    },
+    {
+      "id": "04_slim_sit3_body_query",
+      "side": "SOURCE",
+      "root_scale": [
+        1,
+        1,
+        1
+      ],
+      "root_rotation": [
+        -15.0,
+        30.0,
+        0.0
+      ]
+    },
+    {
+      "id": "04_slim_sit3_body_query",
+      "side": "RP",
+      "root_scale": [
+        1,
+        1,
+        1
+      ],
+      "root_rotation": [
+        -15.0,
+        30.0,
+        0.0
+      ]
+    }
+  ],
+  "fresh_process_reproduction": "byte-identical",
+  "gui_tested": false,
+  "bedrock_native_tested": false,
+  "java_native_tested": false
+}

@@ -1,0 +1,562 @@
+{
+  "status": "PASS bounded selection checks",
+  "scene_count": 4,
+  "hand_stated_landmark_records": 52,
+  "query_attachment_mutations_rejected": [
+    "01_wide_wait2_head_query",
+    "02_slim_wait2_head_query",
+    "03_wide_sit3_body_query",
+    "04_slim_sit3_body_query"
+  ],
+  "new_scenes_equal_to_any_declared_same_rig_prior_static_pose": 0,
+  "declared_prior_samples": 29,
+  "prior_scope": "Only the documented instants in prior-coverage.json; old approximate UI times are checked at their recorded decimals. Geometry difference is not visible novelty at every camera, native acceptance, or an all-times claim.",
+  "new_same_rig_family_differences": [
+    {
+      "rig": "wide",
+      "scenes": [
+        "01_wide_wait2_head_query",
+        "03_wide_sit3_body_query"
+      ],
+      "max_corner_component_difference_model_units": 19.556195504971775
+    },
+    {
+      "rig": "slim",
+      "scenes": [
+        "02_slim_wait2_head_query",
+        "04_slim_sit3_body_query"
+      ],
+      "max_corner_component_difference_model_units": 19.556195504971775
+    }
+  ],
+  "scenes": [
+    {
+      "id": "01_wide_wait2_head_query",
+      "hand_stated_landmarks": {
+        "head.rotation": [
+          -15,
+          30,
+          0
+        ],
+        "body.rotation": [
+          0,
+          0,
+          0
+        ],
+        "body.position": [
+          0,
+          -2,
+          0
+        ],
+        "body.scale": [
+          1,
+          1,
+          1
+        ],
+        "right_arm.rotation": [
+          -15,
+          0,
+          0
+        ],
+        "left_arm.rotation": [
+          -15,
+          0,
+          0
+        ],
+        "right_leg.rotation": [
+          0,
+          0,
+          0
+        ],
+        "left_leg.rotation": [
+          0,
+          0,
+          0
+        ],
+        "right_foot.rotation": [
+          0,
+          0,
+          0
+        ],
+        "left_foot.rotation": [
+          0,
+          0,
+          0
+        ],
+        "right_hand.rotation": [
+          0,
+          0,
+          0
+        ],
+        "left_hand.rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      "same_rig_prior_differences": [
+        {
+          "previous_id": "02_wide_idle3_body_turn",
+          "max_corner_component_difference_model_units": 19.556195504971775
+        },
+        {
+          "previous_id": "04_wide_interrupt_shrink",
+          "max_corner_component_difference_model_units": 12.411873972088085
+        },
+        {
+          "previous_id": "05_wide_boom_peak",
+          "max_corner_component_difference_model_units": 15.889934629111442
+        },
+        {
+          "previous_id": "07_wide_standtake_wrist",
+          "max_corner_component_difference_model_units": 9.480024363954719
+        },
+        {
+          "previous_id": "earlier_wide_neutral_0",
+          "max_corner_component_difference_model_units": 4.6689926204609264
+        },
+        {
+          "previous_id": "earlier_wide_customer_sit_1_0.58",
+          "max_corner_component_difference_model_units": 10.4151946688071
+        },
+        {
+          "previous_id": "earlier_wide_npc_sitspawn_0.31",
+          "max_corner_component_difference_model_units": 15.042343391950661
+        },
+        {
+          "previous_id": "earlier_wide_npc_standspawn_0.31",
+          "max_corner_component_difference_model_units": 5.910468061440824
+        },
+        {
+          "previous_id": "earlier_wide_npc_sittake_1",
+          "max_corner_component_difference_model_units": 19.967362016572586
+        },
+        {
+          "previous_id": "earlier_wide_npc_standtake_0.53",
+          "max_corner_component_difference_model_units": 26.708866481333835
+        },
+        {
+          "previous_id": "earlier_wide_npc_standtake_1.5",
+          "max_corner_component_difference_model_units": 26.58674300485795
+        },
+        {
+          "previous_id": "earlier_wide_npc_standtake_3",
+          "max_corner_component_difference_model_units": 19.06886900857053
+        },
+        {
+          "previous_id": "earlier_wide_npc_eat&scale_interrupt_0.25",
+          "max_corner_component_difference_model_units": 10.500770592151804
+        },
+        {
+          "previous_id": "earlier_wide_npc_eat&scale_2.53",
+          "max_corner_component_difference_model_units": 10.129014789350348
+        },
+        {
+          "previous_id": "earlier_wide_npc_eat&boom_5.81",
+          "max_corner_component_difference_model_units": 12.14486349419201
+        },
+        {
+          "previous_id": "earlier_wide_npc_eat&boom_6",
+          "max_corner_component_difference_model_units": 21.06886900857053
+        },
+        {
+          "previous_id": "02_wide_wait1_phase0",
+          "max_corner_component_difference_model_units": 4.6689926204609264
+        },
+        {
+          "previous_id": "04_wide_wait4_yaw",
+          "max_corner_component_difference_model_units": 5.866271867935129
+        },
+        {
+          "previous_id": "05_wide_eat_left_wrist",
+          "max_corner_component_difference_model_units": 10.207885756703543
+        }
+      ],
+      "minimum_of_prior_max_corner_component_differences": 4.6689926204609264,
+      "actual_serialized_source_rp_corner_difference": 1.7763568394002505e-15
+    },
+    {
+      "id": "02_slim_wait2_head_query",
+      "hand_stated_landmarks": {
+        "head.rotation": [
+          -15,
+          30,
+          0
+        ],
+        "body.rotation": [
+          0,
+          0,
+          0
+        ],
+        "body.position": [
+          0,
+          -2,
+          0
+        ],
+        "body.scale": [
+          1,
+          1,
+          1
+        ],
+        "right_arm.rotation": [
+          -15,
+          0,
+          0
+        ],
+        "left_arm.rotation": [
+          -15,
+          0,
+          0
+        ],
+        "right_leg.rotation": [
+          0,
+          0,
+          0
+        ],
+        "left_leg.rotation": [
+          0,
+          0,
+          0
+        ],
+        "right_foot.rotation": [
+          0,
+          0,
+          0
+        ],
+        "left_foot.rotation": [
+          0,
+          0,
+          0
+        ],
+        "right_hand.rotation": [
+          0,
+          0,
+          0
+        ],
+        "left_hand.rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      "same_rig_prior_differences": [
+        {
+          "previous_id": "01_slim_idle4_wrist",
+          "max_corner_component_difference_model_units": 10.42364903763135
+        },
+        {
+          "previous_id": "03_slim_eat_hand_extreme",
+          "max_corner_component_difference_model_units": 10.84004406523437
+        },
+        {
+          "previous_id": "06_slim_spawn_rebound",
+          "max_corner_component_difference_model_units": 15.215387857340417
+        },
+        {
+          "previous_id": "earlier_slim_neutral_0",
+          "max_corner_component_difference_model_units": 4.6689926204609264
+        },
+        {
+          "previous_id": "earlier_slim_customer_sit_1_1.5",
+          "max_corner_component_difference_model_units": 10.84004406523437
+        },
+        {
+          "previous_id": "earlier_slim_customer_sit_4_2",
+          "max_corner_component_difference_model_units": 10.207885756703543
+        },
+        {
+          "previous_id": "01_slim_sit1_counterphase",
+          "max_corner_component_difference_model_units": 10.84004406523437
+        },
+        {
+          "previous_id": "03_slim_sit2_head_query",
+          "max_corner_component_difference_model_units": 9.875426347333889
+        },
+        {
+          "previous_id": "06_slim_sittake_phase0",
+          "max_corner_component_difference_model_units": 19.967362016572586
+        },
+        {
+          "previous_id": "07_slim_sittake_phase05",
+          "max_corner_component_difference_model_units": 20.30984229857604
+        }
+      ],
+      "minimum_of_prior_max_corner_component_differences": 4.6689926204609264,
+      "actual_serialized_source_rp_corner_difference": 1.7763568394002505e-15
+    },
+    {
+      "id": "03_wide_sit3_body_query",
+      "hand_stated_landmarks": {
+        "body.rotation": [
+          -15,
+          30,
+          0
+        ],
+        "body.position": [
+          0,
+          -2,
+          0
+        ],
+        "body.scale": [
+          1,
+          1,
+          1
+        ],
+        "head.rotation": [
+          0,
+          0,
+          0
+        ],
+        "left_arm.rotation": [
+          -157.5348,
+          -6.8699,
+          16.134
+        ],
+        "right_arm.rotation": [
+          -17.777333333333335,
+          0,
+          0
+        ],
+        "right_leg.rotation": [
+          -84.92327,
+          9.96156,
+          0.88045
+        ],
+        "left_leg.rotation": [
+          -84.92327,
+          -9.96156,
+          -0.88045
+        ],
+        "right_foot.rotation": [
+          45.55466666666667,
+          0,
+          0
+        ],
+        "left_foot.rotation": [
+          34.44533333333333,
+          0,
+          0
+        ],
+        "right_foot.position": [
+          0,
+          1.5,
+          -0.6388666666666667
+        ],
+        "left_foot.position": [
+          0,
+          1.5,
+          -0.3611333333333333
+        ],
+        "right_hand.rotation": [
+          0,
+          0,
+          0
+        ],
+        "left_hand.rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      "same_rig_prior_differences": [
+        {
+          "previous_id": "02_wide_idle3_body_turn",
+          "max_corner_component_difference_model_units": 11.888229393860668
+        },
+        {
+          "previous_id": "04_wide_interrupt_shrink",
+          "max_corner_component_difference_model_units": 16.224109250354864
+        },
+        {
+          "previous_id": "05_wide_boom_peak",
+          "max_corner_component_difference_model_units": 15.074195580785725
+        },
+        {
+          "previous_id": "07_wide_standtake_wrist",
+          "max_corner_component_difference_model_units": 17.00797025511426
+        },
+        {
+          "previous_id": "earlier_wide_neutral_0",
+          "max_corner_component_difference_model_units": 17.983596250588345
+        },
+        {
+          "previous_id": "earlier_wide_customer_sit_1_0.58",
+          "max_corner_component_difference_model_units": 19.567138060079902
+        },
+        {
+          "previous_id": "earlier_wide_npc_sitspawn_0.31",
+          "max_corner_component_difference_model_units": 15.264581598567935
+        },
+        {
+          "previous_id": "earlier_wide_npc_standspawn_0.31",
+          "max_corner_component_difference_model_units": 15.264581598567935
+        },
+        {
+          "previous_id": "earlier_wide_npc_sittake_1",
+          "max_corner_component_difference_model_units": 19.487253533792867
+        },
+        {
+          "previous_id": "earlier_wide_npc_standtake_0.53",
+          "max_corner_component_difference_model_units": 26.40262445028479
+        },
+        {
+          "previous_id": "earlier_wide_npc_standtake_1.5",
+          "max_corner_component_difference_model_units": 25.775131247083934
+        },
+        {
+          "previous_id": "earlier_wide_npc_standtake_3",
+          "max_corner_component_difference_model_units": 18.65997892403935
+        },
+        {
+          "previous_id": "earlier_wide_npc_eat&scale_interrupt_0.25",
+          "max_corner_component_difference_model_units": 12.74250753910308
+        },
+        {
+          "previous_id": "earlier_wide_npc_eat&scale_2.53",
+          "max_corner_component_difference_model_units": 14.046920081588002
+        },
+        {
+          "previous_id": "earlier_wide_npc_eat&boom_5.81",
+          "max_corner_component_difference_model_units": 13.405287872778406
+        },
+        {
+          "previous_id": "earlier_wide_npc_eat&boom_6",
+          "max_corner_component_difference_model_units": 20.65997892403935
+        },
+        {
+          "previous_id": "02_wide_wait1_phase0",
+          "max_corner_component_difference_model_units": 19.47450761956647
+        },
+        {
+          "previous_id": "04_wide_wait4_yaw",
+          "max_corner_component_difference_model_units": 19.56070151570153
+        },
+        {
+          "previous_id": "05_wide_eat_left_wrist",
+          "max_corner_component_difference_model_units": 12.89658847340306
+        }
+      ],
+      "minimum_of_prior_max_corner_component_differences": 11.888229393860668,
+      "actual_serialized_source_rp_corner_difference": 5.329070518200751e-15
+    },
+    {
+      "id": "04_slim_sit3_body_query",
+      "hand_stated_landmarks": {
+        "body.rotation": [
+          -15,
+          30,
+          0
+        ],
+        "body.position": [
+          0,
+          -2,
+          0
+        ],
+        "body.scale": [
+          1,
+          1,
+          1
+        ],
+        "head.rotation": [
+          0,
+          0,
+          0
+        ],
+        "left_arm.rotation": [
+          -157.5348,
+          -6.8699,
+          16.134
+        ],
+        "right_arm.rotation": [
+          -17.777333333333335,
+          0,
+          0
+        ],
+        "right_leg.rotation": [
+          -84.92327,
+          9.96156,
+          0.88045
+        ],
+        "left_leg.rotation": [
+          -84.92327,
+          -9.96156,
+          -0.88045
+        ],
+        "right_foot.rotation": [
+          45.55466666666667,
+          0,
+          0
+        ],
+        "left_foot.rotation": [
+          34.44533333333333,
+          0,
+          0
+        ],
+        "right_foot.position": [
+          0,
+          1.5,
+          -0.6388666666666667
+        ],
+        "left_foot.position": [
+          0,
+          1.5,
+          -0.3611333333333333
+        ],
+        "right_hand.rotation": [
+          0,
+          0,
+          0
+        ],
+        "left_hand.rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      "same_rig_prior_differences": [
+        {
+          "previous_id": "01_slim_idle4_wrist",
+          "max_corner_component_difference_model_units": 19.52064490968592
+        },
+        {
+          "previous_id": "03_slim_eat_hand_extreme",
+          "max_corner_component_difference_model_units": 13.617842972526425
+        },
+        {
+          "previous_id": "06_slim_spawn_rebound",
+          "max_corner_component_difference_model_units": 14.996989268406573
+        },
+        {
+          "previous_id": "earlier_slim_neutral_0",
+          "max_corner_component_difference_model_units": 17.983596250588345
+        },
+        {
+          "previous_id": "earlier_slim_customer_sit_1_1.5",
+          "max_corner_component_difference_model_units": 19.47450761956647
+        },
+        {
+          "previous_id": "earlier_slim_customer_sit_4_2",
+          "max_corner_component_difference_model_units": 19.565708566641838
+        },
+        {
+          "previous_id": "01_slim_sit1_counterphase",
+          "max_corner_component_difference_model_units": 19.55810080215388
+        },
+        {
+          "previous_id": "03_slim_sit2_head_query",
+          "max_corner_component_difference_model_units": 19.556195504971775
+        },
+        {
+          "previous_id": "06_slim_sittake_phase0",
+          "max_corner_component_difference_model_units": 19.487253533792867
+        },
+        {
+          "previous_id": "07_slim_sittake_phase05",
+          "max_corner_component_difference_model_units": 19.769813264132747
+        }
+      ],
+      "minimum_of_prior_max_corner_component_differences": 13.617842972526425,
+      "actual_serialized_source_rp_corner_difference": 5.329070518200751e-15
+    }
+  ]
+}

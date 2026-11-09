@@ -1,0 +1,11 @@
+{
+  "original_sha256": "e03c81e3dd68caf618d8223dc4cd9dbff5ae3d1868326ef113dce8d7ac177bb2",
+  "adapted_sha256": "f5db5c8fab050da8517261e938ab0a003e4ac746ac6b4d553c71a676537cf093",
+  "replacements": [
+    {
+      "old": " for r in read(ROOT/'source-evidence/gecko-cache-provenance.json')['records']:\n  p=ROOT/'source-evidence'/Path(r['cachePath']).name\n  if p.exists():data=p.read_bytes();assert hashlib.sha1(b'blob '+str(len(data)).encode()+b'\\0'+data).hexdigest()==r['blobSha'];checks+=1\n",
+      "new": " for r in read(ROOT/'public-geckolib-sources.json')['records']:\n  p=ROOT/r['file'];data=p.read_bytes();assert sha(p)==r['sha256'] and len(data)==r['bytes'];assert hashlib.sha1(b'blob '+str(len(data)).encode()+b'\\0'+data).hexdigest()==r['git_blob'];checks+=1\n"
+    }
+  ],
+  "scope": "Only the acquisition-metadata read becomes a public source-only projection. Decimal timelines, matrices, UVs, structure/pose mutations and exact scene regeneration are unchanged."
+}

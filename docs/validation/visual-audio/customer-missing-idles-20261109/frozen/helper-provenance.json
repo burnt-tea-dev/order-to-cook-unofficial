@@ -1,0 +1,18 @@
+{
+  "basis": "Exact earlier remaining-batch helpers and proven official 5.2.2 decoder. The prior independent Decimal/matrix/UV oracle is reused and strengthened, not claimed newly independent from its author.",
+  "prior_helpers": {
+    "build_review.py": "119c92d7bbd27a581d45e008ad6334722b0d4f88361e249f51fe409f6ab836df",
+    "verify_review.py": "60ce23b4f61b20e551d2b419fbd566901217c02ac8459d656e4f5e0886d7345e",
+    "verify_selection.py": "4dec9e1c9559d3502ca69f69eaa84fcf61c6ae0c9129f51deb0f849a314c8417",
+    "decode_cubes.cjs": "a0eebe4c04453a4d83c5407d7643103af448a494967cf9a4eb183d6339c57b0a"
+  },
+  "changes": [
+    "Four declared missing idle/rig cases",
+    "Isolated deterministic UUID namespace",
+    "Complete outliner membership, cross-type UUID uniqueness, parent-chain validation and mutations",
+    "Sit3 body-query controls replacing wrong zero-body generalization",
+    "Hand-stated wait2/sit3 landmarks and bounded prior-pose comparisons",
+    "Remove unrelated boom/shrink report padding; keep selected-scope checks",
+    "Current 17-input manifest with honest motorcycle converter drift"
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "current_commit": "dbb2574154a54cc5ad69e75e71d23900a98a79fe",
+  "prior_commit": "dd3153ed9c9755702244696c5271dcd35feb6d13",
+  "current_tree": "be96dc9adc99c4afbf79b7be153ee0387372bb54",
+  "prior_manifest_sha256": "26d51a1960c92871f97704de314d9bf72c4acbd25e5ebb1fe4c2de327c56c47e",
+  "checked_files": 17,
+  "unchanged_files": 16,
+  "changed_files": 1,
+  "converter_ast_changed_top_level_nodes": [
+    "make_motorcycle_geo"
+  ],
+  "scope": "Selected inputs checked fresh against current worktree and commit object bytes. Converter context changed for motorcycle only; it is not run or imported. Not whole-tree equivalence or remote authentication.",
+  "files": [
+    {
+      "path": "upstream/source.lock.json",
+      "prior_sha256": "2222a2d53450fdc2ca81abe4088e2581405ae8409b16fbd479324992c8f5c909",
+      "current_sha256": "2222a2d53450fdc2ca81abe4088e2581405ae8409b16fbd479324992c8f5c909",
+      "prior_git_blob": "bd63d0794b80dfccb5977cdeec1a5ce9d3726e8b",
+      "current_git_blob": "bd63d0794b80dfccb5977cdeec1a5ce9d3726e8b",
+      "byte_identical": true,
+      "role": "Customer/source/context input"
+    },
+    {
+      "path": "tools/convert_assets.py",
+      "prior_sha256": "b97ec53d05b067e4c0e4f2b684d92c30ad19c2d16505c26d9a364ffe2ead9523",
+      "current_sha256": "74c03581e97bfc174cfa2658c3ea4011a4649abd3d36de5bab14a059fb6a035a",
+      "prior_git_blob": "099cb1e10c7ff9f7e7f563ab382d154774bf1a46",
+      "current_git_blob": "6048ada3515226f672335850707ed9fe1c23b0f9",
+      "byte_identical": false,
+      "role": "Context-only converter fixture; never imported/executed"
+    },
+    {
+      "path": "tests/asset-motion.test.js",
+      "prior_sha256": "0fd86bc16e9dc1f78685e51699b318ac5bd19e683dfbf692c369be9882f9ce5d",
+      "current_sha256": "0fd86bc16e9dc1f78685e51699b318ac5bd19e683dfbf692c369be9882f9ce5d",
+      "prior_git_blob": "46795f5ae8ffc6b925379999e261346eadfc3b0b",
+      "current_git_blob": "46795f5ae8ffc6b925379999e261346eadfc3b0b",
+      "byte_identical": true,
+      "role": "Customer/source/context input"
+    },
+    {
+      "path": "runtime/RP/entity/customer.entity.json",
+      "prior_sha256": "54117245491fbad4560bfa374ef62612062a67a6081e10229f5ea63569cfac16",
+      "current_sha256": "54117245491fbad4560bfa374ef62612062a67a6081e10229f5ea63569cfac16",
+      "prior_git_blob": "b6821218370d9f0f2f5b348b444da96fce1a649a",
+      "current_git_blob": "b6821218370d9f0f2f5b348b444da96fce1a649a",
+      "byte_identical": true,
+      "role": "Customer/source/context input"
+    },
+    {
+      "path": "runtime/RP/animation_controllers/customer.animation_controllers.json",
+      "prior_sha256": "2b024e01dcdf472a53322f62d202f73b6e6c6f1ef1d63560c880b3020cf1e2ee",
+      "current_sha256": "2b024e01dcdf472a53322f62d202f73b6e6c6f1ef1d63560c880b3020cf1e2ee",
+      "prior_git_blob": "a298cb485495697062689e65f2d0788563aa6b76",
+      "current_git_blob": "a298cb485495697062689e65f2d0788563aa6b76",
+      "byte_identical": true,
+      "role": "Customer/source/context input"
+    },
+    {
+      "path": "runtime/RP/models/entity/customer.geo.json",
+      "prior_sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+      "current_sha256": "d4b68f68330ba0488c7f1d85761462b78158aef8eeef3d88ccc199cd4936d86a",
+      "prior_git_blob": "81cdda044297cd96803d779649e08c734dfc898f",
+      "current_git_blob": "81cdda044297cd96803d779649e08c734dfc898f",
+      "byte_identical": true,
+      "role": "Customer/source/context input"
+    },
+    {
+      "path": "runtime/RP/models/entity/customer_slim.geo.json",
+      "prior_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+      "current_sha256": "f3d3333fe1fdd75a340a484d0923b6edbead10cd3aca59ae86ca017bab1ebb72",
+      "prior_git_blob": "14a683096f72e4b2c869549ab113e8c85a3d7360",
+      "current_git_blob": "14a683096f72e4b2c869549ab113e8c85a3d7360",
+      "byte_identical": true,
+      "role": "Customer/source/context input"
+    },
+    {
+      "path": "runtime/RP/animations/npc.animation.json",
+      "prior_sha256": "101a5507f2aa2d04ceae3e9ea84b8201fa69feb85baf46fb075980db63bc4b9e",
+      "current_sha256": "101a5507f2aa2d04ceae3e9ea84b8201fa69feb85baf46fb075980db63bc4b9e",
+      "prior_git_blob": "9ebc84145b928bc7aa8e600ffbe72bebae5f5596",
+      "current_git_blob": "9ebc84145b928bc7aa8e600ffbe72bebae5f5596",
+      "byte_identical": true,
+      "role": "Customer/source/context input"
+    },
+    {
+      "path": "runtime/RP/animations/npc.transition.animation.json",
+      "prior_sha256": "5870c333007cc844905cb524e14b7b36ba0c2e093cbefc44766b2f5ed3059581",
+      "current_sha256": "5870c333007cc844905cb524e14b7b36ba0c2e093cbefc44766b2f5ed3059581",
+      "prior_git_blob": "46b722f49ab5bb6310d0db867c037730008dd249",
+      "current_git_blob": "46b722f49ab5bb6310d0db867c037730008dd249",
+      "byte_identical": true,
+      "role": "Customer/source/context input"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",
+      "prior_sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+      "current_sha256": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+      "prior_git_blob": "63627c77ae154eb1e84f694c758b6ef516c0c8ca",
+      "current_git_blob": "63627c77ae154eb1e84f694c758b6ef516c0c8ca",
+      "byte_identical": true,
+      "role": "Customer/source/context input"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json",
+      "prior_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+      "current_sha256": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+      "prior_git_blob": "9ef00daf2aa210efe50c5140ef3712e667d66edb",
+      "current_git_blob": "9ef00daf2aa210efe50c5140ef3712e667d66edb",
+      "byte_identical": true,
+      "role": "Customer/source/context input"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/animations/npc.animation.json",
+      "prior_sha256": "19691dda1b484ca6a256a1dc5e306304a8e6b0e0cad6c9d60f7d0daf88588734",
+      "current_sha256": "19691dda1b484ca6a256a1dc5e306304a8e6b0e0cad6c9d60f7d0daf88588734",
+      "prior_git_blob": "173d58cf9b0d8917caffb5ca8fd90aa95f6dd514",
+      "current_git_blob": "173d58cf9b0d8917caffb5ca8fd90aa95f6dd514",
+      "byte_identical": true,
+      "role": "Customer/source/context input"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/animations/npc.transition.animation.json",
+      "prior_sha256": "723940ed47a56c9050c08334951c05dedcfc69727388802454693faceea64417",
+      "current_sha256": "723940ed47a56c9050c08334951c05dedcfc69727388802454693faceea64417",
+      "prior_git_blob": "eb683696113df00f3d23fbf474d0286ee2a66089",
+      "current_git_blob": "eb683696113df00f3d23fbf474d0286ee2a66089",
+      "byte_identical": true,
+      "role": "Customer/source/context input"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom.png",
+      "prior_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+      "current_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+      "prior_git_blob": "ae63bb7db4fbeb4f8b9b2fa925ebc34a555eb1d2",
+      "current_git_blob": "ae63bb7db4fbeb4f8b9b2fa925ebc34a555eb1d2",
+      "byte_identical": true,
+      "role": "Customer/source/context input"
+    },
+    {
+      "path": "upstream/reference/common/src/main/resources/assets/ordertocook/textures/entity/otc_zombie_custom2.png",
+      "prior_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+      "current_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+      "prior_git_blob": "7600c48b681fe81c4bdbaf927cd58f4844abb430",
+      "current_git_blob": "7600c48b681fe81c4bdbaf927cd58f4844abb430",
+      "byte_identical": true,
+      "role": "Customer/source/context input"
+    },
+    {
+      "path": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom.png",
+      "prior_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+      "current_sha256": "394647900a69b62adeb3382c8dcf1e9ff5e0cf5b801938f19a9a19c3868ca2d9",
+      "prior_git_blob": "ae63bb7db4fbeb4f8b9b2fa925ebc34a555eb1d2",
+      "current_git_blob": "ae63bb7db4fbeb4f8b9b2fa925ebc34a555eb1d2",
+      "byte_identical": true,
+      "role": "Customer/source/context input"
+    },
+    {
+      "path": "runtime/RP/textures/ordertocook/entity/otc_zombie_custom2.png",
+      "prior_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+      "current_sha256": "3a32ac5b053f7c67a5eb31196cf92ea2a4a66b2ffba524e61c568bd985f77249",
+      "prior_git_blob": "7600c48b681fe81c4bdbaf927cd58f4844abb430",
+      "current_git_blob": "7600c48b681fe81c4bdbaf927cd58f4844abb430",
+      "byte_identical": true,
+      "role": "Customer/source/context input"
+    }
+  ]
+}

@@ -227,3 +227,15 @@ A separate [helmet A → B → A control](validation/visual-audio/blockbench-202
 確認舊版前柱的 V 形折位；候選修正 7 根靜態骨骼的 X 旋轉符號與 41 個 box UV 鏡像。
 白色前後斜視／頂視、最小辨識控制及紅藍黃候選色均保留原圖。這是中立姿態的模型與
 貼圖配置驗證，不代表轉向、輪速、發光、透明／背面或原生遊戲已通過；既有動態差距仍保留。
+
+## 顧客 standing idle2／seated idle3：四個靜態姿態
+
+[新增公開證據包](validation/visual-audio/customer-missing-idles-20261109/README.md)
+補上 `customer_wait_2` 與 `customer_sit_3` 的 wide／slim 組合，包含八張原始模型照片
+及一張 Auto 設定診斷，均已逐張獨立檢視。可見面未發現新的 port-only 大面積缺紋理
+或破面；遮擋面仍未驗收。來源與 RP 共用 Blockbench CubeRenderer；query 和時間是
+synthetic frozen inputs，不是原生追蹤或播放測試。既有 historical pending 記錄保留。
+17 個輸入對 main `dbb2574` 有 commit/tree membership；16 個不變，converter 僅有
+機車函式的 context 差異且未執行。公開只讀重現會檢查 1,280 corners、960 face-UV
+及場景逐 byte 重建。沒有 runtime／版本變更，也不代表原生引擎、音效、粒子、
+連續動畫、控制器或透明排序已通過。
