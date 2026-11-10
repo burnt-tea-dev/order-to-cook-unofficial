@@ -1,0 +1,84 @@
+✔ fridge item uses a separate complete source-derived mesh without changing placed dispatch (4.811957ms)
+✔ all ten source elements are uniformly half-sized and retain all sixty source face UVs (6.118333ms)
+✖ both first-person hands explicitly use source poses on the compact mesh (2.494923ms)
+✖ relative to the exact CARY .54 item only the two first-person scales change (9.450183ms)
+✔ all original placed fridge files and Java inputs remain at the reviewed baseline (32.507685ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 3
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 308.847891
+
+✖ failing tests:
+
+test at tests/fridge-item-visual.test.js:63:1
+✖ both first-person hands explicitly use source poses on the compact mesh (2.494923ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   0.8,
+  +   0.8,
+  +   0.8
+  -   0.4,
+  -   0.4,
+  -   0.4
+    ]
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f31f84fbb9ff/fridge-held-fix-20261110/repo/tests/fridge-item-visual.test.js:70:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 0.8, 0.8, 0.8 ],
+    expected: [ 0.4, 0.4, 0.4 ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/fridge-item-visual.test.js:86:1
+✖ relative to the exact CARY .54 item only the two first-person scales change (9.450183ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    {
+      'minecraft:geometry': [
+        {
+          bones: [
+            {
+  ...
+              scale: [
+  +             0.8,
+  +             0.8,
+  +             0.8
+  -             0.4,
+  -             0.4,
+  -             0.4
+              ],
+              translation: [
+                0,
+                1,
+                0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f31f84fbb9ff/fridge-held-fix-20261110/repo/tests/fridge-item-visual.test.js:95:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { format_version: '1.21.0', 'minecraft:geometry': [ [Object] ] },
+    expected: { format_version: '1.21.0', 'minecraft:geometry': [ [Object] ] },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

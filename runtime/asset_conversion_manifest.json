@@ -3886,6 +3886,24 @@
       "operation": "Complete independent door times four common-root samples; GeckoLib elastic opening/bounce closing sampled at 0.1s; signed interior UV preserved; shared cabinet squash; bounded hinge sweep"
     },
     {
+      "source": "common/src/main/resources/assets/ordertocook/models/item/refrigerator.json",
+      "output": "RP/models/blocks/refrigerator_item.geo.json",
+      "sha256": "e9242a9769e1b9efb1a5f9c57480ac6580b51c84d17049c847b3d54b07388859",
+      "operation": "Complete Java refrigerator item; half-size geometry around block center, original per-face UVs, source display scales restored except compact first-person hands; placed halves unchanged"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/block/refrigerator.json",
+      "output": "RP/models/blocks/refrigerator_item.geo.json",
+      "sha256": "5777bbf7e1cecf1bb7567f20298fd79e54d464ffd37660420ffbd3d6b8d97ad7",
+      "operation": "Complete Java refrigerator item; half-size geometry around block center, original per-face UVs, source display scales restored except compact first-person hands; placed halves unchanged"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/models/item/refrigerator.json",
+      "output": "BP/blocks/refrigerator.json",
+      "sha256": "e9242a9769e1b9efb1a5f9c57480ac6580b51c84d17049c847b3d54b07388859",
+      "operation": "Separate complete compact block item; no change to placed cabinet, collision, storage or animation"
+    },
+    {
       "source": "common/src/main/resources/assets/ordertocook/animations/refrigerator.animation.json",
       "output": "BP/scripts/appliance_pose_data.js",
       "sha256": "e39b2d0190fad8bcdb05fb3e1192448db6dcaff75ff5a45117e8d13e448a0762",

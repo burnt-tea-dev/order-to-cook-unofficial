@@ -1,0 +1,942 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.ordertocook.refrigerator_item",
+        "texture_width": 16,
+        "texture_height": 16,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                -3.0
+              ],
+              "size": [
+                8.0,
+                16.0,
+                7.0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    2.66667,
+                    5.33333
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "east": {
+                  "uv": [
+                    0,
+                    5.33333
+                  ],
+                  "uv_size": [
+                    2.33333,
+                    5.33334
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "south": {
+                  "uv": [
+                    2.66667,
+                    0
+                  ],
+                  "uv_size": [
+                    2.66666,
+                    5.33333
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "west": {
+                  "uv": [
+                    5.33333,
+                    0
+                  ],
+                  "uv_size": [
+                    2.33334,
+                    5.33333
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "up": {
+                  "uv": [
+                    7.66667,
+                    5.66667
+                  ],
+                  "uv_size": [
+                    2.66666,
+                    2.33333
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "down": {
+                  "uv": [
+                    7.66667,
+                    10.33333
+                  ],
+                  "uv_size": [
+                    2.66666,
+                    -2.33333
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                }
+              }
+            },
+            {
+              "origin": [
+                -3.5,
+                14.0,
+                -3.0
+              ],
+              "size": [
+                7.0,
+                5.0,
+                6.5
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    12.33333,
+                    0
+                  ],
+                  "uv_size": [
+                    2.33334,
+                    1.66667
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "east": {
+                  "uv": [
+                    5,
+                    12.5
+                  ],
+                  "uv_size": [
+                    2.16667,
+                    1.66667
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "south": {
+                  "uv": [
+                    12.33333,
+                    1.66667
+                  ],
+                  "uv_size": [
+                    2.33334,
+                    1.66666
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "west": {
+                  "uv": [
+                    11.33333,
+                    12.5
+                  ],
+                  "uv_size": [
+                    2.16667,
+                    1.66667
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "up": {
+                  "uv": [
+                    10.33333,
+                    6.5
+                  ],
+                  "uv_size": [
+                    2.33334,
+                    2.16667
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "down": {
+                  "uv": [
+                    10,
+                    4.33333
+                  ],
+                  "uv_size": [
+                    2.33333,
+                    -2.16666
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                }
+              }
+            },
+            {
+              "origin": [
+                -3.5,
+                5.0,
+                -3.0
+              ],
+              "size": [
+                7.0,
+                8.5,
+                6.5
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    7.66667,
+                    0
+                  ],
+                  "uv_size": [
+                    2.33333,
+                    2.83333
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "east": {
+                  "uv": [
+                    2.33333,
+                    8.66667
+                  ],
+                  "uv_size": [
+                    2.16667,
+                    2.83333
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "south": {
+                  "uv": [
+                    7.66667,
+                    2.83333
+                  ],
+                  "uv_size": [
+                    2.33333,
+                    2.83334
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "west": {
+                  "uv": [
+                    4.5,
+                    8.66667
+                  ],
+                  "uv_size": [
+                    2.16667,
+                    2.83333
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "up": {
+                  "uv": [
+                    10.33333,
+                    6.33333
+                  ],
+                  "uv_size": [
+                    2.33334,
+                    2.16667
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "down": {
+                  "uv": [
+                    10.33333,
+                    8.66667
+                  ],
+                  "uv_size": [
+                    2.33334,
+                    -2.16667
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                }
+              }
+            },
+            {
+              "origin": [
+                -4.0,
+                19.0,
+                -4.0
+              ],
+              "size": [
+                8.0,
+                1.0,
+                1.0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    12.66667,
+                    4.66667
+                  ],
+                  "uv_size": [
+                    2.66666,
+                    0.33333
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "east": {
+                  "uv": [
+                    7.33333,
+                    8.66667
+                  ],
+                  "uv_size": [
+                    0.33334,
+                    0.33333
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "south": {
+                  "uv": [
+                    12.66667,
+                    5
+                  ],
+                  "uv_size": [
+                    2.66666,
+                    0.33333
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "west": {
+                  "uv": [
+                    7.33333,
+                    9
+                  ],
+                  "uv_size": [
+                    0.33334,
+                    0.33333
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "up": {
+                  "uv": [
+                    12.66667,
+                    5.33333
+                  ],
+                  "uv_size": [
+                    2.66666,
+                    0.33334
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "down": {
+                  "uv": [
+                    12.66667,
+                    6
+                  ],
+                  "uv_size": [
+                    2.66666,
+                    -0.33333
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                }
+              }
+            },
+            {
+              "origin": [
+                -4.0,
+                4.125,
+                -4.0
+              ],
+              "size": [
+                8.0,
+                9.625,
+                1.0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    2.33333,
+                    5.33333
+                  ],
+                  "uv_size": [
+                    2.66667,
+                    3.33334
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "east": {
+                  "uv": [
+                    7.16667,
+                    12.5
+                  ],
+                  "uv_size": [
+                    0.33333,
+                    3.33333
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "south": {
+                  "uv": [
+                    5,
+                    5.33333
+                  ],
+                  "uv_size": [
+                    2.66667,
+                    3.33334
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "west": {
+                  "uv": [
+                    7.5,
+                    12.5
+                  ],
+                  "uv_size": [
+                    0.33333,
+                    3.33333
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "up": {
+                  "uv": [
+                    12.33333,
+                    3.33333
+                  ],
+                  "uv_size": [
+                    2.66667,
+                    0.33334
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "down": {
+                  "uv": [
+                    12.33333,
+                    4
+                  ],
+                  "uv_size": [
+                    2.66667,
+                    -0.33333
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                }
+              }
+            },
+            {
+              "origin": [
+                -4.0,
+                13.875,
+                -4.0
+              ],
+              "size": [
+                8.0,
+                5.125,
+                1.0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    11.33333,
+                    10.83333
+                  ],
+                  "uv_size": [
+                    2.66667,
+                    1.66667
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "east": {
+                  "uv": [
+                    6.66667,
+                    8.66667
+                  ],
+                  "uv_size": [
+                    0.33333,
+                    1.66666
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "south": {
+                  "uv": [
+                    2.33333,
+                    11.5
+                  ],
+                  "uv_size": [
+                    2.66667,
+                    1.66667
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "west": {
+                  "uv": [
+                    7,
+                    8.66667
+                  ],
+                  "uv_size": [
+                    0.33333,
+                    1.66666
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "up": {
+                  "uv": [
+                    12.33333,
+                    4
+                  ],
+                  "uv_size": [
+                    2.66667,
+                    0.33333
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "down": {
+                  "uv": [
+                    12.66667,
+                    4.66667
+                  ],
+                  "uv_size": [
+                    2.66666,
+                    -0.33334
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                }
+              }
+            },
+            {
+              "origin": [
+                -3.5,
+                14.5,
+                -3.875
+              ],
+              "size": [
+                7.0,
+                1.5,
+                1.75
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    2.33333,
+                    0.5
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "east": {
+                  "uv": [
+                    2.5,
+                    7.83333
+                  ],
+                  "uv_size": [
+                    0.5,
+                    0.5
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "south": {
+                  "uv": [
+                    2.5,
+                    7.83333
+                  ],
+                  "uv_size": [
+                    2.33333,
+                    0.5
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "west": {
+                  "uv": [
+                    4.33333,
+                    7.83333
+                  ],
+                  "uv_size": [
+                    0.5,
+                    0.5
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "up": {
+                  "uv": [
+                    2.5,
+                    1.16667
+                  ],
+                  "uv_size": [
+                    -2.33333,
+                    -0.5
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "down": {
+                  "uv": [
+                    2.83333,
+                    0.5
+                  ],
+                  "uv_size": [
+                    -2.33333,
+                    -0.5
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                }
+              }
+            },
+            {
+              "origin": [
+                -3.5,
+                17.0,
+                -3.875
+              ],
+              "size": [
+                7.0,
+                1.5,
+                1.75
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    2.33333,
+                    0.5
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "east": {
+                  "uv": [
+                    2.5,
+                    7.83333
+                  ],
+                  "uv_size": [
+                    0.5,
+                    0.5
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "south": {
+                  "uv": [
+                    2.5,
+                    7.83333
+                  ],
+                  "uv_size": [
+                    2.33333,
+                    0.5
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "west": {
+                  "uv": [
+                    4.33333,
+                    7.83333
+                  ],
+                  "uv_size": [
+                    0.5,
+                    0.5
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "up": {
+                  "uv": [
+                    2.5,
+                    1.16667
+                  ],
+                  "uv_size": [
+                    -2.33333,
+                    -0.5
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "down": {
+                  "uv": [
+                    2.83333,
+                    0.5
+                  ],
+                  "uv_size": [
+                    -2.33333,
+                    -0.5
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                }
+              }
+            },
+            {
+              "origin": [
+                -3.5,
+                8.5,
+                -2.75
+              ],
+              "size": [
+                7.0,
+                1.0,
+                6.25
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    12.66667,
+                    6
+                  ],
+                  "uv_size": [
+                    2.33333,
+                    0.33333
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "east": {
+                  "uv": [
+                    12.66667,
+                    6.66667
+                  ],
+                  "uv_size": [
+                    2.16666,
+                    0.33333
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "south": {
+                  "uv": [
+                    12.66667,
+                    6.33333
+                  ],
+                  "uv_size": [
+                    2.33333,
+                    0.33334
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "west": {
+                  "uv": [
+                    12.66667,
+                    7
+                  ],
+                  "uv_size": [
+                    2.16666,
+                    0.33333
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "up": {
+                  "uv": [
+                    6.66667,
+                    10.33333
+                  ],
+                  "uv_size": [
+                    2.33333,
+                    2.16667
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "down": {
+                  "uv": [
+                    10.33333,
+                    10.83333
+                  ],
+                  "uv_size": [
+                    2.33334,
+                    -2.16666
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                }
+              }
+            },
+            {
+              "origin": [
+                -3.5,
+                16.25,
+                -2.75
+              ],
+              "size": [
+                7.0,
+                0.5,
+                6.25
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    12.66667,
+                    7.33333
+                  ],
+                  "uv_size": [
+                    2.33333,
+                    0.16667
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "east": {
+                  "uv": [
+                    12.66667,
+                    7.66667
+                  ],
+                  "uv_size": [
+                    2.16666,
+                    0.16666
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "south": {
+                  "uv": [
+                    12.66667,
+                    7.5
+                  ],
+                  "uv_size": [
+                    2.33333,
+                    0.16667
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "west": {
+                  "uv": [
+                    12.66667,
+                    7.83333
+                  ],
+                  "uv_size": [
+                    2.16666,
+                    0.16667
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "up": {
+                  "uv": [
+                    0,
+                    10.66667
+                  ],
+                  "uv_size": [
+                    2.33333,
+                    2.16666
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                },
+                "down": {
+                  "uv": [
+                    9,
+                    13
+                  ],
+                  "uv_size": [
+                    2.33333,
+                    -2.16667
+                  ],
+                  "material_instance": "ordertocook_block_refrigerator"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "item_display_transforms": {
+        "firstperson_righthand": {
+          "rotation": [
+            0,
+            107,
+            0
+          ],
+          "translation": [
+            0,
+            1,
+            0
+          ],
+          "scale": [
+            0.4,
+            0.4,
+            0.4
+          ]
+        },
+        "firstperson_lefthand": {
+          "rotation": [
+            0,
+            103,
+            0
+          ],
+          "translation": [
+            0,
+            1.25,
+            0
+          ],
+          "scale": [
+            0.4,
+            0.4,
+            0.4
+          ]
+        },
+        "thirdperson_righthand": {
+          "rotation": [
+            75,
+            45,
+            0
+          ],
+          "translation": [
+            0,
+            2.5,
+            0
+          ],
+          "scale": [
+            0.75,
+            0.75,
+            0.75
+          ]
+        },
+        "thirdperson_lefthand": {
+          "rotation": [
+            75,
+            45,
+            0
+          ],
+          "translation": [
+            0,
+            2.5,
+            0
+          ],
+          "scale": [
+            0.75,
+            0.75,
+            0.75
+          ]
+        },
+        "gui": {
+          "rotation": [
+            30,
+            -135,
+            0
+          ],
+          "translation": [
+            0,
+            -3,
+            0
+          ],
+          "scale": [
+            0.85,
+            0.85,
+            0.85
+          ]
+        },
+        "ground": {
+          "translation": [
+            0,
+            3,
+            0
+          ],
+          "scale": [
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        "fixed": {
+          "translation": [
+            0,
+            -3.5,
+            0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      }
+    }
+  ]
+}

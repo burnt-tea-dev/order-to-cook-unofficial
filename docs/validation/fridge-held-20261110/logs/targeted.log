@@ -1,0 +1,58 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> order-to-cook-bedrock-unofficial@0.1.55-alpha.1 test
+> node tools/run_tests.mjs tests/fridge-item-visual.test.js tests/appliance-bounds.test.js tests/native-fridge.test.js tests/appliance-motion.test.js
+
+Running selected gameplay: 4 test files
+✔ all generated block meshes stay strictly within the observed native envelope and 30px extent (227.915502ms)
+✔ serialized block geometry remains bounded with Float32 arithmetic in all four facings (333.486928ms)
+✔ corrected fridge depth swing extremes retain a positive inward rounding guard (2.173804ms)
+[OrderToCook] minecraft:overworld_0_0_0: Error: upper chunk unavailable
+[OrderToCook] minecraft:overworld_0_0_0: Error: upper chunk unavailable
+✔ door motion takes 20 loaded ticks and reverses from its current angle (2.339152ms)
+✔ dishwasher frames derive from saved phase and timer including the second wash loop (1.338397ms)
+✔ a full close selects the original close clip and reopening reverses that same visible clip (0.413884ms)
+✔ separate native refrigerator events count all viewers and preserve both real containers (7.947524ms)
+✔ reopening a closing native compartment reverses without an endpoint jump (0.812145ms)
+✔ unload clears native viewer bookkeeping and closes on reload without replacing cargo (1.974498ms)
+✔ player departure removes only that native viewer and leaves the other compartment open (1.336646ms)
+✔ a loaded fridge closes stale persisted frames after service restart without touching its native inventory (1.215335ms)
+✔ dishwasher unload and restart resume the persisted pose and generate no second batch (9.404882ms)
+✔ shared root selector uses last active controller, including neutral lower samples (0.855203ms)
+✔ a closing half drives the fully open half and preserves native inventory identity (1.57077ms)
+✔ staggered closes use lower precedence even while its root is neutral (1.339781ms)
+✔ closing-clip reversal keeps bounded behavior and updates the shared root (1.037832ms)
+✔ missing upper half cannot leave its deformation on the remaining half (1.735249ms)
+✔ restart and unload derive shared root from persisted door clips, not stale root states (9.753656ms)
+✔ partial root write failure retries next tick and idle neutral poses do not rewrite (9.97379ms)
+✔ throwing upper lookup clears its shared deformation without touching cargo (4.833777ms)
+✔ throwing upper lookup clears viewers and restores persisted motion instead of its old cache (4.044889ms)
+✔ fridge item uses a separate complete source-derived mesh without changing placed dispatch (2.332947ms)
+✔ all ten source elements are uniformly half-sized and retain all sixty source face UVs (5.026059ms)
+✔ both first-person hands explicitly use source poses on the compact mesh (0.622997ms)
+✔ relative to the exact CARY .54 item only the two first-person scales change (1.719854ms)
+✔ all original placed fridge files and Java inputs remain at the reviewed baseline (27.402854ms)
+[OrderToCook] minecraft:overworld_0_0_0: Error: 冰箱遷移目的格已有物品；兩邊實物均保留，未覆寫。
+[OrderToCook] minecraft:overworld_0_0_0: Error: 冰箱遷移目的格已有物品；兩邊實物均保留，未覆寫。
+[OrderToCook] minecraft:overworld_0_0_0: Error: 冰箱遷移目的格已有物品；兩邊實物均保留，未覆寫。
+✔ new refrigerator uses two bounded native inventories and keeps them across door-state changes (9.716449ms)
+✔ legacy 81-slot helper migrates upper/lower boundary slots with full metadata exactly once (13.75514ms)
+✔ an interrupted native move resumes remaining source slots without duplicating the completed moves (4.655867ms)
+✔ station-save failure retains the empty helper reference and retries without moving already-migrated cargo (2.629694ms)
+✔ migration refuses an occupied destination instead of overwriting either physical stack (4.694075ms)
+✔ a saved helper that has not loaded blocks access and is never replaced by an empty inventory (1.631579ms)
+✔ a foreign or incorrectly anchored helper cannot be migrated through a saved refrigerator reference (12.946547ms)
+✔ without the native container component a fridge preserves legacy cargo and never opens a paginated fallback (2.950657ms)
+✔ breaking either half spills each native stack once and drops only one refrigerator item (24.488014ms)
+✔ command removal cleans the remaining half without replaying automatic native cargo drops (3.269702ms)
+✔ sneak-empty compaction merges matching metadata in first-seen order within one compartment (0.961694ms)
+✔ ordinary use, holding an item and denied access cannot compact fridge cargo (0.413606ms)
+✔ compaction restores full slot snapshots when a write throws before or after acceptance (0.87793ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 978.747697

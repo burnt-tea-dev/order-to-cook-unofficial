@@ -2,6 +2,8 @@
 
 [简体中文](README.zh-CN.md) · [繁體中文](README.md) · **English**
 
+0.1.55-alpha.1 is an **isolated Draft candidate** that reduces both first-person fridge scales from the CARY .54 model's 0.8 to 0.4. Geometry, UVs and other display poses are unchanged. Actual Blockbench views were checked; Minecraft acceptance is pending. This branch is not an upgrade superset of the unknown .54 payload or #87. [Sources, original captures and limits](docs/validation/fridge-held-20261110/README.md).
+
 0.1.52-alpha.1 follows Java PACK when the counter output is occupied: drop the complete bag while retaining the existing block or meal. Plating still needs free space. Existing ingredients, packaging settings and order proofs are retained; known drop failures compensate this transaction. Source regressions pass; new Native/client behavior is not yet observed. [Behavior and scope](docs/PARITY.md#受阻台面的打包掉袋0152).
 
 0.1.51-alpha.1 source recovers loaded unsafe delivery addresses while retaining the original order, parcel proof, deadline and accepted reward. An existing bag updates only its generated coordinate lore when used. Unknown chunks and existing customers/anchors retain their addresses. See [PARITY](docs/PARITY.md#已接外送單的壞地址恢復0151) for behavior and unverified Native/client scope.

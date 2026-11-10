@@ -43,6 +43,8 @@ jobs:
           python -m unittest discover -s tests -p test_fridge_shared_root.py
           python -m unittest discover -s tests -p test_dining_assets.py
           python -m unittest discover -s tests -p test_guide_languages.py
+      - name: Check compact fridge block-item source and display contract
+        run: node --test tests/fridge-item-visual.test.js
       - name: Validate compliance metadata and generated packages
         run: python tools/check_compliance.py
       - name: Regression-check advisory clarification and release tag validation
