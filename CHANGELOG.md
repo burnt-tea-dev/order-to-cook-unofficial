@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.51-alpha.1
+
+- Recover unexpired delivery orders with a loaded water/blocked destination only when no customer or saved anchor exists. Reuse the original radial rules and four-candidate bound through the existing customer retry; accept only loaded safe ground near a player. Unknown chunks and established customers retain their addresses.
+- Commit the replacement through the original customer spawn/save rollback. Keep the same order, physical proof, items, accepted reward, distance quote, delivery class and deadlines; never regenerate, renew or repack the order. No new timer, registry or chunk loading is added.
+- On use of an existing live bag, update only the factory coordinate lore line identified by its following use hint. Preserve the same native stack, name, other lore, dynamic properties and count; skip unchanged/custom lore and absent, terminal or expired bags. A late callback cannot recreate a consumed parcel.
+- Freeze fresh paired 0.1.51 with unchanged UUIDs/APIs and prior history retained. Source regressions cover bounded recovery, rollback, unknown terrain, unchanged anchors/deadlines, original-bag handoff and single payment. This source delivery does not update the fixed 0.1.50 candidate or claim new Native, client or performance results.
+
 ## 0.1.50-alpha.1
 
 - Dispatch canceled native clicks to the existing station interaction owner even when `isFirstEvent` is false. Empty-hand menu-board use opens management and clean-plate shelf use reaches the normal debit/storage path. Preserve the existing three-tick duplicate guard and component fallback.

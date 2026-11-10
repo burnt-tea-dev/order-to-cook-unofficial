@@ -2,6 +2,8 @@
 
 [简体中文](README.zh-CN.md) · [繁體中文](README.md) · **English**
 
+0.1.51-alpha.1 source recovers loaded unsafe delivery addresses while retaining the original order, parcel proof, deadline and accepted reward. An existing bag updates only its generated coordinate lore when used. Unknown chunks and existing customers/anchors retain their addresses; the fixed shared 050 candidate stays unchanged. See [PARITY](docs/PARITY.md#已接外送單的壞地址恢復0151) for behavior and unverified Native/client scope.
+
 0.1.48-alpha.1 is an **unpublished candidate integrated onto merged #75 main**. It corrects seven static motorcycle X-angle signs and 41 physical box-UV mirror mappings while retaining every original texture and all gameplay/steering/wheel behavior. Nine original common-editor photographs support the bounded static comparison, not native or moving-vehicle acceptance. Paired identity is frozen; packages are built from the exact integrated candidate commit. Any later source change requires fresh build proofs. [Scope, identity and limits](docs/validation/0.1.48-alpha.1/MOTORCYCLE_STATIC_MAPPING.md).
 
 0.1.47 restores a shared refrigerator root across both independently posed doors, with lower-close controller priority including neutral samples. Cosmetic recovery now continues when reading the upper block throws, without weakening inventory migration safeguards. The paired candidate identity is frozen, not published; finite sampling, SRT shear approximation, reversal/STOP differences and non-atomic two-block writes remain. [Source, identity and validation](docs/validation/0.1.47-alpha.1/FRIDGE_SHARED_ROOT.md).
