@@ -1,0 +1,20 @@
+{
+  "client_version": "26.63",
+  "reported_rp_version": [
+    0,
+    1,
+    54
+  ],
+  "manifest_sha256": "e60f2b2ad11f28075309fc21ff00a7789c657b5e7fbf3240f7928a26dcd038bc",
+  "source_marker_sha256": "fea65f9e30c45c6ab9ad19ff111afaeaa95a4ec8ebfa0769cafbf08fc38e2efe",
+  "source_marker_claimed_commit": "0dc5c5ca7a842eb4942c3c3b26f423eccc5966b2",
+  "source_commit_verified": false,
+  "source_lookup_result": "Git fetch: not our ref; GitHub Contents API: no commit found. SOURCE is a declaration, not proof of correspondence.",
+  "model_sha256": "1cea082601b71066ea07057ffcdf02c3f8c1aa1aa077151bc5fb7821526412e1",
+  "model_json_differences": [
+    "minecraft:geometry[0].item_display_transforms.firstperson_righthand.scale: [0.8,0.8,0.8] -> [0.4,0.4,0.4]",
+    "minecraft:geometry[0].item_display_transforms.firstperson_lefthand.scale: [0.8,0.8,0.8] -> [0.4,0.4,0.4]"
+  ],
+  "source_bp_verified": false,
+  "native_after_repair_tested": false
+}

@@ -1231,6 +1231,52 @@ def simple_block(name, model, collision=True, selection=None):
     block_definition(name, g["minecraft:geometry"][0]["description"]["identifier"], mats, collision=collision, selection=selection)
 
 
+def fridge_item_visual():
+    """A complete, compact item, separate from the two placed cabinet halves.
+
+    The pinned Java item inherits a 16x32x16 block model. Its display values
+    are item transforms, not geometry coordinates. Fit that model uniformly
+    to 8x16x8 about the block center (0,8,0), retaining the CARY .54 item's
+    position and non-first-person scale compensation. First-person deliberately
+    omits that compensation, halving its visible dimensions. This is a Bedrock
+    comfort adaptation, not a source-size or camera-parity claim.
+    """
+    name = f"{NS}:item/refrigerator"
+    identifier = f"geometry.{NS}.refrigerator_item"
+    model = resolve_model(name)
+    g, materials = convert_java_model(name, identifier)
+    mesh = g["minecraft:geometry"][0]
+    # All ten source elements are axis aligned. Guard this narrow conversion
+    # rather than silently fitting changed/rotated source geometry incorrectly.
+    cubes = mesh["bones"][0]["cubes"]
+    if len(cubes) != 10 or any(cube.get("rotation") for cube in cubes):
+        raise ValueError("Unexpected refrigerator item source topology")
+    low = [min(cube["origin"][axis] for cube in cubes) for axis in range(3)]
+    high = [max(cube["origin"][axis]+cube["size"][axis] for cube in cubes) for axis in range(3)]
+    if low != [-8, 0, -8] or high != [8, 32, 8]:
+        raise ValueError("Unexpected refrigerator item source bounds")
+    for cube in cubes:
+        cube["origin"] = [value * .5 for value in cube["origin"]]
+        cube["origin"][1] += 4
+        cube["size"] = [value * .5 for value in cube["size"]]
+    contexts = ("firstperson_righthand", "firstperson_lefthand",
+                "thirdperson_righthand", "thirdperson_lefthand", "gui", "ground", "fixed")
+    mesh["item_display_transforms"] = {
+        context: copy.deepcopy(model["display"][context])
+        for context in contexts}
+    for context, transform in mesh["item_display_transforms"].items():
+        if not context.startswith("firstperson_"):
+            transform["scale"] = [value * 2 for value in transform["scale"]]
+    # Native-container block format requires numeric, rather than boolean AO.
+    for material in materials.values():
+        material["ambient_occlusion"] = 0
+    assert_block_bounds(g)
+    sources, _ = GEOMETRY_SOURCES[identifier]
+    GEOMETRY_SOURCES[identifier] = (sources,
+        "Complete Java refrigerator item; half-size geometry around block center, original per-face UVs, source display scales restored except compact first-person hands; placed halves unchanged")
+    return {"geometry": emit_geo("refrigerator_item", g), "material_instances": materials}
+
+
 def make_blocks():
     simple_block("board", "board", False, {"origin": [-8, 0, 4], "size": [16, 16, 4]})
     simple_block("countertop", "countertop")
@@ -1371,7 +1417,10 @@ def make_blocks():
     # compartment its actual capacity; the old upper state remains migratable.
     block_definition("refrigerator", f"geometry.{NS}.refrigerator_lower_0", mats,
                      {"half": ["lower", "upper"], "open": [False, True], "closing": [False, True], "frame": list(range(11)), "root_frame": list(range(len(fridge_roots)))}, variants,
-                     native_container={"slot_count": 54, "title": f"container.{NS}.refrigerator.lower"})
+                     native_container={"slot_count": 54, "title": f"container.{NS}.refrigerator.lower"},
+                     item_visual=fridge_item_visual())
+    record(model_path(f"{NS}:item/refrigerator"), BP / "blocks/refrigerator.json",
+           "Separate complete compact block item; no change to placed cabinet, collision, storage or animation")
     block_definition("refrigerator_upper", f"geometry.{NS}.refrigerator_upper_0", mats,
                      {"half": ["upper"], "open": [False, True], "closing": [False, True], "frame": list(range(11)), "root_frame": list(range(len(fridge_roots)))}, upper_variants,
                      native_container={"slot_count": 27, "title": f"container.{NS}.refrigerator.upper"},

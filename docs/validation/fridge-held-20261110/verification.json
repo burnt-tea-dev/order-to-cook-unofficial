@@ -1,0 +1,58 @@
+{
+  "candidate": "0.1.55-alpha.1",
+  "base_commit": "a4176b193294d8f57234b3b316ad6b092acf5d5b",
+  "upstream_commit": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+  "runtime_tree_sha256": "933a95a38d48077fc6faec349eaaeded007ff2c768fef1d56a445cf5ff82ddd4",
+  "node_exact_item_tests": {
+    "passed": 5,
+    "failed": 0
+  },
+  "node_targeted": {
+    "passed": 39,
+    "failed": 0
+  },
+  "npm_verify_core": {
+    "passed": 328,
+    "failed": 0
+  },
+  "npm_verify_full": {
+    "passed": 985,
+    "failed": 0,
+    "skipped": 0,
+    "types": true,
+    "resources": true,
+    "build": true
+  },
+  "python_appliance": {
+    "passed": 34
+  },
+  "python_fridge_shared_root": {
+    "passed": 3
+  },
+  "python_ci_scope": {
+    "passed": 9
+  },
+  "regeneration": {
+    "files": 650,
+    "byte_identical": true
+  },
+  "negative_control_restored_right_scale_08": "rejected",
+  "independent_review": {
+    "read_only": true,
+    "item_tests_rerun": 5,
+    "preserved_input_hashes_checked_against_git_baseline": 190,
+    "lower_block_equals_main_except_item_visual": true,
+    "findings": "No source defect identified; whole-package deployment cannot be assumed safe over unknown CARY .54 payload."
+  },
+  "original_blockbench_captures": 7,
+  "native_after_repair_tested": false,
+  "deployed": false,
+  "merged": false,
+  "release_created": false,
+  "limitations": [
+    "Exact CARY resource-only cache was inspected; server BP was not available.",
+    "Cache SOURCE claimed commit cannot currently be resolved on GitHub.",
+    "The .55 branch does not integrate #87 or prove preservation of all unknown .54 changes.",
+    "Editor Display mode does not prove Bedrock FOV, bob, clipping or input behavior."
+  ]
+}
