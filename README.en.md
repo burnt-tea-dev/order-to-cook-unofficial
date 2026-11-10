@@ -234,6 +234,16 @@ npm run verify
 python tools/check_compliance.py
 ```
 
+`npm run verify` runs the core order/payment, item handoff, saved-container and
+interaction-owner suites, then type/resource checks and packaging. Use
+`npm test -- tests/delivery-recovery.test.js` to run only named files,
+`npm test -- --full` for all existing JS tests, or `npm run verify:full` for all
+JS tests plus checks/build. Model, pixel and asset matrices remain available in
+the manual build workflow's `full_validation` option and version-tag/candidate
+validation. Run the relevant existing asset tests when changing those sources;
+ordinary PR validation does not replay every asset matrix. See the
+[maintained test entry](README.md#開發與重現).
+
 `dist/` contains `.mcaddon`, standalone `.mcpack`, `SHA256SUMS.txt` and runtime fingerprint. If changing source models or conversion tools:
 
 ```sh
