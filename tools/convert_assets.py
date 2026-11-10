@@ -715,6 +715,12 @@ def convert_animations():
                 body["anim_time_update"] = (f"math.min({length}, math.max(q.anim_time + q.delta_time, "
                                             f"q.property('{NS}:action_elapsed')))")
                 body["loop"] = "hold_on_last_frame"
+            elif family == "npc":
+                # The idle controller changes variant only at the source clip's
+                # end. State time also restarts a repeated selection without an
+                # animationless reset frame exposing the standing bind pose.
+                body["anim_time_update"] = "q.state_time"
+                body["loop"] = True
             elif family == "food_plate_placed":
                 body["anim_time_update"] = (f"math.min(0.5, math.max(q.anim_time + q.delta_time, "
                                             f"q.property('{NS}:placement_age')))")
@@ -1168,6 +1174,36 @@ def state_condition(states):
     return " && ".join(f"q.block_state('{NS}:{key}') == " + (f"'{value}'" if isinstance(value, str) else str(value).lower()) for key, value in states.items())
 
 
+def make_fridge_item_visual():
+    """Use Java's complete block item, independently of the two placed halves."""
+    model_name = f"{NS}:item/refrigerator"
+    identifier = f"geometry.{NS}.refrigerator_item"
+    g, materials = convert_java_model(model_name, identifier)
+    entry = g["minecraft:geometry"][0]
+    # The complete 32px cabinet exceeds the block-item geometry envelope.
+    # Halve it around the item centre (0,8,0), then compensate in each source
+    # display scale. Keep all faces/UVs; never clip it to a placed half.
+    for cube in entry["bones"][0]["cubes"]:
+        cube["origin"] = [cube["origin"][0]/2, 4+cube["origin"][1]/2, cube["origin"][2]/2]
+        cube["size"] = [value/2 for value in cube["size"]]
+    display = resolve_model(model_name)["display"]
+    entry["item_display_transforms"] = {}
+    for context in ("gui", "ground", "fixed", "firstperson_righthand", "firstperson_lefthand",
+                    "thirdperson_righthand", "thirdperson_lefthand"):
+        transform = copy.deepcopy(display[context])
+        transform["scale"] = [value*2 for value in transform["scale"]]
+        entry["item_display_transforms"][context] = transform
+    for material in materials.values():
+        material["ambient_occlusion"] = 0
+    sources, _ = GEOMETRY_SOURCES[identifier]
+    operation = "Complete Java refrigerator item parent, all faces/UVs; half-size mesh about item centre with compensated source display scales; independent of placed halves"
+    GEOMETRY_SOURCES[identifier] = (sources, operation)
+    item_visual = {"geometry": emit_geo("refrigerator_item", g), "material_instances": materials}
+    for source in sources:
+        record(source, BP / "blocks/refrigerator.json", operation)
+    return item_visual
+
+
 def block_definition(name, base_geo, materials, states=None, variants=(), collision=True, selection=None,
                      native_container=None, hidden=False, loot_table=None, item_visual=None):
     if native_container is not None:
@@ -1371,7 +1407,8 @@ def make_blocks():
     # compartment its actual capacity; the old upper state remains migratable.
     block_definition("refrigerator", f"geometry.{NS}.refrigerator_lower_0", mats,
                      {"half": ["lower", "upper"], "open": [False, True], "closing": [False, True], "frame": list(range(11)), "root_frame": list(range(len(fridge_roots)))}, variants,
-                     native_container={"slot_count": 54, "title": f"container.{NS}.refrigerator.lower"})
+                     native_container={"slot_count": 54, "title": f"container.{NS}.refrigerator.lower"},
+                     item_visual=make_fridge_item_visual())
     block_definition("refrigerator_upper", f"geometry.{NS}.refrigerator_upper_0", mats,
                      {"half": ["upper"], "open": [False, True], "closing": [False, True], "frame": list(range(11)), "root_frame": list(range(len(fridge_roots)))}, upper_variants,
                      native_container={"slot_count": 27, "title": f"container.{NS}.refrigerator.upper"},
@@ -1954,6 +1991,23 @@ def customer_reaction_clock(durations=None):
     return properties, groups, events
 
 
+def make_motorcycle_entity():
+    motorcycle = entity_base("ordertocook_motorcycle", True, True)
+    # Java positionRider uses +Z behind its -Z forward vector. Bedrock's
+    # native actor faces +Z; the unchanged -Z-front mesh is turned by the
+    # client renderer, so its seat must be behind the actor at -Z too.
+    motorcycle.update({"minecraft:collision_box": {"width": 1.2, "height": 1.2}, "minecraft:movement": {"value": .35},
+        "minecraft:movement.basic": {}, "minecraft:input_ground_controlled": {}, "minecraft:jump.static": {},
+        "minecraft:variable_max_auto_step": {"base_value":1, "controlled_value":1, "jump_prevented_value":.5625},
+        "minecraft:rideable": {"seat_count": 1, "controlling_seat": 0, "crouching_skip_interact": True,
+            "family_types": ["player"], "interact_text": "action.interact.ride.horse", "pull_in_entities": False,
+            "seats": [{"position": [0,.6,-.45]}]},
+        "minecraft:inventory": {"inventory_size": 54, "container_type": "inventory", "private": True, "can_be_siphoned_from": False}})
+    write_entity("motorcycle", motorcycle, {
+        f"{NS}:color": {"type":"int","range":[0,3],"default":0,"client_sync":True},
+        f"{NS}:light": {"type":"bool","default":True,"client_sync":True}})
+
+
 def make_entities(animation_names):
     customer = entity_base("ordertocook_customer", True, True)
     customer.update({"minecraft:collision_box": {"width": .6, "height": 1.8}, "minecraft:movement": {"value": 0},
@@ -1978,17 +2032,7 @@ def make_entities(animation_names):
             components["minecraft:rideable"] = {"seat_count": 1, "family_types": ["player", "ordertocook_customer"],
                 "interact_text": "action.interact.sit", "pull_in_entities": False, "seats": [{"position": [0,0,0], "lock_rider_rotation": 45}]}
         write_entity(name, components)
-    motorcycle = entity_base("ordertocook_motorcycle", True, True)
-    motorcycle.update({"minecraft:collision_box": {"width": 1.2, "height": 1.2}, "minecraft:movement": {"value": .35},
-        "minecraft:movement.basic": {}, "minecraft:input_ground_controlled": {}, "minecraft:jump.static": {},
-        "minecraft:variable_max_auto_step": {"base_value":1, "controlled_value":1, "jump_prevented_value":.5625},
-        "minecraft:rideable": {"seat_count": 1, "controlling_seat": 0, "crouching_skip_interact": True,
-            "family_types": ["player"], "interact_text": "action.interact.ride.horse", "pull_in_entities": False,
-            "seats": [{"position": [0,.6,.45]}]},
-        "minecraft:inventory": {"inventory_size": 54, "container_type": "inventory", "private": True, "can_be_siphoned_from": False}})
-    write_entity("motorcycle", motorcycle, {
-        f"{NS}:color": {"type":"int","range":[0,3],"default":0,"client_sync":True},
-        f"{NS}:light": {"type":"bool","default":True,"client_sync":True}})
+    make_motorcycle_entity()
     make_motorcycle_geo()
     for original, short in (("drive_idle", "customer"), ("drive_idle_alex", "customer_slim")):
         source = ASSETS / "geo" / (original + ".geo.json")
@@ -2002,49 +2046,61 @@ def make_entities(animation_names):
     for index in range(1,5):
         anims[f"waiting{index}"] = animation_names[("npc",f"customer_wait_{index}")]
         anims[f"seated{index}"] = animation_names[("npc",f"customer_sit_{index}")]
-    # The original waiting/seated clips are once-off in Java's controller; the
-    # Bedrock controller cycles back through reset to preserve their duration.
+    # Customers use the original idle/action clips exclusively. They have zero
+    # movement in Java; the old synthetic customer walk has no runtime caller.
     write_json(RP / "animations/runtime.animation.json", {"format_version":"1.8.0","animations":{
-        f"animation.{NS}.customer.walk": {"loop":True, "bones":{
-            "right_leg":{"rotation":["math.cos(q.modified_distance_moved * 38.17) * 28",0,0]},
-            "left_leg":{"rotation":["-math.cos(q.modified_distance_moved * 38.17) * 28",0,0]},
-            "right_arm":{"rotation":["-math.cos(q.modified_distance_moved * 38.17) * 14",0,0]},
-            "left_arm":{"rotation":["math.cos(q.modified_distance_moved * 38.17) * 14",0,0]}}},
         f"animation.{NS}.motorcycle.drive": {"loop":True,"bones":{
             "front_t":{"rotation":["q.modified_distance_moved * -114.6",0,0]},
             "rear_t":{"rotation":["q.modified_distance_moved * -114.6",0,0]}}}}})
     stages = {}
     action_transitions = [{f"action_{action}": f"q.property('{NS}:action') == {action}"} for action in action_clips]
-    idle_transitions = [{"select": f"q.property('{NS}:action') == 0"}]
-    stages["select"] = {"on_entry": [f"v.idle_variant = q.property('{NS}:animation_variant');"],
-        "transitions": copy.deepcopy(action_transitions) + [
-            {"seated": f"q.property('{NS}:stage') == 'seated'"}, {"waiting": "1.0"}]}
-    for stage in ("waiting", "seated"):
-        other = "seated" if stage == "waiting" else "waiting"
-        condition = f"q.property('{NS}:stage') {'==' if other == 'seated' else '!='} 'seated'"
-        transitions = copy.deepcopy(action_transitions)+[{"select": condition}, {stage+"_reset": "q.all_animations_finished"}]
-        # Java selects a new weighted idle only when the current clip finishes
-        # on the client. Latch it for that cycle; a server timer must not change
-        # animation weights halfway through a late-loaded four-second clip.
-        stages[stage] = {"animations": [{f"{stage}{index}": f"v.idle_variant == {index}"} for index in range(1, 5)],
-                         "blend_transition": 0, "transitions": transitions}
-        stages[stage+"_reset"] = {
-            "on_entry": ["v.idle_roll = math.random(0, 1);",
-                         "v.idle_variant = v.idle_roll < 0.55 ? 1 : (v.idle_roll < 0.7 ? 2 : (v.idle_roll < 0.85 ? 3 : 4));"],
-            "transitions": copy.deepcopy(action_transitions)+[{"select": condition}, {stage: "1.0"}]}
+    idle_transitions = [{"idle": f"q.property('{NS}:action') == 0"}]
+    riding = f"q.is_riding_any_entity_of_type('{NS}:seat')"
+    source_idles = read_json(ASSETS / "animations/npc.animation.json")["animations"]
+    idle_length = "0"
+    for stage, clip in (("waiting", "wait"), ("seated", "sit")):
+        for index in range(1, 5):
+            length = source_idles[f"customer_{clip}_{index}"]["animation_length"]
+            condition = f"{'v.idle_seated' if stage == 'seated' else '!v.idle_seated'} && v.idle_variant == {index}"
+            idle_length = f"({condition} ? {length} : {idle_length})"
+    for state, other in (("idle", "idle_next"), ("idle_next", "idle")):
+        # Both cycle states play a complete original clip. The native state
+        # clock resets on entry even if the same variant was selected again.
+        # Ride ownership, as in CustomerEntity.isChairCustomer(), selects the
+        # pose; the order's eating/leaving label is not a seating decision.
+        stages[state] = {
+            "on_entry": [f"v.idle_seated = {riding};",
+                         f"v.idle_length = {idle_length};"],
+            "animations": [{f"{stage}{index}": f"{'v.idle_seated' if stage == 'seated' else '!v.idle_seated'} && v.idle_variant == {index}"}
+                           for stage in ("waiting", "seated") for index in range(1, 5)],
+            "blend_transition": 0,
+            "transitions": copy.deepcopy(action_transitions) + [
+                {other: f"if (v.idle_seated != {riding}) {{ v.idle_variant = q.property('{NS}:animation_variant'); return 1; }} "
+                        "if (q.state_time < v.idle_length) { return 0; } "
+                        "v.idle_roll = math.random(0, 1); "
+                        "v.idle_variant = v.idle_roll < 0.55 ? 1 : (v.idle_roll < 0.7 ? 2 : (v.idle_roll < 0.85 ? 3 : 4)); return 1;"}]}
     for action in action_clips:
         # Authoritative server action/timer decides completion. Never loop a
         # completed eating/arrival effect simply because the clip ended locally.
         transitions = [entry for entry in action_transitions if f"action_{action}" not in entry]+copy.deepcopy(idle_transitions)
-        stages[f"action_{action}"] = {"animations": [f"action{action}"], "blend_transition": 0, "transitions": transitions}
+        stages[f"action_{action}"] = {"animations": [f"action{action}"], "blend_transition": 0,
+            "on_exit": [f"v.idle_variant = q.property('{NS}:animation_variant');"], "transitions": transitions}
     write_json(RP / "animation_controllers/customer.animation_controllers.json", {"format_version":"1.10.0","animation_controllers":{
-        f"controller.animation.{NS}.customer":{"initial_state":"select","states":stages}}})
+        f"controller.animation.{NS}.customer":{"initial_state":"idle","states":stages}}})
     anims["controller"] = f"controller.animation.{NS}.customer"
+    # Entity variables are lost when the client unloads the actor. Create every
+    # idle variable before any controller state is evaluated, independently of
+    # initial-state entry events; state entry only updates an existing cycle.
     write_json(RP / "entity/customer.entity.json", {"format_version":"1.10.0","minecraft:client_entity":{"description":{
         "identifier":f"{NS}:customer", "materials":{"default":"entity_alphatest"},
         "textures":{"wide":f"textures/{NS}/entity/otc_zombie_custom","slim":f"textures/{NS}/entity/otc_zombie_custom2"},
         "geometry":{"wide":f"geometry.{NS}.customer","slim":f"geometry.{NS}.customer_slim"},
-        "animations":anims,"scripts":{"animate":["controller"]},"render_controllers":[f"controller.render.{NS}.customer"],
+        "animations":anims,"scripts":{
+            "initialize":[f"v.idle_variant = q.property('{NS}:animation_variant');",
+                          f"v.idle_seated = {riding};",
+                          f"v.idle_length = {idle_length};",
+                          "v.idle_roll = 0;"],
+            "animate":["controller"]},"render_controllers":[f"controller.render.{NS}.customer"],
         "spawn_egg":{"base_color":"c89d5a","overlay_color":"f3e3ca"}}}})
     for name in ("seat","storage"):
         write_json(RP / "entity" / (name + ".entity.json"), {"format_version":"1.10.0","minecraft:client_entity":{"description":{
@@ -2213,10 +2269,21 @@ def make_languages():
     for value in (1,5,20,100,10000):
         traditional[f"chef_coin_{value}"]=f"廚師幣（{value}）"
     english_extra = {"guide":"Order To Cook Guide", "controller":"Restaurant Controller"}
+    simplified_extra = {"guide": "Order To Cook 使用指南", "controller": "餐厅控制器"}
     fridge_labels = {
         "en_US": {"upper": "Refrigerator — Upper (27 slots)", "lower": "Refrigerator — Lower (54 slots)", "block": "Upper Refrigerator"},
         "zh_CN": {"upper": "冰箱上层（27格）", "lower": "冰箱下层（54格）", "block": "冰箱上层"},
         "zh_TW": {"upper": "冰箱上層（27格）", "lower": "冰箱下層（54格）", "block": "冰箱上層"},
+    }
+    motorcycle_exit_hints = {
+        "en_US": ("Sneak to dismount", "Press :_input_key.sneak: to dismount", "Tap dismount to get off"),
+        "zh_CN": ("潜行下车", "按 :_input_key.sneak: 下车", "轻触离座按钮下车"),
+        "zh_TW": ("蹲下離座", "按 :_input_key.sneak: 離座", "輕觸離座按鈕下車"),
+    }
+    entity_labels = {
+        "en_US": ("Customer", "Delivery Motorcycle", "Dining Plate", "Check plate"),
+        "zh_CN": ("顾客", "小电驴", "用餐餐盘", "查看餐盘"),
+        "zh_TW": ("顧客", "外賣電單車", "用餐餐盤", "查看餐盤"),
     }
     for src_name, out_name in (("en_us","en_US"),("zh_cn","zh_CN"),("zh_cn","zh_TW")):
         lang = read_json(ASSETS / "lang" / (src_name + ".json"))
@@ -2237,11 +2304,22 @@ def make_languages():
         for path in sorted((BP / "items").glob("*.json")):
             name=path.stem
             fallback=english_extra.get(name,name.replace("_"," ").title())
-            value=traditional[name] if out_name == "zh_TW" else lang.get(f"item.{NS}.{name}",fallback if out_name == "en_US" else traditional[name])
+            # Block-items use their upstream block label, rather than falling
+            # through to the Traditional Chinese table for every Chinese locale.
+            value=traditional[name] if out_name == "zh_TW" else lang.get(f"item.{NS}.{name}", lang.get(f"block.{NS}.{name}", fallback if out_name == "en_US" else simplified_extra.get(name, fallback)))
             lines.append(f"item.{NS}:{name}.name={value}")
-        lines += [f"entity.{NS}:customer.name="+("Customer" if out_name=="en_US" else "顧客"), f"entity.{NS}:motorcycle.name="+("Delivery Motorcycle" if out_name=="en_US" else "外賣電單車"),
-                  f"entity.{NS}:dining_plate.name="+("Dining Plate" if out_name=="en_US" else "用餐餐盤"),
-                  f"action.interact.{NS}.plate="+("Check plate" if out_name=="en_US" else "查看餐盤")]
+        customer, motorcycle, dining_plate, plate_action = entity_labels[out_name]
+        lines += [f"entity.{NS}:customer.name={customer}", f"entity.{NS}:motorcycle.name={motorcycle}",
+                  f"entity.{NS}:dining_plate.name={dining_plate}", f"action.interact.{NS}.plate={plate_action}"]
+        for suffix, hint in zip(("", "console.", "scheme."), motorcycle_exit_hints[out_name]):
+            lines.append(f"action.hint.exit.{suffix}{NS}:motorcycle={hint}")
+        # Reuse the Java order names. The port's Traditional Chinese wording
+        # and platform-specific UI text have one editable .lang source per locale.
+        port_text = (ROOT / "assets/localization" / (out_name + ".lang")).read_text(encoding="utf-8")
+        port_keys = {line.partition("=")[0] for line in port_text.splitlines() if "=" in line}
+        lines += [f"{key}={value}" for key, value in lang.items()
+                  if key.startswith(f"order.{NS}.name.") and key not in port_keys]
+        lines += port_text.splitlines()
         dest=RP / "texts" / (out_name+".lang")
         # Handbook and runtime messages are maintained independently of Java
         # asset labels. Regeneration must retain those additional keys.
@@ -2263,6 +2341,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source",type=Path,default=ROOT / "upstream/reference",help="Bundled upstream/reference source subset (default), or a local OrdertoCook checkout")
     parser.add_argument("--output",type=Path,default=ROOT / "runtime")
+    parser.add_argument("--languages-only", action="store_true", help="Regenerate only language files from upstream and owned localization sources")
     parser.add_argument("--segmented-player-native", type=Path, help="External native input for local model-source prototypes only")
     parser.add_argument("--segmented-player-slim", type=Path, help="External legacy mobs.json containing standalone native customSlim")
     parser.add_argument("--segmented-camera-frames", type=Path, help="Explicit right/left model-space camera frames for that prototype")
@@ -2270,6 +2349,9 @@ def main():
     SOURCE=args.source.resolve(); ASSETS=SOURCE / ASSET_REL; OUT=args.output.resolve(); BP=OUT / "BP"; RP=OUT / "RP"
     if not (SOURCE / "LICENSE.txt").is_file() or not ASSETS.is_dir():
         parser.error("Expected OrdertoCook source inputs with LICENSE.txt and common resources")
+    if args.languages_only:
+        make_languages()
+        return
     if args.segmented_player_native or args.segmented_player_slim or args.segmented_camera_frames:
         if not (args.segmented_player_native and args.segmented_player_slim and args.segmented_camera_frames):
             parser.error("Segmented prototypes need separate native classic/slim inputs and explicit camera frames")
@@ -2307,7 +2389,7 @@ def main():
     write_json(OUT / "asset_conversion_manifest.json", {"upstream":"https://github.com/breezeth-CN/OrdertoCook","revision":revision,
         "license":"GPL-3.0", "assets":PROVENANCE,
         "port_assets": [{"source": str(path.relative_to(ROOT)), "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
-                        for path in sorted((ROOT / "assets/guidebook").glob("*")) if path.suffix in (".png", ".lang")],
+                        for path in sorted([*(ROOT / "assets/guidebook").glob("*"), *(ROOT / "assets/localization").glob("*.lang")]) if path.suffix in (".png", ".lang")],
         "adaptations":["Two-part refrigerator with complete independent doors; separate 11-pose open/close source clips; at most 0.126px intermediate hinge translation bounds the sweep",
             "Washing table includes the source renderer's static translucent water quad in all 11 plate states; whole-block blend and reverse-winding underside require native sorting/backface review",
             "Original GeckoLib elastic/bounce easing and appliance squash retained in sampled static cuboids; refrigerator halves share four common-root samples with active-lower controller priority; residual descendant shear, reversal/STOP adaptation and non-atomic block writes remain documented",

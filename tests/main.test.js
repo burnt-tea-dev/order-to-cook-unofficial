@@ -371,19 +371,13 @@ test('restaurant removal retains an unacknowledged personal ledger for a later r
   assert.equal(env.hooks.progression.getState(env.player.id).totals.earned, env.order.paidReward);
 });
 
-test('one HUD update combines equipment with delivery and prioritizes washing without losing navigation', async () => {
+test('one HUD update combines washing with delivery', async () => {
   const env = await mainFixture();
   env.order.type = 'delivery'; env.order.carrier = 'bag'; env.order.destination = { dimensionId: env.player.dimension.id, x: 100, y: 0, z: 100 };
   env.store.saveRestaurant(env.restaurant);
-  env.player.viewedBlock = env.machine;
-  env.hooks.appliances.getInspection = () => '設備讀數';
-  env.hooks.appliances.getWashingProgress = () => undefined;
-  env.hooks.updateHud();
-  assert.match(env.player.messages.at(-1), /^設備讀數\n§r§6外送/);
   env.hooks.appliances.getWashingProgress = () => '手洗進度';
   env.hooks.updateHud();
   assert.match(env.player.messages.at(-1), /^手洗進度\n§r§6外送/);
-  assert.doesNotMatch(env.player.messages.at(-1), /設備讀數/);
 });
 
 test('unloaded crosshair targets do not hide delivery hints and idle HUD clears only once', async () => {

@@ -12,6 +12,8 @@ const MOTORCYCLE = `${NS}motorcycle`;
 const CONTROLLER = `${NS}controller`;
 const SEAT = `${NS}seat`;
 const CHAIR = `${NS}chair`;
+// OrderNpcManager.SEAT_Y_OFFSET: chair.above() - (1 - 9/16 + 0.6).
+const CUSTOMER_SEAT_HEIGHT = 9 / 16 - 0.6;
 const LIVE_ORDER = new Set(["accepted", "packed"]);
 const COLORS = ["白色", "紅色", "藍色", "黃色"];
 const DYES = Object.freeze({ "minecraft:white_dye": 0, "minecraft:red_dye": 1, "minecraft:blue_dye": 2, "minecraft:yellow_dye": 3 });
@@ -256,14 +258,18 @@ export function createEntityService(ctx) {
     if (chairOccupied(block, rider)) return false;
     let seat = seatAt(block);
     if (seat?.getComponent("minecraft:rideable")?.getRiders().length) return false;
+    // OrderNpcManager uses chair.above() - (1 - 9/16 + 0.6) for customers;
+    // ChairBlock's player seat uses +9/16. The source customer rig includes
+    // its own seated hip height, so sharing the player origin raises it 0.6m.
+    const seatLocation = center(block.location, rider.typeId === CUSTOMER ? CUSTOMER_SEAT_HEIGHT : 9 / 16);
     if (!seat) {
-      seat = block.dimension.spawnEntity(SEAT, center(block.location, 0.5625));
+      seat = block.dimension.spawnEntity(SEAT, seatLocation);
       try {
         seat.setDynamicProperty(`${NS}chair_anchor`, JSON.stringify({ dimensionId: block.dimension.id, location: block.location }));
         seat.addTag(`${NS}chair_seat`);
         seat.setRotation({ x: 0, y: chairYaw(block) });
       } catch (error) { clearSeat(seat); throw error; }
-    }
+    } else seat.teleport(seatLocation);
     const mounted = seat.getComponent("minecraft:rideable")?.addRider(rider) ?? false;
     if (!mounted) { clearSeat(seat); return false; }
     rider.setRotation({ x: 0, y: chairYaw(block) });
@@ -390,7 +396,9 @@ export function createEntityService(ctx) {
     try { dimension = gameWorld.getDimension(dimensionId); } catch { return undefined; }
     const players = gameWorld.getAllPlayers();
     const playerNear = point => players.some(player => player.dimension.id === dimension.id && horizontalDist2(player.location, point) <= 64 ** 2);
-    if (!playerNear(destination)) return undefined;
+    // Restaurant customers are admitted by the simulated machine/chair, not
+    // a player-distance gate. Remote delivery actors still wait for a visit.
+    if (order.type === "delivery" && !playerNear(destination)) return undefined;
     if (order.customerEntityId && order.customerAnchor?.location) {
       // A persisted actor may be outside the currently loaded entity set. Do
       // not spawn a replacement while its last known chunk is unavailable.
@@ -801,7 +809,7 @@ export function createEntityService(ctx) {
     if (player.getComponent("minecraft:riding")?.entityRidingOn) { void openMotorcycle(player, entity); return true; }
     const rideable = entity.getComponent("minecraft:rideable");
     if (rideable?.getRiders().length) { notify(player, "這輛小電驢已有駕駛。"); return true; }
-    if (rideable?.addRider(player)) notify(player, "用移動鍵駕駛、跳躍鍵鳴笛、蹲下離座。遙控器可切換車燈。");
+    rideable?.addRider(player);
     return true;
   }
 
@@ -874,14 +882,18 @@ export function createEntityService(ctx) {
   }
 
   function restoreCustomerChair(entity) {
-    if (entity.getComponent("minecraft:riding")?.entityRidingOn) return;
+    const riding = entity.getComponent("minecraft:riding")?.entityRidingOn;
+    if (riding && riding.typeId !== SEAT) return;
     const anchor = readAnchor(entity.getDynamicProperty(`${NS}chair_anchor`));
     if (!anchor || anchor.dimensionId !== entity.dimension.id) return;
     try {
       const chair = entity.dimension.getBlock(anchor.location);
       if (!chair) return;
       if (chair.typeId !== CHAIR) { releaseCustomerChair(entity); return; }
-      sitOnChair(entity, chair);
+      if (riding) {
+        const location = center(chair.location, CUSTOMER_SEAT_HEIGHT);
+        if (dist2(riding.location, location) > 0.000001) riding.teleport(location);
+      } else sitOnChair(entity, chair);
     } catch { /* Preserve the association until the original chair loads. */ }
   }
 

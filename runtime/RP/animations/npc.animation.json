@@ -2,7 +2,7 @@
   "format_version": "1.8.0",
   "animations": {
     "animation.ordertocook.npc.customer_sit_1": {
-      "loop": false,
+      "loop": true,
       "animation_length": 4.5,
       "bones": {
         "right_arm": {
@@ -274,10 +274,11 @@
             ]
           }
         }
-      }
+      },
+      "anim_time_update": "q.state_time"
     },
     "animation.ordertocook.npc.customer_sit_2": {
-      "loop": false,
+      "loop": true,
       "animation_length": 4.5,
       "bones": {
         "head": {
@@ -556,10 +557,11 @@
             ]
           }
         }
-      }
+      },
+      "anim_time_update": "q.state_time"
     },
     "animation.ordertocook.npc.customer_sit_3": {
-      "loop": false,
+      "loop": true,
       "animation_length": 4.5,
       "bones": {
         "right_arm": {
@@ -836,10 +838,11 @@
             ]
           }
         }
-      }
+      },
+      "anim_time_update": "q.state_time"
     },
     "animation.ordertocook.npc.customer_sit_4": {
-      "loop": false,
+      "loop": true,
       "animation_length": 4.6944,
       "bones": {
         "head": {
@@ -1186,10 +1189,11 @@
             ]
           }
         }
-      }
+      },
+      "anim_time_update": "q.state_time"
     },
     "animation.ordertocook.npc.customer_wait_1": {
-      "loop": false,
+      "loop": true,
       "animation_length": 4.5,
       "bones": {
         "right_arm": {
@@ -1277,10 +1281,11 @@
             0
           ]
         }
-      }
+      },
+      "anim_time_update": "q.state_time"
     },
     "animation.ordertocook.npc.customer_wait_2": {
-      "loop": false,
+      "loop": true,
       "animation_length": 4.5,
       "bones": {
         "head": {
@@ -1375,10 +1380,11 @@
             0
           ]
         }
-      }
+      },
+      "anim_time_update": "q.state_time"
     },
     "animation.ordertocook.npc.customer_wait_3": {
-      "loop": false,
+      "loop": true,
       "animation_length": 4.5,
       "bones": {
         "right_arm": {
@@ -1471,10 +1477,11 @@
             0
           ]
         }
-      }
+      },
+      "anim_time_update": "q.state_time"
     },
     "animation.ordertocook.npc.customer_wait_4": {
-      "loop": false,
+      "loop": true,
       "animation_length": 4.6944,
       "bones": {
         "head": {
@@ -1637,7 +1644,8 @@
             ]
           }
         }
-      }
+      },
+      "anim_time_update": "q.state_time"
     }
   }
 }

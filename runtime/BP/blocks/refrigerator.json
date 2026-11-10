@@ -83,6 +83,23 @@
           "slot_count": 54,
           "title": "container.ordertocook.refrigerator.lower"
         }
+      },
+      "minecraft:item_visual": {
+        "geometry": "geometry.ordertocook.refrigerator_item",
+        "material_instances": {
+          "ordertocook_block_refrigerator": {
+            "texture": "ordertocook_block_refrigerator",
+            "render_method": "alpha_test",
+            "ambient_occlusion": 0,
+            "face_dimming": true
+          },
+          "*": {
+            "texture": "ordertocook_block_refrigerator",
+            "render_method": "alpha_test",
+            "ambient_occlusion": 0,
+            "face_dimming": true
+          }
+        }
       }
     },
     "permutations": [

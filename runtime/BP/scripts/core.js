@@ -349,9 +349,9 @@ function destinationFor(restaurant, longDistance, cfg, rng) {
 }
 
 /** Reuse the original radial candidates without allocating or changing an order. */
-export function chooseDeliveryDestination(restaurant, longDistance, resolveDestination, rng = Math.random) {
+export function chooseDeliveryDestination(restaurant, longDistance, resolveDestination, rng = Math.random, attempts = 4) {
   const cfg = configFor(restaurant);
-  for (let attempt = 0; attempt < (resolveDestination ? 4 : 1); attempt++) {
+  for (let attempt = 0; attempt < (resolveDestination ? attempts : 1); attempt++) {
     const candidate = destinationFor(restaurant, longDistance, cfg, rng);
     const destination = resolveDestination ? resolveDestination(candidate) : candidate;
     if (destination) return destination;
@@ -381,9 +381,13 @@ function makeOrder(restaurant, now, rng, walkIn, resolveDestination) {
   const longDistance = delivery && unit(rng) < chance(cfg.longDistanceDeliveryChance);
   let destination;
   if (delivery) {
-    // Resolve terrain before assigning an ID or publishing a delivery offer.
-    destination = chooseDeliveryDestination(restaurant, longDistance, resolveDestination, rng);
-    if (!destination) return undefined;
+    // Java always publishes the offer, retaining the last radial candidate if
+    // all eight terrain choices fail. Customer placement resolves it later.
+    let fallback;
+    destination = chooseDeliveryDestination(restaurant, longDistance, candidate => {
+      fallback = candidate;
+      return resolveDestination ? resolveDestination(candidate) : candidate;
+    }, rng, 8) ?? fallback;
   }
   const pool = normalizeMenu(restaurant.menu);
   if (!pool.length) pool.push({ ...VANILLA_FOOD_BY_ID["minecraft:apple"] });

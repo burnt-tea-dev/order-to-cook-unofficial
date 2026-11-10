@@ -33,6 +33,12 @@
         "controller": "controller.animation.ordertocook.customer"
       },
       "scripts": {
+        "initialize": [
+          "v.idle_variant = q.property('ordertocook:animation_variant');",
+          "v.idle_seated = q.is_riding_any_entity_of_type('ordertocook:seat');",
+          "v.idle_length = (v.idle_seated && v.idle_variant == 4 ? 4.6944 : (v.idle_seated && v.idle_variant == 3 ? 4.5 : (v.idle_seated && v.idle_variant == 2 ? 4.5 : (v.idle_seated && v.idle_variant == 1 ? 4.5 : (!v.idle_seated && v.idle_variant == 4 ? 4.6944 : (!v.idle_seated && v.idle_variant == 3 ? 4.5 : (!v.idle_seated && v.idle_variant == 2 ? 4.5 : (!v.idle_seated && v.idle_variant == 1 ? 4.5 : 0))))))));",
+          "v.idle_roll = 0;"
+        ],
         "animate": [
           "controller"
         ]

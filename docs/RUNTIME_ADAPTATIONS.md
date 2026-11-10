@@ -209,11 +209,11 @@ Java stage 0 的 blockstate 為空，實際由 `FoodPlatePlacedRenderer` 顯示�
 
 ## 設備準星資訊與個人進度
 
-`equipment_inspection.js` 自 alpha.3 起提供唯讀快照，由 main 的單一 action bar 更新器每 10 ticks 合併顯示。6 格射線命中後，仍需同維度、設備中心 6 格內、已載入且有使用權限。架子容量為包材 10／盤架 18；洗碗池 10、洗碗機 16；冰箱直接讀取上 27／下 54 原生容器的已用槽位，遷移未完成時顯示尚未載入，不觸發搬移。爐灶 helper 仍需與設備 ID、維度及原 anchor 相符。檢視不建立 station、替代庫存或修復壞資料。
+Java 的設備準星讀數來自可選的 Jade 相容層，不是 OTC 本體常駐 HUD。固定提交的 Forge／NeoForge `build.gradle` 都只以 `compileOnly` 引入 Jade；[Forge provider](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/compat/jade/OrderToCookJadePlugin.java) 與 [NeoForge provider](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/neoforge-1.21.1/src/main/java/cn/breezeth/ordertocook/compat/jade/OrderToCookJadePlugin.java) 透過 Jade 的 `registerClient`／`appendTooltip` 提供架子、洗碗池、洗碗機及冰箱資訊，沒有爐灶 provider。
 
-第一行優先手洗百分比／20 tick 中止訊息，否則顯示設備資訊；若主手票據／包裹有進行中的外送，第二行顯示方向、座標及時間。手洗仍要求空手，完成後重新手持外送物品才能恢復導航。無任何本包提示時只清除上一次 HUD 一次，不持續清空閒置玩家 action bar。兩行排版與不同裝置可讀性待 dot 實測。
+2026-11-10 未發布來源移除 Bedrock 自加的「每 10 ticks 看向設備就顯示讀數」路徑，同時退役 `getInspection` 及專用 `equipment_inspection.js`。不再把可選 Jade 資訊強制搬到 action bar，也不另加開關或替代介面。這是來源修正，未部署或觀察修後客戶端畫面。
 
-Jade 來源是固定提交的 [OrderToCookJadePlugin.java](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/compat/jade/OrderToCookJadePlugin.java)。爐灶讀數是現有 Bedrock 表單的 HUD 適配。洗碗機的原 `empty_out` 預覽已獨立接線，條件和多人共用姿態限制見上節；HUD 仍只讀設備資料。
+既有手洗百分比／20 tick 中止訊息及手持進行中外送票據／包裹的導航仍沿原條件顯示；它們屬本版操作回饋，不代表 Java 有同樣的文字布局。無本包提示時仍只清除上一次 HUD 一次。點擊後訊息、原生容器、機器／盤子狀態、世界模型及洗碗機 `empty_out` 預覽不受這次移除影響；其既有適配界線見各功能章節。
 
 個人進度的 11 個原作定義、10 個可觸發條件，以及玩家歸屬／同維度金牌判定見 [PROGRESSION.md](PROGRESSION.md)。訂單累積帳簿與餐廳同時保存；profile 以來源 checkpoint 取差值，分玩家重試，保留壞資料。操作型事件也在餐廳／設備上保留至個人進度保存成功，不能以重做升級代替重試通知。
 

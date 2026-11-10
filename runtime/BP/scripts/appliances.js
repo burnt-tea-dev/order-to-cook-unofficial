@@ -3,7 +3,6 @@
 import { BlockPermutation, EquipmentSlot, ItemStack, MolangVariableMap, system, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { advanceDoorMotion, fridgeRootFrame, dishwasherFrame, APPLIANCE_TICK_INTERVAL, FRIDGE_MOTION_TICKS, FRIDGE_LAST_FRAME } from "./appliance_motion.js";
-import { formatEquipmentInspection, INSPECTION_TYPES } from "./equipment_inspection.js";
 import { createNativeFridgeStorage, compactFridgeInventory, FRIDGE_UPPER, isFridge, isUpperFridge } from "./native_fridge.js";
 import { createNativeStoveStorage } from "./stove_controls.js";
 import { SMOKING_RECIPES } from "./smoking_recipes.js";
@@ -434,39 +433,6 @@ export function createApplianceService(ctx) {
     }
     dishwasherPreviews.clear();
     for (const [id, preview] of next) dishwasherPreviews.set(id, preview);
-  }
-
-  /**
-   * Resolve an existing station and its existing helper only. Merely looking at
-   * equipment must not call getStation/data/ensureStorage or write saved state.
-   */
-  function getInspection(player, block) {
-    try {
-      if (!block?.isValid || (!isFridge(block) && !INSPECTION_TYPES.includes(block.typeId))) return undefined;
-      const upper = isUpperFridge(block);
-      const normalized = normalizeApplianceBlock(block);
-      const station = (ctx.stations?.() ?? []).find(entry =>
-        entry.dimensionId === normalized.dimension.id && entry.typeId === normalized.typeId &&
-        sameLocation(entry.location, normalized.location));
-      if (!station || !accessible(player, station)) return undefined;
-      const snapshot = { typeId: station.typeId, supplies: station.supplies, upper,
-        appliance: station.appliance ? { ...station.appliance } : undefined,
-        occupied: undefined, storageLoaded: false };
-      if (station.typeId === FRIDGE || station.typeId === STOVE) {
-        const inventory = station.typeId === FRIDGE ? nativeFridge.peek(station) : nativeStove.peek(station);
-        snapshot.storageLoaded = !!inventory?.isValid && inventory.size >= (station.typeId === FRIDGE ? 81 : 7);
-        if (snapshot.storageLoaded && station.typeId === FRIDGE) {
-          const first = upper ? 0 : 27, length = upper ? 27 : 54;
-          let occupied = 0;
-          for (let slot = first; slot < first + length; slot++) if (inventory.getItem(slot)) occupied++;
-          snapshot.occupied = occupied;
-        }
-      }
-      return formatEquipmentInspection(snapshot);
-    } catch {
-      // A ray target, helper or permission can disappear between reads.
-      return undefined;
-    }
   }
 
   /** The main HUD is the only action-bar writer; this method has no side effects. */
@@ -1180,6 +1146,6 @@ export function createApplianceService(ctx) {
     });
   }
 
-  return { init, tick, onPlace, onInteract, onBreak, getStorage, countFood, consumeFood, getInspection, getWashingProgress,
+  return { init, tick, onPlace, onInteract, onBreak, getStorage, countFood, consumeFood, getWashingProgress,
     canOpenFridge, canOpenStove, onContainerOpened, onContainerClosed, normalizeBlock: normalizeApplianceBlock };
 }
