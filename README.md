@@ -237,16 +237,24 @@ Server 事件、創造模式與 `otc_admin` 玩家可使用。只接受 signed 3
 ```sh
 npm ci
 npm run verify
-python tools/check_compliance.py
+python3 tools/check_compliance.py
 ```
 
-CI 依 [tools/ci_scope.py](tools/ci_scope.py) 判斷改動範圍。只有已確認不參與建置的說明文件與 `docs/validation/` 文字觀察紀錄，才省略玩法測試、型別檢查與模型幾何重現；打包、署名、素材來源及發布規則檢查仍會執行。程式、資源、工具、工作流、版本或未知改動，以及 tag、手動執行或缺少比較基準時，均跑完整檢查；流程見 [build.yml](.github/workflows/build.yml)。
+`npm run verify` 預設執行訂單／付款、物品交付、容器保存及實際互動 owner 的核心測試，再做型別、可載入 JSON／資源連結與建置檢查。常設檔案由 [tools/run_tests.mjs](tools/run_tests.mjs) 選定，原模型、像素、逐資產與其他完整回歸全部保留：
+
+```sh
+npm test -- tests/delivery-recovery.test.js   # 只跑本次受影響的檔案，可列多檔
+npm test -- --full                           # 全部既有 JavaScript 測試
+npm run verify:full                          # 全部 JS、型別／資源與建置
+```
+
+普通 PR／main 使用核心檢查；CI 仍依 [tools/ci_scope.py](tools/ci_scope.py) 略過已確認的純說明改動，並保留打包、署名、素材來源與發布規則檢查。手動執行 [build.yml](.github/workflows/build.yml) 並勾選 `full_validation`，或推送版本 tag，才執行完整 JS 及原有模型／指南／雙 native 幾何來源矩陣。明確的 `bedrock/**` 候選分支仍走完整檢查。修改特定模型或轉換器時，另執行對應既有測試或完整手動入口；普通驗證不冒稱已重現所有素材。
 
 輸出位於 `dist/`，包含 `.mcaddon`、獨立 `.mcpack`、`SHA256SUMS.txt` 及 runtime 指紋。若修改來源模型或轉換器：
 
 ```sh
-python -m pip install Pillow==12.3.0
-python tools/convert_assets.py
+python3 -m pip install Pillow==12.3.0
+python3 tools/convert_assets.py
 npm run verify
 ```
 
@@ -255,8 +263,8 @@ npm run verify
 原生服務端測試需要從 [Minecraft 官方網站](https://www.minecraft.net/en-us/download/server/bedrock) 自行取得 Linux BDS，解壓到**沒有其他世界的獨立測試目錄**：
 
 ```sh
-python tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode initial
-python tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode reload
+python3 tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode initial
+python3 tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode reload
 ```
 
 探針不隨正式安裝包啟用；它只會被測試工具注入一次性的測試副本。

@@ -231,14 +231,16 @@ Server 事件、创造模式与 `otc_admin` 玩家可使用。只接受 signed 3
 ```sh
 npm ci
 npm run verify
-python tools/check_compliance.py
+python3 tools/check_compliance.py
 ```
+
+`npm run verify` 默认运行订单／付款、物品交付、容器保存及真实交互 owner 的核心测试，再做类型／资源检查和构建。`npm test -- tests/delivery-recovery.test.js` 只运行指定文件，可列多档；`npm test -- --full` 运行全部现有 JS，`npm run verify:full` 再加类型／资源和构建。模型、像素及逐资产矩阵保留在手动 build 工作流的 `full_validation` 选项及版本 tag／候选检查。修改对应素材时另跑相关现有测试或完整手动入口；普通 PR 不重放全部素材矩阵。详见[统一测试入口](README.md#開發與重現)。
 
 `dist/` 包含 `.mcaddon`、独立 `.mcpack`、`SHA256SUMS.txt` 和 runtime 指纹。若修改原始模型或转换器：
 
 ```sh
-python -m pip install Pillow==12.3.0
-python tools/convert_assets.py
+python3 -m pip install Pillow==12.3.0
+python3 tools/convert_assets.py
 npm run verify
 ```
 
@@ -247,8 +249,8 @@ npm run verify
 原生服务器测试须从 [Minecraft 官网](https://www.minecraft.net/en-us/download/server/bedrock) 自行获取 Linux BDS，解压到**没有其他世界的独立临时测试目录**：
 
 ```sh
-python tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode initial
-python tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode reload
+python3 tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode initial
+python3 tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode reload
 ```
 
 探针不在正式安装包中启用，仅由测试工具注入一次性副本。
