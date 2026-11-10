@@ -4,7 +4,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { appliances, FakeItem, FakePlayer, FakeForm, makeEnvironment, place } from './appliances.harness.js';
+import { appliances, FakeItem, FakePlayer, makeEnvironment, place } from './appliances.harness.js';
 
 const root = new URL('../', import.meta.url);
 const json = path => JSON.parse(readFileSync(new URL(path, root), 'utf8'));
@@ -144,15 +144,10 @@ test('two stoves burn independently and successful ordinary refuelling restarts 
   assert.equal(inventory.getItem(3), undefined);
 });
 
-test('UI cancellation, input removal and full output never restart the active ignition', async () => {
+test('native container use, input removal and full output never restart the active ignition', () => {
   const f = fixture(); stock(f);
   publish(f); expected(f, 1, 0);
-  const originalShow = FakeForm.prototype.show;
-  FakeForm.prototype.show = async () => ({ canceled: true });
-  try {
-    f.service.onInteract(new FakePlayer(f.env.dimension), f.block);
-    await new Promise(resolve => setImmediate(resolve));
-  } finally { FakeForm.prototype.show = originalShow; }
+  f.service.onInteract(new FakePlayer(f.env.dimension), f.block);
   expected(f, 1, 0);
   publish(f); expected(f, 3, 0);
   f.inventory.setItem(0, undefined);

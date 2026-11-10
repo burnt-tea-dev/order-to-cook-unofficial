@@ -89,6 +89,7 @@ export class FakeBlock {
   makeContainer(typeId) {
     return typeId === 'ordertocook:refrigerator' ? new FakeContainer(54)
       : typeId === 'ordertocook:refrigerator_upper' ? new FakeContainer(27)
+      : typeId === 'ordertocook:stove' ? new FakeContainer(7)
       : ['ordertocook:food_plate_display', 'ordertocook:takeout_bag'].includes(typeId) ? new FakeContainer(1) : undefined;
   }
   get typeId() { return this.permutation.type.id; }
@@ -173,15 +174,17 @@ export function makeEnvironment() {
     },
     getBlockFromRay(origin, direction, options = {}) {
       // Model only the downward, full-floor collision queries used by customer
-      // spawning. Slabs/plants/fixtures are deliberately not full ground here.
+      // spawning. Include the actual full-cube kitchen collisions; whether a
+      // customer may use equipment as ground belongs to the production owner.
       if (direction.x !== 0 || direction.z !== 0 || direction.y >= 0) return undefined;
-      const fullFloor = new Set(['minecraft:stone', 'minecraft:dirt', 'minecraft:grass_block', 'minecraft:oak_planks']);
+      const fullFloor = new Set(['minecraft:stone', 'minecraft:dirt', 'minecraft:grass_block', 'minecraft:oak_planks',
+        'ordertocook:stove', 'ordertocook:countertop', 'ordertocook:washingtable', 'ordertocook:dishwasher']);
       const bottom = origin.y - (options.maxDistance ?? 250);
       for (let y = Math.floor(origin.y); y >= Math.floor(bottom) - 1; y--) {
         const top = y + 1;
         if (top > origin.y + 1e-7 || top < bottom - 1e-7) continue;
         const block = this.getBlock({ x: origin.x, y, z: origin.z });
-        if (fullFloor.has(block.typeId)) return { block, face: 'Up', faceLocation: { x: origin.x - Math.floor(origin.x), y: 1, z: origin.z - Math.floor(origin.z) } };
+        if (fullFloor.has(block.typeId) || (options.includeLiquidBlocks && block.isLiquid)) return { block, face: 'Up', faceLocation: { x: origin.x - Math.floor(origin.x), y: 1, z: origin.z - Math.floor(origin.z) } };
       }
       return undefined;
     },

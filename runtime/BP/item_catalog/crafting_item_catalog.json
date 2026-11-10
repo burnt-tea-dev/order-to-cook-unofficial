@@ -1,0 +1,119 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:crafting_items_catalog": {
+    "categories": [
+      {
+        "category_name": "construction",
+        "groups": [
+          {
+            "group_identifier": {
+              "name": "ordertocook:itemGroup.storage",
+              "icon": "minecraft:chest"
+            },
+            "items": [
+              "ordertocook:shelf",
+              "ordertocook:plate_shelf"
+            ]
+          },
+          {
+            "group_identifier": {
+              "name": "ordertocook:itemGroup.furniture",
+              "icon": "minecraft:oak_stairs"
+            },
+            "items": [
+              "ordertocook:chair"
+            ]
+          }
+        ]
+      },
+      {
+        "category_name": "equipment",
+        "groups": [
+          {
+            "group_identifier": {
+              "name": "ordertocook:itemGroup.vehicles",
+              "icon": "minecraft:minecart"
+            },
+            "items": [
+              "ordertocook:motorcycle",
+              "ordertocook:controller"
+            ]
+          },
+          {
+            "group_identifier": {
+              "name": "ordertocook:itemGroup.armor",
+              "icon": "minecraft:iron_helmet"
+            },
+            "items": [
+              "ordertocook:helmet"
+            ]
+          }
+        ]
+      },
+      {
+        "category_name": "items",
+        "groups": [
+          {
+            "group_identifier": {
+              "name": "ordertocook:itemGroup.restaurant_equipment",
+              "icon": "minecraft:furnace"
+            },
+            "items": [
+              "ordertocook:order_machine",
+              "ordertocook:board",
+              "ordertocook:countertop",
+              "ordertocook:stove",
+              "ordertocook:washingtable",
+              "ordertocook:dishwasher",
+              "ordertocook:refrigerator",
+              "ordertocook:otc_upgrade_box"
+            ]
+          },
+          {
+            "group_identifier": {
+              "name": "ordertocook:itemGroup.tableware",
+              "icon": "minecraft:bowl"
+            },
+            "items": [
+              "ordertocook:clean_plate",
+              "ordertocook:dirty_plate",
+              "ordertocook:food_plate",
+              "ordertocook:takeout_bag"
+            ]
+          },
+          {
+            "group_identifier": {
+              "name": "ordertocook:itemGroup.orders",
+              "icon": "minecraft:paper"
+            },
+            "items": [
+              "ordertocook:order"
+            ]
+          },
+          {
+            "group_identifier": {
+              "name": "ordertocook:itemGroup.currency",
+              "icon": "minecraft:gold_nugget"
+            },
+            "items": [
+              "ordertocook:chef_coin_1",
+              "ordertocook:chef_coin_5",
+              "ordertocook:chef_coin_20",
+              "ordertocook:chef_coin_100",
+              "ordertocook:chef_coin_10000"
+            ]
+          },
+          {
+            "group_identifier": {
+              "name": "ordertocook:itemGroup.guides",
+              "icon": "minecraft:book"
+            },
+            "items": [
+              "ordertocook:guide"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

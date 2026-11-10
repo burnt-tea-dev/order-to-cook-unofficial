@@ -47,7 +47,7 @@ test('handwashing uses source half-second/second cues, basin positions and 10–
   }
   const water = sounds.filter(e => e.id === 'random.splash');
   assert.deepEqual(water.map(e => e.tick), [10, 20, 40, 60]);
-  for (const cue of water) { assert.equal(cue.volume, 0.22); assert.ok(cue.pitch >= 0.9 && cue.pitch <= 1.1); }
+  for (const cue of water) { assert.ok(Math.abs(cue.volume - 0.264) < 1e-12); assert.ok(cue.pitch >= 0.9 && cue.pitch <= 1.1); }
   assert.equal(station.appliance.plates, 0);
   assert.equal(player.container.getItem(0).typeId, 'ordertocook:clean_plate');
   const count = emissions.length; advance(service, env, 40); assert.equal(emissions.length, count);
@@ -90,8 +90,8 @@ test('sixteen-plate dishwasher repeats original wash sound and emits white spark
   assert.equal(station.appliance.phase, 5); assert.equal(station.appliance.plates, 16);
   service.onInteract(player, block);
   const taking = sounds.slice(-2);
-  assert.equal(taking[0].id, 'ordertocook:plate_place'); assert.equal(taking[0].volume, 0.75);
-  assert.equal(taking[1].id, 'ordertocook:dishwasher_in'); assert.equal(taking[1].volume, 0.85); assert.equal(taking[1].pitch, 1.05);
+  assert.equal(taking[0].id, 'ordertocook:plate_place'); assert.ok(Math.abs(taking[0].volume - 0.9) < 1e-12);
+  assert.equal(taking[1].id, 'ordertocook:dishwasher_in'); assert.ok(Math.abs(taking[1].volume - 1.02) < 1e-12); assert.equal(taking[1].pitch, 1.05);
   assert.equal(amount(emissions.at(-1)), 7);
   advance(service, env, 14); assert.equal(station.appliance.phase, 0);
 });

@@ -3,12 +3,15 @@
 // Unrelated main-harness UI/appliance stubs remain; this is not native acceptance.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mainFixture } from './main.harness.js';
+import { mainFixture, configure } from './main.harness.js';
 import { entityServices, place } from './appliances.harness.js';
 import { MACHINE_TICKS } from '../runtime/BP/scripts/machine_timing.js';
 
 async function fixture({ refreshTogether = false, blocked = 'above' } = {}) {
   const env = await mainFixture(), restaurant = env.restaurant;
+  // Keep the simultaneous machine offer independent of delivery terrain; the
+  // real entity service below still owns all walk-in admission and cleanup.
+  configure(env, { deliveryRate: 0 }, 'server');
   if (blocked !== 'occupied') for (const entity of [...env.dimension.entities.values()]) entity.remove();
   const board = env.store.getStation(place(env, 'ordertocook:board', { x: 3, y: 0, z: 0 }));
   board.menu = [{ typeId: 'minecraft:bread', nutrition: 5 }]; env.store.saveStation(board);

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.50-alpha.1
+
+- Dispatch canceled native clicks to the existing station interaction owner even when `isFirstEvent` is false. Empty-hand menu-board use opens management and clean-plate shelf use reaches the normal debit/storage path. Preserve the existing three-tick duplicate guard and component fallback.
+- Raise OTC sound playback volumes by 20% across the existing effects, appliance, customer and direct block playback paths. Preserve cue timing, pitch and original audio assets; this is a playback gain change, not a measured loudness or performance result.
+- Replace the stove's button-list controls with a real native seven-slot block container: three inputs, shared fuel and three matching outputs. Keep cooking/fuel timing and full native stacks. Adopt legacy helper cargo through native moves and retire the empty helper only after saving; blocked or incomplete migration retains both sides. The first claimed interaction gives a visible retry prompt. Bedrock's generic layout still lacks Java's slot filters, output locks and progress/flame bars, and already-open containers cannot be forcibly closed on permission changes.
+- Keep standing customers off OTC equipment tops. Resolve new delivery offers against bounded loaded surface candidates before assigning IDs; reject water, underwater pockets and blocked ground. Unloaded terrain defers generation without inventing a water result, printing success or scanning every tick. Existing accepted/packed destinations, proofs and loaded actors are retained; old offshore orders are not silently moved.
+- Organize OTC creative entries into nine native groups across construction, equipment and items, with translated labels and deterministic order. Hide the internal plated-food display block while retaining its real plate item and saved ID. Regenerate definitions, the native catalog and handbook languages from their editable sources.
+- Freeze the final unused paired 0.1.50 identity with unchanged UUIDs/APIs and all prior release history retained. Registered event, cooking/migration, terrain and real-generator regressions cover this batch; source/build results do not claim new BDS, client GUI, multiplayer, FPS or LIVE acceptance.
+
 ## 0.1.48-alpha.1 (unpublished candidate)
 
 - Correct only the motorcycle static source mapping: seven X-rotation signs and 41 box mirror flags. Preserve original images, hierarchy, pivots, inflation, dimensions and all gameplay/steering/wheel behavior.

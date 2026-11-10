@@ -4,7 +4,8 @@
     "description": {
       "identifier": "ordertocook:refrigerator",
       "menu_category": {
-        "category": "construction"
+        "category": "items",
+        "group": "ordertocook:itemGroup.restaurant_equipment"
       },
       "traits": {
         "minecraft:placement_direction": {

@@ -5,12 +5,12 @@ import { ActionFormData } from "@minecraft/server-ui";
 import { advanceDoorMotion, fridgeRootFrame, dishwasherFrame, APPLIANCE_TICK_INTERVAL, FRIDGE_MOTION_TICKS, FRIDGE_LAST_FRAME } from "./appliance_motion.js";
 import { formatEquipmentInspection, INSPECTION_TYPES } from "./equipment_inspection.js";
 import { createNativeFridgeStorage, compactFridgeInventory, FRIDGE_UPPER, isFridge, isUpperFridge } from "./native_fridge.js";
-import { createStoveControls } from "./stove_controls.js";
+import { createNativeStoveStorage } from "./stove_controls.js";
 import { SMOKING_RECIPES } from "./smoking_recipes.js";
 import { initializeStoveFire, igniteStoveFire, advanceStoveFire, stoveFireFrame, stoveIgnitionFrame } from "./stove_fire.js";
 
 export { SMOKING_RECIPES };
-import { playEffects, plateSound, fridgeDoorEffects, dishwasherTakeEffects, dishwasherTimedEffects, washingEffectBeat, handwashingEffects } from "./audiovisual.js";
+import { playEffects, playbackVolume, plateSound, fridgeDoorEffects, dishwasherTakeEffects, dishwasherTimedEffects, washingEffectBeat, handwashingEffects } from "./audiovisual.js";
 
 const NS = "ordertocook:";
 const FRIDGE = `${NS}refrigerator`;
@@ -158,7 +158,7 @@ function say(ctx, player, message) {
 }
 
 function safeSound(dimension, id, location, volume = 0.6, pitch = 1) {
-  try { dimension.playSound(id, location, { volume, pitch }); } catch { /* Cosmetic only. */ }
+  try { dimension.playSound(id, location, { volume: playbackVolume(volume), pitch }); } catch { /* Cosmetic only. */ }
 }
 
 function safeParticle(dimension, id, location) {
@@ -274,16 +274,9 @@ export function createApplianceService(ctx) {
     loadedBlock: loadedStation, saveStation: ctx.saveStation,
     placeUpper: placeFridgeUpper, findLegacy: station => ensureStorage(station, false),
   });
-  const stoveControls = createStoveControls({
-    getStorage, isAccessible: accessible, playerInventory, transferStackToRange,
-    itemLabel, fingerprint: itemFingerprint,
-    isIngredient: stack => !!recipeResult(stack), isFuel: stack => fuelTicks[stack.typeId] > 0,
-    makeForm: () => new ActionFormData(), notify: (player, message) => say(ctx, player, message), getProgress: data,
-    onChange: (station, inventory) => {
-      const d = data(station), before = { inputKeys: d.inputKeys, cookProgress: d.cookProgress };
-      try { syncStoveInputs(station, inventory); ctx.saveStation(station); }
-      catch (error) { Object.assign(d, before); throw error; }
-    },
+  const nativeStove = createNativeStoveStorage({
+    loadedBlock: loadedStation, saveStation: ctx.saveStation,
+    findLegacy: station => ensureStorage(station, false), fingerprint: itemFingerprint,
   });
 
   function placeFridgeUpper(lower, upper) {
@@ -357,6 +350,7 @@ export function createApplianceService(ctx) {
 
   function getStorage(station) {
     if (station.typeId === FRIDGE) return nativeFridge.ensure(station);
+    if (station.typeId === STOVE) return nativeStove.ensure(station);
     return ensureStorage(station)?.getComponent("minecraft:inventory")?.container;
   }
 
@@ -433,7 +427,7 @@ export function createApplianceService(ctx) {
         if (!previous?.viewers.has(player.id)) {
           // Match Java playLocalSound: do not make other players hear another
           // viewer repeatedly moving their crosshair over the same appliance.
-          try { player.playSound(`${NS}dishwasher_out`, { location: center(station.location, 0.6), volume: 0.75, pitch: 1 }); } catch { /* Cosmetic only. */ }
+          try { player.playSound(`${NS}dishwasher_out`, { location: center(station.location, 0.6), volume: playbackVolume(0.75), pitch: 1 }); } catch { /* Cosmetic only. */ }
         }
       } catch { /* A departing player or unloaded ray target has no preview. */ }
     }
@@ -458,10 +452,7 @@ export function createApplianceService(ctx) {
         appliance: station.appliance ? { ...station.appliance } : undefined,
         occupied: undefined, storageLoaded: false };
       if (station.typeId === FRIDGE || station.typeId === STOVE) {
-        const helper = station.typeId === STOVE && findEntity(station.storageId);
-        const inventory = station.typeId === FRIDGE ? nativeFridge.peek(station) : helper?.typeId === STORAGE && helper.getDynamicProperty(`${NS}station_id`) === station.id &&
-          helper.dimension.id === station.dimensionId && squaredDistance(helper.location, center(station.location, 0.1)) <= 1.5 ** 2
-          ? helper.getComponent("minecraft:inventory")?.container : undefined;
+        const inventory = station.typeId === FRIDGE ? nativeFridge.peek(station) : nativeStove.peek(station);
         snapshot.storageLoaded = !!inventory?.isValid && inventory.size >= (station.typeId === FRIDGE ? 81 : 7);
         if (snapshot.storageLoaded && station.typeId === FRIDGE) {
           const first = upper ? 0 : 27, length = upper ? 27 : 54;
@@ -617,6 +608,13 @@ export function createApplianceService(ctx) {
     return !!station && accessible(player, station) && !!nativeFridge.peek(station);
   }
 
+  /** No migration or writes are permitted in the before-event decision. */
+  function canOpenStove(player, block) {
+    if (block?.typeId !== STOVE) return false;
+    const station = (ctx.stations?.() ?? []).find(value => value.dimensionId === block.dimension.id && sameLocation(value.location, block.location));
+    return !!station?.ownerId && accessible(player, station) && !!nativeStove.peek(station);
+  }
+
   function consumeHeld(player, expectedId, count = 1) {
     const inventory = playerInventory(player);
     const index = player.selectedSlotIndex;
@@ -736,11 +734,6 @@ export function createApplianceService(ctx) {
     say(ctx, player, `已放入 ${count} 個髒盤子；完成後再次點擊取出。`);
   }
 
-  async function openStove(player, station) {
-    const inventory = getStorage(station);
-    if (inventory && syncStoveInputs(station, inventory)) ctx.saveStation(station);
-    return stoveControls.interact(player, station);
-  }
 
   function stoveInputKeys(container) {
     return [0, 1, 2].map(lane => {
@@ -944,12 +937,12 @@ export function createApplianceService(ctx) {
     const station = ctx.getStation(block);
     data(station);
     if (block.typeId === FRIDGE) nativeFridge.ensure(station);
-    if (block.typeId === STOVE) ensureStorage(station);
+    if (block.typeId === STOVE) nativeStove.ensure(station);
     updateVisual(station);
     return true;
   }
 
-  function onInteract(player, block) {
+  function onInteract(player, block, { nativeEntryCancelled = false } = {}) {
     if (!KINDS.has(block.typeId)) return false;
     const normalized = normalizeApplianceBlock(block);
     const station = ctx.getStation(normalized);
@@ -966,7 +959,16 @@ export function createApplianceService(ctx) {
           if (container?.isValid) compactFridgeInventory(container);
         }
       }
-      else if (block.typeId === STOVE) void openStove(player, station).catch(error => say(ctx, player, String(error)));
+      else if (block.typeId === STOVE) {
+        if (!nativeStove.peek(station)) {
+          const inventory = nativeStove.ensure(station);
+          say(ctx, player, inventory ? '爐灶庫存已就緒，請再次點擊開啟原生容器。' : '爐灶原生容器尚未就緒；需 Bedrock 26.60 並啟用 Upcoming Creator Features。舊庫存會保留。');
+        } else if (nativeEntryCancelled) {
+          // A new stove was already initialized on placement, but its first
+          // native open was cancelled until the normal owner claimed it.
+          say(ctx, player, '爐灶庫存已就緒，請再次點擊開啟原生容器。');
+        }
+      }
       else if (block.typeId === SINK) interactSink(player, station);
       else if (block.typeId === DISHWASHER) interactDishwasher(player, station);
     } catch (error) { say(ctx, player, `設備操作未完成：${String(error)}`); }
@@ -1009,7 +1011,6 @@ export function createApplianceService(ctx) {
       ctx.deleteStation(station.id);
       clocks.delete(station.id);
       initializedStoves.delete(station.id);
-      stoveControls.forgetStation(station.id);
       dishwasherPreviews.delete(station.id);
       resetFridgeSessions(station);
       for (const [id, session] of washing) if (session.station.id === station.id) stopWashing(id, false);
@@ -1021,6 +1022,16 @@ export function createApplianceService(ctx) {
     // Native inventories already spill when a block is removed. Remove the other
     // half after command/explosion removal too, without spawning its cargo again.
     for (const station of ctx.stations?.() ?? []) {
+      if (station.typeId === STOVE && station.nativeStove && !station.storageId) {
+        const block = blockFor(station);
+        if (block?.isValid && block.typeId !== STOVE) {
+          // Native cargo already spilled with the removed block; no helper owns it.
+          ctx.deleteStation(station.id);
+          clocks.delete(station.id);
+          initializedStoves.delete(station.id);
+        }
+        continue;
+      }
       if (station.typeId !== FRIDGE) continue;
       try {
         const dimension = gameWorld.getDimension(station.dimensionId);
@@ -1066,7 +1077,6 @@ export function createApplianceService(ctx) {
     const now = gameSystem.currentTick;
     if (now === lastTick) return;
     lastTick = now;
-    stoveControls.forgetInaccessible();
     for (const [id, feedback] of washingFeedback) if (now >= feedback.until) washingFeedback.delete(id);
     tickWashing();
     const stations = ctx.stations?.() ?? [];
@@ -1162,7 +1172,6 @@ export function createApplianceService(ctx) {
       stopWashing(event.playerId, false);
       washingFeedback.delete(event.playerId);
       storageForms.delete(event.playerId);
-      stoveControls.forgetPlayer(event.playerId);
       for (const compartments of viewers.values()) {
         compartments.lower.delete(event.playerId);
         compartments.upper.delete(event.playerId);
@@ -1171,5 +1180,5 @@ export function createApplianceService(ctx) {
   }
 
   return { init, tick, onPlace, onInteract, onBreak, getStorage, countFood, consumeFood, getInspection, getWashingProgress,
-    canOpenFridge, onContainerOpened, onContainerClosed, normalizeBlock: normalizeApplianceBlock };
+    canOpenFridge, canOpenStove, onContainerOpened, onContainerClosed, normalizeBlock: normalizeApplianceBlock };
 }
