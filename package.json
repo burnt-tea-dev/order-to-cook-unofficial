@@ -7,8 +7,8 @@
   "scripts": {
     "test": "node tools/run_tests.mjs",
     "test:full": "node tools/run_tests.mjs --full",
-    "check": "tsc --noEmit && python tools/validate_pack.py",
-    "build": "python tools/build.py",
+    "check": "tsc --noEmit && python3 tools/validate_pack.py",
+    "build": "python3 tools/build.py",
     "verify": "npm test && npm run check && npm run build",
     "verify:full": "npm run test:full && npm run check && npm run build"
   },

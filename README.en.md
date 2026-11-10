@@ -231,7 +231,7 @@ Requires Node.js 22+ and Python 3.12+. Generated assets are checked in; ordinary
 ```sh
 npm ci
 npm run verify
-python tools/check_compliance.py
+python3 tools/check_compliance.py
 ```
 
 `npm run verify` runs the core order/payment, item handoff, saved-container and
@@ -247,8 +247,8 @@ ordinary PR validation does not replay every asset matrix. See the
 `dist/` contains `.mcaddon`, standalone `.mcpack`, `SHA256SUMS.txt` and runtime fingerprint. If changing source models or conversion tools:
 
 ```sh
-python -m pip install Pillow==12.3.0
-python tools/convert_assets.py
+python3 -m pip install Pillow==12.3.0
+python3 tools/convert_assets.py
 npm run verify
 ```
 
@@ -257,8 +257,8 @@ The converter defaults to pinned assets in `upstream/reference/`; `--source /pat
 For native BDS tests, obtain Linux BDS from the [official Minecraft site](https://www.minecraft.net/en-us/download/server/bedrock) and unpack it into a **separate disposable test directory without other worlds**:
 
 ```sh
-python tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode initial
-python tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode reload
+python3 tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode initial
+python3 tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode reload
 ```
 
 The probe is never enabled in production installers and is only injected by the test tool into disposable copies.
