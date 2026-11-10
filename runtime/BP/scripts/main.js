@@ -41,6 +41,7 @@ const ITEM_ORDER = 'ordertocook:order_id';
 const ITEM_PROOF = 'ordertocook:proof';
 const ITEM_EXPIRY = 'ordertocook:expires_at';
 const ITEM_EXPIRY_TICK = 'ordertocook:expires_tick';
+const PARCEL_USE_HINT = '使用查看詳情；蹲下點擊方塊頂面可擺放';
 function orderTime() { return { wall: Date.now(), tick: system.currentTick }; }
 const pendingPlacements = new Map();
 const liveStatus = new Set(['offered', 'accepted', 'packed']);
@@ -280,6 +281,9 @@ function parcelDisplayType(order) {
   const type = parcelType(order);
   return type === 'ordertocook:food_plate' ? 'ordertocook:food_plate_display' : type;
 }
+function destinationLore(order) {
+  return order.destination ? `目的地 X:${order.destination.x} Z:${order.destination.z}` : undefined;
+}
 function parcelFor(restaurant, order, typeId) {
   const carrierType = typeId || parcelType(order);
   if (!carrierType) throw new Error('餐點承載物資料無效。');
@@ -294,7 +298,7 @@ function parcelFor(restaurant, order, typeId) {
   }
   if (stack.typeId === 'ordertocook:takeout_bag') stack.setDynamicProperty(ITEM_EXPIRY, order.expiresAt);
   if (order.expiresTick !== undefined) stack.setDynamicProperty(ITEM_EXPIRY_TICK, order.expiresTick);
-  stack.setLore([orderHeading(order), ...order.items.map(item => `${menuFoodLabel(item, foodLabel(item.typeId))} ×${item.amount}`), `報酬 ${order.reward} · 期限見訂單詳情`, ...(order.destination ? [`目的地 X:${order.destination.x} Z:${order.destination.z}`] : []), '使用查看詳情；蹲下點擊方塊頂面可擺放']);
+  stack.setLore([orderHeading(order), ...order.items.map(item => `${menuFoodLabel(item, foodLabel(item.typeId))} ×${item.amount}`), `報酬 ${order.reward} · 期限見訂單詳情`, ...(order.destination ? [destinationLore(order)] : []), PARCEL_USE_HINT]);
   return stack;
 }
 function itemOrder(stack) {
@@ -1094,6 +1098,7 @@ async function interactBlock(player, block, { nativeEntryCancelled = false } = {
 function onUse(player, itemStack) {
   if (!ready || !player?.isValid) return;
   itemStack = adoptHeldBag(player, itemStack);
+  itemStack = updateHeldDestinationLore(player, itemStack);
   if (['ordertocook:motorcycle', 'ordertocook:controller'].includes(itemStack?.typeId)) { entities?.onItemUse?.(player, itemStack); return; }
   if (itemStack?.typeId === 'ordertocook:guide') { safely(player, () => guideForm(player)); return; }
   if (itemStack?.typeId === 'ordertocook:otc_upgrade_box') { notify(player, '使用工具箱點擊：兩個空木桶的下方木桶、空煙燻爐、或沒有餐盤的洗碗池。'); return; }
@@ -1103,6 +1108,26 @@ function onUse(player, itemStack) {
     const remaining = bagRemainingMs(itemStack);
     if (remaining !== undefined) notify(player, `外送包裹剩餘：${Math.ceil(remaining / 60000)} 分鐘遊戲時間。`);
   }
+}
+
+function updateHeldDestinationLore(player, requested) {
+  const stack = heldItem(player);
+  if (stack?.typeId !== 'ordertocook:takeout_bag' || requested?.typeId !== stack.typeId ||
+      [ITEM_RESTAURANT, ITEM_ORDER, ITEM_PROOF].some(key => stack.getDynamicProperty(key) !== requested.getDynamicProperty(key))) return requested;
+  const linked = itemOrder(stack);
+  if (!linked || !['accepted', 'packed'].includes(linked.order.status) || linked.proof !== linked.order.proof ||
+      orderRemainingMs(linked.order, orderTime()) <= 0) return requested;
+  const destination = destinationLore(linked.order);
+  if (!destination) return requested;
+  const lore = stack.getLore();
+  // Recognize only our factory's coordinate line followed by its own use hint.
+  // Extra player lore, names and all native metadata remain on this same stack.
+  const index = lore.findIndex((line, index) => /^目的地 X:-?\d+ Z:-?\d+$/.test(line) && lore[index + 1] === PARCEL_USE_HINT);
+  if (index < 0 || lore[index] === destination) return requested;
+  lore[index] = destination;
+  stack.setLore(lore);
+  containerOf(player).setItem(player.selectedSlotIndex, stack);
+  return stack;
 }
 
 function bagRemainingMs(stack, time = orderTime()) {

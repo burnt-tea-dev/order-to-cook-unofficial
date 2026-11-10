@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Bedrock adaptation of Order To Cook by breezeth-CN; see THIRD_PARTY_NOTICES.md.
 import { ButtonState, EntityDamageCause, EntitySwingSource, InputButton, ItemStack, MolangVariableMap, system, world } from "@minecraft/server";
-import { orderRemainingMs, orderCarrier } from './core.js';
+import { orderRemainingMs, orderCarrier, chooseDeliveryDestination } from './core.js';
 import { ActionFormData } from "@minecraft/server-ui";
 import { containerCapacity, dropContainerContents, itemLabel, openContainerForm, playerInventory } from "./appliances.js";
 import { playEffects, playbackVolume, customerCompletionEffects, customerPortalEffects, customerExplosionEffects, customerUnsuccessfulEffects, motorcycleHitEffects } from "./audiovisual.js";
@@ -388,8 +388,9 @@ export function createEntityService(ctx) {
     const dimensionId = destination.dimensionId ?? restaurant.dimensionId;
     let dimension;
     try { dimension = gameWorld.getDimension(dimensionId); } catch { return undefined; }
-    const playerNear = gameWorld.getAllPlayers().some(player => player.dimension.id === dimension.id && horizontalDist2(player.location, destination) <= 64 ** 2);
-    if (!playerNear) return undefined;
+    const players = gameWorld.getAllPlayers();
+    const playerNear = point => players.some(player => player.dimension.id === dimension.id && horizontalDist2(player.location, point) <= 64 ** 2);
+    if (!playerNear(destination)) return undefined;
     if (order.customerEntityId && order.customerAnchor?.location) {
       // A persisted actor may be outside the currently loaded entity set. Do
       // not spawn a replacement while its last known chunk is unavailable.
@@ -411,9 +412,21 @@ export function createEntityService(ctx) {
     if (chair) location = center(chair.location, 1);
     else if (order.type === 'delivery') {
       const previousAnchor = order.customerEntityId && order.customerAnchor?.location;
-      const resolved = resolveDeliveryDestination(restaurant, previousAnchor
+      let resolved = resolveDeliveryDestination(restaurant, previousAnchor
         ? { ...destination, ...previousAnchor, dimensionId: order.customerAnchor.dimensionId ?? dimension.id } : destination,
       previousAnchor ? 0 : 2);
+      if (['water', 'blocked'].includes(resolved.status) && !order.customerEntityId && !order.customerAnchor &&
+          orderRemainingMs(order, ctx.orderTime?.() ?? clock()) > 0) {
+        // Unknown chunks and established customers retain their original address.
+        // Commit a replacement only with the normal spawn/save transaction below;
+        // the accepted quote, physical proof and deadline are never regenerated.
+        const replacement = chooseDeliveryDestination(restaurant, order.longDistance, candidate => {
+          if (candidate.dimensionId !== dimension.id || !playerNear(candidate)) return undefined;
+          const result = resolveDeliveryDestination(restaurant, candidate);
+          return result.status === 'ready' ? result.destination : undefined;
+        }, ctx.random ?? Math.random);
+        if (replacement) resolved = { status: 'ready', destination: replacement };
+      }
       if (resolved.status !== 'ready') return undefined;
       location = center(resolved.destination, 0);
       if (previousAnchor && !sameBlock(location, previousAnchor)) return undefined;

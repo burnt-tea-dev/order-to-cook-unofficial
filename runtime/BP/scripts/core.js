@@ -348,6 +348,17 @@ function destinationFor(restaurant, longDistance, cfg, rng) {
   };
 }
 
+/** Reuse the original radial candidates without allocating or changing an order. */
+export function chooseDeliveryDestination(restaurant, longDistance, resolveDestination, rng = Math.random) {
+  const cfg = configFor(restaurant);
+  for (let attempt = 0; attempt < (resolveDestination ? 4 : 1); attempt++) {
+    const candidate = destinationFor(restaurant, longDistance, cfg, rng);
+    const destination = resolveDestination ? resolveDestination(candidate) : candidate;
+    if (destination) return destination;
+  }
+  return undefined;
+}
+
 function nextOrderId(restaurant, now) {
   let sequence = integer(restaurant.orderSequence);
   let id;
@@ -371,11 +382,7 @@ function makeOrder(restaurant, now, rng, walkIn, resolveDestination) {
   let destination;
   if (delivery) {
     // Resolve terrain before assigning an ID or publishing a delivery offer.
-    for (let attempt = 0; attempt < (resolveDestination ? 4 : 1); attempt++) {
-      const candidate = destinationFor(restaurant, longDistance, cfg, rng);
-      destination = resolveDestination ? resolveDestination(candidate) : candidate;
-      if (destination) break;
-    }
+    destination = chooseDeliveryDestination(restaurant, longDistance, resolveDestination, rng);
     if (!destination) return undefined;
   }
   const pool = normalizeMenu(restaurant.menu);
