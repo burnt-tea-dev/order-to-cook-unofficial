@@ -145,6 +145,8 @@ export class FakeEntity {
   addTag(tag) { this.tags.add(tag); }
   hasTag(tag) { return this.tags.has(tag); }
   remove() { this.isValid = false; this.dimension.entities.delete(this.id); }
+  clearVelocity() { this.velocity = { x: 0, y: 0, z: 0 }; }
+  applyImpulse(value) { this.velocity = Object.fromEntries(['x', 'y', 'z'].map(axis => [axis, (this.velocity?.[axis] || 0) + value[axis]])); }
 }
 
 export class FakePlayer extends FakeEntity {
@@ -195,7 +197,14 @@ export function makeEnvironment() {
         (!options.volume || ['x', 'y', 'z'].every(axis => entity.location[axis] >= options.location[axis] && entity.location[axis] < options.location[axis] + options.volume[axis] + 1)));
     },
     spawnEntity(typeId, location) { const entity = new FakeEntity(this, typeId, location); this.entities.set(entity.id, entity); this.spawnCount++; return entity; },
-    spawnItem(stack, location) { this.drops.push({ stack: stack.clone(), location: { ...location } }); },
+    spawnItem(stack, location) {
+      const drop = { stack: stack.clone(), location: { ...location } };
+      this.drops.push(drop);
+      const entity = new FakeEntity(this, 'minecraft:item', location);
+      const remove = entity.remove.bind(entity);
+      entity.remove = () => { remove(); this.drops.splice(this.drops.indexOf(drop), 1); };
+      return entity;
+    },
     playSound(id) { this.sounds.push(id); }, spawnParticle() {},
   };
   const gameSystem = {

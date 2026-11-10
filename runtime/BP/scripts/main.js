@@ -592,19 +592,20 @@ async function countertopForm(player, block) {
   const orders = restaurant.orders.filter(order => order.status === 'accepted');
   if (!orders.length) { notify(player, '先在打單機接單；已備妥的成品不會重複製作。'); return; }
   const ingredients = ingredientContainers(player, block);
+  const outputBlocked = !block.above()?.isAir;
   const labels = orders.map(order => {
     const plan = planExtraction(ingredients, order.items);
     const shelfId = order.type === 'delivery' ? 'ordertocook:shelf' : 'ordertocook:plate_shelf';
     const supplies = (order.type === 'delivery' && !settings.countertopConsumeLeather) || nearbyStations(block.dimension.id, block.location, 5, shelfId, { shape: 'cube' })
       .some(station => station.supplies > 0 && canUseStation(player, station));
     const problems = [];
-    if (!block.above()?.isAir) problems.push('台上已有成品／方塊');
+    if (outputBlocked && order.type !== 'delivery' && !chooseCarrier) problems.push('台上已有成品／方塊');
     if (!supplies) problems.push(order.type === 'delivery' ? '缺少包材' : '缺少乾淨餐盤');
     if (!plan.ok) problems.push(plan.missingFoods.length ? `缺少 ${plan.missingFoods.map(item => `${menuFoodLabel(item, foodLabel(item.typeId))} ×${item.amount}`).join('、')}` : '食品資料無法讀取');
     const dishes = order.items.map(item => `${menuFoodLabel(item, foodLabel(item.typeId))} ×${item.amount}`).join('、');
-    return `${orderHeading(order)}\n${dishes}\n${problems.length ? problems.join('；') : '可製作'} · ${order.type === 'delivery' ? '打包' : '裝盤'}`;
+    return `${orderHeading(order)}\n${dishes}\n${problems.length ? problems.join('；') : '可製作'} · ${order.type === 'delivery' ? '打包' : chooseCarrier ? '選擇裝盤／打包' : '裝盤'}`;
   });
-  const index = await choose(player, '操作台 · 裝盤／打包', '點選訂單直接製作；手持訂單點台可直接處理該單。\n蹲下點台可額外選擇把堂食打包帶走。\n使用背包與附近 24 格冰箱的食品；裝盤需 5 格內乾淨盤，打包依伺服器包材設定。\n成品放在台上，請先保持上方空置。', labels);
+  const index = await choose(player, '操作台 · 裝盤／打包', '點選訂單直接製作；手持訂單點台可直接處理該單。\n蹲下點台可額外選擇把堂食打包帶走。\n使用背包與附近 24 格冰箱的食品；裝盤需 5 格內乾淨盤，打包依伺服器包材設定。\n裝盤需台上空置；打包時若台上已有成品／方塊，袋子會掉落在操作台上方。', labels);
   if (index === undefined || !nearBlock(player, block) || block.typeId !== 'ordertocook:countertop' || !canManage(player, restaurant)) return;
   const order = orders[index];
   if (!order) return;
@@ -635,7 +636,9 @@ function prepareOrderAtCountertop(player, block, restaurant, order, carrier = un
   const bag = selected === 'bag';
   if (order.status !== 'accepted' || orderRemainingMs(order, orderTime()) <= 0) { notify(player, '訂單狀態已改變或已逾時。'); return; }
   const output = block.above();
-  if (!output?.isAir) { notify(player, '先取走操作台上方的成品／方塊。'); return; }
+  if (!output || (!bag && !output.isAir)) { notify(player, '先取走操作台上方的成品／方塊。'); return; }
+  const dropBag = bag && !output.isAir;
+  const dropPosition = { x: block.location.x + 0.5, y: block.location.y + 1.2, z: block.location.z + 0.5 };
   const shelfId = bag ? 'ordertocook:shelf' : 'ordertocook:plate_shelf';
   // Java RestaurantSupplyCompatApi scans each axis from -5 through +5.
   // Read the current global setting here, after any awaited picker/carrier form.
@@ -654,20 +657,29 @@ function prepareOrderAtCountertop(player, block, restaurant, order, carrier = un
   const before = JSON.stringify(restaurant);
   const supplyBefore = supply?.supplies;
   if (!applyExtraction(plan)) { notify(player, '食品格子已改變，請重新操作。'); return; }
+  let dropped, placedDisplay = false;
   try {
     const result = packOrder(restaurant, order.id, orderTime(), selected);
     if (!result.ok) throw new Error(reasonText(result.reason));
     order.proof = `${restaurant.orderSequence.toString(36)}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
-    order.outputLocation = { ...output.location };
+    order.outputLocation = dropBag ? dropPosition : { ...output.location };
     order.platedVariant = Math.floor(Math.random() * 10);
     if (supply) { supply.supplies--; saveStation(supply); }
     saveRestaurant(restaurant);
-    output.setPermutation(BlockPermutation.resolve(bag ? 'ordertocook:takeout_bag' : 'ordertocook:food_plate_display'));
-    const display = getStation(output);
-    Object.assign(display, { restaurantId: restaurant.id, orderId: order.id, proof: order.proof, ownerId: restaurant.ownerId, nativeParcel: true });
-    saveStation(display);
-    parcelInventory(output, display).setItem(0, parcelFor(restaurant, order));
-    if (!bag) setBlockState(output, 'ordertocook:stage', order.platedVariant * 4 + 1);
+    if (dropBag) {
+      // Java PACK preserves an occupied output and drops the same full bag.
+      dropped = block.dimension.spawnItem(parcelFor(restaurant, order), dropPosition);
+      dropped.clearVelocity();
+      dropped.applyImpulse({ x: 0, y: 0.2, z: 0 });
+    } else {
+      placedDisplay = true;
+      output.setPermutation(BlockPermutation.resolve(bag ? 'ordertocook:takeout_bag' : 'ordertocook:food_plate_display'));
+      const display = getStation(output);
+      Object.assign(display, { restaurantId: restaurant.id, orderId: order.id, proof: order.proof, ownerId: restaurant.ownerId, nativeParcel: true });
+      saveStation(display);
+      parcelInventory(output, display).setItem(0, parcelFor(restaurant, order));
+      if (!bag) setBlockState(output, 'ordertocook:stage', order.platedVariant * 4 + 1);
+    }
     if (supply) {
       const supplyBlock = loadedBlock(supply);
       if (supplyBlock) setBlockState(supplyBlock, bag ? 'ordertocook:papers' : 'ordertocook:plates', supply.supplies);
@@ -675,20 +687,21 @@ function prepareOrderAtCountertop(player, block, restaurant, order, carrier = un
     removeTickets(player, order.id);
     if (!bag) playAt(block, 'food_plate_place', 0.9);
     playEffects(output.dimension, freshMealEffects(output.location), MolangVariableMap);
-    notify(player, '餐點已備妥並放到操作台上。空手點擊取走，再拿給對應顧客。');
+    notify(player, dropBag ? '餐點已備妥並掉落在操作台上方。拾起袋子，再拿給對應顧客。' : '餐點已備妥並放到操作台上。空手點擊取走，再拿給對應顧客。');
   } catch (error) {
+    if (dropped?.isValid) dropped.remove();
     restoreExtraction(plan);
     if (supply) { supply.supplies = supplyBefore; saveStation(supply); }
     saveRestaurant(JSON.parse(before));
-    if (isParcelDisplay(output)) {
+    if (placedDisplay && isParcelDisplay(output)) {
       containerOf(output)?.setItem(0, undefined);
       output.setType('minecraft:air');
     }
-    const display = findStation(output);
+    const display = placedDisplay && findStation(output);
     if (display) deleteStation(display);
     throw error;
   }
-  beginBagPlacement(output);
+  if (!dropBag) beginBagPlacement(output);
 }
 
 function isParcelDisplay(block) {
