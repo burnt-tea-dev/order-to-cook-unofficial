@@ -42,6 +42,7 @@ jobs:
           python -m unittest discover -s tests -p test_motorcycle_mapping.py
           python -m unittest discover -s tests -p test_fridge_shared_root.py
           python -m unittest discover -s tests -p test_dining_assets.py
+          python -m unittest discover -s tests -p test_food_stain_bake.py
           python -m unittest discover -s tests -p test_guide_languages.py
       - name: Validate compliance metadata and generated packages
         run: python tools/check_compliance.py
