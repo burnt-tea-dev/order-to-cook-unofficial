@@ -1,0 +1,11 @@
+# Local dishwasher display-state prototype
+
+Base: OTC052 `a4176b193294d8f57234b3b316ad6b092acf5d5b`. Local paired identity: 0.1.53-alpha.1. This source is not pushed, merged, deployed or Native-qualified.
+
+The fixed `e59e3dbcabe19b783d9adb933db5fcb8bc1e4642` Forge and NeoForge `DishwasherRenderer.shouldRenderDishCube` hide all plates at zero, show cube2 at one, add cube5 at two, and show all six at three or more. Existing 82 dishwasher meshes, source poses, UV and textures are unchanged. The generator now emits plates=[0,1,2,3] without dishwasher plates_high, and uses that value directly for the original >=1/2/3 predicates. Other devices retain their wide states and the existing shared setter.
+
+Only the visual writer saturates the count. The saved station.appliance.plates remains the real 0–16 quantity; original cooking/wash timers, phase state, intake, output, break return and persistence code remain unchanged. The declared state product is 7*4*16*4=1792 instead of 7*16*2*16*4=14336.
+
+The real block generator was run to an external directory. All 420 generated block/model outputs match the source runtime after adopting only the changed dishwasher definition; no full geometry/animation matrix was replayed. One added regression calls the real appliance owner for 0/1/2/3/8/15/16 plates, validates its projection against the actual generated schema and evaluates the generated visibility expressions against the independent Java cube contract. The existing sixteen-plate intake, 30+80+24 timing and single 16-plate output control is retained. These focused cases failed before and passed after the source change. The existing targeted dishwasher source-visibility check also passes.
+
+The old palette remains the material unknown. Previous saved plates=15, or plates=0 plus plates_high=true for sixteen, may be interpreted differently when the block definition changes. Existing loadedStation requires the original block type; a missing/unknown block would be skipped and cannot be called automatically migrated. The shared owner must observe old-definition save -> new-definition load, real count/output and restart on the same QA copy before a publish/merge decision. No migration layer or data rewrite has been added, and no FPS, client-rendering or global shape-registry improvement is claimed.

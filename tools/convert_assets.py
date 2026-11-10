@@ -1399,7 +1399,7 @@ def make_blocks():
     phase_clips = {0: None, 1: "empty_in", 2: "dirty_in", 3: "washing", 4: "clear_out", 5: "clear_out", 6: "empty_out"}
     # Java DishwasherRenderer: 1 plate -> cube 2, 2 -> cubes 2 and 5,
     # 3+ -> all six. Separate child bones keep the original cube transforms.
-    plate_count = f"(q.block_state('{NS}:plates') + 16 * q.block_state('{NS}:plates_high'))"
+    plate_count = f"q.block_state('{NS}:plates')"
     visibility = {f"{dish}_{index}": f"{plate_count} >= {1 if index == 2 else 2 if index == 5 else 3}"
                   for dish in ("drity_dish", "clear_dish") for index in range(1, 7)}
     for old in (RP / "models/blocks").glob("dishwasher_[0-5].geo.json"):
@@ -1435,7 +1435,7 @@ def make_blocks():
             condition = {"phase": phase} if phase in (0, 5) else {"phase": phase, "frame": frame}
             variants.append({"condition": state_condition(condition), "components": {"minecraft:geometry": {"identifier": identifier, "bone_visibility": visibility}}})
     block_definition("dishwasher", {"identifier": f"geometry.{NS}.dishwasher_0_0", "bone_visibility": visibility}, mats,
-                     {"phase": list(range(7)), "plates": list(range(17)), "frame": list(range(16))}, variants)
+                     {"phase": list(range(7)), "plates": list(range(4)), "frame": list(range(16))}, variants)
     g, mats = convert_java_model(f"{NS}:block/stove", f"geometry.{NS}.stove")
     emit_geo("stove", g)
     # Each stove owns its ignition delay, burst and four 8-tick cycle frames.

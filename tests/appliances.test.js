@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { appliances, FakeContainer, FakeItem, FakePlayer, makeEnvironment, place, advance } from './appliances.harness.js';
 
 test('unstackable parcel transfers with its proof, name and lore intact', () => {
@@ -87,7 +88,7 @@ test('sixteen-plate washer follows 30+80+24 ticks and produces plates once', () 
   const block = place(env, 'ordertocook:dishwasher'); service.onPlace(block); const station = env.ctx.getStation(block);
   player.container.setItem(0, new FakeItem('ordertocook:dirty_plate', 20)); service.onInteract(player, block); service.tick();
   assert.equal(player.container.getItem(0).amount, 4); assert.equal(station.appliance.phase, 2); assert.equal(station.appliance.plates, 16);
-  assert.equal(block.permutation.getState('ordertocook:plates'), 0); assert.equal(block.permutation.getState('ordertocook:plates_high'), true);
+  assert.equal(block.permutation.getState('ordertocook:plates'), 3); assert.equal(block.permutation.getState('ordertocook:plates_high'), undefined);
   advance(service, env, 30); assert.equal(station.appliance.phase, 3); advance(service, env, 80); assert.equal(station.appliance.phase, 4);
   advance(service, env, 24); assert.equal(station.appliance.phase, 5);
   player.selectedSlotIndex = 1; // Empty main hand; the four excess dirty plates remain in slot 0.
@@ -96,6 +97,40 @@ test('sixteen-plate washer follows 30+80+24 ticks and produces plates once', () 
   assert.equal(player.container.getItem(0).typeId, 'ordertocook:dirty_plate'); assert.equal(player.container.getItem(0).amount, 4);
   assert.equal(player.container.slots.filter(stack => stack?.typeId === 'ordertocook:clean_plate').reduce((n, item) => n + item.amount, 0), 16);
   service.onInteract(player, block); assert.equal(station.appliance.phase, 1); advance(service, env, 14); assert.equal(station.appliance.phase, 0);
+});
+
+test('washer display projection fits the generated schema while preserving the real batch and Java plate cubes', () => {
+  const definition = JSON.parse(readFileSync(new URL('../runtime/BP/blocks/dishwasher.json', import.meta.url), 'utf8'))['minecraft:block'];
+  const states = definition.description.states;
+  assert.deepEqual(states['ordertocook:plates'], [0, 1, 2, 3]);
+  assert.equal(states['ordertocook:plates_high'], undefined);
+  const shapes = [definition.components, ...definition.permutations.map(row => row.components)]
+    .map(components => components['minecraft:geometry']).filter(Boolean);
+  for (const count of [0, 1, 2, 3, 8, 15, 16]) {
+    const env = makeEnvironment(), service = appliances.createApplianceService(env.ctx), player = new FakePlayer(env.dimension);
+    const block = place(env, 'ordertocook:dishwasher'); service.onPlace(block);
+    const station = env.ctx.getStation(block);
+    if (count) {
+      player.container.setItem(0, new FakeItem('ordertocook:dirty_plate', count));
+      service.onInteract(player, block);
+    }
+    assert.equal(station.appliance.plates, count);
+    const projected = block.permutation.getAllStates();
+    assert.equal(projected['ordertocook:plates_high'], undefined);
+    for (const [name, value] of Object.entries(projected)) assert.ok(states[name]?.includes(value), `${name} must fit its generated schema`);
+    const q = { block_state: name => {
+      assert.ok(name in states, `render expression reads unknown state ${name}`);
+      return projected[name];
+    } };
+    // Independent Java renderer contract: first plate is cube2, second cube5,
+    // and the remaining source cubes are all shown once there are three plates.
+    const expected = [[], [2], [2, 5]][count] || [1, 2, 3, 4, 5, 6];
+    for (const shape of shapes) for (const family of ['drity_dish', 'clear_dish']) {
+      const actual = [1, 2, 3, 4, 5, 6].filter(index =>
+        Function('q', 'return (' + shape.bone_visibility[`${family}_${index}`] + ')')(q));
+      assert.deepEqual(actual, expected);
+    }
+  }
 });
 
 test('washer save failures restore both the complete item stacks and the batch state before retry', () => {

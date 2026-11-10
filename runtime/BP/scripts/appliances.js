@@ -371,8 +371,9 @@ export function createApplianceService(ctx) {
       setState(block, `${NS}frame`, preview
         ? Math.min(15, Math.floor((gameSystem.currentTick - preview.start) / (1.1667 * 20) * 15))
         : dishwasherFrame(d));
-      setState(block, `${NS}plates`, d.plates % 16);
-      setState(block, `${NS}plates_high`, d.plates === 16);
+      // The Java mesh has only empty, one, two and three-or-more displays.
+      // The full 0..16 batch stays in the saved appliance data.
+      setState(block, `${NS}plates`, Math.min(d.plates, 3));
     }
     if (station.typeId === STOVE) {
       // Commit texture and both halves of the pose age atomically. Separate
