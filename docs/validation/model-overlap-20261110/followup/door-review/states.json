@@ -1,0 +1,2730 @@
+[
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_0_0.geo.json",
+    "baseline_sha256": "9d7d61be116bc5e334f4b2244924dd07d7d8bff34fc695bb419f8537a78e86cb",
+    "reviewed_sha256": "33a63a21718480bd86f2c755b404ea628ff4b863e986a51c7c48dc9a915f60b2",
+    "candidate_sha256": "33a63a21718480bd86f2c755b404ea628ff4b863e986a51c7c48dc9a915f60b2",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.01499999999999968,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.75
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_1_0.geo.json",
+    "baseline_sha256": "ae024ff85f3058fdfc41a05c44081eb8c59c74dc5e8b5206f4e6084862551067",
+    "reviewed_sha256": "19d9e1586ab6feb418b9568bd2a551b629395ee10ac355c1559b5bcaab0b9489",
+    "candidate_sha256": "19d9e1586ab6feb418b9568bd2a551b629395ee10ac355c1559b5bcaab0b9489",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.85760213195097,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.872602131950966,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_1_1.geo.json",
+    "baseline_sha256": "947f96a12a919b3d0292466983ca9c1b792a6292b2e3ff2fc1fa5265940db057",
+    "reviewed_sha256": "8673435a109143bee255946a09dee4eb470d6b6bf45cd83131e6c19f9e75f444",
+    "candidate_sha256": "8673435a109143bee255946a09dee4eb470d6b6bf45cd83131e6c19f9e75f444",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.847956966166059,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.862956966166058,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_1_10.geo.json",
+    "baseline_sha256": "db41d5bd4e9cabf613793313fb15274a186dbe4579120523976b312933963833",
+    "reviewed_sha256": "043e5c3ea883539404ecb24e9e05ad585966d41c6a319819d0746587722bf75e",
+    "candidate_sha256": "043e5c3ea883539404ecb24e9e05ad585966d41c6a319819d0746587722bf75e",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 3.0729928175409005,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 3.0879928175408993,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_1_11.geo.json",
+    "baseline_sha256": "571af2f255e63fcba428493de5fdbe968a0b40bf7a7efb2431b338b6f92d5acb",
+    "reviewed_sha256": "a2c019be53598b8360ac475a3e2ec71a2d48ae4f3c780e7c3fb833d687e4dcd1",
+    "candidate_sha256": "a2c019be53598b8360ac475a3e2ec71a2d48ae4f3c780e7c3fb833d687e4dcd1",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 0.926962,
+    "reviewed_thickness": 0.913058,
+    "retreat": 0.013903999999999916,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 0.6024287070959901,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 0.6163327070959903,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_1_12.geo.json",
+    "baseline_sha256": "4a2310bfad2526ce145413de61c332eeeb4904eff966695ed183ab6491feb143",
+    "reviewed_sha256": "1f5c1f0706caa0d0afec7e7cd142e92a84e1d5e88fe2058ddc06307d7c49c099",
+    "candidate_sha256": "1f5c1f0706caa0d0afec7e7cd142e92a84e1d5e88fe2058ddc06307d7c49c099",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 0.920012,
+    "reviewed_thickness": 0.906212,
+    "retreat": 0.013800000000000034,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.013799999999999812,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.75
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_1_13.geo.json",
+    "baseline_sha256": "3f0f357d348556f6bf822184db2e3125ad3d0e6dc79b3dd817de59860627e162",
+    "reviewed_sha256": "eace87057efb6b3a56f5c58adbe949b003ea1e183787e4cb5e1d486c2acde4ed",
+    "candidate_sha256": "eace87057efb6b3a56f5c58adbe949b003ea1e183787e4cb5e1d486c2acde4ed",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 0.946675,
+    "reviewed_thickness": 0.932475,
+    "retreat": 0.01419999999999999,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 8.881784197001252e-16,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.014200000000000657,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.75
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_1_14.geo.json",
+    "baseline_sha256": "93430a7a56d46b049846f56b3945e9f01d3f1c58cfcd725a7f41eb6dbf4c39ac",
+    "reviewed_sha256": "19fab61cd5255247fd15335518cf878dd02429c5eac0f75c0e0d030756136849",
+    "candidate_sha256": "19fab61cd5255247fd15335518cf878dd02429c5eac0f75c0e0d030756136849",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 0.973337,
+    "reviewed_thickness": 0.958737,
+    "retreat": 0.014600000000000057,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.014599999999999724,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.75
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_1_15.geo.json",
+    "baseline_sha256": "947124404049f87f2b6901bc0909c0c98a424ec291a8ed8aff4fdb41326e5360",
+    "reviewed_sha256": "42714f1b149cd77904066394accfae2dc332f1e5887b2cfb62056767365e2ae7",
+    "candidate_sha256": "42714f1b149cd77904066394accfae2dc332f1e5887b2cfb62056767365e2ae7",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.01499999999999968,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.75
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_1_2.geo.json",
+    "baseline_sha256": "bd5d6bb08eef2abe4c4d07445dd9d6be8d14afd2b99fd825f2a83d6f60c4cfef",
+    "reviewed_sha256": "bd03efc2c6c5f754d786253fee530ffe1082e95500e9ffd8396ed2ffbe0e376c",
+    "candidate_sha256": "bd03efc2c6c5f754d786253fee530ffe1082e95500e9ffd8396ed2ffbe0e376c",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.835999989542497,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.850999989542498,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_1_3.geo.json",
+    "baseline_sha256": "2fd9ea18891ca358e4f61a5a7bcc65a384bed6d9de23c219a4cd745d62adc900",
+    "reviewed_sha256": "2964eac5fd963d6010d60c079d2141bb218e98a6f8be27f6fed55b0d29233296",
+    "candidate_sha256": "2964eac5fd963d6010d60c079d2141bb218e98a6f8be27f6fed55b0d29233296",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.821711497913425,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.836711497913425,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_1_4.geo.json",
+    "baseline_sha256": "8a5574a6405065347182bcad9f22e7bb36e3523ed2aceefcd671f306b29901c3",
+    "reviewed_sha256": "92af530fef54ae6ebd5df416af653a09f943466dee700603e1f740af9ba74530",
+    "candidate_sha256": "92af530fef54ae6ebd5df416af653a09f943466dee700603e1f740af9ba74530",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.805072623324996,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.820072623324995,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_1_5.geo.json",
+    "baseline_sha256": "cce2f649bd3bfe434c6e4db9bb94ddb897303717e62f392bfd363136f856ac52",
+    "reviewed_sha256": "9c2498525351a8e8a2e75693823b063c631ddbc39dc6370b6922207801ce12c8",
+    "candidate_sha256": "9c2498525351a8e8a2e75693823b063c631ddbc39dc6370b6922207801ce12c8",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.786065052996243,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.801065052996245,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_1_6.geo.json",
+    "baseline_sha256": "1c68dafd28d601109d51706940a6337ced88fccce5e846c018de7630b69c2654",
+    "reviewed_sha256": "2086df9e47765dae98b7715485666735b454ce27b8a2b8d4bde17dd033467263",
+    "candidate_sha256": "2086df9e47765dae98b7715485666735b454ce27b8a2b8d4bde17dd033467263",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.76011934326817,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.775119343268171,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_1_7.geo.json",
+    "baseline_sha256": "308e6affd6b2ee4bd9c1492e663477e04eb31b978a24a5cc24da157c85750a06",
+    "reviewed_sha256": "cbeb46d0e3ec3cd6b7f3ba53a63ed1f06f7246e22fb314f9494e1f54889bde1b",
+    "candidate_sha256": "cbeb46d0e3ec3cd6b7f3ba53a63ed1f06f7246e22fb314f9494e1f54889bde1b",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.235871044425837,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.250871044425834,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_1_8.geo.json",
+    "baseline_sha256": "369ad77b5efdef718867069c66b1471e6af8d6c5f91e5305ab3e5f93a7c1c516",
+    "reviewed_sha256": "2b7cd5558f67859f0096137fbc6e96915cdba8e98f42b56725b1e2e156b79e9e",
+    "candidate_sha256": "2b7cd5558f67859f0096137fbc6e96915cdba8e98f42b56725b1e2e156b79e9e",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 7.040228462612797,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 7.055228462612797,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_1_9.geo.json",
+    "baseline_sha256": "dc605c2a0a3ce5def61cb8262036a7fd670f05128c6505a0ad1b0b583e5be673",
+    "reviewed_sha256": "1a3c9fa4455ab22573b8019ba7474bb2aeaead65d29fd1e961587b54bcee5624",
+    "candidate_sha256": "1a3c9fa4455ab22573b8019ba7474bb2aeaead65d29fd1e961587b54bcee5624",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 5.2710174732090564,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 5.286017473209056,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_2_0.geo.json",
+    "baseline_sha256": "0dc47a91e86eb0d5e17bff509c56241a0b832310d544072c8c0539845571afab",
+    "reviewed_sha256": "48bfce9a4a71a4ed4a7c71338ca98adb088532ccdd5d3f46cf690cad41e6aeb1",
+    "candidate_sha256": "48bfce9a4a71a4ed4a7c71338ca98adb088532ccdd5d3f46cf690cad41e6aeb1",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.85760213195097,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.872602131950966,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_2_1.geo.json",
+    "baseline_sha256": "00092df928c33fd3f2e9d0556a4ea64e47a91924e9846d59765f6a4d82ed7806",
+    "reviewed_sha256": "87f631987df74ed3fd392d411860606cdf180a1a027b3d6447419d802ac2a1b6",
+    "candidate_sha256": "87f631987df74ed3fd392d411860606cdf180a1a027b3d6447419d802ac2a1b6",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.85760213195097,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.872602131950966,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_2_10.geo.json",
+    "baseline_sha256": "cab9dec01096616616e12453705c206859770c0fc3b1d8b28e175b4111d513fd",
+    "reviewed_sha256": "ed9ca06dcb94ef642c854a056e0345fcb136b5e86879ba4487d8bb3188f7eb27",
+    "candidate_sha256": "ed9ca06dcb94ef642c854a056e0345fcb136b5e86879ba4487d8bb3188f7eb27",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.809444036409367,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.82444403640937,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_2_11.geo.json",
+    "baseline_sha256": "c83afd9e72bbb7b4f2ea39220d796f1ff305ec062a284b9337d5e33b31b11f35",
+    "reviewed_sha256": "0fd8a109bc081a762f71f0d85c7a839e1a7bea9c6176d55b75a224df01038ba0",
+    "candidate_sha256": "0fd8a109bc081a762f71f0d85c7a839e1a7bea9c6176d55b75a224df01038ba0",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.76004303477348,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.775043034773478,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_2_12.geo.json",
+    "baseline_sha256": "cd08266e9f19320ac983f93ef8523cffe92035a236a7b5d029af5f8c0ba0d281",
+    "reviewed_sha256": "bd3269e714b48f2fa177a467e99c137ad0c8814596853b3ae0cafc7005fca304",
+    "candidate_sha256": "bd3269e714b48f2fa177a467e99c137ad0c8814596853b3ae0cafc7005fca304",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 6.646211688727931,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 6.6612116887279305,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_2_13.geo.json",
+    "baseline_sha256": "893d6cfb114096d2ed6d0bb73c37a07e929810bed820f3adfdea3f043fd8a303",
+    "reviewed_sha256": "5ce856e4d115e4d1646dd2d626d80387dc9340523c010556763d2ffeafd4a2ac",
+    "candidate_sha256": "5ce856e4d115e4d1646dd2d626d80387dc9340523c010556763d2ffeafd4a2ac",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 0.980957,
+    "reviewed_thickness": 0.966243,
+    "retreat": 0.014714000000000005,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 1.8491353849653058,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 1.863849384965305,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_2_14.geo.json",
+    "baseline_sha256": "329d04153d280b9053cb4b4b1af826cb230a7e75b369f8716c14c2779b6edb27",
+    "reviewed_sha256": "269b4b5f1139788f3299d9f4d10e067e90b84b05b8b9425a77b80cee4fc16f6a",
+    "candidate_sha256": "269b4b5f1139788f3299d9f4d10e067e90b84b05b8b9425a77b80cee4fc16f6a",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 0.940012,
+    "reviewed_thickness": 0.925912,
+    "retreat": 0.014100000000000001,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.014100000000000001,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 5,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.75
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_2_15.geo.json",
+    "baseline_sha256": "ae4a68e7c803cf33e6a2aa9f452d61b0a7808b0c883bdbfdd1475937a2e2a8e9",
+    "reviewed_sha256": "6a92b91c46c4a301687e51274cc985e262b49c61839253283ae51306fe4514ae",
+    "candidate_sha256": "6a92b91c46c4a301687e51274cc985e262b49c61839253283ae51306fe4514ae",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.01499999999999968,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 5,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.75
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_2_2.geo.json",
+    "baseline_sha256": "2daba27198901b00d1e84204f209f87f3292daf7ae8a5de62f56bab7cc1e7898",
+    "reviewed_sha256": "5408520ee604ba4754c3ae8c6076258de42e98dd42d25c1153115105e933b91a",
+    "candidate_sha256": "5408520ee604ba4754c3ae8c6076258de42e98dd42d25c1153115105e933b91a",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.85760213195097,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.872602131950966,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_2_3.geo.json",
+    "baseline_sha256": "edaf47686737fe09b5775f979b78397ca171963cbbe5e67d2e28fe02f5dc80e6",
+    "reviewed_sha256": "9b793f94a8f6e560b5aedc93be9facdfc6638bd7d66212553013bea737da29fb",
+    "candidate_sha256": "9b793f94a8f6e560b5aedc93be9facdfc6638bd7d66212553013bea737da29fb",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.85760213195097,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.872602131950966,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_2_4.geo.json",
+    "baseline_sha256": "7976b664e7f84d2dd27cd63fecafbe763715f39e9e5a98de9366b5da2108ac33",
+    "reviewed_sha256": "ca578dd6b6989a14b2d88072e298c77eacddbc09f5bb236e9ecf8e6a06e676e9",
+    "candidate_sha256": "ca578dd6b6989a14b2d88072e298c77eacddbc09f5bb236e9ecf8e6a06e676e9",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.85760213195097,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.872602131950966,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_2_5.geo.json",
+    "baseline_sha256": "39c52b088ee4a84612fc417f6c95ab6c5dc3401c2644265622a93097fbec1490",
+    "reviewed_sha256": "f809d6513f66f8226a119e7134d03793c10a0f1f4518c7b84f687bcda52a26e1",
+    "candidate_sha256": "f809d6513f66f8226a119e7134d03793c10a0f1f4518c7b84f687bcda52a26e1",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.85760213195097,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.872602131950966,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_2_6.geo.json",
+    "baseline_sha256": "de4247066e2212229f5d0a6f60594fcb32849dc1c776faa7d447cc20ac43fbf8",
+    "reviewed_sha256": "0fe6246dcb2229c9dc1e38c5ef45a3dc210405fc298413299188b8b4953c9e6d",
+    "candidate_sha256": "0fe6246dcb2229c9dc1e38c5ef45a3dc210405fc298413299188b8b4953c9e6d",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 7.911809973275515,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 7.926809973275515,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_2_7.geo.json",
+    "baseline_sha256": "a8f502cd8855f82e2437803113ceeacd91afbc255fdd59589c067a11e7cbc8f8",
+    "reviewed_sha256": "3eb6d660f9e21894250dcb169b1444f6c9967c1d6b44b9718032058403d3fdbd",
+    "candidate_sha256": "3eb6d660f9e21894250dcb169b1444f6c9967c1d6b44b9718032058403d3fdbd",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 6.966018857267676,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 6.981018857267675,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_2_8.geo.json",
+    "baseline_sha256": "4504a3b00b4ef6e05cab2fb11e2cc355ac57c84f091ed135806c0c7d63818dbd",
+    "reviewed_sha256": "9c495a946933531ea1b2a85168008810cafd2667e3988ec5e449298d05cb3b95",
+    "candidate_sha256": "9c495a946933531ea1b2a85168008810cafd2667e3988ec5e449298d05cb3b95",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.85760213195097,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.872602131950966,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_2_9.geo.json",
+    "baseline_sha256": "86a74567676e89d31bf1d75e4b646dac2d7abf41333e69e43ded43e428da48df",
+    "reviewed_sha256": "892468d3dc92dbce70dbae3625e310ec59386812369c63f8797741cf88167642",
+    "candidate_sha256": "892468d3dc92dbce70dbae3625e310ec59386812369c63f8797741cf88167642",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.842260628731022,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.857260628731023,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_3_0.geo.json",
+    "baseline_sha256": "78edbf7d936879df09660c10dc74e997fe63fe39f616a831e1db24567cbfd8b2",
+    "reviewed_sha256": "f88b8f201ad61b1fcef499803e39bab640ae3a01b2324f33891f19d9e7ea0869",
+    "candidate_sha256": "f88b8f201ad61b1fcef499803e39bab640ae3a01b2324f33891f19d9e7ea0869",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.01499999999999968,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.75
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_3_1.geo.json",
+    "baseline_sha256": "a1f9b8430647b51fb6d262f8efaa68b1c0456cbb6169f2bfe89c3e582b7deaea",
+    "reviewed_sha256": "b2557c0754754d2f7eb51a47cd3a669c2cabcc39656a21e2e1b3ead3df7ec8c0",
+    "candidate_sha256": "b2557c0754754d2f7eb51a47cd3a669c2cabcc39656a21e2e1b3ead3df7ec8c0",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.01499999999999968,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.71143334
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_3_10.geo.json",
+    "baseline_sha256": "53bfbbace28e8bcc2832efaf358fbdda5c52f90c23fb1e18985ea397c7244d77",
+    "reviewed_sha256": "1d02bc4499fa2371317798f1be02a347774b87eb776fee6fd09a7124c4351322",
+    "candidate_sha256": "1d02bc4499fa2371317798f1be02a347774b87eb776fee6fd09a7124c4351322",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.01499999999999968,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.75
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_3_11.geo.json",
+    "baseline_sha256": "6307d709fc596985c146a901ddbe155fffadc10cf34737722618a80e4d2a9830",
+    "reviewed_sha256": "aa3d1b966dcc6b0fdee72351ed41238f006f906c2c549182d43e7a5246a9ac03",
+    "candidate_sha256": "aa3d1b966dcc6b0fdee72351ed41238f006f906c2c549182d43e7a5246a9ac03",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.01499999999999968,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.71143334
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_3_12.geo.json",
+    "baseline_sha256": "b42e59400f4f8063e80ebf8f5d227af28c0f12297b04c8c68e1b8e8678503a56",
+    "reviewed_sha256": "6146d840cb910847e9f3d113f77f96946476b38d8c45064220e468cc8f4c1028",
+    "candidate_sha256": "6146d840cb910847e9f3d113f77f96946476b38d8c45064220e468cc8f4c1028",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.01499999999999968,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.75
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_3_13.geo.json",
+    "baseline_sha256": "b84659ce8980989dbc543e00a0da3bd5ed28d10b552d997fb1a09b335c5dd05c",
+    "reviewed_sha256": "6eaa4a87e29931839592e3f061810417452eb7d99a121aae1a847700738767a8",
+    "candidate_sha256": "6eaa4a87e29931839592e3f061810417452eb7d99a121aae1a847700738767a8",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.01499999999999968,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.71143334
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_3_14.geo.json",
+    "baseline_sha256": "924b7c98df90767ebb33aa1a79be1532d195d3e97c8d48798ee66a4b40c57024",
+    "reviewed_sha256": "337c5b3d142a0b4f3e6c3157ed3688920ec99a28dccd06ba735fe184858c1d2e",
+    "candidate_sha256": "337c5b3d142a0b4f3e6c3157ed3688920ec99a28dccd06ba735fe184858c1d2e",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.01499999999999968,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.75
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_3_15.geo.json",
+    "baseline_sha256": "f0016752c551fd736ab9f363315bfa2a5ecf16061c78644a13e5f08fb9464138",
+    "reviewed_sha256": "892d56547f179b400afcb815b9e5ebe86c438598c25666325176e473f94d3dc0",
+    "candidate_sha256": "892d56547f179b400afcb815b9e5ebe86c438598c25666325176e473f94d3dc0",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.01499999999999968,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.75
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_3_2.geo.json",
+    "baseline_sha256": "3a77dd822036216bcf18768426f232c1197cf19e9510ee8fd081f2f96a6f7383",
+    "reviewed_sha256": "f373a75518ed28e18d2699d7b93cb3f47bba79d24e3b4187c571e3ac65086336",
+    "candidate_sha256": "f373a75518ed28e18d2699d7b93cb3f47bba79d24e3b4187c571e3ac65086336",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.01499999999999968,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.75
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_3_3.geo.json",
+    "baseline_sha256": "7b9b7a4ce50d665a3abfdb2afce6a38681e993144e66f52c53f4a3bda1706a7a",
+    "reviewed_sha256": "b894fa68e7193f6e5c9345ab084ffcdb6b0f495aecb015bccdd48f2e2deb4842",
+    "candidate_sha256": "b894fa68e7193f6e5c9345ab084ffcdb6b0f495aecb015bccdd48f2e2deb4842",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.01499999999999968,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.71143334
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_3_4.geo.json",
+    "baseline_sha256": "db6fbe3ce657ac1074503761b6d3113d19dd537bc18cba5eee09a1f69cd44d1a",
+    "reviewed_sha256": "87d936ed1f342f52b40cd549b4ab73db264e05fccece43f8562659a150698fdd",
+    "candidate_sha256": "87d936ed1f342f52b40cd549b4ab73db264e05fccece43f8562659a150698fdd",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.01499999999999968,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.75
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_3_5.geo.json",
+    "baseline_sha256": "935ce45b86bcd7c905d8e478673d47e188461344e6fe0f88c4d112a7df9fdc10",
+    "reviewed_sha256": "e9a26f5ab20b1254f8c8f4b76f061e6fa956532fa7de5da354db93b5d3f8166d",
+    "candidate_sha256": "e9a26f5ab20b1254f8c8f4b76f061e6fa956532fa7de5da354db93b5d3f8166d",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.01499999999999968,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.71143334
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_3_6.geo.json",
+    "baseline_sha256": "0370f2fee61f588825fec49d53db19fd26f5be2966da01b30c197d4a68773d32",
+    "reviewed_sha256": "f830a99c418ce69f58f1bb6691e84d60b5ef050db89ce057a8b92b13d56f1c63",
+    "candidate_sha256": "f830a99c418ce69f58f1bb6691e84d60b5ef050db89ce057a8b92b13d56f1c63",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.01499999999999968,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.75
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_3_7.geo.json",
+    "baseline_sha256": "47effd242ddce22c2f114fc6dc309923ac99cb1e5f3881c5032268126a76d2ee",
+    "reviewed_sha256": "5a85237dd953f9f4e55f0d4e4d8136e7fcc8e7b36eb016897122b84747aaa06d",
+    "candidate_sha256": "5a85237dd953f9f4e55f0d4e4d8136e7fcc8e7b36eb016897122b84747aaa06d",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.01499999999999968,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.71143334
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_3_8.geo.json",
+    "baseline_sha256": "a0ad5bb2ebac947cb7612c0d08b5001090ea94d4b2b4e03c842f122febbe4f9a",
+    "reviewed_sha256": "dc95671257854a5f6c0355e73ebca6a0916f8472e1b39872e75a9523e74a592d",
+    "candidate_sha256": "dc95671257854a5f6c0355e73ebca6a0916f8472e1b39872e75a9523e74a592d",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.01499999999999968,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.75
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_3_9.geo.json",
+    "baseline_sha256": "0c04c8849ba7753c2bb80761579a6eaf2de2ba89f71e6f06f32d77ab23eaad9d",
+    "reviewed_sha256": "cdbc7455ecc9dfc73512d0254ef4c3e205eb0e3104f767f1effd42cd873496d0",
+    "candidate_sha256": "cdbc7455ecc9dfc73512d0254ef4c3e205eb0e3104f767f1effd42cd873496d0",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.01499999999999968,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.71143334
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_4_0.geo.json",
+    "baseline_sha256": "bc00439ef55cb3ebabfa33e895528d5d3c18ab0ec170d4962b91d3f0a7b4875e",
+    "reviewed_sha256": "0843a0b9f3d86bba99685b1c5dc905d60933c96c1145668061c25e54fcf9ac11",
+    "candidate_sha256": "0843a0b9f3d86bba99685b1c5dc905d60933c96c1145668061c25e54fcf9ac11",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.01499999999999968,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 5,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.75
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_4_1.geo.json",
+    "baseline_sha256": "ad300cd2273104888e0ab33d0af1d5745c87fd4045af79dadcfb57459a79e2b5",
+    "reviewed_sha256": "4afcbc5ade0ed004eda71200bd1bdd50e63825da51b099179ada9c8f885f22a1",
+    "candidate_sha256": "4afcbc5ade0ed004eda71200bd1bdd50e63825da51b099179ada9c8f885f22a1",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 6.12248454497383,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 6.137484544973829,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_4_10.geo.json",
+    "baseline_sha256": "4dff29981eb2ae3b47a8e2bd38e1e14e85f8b38461a9139dc52c0a8b8220df0a",
+    "reviewed_sha256": "1b8c3f2ff5e9f200b65834b8bc10aaace70c152a3713a66cb6f7425f383ecdfa",
+    "candidate_sha256": "1b8c3f2ff5e9f200b65834b8bc10aaace70c152a3713a66cb6f7425f383ecdfa",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 9.433389351268504,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 9.448389351268505,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_4_11.geo.json",
+    "baseline_sha256": "816dd7c77fd29e94e738fa1f6e6e703c07ede6d07ba31925f806661acc2b90ec",
+    "reviewed_sha256": "f0772d246cc43747076b5d61d1bbbe061d1590504bc8d741556783c9a03344cc",
+    "candidate_sha256": "f0772d246cc43747076b5d61d1bbbe061d1590504bc8d741556783c9a03344cc",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 9.185274529354443,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 9.200274529354443,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_4_12.geo.json",
+    "baseline_sha256": "23687624230c7527f1a25cddade9e49b6cbfa26ccf718405912eea4d74235632",
+    "reviewed_sha256": "3419efa80b64655a14a8099ae53a3ce36fc65e0410fe5cee905bbc8199837b22",
+    "candidate_sha256": "3419efa80b64655a14a8099ae53a3ce36fc65e0410fe5cee905bbc8199837b22",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.937159707440378,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.952159707440376,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_4_13.geo.json",
+    "baseline_sha256": "79144d7b24aa7f032dab14c47835dadfb282dad7e4e0affde8f8cdbe0b3441ee",
+    "reviewed_sha256": "fdfdefa2fc4d1ed4cab469d341fb33cdd559e77a0c4b674d885a6916d98baa1d",
+    "candidate_sha256": "fdfdefa2fc4d1ed4cab469d341fb33cdd559e77a0c4b674d885a6916d98baa1d",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.85760213195097,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.872602131950966,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_4_14.geo.json",
+    "baseline_sha256": "de262e187f96c1af9213d97ca2a66f0039f20dda8ee0f819ba86a4aac6e1b097",
+    "reviewed_sha256": "7442b5acb271786375470d1f4758f78009c216bc0251d5f2cb56ca4051d28aa3",
+    "candidate_sha256": "7442b5acb271786375470d1f4758f78009c216bc0251d5f2cb56ca4051d28aa3",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.85760213195097,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.872602131950966,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_4_15.geo.json",
+    "baseline_sha256": "5bc120f65325723a5df3fa55ff686bee0a15827d74eca8df02f7ed24be9418d5",
+    "reviewed_sha256": "01b5cf7bc248f3ec42fb81f9c728d8b416fcba3a9719141bc6e6f6f8dd164099",
+    "candidate_sha256": "01b5cf7bc248f3ec42fb81f9c728d8b416fcba3a9719141bc6e6f6f8dd164099",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.85760213195097,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.872602131950966,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_4_2.geo.json",
+    "baseline_sha256": "1c9b0991ce30bf161e5168531bb2e7c7b9e4ab108dc09a795b687649f1710a1f",
+    "reviewed_sha256": "d7d47d156f65e2ec6a0a271ff69a23a765d4a0b5416e2104445a9f087c996322",
+    "candidate_sha256": "d7d47d156f65e2ec6a0a271ff69a23a765d4a0b5416e2104445a9f087c996322",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.77687052706195,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.79187052706195,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_4_3.geo.json",
+    "baseline_sha256": "f5f6bc6b89730b4b20a0138507885dcc3e075fd391134159ba968c9dfac30558",
+    "reviewed_sha256": "72224e9dc4c924eac02270697b52ef2589baab9bfbb780fb08d1b9d8c68fa1e8",
+    "candidate_sha256": "72224e9dc4c924eac02270697b52ef2589baab9bfbb780fb08d1b9d8c68fa1e8",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.779190904811541,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.79419090481154,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_4_4.geo.json",
+    "baseline_sha256": "7914864797c0de7b279bc46156850969dd945b0911f2c3263bbebd257e2408ad",
+    "reviewed_sha256": "17f80cb27ff8712f9393149f0672adb76f355468c1fe68f152509a644ef3dc9b",
+    "candidate_sha256": "17f80cb27ff8712f9393149f0672adb76f355468c1fe68f152509a644ef3dc9b",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.779876489228785,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.794876489228786,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_4_5.geo.json",
+    "baseline_sha256": "c95b7a6f6dec62615802213f14de58c55f9e9ef4dd462b9835467bb3bfe7cf8c",
+    "reviewed_sha256": "9afbc93199d5bf9c87687087157949736577087728a59d95899b21375953c762",
+    "candidate_sha256": "9afbc93199d5bf9c87687087157949736577087728a59d95899b21375953c762",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.772980520462216,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.787980520462217,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_4_6.geo.json",
+    "baseline_sha256": "b66455c8b29790f1ef4ceabe0758e91dd0e6981e3115d75747d9f30355d612d2",
+    "reviewed_sha256": "33baeb137ab6f26c38e5c2e1ff79036ee2d577eda65b7992f505b3351ae9bf91",
+    "candidate_sha256": "33baeb137ab6f26c38e5c2e1ff79036ee2d577eda65b7992f505b3351ae9bf91",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.772980520462216,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.787980520462217,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_4_7.geo.json",
+    "baseline_sha256": "c8264d40ba50e0fa3dbcd0e9924e2dfded4a36b7d0cef750446f906662f4a67d",
+    "reviewed_sha256": "53adb20f4a6b595d3c0a7834fd1c9c4ce63f63fc87e0285fd9911f18186ae2f6",
+    "candidate_sha256": "53adb20f4a6b595d3c0a7834fd1c9c4ce63f63fc87e0285fd9911f18186ae2f6",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.769222299519166,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.784222299519165,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_4_8.geo.json",
+    "baseline_sha256": "d14d6d74cccb843b949b2d1e8337a485615f210e4cadd61f124cd1e4d610c156",
+    "reviewed_sha256": "bd678baa772e5cdd67d2be77792914cc084c527ed2065276e5bb46a0b6be51dd",
+    "candidate_sha256": "bd678baa772e5cdd67d2be77792914cc084c527ed2065276e5bb46a0b6be51dd",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.000178,
+    "reviewed_thickness": 0.985175,
+    "retreat": 0.015002999999999989,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.714468186756609,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.729471186756609,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_4_9.geo.json",
+    "baseline_sha256": "fc41b27e92386d23e3bb0036945a7acc332adbf6b2415ec9a7429fb3e6ad8957",
+    "reviewed_sha256": "e34f6e9e5d40f7496497f83329fb43a02ecfd9cf47ff174cf5c1ad812f8cbb83",
+    "candidate_sha256": "e34f6e9e5d40f7496497f83329fb43a02ecfd9cf47ff174cf5c1ad812f8cbb83",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 9.56333615122541,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 9.57833615122541,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_5_0.geo.json",
+    "baseline_sha256": "2ca1265345d78964fb900f4293f62724374baa501374c7af62f17f7494263129",
+    "reviewed_sha256": "ea9fc6128bf1cb419484fe1ad0701a1d554e185ade9a918991b2b2bdf902933e",
+    "candidate_sha256": "ea9fc6128bf1cb419484fe1ad0701a1d554e185ade9a918991b2b2bdf902933e",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.85760213195097,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.872602131950966,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 4,
+    "reviewed_coplanar_count": 4,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_6_0.geo.json",
+    "baseline_sha256": "be996a1f77a4a7d77ae530043f286d31646222895bf8b6fc4e7ca7148afb8824",
+    "reviewed_sha256": "461f1fc3318f130ff6004ef9414e5182424016e4f0f69f55c87d963faa4ff43d",
+    "candidate_sha256": "461f1fc3318f130ff6004ef9414e5182424016e4f0f69f55c87d963faa4ff43d",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.0,
+      "coplanar": true
+    },
+    "reviewed_contact": {
+      "parallel": true,
+      "max_plane_distance": 0.01499999999999968,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 2,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [
+      {
+        "a": [
+          "group3",
+          0,
+          "north"
+        ],
+        "b": [
+          "group5",
+          0,
+          "south"
+        ],
+        "area": 97.75
+      }
+    ],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_6_1.geo.json",
+    "baseline_sha256": "db328062c8edd62f433ca359d672f4c7b8e32f2448f87538c1f4c841a784498e",
+    "reviewed_sha256": "93ad97b36c694f7abadfb33ab2bbc80b63ad829c1b137d8e1e29b9cb2431e011",
+    "candidate_sha256": "93ad97b36c694f7abadfb33ab2bbc80b63ad829c1b137d8e1e29b9cb2431e011",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 6.12248454497383,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 6.137484544973829,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_6_10.geo.json",
+    "baseline_sha256": "5fcf134c366d9bd2f2daa7680e1349b489f5e4435dbc8913899437ddf4ad05ce",
+    "reviewed_sha256": "3b19eabad417bca8bceff6aa74e7875a78219ffb11050a26a60f31e2fd231e09",
+    "candidate_sha256": "3b19eabad417bca8bceff6aa74e7875a78219ffb11050a26a60f31e2fd231e09",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 9.433389351268504,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 9.448389351268505,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_6_11.geo.json",
+    "baseline_sha256": "e8c3abc91f3225afb7a74d7464243d90300ddc405d818ebc216bb906849c9006",
+    "reviewed_sha256": "3d6135c614fcf7146095784ce97d0ba204bcb9ed89d1a6ecf21daca65e9c0ecb",
+    "candidate_sha256": "3d6135c614fcf7146095784ce97d0ba204bcb9ed89d1a6ecf21daca65e9c0ecb",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 9.185274529354443,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 9.200274529354443,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_6_12.geo.json",
+    "baseline_sha256": "8502cd3e3d3542a034c7cddec55033f6aac8a5c3ed3620a7e9950d9935e3a773",
+    "reviewed_sha256": "f5189815ce4bd29cf04a5c35e14dd8e9172dc16da57ce6dceada91a60119bdf5",
+    "candidate_sha256": "f5189815ce4bd29cf04a5c35e14dd8e9172dc16da57ce6dceada91a60119bdf5",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.937159707440378,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.952159707440376,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_6_13.geo.json",
+    "baseline_sha256": "06e1194927167639a7ac49ef57c9cb4972ddbc529f50175b3a8b8d6b72ae4355",
+    "reviewed_sha256": "491cc8b70c07fd9334e008628e6dd22c20d525b1c21769fa2599345e66144708",
+    "candidate_sha256": "491cc8b70c07fd9334e008628e6dd22c20d525b1c21769fa2599345e66144708",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.85760213195097,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.872602131950966,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_6_14.geo.json",
+    "baseline_sha256": "6a2c83729c24e592966d4b28d1307eaccd360f90ed652f28d23aa2a0a1f7d98c",
+    "reviewed_sha256": "2bd6a67b599e0a342bc6f26715f372b78bbd49befb7767748ff879da9cf81beb",
+    "candidate_sha256": "2bd6a67b599e0a342bc6f26715f372b78bbd49befb7767748ff879da9cf81beb",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.85760213195097,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.872602131950966,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_6_15.geo.json",
+    "baseline_sha256": "aff13fd188a422c75d7367195ea96133b9905c4b0da6bbd582ac6b2c2f28471f",
+    "reviewed_sha256": "0806a98354514cb32deaf2330faa94799ea1ba0a63e60586cbe8ddcbce47e5f1",
+    "candidate_sha256": "0806a98354514cb32deaf2330faa94799ea1ba0a63e60586cbe8ddcbce47e5f1",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.85760213195097,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.872602131950966,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_6_2.geo.json",
+    "baseline_sha256": "0508f7c2c5f85b9fb5f18559858a04f3ce02c307654717340c39d224780ea3f2",
+    "reviewed_sha256": "f7fbb46d391f292ba20e0379dafc8a04255823d58de9bd97bd4eb9b193c2ba05",
+    "candidate_sha256": "f7fbb46d391f292ba20e0379dafc8a04255823d58de9bd97bd4eb9b193c2ba05",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.77687052706195,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.79187052706195,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_6_3.geo.json",
+    "baseline_sha256": "84be014a43af086b0ff10ef180794c9c01bd779b23d32e09b9ec2913496e603d",
+    "reviewed_sha256": "4752045de0ae4aa2b0d9e71cc1ec67cd1f30ae70b202b71822004b6ed92365aa",
+    "candidate_sha256": "4752045de0ae4aa2b0d9e71cc1ec67cd1f30ae70b202b71822004b6ed92365aa",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.779190904811541,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.79419090481154,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_6_4.geo.json",
+    "baseline_sha256": "7ff0821c6ef5665bf548bad225592fd103f91ca09878854bc79108edd0116195",
+    "reviewed_sha256": "c63fabf9aff5b94fa66901d313d40df0d131b3ad903acad8839f817247345d94",
+    "candidate_sha256": "c63fabf9aff5b94fa66901d313d40df0d131b3ad903acad8839f817247345d94",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.779876489228785,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.794876489228786,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_6_5.geo.json",
+    "baseline_sha256": "4ca9bd117b288f734d9b8ae52711010f5d64c672e18bcd58766d48f635687c8b",
+    "reviewed_sha256": "a1a963b64df678d17e69de044c33c439a8fe543fbd760a2032a67ae4bfca06dd",
+    "candidate_sha256": "a1a963b64df678d17e69de044c33c439a8fe543fbd760a2032a67ae4bfca06dd",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.772980520462216,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.787980520462217,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_6_6.geo.json",
+    "baseline_sha256": "918a6a0f6c4021efeb8405f543252e15bbad16c6efad31985e5f935eb38a637b",
+    "reviewed_sha256": "ba91d3de60ba020b67a18089025ef5ecac2ed6fe7cc0646a23b48dd589b62fb5",
+    "candidate_sha256": "ba91d3de60ba020b67a18089025ef5ecac2ed6fe7cc0646a23b48dd589b62fb5",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.772980520462216,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.787980520462217,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_6_7.geo.json",
+    "baseline_sha256": "22afb36802582e770a9be9c2e93c0844d265772f4a071449e112f91b332bf2de",
+    "reviewed_sha256": "35668abb3cf0b72a0b0c7e5c917678c62598b03d9e9b0841345626de2362a563",
+    "candidate_sha256": "35668abb3cf0b72a0b0c7e5c917678c62598b03d9e9b0841345626de2362a563",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.769222299519166,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.784222299519165,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_6_8.geo.json",
+    "baseline_sha256": "a37b4d69577c4a9735c823edfcdda78278614b0bc9f0be357c5720800d49ea83",
+    "reviewed_sha256": "c20632c21731efd100004ba1c6ee0132fc8b8045dd847f922fae56f9aa06a159",
+    "candidate_sha256": "c20632c21731efd100004ba1c6ee0132fc8b8045dd847f922fae56f9aa06a159",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.000178,
+    "reviewed_thickness": 0.985175,
+    "retreat": 0.015002999999999989,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.714468186756609,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 8.729471186756609,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  },
+  {
+    "path": "runtime/RP/models/blocks/dishwasher_6_9.geo.json",
+    "baseline_sha256": "72a4115f914ca4696ec08607ed0a410142070024d2fb2e4866a27002d763154d",
+    "reviewed_sha256": "9afdfe5f41dc079f095999baeb88f69742486e22034ca0d65a2b1b1e9e2f9536",
+    "candidate_sha256": "9afdfe5f41dc079f095999baeb88f69742486e22034ca0d65a2b1b1e9e2f9536",
+    "candidate_json_exact": true,
+    "candidate_bytes_exact": true,
+    "only_door_size_z_changed": true,
+    "front_physical_vertices_exact": true,
+    "all_uv_pivots_rotations_exact": true,
+    "baseline_thickness": 1.0,
+    "reviewed_thickness": 0.985,
+    "retreat": 0.015000000000000013,
+    "baseline_contact": {
+      "parallel": false,
+      "max_plane_distance": 9.56333615122541,
+      "coplanar": false
+    },
+    "reviewed_contact": {
+      "parallel": false,
+      "max_plane_distance": 9.57833615122541,
+      "coplanar": false
+    },
+    "baseline_coplanar_count": 1,
+    "reviewed_coplanar_count": 1,
+    "added": [],
+    "removed": [],
+    "enlarged": []
+  }
+]

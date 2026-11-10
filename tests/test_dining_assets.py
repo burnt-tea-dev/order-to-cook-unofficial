@@ -61,8 +61,11 @@ class DiningAssetTests(unittest.TestCase):
                 name = variants[f"facing=north,stage={stage}"]["model"].split(":")[1]
                 model = read(ASSETS / "models" / (name + ".json"))
                 cubes = meshes[stage]["bones"][0]["cubes"]
-                self.assertEqual(len(cubes), len(model["elements"]))
-                for index, (cube, original) in enumerate(zip(cubes, model["elements"])):
+                stain_indices = [i for i,e in enumerate(model["elements"]) if e['from'][1] == e['to'][1] == 1.01563]
+                self.assertEqual(len(stain_indices), 0 if stage == 36 else 1)
+                retained = [(i,e) for i,e in enumerate(model["elements"]) if i not in stain_indices]
+                self.assertEqual(len(cubes), len(retained))
+                for cube, (index, original) in zip(cubes, retained):
                     inset = (stage == 5 and index in (3,4,5,6)) or (stage == 6 and index in (3,4))
                     expected_from, expected_to = list(original['from']), list(original['to'])
                     if inset:
@@ -79,6 +82,11 @@ class DiningAssetTests(unittest.TestCase):
                     for direction, face in original["faces"].items():
                         self.assertEqual(model["textures"][face["texture"][1:]], "ordertocook:block/food_plate_variants")
                         converted = cube["uv"][direction]
+                        if index == 0 and direction == 'up' and stain_indices:
+                            family = (stage-1)//4+1
+                            slot = 1 if family == 2 else 2 if family == 8 else 3 if family == 10 else 0
+                            self.assertEqual(converted, {'uv':[204,4+slot*16], 'uv_size':[12,12]})
+                            continue
                         start = [(converted["uv"][0] - 38) / 10, (converted["uv"][1] - 2) / 10]
                         end = [start[0] + converted["uv_size"][0] / 10, start[1] + converted["uv_size"][1] / 10]
                         recovered = end + start if direction in ("up", "down") else start + end

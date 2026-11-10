@@ -1,0 +1,14 @@
+{
+  "scope": "Door source-contract and post-pose trim helpers only. Other concurrent converter work is outside this review; whole-file SHA records this review snapshot.",
+  "converter_sha256": "875a27aefcbfb50d117bbea180601c3a72405e9b3acfaef8767fc55811b3744a",
+  "helpers": {
+    "separate_dishwasher_drawer_faces": {
+      "sha256": "d1b10adf83528ea0f733360b85798d6832f3530f55e40bcc83b7d5f24698a19f",
+      "source": "def separate_dishwasher_drawer_faces(g):\n    \"\"\"Separate the nested basket's coincident caps before posing the drawer.\n\n    Keep the outer silhouette, X/Z walls, face UVs and original texture bytes.\n    The inner cap moves inward 0.015 model pixels at each Y end. Applying this\n    before bake_pose makes the tiny clearance follow the original squash.\n    The untouched imported/source geometry remains available for comparison.\n    \"\"\"\n    drawer = next(b for b in g[\"minecraft:geometry\"][0][\"bones\"] if b[\"name\"] == \"group3\")\n    outer, inner = drawer[\"cubes\"]\n    if (outer[\"origin\"] != [-5.75, 2.25, -5.03] or outer[\"size\"] != [11.5, 8.5, 11]\n            or inner[\"origin\"] != [-5.25, 2.25, -4.03] or inner[\"size\"] != [10.5, 8.5, 9]):\n        raise ValueError(\"Changed dishwasher nested-drawer source contract\")\n    door = next(b for b in g[\"minecraft:geometry\"][0][\"bones\"] if b[\"name\"] == \"group5\")[\"cubes\"]\n    if (len(door) != 1 or door[0][\"origin\"] != [-6,2,-6.03]\n            or door[0][\"size\"] != [12,9,1]):\n        raise ValueError(\"Changed dishwasher door-back source contract\")\n    inner[\"origin\"][1] += 0.015\n    inner[\"size\"][1] -= 0.03"
+    },
+    "separate_dishwasher_door_back": {
+      "sha256": "87342c0ac552758a701b4469ee048a4c187ce95c58d638049425404905d0fe44",
+      "source": "def separate_dishwasher_door_back(g):\n    \"\"\"Retreat only the door's back after posing, preserving its front vertices.\n\n    The closed door back and basket front share Z=-5.03 in the source.\n    Alpha-tested holes can expose that opposing contact. Trimming after the\n    cuboid/shear fit preserves its front, pivot, rotation and all other bones.\n    Thickness and side-face texel density change by 1.5%; UV art is retained.\n    \"\"\"\n    cubes = next(b for b in g[\"minecraft:geometry\"][0][\"bones\"] if b[\"name\"] == \"group5\")[\"cubes\"]\n    if len(cubes) != 1:\n        raise ValueError(\"Changed posed dishwasher door-back contract\")\n    thickness = cubes[0][\"size\"][2]\n    if not math.isfinite(thickness) or thickness <= 0:\n        raise ValueError(\"Changed posed dishwasher door-back contract\")\n    shortened = round(thickness * .985, 6)\n    if not 0 < shortened < thickness:\n        raise ValueError(\"Door-back retreat lost positive finite clearance\")\n    cubes[0][\"size\"][2] = shortened"
+    }
+  }
+}

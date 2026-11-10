@@ -232,6 +232,91 @@ def inset_cube_axis(cube, axis, amount):
     cube['size'][axis] -= 2*amount
 
 
+FOOD_STAIN_TEXTURE = 'ordertocook:block/food_plate_stains_baked'
+FOOD_STAIN_TILE = 'ordertocook_block_food_plate_stains_baked'
+FOOD_STAIN_SOURCE_TILE = 'ordertocook_block_food_plate_variants'
+
+
+def food_stain_sheet(source_image):
+    """Four exact 12x12 tops in 16x16 cells, with 2px clamped edge padding.
+
+    Alpha is binary in all pinned source samples. Choose the original stain
+    texel when alpha=255 and the original plate texel when alpha=0; do not blend
+    colors or apply an arbitrary alphatest cutoff. Source UV=16 units; actual
+    source resolution=160. Slot order: full, half, alternate, shifted.
+    """
+    image = source_image.convert('RGBA')
+    if image.size != (160, 160):
+        raise ValueError('Changed food stain texture dimensions')
+    base = image.crop((0, 0, 12, 12))
+    orange = image.crop((0, 26, 12, 38))
+    alternate = image.crop((39, 37, 51, 49))
+    if set(base.getchannel('A').tobytes()) != {255}:
+        raise ValueError('Changed food stain base alpha')
+    for texture, opaque in ((orange, 37), (alternate, 79)):
+        alpha = texture.getchannel('A').tobytes()
+        if set(alpha) != {0, 255} or alpha.count(255) != opaque:
+            raise ValueError('Changed food stain binary alpha contract')
+    # Family 10's quad overhangs the plate by 1px. Its last source row is the
+    # overhanging world-Z strip, so it may be discarded only while transparent.
+    if any(orange.crop((0, 11, 12, 12)).getchannel('A').tobytes()):
+        raise ValueError('Changed food stain outside-plate alpha')
+    tiles = [base.copy() for _ in range(4)]
+    tiles[0].paste(orange, (0, 0), orange)
+    half = orange.crop((0, 0, 12, 6))
+    if half.getchannel('A').tobytes().count(255) != 18:
+        raise ValueError('Changed food stain half alpha contract')
+    tiles[1].paste(half, (0, 0), half)
+    # Family 8's V direction is opposite the plate top. U is shared.
+    alternate = alternate.transpose(Image.Transpose.FLIP_TOP_BOTTOM)
+    tiles[2].paste(alternate, (0, 0), alternate)
+    tiles[3].paste(orange, (0, 1), orange)
+    result = Image.new('RGBA', (16, 64))
+    for slot, tile in enumerate(tiles):
+        for y in range(16):
+            for x in range(16):
+                result.putpixel((x, slot*16+y), tile.getpixel(
+                    (min(11, max(0, x-2)), min(11, max(0, y-2)))))
+    return result
+
+
+def flatten_food_plate_stain(name, cubes):
+    """Rebind only the base up face and remove only its matching stain quad.
+
+    39/40 pinned food stages have one redundant alpha-test stain plane. Keep
+    every other face/cube, including family 10's separate Y=1.0625 food decal.
+    Refuse changed source contracts rather than silently flattening new content.
+    """
+    match = re.fullmatch(r'ordertocook:block/food_plate_anim/(10|[1-9])_([1-4])', name)
+    if not match:
+        return False
+    family, phase = map(int, match.groups())
+    found = [index for index, cube in enumerate(cubes)
+             if cube['origin'][1] == 1.01563 and cube['size'][1] == 0]
+    if family == 9 and phase == 4:
+        if found:
+            raise ValueError('Changed stain-free food stage contract')
+        return False
+    slot = 1 if family == 2 else 2 if family == 8 else 3 if family == 10 else 0
+    index = (13, 11, 8, 4)[phase-1] if family == 10 else 1
+    expected_plane = {'origin': [-6, 1.01563, 0 if family == 2 else -7 if family == 10 else -6],
+                      'size': [12, 0, 6 if family == 2 else 12], 'uv': {'up': {
+                          'uv': [3.9, 4.9] if family == 8 else [0, 2.6],
+                          'uv_size': [1.2, -1.2] if family == 8 else [1.2, .6 if family == 2 else 1.2],
+                          'material_instance': FOOD_STAIN_SOURCE_TILE}}}
+    expected_top = {'uv': [0, 0], 'uv_size': [1.2, 1.2],
+                    'material_instance': FOOD_STAIN_SOURCE_TILE}
+    if (not cubes or found != [index] or cubes[index] != expected_plane
+            or cubes[0]['origin'] != [-6, 0, -6] or cubes[0]['size'] != [12, 1, 12]
+            or cubes[0].get('rotation') or cubes[0].get('pivot')
+            or cubes[0]['uv'].get('up') != expected_top):
+        raise ValueError('Changed food stain plate/quad/UV contract')
+    cubes[0]['uv']['up'] = {'uv': [2, slot*4+.5], 'uv_size': [12, 3],
+                           'material_instance': FOOD_STAIN_TILE}
+    del cubes[index]
+    return True
+
+
 def separate_food_cap_faces(name, cubes):
     """Two pinned food stages have rotated caps coplanar with their center bar."""
     indices = {'ordertocook:block/food_plate_anim/2_1':(3,4,5,6),
@@ -252,6 +337,7 @@ def convert_java_model(name, identifier, extra_models=()):
     cubes, materials = [], {}
     sources = []
     food_caps_adapted = False
+    stain_adapted = False
     for model_name in (name, *extra_models):
         parent_name = model_name
         while parent_name.startswith(NS + ":"):
@@ -261,18 +347,24 @@ def convert_java_model(name, identifier, extra_models=()):
         model = resolve_model(model_name)
         converted = [java_cube(cube, model.get("textures", {})) for cube in model.get("elements", [])]
         food_caps_adapted = separate_food_cap_faces(model_name, converted) or food_caps_adapted
+        stain_adapted = flatten_food_plate_stain(model_name, converted) or stain_adapted
         cubes.extend(converted)
         for tex in model.get("textures", {}).values():
             resolved = resolve_texture(tex, model["textures"])
             if texture_file(resolved).is_file():
                 materials[texture_tile(resolved)] = {"texture": texture_tile(resolved),
                     "render_method": "alpha_test", "ambient_occlusion": False, "face_dimming": True}
+    if stain_adapted:
+        materials[FOOD_STAIN_TILE] = {**materials[FOOD_STAIN_SOURCE_TILE], "texture": FOOD_STAIN_TILE}
+        sources.append(texture_file(f"{NS}:block/food_plate_variants"))
     if not materials:
         materials[NS + "_block_order_machine"] = {"texture": NS + "_block_order_machine", "render_method": "alpha_test"}
     materials["*"] = copy.deepcopy(next(iter(materials.values())))
     operation = "Java elements, rescale, reflected coordinates and per-face UV conversion"
     if food_caps_adapted:
         operation += "; food cap Z inset 0.015px with side UV crop"
+    if stain_adapted:
+        operation += "; binary-alpha stain texels baked onto plate top, redundant 0.01563px-offset quad removed"
     GEOMETRY_SOURCES[identifier] = (list(dict.fromkeys(sources)), operation)
     return geometry(identifier, [{"name": "root", "pivot": [0, 0, 0], "cubes": cubes}]), materials
 
@@ -1290,8 +1382,32 @@ def separate_dishwasher_drawer_faces(g):
     if (outer["origin"] != [-5.75, 2.25, -5.03] or outer["size"] != [11.5, 8.5, 11]
             or inner["origin"] != [-5.25, 2.25, -4.03] or inner["size"] != [10.5, 8.5, 9]):
         raise ValueError("Changed dishwasher nested-drawer source contract")
+    door = next(b for b in g["minecraft:geometry"][0]["bones"] if b["name"] == "group5")["cubes"]
+    if (len(door) != 1 or door[0]["origin"] != [-6,2,-6.03]
+            or door[0]["size"] != [12,9,1]):
+        raise ValueError("Changed dishwasher door-back source contract")
     inner["origin"][1] += 0.015
     inner["size"][1] -= 0.03
+
+
+def separate_dishwasher_door_back(g):
+    """Retreat only the door's back after posing, preserving its front vertices.
+
+    The closed door back and basket front share Z=-5.03 in the source.
+    Alpha-tested holes can expose that opposing contact. Trimming after the
+    cuboid/shear fit preserves its front, pivot, rotation and all other bones.
+    Thickness and side-face texel density change by 1.5%; UV art is retained.
+    """
+    cubes = next(b for b in g["minecraft:geometry"][0]["bones"] if b["name"] == "group5")["cubes"]
+    if len(cubes) != 1:
+        raise ValueError("Changed posed dishwasher door-back contract")
+    thickness = cubes[0]["size"][2]
+    if not math.isfinite(thickness) or thickness <= 0:
+        raise ValueError("Changed posed dishwasher door-back contract")
+    shortened = round(thickness * .985, 6)
+    if not 0 < shortened < thickness:
+        raise ValueError("Door-back retreat lost positive finite clearance")
+    cubes[0]["size"][2] = shortened
 
 
 def simple_block(name, model, collision=True, selection=None):
@@ -1488,6 +1604,7 @@ def make_blocks():
             seconds = length if phase == 5 else length*frame/(16 if phase == 3 else 15)
             name = f"dishwasher_{phase}_{frame}"
             g = bake_pose(base, clip, seconds, f"geometry.{NS}.{name}")
+            separate_dishwasher_door_back(g)
             bones = g["minecraft:geometry"][0]["bones"]
             dishes = []
             for bone in bones:
@@ -1505,7 +1622,7 @@ def make_blocks():
             assert_block_bounds(g)
             identifier = emit_geo(name, g)
             for original in (source, animation_source):
-                record(original, RP / "models/blocks" / f"{name}.geo.json", f"Source phase {phase}, frame {frame}; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation")
+                record(original, RP / "models/blocks" / f"{name}.geo.json", f"Source phase {phase}, frame {frame}; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; door back retreated 1.5 percent after posing, front retained; cuboid descendant-shear approximation")
             condition = {"phase": phase} if phase in (0, 5) else {"phase": phase, "frame": frame}
             variants.append({"condition": state_condition(condition), "components": {"minecraft:geometry": {"identifier": identifier, "bone_visibility": visibility}}})
     block_definition("dishwasher", {"identifier": f"geometry.{NS}.dishwasher_0_0", "bone_visibility": visibility}, mats,
@@ -1789,7 +1906,7 @@ def write_entity(name, components, properties=None, events=None, groups=None):
 
 
 def make_dining_plate():
-    """Cosmetic meal entity with 41 exact stage shapes and one real atlas.
+    """Cosmetic meal entity with 41 source-derived stages and one real atlas.
 
     Entity render controllers bind one texture; block material_instance names
     cannot select different source PNGs there. Remap every face into the atlas
@@ -1829,6 +1946,8 @@ def make_dining_plate():
                 textures[texture_tile(name)] = texture_file(name)
         meshes.append(g["minecraft:geometry"][0])
     images = {name: Image.open(path).convert("RGBA") for name, path in sorted(textures.items())}
+    # Append the derived tile after original inputs, preserving their atlas offsets.
+    images[FOOD_STAIN_TILE] = food_stain_sheet(Image.open(texture_file(f"{NS}:block/food_plate_variants")))
     padding = 2
     raw_width = sum(img.width+2*padding for img in images.values())
     raw_height = max(img.height+2*padding for img in images.values())
@@ -1851,6 +1970,8 @@ def make_dining_plate():
     atlas.save(atlas_path)
     for name, path in textures.items():
         record(path, atlas_path, f"Exact source pixels placed in a single entity atlas; x,y,UV scales={mapping[name]}")
+    record(texture_file(f"{NS}:block/food_plate_variants"), atlas_path,
+           f"Exact binary-alpha plate/stain texels flattened into four padded tops; x,y,UV scales={mapping[FOOD_STAIN_TILE]}")
     for mesh in meshes:
         mesh["description"]["texture_width"] = width
         mesh["description"]["texture_height"] = height
@@ -1867,7 +1988,7 @@ def make_dining_plate():
     write_json(geometry_path, {"format_version": GEOMETRY_VERSION, "minecraft:geometry": rounded(meshes)})
     record(blockstates_source, geometry_path, "Original stage1..40 mapping; stage0 uses the original FoodPlatePlacedRenderer meal")
     for path in sorted({source for mesh in meshes for source in GEOMETRY_SOURCES[mesh['description']['identifier']][0]}):
-        record(path, geometry_path, "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas")
+        record(path, geometry_path, "Source food shapes with explicit cap clearance and stain-to-top flattening; original texels remapped to entity atlas")
     components = entity_base("ordertocook_dining_plate")
     components.update({
         "minecraft:collision_box": {"width": 0.01, "height": 0.01},
@@ -2254,6 +2375,11 @@ def make_textures_and_sounds():
         if rel.parts[0] in ("block", "item"):
             tex = str(rel.with_suffix(""))
             terrain[texture_tile(NS + ":" + tex)] = {"textures": f"textures/{NS}/{tex}"}
+    stain_source = texture_file(f"{NS}:block/food_plate_variants")
+    stain_dest = RP / f"textures/{NS}/block/food_plate_stains_baked.png"
+    food_stain_sheet(Image.open(stain_source)).save(stain_dest)
+    terrain[FOOD_STAIN_TILE] = {"textures": f"textures/{NS}/block/food_plate_stains_baked"}
+    record(stain_source, stain_dest, "Four padded plate tops from exact binary-alpha source texels; redundant stain depth layer removed")
     # Bedrock emissive materials use alpha to encode emissiveness. The Java
     # light layer is fully opaque at nine lamp texels; preserve its RGB/mask
     # and lower only those alpha values for the native emissive overlay.

@@ -1,0 +1,13 @@
+{
+  "geometry_count": 450,
+  "geometry_file_count": 410,
+  "baseline_coplanar_pairs": 2977,
+  "initial_repair_coplanar_pairs": 2774,
+  "final_coplanar_pairs": 2749,
+  "door_pair_removals": 25,
+  "stain_quad_removals": {
+    "block_stages": 39,
+    "legacy_entity_stages": 39
+  },
+  "limits": "Exact and finite coplanarity predicates only; no native flicker acceptance. Near-coplanar stains are handled separately by eliminating their competing quad."
+}

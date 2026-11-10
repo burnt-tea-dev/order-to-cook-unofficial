@@ -934,8 +934,10 @@ class ModelOverlapTests(unittest.TestCase):
                 b,e,a = lookup(baseline),lookup(expected),lookup(shipped)
                 with self.subTest(phase=phase, frame=frame):
                     self.assertEqual(a['group3'], e['group3'])
-                    for bone in ('group2','group5'):
-                        self.assertEqual(a[bone],b[bone])
+                    self.assertEqual(a['group2'],b['group2'])
+                    expected_door = copy.deepcopy(b['group5'])
+                    expected_door['cubes'][0]['size'][2] = round(expected_door['cubes'][0]['size'][2]*.985,6)
+                    self.assertEqual(a['group5'],expected_door)
                     old_outer,old_inner = b['group3']['cubes']
                     outer,inner = a['group3']['cubes']
                     self.assertEqual(outer,old_outer)
@@ -957,13 +959,18 @@ class ModelOverlapTests(unittest.TestCase):
             raw = [converter.java_cube(c,original['textures']) for c in original['elements']]
             repaired = copy.deepcopy(raw)
             self.assertTrue(converter.separate_food_cap_faces(f'ordertocook:block/food_plate_anim/{name}',repaired))
+            converter.flatten_food_plate_stain(f'ordertocook:block/food_plate_anim/{name}',repaired)
             block = converter.read_json(ROOT / f'runtime/RP/models/blocks/food_plate_display_{stage}.geo.json')['minecraft:geometry'][0]['bones'][0]['cubes']
             self.assertEqual(converter.rounded(repaired),block)
             actor = atlas[stage]['bones'][0]['cubes']
-            for i,(old,new) in enumerate(zip(raw,block)):
-                self.assertEqual({k:v for k,v in new.items() if k!='uv'}, {k:v for k,v in actor[i].items() if k!='uv'})
+            kept = [i for i in range(len(raw)) if i != 1]
+            for output_index, i in enumerate(kept):
+                old, new = raw[i], block[output_index]
+                self.assertEqual({k:v for k,v in new.items() if k!='uv'}, {k:v for k,v in actor[output_index].items() if k!='uv'})
                 if i not in indices:
-                    self.assertEqual(new,old)
+                    expected = copy.deepcopy(old)
+                    if i == 0: expected['uv']['up'] = new['uv']['up']
+                    self.assertEqual(new,expected)
                 else:
                     self.assertAlmostEqual(new['origin'][2]-old['origin'][2],.015)
                     self.assertAlmostEqual(old['size'][2]-new['size'][2],.03)
@@ -991,6 +998,38 @@ class ModelOverlapTests(unittest.TestCase):
             for face in c['uv'].values():face.pop('material_instance')
         converter.inset_cube_axis(raw[0],0,.0625)
         self.assertEqual(converter.rounded(raw),cubes)
+
+    def test_door_back_retreat_preserves_front_and_only_changes_posed_thickness(self):
+        source = converter.normalize_geo(converter.ASSETS / 'geo/block/dishwasher.geo.json', 'geometry.test')
+        bad = copy.deepcopy(source)
+        next(b for b in bad['minecraft:geometry'][0]['bones'] if b['name']=='group5')['cubes'][0]['origin'][2] += .1
+        with self.assertRaisesRegex(ValueError,'door-back source'):
+            converter.separate_dishwasher_drawer_faces(bad)
+        clips = converter.read_json(converter.ASSETS / 'animations/dishwasher.animation.json')['animations']
+        count = 0
+        for phase,name in {0:None,1:'empty_in',2:'dirty_in',3:'washing',4:'clear_out',5:'clear_out',6:'empty_out'}.items():
+            for frame in ([0] if phase in (0,5) else range(16)):
+                clip=clips[name] if name else {};length=clip.get('animation_length',0)
+                seconds=length if phase==5 else length*frame/(16 if phase==3 else 15)
+                original=converter.bake_pose(source,clip,seconds,'geometry.test')
+                repaired=copy.deepcopy(original);converter.separate_dishwasher_door_back(repaired)
+                before=next(b for b in original['minecraft:geometry'][0]['bones'] if b['name']=='group5')['cubes'][0]
+                after=next(b for b in repaired['minecraft:geometry'][0]['bones'] if b['name']=='group5')['cubes'][0]
+                with self.subTest(phase=phase,frame=frame):
+                    self.assertEqual(before['origin'],after['origin'])
+                    self.assertEqual(before['size'][:2],after['size'][:2])
+                    self.assertEqual(before['uv'],after['uv'])
+                    self.assertGreater(before['size'][2]-after['size'][2],.01)
+                    self.assertLess(before['size'][2]-after['size'][2],.02)
+                    after['size'][2]=before['size'][2]
+                    self.assertEqual(original,repaired,'only posed door thickness changes; all front vertices, poses and other cubes stay exact')
+                count+=1
+        self.assertEqual(count,82)
+        for thickness in (0, -1, 1e-8, float('nan'), float('inf')):
+            invalid = copy.deepcopy(source)
+            next(b for b in invalid['minecraft:geometry'][0]['bones'] if b['name']=='group5')['cubes'][0]['size'][2] = thickness
+            with self.subTest(invalid_thickness=thickness), self.assertRaises(ValueError):
+                converter.separate_dishwasher_door_back(invalid)
 
     def test_axis_inset_crops_signed_and_rotated_uvs_without_stretching(self):
         cube = {'origin':[0,0,0],'size':[2,2,2],'uv':{

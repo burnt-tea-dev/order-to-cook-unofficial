@@ -1,0 +1,115 @@
+dishwasher_0_0.geo.json 2 -> 1
+dishwasher_1_0.geo.json 1 -> 1
+dishwasher_1_1.geo.json 1 -> 1
+dishwasher_1_10.geo.json 1 -> 1
+dishwasher_1_11.geo.json 1 -> 1
+dishwasher_1_12.geo.json 2 -> 1
+dishwasher_1_13.geo.json 2 -> 1
+dishwasher_1_14.geo.json 2 -> 1
+dishwasher_1_15.geo.json 2 -> 1
+dishwasher_1_2.geo.json 1 -> 1
+dishwasher_1_3.geo.json 1 -> 1
+dishwasher_1_4.geo.json 1 -> 1
+dishwasher_1_5.geo.json 1 -> 1
+dishwasher_1_6.geo.json 1 -> 1
+dishwasher_1_7.geo.json 1 -> 1
+dishwasher_1_8.geo.json 1 -> 1
+dishwasher_1_9.geo.json 1 -> 1
+dishwasher_2_0.geo.json 1 -> 1
+dishwasher_2_1.geo.json 4 -> 4
+dishwasher_2_10.geo.json 4 -> 4
+dishwasher_2_11.geo.json 4 -> 4
+dishwasher_2_12.geo.json 4 -> 4
+dishwasher_2_13.geo.json 4 -> 4
+dishwasher_2_14.geo.json 5 -> 4
+dishwasher_2_15.geo.json 5 -> 4
+dishwasher_2_2.geo.json 4 -> 4
+dishwasher_2_3.geo.json 4 -> 4
+dishwasher_2_4.geo.json 4 -> 4
+dishwasher_2_5.geo.json 4 -> 4
+dishwasher_2_6.geo.json 4 -> 4
+dishwasher_2_7.geo.json 4 -> 4
+dishwasher_2_8.geo.json 4 -> 4
+dishwasher_2_9.geo.json 4 -> 4
+dishwasher_3_0.geo.json 2 -> 1
+dishwasher_3_1.geo.json 2 -> 1
+dishwasher_3_10.geo.json 2 -> 1
+dishwasher_3_11.geo.json 2 -> 1
+dishwasher_3_12.geo.json 2 -> 1
+dishwasher_3_13.geo.json 2 -> 1
+dishwasher_3_14.geo.json 2 -> 1
+dishwasher_3_15.geo.json 2 -> 1
+dishwasher_3_2.geo.json 2 -> 1
+dishwasher_3_3.geo.json 2 -> 1
+dishwasher_3_4.geo.json 2 -> 1
+dishwasher_3_5.geo.json 2 -> 1
+dishwasher_3_6.geo.json 2 -> 1
+dishwasher_3_7.geo.json 2 -> 1
+dishwasher_3_8.geo.json 2 -> 1
+dishwasher_3_9.geo.json 2 -> 1
+dishwasher_4_0.geo.json 5 -> 4
+dishwasher_4_1.geo.json 4 -> 4
+dishwasher_4_10.geo.json 4 -> 4
+dishwasher_4_11.geo.json 4 -> 4
+dishwasher_4_12.geo.json 4 -> 4
+dishwasher_4_13.geo.json 4 -> 4
+dishwasher_4_14.geo.json 4 -> 4
+dishwasher_4_15.geo.json 4 -> 4
+dishwasher_4_2.geo.json 4 -> 4
+dishwasher_4_3.geo.json 4 -> 4
+dishwasher_4_4.geo.json 4 -> 4
+dishwasher_4_5.geo.json 4 -> 4
+dishwasher_4_6.geo.json 4 -> 4
+dishwasher_4_7.geo.json 4 -> 4
+dishwasher_4_8.geo.json 1 -> 1
+dishwasher_4_9.geo.json 4 -> 4
+dishwasher_5_0.geo.json 4 -> 4
+dishwasher_6_0.geo.json 2 -> 1
+dishwasher_6_1.geo.json 1 -> 1
+dishwasher_6_10.geo.json 1 -> 1
+dishwasher_6_11.geo.json 1 -> 1
+dishwasher_6_12.geo.json 1 -> 1
+dishwasher_6_13.geo.json 1 -> 1
+dishwasher_6_14.geo.json 1 -> 1
+dishwasher_6_15.geo.json 1 -> 1
+dishwasher_6_2.geo.json 1 -> 1
+dishwasher_6_3.geo.json 1 -> 1
+dishwasher_6_4.geo.json 1 -> 1
+dishwasher_6_5.geo.json 1 -> 1
+dishwasher_6_6.geo.json 1 -> 1
+dishwasher_6_7.geo.json 1 -> 1
+dishwasher_6_8.geo.json 1 -> 1
+dishwasher_6_9.geo.json 1 -> 1
+{
+  "baseline_commit": "4cc310c57f0fa48cc450526458c666d3a30521af",
+  "geometry_file_count": 410,
+  "changed_files": 82,
+  "unchanged_geometry_files": 328,
+  "all_82_match_candidate_json": true,
+  "candidate_byte_matches": 82,
+  "actual_make_blocks_matches_runtime_states": 82,
+  "front_physical_vertices_exact": true,
+  "all_uv_pivots_rotations_exact": true,
+  "all_other_fields_exact": true,
+  "baseline_door_thickness_range": [
+    0.920012,
+    1.000178
+  ],
+  "reviewed_door_thickness_range": [
+    0.906212,
+    0.985175
+  ],
+  "door_retreat_range": [
+    0.013800000000000034,
+    0.015002999999999989
+  ],
+  "baseline_pair_coplanar_poses": 25,
+  "reviewed_pair_coplanar_poses": 0,
+  "baseline_dishwasher_coplanar_pairs": 200,
+  "reviewed_dishwasher_coplanar_pairs": 175,
+  "new_coplanar_pair_instances": 0,
+  "enlarged_coplanar_pair_instances": 0,
+  "removed_coplanar_pair_instances": 25,
+  "source_and_posed_negative_guard_probes_rejected": 8,
+  "limits": "Offline finite geometry verification. No game/editor/native checks, alpha-threshold acceptance, all-view or temporal flicker claim. Guard probes are synthetic inputs, not source data."
+}

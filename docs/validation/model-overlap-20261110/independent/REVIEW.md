@@ -1,5 +1,7 @@
 # Independent finite overlap review
 
+> Historical first-pass snapshot, local commit `4cc310c57f0fa48cc450526458c666d3a30521af`. Later door-back and near-coplanar stain-layer repairs are documented in the parent report. Its input hashes and counts bind only that snapshot, not the later candidate. The nonzero-alpha occlusion assumption below misses alpha-tested openings; zero same-facing records never established absence of the user-reported flicker.
+
 ## Verdict
 
 The five narrow repair families are supported by this review: exact duplicate chair leg, dishwasher drawer caps, meal stages 5/6 cap joins (both block and entity outputs), helmet visor joins, and the motorcycle chest connector. The reviewed working-tree snapshot retains 450 geometry identifiers in 410 files. Its positive-area coplanar candidate count falls from 2,977 to 2,774, not to zero. Coplanarity alone is not a defect.
