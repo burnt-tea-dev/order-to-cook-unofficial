@@ -607,7 +607,7 @@
       "source": "common/src/main/resources/assets/ordertocook/models/block/chair.json",
       "output": "RP/models/blocks/chair.geo.json",
       "sha256": "3411e8d52ff1eb9663aacdfe72ebe2ca879d43cdcc8608516feb4c9727d68c87",
-      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion; one exact duplicate chair leg removed"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
@@ -1339,13 +1339,13 @@
       "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_1.json",
       "output": "RP/models/blocks/food_plate_display_5.geo.json",
       "sha256": "e63950cb5b497bb060c4da16b2b2772346831c4087d0dc529366421bac99703c",
-      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion; food cap Z inset 0.015px with side UV crop"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_2.json",
       "output": "RP/models/blocks/food_plate_display_6.geo.json",
       "sha256": "62b5a756fca8fc36ceccf6227cd16b2a4518cf43f19d5e38e0b4d311e628f9e8",
-      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
+      "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion; food cap Z inset 0.015px with side UV crop"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_3.json",
@@ -3895,985 +3895,985 @@
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_0_0.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 0, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 0, frame 0; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_0_0.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 0, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 0, frame 0; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_0.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 1, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 0; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_0.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 1, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 0; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_1.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 1, frame 1; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 1; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_1.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 1, frame 1; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 1; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_2.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 1, frame 2; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 2; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_2.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 1, frame 2; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 2; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_3.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 1, frame 3; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 3; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_3.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 1, frame 3; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 3; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_4.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 1, frame 4; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 4; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_4.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 1, frame 4; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 4; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_5.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 1, frame 5; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 5; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_5.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 1, frame 5; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 5; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_6.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 1, frame 6; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 6; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_6.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 1, frame 6; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 6; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_7.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 1, frame 7; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 7; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_7.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 1, frame 7; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 7; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_8.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 1, frame 8; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 8; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_8.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 1, frame 8; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 8; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_9.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 1, frame 9; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 9; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_9.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 1, frame 9; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 9; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_10.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 1, frame 10; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 10; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_10.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 1, frame 10; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 10; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_11.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 1, frame 11; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 11; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_11.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 1, frame 11; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 11; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_12.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 1, frame 12; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 12; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_12.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 1, frame 12; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 12; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_13.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 1, frame 13; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 13; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_13.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 1, frame 13; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 13; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_14.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 1, frame 14; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 14; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_14.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 1, frame 14; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 14; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_1_15.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 1, frame 15; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 15; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_1_15.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 1, frame 15; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 1, frame 15; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_0.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 2, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 0; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_0.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 2, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 0; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_1.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 2, frame 1; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 1; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_1.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 2, frame 1; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 1; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_2.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 2, frame 2; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 2; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_2.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 2, frame 2; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 2; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_3.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 2, frame 3; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 3; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_3.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 2, frame 3; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 3; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_4.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 2, frame 4; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 4; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_4.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 2, frame 4; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 4; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_5.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 2, frame 5; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 5; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_5.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 2, frame 5; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 5; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_6.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 2, frame 6; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 6; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_6.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 2, frame 6; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 6; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_7.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 2, frame 7; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 7; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_7.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 2, frame 7; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 7; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_8.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 2, frame 8; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 8; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_8.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 2, frame 8; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 8; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_9.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 2, frame 9; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 9; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_9.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 2, frame 9; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 9; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_10.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 2, frame 10; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 10; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_10.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 2, frame 10; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 10; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_11.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 2, frame 11; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 11; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_11.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 2, frame 11; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 11; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_12.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 2, frame 12; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 12; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_12.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 2, frame 12; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 12; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_13.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 2, frame 13; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 13; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_13.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 2, frame 13; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 13; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_14.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 2, frame 14; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 14; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_14.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 2, frame 14; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 14; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_2_15.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 2, frame 15; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 15; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_2_15.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 2, frame 15; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 2, frame 15; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_0.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 3, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 0; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_0.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 3, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 0; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_1.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 3, frame 1; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 1; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_1.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 3, frame 1; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 1; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_2.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 3, frame 2; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 2; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_2.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 3, frame 2; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 2; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_3.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 3, frame 3; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 3; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_3.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 3, frame 3; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 3; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_4.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 3, frame 4; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 4; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_4.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 3, frame 4; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 4; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_5.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 3, frame 5; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 5; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_5.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 3, frame 5; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 5; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_6.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 3, frame 6; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 6; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_6.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 3, frame 6; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 6; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_7.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 3, frame 7; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 7; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_7.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 3, frame 7; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 7; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_8.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 3, frame 8; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 8; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_8.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 3, frame 8; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 8; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_9.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 3, frame 9; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 9; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_9.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 3, frame 9; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 9; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_10.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 3, frame 10; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 10; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_10.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 3, frame 10; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 10; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_11.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 3, frame 11; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 11; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_11.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 3, frame 11; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 11; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_12.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 3, frame 12; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 12; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_12.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 3, frame 12; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 12; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_13.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 3, frame 13; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 13; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_13.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 3, frame 13; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 13; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_14.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 3, frame 14; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 14; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_14.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 3, frame 14; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 14; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_3_15.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 3, frame 15; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 15; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_3_15.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 3, frame 15; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 3, frame 15; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_0.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 4, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 0; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_0.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 4, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 0; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_1.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 4, frame 1; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 1; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_1.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 4, frame 1; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 1; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_2.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 4, frame 2; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 2; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_2.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 4, frame 2; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 2; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_3.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 4, frame 3; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 3; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_3.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 4, frame 3; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 3; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_4.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 4, frame 4; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 4; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_4.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 4, frame 4; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 4; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_5.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 4, frame 5; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 5; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_5.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 4, frame 5; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 5; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_6.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 4, frame 6; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 6; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_6.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 4, frame 6; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 6; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_7.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 4, frame 7; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 7; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_7.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 4, frame 7; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 7; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_8.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 4, frame 8; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 8; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_8.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 4, frame 8; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 8; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_9.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 4, frame 9; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 9; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_9.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 4, frame 9; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 9; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_10.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 4, frame 10; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 10; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_10.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 4, frame 10; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 10; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_11.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 4, frame 11; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 11; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_11.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 4, frame 11; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 11; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_12.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 4, frame 12; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 12; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_12.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 4, frame 12; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 12; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_13.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 4, frame 13; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 13; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_13.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 4, frame 13; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 13; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_14.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 4, frame 14; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 14; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_14.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 4, frame 14; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 14; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_4_15.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 4, frame 15; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 15; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_4_15.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 4, frame 15; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 4, frame 15; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_5_0.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 5, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 5, frame 0; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_5_0.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 5, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 5, frame 0; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_6_0.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 6, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 0; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_6_0.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 6, frame 0; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 0; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_6_1.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 6, frame 1; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 1; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_6_1.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 6, frame 1; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 1; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_6_2.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 6, frame 2; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 2; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_6_2.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 6, frame 2; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 2; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_6_3.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 6, frame 3; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 3; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_6_3.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 6, frame 3; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 3; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_6_4.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 6, frame 4; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 4; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_6_4.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 6, frame 4; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 4; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_6_5.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 6, frame 5; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 5; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_6_5.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 6, frame 5; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 5; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_6_6.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 6, frame 6; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 6; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_6_6.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 6, frame 6; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 6; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_6_7.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 6, frame 7; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 7; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_6_7.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 6, frame 7; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 7; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_6_8.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 6, frame 8; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 8; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_6_8.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 6, frame 8; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 8; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_6_9.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 6, frame 9; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 9; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_6_9.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 6, frame 9; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 9; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_6_10.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 6, frame 10; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 10; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_6_10.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 6, frame 10; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 10; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_6_11.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 6, frame 11; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 11; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_6_11.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 6, frame 11; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 11; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_6_12.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 6, frame 12; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 12; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_6_12.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 6, frame 12; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 12; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_6_13.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 6, frame 13; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 13; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_6_13.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 6, frame 13; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 13; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_6_14.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 6, frame 14; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 14; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_6_14.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 6, frame 14; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 14; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/block/dishwasher.geo.json",
       "output": "RP/models/blocks/dishwasher_6_15.geo.json",
       "sha256": "79526ce66a13a6b8fb0f9e862ea58d6f85fc7a458e6a157713702bd969b4453d",
-      "operation": "Source phase 6, frame 15; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 15; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/animations/dishwasher.animation.json",
       "output": "RP/models/blocks/dishwasher_6_15.geo.json",
       "sha256": "b7ce56c88afed65ff4c912cf56b8297e0a227d84a69150932f9b43341cb572d5",
-      "operation": "Source phase 6, frame 15; per-axis squash, signed-cavity UV and count-selected plates; cuboid descendant-shear approximation"
+      "operation": "Source phase 6, frame 15; per-axis squash, signed-cavity UV and count-selected plates; inner drawer caps separated by 0.015px before posing; cuboid descendant-shear approximation"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/models/block/stove.json",
@@ -5185,13 +5185,13 @@
       "source": "common/src/main/resources/assets/ordertocook/models/item/helmet.json",
       "output": "RP/models/entity/helmet_visor.geo.json",
       "sha256": "d4971693a996e0e1fdb19fee27f809bc2f4dfc7a8b666a0caeed91e5f227ef7f",
-      "operation": "Head armor attachment; source shell/visor materials retained"
+      "operation": "Head armor attachment; source shell/visor materials retained; front visor joins side panels without overlap, UV cropped"
     },
     {
       "source": "forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/render/model/MotorcycleModel.java",
       "output": "RP/models/entity/motorcycle.geo.json",
       "sha256": "073119a7a31b8ac7d04e3d98fa41053eb0f80f853a680c036572055b7424ac32",
-      "operation": "CubeListBuilder hierarchy, PartPose and box-UV conversion"
+      "operation": "CubeListBuilder hierarchy, PartPose and box-UV conversion; chest connector Y+0.015px separates inflated bottom faces"
     },
     {
       "source": "common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json",

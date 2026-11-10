@@ -53,7 +53,7 @@ class DiningAssetTests(unittest.TestCase):
                   if "minecraft:geometry" in p["components"]}
         self.assertEqual(stages, {f"geometry.ordertocook.dining_plate_{i}" for i in range(1, 41)})
 
-    def test_all_food_stage_shapes_and_uvs_retain_the_java_source(self):
+    def test_food_stages_retain_source_except_explicit_cap_clearance_and_uv_crop(self):
         variants = read(ASSETS / "blockstates/food_plate_display.json")["variants"]
         meshes = read(ROOT / "runtime/RP/models/entity/dining_plate.geo.json")["minecraft:geometry"]
         for stage in range(1, 41):
@@ -62,12 +62,17 @@ class DiningAssetTests(unittest.TestCase):
                 model = read(ASSETS / "models" / (name + ".json"))
                 cubes = meshes[stage]["bones"][0]["cubes"]
                 self.assertEqual(len(cubes), len(model["elements"]))
-                for cube, original in zip(cubes, model["elements"]):
+                for index, (cube, original) in enumerate(zip(cubes, model["elements"])):
+                    inset = (stage == 5 and index in (3,4,5,6)) or (stage == 6 and index in (3,4))
+                    expected_from, expected_to = list(original['from']), list(original['to'])
+                    if inset:
+                        expected_from[2] += .015
+                        expected_to[2] -= .015
                     high_x = 8 - cube["origin"][0]
                     recovered_from = [high_x - cube["size"][0], cube["origin"][1], cube["origin"][2] + 8]
                     recovered_to = [high_x, cube["origin"][1] + cube["size"][1], cube["origin"][2] + cube["size"][2] + 8]
                     self.assertFalse(original.get("rotation", {}).get("rescale", False))
-                    for actual, expected in zip(recovered_from + recovered_to, original["from"] + original["to"]):
+                    for actual, expected in zip(recovered_from + recovered_to, expected_from + expected_to):
                         self.assertAlmostEqual(actual, expected, places=5)
                     # The source uses the 160px variant atlas. Recover its
                     # original 16-unit UVs from the remapped entity atlas.
@@ -77,7 +82,15 @@ class DiningAssetTests(unittest.TestCase):
                         start = [(converted["uv"][0] - 38) / 10, (converted["uv"][1] - 2) / 10]
                         end = [start[0] + converted["uv_size"][0] / 10, start[1] + converted["uv_size"][1] / 10]
                         recovered = end + start if direction in ("up", "down") else start + end
-                        for actual, expected in zip(recovered, face["uv"]):
+                        expected_uv = list(face['uv'])
+                        if inset and direction in ('east','west','up','down'):
+                            axis = 0 if direction in ('east','west') else 1
+                            if face.get('rotation',0) % 180:
+                                axis = 1-axis
+                            delta = (expected_uv[axis+2]-expected_uv[axis])*.015/2
+                            expected_uv[axis] += delta
+                            expected_uv[axis+2] -= delta
+                        for actual, expected in zip(recovered, expected_uv):
                             self.assertAlmostEqual(actual, expected, places=5)
                         self.assertEqual(converted.get("uv_rotation", 0), face.get("rotation", 0))
 

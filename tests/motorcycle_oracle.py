@@ -88,7 +88,16 @@ def bbrect(q):
  a,b=q[0];c,d=q[3];assert q==[[a,b],[c,b],[a,d],[c,d]]
  return [a,b,c,d]
 
-def compare(text, geometry):
+def compare(text, geometry, expected_offsets=None):
+ # Explicit caller-supplied model-space adaptations; default remains exact Java.
+ # Do not conceal them inside the source parser or physical-corner oracle.
+ if expected_offsets:
+  import copy
+  geometry=copy.deepcopy(geometry)
+  lookup={b['name']:b for b in geometry['minecraft:geometry'][0]['bones']}
+  for (bone,index),offset in expected_offsets.items():
+   cube=lookup[bone]['cubes'][index]
+   cube['origin']=[a-b for a,b in zip(cube['origin'],offset)]
  J=parse_java(text); B={b['name']:b for b in geometry['minecraft:geometry'][0]['bones']}
  assert list(J)==list(B), 'bone identities'
  corner_max=uv_max=0; bad_corners=bad_uv=0

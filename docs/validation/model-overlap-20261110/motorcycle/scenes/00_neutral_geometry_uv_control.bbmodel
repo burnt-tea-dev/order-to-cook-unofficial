@@ -1,0 +1,730 @@
+{
+  "meta": {
+    "format_version": "5.0",
+    "model_format": "free",
+    "box_uv": false
+  },
+  "name": "CONTROL | JAVA SOURCE X-20 | REPAIRED RP X+20",
+  "resolution": {
+    "width": 128,
+    "height": 128
+  },
+  "elements": [
+    {
+      "name": "JAVA SOURCE body cube0",
+      "uuid": "c69d392f-e17d-5f61-b2d6-1db32d34675b",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -24.0,
+        5.0,
+        -5.0
+      ],
+      "to": [
+        -16.0,
+        10.0,
+        3.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.01,
+      "faces": {
+        "up": {
+          "uv": [
+            53.0,
+            8.0,
+            61.0,
+            0.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            61.0,
+            0.0,
+            69.0,
+            8.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            53.0,
+            8.0,
+            45.0,
+            13.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            61.0,
+            8.0,
+            53.0,
+            13.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            69.0,
+            8.0,
+            61.0,
+            13.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            77.0,
+            8.0,
+            69.0,
+            13.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE cube_r1 cube0",
+      "uuid": "00ce3ad1-7382-56a4-bc35-a2fe788c1cd9",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -18.0,
+        5.0,
+        -10.0
+      ],
+      "to": [
+        -17.0,
+        13.0,
+        -7.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            69.0,
+            74.0,
+            70.0,
+            71.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            70.0,
+            71.0,
+            71.0,
+            74.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            69.0,
+            74.0,
+            66.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            70.0,
+            74.0,
+            69.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            73.0,
+            74.0,
+            70.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            74.0,
+            74.0,
+            73.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE chest cube2",
+      "uuid": "62cc3b64-88c6-57f1-ab28-564df7e9e3d4",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -26.0,
+        19.0,
+        14.0
+      ],
+      "to": [
+        -14.0,
+        27.0,
+        24.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            10.0,
+            32.0,
+            22.0,
+            22.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            22.0,
+            22.0,
+            34.0,
+            32.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            10.0,
+            32.0,
+            0.0,
+            40.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            22.0,
+            32.0,
+            10.0,
+            40.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            32.0,
+            32.0,
+            22.0,
+            40.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            44.0,
+            32.0,
+            32.0,
+            40.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP body cube0",
+      "uuid": "5e2d34eb-4197-5503-b83d-fbab48bd6483",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        16.0,
+        5.0,
+        -5.0
+      ],
+      "to": [
+        24.0,
+        10.0,
+        3.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.01,
+      "faces": {
+        "east": {
+          "uv": [
+            69.0,
+            8.0,
+            61.0,
+            13.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            53.0,
+            8.0,
+            45,
+            13.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            53.0,
+            8.0,
+            61.0,
+            0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            61.0,
+            0,
+            69.0,
+            8.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            77.0,
+            8.0,
+            69.0,
+            13.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            61.0,
+            8.0,
+            53.0,
+            13.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP cube_r1 cube0",
+      "uuid": "8682c2b7-35bf-5fd6-ad82-f4cbd0a30201",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        22.0,
+        5.0,
+        -10.0
+      ],
+      "to": [
+        23.0,
+        13.0,
+        -7.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            73.0,
+            74.0,
+            70.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            69.0,
+            74.0,
+            66,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            69.0,
+            74.0,
+            70.0,
+            71
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            70.0,
+            71,
+            71.0,
+            74.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            74.0,
+            74.0,
+            73.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            70.0,
+            74.0,
+            69.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP chest cube2",
+      "uuid": "798cc370-d1e0-5c1b-923e-4743d2adcbcd",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        14.0,
+        19.0,
+        14.0
+      ],
+      "to": [
+        26.0,
+        27.0,
+        24.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            32.0,
+            32.0,
+            22.0,
+            40.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            10.0,
+            32.0,
+            0,
+            40.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            10.0,
+            32.0,
+            22.0,
+            22
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            22.0,
+            22,
+            34.0,
+            32.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            44.0,
+            32.0,
+            32.0,
+            40.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            22.0,
+            32.0,
+            10.0,
+            40.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    }
+  ],
+  "groups": [
+    {
+      "uuid": "6b2b6bb3-8c68-578b-a81a-534bd34d2847",
+      "name": "JAVA SOURCE body",
+      "origin": [
+        -20.1667,
+        12.9547,
+        1.7935
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "2b37a7bc-64f4-5ce4-ac55-9d81edf59a4f",
+      "name": "JAVA SOURCE cube_r1",
+      "origin": [
+        -20.0,
+        27.0,
+        -10.0
+      ],
+      "rotation": [
+        22.001579333023614,
+        0.0,
+        -0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "8b6ed1af-36a3-5665-84d7-3f5de8362520",
+      "name": "JAVA SOURCE chest",
+      "origin": [
+        -22.0,
+        18.0,
+        22.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "5181e932-fbe2-5964-b680-955a8bb7ca48",
+      "name": "REPAIRED RP body",
+      "origin": [
+        19.8333,
+        12.9547,
+        1.7935
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "89999668-8374-5aa6-a32e-6304c851fe9d",
+      "name": "REPAIRED RP cube_r1",
+      "origin": [
+        20.0,
+        27.0,
+        -10.0
+      ],
+      "rotation": [
+        22.001579,
+        -0.0,
+        0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "b92ba628-8d94-5143-b624-e91f5a9a7696",
+      "name": "REPAIRED RP chest",
+      "origin": [
+        18.0,
+        18.0,
+        22.0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    }
+  ],
+  "outliner": [
+    {
+      "uuid": "6b2b6bb3-8c68-578b-a81a-534bd34d2847",
+      "isOpen": false,
+      "children": [
+        "c69d392f-e17d-5f61-b2d6-1db32d34675b",
+        {
+          "uuid": "2b37a7bc-64f4-5ce4-ac55-9d81edf59a4f",
+          "isOpen": false,
+          "children": [
+            "00ce3ad1-7382-56a4-bc35-a2fe788c1cd9"
+          ]
+        },
+        {
+          "uuid": "8b6ed1af-36a3-5665-84d7-3f5de8362520",
+          "isOpen": false,
+          "children": [
+            "62cc3b64-88c6-57f1-ab28-564df7e9e3d4"
+          ]
+        }
+      ]
+    },
+    {
+      "uuid": "5181e932-fbe2-5964-b680-955a8bb7ca48",
+      "isOpen": false,
+      "children": [
+        "5e2d34eb-4197-5503-b83d-fbab48bd6483",
+        {
+          "uuid": "89999668-8374-5aa6-a32e-6304c851fe9d",
+          "isOpen": false,
+          "children": [
+            "8682c2b7-35bf-5fd6-ad82-f4cbd0a30201"
+          ]
+        },
+        {
+          "uuid": "b92ba628-8d94-5143-b624-e91f5a9a7696",
+          "isOpen": false,
+          "children": [
+            "798cc370-d1e0-5c1b-923e-4743d2adcbcd"
+          ]
+        }
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "name": "motorcycle.png",
+      "id": "0",
+      "uuid": "804d3088-a3fe-5dcf-952d-1789ce94f406",
+      "width": 128,
+      "height": 128,
+      "uv_width": 128,
+      "uv_height": 128,
+      "render_mode": "default",
+      "render_sides": "auto",
+      "internal": true,
+      "saved": true,
+      "source": "data:image/png;base64,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"
+    }
+  ]
+}

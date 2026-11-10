@@ -14,6 +14,7 @@ from motorcycle_oracle import compare, parse_java, jfaces, jworld, rpfaces, bbre
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = Path('forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/render/model/MotorcycleModel.java')
 SOURCE = (ROOT / 'upstream/reference' / MODEL).read_text()
+EXPECTED_OFFSETS = {('chest',4):(0,.015,0)}
 GEOMETRY = ROOT / 'runtime/RP/models/entity/motorcycle.geo.json'
 
 
@@ -35,7 +36,7 @@ def regenerate(text):
 
 class MotorcycleMapping(unittest.TestCase):
     def assert_mapping(self, text, geometry):
-        report = compare(text, geometry)
+        report = compare(text, geometry, expected_offsets=EXPECTED_OFFSETS)
         self.assertLess(report['max_corner_distance'], 1e-5, report)
         self.assertEqual(report['max_uv_residual_pixels'], 0, report)
         return report
@@ -44,6 +45,18 @@ class MotorcycleMapping(unittest.TestCase):
         result = regenerate(SOURCE)
         self.assertEqual(result, json.loads(GEOMETRY.read_text()))
         print('REGENERATED SOURCE COMPARISON', self.assert_mapping(SOURCE, result))
+
+    def test_chest_clearance_is_an_explicit_translation_not_source_equality(self):
+        geometry = regenerate(SOURCE)
+        raw = compare(SOURCE,geometry)
+        self.assertEqual(raw['affected_corner_boxes'],1)
+        self.assertAlmostEqual(raw['max_corner_distance'],.015,places=8)
+        self.assertEqual(raw['max_uv_residual_pixels'],0)
+        self.assert_mapping(SOURCE,geometry)
+        connector = next(b for b in geometry['minecraft:geometry'][0]['bones'] if b['name']=='chest')['cubes'][4]
+        connector['origin'][1] -= .015
+        with self.assertRaises(AssertionError):
+            self.assert_mapping(SOURCE,geometry)
 
     def test_independent_hand_controls(self):
         java = parse_java(SOURCE)
@@ -64,7 +77,7 @@ class MotorcycleMapping(unittest.TestCase):
         for b in wrong_x['minecraft:geometry'][0]['bones']:
             if 'rotation' in b:
                 b['rotation'][0] *= -1
-        r = compare(SOURCE, wrong_x)
+        r = compare(SOURCE, wrong_x, expected_offsets=EXPECTED_OFFSETS)
         self.assertEqual(r['affected_corner_boxes'], 16)
         self.assertGreater(r['max_corner_distance'], 16)
         self.assertEqual(r['max_uv_residual_pixels'], 0)
@@ -72,7 +85,7 @@ class MotorcycleMapping(unittest.TestCase):
         for b in wrong_uv['minecraft:geometry'][0]['bones']:
             for c in b['cubes']:
                 c.pop('mirror', None)
-        r = compare(SOURCE, wrong_uv)
+        r = compare(SOURCE, wrong_uv, expected_offsets=EXPECTED_OFFSETS)
         self.assertEqual(r['uv_changed_boxes'], 41)
         self.assertEqual(r['max_uv_residual_pixels'], 34)
         self.assertLess(r['max_corner_distance'], 1e-5)

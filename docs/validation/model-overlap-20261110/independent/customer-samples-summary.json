@@ -1,0 +1,4561 @@
+{
+  "scope": "5 fractional endpoint/quartile samples per15 customer clips plus4.0s wherein duration; both rigs; query.target_x/y_rotation fixed0. No native playback or continuous-time completeness. Constant catmullrom tracks follow repository prior oracle assumptions.",
+  "full_output_sha256": "6406d04eafddf34a61bb1580c4ea2f32e86a7a03ec4349eeb6de929da76b8224",
+  "samples": [
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_1",
+      "seconds": 0.0,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_1",
+      "seconds": 1.125,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_1",
+      "seconds": 2.25,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_1",
+      "seconds": 3.375,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_1",
+      "seconds": 4.0,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_1",
+      "seconds": 4.5,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_2",
+      "seconds": 0.0,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_2",
+      "seconds": 1.125,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_2",
+      "seconds": 2.25,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_2",
+      "seconds": 3.375,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_2",
+      "seconds": 4.0,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_2",
+      "seconds": 4.5,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_3",
+      "seconds": 0.0,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_3",
+      "seconds": 1.125,
+      "coplanar_pairs": 26,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_3",
+      "seconds": 2.25,
+      "coplanar_pairs": 26,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_3",
+      "seconds": 3.375,
+      "coplanar_pairs": 26,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_3",
+      "seconds": 4.0,
+      "coplanar_pairs": 26,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_3",
+      "seconds": 4.5,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_4",
+      "seconds": 0.0,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_4",
+      "seconds": 1.1736,
+      "coplanar_pairs": 23,
+      "exposed_differing_pair_count": 2,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 0.8990918047288847,
+        "samples": 82,
+        "same_normal": true,
+        "both_nonzero": 82,
+        "different_rgba": 82,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "visible_normal_samples": 54,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.0,
+            21.9304375,
+            -1.9768125
+          ],
+          "a_rgba": [
+            4,
+            149,
+            149,
+            255
+          ],
+          "b_rgba": [
+            159,
+            99,
+            71,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_4",
+      "seconds": 2.3472,
+      "coplanar_pairs": 23,
+      "exposed_differing_pair_count": 1,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 1.041134101103493,
+        "samples": 93,
+        "same_normal": true,
+        "both_nonzero": 93,
+        "different_rgba": 93,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "visible_normal_samples": 50,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.0,
+            21.9304375,
+            -1.9768125
+          ],
+          "a_rgba": [
+            4,
+            149,
+            149,
+            255
+          ],
+          "b_rgba": [
+            159,
+            99,
+            71,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_4",
+      "seconds": 3.5208,
+      "coplanar_pairs": 20,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_4",
+      "seconds": 4.0,
+      "coplanar_pairs": 25,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_sit_4",
+      "seconds": 4.6944,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_1",
+      "seconds": 0.0,
+      "coplanar_pairs": 52,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_1",
+      "seconds": 1.125,
+      "coplanar_pairs": 52,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_1",
+      "seconds": 2.25,
+      "coplanar_pairs": 52,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_1",
+      "seconds": 3.375,
+      "coplanar_pairs": 52,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_1",
+      "seconds": 4.0,
+      "coplanar_pairs": 52,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_1",
+      "seconds": 4.5,
+      "coplanar_pairs": 52,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_2",
+      "seconds": 0.0,
+      "coplanar_pairs": 52,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_2",
+      "seconds": 1.125,
+      "coplanar_pairs": 52,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_2",
+      "seconds": 2.25,
+      "coplanar_pairs": 52,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_2",
+      "seconds": 3.375,
+      "coplanar_pairs": 52,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_2",
+      "seconds": 4.0,
+      "coplanar_pairs": 52,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_2",
+      "seconds": 4.5,
+      "coplanar_pairs": 52,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_3",
+      "seconds": 0.0,
+      "coplanar_pairs": 51,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_3",
+      "seconds": 1.125,
+      "coplanar_pairs": 48,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_3",
+      "seconds": 2.25,
+      "coplanar_pairs": 48,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_3",
+      "seconds": 3.375,
+      "coplanar_pairs": 48,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_3",
+      "seconds": 4.0,
+      "coplanar_pairs": 48,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_3",
+      "seconds": 4.5,
+      "coplanar_pairs": 52,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_4",
+      "seconds": 0.0,
+      "coplanar_pairs": 52,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_4",
+      "seconds": 1.1736,
+      "coplanar_pairs": 45,
+      "exposed_differing_pair_count": 2,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 0.8990918047288847,
+        "samples": 82,
+        "same_normal": true,
+        "both_nonzero": 82,
+        "different_rgba": 82,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "visible_normal_samples": 54,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.0,
+            21.9304375,
+            -1.9768125
+          ],
+          "a_rgba": [
+            4,
+            149,
+            149,
+            255
+          ],
+          "b_rgba": [
+            159,
+            99,
+            71,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_4",
+      "seconds": 2.3472,
+      "coplanar_pairs": 45,
+      "exposed_differing_pair_count": 1,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 1.041134101103493,
+        "samples": 93,
+        "same_normal": true,
+        "both_nonzero": 93,
+        "different_rgba": 93,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "visible_normal_samples": 50,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.0,
+            21.9304375,
+            -1.9768125
+          ],
+          "a_rgba": [
+            4,
+            149,
+            149,
+            255
+          ],
+          "b_rgba": [
+            159,
+            99,
+            71,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_4",
+      "seconds": 3.5208,
+      "coplanar_pairs": 42,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_4",
+      "seconds": 4.0,
+      "coplanar_pairs": 48,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc.customer_wait_4",
+      "seconds": 4.6944,
+      "coplanar_pairs": 52,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_boom",
+      "seconds": 0,
+      "coplanar_pairs": 23,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_boom",
+      "seconds": 1.5,
+      "coplanar_pairs": 24,
+      "exposed_differing_pair_count": 4,
+      "example": {
+        "a": [
+          "right_arm",
+          0,
+          "north"
+        ],
+        "b": [
+          "right_hand",
+          0,
+          "north"
+        ],
+        "area": 2.4785956210560354,
+        "samples": 415,
+        "same_normal": true,
+        "both_nonzero": 415,
+        "different_rgba": 415,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.6420698026212195,
+            23.80183152739438,
+            0.6104925365487647
+          ],
+          "a_rgba": [
+            0,
+            127,
+            127,
+            255
+          ],
+          "b_rgba": [
+            155,
+            99,
+            73,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_boom",
+      "seconds": 3.0,
+      "coplanar_pairs": 24,
+      "exposed_differing_pair_count": 6,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 0.9461553299417481,
+        "samples": 86,
+        "same_normal": true,
+        "both_nonzero": 86,
+        "different_rgba": 86,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "visible_normal_samples": 35,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.0,
+            21.42117106111204,
+            -2.8914501476561147
+          ],
+          "a_rgba": [
+            4,
+            149,
+            149,
+            255
+          ],
+          "b_rgba": [
+            158,
+            97,
+            67,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_boom",
+      "seconds": 4.0,
+      "coplanar_pairs": 24,
+      "exposed_differing_pair_count": 5,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 1.3255114440748936,
+        "samples": 119,
+        "same_normal": true,
+        "both_nonzero": 119,
+        "different_rgba": 119,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "visible_normal_samples": 55,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.0,
+            21.42117106111204,
+            -2.8914501476561147
+          ],
+          "a_rgba": [
+            4,
+            149,
+            149,
+            255
+          ],
+          "b_rgba": [
+            158,
+            97,
+            67,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_boom",
+      "seconds": 4.5,
+      "coplanar_pairs": 24,
+      "exposed_differing_pair_count": 5,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 1.2385657031450665,
+        "samples": 114,
+        "same_normal": true,
+        "both_nonzero": 114,
+        "different_rgba": 114,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "visible_normal_samples": 62,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.0,
+            21.42117106111204,
+            -2.8914501476561147
+          ],
+          "a_rgba": [
+            4,
+            149,
+            149,
+            255
+          ],
+          "b_rgba": [
+            158,
+            97,
+            67,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_boom",
+      "seconds": 6,
+      "coplanar_pairs": 0,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale",
+      "seconds": 0.0,
+      "coplanar_pairs": 23,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale",
+      "seconds": 1.375,
+      "coplanar_pairs": 24,
+      "exposed_differing_pair_count": 4,
+      "example": {
+        "a": [
+          "right_arm",
+          0,
+          "north"
+        ],
+        "b": [
+          "right_hand",
+          0,
+          "north"
+        ],
+        "area": 2.263781720713407,
+        "samples": 379,
+        "same_normal": true,
+        "both_nonzero": 379,
+        "different_rgba": 379,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.775844137212774,
+            23.869262209704722,
+            0.6620970825810663
+          ],
+          "a_rgba": [
+            0,
+            127,
+            127,
+            255
+          ],
+          "b_rgba": [
+            155,
+            99,
+            73,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale",
+      "seconds": 2.75,
+      "coplanar_pairs": 24,
+      "exposed_differing_pair_count": 6,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 0.5593508417974784,
+        "samples": 52,
+        "same_normal": true,
+        "both_nonzero": 52,
+        "different_rgba": 52,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "visible_normal_samples": 14,
+        "tested_normal_samples": 52,
+        "witness": {
+          "position": [
+            4.0,
+            21.42117106111204,
+            -2.8914501476561147
+          ],
+          "a_rgba": [
+            4,
+            149,
+            149,
+            255
+          ],
+          "b_rgba": [
+            159,
+            99,
+            71,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale",
+      "seconds": 4.0,
+      "coplanar_pairs": 24,
+      "exposed_differing_pair_count": 6,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 0.6305975777579673,
+        "samples": 58,
+        "same_normal": true,
+        "both_nonzero": 58,
+        "different_rgba": 58,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "visible_normal_samples": 14,
+        "tested_normal_samples": 58,
+        "witness": {
+          "position": [
+            4.0,
+            21.42117106111204,
+            -2.8914501476561147
+          ],
+          "a_rgba": [
+            4,
+            149,
+            149,
+            255
+          ],
+          "b_rgba": [
+            159,
+            99,
+            71,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale",
+      "seconds": 4.125,
+      "coplanar_pairs": 24,
+      "exposed_differing_pair_count": 6,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 0.5829468391721747,
+        "samples": 54,
+        "same_normal": true,
+        "both_nonzero": 54,
+        "different_rgba": 54,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "visible_normal_samples": 14,
+        "tested_normal_samples": 54,
+        "witness": {
+          "position": [
+            4.0,
+            21.42117106111204,
+            -2.8914501476561147
+          ],
+          "a_rgba": [
+            4,
+            149,
+            149,
+            255
+          ],
+          "b_rgba": [
+            159,
+            99,
+            71,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale",
+      "seconds": 5.5,
+      "coplanar_pairs": 0,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale_interrupt",
+      "seconds": 0.0,
+      "coplanar_pairs": 24,
+      "exposed_differing_pair_count": 4,
+      "example": {
+        "a": [
+          "right_arm",
+          0,
+          "north"
+        ],
+        "b": [
+          "right_hand",
+          0,
+          "north"
+        ],
+        "area": 6.920637921952276,
+        "samples": 1176,
+        "same_normal": true,
+        "both_nonzero": 1176,
+        "different_rgba": 1176,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.322460965818957,
+            21.284579577442827,
+            -3.477156681358232
+          ],
+          "a_rgba": [
+            3,
+            158,
+            158,
+            255
+          ],
+          "b_rgba": [
+            155,
+            99,
+            73,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale_interrupt",
+      "seconds": 0.125,
+      "coplanar_pairs": 24,
+      "exposed_differing_pair_count": 5,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 0.38649700452420704,
+        "samples": 37,
+        "same_normal": true,
+        "both_nonzero": 37,
+        "different_rgba": 37,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "visible_normal_samples": 5,
+        "tested_normal_samples": 37,
+        "witness": {
+          "position": [
+            4.0,
+            21.42117106111204,
+            -2.8914501476561147
+          ],
+          "a_rgba": [
+            4,
+            149,
+            149,
+            255
+          ],
+          "b_rgba": [
+            159,
+            99,
+            71,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale_interrupt",
+      "seconds": 0.25,
+      "coplanar_pairs": 24,
+      "exposed_differing_pair_count": 5,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 0.420554770594178,
+        "samples": 40,
+        "same_normal": true,
+        "both_nonzero": 40,
+        "different_rgba": 40,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "visible_normal_samples": 10,
+        "tested_normal_samples": 40,
+        "witness": {
+          "position": [
+            4.0,
+            21.42117106111204,
+            -2.8914501476561147
+          ],
+          "a_rgba": [
+            4,
+            149,
+            149,
+            255
+          ],
+          "b_rgba": [
+            159,
+            99,
+            71,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale_interrupt",
+      "seconds": 0.375,
+      "coplanar_pairs": 24,
+      "exposed_differing_pair_count": 5,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 0.11371193224038696,
+        "samples": 42,
+        "same_normal": true,
+        "both_nonzero": 42,
+        "different_rgba": 42,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "visible_normal_samples": 12,
+        "tested_normal_samples": 42,
+        "witness": {
+          "position": [
+            2.0,
+            15.71058553055602,
+            -1.4457250738280574
+          ],
+          "a_rgba": [
+            4,
+            149,
+            149,
+            255
+          ],
+          "b_rgba": [
+            159,
+            99,
+            71,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale_interrupt",
+      "seconds": 0.5,
+      "coplanar_pairs": 0,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_sittake",
+      "seconds": 0,
+      "coplanar_pairs": 23,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_sittake",
+      "seconds": 0.5,
+      "coplanar_pairs": 23,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_sittake",
+      "seconds": 1.0,
+      "coplanar_pairs": 23,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_sittake",
+      "seconds": 1.5,
+      "coplanar_pairs": 23,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_sittake",
+      "seconds": 2,
+      "coplanar_pairs": 0,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_standtake",
+      "seconds": 0,
+      "coplanar_pairs": 44,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_standtake",
+      "seconds": 0.75,
+      "coplanar_pairs": 31,
+      "exposed_differing_pair_count": 8,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "north"
+        ],
+        "b": [
+          "right_leg",
+          0,
+          "north"
+        ],
+        "area": 0.3402135611165349,
+        "samples": 12,
+        "same_normal": true,
+        "both_nonzero": 12,
+        "different_rgba": 10,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "visible_normal_samples": 10,
+        "tested_normal_samples": 10,
+        "witness": {
+          "position": [
+            3.0463750000000003,
+            14.8959375,
+            -2.0
+          ],
+          "a_rgba": [
+            65,
+            53,
+            155,
+            255
+          ],
+          "b_rgba": [
+            70,
+            58,
+            165,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_standtake",
+      "seconds": 1.5,
+      "coplanar_pairs": 31,
+      "exposed_differing_pair_count": 8,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "north"
+        ],
+        "b": [
+          "right_leg",
+          0,
+          "north"
+        ],
+        "area": 0.580934722366159,
+        "samples": 24,
+        "same_normal": true,
+        "both_nonzero": 24,
+        "different_rgba": 19,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "visible_normal_samples": 19,
+        "tested_normal_samples": 19,
+        "witness": {
+          "position": [
+            3.0463750000000003,
+            17.0274375,
+            -2.0
+          ],
+          "a_rgba": [
+            65,
+            53,
+            155,
+            255
+          ],
+          "b_rgba": [
+            70,
+            58,
+            165,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_standtake",
+      "seconds": 2.25,
+      "coplanar_pairs": 44,
+      "exposed_differing_pair_count": 4,
+      "example": {
+        "a": [
+          "right_arm",
+          0,
+          "north"
+        ],
+        "b": [
+          "right_hand",
+          0,
+          "north"
+        ],
+        "area": 3.7902049232337998,
+        "samples": 640,
+        "same_normal": true,
+        "both_nonzero": 640,
+        "different_rgba": 640,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.121798934887581,
+            22.489582361088043,
+            -4.7321163205083145
+          ],
+          "a_rgba": [
+            0,
+            127,
+            127,
+            255
+          ],
+          "b_rgba": [
+            155,
+            99,
+            73,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_standtake",
+      "seconds": 3,
+      "coplanar_pairs": 0,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_sitspawn",
+      "seconds": 0.0,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_sitspawn",
+      "seconds": 0.145825,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_sitspawn",
+      "seconds": 0.29165,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_sitspawn",
+      "seconds": 0.437475,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_sitspawn",
+      "seconds": 0.5833,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_standspawn",
+      "seconds": 0.0,
+      "coplanar_pairs": 52,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_standspawn",
+      "seconds": 0.145825,
+      "coplanar_pairs": 52,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_standspawn",
+      "seconds": 0.29165,
+      "coplanar_pairs": 52,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_standspawn",
+      "seconds": 0.437475,
+      "coplanar_pairs": 52,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer",
+      "clip": "animation.ordertocook.npc_transition.npc_standspawn",
+      "seconds": 0.5833,
+      "coplanar_pairs": 52,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_1",
+      "seconds": 0.0,
+      "coplanar_pairs": 35,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.186526802123697,
+        "samples": 1045,
+        "same_normal": true,
+        "both_nonzero": 1045,
+        "different_rgba": 943,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.91986725107073,
+            11.467602349789345,
+            -5.189506046414749
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_1",
+      "seconds": 1.125,
+      "coplanar_pairs": 35,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.713871911474459,
+        "samples": 1137,
+        "same_normal": true,
+        "both_nonzero": 1137,
+        "different_rgba": 1085,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.968705807821472,
+            11.5057243842473,
+            -5.47087647549942
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_1",
+      "seconds": 2.25,
+      "coplanar_pairs": 35,
+      "exposed_differing_pair_count": 2,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 7.397637854369652,
+        "samples": 1251,
+        "same_normal": true,
+        "both_nonzero": 1251,
+        "different_rgba": 1235,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            5.001264851711093,
+            11.427368792359358,
+            -5.649378043786323
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_1",
+      "seconds": 3.375,
+      "coplanar_pairs": 35,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.713871911474459,
+        "samples": 1137,
+        "same_normal": true,
+        "both_nonzero": 1137,
+        "different_rgba": 1085,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.968705807821472,
+            11.5057243842473,
+            -5.47087647549942
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_1",
+      "seconds": 4.0,
+      "coplanar_pairs": 35,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.921938316337657,
+        "samples": 1171,
+        "same_normal": true,
+        "both_nonzero": 1171,
+        "different_rgba": 1136,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.984985327949545,
+            11.497677672761302,
+            -5.5628508749737335
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_1",
+      "seconds": 4.5,
+      "coplanar_pairs": 35,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.186526802123697,
+        "samples": 1045,
+        "same_normal": true,
+        "both_nonzero": 1045,
+        "different_rgba": 943,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.91986725107073,
+            11.467602349789345,
+            -5.189506046414749
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_2",
+      "seconds": 0.0,
+      "coplanar_pairs": 35,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.186526802123697,
+        "samples": 1045,
+        "same_normal": true,
+        "both_nonzero": 1045,
+        "different_rgba": 943,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.91986725107073,
+            11.467602349789345,
+            -5.189506046414749
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_2",
+      "seconds": 1.125,
+      "coplanar_pairs": 35,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.713871911474459,
+        "samples": 1137,
+        "same_normal": true,
+        "both_nonzero": 1137,
+        "different_rgba": 1085,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.968705807821472,
+            11.5057243842473,
+            -5.47087647549942
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_2",
+      "seconds": 2.25,
+      "coplanar_pairs": 35,
+      "exposed_differing_pair_count": 2,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 7.397637854369652,
+        "samples": 1251,
+        "same_normal": true,
+        "both_nonzero": 1251,
+        "different_rgba": 1235,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            5.001264851711093,
+            11.427368792359358,
+            -5.649378043786323
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_2",
+      "seconds": 3.375,
+      "coplanar_pairs": 35,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.713871911474459,
+        "samples": 1137,
+        "same_normal": true,
+        "both_nonzero": 1137,
+        "different_rgba": 1085,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.968705807821472,
+            11.5057243842473,
+            -5.47087647549942
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_2",
+      "seconds": 4.0,
+      "coplanar_pairs": 35,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.921938316337657,
+        "samples": 1171,
+        "same_normal": true,
+        "both_nonzero": 1171,
+        "different_rgba": 1136,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.984985327949545,
+            11.497677672761302,
+            -5.5628508749737335
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_2",
+      "seconds": 4.5,
+      "coplanar_pairs": 35,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.186526802123697,
+        "samples": 1045,
+        "same_normal": true,
+        "both_nonzero": 1045,
+        "different_rgba": 943,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.91986725107073,
+            11.467602349789345,
+            -5.189506046414749
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_3",
+      "seconds": 0.0,
+      "coplanar_pairs": 35,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.186526802123697,
+        "samples": 1045,
+        "same_normal": true,
+        "both_nonzero": 1045,
+        "different_rgba": 943,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.91986725107073,
+            11.467602349789345,
+            -5.189506046414749
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_3",
+      "seconds": 1.125,
+      "coplanar_pairs": 32,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.713871911474459,
+        "samples": 1137,
+        "same_normal": true,
+        "both_nonzero": 1137,
+        "different_rgba": 1085,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.968705807821472,
+            11.5057243842473,
+            -5.47087647549942
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_3",
+      "seconds": 2.25,
+      "coplanar_pairs": 32,
+      "exposed_differing_pair_count": 2,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 7.397637854369652,
+        "samples": 1251,
+        "same_normal": true,
+        "both_nonzero": 1251,
+        "different_rgba": 1235,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            5.001264851711093,
+            11.427368792359358,
+            -5.649378043786323
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_3",
+      "seconds": 3.375,
+      "coplanar_pairs": 32,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.713871911474459,
+        "samples": 1137,
+        "same_normal": true,
+        "both_nonzero": 1137,
+        "different_rgba": 1085,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.968705807821472,
+            11.5057243842473,
+            -5.47087647549942
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_3",
+      "seconds": 4.0,
+      "coplanar_pairs": 32,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.921938316337657,
+        "samples": 1171,
+        "same_normal": true,
+        "both_nonzero": 1171,
+        "different_rgba": 1136,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.984985327949545,
+            11.497677672761302,
+            -5.5628508749737335
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_3",
+      "seconds": 4.5,
+      "coplanar_pairs": 35,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.186526802123697,
+        "samples": 1045,
+        "same_normal": true,
+        "both_nonzero": 1045,
+        "different_rgba": 943,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.91986725107073,
+            11.467602349789345,
+            -5.189506046414749
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_4",
+      "seconds": 0.0,
+      "coplanar_pairs": 35,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.186526802123697,
+        "samples": 1045,
+        "same_normal": true,
+        "both_nonzero": 1045,
+        "different_rgba": 943,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.91986725107073,
+            11.467602349789345,
+            -5.189506046414749
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_4",
+      "seconds": 1.1736,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 5,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 0.8990918047288847,
+        "samples": 82,
+        "same_normal": true,
+        "both_nonzero": 82,
+        "different_rgba": 82,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 54,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.0,
+            21.9304375,
+            -1.9768125
+          ],
+          "a_rgba": [
+            140,
+            190,
+            138,
+            255
+          ],
+          "b_rgba": [
+            223,
+            196,
+            162,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_4",
+      "seconds": 2.3472,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 1.041134101103493,
+        "samples": 93,
+        "same_normal": true,
+        "both_nonzero": 93,
+        "different_rgba": 93,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 50,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.0,
+            21.9304375,
+            -1.9768125
+          ],
+          "a_rgba": [
+            140,
+            190,
+            138,
+            255
+          ],
+          "b_rgba": [
+            223,
+            196,
+            162,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_4",
+      "seconds": 3.5208,
+      "coplanar_pairs": 26,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.958342885331843,
+        "samples": 1178,
+        "same_normal": true,
+        "both_nonzero": 1178,
+        "different_rgba": 1146,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.984985327949545,
+            11.497677672761302,
+            -5.5628508749737335
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_4",
+      "seconds": 4.0,
+      "coplanar_pairs": 31,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.921938316337657,
+        "samples": 1171,
+        "same_normal": true,
+        "both_nonzero": 1171,
+        "different_rgba": 1136,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.984985327949545,
+            11.497677672761302,
+            -5.5628508749737335
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_sit_4",
+      "seconds": 4.6944,
+      "coplanar_pairs": 35,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.186526802123697,
+        "samples": 1045,
+        "same_normal": true,
+        "both_nonzero": 1045,
+        "different_rgba": 943,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.91986725107073,
+            11.467602349789345,
+            -5.189506046414749
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_1",
+      "seconds": 0.0,
+      "coplanar_pairs": 63,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_1",
+      "seconds": 1.125,
+      "coplanar_pairs": 63,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_1",
+      "seconds": 2.25,
+      "coplanar_pairs": 63,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_1",
+      "seconds": 3.375,
+      "coplanar_pairs": 63,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_1",
+      "seconds": 4.0,
+      "coplanar_pairs": 63,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_1",
+      "seconds": 4.5,
+      "coplanar_pairs": 63,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_2",
+      "seconds": 0.0,
+      "coplanar_pairs": 63,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_2",
+      "seconds": 1.125,
+      "coplanar_pairs": 63,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_2",
+      "seconds": 2.25,
+      "coplanar_pairs": 63,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_2",
+      "seconds": 3.375,
+      "coplanar_pairs": 63,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_2",
+      "seconds": 4.0,
+      "coplanar_pairs": 63,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_2",
+      "seconds": 4.5,
+      "coplanar_pairs": 63,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_3",
+      "seconds": 0.0,
+      "coplanar_pairs": 62,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_3",
+      "seconds": 1.125,
+      "coplanar_pairs": 59,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_3",
+      "seconds": 2.25,
+      "coplanar_pairs": 59,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_3",
+      "seconds": 3.375,
+      "coplanar_pairs": 59,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_3",
+      "seconds": 4.0,
+      "coplanar_pairs": 59,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_3",
+      "seconds": 4.5,
+      "coplanar_pairs": 63,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_4",
+      "seconds": 0.0,
+      "coplanar_pairs": 63,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_4",
+      "seconds": 1.1736,
+      "coplanar_pairs": 56,
+      "exposed_differing_pair_count": 2,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 0.8990918047288847,
+        "samples": 82,
+        "same_normal": true,
+        "both_nonzero": 82,
+        "different_rgba": 82,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 54,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.0,
+            21.9304375,
+            -1.9768125
+          ],
+          "a_rgba": [
+            140,
+            190,
+            138,
+            255
+          ],
+          "b_rgba": [
+            223,
+            196,
+            162,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_4",
+      "seconds": 2.3472,
+      "coplanar_pairs": 56,
+      "exposed_differing_pair_count": 1,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 1.041134101103493,
+        "samples": 93,
+        "same_normal": true,
+        "both_nonzero": 93,
+        "different_rgba": 93,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 50,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.0,
+            21.9304375,
+            -1.9768125
+          ],
+          "a_rgba": [
+            140,
+            190,
+            138,
+            255
+          ],
+          "b_rgba": [
+            223,
+            196,
+            162,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_4",
+      "seconds": 3.5208,
+      "coplanar_pairs": 53,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_4",
+      "seconds": 4.0,
+      "coplanar_pairs": 59,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc.customer_wait_4",
+      "seconds": 4.6944,
+      "coplanar_pairs": 63,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_boom",
+      "seconds": 0,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.186526802123697,
+        "samples": 1045,
+        "same_normal": true,
+        "both_nonzero": 1045,
+        "different_rgba": 943,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.91986725107073,
+            11.467602349789345,
+            -5.189506046414749
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_boom",
+      "seconds": 1.5,
+      "coplanar_pairs": 30,
+      "exposed_differing_pair_count": 7,
+      "example": {
+        "a": [
+          "right_arm",
+          0,
+          "north"
+        ],
+        "b": [
+          "right_hand",
+          0,
+          "north"
+        ],
+        "area": 2.278483839254834,
+        "samples": 510,
+        "same_normal": true,
+        "both_nonzero": 510,
+        "different_rgba": 510,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.636360995768333,
+            23.802822853752474,
+            0.6103177334200562
+          ],
+          "a_rgba": [
+            148,
+            200,
+            146,
+            255
+          ],
+          "b_rgba": [
+            148,
+            150,
+            107,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_boom",
+      "seconds": 3.0,
+      "coplanar_pairs": 30,
+      "exposed_differing_pair_count": 9,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 0.9461553299417481,
+        "samples": 86,
+        "same_normal": true,
+        "both_nonzero": 86,
+        "different_rgba": 86,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 35,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.0,
+            21.42117106111204,
+            -2.8914501476561147
+          ],
+          "a_rgba": [
+            140,
+            190,
+            138,
+            255
+          ],
+          "b_rgba": [
+            235,
+            208,
+            176,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_boom",
+      "seconds": 4.0,
+      "coplanar_pairs": 30,
+      "exposed_differing_pair_count": 9,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 1.3255114440748936,
+        "samples": 119,
+        "same_normal": true,
+        "both_nonzero": 119,
+        "different_rgba": 119,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 55,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.0,
+            21.42117106111204,
+            -2.8914501476561147
+          ],
+          "a_rgba": [
+            140,
+            190,
+            138,
+            255
+          ],
+          "b_rgba": [
+            235,
+            208,
+            176,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_boom",
+      "seconds": 4.5,
+      "coplanar_pairs": 30,
+      "exposed_differing_pair_count": 9,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 1.2385657031450665,
+        "samples": 114,
+        "same_normal": true,
+        "both_nonzero": 114,
+        "different_rgba": 114,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 62,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.0,
+            21.42117106111204,
+            -2.8914501476561147
+          ],
+          "a_rgba": [
+            140,
+            190,
+            138,
+            255
+          ],
+          "b_rgba": [
+            235,
+            208,
+            176,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_boom",
+      "seconds": 6,
+      "coplanar_pairs": 0,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale",
+      "seconds": 0.0,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.186526802123697,
+        "samples": 1045,
+        "same_normal": true,
+        "both_nonzero": 1045,
+        "different_rgba": 943,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.91986725107073,
+            11.467602349789345,
+            -5.189506046414749
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale",
+      "seconds": 1.375,
+      "coplanar_pairs": 30,
+      "exposed_differing_pair_count": 7,
+      "example": {
+        "a": [
+          "right_arm",
+          0,
+          "north"
+        ],
+        "b": [
+          "right_hand",
+          0,
+          "north"
+        ],
+        "area": 2.0820502947414896,
+        "samples": 465,
+        "same_normal": true,
+        "both_nonzero": 465,
+        "different_rgba": 465,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.7701713352068635,
+            23.87043707829135,
+            0.6618902953195794
+          ],
+          "a_rgba": [
+            148,
+            200,
+            146,
+            255
+          ],
+          "b_rgba": [
+            148,
+            150,
+            107,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale",
+      "seconds": 2.75,
+      "coplanar_pairs": 30,
+      "exposed_differing_pair_count": 9,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 0.5593508417974784,
+        "samples": 52,
+        "same_normal": true,
+        "both_nonzero": 52,
+        "different_rgba": 52,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 14,
+        "tested_normal_samples": 52,
+        "witness": {
+          "position": [
+            4.0,
+            21.42117106111204,
+            -2.8914501476561147
+          ],
+          "a_rgba": [
+            140,
+            190,
+            138,
+            255
+          ],
+          "b_rgba": [
+            223,
+            196,
+            162,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale",
+      "seconds": 4.0,
+      "coplanar_pairs": 30,
+      "exposed_differing_pair_count": 9,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 0.6305975777579673,
+        "samples": 58,
+        "same_normal": true,
+        "both_nonzero": 58,
+        "different_rgba": 58,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 14,
+        "tested_normal_samples": 58,
+        "witness": {
+          "position": [
+            4.0,
+            21.42117106111204,
+            -2.8914501476561147
+          ],
+          "a_rgba": [
+            140,
+            190,
+            138,
+            255
+          ],
+          "b_rgba": [
+            223,
+            196,
+            162,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale",
+      "seconds": 4.125,
+      "coplanar_pairs": 30,
+      "exposed_differing_pair_count": 9,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 0.5829468391721747,
+        "samples": 54,
+        "same_normal": true,
+        "both_nonzero": 54,
+        "different_rgba": 54,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 14,
+        "tested_normal_samples": 54,
+        "witness": {
+          "position": [
+            4.0,
+            21.42117106111204,
+            -2.8914501476561147
+          ],
+          "a_rgba": [
+            140,
+            190,
+            138,
+            255
+          ],
+          "b_rgba": [
+            223,
+            196,
+            162,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale",
+      "seconds": 5.5,
+      "coplanar_pairs": 0,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale_interrupt",
+      "seconds": 0.0,
+      "coplanar_pairs": 30,
+      "exposed_differing_pair_count": 6,
+      "example": {
+        "a": [
+          "right_arm",
+          0,
+          "north"
+        ],
+        "b": [
+          "right_hand",
+          0,
+          "north"
+        ],
+        "area": 6.352934165308922,
+        "samples": 1441,
+        "same_normal": true,
+        "both_nonzero": 1441,
+        "different_rgba": 1441,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.314627356047278,
+            21.257562917815992,
+            -3.5667747650261967
+          ],
+          "a_rgba": [
+            144,
+            194,
+            142,
+            255
+          ],
+          "b_rgba": [
+            239,
+            218,
+            191,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale_interrupt",
+      "seconds": 0.125,
+      "coplanar_pairs": 30,
+      "exposed_differing_pair_count": 7,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 0.38649700452420704,
+        "samples": 37,
+        "same_normal": true,
+        "both_nonzero": 37,
+        "different_rgba": 37,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 5,
+        "tested_normal_samples": 37,
+        "witness": {
+          "position": [
+            4.0,
+            21.42117106111204,
+            -2.8914501476561147
+          ],
+          "a_rgba": [
+            140,
+            190,
+            138,
+            255
+          ],
+          "b_rgba": [
+            223,
+            196,
+            162,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale_interrupt",
+      "seconds": 0.25,
+      "coplanar_pairs": 30,
+      "exposed_differing_pair_count": 8,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 0.420554770594178,
+        "samples": 40,
+        "same_normal": true,
+        "both_nonzero": 40,
+        "different_rgba": 40,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 10,
+        "tested_normal_samples": 40,
+        "witness": {
+          "position": [
+            4.0,
+            21.42117106111204,
+            -2.8914501476561147
+          ],
+          "a_rgba": [
+            140,
+            190,
+            138,
+            255
+          ],
+          "b_rgba": [
+            223,
+            196,
+            162,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale_interrupt",
+      "seconds": 0.375,
+      "coplanar_pairs": 30,
+      "exposed_differing_pair_count": 8,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "east"
+        ],
+        "b": [
+          "head",
+          0,
+          "east"
+        ],
+        "area": 0.11371193224038696,
+        "samples": 42,
+        "same_normal": true,
+        "both_nonzero": 42,
+        "different_rgba": 42,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 12,
+        "tested_normal_samples": 42,
+        "witness": {
+          "position": [
+            2.0,
+            15.71058553055602,
+            -1.4457250738280574
+          ],
+          "a_rgba": [
+            140,
+            190,
+            138,
+            255
+          ],
+          "b_rgba": [
+            223,
+            196,
+            162,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_eat_scale_interrupt",
+      "seconds": 0.5,
+      "coplanar_pairs": 0,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_sittake",
+      "seconds": 0,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.186526802123697,
+        "samples": 1045,
+        "same_normal": true,
+        "both_nonzero": 1045,
+        "different_rgba": 943,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.91986725107073,
+            11.467602349789345,
+            -5.189506046414749
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_sittake",
+      "seconds": 0.5,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.921938316337657,
+        "samples": 1171,
+        "same_normal": true,
+        "both_nonzero": 1171,
+        "different_rgba": 1136,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.984985327949545,
+            11.497677672761302,
+            -5.5628508749737335
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_sittake",
+      "seconds": 1.0,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.921938316337657,
+        "samples": 1171,
+        "same_normal": true,
+        "both_nonzero": 1171,
+        "different_rgba": 1136,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.984985327949545,
+            11.497677672761302,
+            -5.5628508749737335
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_sittake",
+      "seconds": 1.5,
+      "coplanar_pairs": 29,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.186526802123697,
+        "samples": 1045,
+        "same_normal": true,
+        "both_nonzero": 1045,
+        "different_rgba": 943,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.91986725107073,
+            11.467602349789345,
+            -5.189506046414749
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_sittake",
+      "seconds": 2,
+      "coplanar_pairs": 0,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_standtake",
+      "seconds": 0,
+      "coplanar_pairs": 55,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_standtake",
+      "seconds": 0.75,
+      "coplanar_pairs": 37,
+      "exposed_differing_pair_count": 8,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "north"
+        ],
+        "b": [
+          "right_leg",
+          0,
+          "north"
+        ],
+        "area": 0.3402135611165349,
+        "samples": 12,
+        "same_normal": true,
+        "both_nonzero": 12,
+        "different_rgba": 12,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 12,
+        "tested_normal_samples": 12,
+        "witness": {
+          "position": [
+            2.7963750000000003,
+            14.8959375,
+            -2.0
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            114,
+            78,
+            54,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_standtake",
+      "seconds": 1.5,
+      "coplanar_pairs": 37,
+      "exposed_differing_pair_count": 8,
+      "example": {
+        "a": [
+          "torso",
+          1,
+          "north"
+        ],
+        "b": [
+          "right_leg",
+          0,
+          "north"
+        ],
+        "area": 0.580934722366159,
+        "samples": 24,
+        "same_normal": true,
+        "both_nonzero": 24,
+        "different_rgba": 24,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 24,
+        "tested_normal_samples": 24,
+        "witness": {
+          "position": [
+            2.4213750000000003,
+            16.8399375,
+            -2.0
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            114,
+            78,
+            54,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_standtake",
+      "seconds": 2.25,
+      "coplanar_pairs": 55,
+      "exposed_differing_pair_count": 4,
+      "example": {
+        "a": [
+          "right_arm",
+          0,
+          "north"
+        ],
+        "b": [
+          "right_hand",
+          0,
+          "north"
+        ],
+        "area": 3.4699573080092083,
+        "samples": 783,
+        "same_normal": true,
+        "both_nonzero": 783,
+        "different_rgba": 783,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.116056766132453,
+            22.4903754667072,
+            -4.732163662140372
+          ],
+          "a_rgba": [
+            148,
+            200,
+            146,
+            255
+          ],
+          "b_rgba": [
+            239,
+            218,
+            191,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_standtake",
+      "seconds": 3,
+      "coplanar_pairs": 0,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_sitspawn",
+      "seconds": 0.0,
+      "coplanar_pairs": 35,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.186526802123694,
+        "samples": 1045,
+        "same_normal": true,
+        "both_nonzero": 1045,
+        "different_rgba": 943,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.968088784238798,
+            25.295007435185656,
+            -5.189506046414749
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_sitspawn",
+      "seconds": 0.145825,
+      "coplanar_pairs": 35,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.186526802123699,
+        "samples": 1045,
+        "same_normal": true,
+        "both_nonzero": 1045,
+        "different_rgba": 943,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.959537884713421,
+            14.83007822871843,
+            -5.189506046414749
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_sitspawn",
+      "seconds": 0.29165,
+      "coplanar_pairs": 35,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.186526802123699,
+        "samples": 1045,
+        "same_normal": true,
+        "both_nonzero": 1045,
+        "different_rgba": 943,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.855750715959575,
+            16.192613663937664,
+            -5.189506046414749
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_sitspawn",
+      "seconds": 0.437475,
+      "coplanar_pairs": 35,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.186526802123699,
+        "samples": 1045,
+        "same_normal": true,
+        "both_nonzero": 1045,
+        "different_rgba": 943,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.937613963040444,
+            14.194443182412273,
+            -5.189506046414749
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_sitspawn",
+      "seconds": 0.5833,
+      "coplanar_pairs": 35,
+      "exposed_differing_pair_count": 3,
+      "example": {
+        "a": [
+          "right_leg",
+          0,
+          "east"
+        ],
+        "b": [
+          "right_foot",
+          0,
+          "east"
+        ],
+        "area": 6.186526802123697,
+        "samples": 1045,
+        "same_normal": true,
+        "both_nonzero": 1045,
+        "different_rgba": 943,
+        "a_alpha": [
+          255
+        ],
+        "b_alpha": [
+          255
+        ],
+        "texture_a": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "texture_b": "textures/ordertocook/entity/otc_zombie_custom2.png",
+        "visible_normal_samples": 64,
+        "tested_normal_samples": 64,
+        "witness": {
+          "position": [
+            4.91986725107073,
+            13.467602349789345,
+            -5.189506046414749
+          ],
+          "a_rgba": [
+            100,
+            65,
+            44,
+            255
+          ],
+          "b_rgba": [
+            88,
+            88,
+            88,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_standspawn",
+      "seconds": 0.0,
+      "coplanar_pairs": 63,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_standspawn",
+      "seconds": 0.145825,
+      "coplanar_pairs": 63,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_standspawn",
+      "seconds": 0.29165,
+      "coplanar_pairs": 63,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_standspawn",
+      "seconds": 0.437475,
+      "coplanar_pairs": 63,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    },
+    {
+      "rig": "customer_slim",
+      "clip": "animation.ordertocook.npc_transition.npc_standspawn",
+      "seconds": 0.5833,
+      "coplanar_pairs": 63,
+      "exposed_differing_pair_count": 0,
+      "example": null
+    }
+  ]
+}

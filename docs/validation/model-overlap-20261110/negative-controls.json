@@ -1,0 +1,34 @@
+{
+  "baseline": "a4176b193294d8f57234b3b316ad6b092acf5d5b",
+  "method": "Current regression assertions against original runtime fixtures; assertion failures required, errors forbidden. No working tree mutation.",
+  "results": [
+    {
+      "test": "test_chair_removes_only_the_identical_source_leg",
+      "tests": 1,
+      "failures": 1,
+      "errors": 0
+    },
+    {
+      "test": "test_all_82_shipped_drawer_poses_keep_positive_clearance",
+      "tests": 1,
+      "failures": 82,
+      "errors": 0
+    },
+    {
+      "test": "test_food_cap_insets_match_both_runtime_stage_families",
+      "tests": 1,
+      "failures": 1,
+      "errors": 0
+    },
+    {
+      "test": "test_visor_front_joins_side_panels_without_positive_area_overlap",
+      "tests": 1,
+      "failures": 1,
+      "errors": 0
+    },
+    {
+      "test": "motorcycle explicit connector adaptation vs baseline",
+      "rejected": true
+    }
+  ]
+}
