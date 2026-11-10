@@ -2,13 +2,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { mainFixture } from './main.harness.js';
+import { mainFixture, configure } from './main.harness.js';
 import { place } from './appliances.harness.js';
 import { MACHINE_TICKS } from '../runtime/BP/scripts/machine_timing.js';
 const machineComponents = JSON.parse(await readFile(new URL('../runtime/BP/blocks/order_machine.json', import.meta.url), 'utf8'))['minecraft:block'].components;
 
 async function fixture(properties) {
   const env = await mainFixture(properties), r = env.restaurant;
+  configure(env, { deliveryRate: 0 }, 'server');
   const board = place(env, 'ordertocook:board', { x: 3, y: 0, z: 0 });
   const menu = [{ typeId: 'minecraft:bread', nutrition: 5 }];
   env.store.saveStation({ id: 'timer-board', typeId: board.typeId, dimensionId: board.dimension.id,

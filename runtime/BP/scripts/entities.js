@@ -4,7 +4,7 @@ import { ButtonState, EntityDamageCause, EntitySwingSource, InputButton, ItemSta
 import { orderRemainingMs, orderCarrier } from './core.js';
 import { ActionFormData } from "@minecraft/server-ui";
 import { containerCapacity, dropContainerContents, itemLabel, openContainerForm, playerInventory } from "./appliances.js";
-import { playEffects, customerCompletionEffects, customerPortalEffects, customerExplosionEffects, customerUnsuccessfulEffects, motorcycleHitEffects } from "./audiovisual.js";
+import { playEffects, playbackVolume, customerCompletionEffects, customerPortalEffects, customerExplosionEffects, customerUnsuccessfulEffects, motorcycleHitEffects } from "./audiovisual.js";
 
 const NS = "ordertocook:";
 const CUSTOMER = `${NS}customer`;
@@ -27,18 +27,27 @@ function horizontalDist2(a, b) { return (a.x - b.x) ** 2 + (a.z - b.z) ** 2; }
 function center(location, height = 0.5) { return { x: Math.floor(location.x) + 0.5, y: Math.floor(location.y) + height, z: Math.floor(location.z) + 0.5 }; }
 function sameBlock(a, b) { return a.x === b.x && a.y === b.y && a.z === b.z; }
 
+function standingOffsets(radius) {
+  const offsets = [];
+  for (let dx = -radius; dx <= radius; dx++) for (let dz = -radius; dz <= radius; dz++) {
+    if (dx * dx + dz * dz <= radius * radius) offsets.push([dx, dz]);
+  }
+  return offsets.sort((a, b) => a[0] ** 2 + a[1] ** 2 - b[0] ** 2 - b[1] ** 2);
+}
+
 /** The Java idle-animation weights are 55%, 15%, 15%, 15%. */
 export function rollCustomerAnimationVariant(roll = Math.random()) {
   return roll < 0.55 ? 1 : roll < 0.70 ? 2 : roll < 0.85 ? 3 : 4;
 }
 
 /** Stable loaded-block support check for the 0.6-wide customer footprint. */
-export function hasFullStandingSupport(dimension, location) {
+export function hasFullStandingSupport(dimension, location, acceptFloor) {
   try {
     const feet = dimension.getBlock(location);
     const head = dimension.getBlock({ ...location, y: location.y + 1 });
     const floor = dimension.getBlock({ ...location, y: location.y - 1 });
-    if (!feet?.isAir || !head?.isAir || !floor || floor.isAir || floor.isLiquid || floor.isWaterlogged) return false;
+    if (!feet?.isAir || !head?.isAir || !floor || floor.isAir || floor.isLiquid || floor.isWaterlogged ||
+        (acceptFloor && !acceptFloor(floor))) return false;
     // A top slab can have a hit at y=1 despite not being a full floor block.
     // Exclude thin fixtures explicitly; the footprint rays also reject narrow
     // modded support shapes without relying on beta Block.isSolid.
@@ -81,7 +90,7 @@ function currentProperty(entity, name, fallback) {
 }
 
 function playSound(entity, id, volume = 0.5, pitch = 1) {
-  try { entity.dimension.playSound(id, entity.location, { volume, pitch }); } catch { /* Cosmetic only. */ }
+  try { entity.dimension.playSound(id, entity.location, { volume: playbackVolume(volume), pitch }); } catch { /* Cosmetic only. */ }
 }
 
 /** Owns world-facing NPC/vehicle/seat behavior; core remains the only reward owner. */
@@ -302,13 +311,9 @@ export function createEntityService(ctx) {
   }
 
   /** Ground checks read loaded blocks only, never tickingarea/structure commands. */
-  function standPosition(dimension, requested, radius = 2) {
-    const offsets = [];
-    for (let dx = -radius; dx <= radius; dx++) for (let dz = -radius; dz <= radius; dz++) {
-      if (dx * dx + dz * dz <= radius * radius) offsets.push([dx, dz]);
-    }
-    offsets.sort((a, b) => a[0] ** 2 + a[1] ** 2 - b[0] ** 2 - b[1] ** 2);
-    const clearAt = location => hasFullStandingSupport(dimension, location);
+  function standPosition(dimension, requested, radius = 2, acceptFloor) {
+    const offsets = standingOffsets(radius);
+    const clearAt = location => hasFullStandingSupport(dimension, location, acceptFloor);
     for (const [dx, dz] of offsets) {
       for (const dy of [0, 1, -1, 2, -2, 3, -3, 4, -4]) {
         const location = { x: Math.floor(requested.x) + dx, y: Math.floor(requested.y) + dy, z: Math.floor(requested.z) + dz };
@@ -332,6 +337,34 @@ export function createEntityService(ctx) {
       } catch { /* An unloaded column is retried when a player approaches it. */ }
     }
     return undefined;
+  }
+
+  /** Read loaded surface columns only; an unavailable column is not water. */
+  function resolveDeliveryDestination(restaurant, requested, radius = 2) {
+    const dimensionId = requested.dimensionId ?? restaurant.dimensionId;
+    let dimension;
+    try { dimension = gameWorld.getDimension(dimensionId); }
+    catch { return { status: 'unloaded' }; }
+    let unloaded = false, water = false;
+    for (const [dx, dz] of standingOffsets(radius)) {
+      try {
+        const range = dimension.heightRange;
+        const x = Math.floor(requested.x) + dx, z = Math.floor(requested.z) + dz;
+        const probeY = Math.max(range.min + 1, Math.min(range.max - 2, Math.floor(requested.y)));
+        if (!dimension.getBlock({ x, y: probeY, z })) { unloaded = true; continue; }
+        const originY = dimension.id === 'minecraft:overworld' ? range.max - 2 : Math.min(range.max - 2, probeY + 24);
+        const hit = dimension.getBlockFromRay({ x: x + 0.5, y: originY, z: z + 0.5 },
+          { x: 0, y: -1, z: 0 },
+          { maxDistance: Math.min(384, originY - range.min), includeLiquidBlocks: true, includePassableBlocks: false });
+        if (!hit) continue;
+        if (hit.block.isLiquid || hit.block.isWaterlogged) { water = true; continue; }
+        const location = { ...hit.block.location, y: hit.block.location.y + 1 };
+        if (!hasFullStandingSupport(dimension, location, floor => !floor.typeId.startsWith(NS))) continue;
+        return { status: 'ready', destination: { ...requested, ...location, dimensionId: dimension.id,
+          distance: Math.round(Math.sqrt(horizontalDist2(location, restaurant.location))) } };
+      } catch { unloaded = true; }
+    }
+    return { status: unloaded ? 'unloaded' : water ? 'water' : 'blocked' };
   }
 
   /** @param {() => void} [onNoEligibleChair] Only reports the pre-allocation walk-in chair gate. */
@@ -372,7 +405,19 @@ export function createEntityService(ctx) {
       onNoEligibleChair?.();
       return undefined;
     }
-    const location = chair ? center(chair.location, 1) : standPosition(dimension, destination, order.type === "dine_in" ? 5 : 2);
+    // Standing guests need ground, not the full collision top of our kitchen
+    // equipment. Seating above and the generic vehicle support check stay separate.
+    let location;
+    if (chair) location = center(chair.location, 1);
+    else if (order.type === 'delivery') {
+      const previousAnchor = order.customerEntityId && order.customerAnchor?.location;
+      const resolved = resolveDeliveryDestination(restaurant, previousAnchor
+        ? { ...destination, ...previousAnchor, dimensionId: order.customerAnchor.dimensionId ?? dimension.id } : destination,
+      previousAnchor ? 0 : 2);
+      if (resolved.status !== 'ready') return undefined;
+      location = center(resolved.destination, 0);
+      if (previousAnchor && !sameBlock(location, previousAnchor)) return undefined;
+    } else location = standPosition(dimension, destination, 5, floor => !floor.typeId.startsWith(NS));
     if (!location) return undefined;
     const claim = chair ? chairKey(chair) : undefined;
     if (claim) chairClaims.add(claim);
@@ -1012,7 +1057,7 @@ export function createEntityService(ctx) {
   }
 
   return {
-    init, tick, spawnCustomer, finishCustomer, resumeCustomerMeal, interruptCustomerMeal, cleanupOrder, getCustomerSeat, spawnMotorcycle, openMotorcycle,
+    init, tick, spawnCustomer, resolveDeliveryDestination, finishCustomer, resumeCustomerMeal, interruptCustomerMeal, cleanupOrder, getCustomerSeat, spawnMotorcycle, openMotorcycle,
     onItemUse, onEntityInteract, onBlockInteract, onBlockBreak, sitOnChair, clapOnChair,
   };
 }

@@ -29,7 +29,7 @@ import { createSmokingRecipeRegistry } from './smoking_recipes.js';
 import { createDiningService, DINING_ENTITY, DINING_BLOCK } from './dining.js';
 import { progressRows } from './progression.js';
 import { createProgressionService, creditBonusEarnings, creditCompletedOrder, queueProgressEvent } from './progression_service.js';
-import { playEffects, plateSound, freshMealEffects, newOrderEffects } from './audiovisual.js';
+import { playEffects, playbackVolume, plateSound, freshMealEffects, newOrderEffects } from './audiovisual.js';
 import { writePortableBlock, readPortableBlock } from './portable_blocks.js';
 import { createMachineTiming } from './machine_timing.js';
 import { defaultRestaurantName, restaurantNameIsDefault, sanitizeRestaurantName } from './restaurant_name.js';
@@ -99,7 +99,7 @@ function validStationAction(player, block, station) {
 }
 function playAt(block, sound, volume = 1, pitch = 1) {
   const location = { x: block.location.x + 0.5, y: block.location.y + 0.5, z: block.location.z + 0.5 };
-  try { block.dimension.playSound(`ordertocook:${sound}`, location, { volume, pitch }); } catch { /* Cosmetic only. */ }
+  try { block.dimension.playSound(`ordertocook:${sound}`, location, { volume: playbackVolume(volume), pitch }); } catch { /* Cosmetic only. */ }
 }
 function beginBagPlacement(block) {
   if (block?.typeId !== 'ordertocook:takeout_bag') return;
@@ -144,13 +144,27 @@ function refreshMachineOrders(restaurant, block = loadedBlock(restaurant), now =
   // reload. The caller commits this config with the generated offers.
   if (getRestaurant(restaurant.id) !== restaurant) throw new Error('Stale machine restaurant; canonical refresh required');
   restaurant.config = { ...restaurant.config, deliveryRate: settings.deliveryRate };
-  refreshOrders(restaurant, now);
+  const unavailable = new Set();
+  const result = refreshOrders(restaurant, now, Math.random, candidate => {
+    const resolved = entities.resolveDeliveryDestination(restaurant, candidate);
+    if (!resolved.destination) unavailable.add(resolved.status);
+    return resolved.destination;
+  });
+  // An unavailable destination consumes this refresh interval, not an order ID.
+  // Retrying on each native tick would scan the same unloaded terrain again.
   machineTiming.refreshed(restaurant);
-  printerStarts.set(restaurant.id, system.currentTick);
+  if (result.orders.length) printerStarts.set(restaurant.id, system.currentTick);
+  else printerStarts.delete(restaurant.id);
   if (block?.typeId === 'ordertocook:order_machine') {
-    playEffects(block.dimension, newOrderEffects(block.location), MolangVariableMap);
+    if (result.orders.length) playEffects(block.dimension, newOrderEffects(block.location), MolangVariableMap);
     syncPrinter(restaurant, block);
   }
+  return { ...result, deliveryReason: unavailable.has('unloaded') ? 'unloaded' : unavailable.has('water') ? 'water' : 'blocked' };
+}
+function deliveryDelayText(reason) {
+  const detail = reason === 'unloaded' ? '候選目的地尚未載入，無法確認安全地面'
+    : reason === 'water' ? '候選目的地在水面，未找到可站立陸地' : '候選目的地沒有安全站立空間';
+  return `這輪未產生新單：${detail}；外送單已延後，將在下一輪刷新再試。`;
 }
 function tickPrinters() {
   if (!ready) return;
@@ -315,12 +329,13 @@ async function machineForm(player, block) {
   if (selection === 0) {
     if (!restaurant.active && !restaurant.menu.length) { notify(player, '先在 24 格內放菜單立牌，用食品點擊立牌新增菜式。'); return; }
     restaurant.active = !restaurant.active;
+    let refreshed;
     // Opening a brand new restaurant starts its first round; toggling does not reroll.
     if (restaurant.active && restaurant.orderSequence === 0) {
-      refreshMachineOrders(restaurant, block);
+      refreshed = refreshMachineOrders(restaurant, block);
     }
     saveRestaurant(restaurant);
-    notify(player, restaurant.active ? `開始營業；打單機每 ${Math.ceil((restaurant.config?.refreshMs ?? DEFAULT_CONFIG.refreshMs) / 1000)} 秒運作時間刷新候選單，暫停或區域未載入時停計。` : '已暫停新單，已接訂單仍需按時完成。');
+    notify(player, restaurant.active ? `開始營業；打單機每 ${Math.ceil((restaurant.config?.refreshMs ?? DEFAULT_CONFIG.refreshMs) / 1000)} 秒運作時間刷新候選單，暫停或區域未載入時停計。${refreshed && !refreshed.orders.length ? `\n${deliveryDelayText(refreshed.deliveryReason)}` : ''}` : '已暫停新單，已接訂單仍需按時完成。');
   } else if (selection === 1) await orderList(player, block, restaurant, 'offered');
   else if (selection === 2) await orderList(player, block, restaurant, 'working');
   else if (selection === 3) await upgradeForm(player, block, restaurant);
@@ -1055,7 +1070,7 @@ function claimStation(player, block) {
   if (restaurant) return true;
   return station.ownerId === player.id || isAdmin(player);
 }
-async function interactBlock(player, block) {
+async function interactBlock(player, block, { nativeEntryCancelled = false } = {}) {
   if (!ready || !nearBlock(player, block)) return;
   if (block.typeId === DINING_BLOCK) { collectDiningPlate(player, block); return; }
   const tick = interactionTicks.get(player.id) ?? -100;
@@ -1068,7 +1083,7 @@ async function interactBlock(player, block) {
     if (nearby && !canManage(player, nearby)) return;
     if (upgradeAppliance(player, block)) return;
   }
-  if (appliances?.onInteract(player, block)) return;
+  if (appliances?.onInteract(player, block, { nativeEntryCancelled })) return;
   if (entities?.onBlockInteract(player, block)) return;
   if (block.typeId === 'ordertocook:board') await boardForm(player, block);
   else if (block.typeId === 'ordertocook:countertop') await countertopForm(player, block);
@@ -1291,7 +1306,14 @@ function registerConfiguration() {
       if (event.id === 'ordertocook:kit' && player) { giveTestKit(player); return; }
       if (event.id === 'ordertocook:refresh' && player) {
         const machine = restaurants().filter(r => r.dimensionId === player.dimension.id && distanceSquared(r.location, player.location) < 24 * 24).sort((a, b) => distanceSquared(a.location, player.location) - distanceSquared(b.location, player.location))[0];
-        if (machine) { if (syncMenu(machine)) saveRestaurant(machine); if (machine.menu.length) { refreshMachineOrders(machine); saveRestaurant(machine); notify(player, '測試用訂單已刷新。'); } }
+        if (machine) {
+          if (syncMenu(machine)) saveRestaurant(machine);
+          if (machine.menu.length) {
+            const refreshed = refreshMachineOrders(machine);
+            saveRestaurant(machine);
+            notify(player, refreshed.orders.length ? '測試用訂單已刷新。' : deliveryDelayText(refreshed.deliveryReason));
+          }
+        }
         return;
       }
       if (event.id === 'ordertocook:food') {
@@ -1413,7 +1435,7 @@ world.beforeEvents.itemUse.subscribe(event => {
 });
 
 world.beforeEvents.playerInteractWithBlock.subscribe(event => {
-  if (!ready) { if (isFridge(event.block) || isParcelDisplay(event.block)) event.cancel = true; return; }
+  if (!ready) { if (isFridge(event.block) || isParcelDisplay(event.block) || event.block.typeId === 'ordertocook:stove') event.cancel = true; return; }
   const item = event.itemStack;
   const meal = dining?.atBlock(event.block);
   if (meal) {
@@ -1425,6 +1447,12 @@ world.beforeEvents.playerInteractWithBlock.subscribe(event => {
   if (parcel) {
     event.cancel = true;
     if (event.isFirstEvent) system.run(() => safely(event.player, () => placeParcel(event.player, event.block, event.blockFace)));
+    return;
+  }
+  if (event.block.typeId === 'ordertocook:stove' && item?.typeId !== 'ordertocook:otc_upgrade_box') {
+    if (appliances.canOpenStove(event.player, event.block)) return;
+    event.cancel = true;
+    system.run(() => safely(event.player, () => interactBlock(event.player, event.block, { nativeEntryCancelled: true })));
     return;
   }
   if (isFridge(event.block) && item?.typeId !== 'ordertocook:otc_upgrade_box') {
@@ -1439,7 +1467,9 @@ world.beforeEvents.playerInteractWithBlock.subscribe(event => {
   }
   if (event.block.typeId.startsWith(PREFIX) || item?.typeId === 'ordertocook:otc_upgrade_box') {
     event.cancel = true;
-    if (event.isFirstEvent) system.run(() => safely(event.player, () => interactBlock(event.player, event.block)));
+    // Cancellation suppresses the component callback too. A continuation must
+    // still reach our owner; interactBlock already coalesces nearby callbacks.
+    system.run(() => safely(event.player, () => interactBlock(event.player, event.block)));
   }
 });
 world.beforeEvents.playerBreakBlock.subscribe(event => {

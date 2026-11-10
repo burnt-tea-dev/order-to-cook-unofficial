@@ -23,8 +23,10 @@ function boardFor(env, restaurant) {
   env.store.saveStation(record);
   if (env.hooks.syncMenu(restaurant)) env.store.saveRestaurant(restaurant);
 }
-async function fixture(saved = []) {
-  const env = await mainFixture(saved);
+async function fixture(saved = [], deliveryResolver = (_restaurant, candidate) => ({ status: 'ready', destination: candidate })) {
+  // These configuration tests substitute terrain IO explicitly; real ground,
+  // water and unloaded-chunk behavior is exercised by the entity service tests.
+  const env = await mainFixture(saved, { deliveryResolver });
   // A fresh native double has no world blocks. Recreate saved physical devices
   // independently of their canonical records before exercising reload callbacks.
   for (const record of env.store.restaurants()) place(env, TYPE, record.location);
@@ -49,7 +51,7 @@ function attempt(env, x, portable = false) {
   const restaurant = env.store.getRestaurant(env.store.locationId(env.dimension.id, block.location));
   assert.ok(restaurant); boardFor(env, restaurant); return { block, restaurant };
 }
-async function refresh(env, entry = 'event', block = env.machine) {
+async function refresh(env, entry = 'event', block = env.machine, expectOffers = true) {
   const restaurant = env.store.getRestaurant(env.store.locationId(env.dimension.id, block.location));
   const sequence = restaurant.orderSequence;
   env.player.location = { ...block.location, x: block.location.x + 1 };
@@ -69,7 +71,7 @@ async function refresh(env, entry = 'event', block = env.machine) {
     env.blockComponents.get('ordertocook:interact').onPlayerInteract({ block, player: env.player });
     await settle();
   }
-  assert.ok(env.store.getRestaurant(restaurant.id).orderSequence > sequence, `${entry} must generate new offers, not return old ones`);
+  if (expectOffers) assert.ok(env.store.getRestaurant(restaurant.id).orderSequence > sequence, `${entry} must generate new offers, not return old ones`);
   return env.store.getRestaurant(restaurant.id).orders.filter(order => order.status === 'offered' && !order.walkIn);
 }
 async function expectType(env, type, { entry = 'event', block = env.machine, rng = 0.2 } = {}) {
@@ -77,6 +79,32 @@ async function expectType(env, type, { entry = 'event', block = env.machine, rng
   assert.ok(orders.length > 0, `${entry} must generate offers`);
   assert.ok(orders.every(order => order.type === type), `${entry}/${rng}: expected ${type}, got ${orders.map(order => order.type)}`);
   return orders;
+}
+
+for (const status of ['water', 'unloaded']) for (const entry of ['event', 'tick', 'open']) {
+  test(`${entry} defers ${status} delivery without publishing an offer or printing success`, async () => {
+    let attempts = 0;
+    const env = await fixture([], () => { attempts++; return { status }; });
+    configure(env, { deliveryRate: 1 }, 'server');
+    const messages = env.player.messages.length;
+    const orders = await fixed(0.2, () => refresh(env, entry, env.machine, false));
+    assert.equal(orders.length, 0);
+    assert.equal(env.restaurant.orders.length, 0);
+    assert.equal(env.restaurant.orderSequence, 0);
+    assert.equal(attempts, 4 * env.core.getUnlockedSlots(env.restaurant));
+    assert.equal(env.dimension.sounds.filter(id => id === 'ordertocook:order_refresh').length, 0);
+    assert.equal(env.machine.permutation.getState('ordertocook:mode'), 'idle');
+    if (entry === 'tick') {
+      assert.equal(env.player.messages.length, messages);
+      assert.equal(env.hooks.machineTiming.remaining(env.restaurant), Math.ceil(env.restaurant.config.refreshMs / 50));
+      env.system.currentTick++;
+      env.blockComponents.get('ordertocook:machine_timing').onTick({ block: env.machine });
+      assert.equal(attempts, 4 * env.core.getUnlockedSlots(env.restaurant), 'the next tick must not scan again');
+    } else {
+      assert.match(env.player.messages.at(-1), status === 'water' ? /水面.*延後/ : /尚未載入.*延後/);
+      assert.doesNotMatch(env.player.messages.at(-1), /測試用訂單已刷新/);
+    }
+  });
 }
 
 test('strict global endpoints govern every machine generation entry for server, creative and tagged admins', async () => {

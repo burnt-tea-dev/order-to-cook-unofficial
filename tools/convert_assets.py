@@ -31,6 +31,62 @@ NOTES: list[str] = []
 GEOMETRY_SOURCES: dict[str, tuple[list[Path], str]] = {}
 FACES = ("north", "east", "south", "west", "up", "down")
 
+# These are native creative groups, not new gameplay items. Vanilla icons keep
+# each group usable when the pack is installed without companion addons.
+CREATIVE_GROUPS = {
+    "restaurant_equipment": ("items", "minecraft:furnace", {
+        "en_US": "Restaurant Equipment", "zh_CN": "餐厅设备", "zh_TW": "餐廳設備"},
+        ("order_machine", "board", "countertop", "stove", "washingtable", "dishwasher", "refrigerator", "otc_upgrade_box")),
+    "storage": ("construction", "minecraft:chest", {
+        "en_US": "Shelves", "zh_CN": "置物架", "zh_TW": "置物架"}, ("shelf", "plate_shelf")),
+    "furniture": ("construction", "minecraft:oak_stairs", {
+        "en_US": "Chairs", "zh_CN": "座椅", "zh_TW": "座椅"}, ("chair",)),
+    "tableware": ("items", "minecraft:bowl", {
+        "en_US": "Plates and Takeout", "zh_CN": "餐盘与外卖", "zh_TW": "餐盤與外賣"},
+        ("clean_plate", "dirty_plate", "food_plate", "takeout_bag")),
+    "orders": ("items", "minecraft:paper", {
+        "en_US": "Restaurant Orders", "zh_CN": "餐厅订单", "zh_TW": "餐廳訂單"}, ("order",)),
+    "currency": ("items", "minecraft:gold_nugget", {
+        "en_US": "Chef Coins", "zh_CN": "厨师币", "zh_TW": "廚師幣"},
+        tuple(f"chef_coin_{value}" for value in (1, 5, 20, 100, 10000))),
+    "guides": ("items", "minecraft:book", {
+        "en_US": "Restaurant Guide", "zh_CN": "餐厅指南", "zh_TW": "餐廳指南"}, ("guide",)),
+    "vehicles": ("equipment", "minecraft:minecart", {
+        "en_US": "Delivery Vehicles", "zh_CN": "外卖载具", "zh_TW": "外賣載具"}, ("motorcycle", "controller")),
+    "armor": ("equipment", "minecraft:iron_helmet", {
+        "en_US": "Delivery Gear", "zh_CN": "外卖装备", "zh_TW": "外賣裝備"}, ("helmet",)),
+}
+
+
+def creative_menu(name):
+    # Both Java tabs omit this implementation block, while keeping the plate.
+    if name == "food_plate_display":
+        return {"category": "none"}
+    for key, (category, _, _, members) in CREATIVE_GROUPS.items():
+        if name in members:
+            return {"category": category, "group": f"{NS}:itemGroup.{key}"}
+    return {"category": "construction"}
+
+
+def make_creative_catalog():
+    visible = set()
+    for folder, kind in (("items", "minecraft:item"), ("blocks", "minecraft:block")):
+        for path in (BP / folder).glob("*.json"):
+            desc = read_json(path)[kind]["description"]
+            if desc.get("menu_category", {}).get("category", "none") != "none":
+                visible.add(desc["identifier"])
+    categories = []
+    for category in ("construction", "equipment", "items", "nature"):
+        groups = []
+        for key, (page, icon, _, members) in CREATIVE_GROUPS.items():
+            items = [f"{NS}:{name}" for name in members if f"{NS}:{name}" in visible]
+            if page == category and items:
+                groups.append({"group_identifier": {"name": f"{NS}:itemGroup.{key}", "icon": icon}, "items": items})
+        if groups:
+            categories.append({"category_name": category, "groups": groups})
+    write_json(BP / "item_catalog/crafting_item_catalog.json", {
+        "format_version": "1.21.60", "minecraft:crafting_items_catalog": {"categories": categories}})
+
 
 def read_json(path: Path):
     return json.loads(path.read_text(encoding="utf-8-sig"))
@@ -1123,7 +1179,7 @@ def block_definition(name, base_geo, materials, states=None, variants=(), collis
             for material in entries.values():
                 if isinstance(material.get("ambient_occlusion"), bool):
                     material["ambient_occlusion"] = int(material["ambient_occlusion"])
-    description = {"identifier": f"{NS}:{name}", "menu_category": {"category": "construction"},
+    description = {"identifier": f"{NS}:{name}", "menu_category": creative_menu(name),
                    "traits": {"minecraft:placement_direction": {"enabled_states": ["minecraft:cardinal_direction"], "y_rotation_offset": 180}}}
     if hidden:
         description["menu_category"] = {"category": "none", "is_hidden_in_commands": True}
@@ -1415,7 +1471,8 @@ def make_blocks():
     # before the source's 20-tick animation countdown finishes.
     block_definition("stove", f"geometry.{NS}.stove", mats,
                      {"lit": [False, True], "fire_frame": list(range(6)),
-                      "ignition_frame": list(range(20))}, variants)
+                      "ignition_frame": list(range(20))}, variants,
+                     native_container={"slot_count": 7, "title": "container.ordertocook.stove"})
 
 
 def transform3(v, rotation, pivot=(0, 0, 0)):
@@ -1582,12 +1639,12 @@ def make_items():
         if name == "helmet":
             components["minecraft:wearable"] = {"slot": "slot.armor.head", "protection": 2}
         write_json(BP / "items" / (name + ".json"), {"format_version": BLOCK_VERSION, "minecraft:item": {
-            "description": {"identifier": f"{NS}:{name}", "menu_category": {"category": "items"}}, "components": components}})
+            "description": {"identifier": f"{NS}:{name}", "menu_category": creative_menu(name)}, "components": components}})
     # Native ItemStack dynamic properties require a non-stackable item. Keep
     # the block's native item rendering while carrying its saved device data.
     for name in ("board", "order_machine"):
         write_json(BP / "items" / (name + ".json"), {"format_version": BLOCK_VERSION, "minecraft:item": {
-            "description": {"identifier": f"{NS}:{name}", "menu_category": {"category": "construction"}},
+            "description": {"identifier": f"{NS}:{name}", "menu_category": creative_menu(name)},
             "components": {"minecraft:display_name": {"value": f"item.{NS}:{name}.name"}, "minecraft:max_stack_size": 1,
                 "minecraft:block_placer": {"block": f"{NS}:{name}", "replace_block_item": True}}}})
     write_json(RP / "textures/item_texture.json", {"resource_pack_name": "Order To Cook Unofficial", "texture_name": "atlas.items", "texture_data": icon_map})
@@ -2164,6 +2221,9 @@ def make_languages():
     for src_name, out_name in (("en_us","en_US"),("zh_cn","zh_CN"),("zh_cn","zh_TW")):
         lang = read_json(ASSETS / "lang" / (src_name + ".json"))
         lines=["## Order To Cook — source translations by breezeth-CN; Bedrock additions by this port.","pack.name=Order To Cook Unofficial","pack.description=Unofficial Bedrock adaptation of Order To Cook."]
+        for key, (_, _, labels, _) in CREATIVE_GROUPS.items():
+            lines.append(f"{NS}:itemGroup.{key}={labels[out_name]}")
+        lines.append(f"container.{NS}.stove=" + {"en_US": "Stove", "zh_CN": "炉灶", "zh_TW": "爐灶"}[out_name])
         for path in sorted((BP / "blocks").glob("*.json")):
             name=path.stem
             value=traditional[name] if out_name == "zh_TW" else lang.get(f"block.{NS}.{name}", name.replace("_"," ").title())
@@ -2236,6 +2296,7 @@ def main():
     make_blocks()
     make_customer_names()
     make_items()
+    make_creative_catalog()
     make_guide_icons()
     make_helmet_attachable()
     make_entities(animations)

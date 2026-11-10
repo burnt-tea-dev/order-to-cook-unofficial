@@ -106,6 +106,95 @@ test('ordinary accepted dine-in orders retain the Java standing fallback within 
   assert.equal(customer.getComponent('minecraft:riding'), undefined);
 });
 
+for (const equipment of ['stove', 'countertop']) {
+  test(`standing guests select nearby ground instead of the ${equipment} top`, () => {
+    const env = makeEnvironment(), fixture = restaurantFixture(env), service = entityServices.createEntityService(env.ctx);
+    fixture.chair.setType('minecraft:air');
+    place(env, `ordertocook:${equipment}`, { x: 0, y: 0, z: 0 });
+    place(env, 'minecraft:stone', { x: 0, y: -1, z: 0 });
+    place(env, 'minecraft:stone', { x: 1, y: -1, z: 0 });
+    assert.equal(entityServices.hasFullStandingSupport(env.dimension, { x: 0, y: 1, z: 0 }), true, 'The real equipment collision is a full top surface.');
+    const customer = service.spawnCustomer(fixture.restaurant, fixture.order);
+    assert.deepEqual(customer.location, { x: 1.5, y: 0, z: 0.5 });
+    assert.equal(fixture.order.status, 'accepted');
+  });
+}
+
+test('equipment-only standing space leaves the order pending until safe ground is available', () => {
+  const env = makeEnvironment(), fixture = restaurantFixture(env), service = entityServices.createEntityService(env.ctx);
+  fixture.chair.setType('minecraft:air');
+  place(env, 'ordertocook:stove', { x: 0, y: 0, z: 0 });
+  const before = structuredClone(fixture.order);
+  assert.equal(service.spawnCustomer(fixture.restaurant, fixture.order), undefined);
+  assert.deepEqual(fixture.order, before);
+  assert.equal(env.dimension.spawnCount, 0);
+  place(env, 'minecraft:stone', { x: 1, y: -1, z: 0 });
+  assert.deepEqual(service.spawnCustomer(fixture.restaurant, fixture.order).location, { x: 1.5, y: 0, z: 0.5 });
+  assert.equal(env.dimension.spawnCount, 1);
+});
+
+test('delivery guests also choose ground beside equipment and save that ground address', () => {
+  const env = makeEnvironment(), fixture = restaurantFixture(env), service = entityServices.createEntityService(env.ctx);
+  fixture.order.type = 'delivery';
+  fixture.order.destination = { x: 0, y: 0, z: 0, dimensionId: env.dimension.id };
+  place(env, 'ordertocook:countertop', { x: 0, y: 0, z: 0 });
+  place(env, 'minecraft:stone', { x: 1, y: -1, z: 0 });
+  const customer = service.spawnCustomer(fixture.restaurant, fixture.order);
+  assert.deepEqual(customer.location, { x: 1.5, y: 0, z: 0.5 });
+  assert.equal(fixture.order.destination.y, 0);
+});
+
+for (const terrain of ['land', 'water', 'underwater_air', 'unloaded', 'blocked']) {
+  test(`delivery surface resolution handles ${terrain} without inventing or moving an existing address`, () => {
+    const env = makeEnvironment(), fixture = restaurantFixture(env), service = entityServices.createEntityService(env.ctx);
+    env.dimension.heightRange = { min: -8, max: 16 };
+    fixture.order.type = 'delivery';
+    fixture.order.proof = 'saved-proof';
+    fixture.order.destination = { x: 0, y: 0, z: 0, dimensionId: env.dimension.id, distance: 0 };
+    if (terrain === 'land') place(env, 'minecraft:stone', { x: 0, y: 3, z: 0 });
+    else if (terrain === 'water' || terrain === 'underwater_air') {
+      place(env, 'minecraft:stone', { x: 0, y: terrain === 'water' ? -4 : -1, z: 0 });
+      place(env, 'minecraft:water', { x: 0, y: terrain === 'water' ? 2 : 4, z: 0 });
+    } else if (terrain === 'unloaded') env.dimension.getBlock = () => { throw Error('chunk unloaded'); };
+    else place(env, 'ordertocook:countertop', { x: 0, y: 0, z: 0 });
+    const before = structuredClone(fixture.order.destination);
+    const resolved = service.resolveDeliveryDestination(fixture.restaurant, fixture.order.destination);
+    assert.equal(resolved.status, terrain === 'land' ? 'ready' : terrain === 'underwater_air' ? 'water' : terrain);
+    assert.deepEqual(fixture.order.destination, before, 'resolution is read-only');
+    const actor = service.spawnCustomer(fixture.restaurant, fixture.order);
+    if (terrain === 'land') {
+      assert.deepEqual(actor.location, { x: 0.5, y: 4, z: 0.5 });
+      assert.equal(fixture.order.destination.y, 4);
+    } else {
+      assert.equal(actor, undefined); assert.equal(env.dimension.spawnCount, 0);
+      assert.deepEqual(fixture.order.destination, before);
+    }
+    assert.equal(fixture.order.proof, 'saved-proof');
+  });
+}
+
+test('a saved valid delivery retries its original anchor after reload and never rerolls an ocean address', () => {
+  const env = makeEnvironment(), fixture = restaurantFixture(env), firstService = entityServices.createEntityService(env.ctx);
+  env.dimension.heightRange = { min: -8, max: 16 };
+  fixture.order.type = 'delivery'; fixture.order.proof = 'proof-before-reload';
+  fixture.order.destination = { x: 0, y: 0, z: 0, dimensionId: env.dimension.id, distance: 0 };
+  place(env, 'minecraft:stone', { x: 0, y: -1, z: 0 });
+  const first = firstService.spawnCustomer(fixture.restaurant, fixture.order);
+  const anchor = structuredClone(fixture.order.customerAnchor), loaded = JSON.parse(JSON.stringify(fixture.restaurant));
+  first.remove(); env.restaurants.set(loaded.id, loaded);
+  const service = readyService(env);
+  tickAt(service, env, Date.now() + 1000);
+  const restored = env.dimension.getEntities({ type: 'ordertocook:customer' });
+  assert.equal(restored.length, 1); assert.deepEqual(restored[0].location, anchor.location);
+  assert.equal(loaded.orders[0].proof, 'proof-before-reload');
+  service.cleanupOrder(loaded.orders[0].id);
+  place(env, 'minecraft:water', { x: 0, y: 2, z: 0 });
+  const before = structuredClone(loaded.orders[0]);
+  tickAt(service, env, Date.now() + 2000); tickAt(service, env, Date.now() + 4000);
+  assert.equal(env.dimension.getEntities({ type: 'ordertocook:customer' }).length, 0);
+  assert.deepEqual(loaded.orders[0], before);
+});
+
 test('walk-in orders still require a chair despite an available standing floor', () => {
   const env = makeEnvironment(), fixture = restaurantFixture(env, 'offered', true), service = entityServices.createEntityService(env.ctx);
   fixture.chair.setType('minecraft:air');
@@ -455,13 +544,17 @@ function chairClapFixture(configurePlayer = () => {}) {
 }
 
 test('chair attack starts one three-second clap and sounds at original ticks 0, 12 and 20', () => {
-  const env = chairClapFixture(); env.swing();
+  const env = chairClapFixture(), volumes = [];
+  const playSound = env.dimension.playSound.bind(env.dimension);
+  env.dimension.playSound = (id, location, options) => { volumes.push(options.volume); playSound(id, location, options); };
+  env.swing();
   assert.deepEqual(env.player.animations.map(x => x.name), ['animation.ordertocook.player.chair_idle', 'animation.ordertocook.player.chair_clap', 'animation.ordertocook.player.chair_clap_first_person']);
   assert.equal(env.dimension.sounds.length, 1);
   env.swing(); env.swing('Mine'); env.swing('UseItem'); env.step(11);
   assert.equal(env.dimension.sounds.length, 1); assert.equal(env.player.animations.length, 3);
   env.step(1); assert.equal(env.dimension.sounds.length, 2);
   env.step(8); assert.equal(env.dimension.sounds.length, 3);
+  assert.deepEqual(volumes, [1.08, 1.08, 1.08]);
   env.step(39); assert.equal(env.player.animations.length, 3);
   env.step(1); assert.equal(env.player.animations.at(-1).name, 'animation.ordertocook.player.chair_idle');
   assert.equal(env.player.animations[1].options.controller, env.player.animations[3].options.controller);

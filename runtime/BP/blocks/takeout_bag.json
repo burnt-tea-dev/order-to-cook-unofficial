@@ -4,7 +4,8 @@
     "description": {
       "identifier": "ordertocook:takeout_bag",
       "menu_category": {
-        "category": "construction"
+        "category": "items",
+        "group": "ordertocook:itemGroup.tableware"
       },
       "traits": {
         "minecraft:placement_direction": {

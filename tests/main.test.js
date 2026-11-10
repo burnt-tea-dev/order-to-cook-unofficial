@@ -4,6 +4,76 @@ import assert from 'node:assert/strict';
 import { mainFixture, balance, itemCount } from './main.harness.js';
 import { FakeItem, place } from './appliances.harness.js';
 
+for (const isFirstEvent of [true, false]) {
+  test(`registered menu-board click opens management with isFirstEvent=${isFirstEvent}`, async () => {
+    const env = await mainFixture();
+    const block = place(env, 'ordertocook:board', { x: 0, y: 0, z: 2 });
+    env.player.container.setItem(0, undefined);
+    const event = { player: env.player, block, isFirstEvent, cancel: false };
+    for (const fn of env.world.beforeEvents.playerInteractWithBlock.subscriptions) fn(event);
+    assert.equal(event.cancel, true);
+    for (const fn of env.system.callbacks.splice(0)) await fn();
+    assert.equal(env.forms.length, 1);
+    assert.equal(env.forms[0][1], '菜單立牌');
+  });
+
+  test(`registered plate-shelf click inserts one clean plate with isFirstEvent=${isFirstEvent}`, async () => {
+    const env = await mainFixture();
+    const block = place(env, 'ordertocook:plate_shelf', { x: 0, y: 0, z: 2 });
+    env.player.container.setItem(0, new FakeItem('ordertocook:clean_plate', 3));
+    const event = { player: env.player, block, itemStack: env.player.container.getItem(0), isFirstEvent, cancel: false };
+    for (const fn of env.world.beforeEvents.playerInteractWithBlock.subscriptions) fn(event);
+    assert.equal(event.cancel, true);
+    for (const fn of env.system.callbacks.splice(0)) await fn();
+    assert.equal(env.store.getStation(block).supplies, 1);
+    assert.equal(env.player.container.getItem(0).amount, 2);
+    assert.equal(block.permutation.getState('ordertocook:plates'), 1);
+  });
+}
+
+test('duplicate canceled and component clicks do not debit a second plate', async () => {
+  const env = await mainFixture();
+  const block = place(env, 'ordertocook:plate_shelf', { x: 0, y: 0, z: 2 });
+  env.player.container.setItem(0, new FakeItem('ordertocook:clean_plate', 3));
+  const event = { player: env.player, block, itemStack: env.player.container.getItem(0), isFirstEvent: false, cancel: false };
+  for (let i = 0; i < 2; i++) {
+    for (const fn of env.world.beforeEvents.playerInteractWithBlock.subscriptions) fn(event);
+  }
+  for (const fn of env.system.callbacks.splice(0)) await fn();
+  await env.blockComponents.get('ordertocook:interact').onPlayerInteract({ player: env.player, block });
+  await Promise.resolve();
+  assert.equal(env.store.getStation(block).supplies, 1);
+  assert.equal(env.player.container.getItem(0).amount, 2);
+});
+
+for (const nativeReady of [false, true]) {
+  test(`registered stove click ${nativeReady ? 'allows the ready native container' : 'defers pending storage to its owner'}`, async () => {
+    const env = await mainFixture();
+    const block = place(env, 'ordertocook:stove', { x: 0, y: 0, z: 2 });
+    env.player.container.setItem(0, undefined);
+    let permissionChecks = 0, ownerCalls = 0;
+    // The separate appliance service owns permissions and native migration.
+    // This test exercises the registered main routing against that interface.
+    env.hooks.appliances.canOpenStove = (player, target) => {
+      assert.equal(player, env.player); assert.equal(target, block);
+      permissionChecks++; return nativeReady;
+    };
+    env.hooks.appliances.onInteract = (_player, target, options) => {
+      assert.equal(target, block);
+      assert.equal(options.nativeEntryCancelled, true);
+      assert.equal(env.store.getStation(block).ownerId, env.player.id, 'the existing first interaction still claims ownership');
+      ownerCalls++; return true;
+    };
+    const event = { player: env.player, block, isFirstEvent: false, cancel: false };
+    for (const fn of env.world.beforeEvents.playerInteractWithBlock.subscriptions) fn(event);
+    assert.equal(event.cancel, !nativeReady);
+    for (const fn of env.system.callbacks.splice(0)) await fn();
+    assert.equal(permissionChecks, 1);
+    assert.equal(ownerCalls, nativeReady ? 0 : 1);
+    assert.equal(env.forms.length, 0);
+  });
+}
+
 test('ordinary machine dining accepts without a chair and issues its canonical ticket', async () => {
   const env = await mainFixture(); env.chair.setType('minecraft:air');
   const order = env.core.generateOrder(env.restaurant, Date.now(), () => 0.9999);

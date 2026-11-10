@@ -2,7 +2,7 @@
 // Production stove service with engine/form doubles. These are not BDS or GUI tests.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { appliances, FakeItem, FakePlayer, FakeForm, makeEnvironment, place, advance } from './appliances.harness.js';
+import { appliances, FakeItem, FakePlayer, makeEnvironment, place, advance } from './appliances.harness.js';
 
 function makeStove(options = {}) {
   const env = makeEnvironment();
@@ -21,20 +21,6 @@ function makeStove(options = {}) {
   const inventory = service.getStorage(station);
   service.tick();
   return { ...env, env, service, block, station, inventory, saved };
-}
-
-const choose = selection => ({ canceled: false, selection });
-const settle = () => new Promise(resolve => setImmediate(resolve));
-
-async function respondWith(responses, action) {
-  const originalShow = FakeForm.prototype.show;
-  let index = 0;
-  FakeForm.prototype.show = async function () {
-    const response = responses[index++];
-    return typeof response === 'function' ? response() : response ?? { canceled: true };
-  };
-  try { action(); await settle(); }
-  finally { FakeForm.prototype.show = originalShow; }
 }
 
 function restart(fixture) {
@@ -195,101 +181,17 @@ test('input kind or metadata changes reset the shared batch while topping up the
   assert.equal(f.inventory.getItem(5), undefined, 'a different lane cannot inherit the old shared progress');
 });
 
-test('cancelled input selection keeps stock and progress; successfully taking it out resets and saves', async () => {
-  const f = makeStove(), player = new FakePlayer(f.dimension);
-  f.inventory.setItem(0, new FakeItem('minecraft:beef', 4));
-  f.inventory.setItem(3, new FakeItem('minecraft:coal'));
+test('native input removal resets progress while same-identity stock keeps it', () => {
+  const f = makeStove();
+  const raw = new FakeItem('minecraft:beef', 4); raw.nameTag = 'Kitchen stock'; raw.setLore(['same batch']);
+  f.inventory.setItem(0, raw); f.inventory.setItem(3, new FakeItem('minecraft:coal'));
   advance(f.service, f.env, 70);
-  await respondWith([{ canceled: true }], () => f.service.onInteract(player, f.block));
-  assert.equal(f.inventory.getItem(0).amount, 4);
   assert.equal(f.station.appliance.cookProgress, 70);
-  assert.equal(player.container.emptySlotsCount, 36);
-  await respondWith([choose(0), { canceled: true }], () => f.service.onInteract(player, f.block));
-  assert.equal(f.inventory.getItem(0), undefined);
-  assert.equal(player.container.getItem(0).amount, 4);
+  raw.amount = 7; f.inventory.setItem(0, raw); advance(f.service, f.env, 1);
+  assert.equal(f.station.appliance.cookProgress, 71);
+  f.inventory.setItem(0, undefined); advance(f.service, f.env, 1);
   assert.equal(f.station.appliance.cookProgress, 0);
   assert.equal(f.saved.get(f.station.id).appliance.cookProgress, 0);
-});
-
-test('a successful UI top-up with identical metadata preserves the current progress', async () => {
-  const f = makeStove(), player = new FakePlayer(f.dimension);
-  const raw = new FakeItem('minecraft:beef', 4);
-  raw.nameTag = 'Kitchen stock'; raw.setLore(['same batch']);
-  f.inventory.setItem(0, raw);
-  f.inventory.setItem(3, new FakeItem('minecraft:coal'));
-  advance(f.service, f.env, 70);
-  raw.amount = 3; player.container.setItem(0, raw);
-  await respondWith([choose(0), choose(0), choose(0)], () => f.service.onInteract(player, f.block));
-  assert.equal(f.inventory.getItem(0).amount, 7);
-  assert.deepEqual(f.inventory.getItem(0).getLore(), ['same batch']);
-  assert.equal(player.container.getItem(0), undefined);
-  assert.equal(f.station.appliance.cookProgress, 70);
-});
-
-test('a full backpack refuses both raw-stock and finished-food collection without losing progress', async () => {
-  const f = makeStove(), player = new FakePlayer(f.dimension);
-  f.inventory.setItem(0, new FakeItem('minecraft:beef', 4));
-  f.inventory.setItem(3, new FakeItem('minecraft:coal'));
-  advance(f.service, f.env, 70);
-  f.inventory.setItem(4, new FakeItem('minecraft:cooked_beef', 3));
-  for (let slot = 0; slot < player.container.size; slot++) player.container.setItem(slot, new FakeItem('minecraft:stone', 64));
-  await respondWith([choose(0), { canceled: true }], () => f.service.onInteract(player, f.block));
-  assert.equal(f.inventory.getItem(0).amount, 4);
-  assert.equal(f.station.appliance.cookProgress, 70);
-  // In the integrated seven-slot screen, output slot 4 is directly withdrawable.
-  await respondWith([choose(4), { canceled: true }], () => f.service.onInteract(player, f.block));
-  assert.equal(f.inventory.getItem(4).amount, 3);
-  assert.equal(f.station.appliance.cookProgress, 70);
-  assert.equal(f.dimension.drops.length, 0);
-});
-
-test('a selected player stack that changes before confirmation is retained and does not reset progress', async () => {
-  const f = makeStove(), player = new FakePlayer(f.dimension);
-  f.inventory.setItem(0, new FakeItem('minecraft:beef', 4));
-  f.inventory.setItem(3, new FakeItem('minecraft:coal'));
-  advance(f.service, f.env, 70);
-  player.container.setItem(1, new FakeItem('minecraft:beef', 2));
-  await respondWith([() => {
-    const changed = new FakeItem('minecraft:beef', 2); changed.setLore(['changed batch']);
-    player.container.setItem(1, changed);
-    return choose(8);
-  }], () => f.service.onInteract(player, f.block));
-  assert.equal(f.inventory.getItem(0).amount, 4);
-  assert.deepEqual(player.container.getItem(1).getLore(), ['changed batch']);
-  assert.equal(f.station.appliance.cookProgress, 70);
-});
-
-test('a stove selection left open across an observed unload cannot regain access on reload', async () => {
-  const f = makeStove(), player = new FakePlayer(f.dimension);
-  f.inventory.setItem(0, new FakeItem('minecraft:beef', 4));
-  const originalShow = FakeForm.prototype.show;
-  const getBlock = f.dimension.getBlock;
-  let selected, reachedSelection;
-  const selection = new Promise(resolve => { selected = resolve; });
-  const selectionShown = new Promise(resolve => { reachedSelection = resolve; });
-  let forms = 0;
-  FakeForm.prototype.show = async function () {
-    forms++;
-    if (forms === 1) { reachedSelection(); return selection; }
-    return { canceled: true };
-  };
-  try {
-    f.service.onInteract(player, f.block);
-    await selectionShown;
-    f.dimension.getBlock = () => undefined;
-    advance(f.service, f.env, 1);
-    f.dimension.getBlock = getBlock;
-    f.system.currentTick += 1000; f.service.tick();
-    selected(choose(0)); await settle();
-    assert.equal(player.container.emptySlotsCount, 36);
-    assert.equal(f.inventory.getItem(0).amount, 4);
-    assert.equal(forms, 1);
-  } finally {
-    selected({ canceled: true });
-    f.dimension.getBlock = getBlock;
-    FakeForm.prototype.show = originalShow;
-    await settle();
-  }
 });
 
 test('an observed unload saves the last loaded state and reload does not catch up unloaded time', () => {
@@ -329,7 +231,7 @@ test('ignition is persisted immediately so reloading a JSON snapshot does not lo
   advance(loaded.service, f.env, 200 - loaded.station.appliance.cookProgress);
   assert.equal(f.inventory.getItem(4).amount, 1);
   assert.equal(f.inventory.getItem(0).amount, 1);
-  assert.equal(f.dimension.spawnCount, 1);
+  assert.equal(f.dimension.spawnCount, 0);
 });
 
 test('batch completion saves zero progress outside the periodic checkpoint and survives reload once', () => {
@@ -384,7 +286,7 @@ test('legacy saved stoves seed new fields without resetting progress or consumin
   assert.equal(f.inventory.getItem(0).amount, 1);
   assert.equal(f.inventory.getItem(4).amount, 4);
   assert.equal(f.inventory.getItem(3).amount, 2);
-  assert.equal(f.dimension.spawnCount, 1);
+  assert.equal(f.dimension.spawnCount, 0);
 });
 
 test('breaking a stove drops all seven real stacks once and leaves no helper to recover twice', () => {
@@ -404,35 +306,18 @@ test('breaking a stove drops all seven real stacks once and leaves no helper to 
 });
 
 
-test('integrated direct stove input saves a reset immediately and recovers both inventories on save failure', async () => {
+test('stove clicks use the native container and never script-debit held stock', () => {
   const f = makeStove(), player = new FakePlayer(f.dimension);
-  f.inventory.setItem(0, new FakeItem('minecraft:beef', 2));
-  f.inventory.setItem(3, new FakeItem('minecraft:coal'));
-  advance(f.service, f.env, 70);
-  // A different ingredient fills another lane and resets shared progress.
-  player.container.setItem(0, new FakeItem('minecraft:potato', 3));
-  const save = f.ctx.saveStation;
-  f.ctx.saveStation = () => { throw new Error('unavailable save'); };
-  await respondWith([], () => f.service.onInteract(player, f.block));
-  assert.equal(player.container.getItem(0).amount, 3);
-  assert.equal(f.inventory.getItem(1), undefined);
-  assert.equal(f.station.appliance.cookProgress, 70);
-  f.ctx.saveStation = save;
-  await respondWith([], () => f.service.onInteract(player, f.block));
-  assert.equal(player.container.getItem(0), undefined);
-  assert.equal(f.inventory.getItem(1).typeId, 'minecraft:potato');
-  assert.equal(f.station.appliance.cookProgress, 0);
-  assert.equal(f.saved.get(f.station.id).appliance.cookProgress, 0);
-});
-
-test('integrated direct controls use the live recipe registry after a supplier joins', async () => {
-  const recipes = {}, f = makeStove({ smokingRecipes: recipes });
-  const player = new FakePlayer(f.dimension);
-  player.container.setItem(0, new FakeItem('supplier:raw', 2));
-  await respondWith([{ canceled: true }], () => f.service.onInteract(player, f.block));
-  assert.equal(player.container.getItem(0).amount, 2);
-  recipes['supplier:raw'] = { output: 'supplier:cooked', count: 2 };
-  await respondWith([], () => f.service.onInteract(player, f.block));
-  assert.equal(player.container.getItem(0), undefined);
-  assert.equal(f.inventory.getItem(0).amount, 2);
+  player.container.setItem(0, new FakeItem('minecraft:beef', 6));
+  assert.equal(f.service.canOpenStove(player, f.block), false, 'the first use must still claim the station');
+  f.station.ownerId = player.id;
+  assert.equal(f.service.canOpenStove(player, f.block), true);
+  f.service.onInteract(player, f.block, { nativeEntryCancelled: true });
+  assert.equal(player.messages.length, 1);
+  assert.match(player.messages[0], /再次點擊.*原生容器/);
+  f.service.onInteract(player, f.block);
+  assert.equal(player.messages.length, 1, 'the normal native after callback must remain quiet');
+  assert.equal(player.container.getItem(0).amount, 6);
+  assert.equal(f.inventory.getItem(0), undefined);
+  assert.equal(f.inventory, f.block.getComponent('minecraft:inventory').container);
 });

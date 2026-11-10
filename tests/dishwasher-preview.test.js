@@ -30,7 +30,10 @@ test('looking with a dirty plate previews the original drawer without moving inv
   assert.equal(station.appliance.plates, 0);
   assert.equal(player.container.getItem(0).amount, 2);
   assert.equal(saves, 0);
-  assert.deepEqual(player.sounds, [{ id: 'ordertocook:dishwasher_out', location: { x: 0.5, y: 0.6, z: 0.5 }, volume: 0.75, pitch: 1 }]);
+  assert.equal(player.sounds.length, 1);
+  const { volume, ...preview } = player.sounds[0];
+  assert.ok(Math.abs(volume - 0.9) < 1e-12);
+  assert.deepEqual(preview, { id: 'ordertocook:dishwasher_out', location: { x: 0.5, y: 0.6, z: 0.5 }, pitch: 1 });
   player.viewedBlock = undefined; advance(service, env, 2);
   assert.equal(value(block, 'phase'), 0);
   assert.equal(value(block, 'frame'), 0);

@@ -9,7 +9,7 @@ const scripts = new URL('../runtime/BP/scripts/', import.meta.url);
 const signal = () => ({ subscriptions: [], subscribe(fn) { this.subscriptions.push(fn); return fn; } });
 const signals = () => new Proxy({}, { get(target, name) { return target[name] ||= signal(); } });
 
-export async function mainFixture(savedProperties = [], { captureErrors = false } = {}) {
+export async function mainFixture(savedProperties = [], { captureErrors = false, deliveryResolver = () => ({ status: 'unloaded' }) } = {}) {
   const env = makeEnvironment();
   const properties = new Map(savedProperties);
   env.world.messages = [];
@@ -44,7 +44,8 @@ export async function mainFixture(savedProperties = [], { captureErrors = false 
   const formResponses = [], forms = [], textResponses = [], errors = [];
   let applianceContext, entityContext;
   const stubs = {
-    createEntityService: context => { entityContext = context; return { init() {}, spawnCustomer() {}, cleanupOrder() {}, onBlockBreak() {},
+    createEntityService: context => { entityContext = context; return { init() {}, spawnCustomer() {}, cleanupOrder() {}, onBlockBreak() {}, onBlockInteract() { return false; },
+      resolveDeliveryDestination: (...args) => deliveryResolver(...args),
       finishCustomer: (...args) => {
         endings.push(args);
         for (const entity of env.dimension.getEntities({ type: 'ordertocook:customer' })) {
@@ -53,7 +54,7 @@ export async function mainFixture(savedProperties = [], { captureErrors = false 
       }, resumeCustomerMeal() {},
       interruptCustomerMeal: (...args) => interruptions.push(args),
       getCustomerSeat: entity => entity?.qaChair || chair }; },
-    createApplianceService: context => { applianceContext = context; return { init() {}, onPlace() {}, onBreak() {}, getStorage() {}, normalizeBlock: block => block }; },
+    createApplianceService: context => { applianceContext = context; return { init() {}, onPlace() {}, onBreak() {}, onInteract() { return false; }, canOpenStove() { return false; }, getStorage() {}, normalizeBlock: block => block }; },
     notify: (who, text) => who.sendMessage(text),
     choose: async (...args) => { forms.push(args); const response = formResponses.shift(); return typeof response === 'function' ? response(...args) : response; },
     textInput: async (...args) => { forms.push(args); const result = textResponses.shift(); return typeof result === 'function' ? result(...args) : result === undefined ? undefined : String(result).trim(); },

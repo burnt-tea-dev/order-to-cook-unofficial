@@ -8,11 +8,14 @@ const center = (p, y = 0.5) => point(p, y, 0.5, 0.5);
 const sound = (id, location, volume = 1, pitch = 1) => ({ sound: id, location, volume, pitch });
 const burst = (id, location, count, spread = [0, 0, 0], speed = 0) => ({ particle: `${NS}${id}`, location, count, spread, speed });
 
+// The owner's loudness adjustment belongs at playback, not in Java cue data.
+export function playbackVolume(volume = 1) { return volume * 1.2; }
+
 /** Emit exactly one explicit burst, rather than a vanilla manual-rate emitter. */
 export function playEffects(dimension, cues, VariableMap) {
   for (const cue of cues) {
     try {
-      if (cue.sound) dimension.playSound(cue.sound, cue.location, { volume: cue.volume, pitch: cue.pitch });
+      if (cue.sound) dimension.playSound(cue.sound, cue.location, { volume: playbackVolume(cue.volume), pitch: cue.pitch });
       else {
         const variables = new VariableMap();
         variables.setFloat("variable.count", cue.count);

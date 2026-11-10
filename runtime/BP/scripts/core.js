@@ -360,7 +360,7 @@ function nextOrderId(restaurant, now) {
 }
 
 /** @param {OrderTime} now */
-function makeOrder(restaurant, now, rng, walkIn) {
+function makeOrder(restaurant, now, rng, walkIn, resolveDestination) {
   const at = clock(now);
   const cfg = configFor(restaurant);
   const level = levelOf(restaurant);
@@ -368,7 +368,16 @@ function makeOrder(restaurant, now, rng, walkIn) {
   const delivery = walkIn ? false : unit(rng) < chance(cfg.deliveryRate);
   const rush = walkIn ? true : unit(rng) < chance(Number(cfg.urgentRate) + URGENT_LEVEL_BONUSES[level]);
   const longDistance = delivery && unit(rng) < chance(cfg.longDistanceDeliveryChance);
-  const destination = delivery ? destinationFor(restaurant, longDistance, cfg, rng) : undefined;
+  let destination;
+  if (delivery) {
+    // Resolve terrain before assigning an ID or publishing a delivery offer.
+    for (let attempt = 0; attempt < (resolveDestination ? 4 : 1); attempt++) {
+      const candidate = destinationFor(restaurant, longDistance, cfg, rng);
+      destination = resolveDestination ? resolveDestination(candidate) : candidate;
+      if (destination) break;
+    }
+    if (!destination) return undefined;
+  }
   const pool = normalizeMenu(restaurant.menu);
   if (!pool.length) pool.push({ ...VANILLA_FOOD_BY_ID["minecraft:apple"] });
   // Fisher-Yates gives the same uniform unique-dish selection as Java shuffle;
@@ -415,8 +424,8 @@ function makeOrder(restaurant, now, rng, walkIn) {
 
 /** Returns the new order and appends it to restaurant.orders. */
 /** @param {OrderTime} [now] */
-export function generateOrder(restaurant, now = Date.now(), rng = Math.random) {
-  return makeOrder(restaurant, now, rng, false);
+export function generateOrder(restaurant, now = Date.now(), rng = Math.random, resolveDestination = undefined) {
+  return makeOrder(restaurant, now, rng, false, resolveDestination);
 }
 
 /** Walk-ins have independent offers, are always dine-in/rush, and expire from arrival. */
@@ -449,7 +458,7 @@ function cancelOffer(order, now, reason) {
 
 /** Accepted/packed orders survive machine refreshes. Only the remaining offers change. */
 /** @param {OrderTime} [now] */
-export function refreshOrders(restaurant, now = Date.now(), rng = Math.random) {
+export function refreshOrders(restaurant, now = Date.now(), rng = Math.random, resolveDestination = undefined) {
   const at = clock(now);
   expireOrders(restaurant, now);
   for (const order of ordersOf(restaurant)) {
@@ -457,7 +466,8 @@ export function refreshOrders(restaurant, now = Date.now(), rng = Math.random) {
   }
   const fresh = [];
   for (let index = 0; index < getUnlockedSlots(restaurant); index++) {
-    fresh.push(generateOrder(restaurant, now, rng));
+    const order = generateOrder(restaurant, now, rng, resolveDestination);
+    if (order) fresh.push(order);
   }
   restaurant.nextRefreshAt = at + integer(configFor(restaurant).refreshMs, DEFAULT_CONFIG.refreshMs, 1);
   restaurant.updatedAt = at;

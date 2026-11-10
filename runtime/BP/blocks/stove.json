@@ -1,10 +1,11 @@
 {
-  "format_version": "1.21.100",
+  "format_version": "1.26.60",
   "minecraft:block": {
     "description": {
       "identifier": "ordertocook:stove",
       "menu_category": {
-        "category": "construction"
+        "category": "items",
+        "group": "ordertocook:itemGroup.restaurant_equipment"
       },
       "traits": {
         "minecraft:placement_direction": {
@@ -57,13 +58,13 @@
         "ordertocook_block_stove": {
           "texture": "ordertocook_block_stove",
           "render_method": "alpha_test",
-          "ambient_occlusion": false,
+          "ambient_occlusion": 0,
           "face_dimming": true
         },
         "*": {
           "texture": "ordertocook_block_stove",
           "render_method": "alpha_test",
-          "ambient_occlusion": false,
+          "ambient_occlusion": 0,
           "face_dimming": true
         }
       },
@@ -85,7 +86,14 @@
       "minecraft:movable": {
         "movement_type": "immovable"
       },
-      "ordertocook:interact": {}
+      "ordertocook:interact": {},
+      "minecraft:block_entity": {
+        "dynamic_properties": true,
+        "container": {
+          "slot_count": 7,
+          "title": "container.ordertocook.stove"
+        }
+      }
     },
     "permutations": [
       {
@@ -143,13 +151,13 @@
             "ordertocook_block_stove": {
               "texture": "ordertocook_block_stove_fire",
               "render_method": "alpha_test",
-              "ambient_occlusion": false,
+              "ambient_occlusion": 0,
               "face_dimming": true
             },
             "*": {
               "texture": "ordertocook_block_stove_fire",
               "render_method": "alpha_test",
-              "ambient_occlusion": false,
+              "ambient_occlusion": 0,
               "face_dimming": true
             }
           }
@@ -162,13 +170,13 @@
             "ordertocook_block_stove": {
               "texture": "ordertocook_block_stove_fire_0",
               "render_method": "alpha_test",
-              "ambient_occlusion": false,
+              "ambient_occlusion": 0,
               "face_dimming": true
             },
             "*": {
               "texture": "ordertocook_block_stove_fire_0",
               "render_method": "alpha_test",
-              "ambient_occlusion": false,
+              "ambient_occlusion": 0,
               "face_dimming": true
             }
           }
@@ -181,13 +189,13 @@
             "ordertocook_block_stove": {
               "texture": "ordertocook_block_stove_fire_1",
               "render_method": "alpha_test",
-              "ambient_occlusion": false,
+              "ambient_occlusion": 0,
               "face_dimming": true
             },
             "*": {
               "texture": "ordertocook_block_stove_fire_1",
               "render_method": "alpha_test",
-              "ambient_occlusion": false,
+              "ambient_occlusion": 0,
               "face_dimming": true
             }
           }
@@ -200,13 +208,13 @@
             "ordertocook_block_stove": {
               "texture": "ordertocook_block_stove_fire_2",
               "render_method": "alpha_test",
-              "ambient_occlusion": false,
+              "ambient_occlusion": 0,
               "face_dimming": true
             },
             "*": {
               "texture": "ordertocook_block_stove_fire_2",
               "render_method": "alpha_test",
-              "ambient_occlusion": false,
+              "ambient_occlusion": 0,
               "face_dimming": true
             }
           }
@@ -219,13 +227,13 @@
             "ordertocook_block_stove": {
               "texture": "ordertocook_block_stove_fire_3",
               "render_method": "alpha_test",
-              "ambient_occlusion": false,
+              "ambient_occlusion": 0,
               "face_dimming": true
             },
             "*": {
               "texture": "ordertocook_block_stove_fire_3",
               "render_method": "alpha_test",
-              "ambient_occlusion": false,
+              "ambient_occlusion": 0,
               "face_dimming": true
             }
           }

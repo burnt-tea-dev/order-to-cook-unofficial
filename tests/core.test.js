@@ -144,6 +144,34 @@ test("short/long delivery destinations use the upstream radial ranges", () => {
   assert.equal(long.destination.distance, 2250);
 });
 
+test('unresolved delivery terrain defers the offer without consuming an ID or changing the restaurant', () => {
+  const r = restaurant(); r.config = { deliveryRate: 1 };
+  const before = structuredClone(r), candidates = [];
+  const result = generateOrder(r, NOW, () => 0.5, candidate => { candidates.push(candidate); return undefined; });
+  assert.equal(result, undefined);
+  assert.equal(candidates.length, 4);
+  assert.deepEqual(r, before);
+});
+
+test('delivery generation publishes only the resolved candidate and preserves the original radial source', () => {
+  const r = restaurant(); r.config = { deliveryRate: 1 };
+  const candidates = [];
+  const result = generateOrder(r, NOW, () => 0.5, candidate => {
+    candidates.push(candidate);
+    return candidates.length === 3 ? { ...candidate, y: 72 } : undefined;
+  });
+  assert.equal(candidates.length, 3);
+  assert.ok(candidates.every(candidate => candidate.distance >= 50 && candidate.distance <= 450));
+  assert.deepEqual(result.destination, { ...candidates[2], y: 72 });
+  assert.equal(r.orders.length, 1); assert.equal(r.orders[0], result);
+});
+
+test('dine-in generation does not request delivery terrain', () => {
+  const r = restaurant(); r.config = { deliveryRate: 0 };
+  const result = generateOrder(r, NOW, () => 0.5, () => { throw Error('unexpected terrain read'); });
+  assert.equal(result.type, 'dine_in');
+});
+
 test("rush probability uses actual restaurant level even when reward benefits are reduced", () => {
   const r = restaurant({ level: 8, menu: [] });
   const order = generateOrder(r, NOW, rolls(0, 0.99, 0.39, 0.5));
@@ -306,6 +334,23 @@ test("refreshing a machine does not discard already accepted or packed work", ()
   assert.equal(oldOffer.cancelReason, "refresh");
   assert.equal(r.orders.includes(order), true);
   assert.equal(r.stats.failed, 0);
+});
+
+test('a refresh with no safe delivery point keeps accepted proof and skips undefined offers', () => {
+  const r = restaurant({ level: 4, menu: richMenu });
+  r.config = { deliveryRate: 1 };
+  const order = packed(r); order.proof = 'original-delivery-proof';
+  const destination = structuredClone(order.destination), sequence = r.orderSequence;
+  let attempts = 0;
+  const result = refreshOrders(r, NOW + 200, () => 0.5, () => { attempts++; return undefined; });
+  assert.deepEqual(result.orders, []);
+  assert.deepEqual(r.orders, [order]);
+  assert.equal(r.orderSequence, sequence);
+  assert.equal(order.status, 'packed');
+  assert.equal(order.proof, 'original-delivery-proof');
+  assert.deepEqual(order.destination, destination);
+  assert.equal(attempts, getUnlockedSlots(r) * 4);
+  assert.ok(r.nextRefreshAt > NOW + 200);
 });
 
 test("removing menu variety downgrades offered benefits without erasing purchased level", () => {
