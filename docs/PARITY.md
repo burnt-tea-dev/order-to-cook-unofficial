@@ -1,5 +1,13 @@
 # 可行性與原作還原對照
 
+## 受阻台面的打包掉袋（0.1.52）
+
+PACK 與 PLATE 分開處理輸出。打包時上方為空氣，沿用原展示方塊與原生實物格；上方已有方塊或另一份餐點時，保留原物件，將同一 `parcelFor` 完整袋子掉在操作台中心上方 1.2 格，清除隨機初速再給向上 0.2 的原生 impulse。外送與明確選擇的堂食袋均適用；裝盤仍需空位。介面文字跟隨兩種操作，不再一律顯示台上受阻。
+
+這與固定 Java 的 [Forge PACK](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/TakeoutBoxBlockEntity.java)及[NeoForge PACK](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/neoforge-1.21.1/src/main/java/cn/breezeth/ordertocook/block/entity/TakeoutBoxBlockEntity.java)同分支。沿原權限、期限、proof、食品抽取及 `countertopConsumeLeather` 設定；同一訂單只完成一次。掉落／速度設定的已知失敗走原交易回復，只移除本次新掉落物或新展示，不清除被擋住的原成品。未新增 timer、物品 ID、registry 或保存格式。
+
+新增回歸直接走原 `countertopForm` 與正式 main/core/store/factory；確定失敗及可撤回掉落實體的補償由原生 I/O doubles 驗證，不表示原生跨儲存層原子性。尚未新增 BDS／客戶端掉落軌跡、聲畫或 FPS 結果。具體來源與測試見 [052 驗證說明](validation/0.1.52-alpha.1/BLOCKED_PACK_OUTPUT.md)。
+
 ## 已接外送單的壞地址恢復（0.1.51）
 
 050 只為新單驗地形；已接／已備妥的海上單原本仍會重試原地址。051 在同一顧客重試 owner 中補上恢復：原目的地已載入且確定是水面或受阻、訂單尚未逾時、沒有顧客或保存 anchor 時，最多嘗試四個原短／長距離候選，只接受附近真玩家已載入的安全地面。沿每單至少 40 tick、每輪最多四單的既有重試，不新增 timer、registry 或強制載入。未載入不是水；既有顧客／anchor 不搬移。沒有找到安全候選就保留原待辦，原期限繼續計時，不宣稱所有海單都已恢復。
@@ -8,7 +16,7 @@
 
 HUD／使用查看詳情讀目前 `order.destination`。外送袋在原 `onUse` 才讀回同一件現存物品，僅替換「座標行＋原 factory 操作提示」可辨識的自有 lore；名稱、其他 lore、DP、數量和完整 stack 保留。文字已正確、自訂 lore、過期／終態或已消耗的袋子不寫回。箱內未使用物品不掃描；紙單／自訂文字的靜態 lore 不會批量改寫，查看詳情與導航仍以目前訂單為準。
 
-現有真 main/core/entity/store harness 覆蓋海水／阻塞恢復、四候選與原 cooldown、未載入／anchor／逾時不變、spawn／save 失敗回復，以及同袋更新自有行、走正式交付一次付款、晚到 callback 不復活袋子。Minecraft 邊界仍由既有 harness 替代，這不是新 Native／世界重啟／client 結果。051 為後續來源；共同當前固定 050 候選不因此重製。
+現有真 main/core/entity/store harness 覆蓋海水／阻塞恢復、四候選與原 cooldown、未載入／anchor／逾時不變、spawn／save 失敗回復，以及同袋更新自有行、走正式交付一次付款、晚到 callback 不復活袋子。Minecraft 邊界仍由既有 harness 替代，這不是新 Native／世界重啟／client 結果。這些來源回歸不改寫既有原生結果的範圍。
 
 ## 取消點擊後的設備互動（0.1.50）
 
@@ -48,7 +56,7 @@ Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedro
 
 全域已提交、餐廳保存後續失敗時，仍以已提交值控制未來生成，不聲稱所有記錄一起原子提交。寫入後例外／讀回失敗可能保留新存檔但舊即時值，重載後才生效；.40 不確定原生結果界線與 .41 count-only 不遷移餐廳規則不變。未開放其他機率欄位，未改 core 取樣、機車或 NPC 生成，也未完成原生／客戶端驗收。[固定來源、紅綠測試及限制](validation/0.1.42-alpha.1/DELIVERY_RATE.md)。
 
-0.1.40 接上 Java 全域 `countertopConsumeLeather`（預設 true）。管理員設定為 false 時，外送與選擇堂食袋的製作不查找／修改任何包裝架，食品與原生完整成品交易、權限、期限及 proof 仍核對；裝盤照常消耗乾淨盤。設定保存於同一世界屬性，表單關閉後才讀取最新值；缺值／錯誤型別安全預設 true，損壞文件保留而停止初始化。沒有新增每餐廳選項；該 .40 修正未接入機器數量或配送比例，機器數量與配送比例由後續修正分別補上。Java PACK 可在輸出受阻時掉袋的行為仍不同，本版仍需台上空置。僅來源／adapter 驗證，非原生存檔、效能或客戶端驗收。[來源、設定與保存界線](validation/0.1.40-alpha.1/LEATHER_CONFIG.md)。
+0.1.40 接上 Java 全域 `countertopConsumeLeather`（預設 true）。管理員設定為 false 時，外送與選擇堂食袋的製作不查找／修改任何包裝架，食品與原生完整成品交易、權限、期限及 proof 仍核對；裝盤照常消耗乾淨盤。設定保存於同一世界屬性，表單關閉後才讀取最新值；缺值／錯誤型別安全預設 true，損壞文件保留而停止初始化。沒有新增每餐廳選項；該 .40 修正未接入機器數量或配送比例，機器數量與配送比例由後續修正分別補上。當時仍需台上空置的 PACK 限制已由 [0.1.52](#受阻台面的打包掉袋0152)補回；裝盤仍需空位。僅來源／adapter 驗證，非原生存檔、效能或客戶端驗收。[來源、設定與保存界線](validation/0.1.40-alpha.1/LEATHER_CONFIG.md)。
 
 0.1.38 堂食打包來源修正：普通入口仍預設裝盤，蹲下點台可改選袋；canonical 訂單獨立保存 carrier 並與 proof 一起驗證。堂食袋保留堂食／到店報酬與統計，只走坐姿或站姿取餐，沒有用餐盤、髒盤或 boom。已備妥舊單缺 carrier 時按原 type 推定；擺放與交付不會把明確錯誤值降級為預設承載物。[來源、回歸與未驗證界線](validation/0.1.38-alpha.1/DINE_IN_TAKEOUT.md)。
 
