@@ -877,5 +877,170 @@ class WashingTableWaterTests(unittest.TestCase):
                             converter.add_washingtable_water(g, mats)
 
 
+class ModelOverlapTests(unittest.TestCase):
+    def test_chair_removes_only_the_identical_source_leg(self):
+        source, _ = converter.convert_java_model('ordertocook:block/chair', 'geometry.ordertocook.chair')
+        original = copy.deepcopy(source)
+        cubes = source['minecraft:geometry'][0]['bones'][0]['cubes']
+        self.assertEqual(cubes[2], cubes[3], 'negative control: original really duplicates the leg')
+        converter.remove_duplicate_chair_leg(source)
+        expected = original['minecraft:geometry'][0]['bones'][0]['cubes']
+        self.assertEqual(cubes, expected[:3] + expected[4:])
+        self.assertEqual(source, converter.read_json(ROOT / 'runtime/RP/models/blocks/chair.geo.json'))
+        self.assertEqual(len({json.dumps(c, sort_keys=True) for c in cubes}), len(cubes))
+
+    def test_overlap_repairs_refuse_changed_source_contracts(self):
+        chair, _ = converter.convert_java_model('ordertocook:block/chair', 'geometry.test')
+        chair['minecraft:geometry'][0]['bones'][0]['cubes'][3]['origin'][1] += 1
+        with self.assertRaisesRegex(ValueError, 'chair duplicate'):
+            converter.remove_duplicate_chair_leg(chair)
+        machine = converter.normalize_geo(converter.ASSETS / 'geo/block/dishwasher.geo.json', 'geometry.test')
+        drawer = next(b for b in machine['minecraft:geometry'][0]['bones'] if b['name'] == 'group3')
+        drawer['cubes'][1]['size'][1] += 1
+        with self.assertRaisesRegex(ValueError, 'nested-drawer'):
+            converter.separate_dishwasher_drawer_faces(machine)
+
+    def test_drawer_repair_preserves_uvs_outer_shape_and_other_bones(self):
+        machine = converter.normalize_geo(converter.ASSETS / 'geo/block/dishwasher.geo.json', 'geometry.test')
+        original = copy.deepcopy(machine)
+        converter.separate_dishwasher_drawer_faces(machine)
+        after = {b['name']: b for b in machine['minecraft:geometry'][0]['bones']}
+        before = {b['name']: b for b in original['minecraft:geometry'][0]['bones']}
+        outer, inner = before['group3']['cubes']
+        self.assertEqual(outer['origin'][1], inner['origin'][1])
+        self.assertEqual(outer['size'][1], inner['size'][1])
+        inner['origin'][1] += .015
+        inner['size'][1] -= .03
+        self.assertEqual(before, after, 'exactly two numeric fields change before posing')
+        self.assertEqual(original, machine)
+
+    def test_all_82_shipped_drawer_poses_keep_positive_clearance(self):
+        source = converter.normalize_geo(converter.ASSETS / 'geo/block/dishwasher.geo.json', 'geometry.test')
+        clips = converter.read_json(converter.ASSETS / 'animations/dishwasher.animation.json')['animations']
+        names = {0:None,1:'empty_in',2:'dirty_in',3:'washing',4:'clear_out',5:'clear_out',6:'empty_out'}
+        repaired = copy.deepcopy(source)
+        converter.separate_dishwasher_drawer_faces(repaired)
+        count = 0
+        for phase, name in names.items():
+            for frame in ([0] if phase in (0,5) else range(16)):
+                clip = clips[name] if name else {}
+                length = clip.get('animation_length',0)
+                seconds = length if phase == 5 else length*frame/(16 if phase == 3 else 15)
+                identifier = f'geometry.ordertocook.dishwasher_{phase}_{frame}'
+                baseline = converter.bake_pose(source,clip,seconds,identifier)
+                expected = converter.bake_pose(repaired,clip,seconds,identifier)
+                shipped = converter.read_json(ROOT / f'runtime/RP/models/blocks/dishwasher_{phase}_{frame}.geo.json')
+                lookup = lambda g: {b['name']: b for b in g['minecraft:geometry'][0]['bones']}
+                b,e,a = lookup(baseline),lookup(expected),lookup(shipped)
+                with self.subTest(phase=phase, frame=frame):
+                    self.assertEqual(a['group3'], e['group3'])
+                    self.assertEqual(a['group2'],b['group2'])
+                    expected_door = copy.deepcopy(b['group5'])
+                    expected_door['cubes'][0]['size'][2] = round(expected_door['cubes'][0]['size'][2]*.985,6)
+                    self.assertEqual(a['group5'],expected_door)
+                    old_outer,old_inner = b['group3']['cubes']
+                    outer,inner = a['group3']['cubes']
+                    self.assertEqual(outer,old_outer)
+                    self.assertEqual(inner['uv'],old_inner['uv'])
+                    self.assertAlmostEqual(old_inner['origin'][1],old_outer['origin'][1],places=4)
+                    self.assertGreater(inner['origin'][1]-outer['origin'][1],.01)
+                    self.assertGreater(outer['origin'][1]+outer['size'][1]-inner['origin'][1]-inner['size'][1],.01)
+                    self.assertLess(inner['origin'][1]-old_inner['origin'][1],.02)
+                    self.assertEqual(inner['origin'][::2],old_inner['origin'][::2])
+                    self.assertEqual(inner['size'][::2],old_inner['size'][::2])
+                count += 1
+        self.assertEqual(count,82)
+
+
+    def test_food_cap_insets_match_both_runtime_stage_families(self):
+        atlas = converter.read_json(ROOT / 'runtime/RP/models/entity/dining_plate.geo.json')['minecraft:geometry']
+        for stage, name, indices in [(5,'2_1',(3,4,5,6)),(6,'2_2',(3,4))]:
+            original = converter.read_json(converter.ASSETS / f'models/block/food_plate_anim/{name}.json')
+            raw = [converter.java_cube(c,original['textures']) for c in original['elements']]
+            repaired = copy.deepcopy(raw)
+            self.assertTrue(converter.separate_food_cap_faces(f'ordertocook:block/food_plate_anim/{name}',repaired))
+            converter.flatten_food_plate_stain(f'ordertocook:block/food_plate_anim/{name}',repaired)
+            block = converter.read_json(ROOT / f'runtime/RP/models/blocks/food_plate_display_{stage}.geo.json')['minecraft:geometry'][0]['bones'][0]['cubes']
+            self.assertEqual(converter.rounded(repaired),block)
+            actor = atlas[stage]['bones'][0]['cubes']
+            kept = [i for i in range(len(raw)) if i != 1]
+            for output_index, i in enumerate(kept):
+                old, new = raw[i], block[output_index]
+                self.assertEqual({k:v for k,v in new.items() if k!='uv'}, {k:v for k,v in actor[output_index].items() if k!='uv'})
+                if i not in indices:
+                    expected = copy.deepcopy(old)
+                    if i == 0: expected['uv']['up'] = new['uv']['up']
+                    self.assertEqual(new,expected)
+                else:
+                    self.assertAlmostEqual(new['origin'][2]-old['origin'][2],.015)
+                    self.assertAlmostEqual(old['size'][2]-new['size'][2],.03)
+                    for face in ('north','south'):
+                        self.assertEqual(new['uv'][face],old['uv'][face])
+            bad = copy.deepcopy(raw);bad[indices[0]]['size'][2] += 1
+            with self.assertRaisesRegex(ValueError,'food cap'):
+                converter.separate_food_cap_faces(f'ordertocook:block/food_plate_anim/{name}',bad)
+
+    def test_visor_front_joins_side_panels_without_positive_area_overlap(self):
+        cubes = converter.read_json(ROOT / 'runtime/RP/models/entity/helmet_visor.geo.json')['minecraft:geometry'][0]['bones'][0]['cubes']
+        front,left,right = cubes
+        self.assertAlmostEqual(front['origin'][0], left['origin'][0]+left['size'][0])
+        self.assertAlmostEqual(front['origin'][0]+front['size'][0],right['origin'][0])
+        self.assertEqual(front['origin'][1:],[29.1,-6.3])
+        self.assertEqual(front['size'][1:],[3.4,.0625])
+        model = converter.resolve_model('ordertocook:item/helmet')
+        raw = [converter.java_cube(e,model['textures']) for e in model['elements']]
+        raw = [c for c in raw if any(v['material_instance']=='ordertocook_item_delivery_helmet_glass' for v in c['uv'].values())]
+        self.assertEqual(len(raw),3)
+        self.assertLess(raw[0]['origin'][0],left['origin'][0]+left['size'][0], 'negative control: original overlaps')
+        for c in raw:
+            c['origin'][1] += 24
+            if 'pivot' in c:c['pivot'][1] += 24
+            for face in c['uv'].values():face.pop('material_instance')
+        converter.inset_cube_axis(raw[0],0,.0625)
+        self.assertEqual(converter.rounded(raw),cubes)
+
+    def test_door_back_retreat_preserves_front_and_only_changes_posed_thickness(self):
+        source = converter.normalize_geo(converter.ASSETS / 'geo/block/dishwasher.geo.json', 'geometry.test')
+        bad = copy.deepcopy(source)
+        next(b for b in bad['minecraft:geometry'][0]['bones'] if b['name']=='group5')['cubes'][0]['origin'][2] += .1
+        with self.assertRaisesRegex(ValueError,'door-back source'):
+            converter.separate_dishwasher_drawer_faces(bad)
+        clips = converter.read_json(converter.ASSETS / 'animations/dishwasher.animation.json')['animations']
+        count = 0
+        for phase,name in {0:None,1:'empty_in',2:'dirty_in',3:'washing',4:'clear_out',5:'clear_out',6:'empty_out'}.items():
+            for frame in ([0] if phase in (0,5) else range(16)):
+                clip=clips[name] if name else {};length=clip.get('animation_length',0)
+                seconds=length if phase==5 else length*frame/(16 if phase==3 else 15)
+                original=converter.bake_pose(source,clip,seconds,'geometry.test')
+                repaired=copy.deepcopy(original);converter.separate_dishwasher_door_back(repaired)
+                before=next(b for b in original['minecraft:geometry'][0]['bones'] if b['name']=='group5')['cubes'][0]
+                after=next(b for b in repaired['minecraft:geometry'][0]['bones'] if b['name']=='group5')['cubes'][0]
+                with self.subTest(phase=phase,frame=frame):
+                    self.assertEqual(before['origin'],after['origin'])
+                    self.assertEqual(before['size'][:2],after['size'][:2])
+                    self.assertEqual(before['uv'],after['uv'])
+                    self.assertGreater(before['size'][2]-after['size'][2],.01)
+                    self.assertLess(before['size'][2]-after['size'][2],.02)
+                    after['size'][2]=before['size'][2]
+                    self.assertEqual(original,repaired,'only posed door thickness changes; all front vertices, poses and other cubes stay exact')
+                count+=1
+        self.assertEqual(count,82)
+        for thickness in (0, -1, 1e-8, float('nan'), float('inf')):
+            invalid = copy.deepcopy(source)
+            next(b for b in invalid['minecraft:geometry'][0]['bones'] if b['name']=='group5')['cubes'][0]['size'][2] = thickness
+            with self.subTest(invalid_thickness=thickness), self.assertRaises(ValueError):
+                converter.separate_dishwasher_door_back(invalid)
+
+    def test_axis_inset_crops_signed_and_rotated_uvs_without_stretching(self):
+        cube = {'origin':[0,0,0],'size':[2,2,2],'uv':{
+            'east':{'uv':[10,4],'uv_size':[-8,6]},
+            'up':{'uv':[2,3],'uv_size':[4,-8],'uv_rotation':90},
+            'north':{'uv':[1,2],'uv_size':[3,4]}}}
+        converter.inset_cube_axis(cube,2,.25)
+        self.assertEqual(cube['uv']['east'],{'uv':[9,4],'uv_size':[-6,6]})
+        self.assertEqual(cube['uv']['up'],{'uv':[2.5,3],'uv_size':[3,-8],'uv_rotation':90})
+        self.assertEqual(cube['uv']['north'],{'uv':[1,2],'uv_size':[3,4]})
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -81,14 +81,14 @@
                 },
                 "up": {
                   "uv": [
-                    0,
-                    0
+                    2,
+                    0.5
                   ],
                   "uv_size": [
-                    1.2,
-                    1.2
+                    12,
+                    3
                   ],
-                  "material_instance": "ordertocook_block_food_plate_variants"
+                  "material_instance": "ordertocook_block_food_plate_stains_baked"
                 },
                 "down": {
                   "uv": [
@@ -98,31 +98,6 @@
                   "uv_size": [
                     1.2,
                     -1.2
-                  ],
-                  "material_instance": "ordertocook_block_food_plate_variants"
-                }
-              }
-            },
-            {
-              "origin": [
-                -6,
-                1.01563,
-                -6
-              ],
-              "size": [
-                12,
-                0.0,
-                12
-              ],
-              "uv": {
-                "up": {
-                  "uv": [
-                    0,
-                    2.6
-                  ],
-                  "uv_size": [
-                    1.2,
-                    1.2
                   ],
                   "material_instance": "ordertocook_block_food_plate_variants"
                 }

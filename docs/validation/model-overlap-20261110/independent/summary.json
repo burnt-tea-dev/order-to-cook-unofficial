@@ -1,0 +1,26 @@
+{
+  "baseline_commit": "a4176b193294d8f57234b3b316ad6b092acf5d5b",
+  "geometry_count": 450,
+  "geometry_file_count": 410,
+  "baseline_raw_pairs": 2977,
+  "candidate_raw_pairs": 2774,
+  "unused_identifiers": 9,
+  "unused_raw_pairs": 203,
+  "same_facing_differing_exposed_sample_records": {
+    "baseline": 33,
+    "candidate": 0
+  },
+  "limits": "Finite deterministic offline detection. No native, all-view or continuous-time acceptance.",
+  "customer_samples": {
+    "poses": 170,
+    "clips": 15,
+    "rigs": 2,
+    "poses_with_candidates": 71,
+    "pair_instances": 311
+  },
+  "assembled_fridge": {
+    "paired_states": 88,
+    "cross_half_pairs": 16,
+    "same_facing_pairs": 0
+  }
+}

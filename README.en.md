@@ -2,6 +2,8 @@
 
 [简体中文](README.zh-CN.md) · [繁體中文](README.md) · **English**
 
+0.1.53-alpha.1 audits all 450 geometry identifiers and narrowly repairs the duplicate chair leg, 82 dishwasher drawer poses, meal stages 5/6, visor joins and motorcycle chest underside. Original textures and gameplay are retained, with real cloud Blockbench comparisons. Customer animation seams and the stage-2 two-sided material question remain unresolved. This is not an all-flicker fix or native acceptance. [Repairs, screenshots and remaining issues](docs/validation/model-overlap-20261110/README.md). The follow-up also separates the closed dishwasher door back from its basket and bakes 39 staged-plate stains into their top surfaces using exact source pixels, removing competing thin layers. All four layouts and both geometry paths are tested, with additional real Blockbench photographs.
+
 0.1.52-alpha.1 follows Java PACK when the counter output is occupied: drop the complete bag while retaining the existing block or meal. Plating still needs free space. Existing ingredients, packaging settings and order proofs are retained; known drop failures compensate this transaction. Source regressions pass; new Native/client behavior is not yet observed. [Behavior and scope](docs/PARITY.md#受阻台面的打包掉袋0152).
 
 0.1.51-alpha.1 source recovers loaded unsafe delivery addresses while retaining the original order, parcel proof, deadline and accepted reward. An existing bag updates only its generated coordinate lore when used. Unknown chunks and existing customers/anchors retain their addresses. See [PARITY](docs/PARITY.md#已接外送單的壞地址恢復0151) for behavior and unverified Native/client scope.

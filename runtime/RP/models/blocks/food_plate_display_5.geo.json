@@ -81,14 +81,14 @@
                 },
                 "up": {
                   "uv": [
-                    0,
-                    0
+                    2,
+                    4.5
                   ],
                   "uv_size": [
-                    1.2,
-                    1.2
+                    12,
+                    3
                   ],
-                  "material_instance": "ordertocook_block_food_plate_variants"
+                  "material_instance": "ordertocook_block_food_plate_stains_baked"
                 },
                 "down": {
                   "uv": [
@@ -98,31 +98,6 @@
                   "uv_size": [
                     1.2,
                     -1.2
-                  ],
-                  "material_instance": "ordertocook_block_food_plate_variants"
-                }
-              }
-            },
-            {
-              "origin": [
-                -6,
-                1.01563,
-                0
-              ],
-              "size": [
-                12,
-                0.0,
-                6
-              ],
-              "uv": {
-                "up": {
-                  "uv": [
-                    0,
-                    2.6
-                  ],
-                  "uv_size": [
-                    1.2,
-                    0.6
                   ],
                   "material_instance": "ordertocook_block_food_plate_variants"
                 }
@@ -212,12 +187,12 @@
               "origin": [
                 -3.41127,
                 0.32145,
-                2.25
+                2.265
               ],
               "size": [
                 2.0,
                 2.0,
-                2.0
+                1.97
               ],
               "uv": {
                 "north": {
@@ -233,11 +208,11 @@
                 },
                 "east": {
                   "uv": [
-                    0.2,
+                    0.2015,
                     5.9
                   ],
                   "uv_size": [
-                    0.2,
+                    0.197,
                     0.2
                   ],
                   "material_instance": "ordertocook_block_food_plate_variants"
@@ -255,11 +230,11 @@
                 },
                 "west": {
                   "uv": [
-                    5.9,
+                    5.9015,
                     1
                   ],
                   "uv_size": [
-                    0.2,
+                    0.197,
                     0.2
                   ],
                   "material_instance": "ordertocook_block_food_plate_variants"
@@ -267,22 +242,22 @@
                 "up": {
                   "uv": [
                     5.9,
-                    1.2
+                    1.2015
                   ],
                   "uv_size": [
                     0.2,
-                    0.2
+                    0.197
                   ],
                   "material_instance": "ordertocook_block_food_plate_variants"
                 },
                 "down": {
                   "uv": [
                     1.4,
-                    6.1
+                    6.0985
                   ],
                   "uv_size": [
                     0.2,
-                    -0.2
+                    -0.197
                   ],
                   "material_instance": "ordertocook_block_food_plate_variants"
                 }
@@ -302,12 +277,12 @@
               "origin": [
                 3.25902,
                 -0.44391,
-                2.25
+                2.265
               ],
               "size": [
                 2.0,
                 2.0,
-                2.0
+                1.97
               ],
               "uv": {
                 "north": {
@@ -323,11 +298,11 @@
                 },
                 "east": {
                   "uv": [
-                    3.6,
+                    3.6015,
                     5.5
                   ],
                   "uv_size": [
-                    0.2,
+                    0.197,
                     0.2
                   ],
                   "material_instance": "ordertocook_block_food_plate_variants"
@@ -345,11 +320,11 @@
                 },
                 "west": {
                   "uv": [
-                    4.8,
+                    4.8015,
                     5.7
                   ],
                   "uv_size": [
-                    0.2,
+                    0.197,
                     0.2
                   ],
                   "material_instance": "ordertocook_block_food_plate_variants"
@@ -357,22 +332,22 @@
                 "up": {
                   "uv": [
                     5.8,
-                    3.5
+                    3.5015
                   ],
                   "uv_size": [
                     0.2,
-                    0.2
+                    0.197
                   ],
                   "material_instance": "ordertocook_block_food_plate_variants"
                 },
                 "down": {
                   "uv": [
                     5,
-                    6
+                    5.9985
                   ],
                   "uv_size": [
                     0.2,
-                    -0.2
+                    -0.197
                   ],
                   "material_instance": "ordertocook_block_food_plate_variants"
                 }
@@ -392,12 +367,12 @@
               "origin": [
                 1.31559,
                 0.09049,
-                0
+                0.015
               ],
               "size": [
                 2.0,
                 2.0,
-                2
+                1.97
               ],
               "uv": {
                 "north": {
@@ -413,11 +388,11 @@
                 },
                 "east": {
                   "uv": [
-                    3.6,
+                    3.6015,
                     5.5
                   ],
                   "uv_size": [
-                    0.2,
+                    0.197,
                     0.2
                   ],
                   "material_instance": "ordertocook_block_food_plate_variants"
@@ -435,11 +410,11 @@
                 },
                 "west": {
                   "uv": [
-                    4.8,
+                    4.8015,
                     5.7
                   ],
                   "uv_size": [
-                    0.2,
+                    0.197,
                     0.2
                   ],
                   "material_instance": "ordertocook_block_food_plate_variants"
@@ -447,22 +422,22 @@
                 "up": {
                   "uv": [
                     5.8,
-                    3.5
+                    3.5015
                   ],
                   "uv_size": [
                     0.2,
-                    0.2
+                    0.197
                   ],
                   "material_instance": "ordertocook_block_food_plate_variants"
                 },
                 "down": {
                   "uv": [
                     5,
-                    6
+                    5.9985
                   ],
                   "uv_size": [
                     0.2,
-                    -0.2
+                    -0.197
                   ],
                   "material_instance": "ordertocook_block_food_plate_variants"
                 }
@@ -482,12 +457,12 @@
               "origin": [
                 -5.16335,
                 -0.67488,
-                0
+                0.015
               ],
               "size": [
                 2.0,
                 2.0,
-                2
+                1.97
               ],
               "uv": {
                 "north": {
@@ -503,11 +478,11 @@
                 },
                 "east": {
                   "uv": [
-                    0.2,
+                    0.2015,
                     5.9
                   ],
                   "uv_size": [
-                    0.2,
+                    0.197,
                     0.2
                   ],
                   "material_instance": "ordertocook_block_food_plate_variants"
@@ -525,11 +500,11 @@
                 },
                 "west": {
                   "uv": [
-                    5.9,
+                    5.9015,
                     1
                   ],
                   "uv_size": [
-                    0.2,
+                    0.197,
                     0.2
                   ],
                   "material_instance": "ordertocook_block_food_plate_variants"
@@ -537,22 +512,22 @@
                 "up": {
                   "uv": [
                     5.9,
-                    1.2
+                    1.2015
                   ],
                   "uv_size": [
                     0.2,
-                    0.2
+                    0.197
                   ],
                   "material_instance": "ordertocook_block_food_plate_variants"
                 },
                 "down": {
                   "uv": [
                     1.4,
-                    6.1
+                    6.0985
                   ],
                   "uv_size": [
                     0.2,
-                    -0.2
+                    -0.197
                   ],
                   "material_instance": "ordertocook_block_food_plate_variants"
                 }

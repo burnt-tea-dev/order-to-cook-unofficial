@@ -1,0 +1,54 @@
+{
+  "files": {
+    "REVIEW.md": {
+      "sha256": "72b13c3ee403dbb1c2a38ca57aecb02bf64c56b22d75bce707bba818a019c0e3",
+      "bytes": 10078
+    },
+    "summary.json": {
+      "sha256": "76b0f7f76b959bfa6aea324a90ea4fcaab8ee2b695285ea3ac7ecab998401690",
+      "bytes": 687
+    },
+    "input-identities.json": {
+      "sha256": "1e4422be02914d1ddc3b63808225ed77f94b1c517206d2c6f2d807584abb57e6",
+      "bytes": 84369
+    },
+    "census.py": {
+      "sha256": "2aeb204aa640c8acdd96fe174fa4f0733cee9580c1cc27d6c3986b475eab847c",
+      "bytes": 4091
+    },
+    "classify.py": {
+      "sha256": "b36b820525cbfecb6540d531c3481ddf0a2c0bd46a54d842c8d5440210c84c82",
+      "bytes": 8129
+    },
+    "dynamic_scan.py": {
+      "sha256": "73546fac0ce7991ce190ab87c28c057cab9c78e3dc4bbd510c6f22044a7e7186",
+      "bytes": 8738
+    },
+    "fridge_pairs.py": {
+      "sha256": "102a65bd952a103044bbf796df99d2e0f82449fbe6aae085edc6f8ab469db99a",
+      "bytes": 1092
+    },
+    "baseline-witnesses.json": {
+      "sha256": "f73100943236031281dfe42d37eeb6bac19fdd8d37d99f1e908e83afd5c0754b",
+      "bytes": 29472
+    },
+    "retained-opposite-witnesses.json": {
+      "sha256": "15e0ae549a1f8f4f90f95b7cf48ca9eee350370598ea6473137ebf99324ac2ad",
+      "bytes": 1807
+    },
+    "customer-samples-summary.json": {
+      "sha256": "1561abee5c8b5ab2c1ca26dfbe20e4c57a982e9603d3ee0136cf4a4b8f17ba7a",
+      "bytes": 106828
+    },
+    "fridge-cross-half.json": {
+      "sha256": "4245eaeb166477cd09dc5e610dba8181d50acfa4001bb969c2b6d4cf5e7b70d8",
+      "bytes": 23247
+    }
+  },
+  "reproducible_full_outputs": {
+    "candidate-census.json": "c82555f1575bc07d9265b876b0f72584a1970c0b220245cc1bb2a595362a06c4",
+    "candidate-classified.json": "b0e8660deeeeb95cd3570e5725eb555aa41cf223eb5343ea96b8e7190b102bcf",
+    "baseline-classified.json": "477a104b59abbe05bcfeb3ed0529e2b1cd591e62eae95aefce8df4d1c30d79d4",
+    "customer-samples.json": "6406d04eafddf34a61bb1580c4ea2f32e86a7a03ec4349eeb6de929da76b8224"
+  }
+}

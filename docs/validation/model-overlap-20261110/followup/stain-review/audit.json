@@ -1,0 +1,751 @@
+{
+  "source_sha256": "b233e3750f620834648f08386244ddeceeb6d0ce2f439315e02d424ed79eb2e1",
+  "models": 40,
+  "stained": 39,
+  "unchanged_no_stain": "9_4",
+  "layout_count": 4,
+  "physical_texel_checks": 5616,
+  "sheet_dimensions": [
+    16,
+    64
+  ],
+  "dining_atlas_raw_width_after_new_sheet": 220,
+  "dining_atlas_dimensions_after_new_sheet": [
+    256,
+    256
+  ],
+  "variants": [
+    {
+      "slot": 0,
+      "names": [
+        "1_1",
+        "1_2",
+        "1_3",
+        "1_4",
+        "3_1",
+        "3_2",
+        "3_3",
+        "3_4",
+        "4_1",
+        "4_2",
+        "4_3",
+        "4_4",
+        "5_1",
+        "5_2",
+        "5_3",
+        "5_4",
+        "6_1",
+        "6_2",
+        "6_3",
+        "6_4",
+        "7_1",
+        "7_2",
+        "7_3",
+        "7_4",
+        "9_1",
+        "9_2",
+        "9_3"
+      ],
+      "alpha": {
+        "0": 107,
+        "255": 37
+      },
+      "outside_opaque": 0,
+      "layout": [
+        2,
+        2,
+        14,
+        14,
+        1.2,
+        3.8,
+        0,
+        2.6
+      ],
+      "java_up_uv": [
+        14,
+        3.5,
+        2,
+        0.5
+      ],
+      "bedrock_up_uv": [
+        2,
+        0.5
+      ],
+      "bedrock_up_uv_size": [
+        12,
+        3
+      ]
+    },
+    {
+      "slot": 1,
+      "names": [
+        "2_1",
+        "2_2",
+        "2_3",
+        "2_4"
+      ],
+      "alpha": {
+        "0": 126,
+        "255": 18
+      },
+      "outside_opaque": 0,
+      "layout": [
+        2,
+        8,
+        14,
+        14,
+        1.2,
+        3.2,
+        0,
+        2.6
+      ],
+      "java_up_uv": [
+        14,
+        7.5,
+        2,
+        4.5
+      ],
+      "bedrock_up_uv": [
+        2,
+        4.5
+      ],
+      "bedrock_up_uv_size": [
+        12,
+        3
+      ]
+    },
+    {
+      "slot": 2,
+      "names": [
+        "8_1",
+        "8_2",
+        "8_3",
+        "8_4"
+      ],
+      "alpha": {
+        "0": 65,
+        "255": 79
+      },
+      "outside_opaque": 0,
+      "layout": [
+        2,
+        2,
+        14,
+        14,
+        5.1,
+        3.7,
+        3.9,
+        4.9
+      ],
+      "java_up_uv": [
+        14,
+        11.5,
+        2,
+        8.5
+      ],
+      "bedrock_up_uv": [
+        2,
+        8.5
+      ],
+      "bedrock_up_uv_size": [
+        12,
+        3
+      ]
+    },
+    {
+      "slot": 3,
+      "names": [
+        "10_1",
+        "10_2",
+        "10_3",
+        "10_4"
+      ],
+      "alpha": {
+        "0": 107,
+        "255": 37
+      },
+      "outside_opaque": 0,
+      "layout": [
+        2,
+        1,
+        14,
+        13,
+        1.2,
+        3.8,
+        0,
+        2.6
+      ],
+      "java_up_uv": [
+        14,
+        15.5,
+        2,
+        12.5
+      ],
+      "bedrock_up_uv": [
+        2,
+        12.5
+      ],
+      "bedrock_up_uv_size": [
+        12,
+        3
+      ]
+    }
+  ],
+  "models_detail": [
+    {
+      "model": "1_1",
+      "stage": 1,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/1_1.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "1_2",
+      "stage": 2,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/1_2.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "1_3",
+      "stage": 3,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/1_3.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "1_4",
+      "stage": 4,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/1_4.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "2_1",
+      "stage": 5,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_1.json",
+      "stain_index": 1,
+      "slot": 1,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 126,
+        "255": 18
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "2_2",
+      "stage": 6,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_2.json",
+      "stain_index": 1,
+      "slot": 1,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 126,
+        "255": 18
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "2_3",
+      "stage": 7,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_3.json",
+      "stain_index": 1,
+      "slot": 1,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 126,
+        "255": 18
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "2_4",
+      "stage": 8,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/2_4.json",
+      "stain_index": 1,
+      "slot": 1,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 126,
+        "255": 18
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "3_1",
+      "stage": 9,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/3_1.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "3_2",
+      "stage": 10,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/3_2.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "3_3",
+      "stage": 11,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/3_3.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "3_4",
+      "stage": 12,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/3_4.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "4_1",
+      "stage": 13,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/4_1.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "4_2",
+      "stage": 14,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/4_2.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "4_3",
+      "stage": 15,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/4_3.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "4_4",
+      "stage": 16,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/4_4.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "5_1",
+      "stage": 17,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/5_1.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "5_2",
+      "stage": 18,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/5_2.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "5_3",
+      "stage": 19,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/5_3.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "5_4",
+      "stage": 20,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/5_4.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "6_1",
+      "stage": 21,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/6_1.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "6_2",
+      "stage": 22,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/6_2.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "6_3",
+      "stage": 23,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/6_3.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "6_4",
+      "stage": 24,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/6_4.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "7_1",
+      "stage": 25,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/7_1.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "7_2",
+      "stage": 26,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/7_2.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "7_3",
+      "stage": 27,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/7_3.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "7_4",
+      "stage": 28,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/7_4.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "8_1",
+      "stage": 29,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/8_1.json",
+      "stain_index": 1,
+      "slot": 2,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 65,
+        "255": 79
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "8_2",
+      "stage": 30,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/8_2.json",
+      "stain_index": 1,
+      "slot": 2,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 65,
+        "255": 79
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "8_3",
+      "stage": 31,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/8_3.json",
+      "stain_index": 1,
+      "slot": 2,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 65,
+        "255": 79
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "8_4",
+      "stage": 32,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/8_4.json",
+      "stain_index": 1,
+      "slot": 2,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 65,
+        "255": 79
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "9_1",
+      "stage": 33,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/9_1.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "9_2",
+      "stage": 34,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/9_2.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "9_3",
+      "stage": 35,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/9_3.json",
+      "stain_index": 1,
+      "slot": 0,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "9_4",
+      "stage": 36,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/9_4.json"
+    },
+    {
+      "model": "10_1",
+      "stage": 37,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/10_1.json",
+      "stain_index": 13,
+      "slot": 3,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "10_2",
+      "stage": 38,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/10_2.json",
+      "stain_index": 11,
+      "slot": 3,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "10_3",
+      "stage": 39,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/10_3.json",
+      "stain_index": 8,
+      "slot": 3,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    },
+    {
+      "model": "10_4",
+      "stage": 40,
+      "source": "upstream/reference/common/src/main/resources/assets/ordertocook/models/block/food_plate_anim/10_4.json",
+      "stain_index": 4,
+      "slot": 3,
+      "base_y": 1,
+      "stain_y": 1.01563,
+      "alpha_counts": {
+        "0": 107,
+        "255": 37
+      },
+      "opaque_outside_plate": 0
+    }
+  ],
+  "limitations": [
+    "CPU source/texel audit only; no native client, depth precision, lighting, mipmap, large-coordinate, or motion test.",
+    "Flattening deliberately removes the original 0.01563 model-pixel layer height/parallax; remaining food geometry and food decals are untouched."
+  ]
+}

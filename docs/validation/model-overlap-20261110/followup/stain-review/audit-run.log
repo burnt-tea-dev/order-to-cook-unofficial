@@ -1,0 +1,198 @@
+{
+  "source_sha256": "b233e3750f620834648f08386244ddeceeb6d0ce2f439315e02d424ed79eb2e1",
+  "models": 40,
+  "stained": 39,
+  "unchanged_no_stain": "9_4",
+  "layout_count": 4,
+  "physical_texel_checks": 5616,
+  "sheet_dimensions": [
+    16,
+    64
+  ],
+  "dining_atlas_raw_width_after_new_sheet": 220,
+  "dining_atlas_dimensions_after_new_sheet": [
+    256,
+    256
+  ],
+  "limitations": [
+    "CPU source/texel audit only; no native client, depth precision, lighting, mipmap, large-coordinate, or motion test.",
+    "Flattening deliberately removes the original 0.01563 model-pixel layer height/parallax; remaining food geometry and food decals are untouched."
+  ]
+}
+[
+  {
+    "slot": 0,
+    "names": [
+      "1_1",
+      "1_2",
+      "1_3",
+      "1_4",
+      "3_1",
+      "3_2",
+      "3_3",
+      "3_4",
+      "4_1",
+      "4_2",
+      "4_3",
+      "4_4",
+      "5_1",
+      "5_2",
+      "5_3",
+      "5_4",
+      "6_1",
+      "6_2",
+      "6_3",
+      "6_4",
+      "7_1",
+      "7_2",
+      "7_3",
+      "7_4",
+      "9_1",
+      "9_2",
+      "9_3"
+    ],
+    "alpha": {
+      "0": 107,
+      "255": 37
+    },
+    "outside_opaque": 0,
+    "layout": [
+      2,
+      2,
+      14,
+      14,
+      1.2,
+      3.8,
+      0,
+      2.6
+    ],
+    "java_up_uv": [
+      14,
+      3.5,
+      2,
+      0.5
+    ],
+    "bedrock_up_uv": [
+      2,
+      0.5
+    ],
+    "bedrock_up_uv_size": [
+      12,
+      3
+    ]
+  },
+  {
+    "slot": 1,
+    "names": [
+      "2_1",
+      "2_2",
+      "2_3",
+      "2_4"
+    ],
+    "alpha": {
+      "0": 126,
+      "255": 18
+    },
+    "outside_opaque": 0,
+    "layout": [
+      2,
+      8,
+      14,
+      14,
+      1.2,
+      3.2,
+      0,
+      2.6
+    ],
+    "java_up_uv": [
+      14,
+      7.5,
+      2,
+      4.5
+    ],
+    "bedrock_up_uv": [
+      2,
+      4.5
+    ],
+    "bedrock_up_uv_size": [
+      12,
+      3
+    ]
+  },
+  {
+    "slot": 2,
+    "names": [
+      "8_1",
+      "8_2",
+      "8_3",
+      "8_4"
+    ],
+    "alpha": {
+      "0": 65,
+      "255": 79
+    },
+    "outside_opaque": 0,
+    "layout": [
+      2,
+      2,
+      14,
+      14,
+      5.1,
+      3.7,
+      3.9,
+      4.9
+    ],
+    "java_up_uv": [
+      14,
+      11.5,
+      2,
+      8.5
+    ],
+    "bedrock_up_uv": [
+      2,
+      8.5
+    ],
+    "bedrock_up_uv_size": [
+      12,
+      3
+    ]
+  },
+  {
+    "slot": 3,
+    "names": [
+      "10_1",
+      "10_2",
+      "10_3",
+      "10_4"
+    ],
+    "alpha": {
+      "0": 107,
+      "255": 37
+    },
+    "outside_opaque": 0,
+    "layout": [
+      2,
+      1,
+      14,
+      13,
+      1.2,
+      3.8,
+      0,
+      2.6
+    ],
+    "java_up_uv": [
+      14,
+      15.5,
+      2,
+      12.5
+    ],
+    "bedrock_up_uv": [
+      2,
+      12.5
+    ],
+    "bedrock_up_uv_size": [
+      12,
+      3
+    ]
+  }
+]

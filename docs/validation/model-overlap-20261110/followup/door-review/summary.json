@@ -1,0 +1,35 @@
+{
+  "baseline_commit": "48ef920779cd7d76244061bad9dd31ffc2f6b57a",
+  "geometry_file_count": 410,
+  "changed_files": 82,
+  "unchanged_geometry_files": 328,
+  "all_82_match_candidate_json": true,
+  "candidate_byte_matches": 82,
+  "actual_make_blocks_matches_runtime_states": 82,
+  "front_physical_vertices_exact": true,
+  "all_uv_pivots_rotations_exact": true,
+  "all_other_fields_exact": true,
+  "baseline_door_thickness_range": [
+    0.920012,
+    1.000178
+  ],
+  "reviewed_door_thickness_range": [
+    0.906212,
+    0.985175
+  ],
+  "door_retreat_range": [
+    0.013800000000000034,
+    0.015002999999999989
+  ],
+  "baseline_pair_coplanar_poses": 25,
+  "reviewed_pair_coplanar_poses": 0,
+  "baseline_dishwasher_coplanar_pairs": 200,
+  "reviewed_dishwasher_coplanar_pairs": 175,
+  "new_coplanar_pair_instances": 0,
+  "enlarged_coplanar_pair_instances": 0,
+  "removed_coplanar_pair_instances": 25,
+  "source_and_posed_negative_guard_probes_rejected": 8,
+  "limits": "Offline finite geometry verification. No game/editor/native checks, alpha-threshold acceptance, all-view or temporal flicker claim. Guard probes are synthetic inputs, not source data.",
+  "recorded_local_baseline_commit": "4cc310c57f0fa48cc450526458c666d3a30521af",
+  "baseline_tree": "e789e28e00751d54d17e94853efdef87500e511a"
+}

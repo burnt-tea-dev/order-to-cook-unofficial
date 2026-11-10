@@ -1,0 +1,1904 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> order-to-cook-bedrock-unofficial@0.1.53-alpha.1 verify:full
+> npm run test:full && npm run check && npm run build
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> order-to-cook-bedrock-unofficial@0.1.53-alpha.1 test:full
+> node tools/run_tests.mjs --full
+
+Running full gameplay: 59 test files
+✔ all generated block meshes stay strictly within the observed native envelope and 30px extent (220.113552ms)
+✔ serialized block geometry remains bounded with Float32 arithmetic in all four facings (272.662301ms)
+✔ corrected fridge depth swing extremes retain a positive inward rounding guard (0.753668ms)
+[OrderToCook] minecraft:overworld_0_0_0: Error: upper chunk unavailable
+[OrderToCook] minecraft:overworld_0_0_0: Error: upper chunk unavailable
+✔ door motion takes 20 loaded ticks and reverses from its current angle (3.787391ms)
+✔ dishwasher frames derive from saved phase and timer including the second wash loop (0.42328ms)
+✔ a full close selects the original close clip and reopening reverses that same visible clip (4.47134ms)
+✔ separate native refrigerator events count all viewers and preserve both real containers (12.884673ms)
+✔ reopening a closing native compartment reverses without an endpoint jump (2.86662ms)
+✔ unload clears native viewer bookkeeping and closes on reload without replacing cargo (6.78427ms)
+✔ player departure removes only that native viewer and leaves the other compartment open (4.241128ms)
+✔ a loaded fridge closes stale persisted frames after service restart without touching its native inventory (2.559756ms)
+✔ dishwasher unload and restart resume the persisted pose and generate no second batch (11.951453ms)
+✔ shared root selector uses last active controller, including neutral lower samples (0.642512ms)
+✔ a closing half drives the fully open half and preserves native inventory identity (2.605602ms)
+✔ staggered closes use lower precedence even while its root is neutral (1.412602ms)
+✔ closing-clip reversal keeps bounded behavior and updates the shared root (1.798413ms)
+✔ missing upper half cannot leave its deformation on the remaining half (1.469702ms)
+✔ restart and unload derive shared root from persisted door clips, not stale root states (2.773935ms)
+✔ partial root write failure retries next tick and idle neutral poses do not rewrite (6.221116ms)
+✔ throwing upper lookup clears its shared deformation without touching cargo (4.482012ms)
+✔ throwing upper lookup clears viewers and restores persisted motion instead of its old cache (1.912957ms)
+✔ handwashing uses source half-second/second cues, basin positions and 10–15 bubbles plus two splashes (12.12473ms)
+✔ four orientations rotate the off-centre basin instead of spraying the rim (0.526244ms)
+✔ cancelled washing stops feedback and preserves its dirty plate (2.249748ms)
+✔ sixteen-plate dishwasher repeats original wash sound and emits white sparkle/door bursts, never water (4.682463ms)
+✔ a particle API failure cannot cancel a wash or duplicate its plate (12.069742ms)
+✔ unstackable parcel transfers with its proof, name and lore intact (3.296864ms)
+✔ a changed parcel proof invalidates an old form selection (0.934281ms)
+✔ full upper fridge refuses a stack instead of spilling into lower slots (1.798896ms)
+✔ bounded transfer fills existing stack before using an empty slot (2.11756ms)
+✔ failed destination write rolls source and destination back (1.175124ms)
+✔ saved unloaded inventory is never replaced by a new empty helper (2.350306ms)
+✔ double fridge initialization preserves the 27/54 native inventories without creating helpers (1.460241ms)
+✔ three stove lanes cook together after 200 ticks using one fuel supply (34.014549ms)
+✔ blocked stove outputs preserve inputs and do not ignite new fuel (14.495911ms)
+✔ sixteen-plate washer follows 30+80+24 ticks and produces plates once (10.731126ms)
+✔ washer save failures restore both the complete item stacks and the batch state before retry (4.966753ms)
+✔ washing a sink requires staying empty-handed and facing it for 80 ticks (5.085728ms)
+✔ looking away cancels sink washing without deleting the dirty plate (1.009825ms)
+✔ native fridge entry rechecks permission and revocation clears visual viewers without moving cargo (2.680488ms)
+✔ staff permission revoked during washing leaves the dirty plate in the sink (1.024221ms)
+✔ init called after worldLoad starts ticking without waiting for another worldLoad (0.667471ms)
+✔ orphan recovery runs when five-tick intervals are offset from tick zero (0.733241ms)
+✔ all 258 generated appliance poses fit the stable bounds after parent rotations (115.014652ms)
+✔ independent refrigerator meshes retain the whole lower door across the cabinet seam (5.720452ms)
+✔ dishwasher terminal poses keep the original drawer translation and only the appropriate dish (0.792275ms)
+✔ all dining stages use one valid entity atlas instead of block material names (9.784736ms)
+✔ customer actions have seven distinct original clips and no automatic completed-action replay (1.315951ms)
+✔ stage zero uses original placed food and its maked clip rather than a plain clean plate (11.710019ms)
+✔ customer original bone tracks remain exact while action clocks seek and keep terminal invisibility (5.193504ms)
+✔ playback raises custom and vanilla cues by twenty percent without changing source cue data (5.988633ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ the plate-shelf direct sound uses the same playback adjustment once (302.260175ms)
+✔ fridge compartment/direction sounds use all four Java pitches at the lower anchor (0.630265ms)
+✔ customer cue counts/origins match source packets and use existing vanilla sound aliases (0.642669ms)
+✔ customer runtime emits each portal burst once, with its explicit count and no new inventory effects (4.911393ms)
+✔ motorcycle hit puff uses body height and original three-smoke/two-poof counts (0.255925ms)
+✔ generated feedback definitions use explicit counts with self-terminating emitters and native atlas sprites (21.227061ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ placed delivery bag plays ten source ticks once and preserves its physical proof (304.811276ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ countertop delivery output starts the same bag animation after the transaction commits (226.587123ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ board cylinder includes horizontal edge and vertical limit 24,8,0 (473.312364ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ board cylinder includes horizontal edge and vertical limit -24,-8,0 (179.557905ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ board cylinder includes horizontal edge and vertical limit 0,8,24 (232.520385ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ board cylinder includes horizontal edge and vertical limit 0,-8,-24 (437.885643ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ board scan excludes outside cylinder 24,0,1 (368.113965ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ board scan excludes outside cylinder -24,0,-1 (362.211929ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ board scan excludes outside cylinder 17,0,17 (248.480913ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ board scan excludes outside cylinder 0,9,0 (217.575724ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ board scan excludes outside cylinder 0,-9,0 (318.323621ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ initial scan takes highest nutrition, then full 3D distance rather than registration order (372.0401ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ equal nutrition and distance follows Java x/z/y scan order, independent of registration (259.107441ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ a valid bound board survives a richer or nearer board, including its empty-menu state (272.179544ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ confirmed removal reselects the best eligible board and persists the new binding (214.566711ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ legacy rectangle-corner binding is replaced by an in-cylinder board (439.744448ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ revoked staff board cannot remain bound or contribute upgrade nutrition (248.65363ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ upgrade and benefit use the highest single nearby board while generated dishes use the bound menu (317.252306ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ nearby board nutrition is a maximum, never a sum of different menus (433.838927ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ removing an unbound rich board lowers offers, keeps bound dishes and committed orders unchanged (253.856926ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ nearby-only nutrition changes persist and failed writes retry without changing the binding (432.974157ms)
+✔ core legacy records without nearby snapshot keep their previous menu-based upgrade behavior (1.139959ms)
+✔ core nearby snapshot changes upgrade and benefit, not the selected menu total (0.365168ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ equal-distance ties retain Java z/y order for [[0,0,5],[0,5,0]] (170.639558ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ equal-distance ties retain Java z/y order for [[0,5,0],[0,-5,0]] (387.087953ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ derived nearby nutrition and binding do not travel with a portable machine item (271.337656ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ unavailable unbound rich board (throw) cannot grant stale nutrition (168.687308ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ unavailable unbound rich board (undefined) cannot grant stale nutrition (199.673494ms)
+✔ locked progression labels remain readable without altering counters (1.762106ms)
+✔ unsupported progression labels retain their explicit unsupported status (0.340382ms)
+✔ unlocked progression colour and neutral buttons are unchanged (0.203899ms)
+✔ grey replacement preserves text, formatting resets and is idempotent (0.198019ms)
+✔ native RawMessage labels retain identity and localization data (1.763654ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ ticket/dine_in: unselected item crosses boundaries once and keeps full metadata (335.262597ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ bag/dine_in: unselected item crosses boundaries once and keeps full metadata (315.078488ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ bag/delivery: unselected item crosses boundaries once and keeps full metadata (300.640752ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ first observation selects only current severity, including exact boundary and beyond (2594.1589ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ flags belong to each physical item, survive slot/player transfer and serialization reload (540.27248ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ freshly prepared bag starts new flags instead of inheriting its warned paper (585.429688ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ world storage and dropped items stay silent, retrieval gets only current severity; plates never warn (576.980269ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ terminal, wrong-proof and packed/reprinted papers are silent anti-stale controls (2497.774256ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ history pruning preserves named self-contained bags, suppresses orphan paper, and legacy names use translation (682.907466ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ legacy linked paper and orphan bag adopt the existing clock once, without changing canonical data (611.479387ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ malformed identity, deadline, flags and mismatched deadlines fail closed without rewriting items (2110.378395ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ native slot/property reads and writes can fail independently without loss, flag erasure or state changes (741.574509ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ notification happens after item persistence; failed chat is marked and not replayed (190.150803ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ one pass reads at most 36 slots/player; writes only a new marker or one-time legacy adoption (179.451659ms)
+✔ each supported locale contains original-style named alerts and a customer fallback (2.491022ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ independent negative controls: plates and world-stored bags never notify their former holder (555.177174ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ legitimate large live histories remain eligible with one referenced-record traversal per pass (291.585631ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ failed canonical save and subsequent reload cannot leave a stale terminal-order lookup (171.871076ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ committed item write followed by an exception retains the marker without rolling back or replaying (195.566799ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ a later failed marker write preserves previous flags and retries only at the next pass (166.218539ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ legacy adoption before thresholds writes once; invalid legacy expiry remains untouched (162.743271ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ invalid native players/containers and expanded inventories cannot expand the 36-slot boundary (133.97252ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ new customer-name snapshots are bounded without splitting surrogate pairs; old missing names use canonical data (131.861915ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ fresh per-pass lookup covers reload, array replacement, deletion and unsaved live additions (339.163427ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ registered machine reprint of accepted work is a fresh physical paper with fresh flags (161.565107ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ failed linked-record traversal is attempted once per pass and never treated as missing history (127.409001ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ walk-in acceptance admits the Java cylinder edge 24,-8,0 (487.47169ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ native arrival gate admits the same Java cylinder edge 24,-8,0 (534.72784ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ walk-in acceptance admits the Java cylinder edge -24,-8,0 (330.079289ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ native arrival gate admits the same Java cylinder edge -24,-8,0 (384.515742ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ walk-in acceptance admits the Java cylinder edge 0,-8,24 (304.717054ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ native arrival gate admits the same Java cylinder edge 0,-8,24 (280.131258ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ walk-in acceptance admits the Java cylinder edge 0,-8,-24 (271.758545ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ native arrival gate admits the same Java cylinder edge 0,-8,-24 (213.521642ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ walk-in acceptance admits the Java cylinder edge 24,8,0 (212.452085ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ native arrival gate admits the same Java cylinder edge 24,8,0 (258.874673ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ walk-in acceptance admits the Java cylinder edge -24,8,0 (568.812705ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ native arrival gate admits the same Java cylinder edge -24,8,0 (271.37808ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ walk-in acceptance admits the Java cylinder edge 0,8,24 (614.337691ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ native arrival gate admits the same Java cylinder edge 0,8,24 (308.51437ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ walk-in acceptance admits the Java cylinder edge 0,8,-24 (457.788544ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ native arrival gate admits the same Java cylinder edge 0,8,-24 (448.592717ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ walk-in gates reject outside the cylinder 24,0,1 (358.759489ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ walk-in gates reject outside the cylinder 25,0,0 (317.954107ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ walk-in gates reject outside the cylinder 0,9,0 (225.247708ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ walk-in gates reject outside the cylinder 0,-9,0 (239.988869ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ cylinder option does not enlarge default spherical refrigerator queries (250.413636ms)
+✔ free chairs use equal-width random bins at 0 (3.554815ms)
+✔ free chairs use equal-width random bins at 0.33332 (0.41805ms)
+✔ free chairs use equal-width random bins at 0.3333333333333333 (0.521603ms)
+✔ free chairs use equal-width random bins at 0.66665 (0.475936ms)
+✔ free chairs use equal-width random bins at 0.6666666666666666 (0.240815ms)
+✔ free chairs use equal-width random bins at 0.999999 (0.255303ms)
+✔ random chair pool excludes occupied candidates before drawing (0.754338ms)
+✔ random chair pool excludes above candidates before drawing (0.21462ms)
+✔ random chair pool excludes head candidates before drawing (0.289336ms)
+✔ random chair pool excludes removed candidates before drawing (0.386249ms)
+✔ random chair pool excludes unloaded candidates before drawing (0.330307ms)
+✔ random chair pool excludes dimension candidates before drawing (0.280438ms)
+✔ random chair pool excludes range candidates before drawing (0.210676ms)
+✔ two sequentially spawned customers occupy distinct usable chairs (0.509935ms)
+✔ ordinary machine diners keep the lowest-x chair independent of RNG 0 (0.271831ms)
+✔ ordinary machine diners keep the lowest-x chair independent of RNG 0.5 (0.129484ms)
+✔ ordinary machine diners keep the lowest-x chair independent of RNG 0.999999 (0.106505ms)
+✔ an in-flight chair claim excludes the first seat before its customer is queryable (0.402297ms)
+✔ new restaurants start closed at level zero with four upstream starter dishes (6.90969ms)
+✔ restaurant menus and config copies cannot modify another restaurant or defaults (2.246347ms)
+✔ the vanilla catalog uses canonical Bedrock IDs and explicit nutrition (0.790344ms)
+✔ menu stacks and legacy aliases cannot inflate nutritional requirements (0.409481ms)
+✔ menu operations reject duplicate/non-food dishes and cap unique templates at 150 (5.072939ms)
+✔ order slots retain the upstream level-zero to level-eight progression (0.449448ms)
+✔ higher-level rare tiers add weight before renormalization (1.236324ms)
+✔ a red-tier order selects unique dishes and respects the six-by-six maximum (2.102311ms)
+✔ small/empty menus produce valid orders without asking for unavailable menu kinds (0.723983ms)
+✔ default rewards apply rush and distance before adding nutrition (0.448172ms)
+✔ short/long delivery destinations use the upstream radial ranges (1.673946ms)
+✔ unresolved delivery terrain defers the offer without consuming an ID or changing the restaurant (3.228409ms)
+✔ delivery generation publishes only the resolved candidate and preserves the original radial source (0.847054ms)
+✔ dine-in generation does not request delivery terrain (0.609813ms)
+✔ rush probability uses actual restaurant level even when reward benefits are reduced (0.231287ms)
+✔ normal and walk-in clocks begin at generation, never acceptance (1.226739ms)
+✔ accepting one machine offer cancels its alternatives but preserves independent walk-ins (0.622288ms)
+✔ accepting a walk-in leaves machine offers available (3.806648ms)
+✔ orders cannot skip acceptance or packing (0.548656ms)
+✔ one packed order pays exactly once; replay does not even roll another tip (0.587373ms)
+✔ seated dining preserves the original 10 percent boom boundary and 110/120-tick durations (0.311081ms)
+✔ boom award uses actual restaurant level plus an inclusive one-to-four random bonus (4.239844ms)
+✔ only an explicitly seated plated meal rolls a boom; takeaway timings remain original (0.573785ms)
+✔ known easter-egg customers use the original 60 percent boom branch (0.1712ms)
+✔ one canonical completion records its bonus and animation and cannot reroll after save/reload (1.794958ms)
+✔ packing just before expiry is permitted; delivery at the exact deadline is refused (0.522923ms)
+✔ expired unaccepted offers do not count as failed work (0.212186ms)
+✔ cancelling accepted work is terminal and increments failures only once (0.228113ms)
+✔ refreshing a machine does not discard already accepted or packed work (0.721777ms)
+✔ a refresh with no safe delivery point keeps accepted proof and skips undefined offers (1.0334ms)
+✔ removing menu variety downgrades offered benefits without erasing purchased level (0.481289ms)
+✔ an accepted price is locked even if its menu is subsequently removed (0.248796ms)
+✔ level upgrades require distinct-menu nutrition, not large lifetime earnings (0.686315ms)
+✔ all eight upgrade prices are preserved and upgrading never refreshes orders for free (0.586151ms)
+✔ configuration may change requirements without permitting duplicate-menu exploits (0.443055ms)
+✔ tip probabilities and random endpoints match normal, rush, rain and easter-egg defaults (0.194909ms)
+✔ completion reports exact tip-inclusive totals and attributes delivery statistics once (0.553038ms)
+✔ JSON save/reload keeps terminal status, fixed expiry and collision-free order IDs (0.664165ms)
+✔ malformed clocks are rejected before domain mutation (0.698932ms)
+✔ coin denomination output preserves every coin and includes no empty stacks (0.258563ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+▶ dine_in supply at each Java cube corner is ready in the picker and consumed by preparation
+  ✔ -5,-5,-5 (279.214902ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ -5,-5,5 (362.292526ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ -5,5,-5 (373.452002ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ -5,5,5 (445.095436ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ 5,-5,-5 (396.206054ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ 5,-5,5 (381.514614ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ 5,5,-5 (348.263356ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ 5,5,5 (299.174ms)
+✔ dine_in supply at each Java cube corner is ready in the picker and consumed by preparation (2890.550514ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+▶ dine_in supply outside any cube face is neither advertised nor consumed
+  ✔ x=-6 (303.921191ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ x=6 (550.958928ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ y=-6 (491.45478ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ y=6 (216.251115ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ z=-6 (421.299374ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ z=6 (397.363437ms)
+✔ dine_in supply outside any cube face is neither advertised nor consumed (2385.519928ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ dine_in rejects an unauthorized cube-corner supply through both picker and held-ticket entries (361.38566ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+▶ delivery supply at each Java cube corner is ready in the picker and consumed by preparation
+  ✔ -5,-5,-5 (377.655346ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ -5,-5,5 (214.173516ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ -5,5,-5 (315.349298ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ -5,5,5 (166.276932ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ 5,-5,-5 (198.301519ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ 5,-5,5 (162.422224ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ 5,5,-5 (199.068676ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ 5,5,5 (180.333344ms)
+✔ delivery supply at each Java cube corner is ready in the picker and consumed by preparation (1816.989508ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+▶ delivery supply outside any cube face is neither advertised nor consumed
+  ✔ x=-6 (205.678239ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ x=6 (199.447503ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ y=-6 (183.664784ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ y=6 (166.514585ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ z=-6 (164.178616ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ z=6 (316.530681ms)
+✔ delivery supply outside any cube face is neither advertised nor consumed (1238.440915ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ delivery rejects an unauthorized cube-corner supply through both picker and held-ticket entries (233.750112ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ the default nearby-station query retains the refrigerator sphere (316.101736ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ held accepted order prepares that order directly and preserves remaining food metadata (372.842355ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ a normally prepared plate keeps its full ItemStack through placement and pickup (220.499062ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ the shared display adapter also preserves a normally prepared takeout bag (254.800281ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ preparation restores food and supplies when its native display inventory is unavailable (161.401796ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+▶ invalid held tickets never fall back to another accepted order
+  ✔ missing linkage (260.791545ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ unknown order (152.69724ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ mismatched proof (184.688975ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ other restaurant (153.809436ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ expired order (238.532875ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ already completed order (253.214323ms)
+✔ invalid held tickets never fall back to another accepted order (1245.569457ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ empty-hand picker shows ready and missing-food status in one page; cancel consumes nothing (266.047482ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ a single empty-hand order still requires an explicit selection and has no nested confirmation (383.791424ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ a picker opened before permission revocation cannot consume food or a plate (471.939068ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ removing the countertop while its picker is open leaves food and supplies unchanged (374.863527ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ a stale picker cannot prepare an order that another player has already made and collected (229.314454ms)
+✔ all six pinned Java coin-exchange recipes exist, preserve value and require the correct input slots (7.005634ms)
+✔ motorcycle is craftable through the original Java 3x3 recipe without changing colour or vehicle lifecycle (4.38418ms)
+✔ Java default 10% profile boundary selects original named customers with their stable identity (2.480457ms)
+✔ ordinary profiles use original names, Java gender boundary and locale without being marked special (0.43641ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ machine and walk-in offers retain their selected profile through acceptance, packing and store reload (1450.479375ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ production handoff reads the persisted special flag, pays the Java tip and 60% seated branch once (875.296044ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ event defers water delivery without publishing an offer or printing success (250.489945ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ tick defers water delivery without publishing an offer or printing success (297.636818ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ open defers water delivery without publishing an offer or printing success (285.628869ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ event defers unloaded delivery without publishing an offer or printing success (253.293076ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ tick defers unloaded delivery without publishing an offer or printing success (310.230496ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ open defers unloaded delivery without publishing an offer or printing success (274.319779ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ strict global endpoints govern every machine generation entry for server, creative and tagged admins (4871.273745ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ ordinary players and non-player entity events cannot change delivery probability (376.026612ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: deliveryRate 必須為 0..1 有限數字
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: deliveryRate 必須為 0..1 有限數字
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: deliveryRate 必須為 0..1 有限數字
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: deliveryRate 必須為 0..1 有限數字
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: deliveryRate 必須為 0..1 有限數字
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: deliveryRate 必須為 0..1 有限數字
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: deliveryRate 必須為 0..1 有限數字
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: deliveryRate 必須為 0..1 有限數字
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: deliveryRate 必須為 0..1 有限數字
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: deliveryRate 必須為 0..1 有限數字
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: deliveryRate 必須為 0..1 有限數字
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: deliveryRate 必須為 0..1 有限數字
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: deliveryRate 必須為 0..1 有限數字
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: deliveryRate 必須為 0..1 有限數字
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: deliveryRate 必須為 0..1 有限數字
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: deliveryRate 必須為 0..1 有限數字
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: deliveryRate 必須為 0..1 有限數字
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: deliveryRate 必須為 0..1 有限數字
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: deliveryRate 必須為 0..1 有限數字
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: deliveryRate 必須為 0..1 有限數字
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: SyntaxError: Unexpected token 'N', ..."veryRate":NaN,"refre"... is not valid JSON
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: SyntaxError: Unexpected token 'I', ..."veryRate":Infinity,""... is not valid JSON
+✔ invalid probabilities reject the whole command without companion settings or live changes (5994.911511ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ missing and invalid saved probabilities use default 0.3 without rewriting raw settings (2424.935142ms)
+[OrderToCook] Initialization stopped; saved data was preserved. SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)
+[OrderToCook] Initialization stopped; saved data was preserved. Error: Expected settings object
+[OrderToCook] Initialization stopped; saved data was preserved. Error: Expected settings object
+[OrderToCook] Initialization stopped; saved data was preserved. Error: Expected settings object
+[OrderToCook] Initialization stopped; saved data was preserved. Error: Expected settings object
+[OrderToCook] Initialization stopped; saved data was preserved. Error: Expected settings object
+[OrderToCook] Initialization stopped; saved data was preserved. Error: Expected settings JSON string
+✔ malformed global documents stop initialization and remain untouched by configuration (1293.462119ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ new ordinary and portable machines inherit global rate, including reload and default reset (2652.03281ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: simulated native persistence failure
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: 餐廳設定寫入未確認；全域設定未變更。
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: simulated native persistence failure
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: 餐廳設定寫入未確認；全域設定未變更。
+✔ pre-write failure and silent settings non-write preserve prior live behavior and stored bytes (882.715509ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: write may have committed
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: read unavailable
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: 餐廳設定寫入未確認；全域設定未變更。
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ uncertain settings commit keeps old live value until reload; no new atomicity guarantee (1258.513758ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: simulated native persistence failure
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: simulated native persistence failure
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: simulated native persistence failure
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: simulated native persistence failure
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ partial restaurant propagation cannot undo global commit or control future refreshes (1712.404089ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ failed generation rolls back canonical orders, retries current rate and never revives stale snapshots (204.26326ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ configuration preserves offered, accepted, packed and completed order data and physical carriers (204.523577ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: simulated native persistence failure
+✔ an open form reads current rate; failed propagation invalidates stale form rather than recommitting it (444.674454ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ ordinary walk-ins stay dine-in even with global delivery probability one (179.882995ms)
+[OrderToCook] Customer spawn delayed: Error: native spawn unavailable
+[OrderToCook] Customer spawn delayed: Error: native save unavailable
+✔ existing water destination recovers through the bounded customer retry without replacing the order (35.538948ms)
+✔ existing blocked destination recovers through the bounded customer retry without replacing the order (2.208959ms)
+✔ unloaded address is unknown and never starts replacement sampling (1.431085ms)
+✔ a saved customer anchor is retained when its current surface becomes unsafe (1.140051ms)
+✔ four failed replacement candidates retain the original work and use the existing retry cooldown (7.603946ms)
+✔ recovered destination spawn failure leaves the original order and no replacement actor (4.085477ms)
+✔ recovered destination save failure leaves the original order and no replacement actor (3.576085ms)
+✔ expired work cannot use destination repair to renew its deadline (1.29935ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ the same physical recovered bag lazily updates only its factory coordinate line and pays once through the real handoff owner (447.319179ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ unrecognized player lore is not treated as a factory coordinate line (397.77897ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ generated dine-in order packs without a plate, moves its exact native bag and completes through the real entity service (298.63309ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ ordinary and walk-in bag handoffs keep tips/statistics and use seated or standing take reactions without plate/boom effects (1380.306724ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ both extra-choice cancellation paths leave the ticket, food, supplies and order untouched (1120.188612ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ extra-choice callbacks revalidate canonical state, rights, deadline, proximity and the original held ticket (3621.258762ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ bag preparation rolls back real commit failures with or without a supply object and allows one canonical retry (3886.168737ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ persisted dine-in bag carrier and proof survive store reload, while absent legacy fields alone retain type defaults (388.644255ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ canonical carrier and proof reject the other physical item at placement and handoff in both directions (490.684734ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ legacy display reconstruction uses the canonical carrier and rejects a mismatched display type (253.932837ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ bag handoff save failure restores the exact bag and canonical packed state before a single payment retry (327.814231ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ delivery cannot select a plate and expired dine-in bags cannot pay (404.169513ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ the explicit plate choice preserves seated dining, dirty-plate ownership and the deferred boom bonus with leather disabled (534.050422ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+▶ PACK with blocked output drops one complete bag without replacing the existing block or parcel
+  ✔ delivery (253.730515ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ dine_in (210.702365ms)
+✔ PACK with blocked output drops one complete bag without replacing the existing block or parcel (465.5476ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ PLATE still refuses blocked output before consuming food or a clean plate (194.837974ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+▶ known drop and impulse failures restore the transaction and leave an existing native parcel untouched
+  ✔ spawn (209.4103ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+  ✔ impulse (229.134107ms)
+✔ known drop and impulse failures restore the transaction and leave an existing native parcel untouched (439.432832ms)
+[OrderToCook] Dining r: Error: simulated restaurant persistence failure
+[OrderToCook] Claimed plate cleanup deferred: Error: simulated restaurant persistence failure
+✔ all ten original plate variants use exact 15/60/80/100-tick stage thresholds (2.423615ms)
+✔ meal begins in front of the chair with opposite-facing plate orientation (3.513668ms)
+✔ occupied front cell is preserved and an adjacent clear table receives the plate (0.767656ms)
+✔ queue callback reentry retains one canonical meal and never changes its timing (2.217488ms)
+✔ only completed dine-in orders can queue a recoverable dirty plate (0.95277ms)
+✔ cosmetic meal progresses and remains dirty after the customer departure deadline (5.927995ms)
+✔ late-loaded placement seeks the original half-second clip without restarting the meal (1.423473ms)
+✔ restart reconciles the persisted plate without resetting meal time or duplicating geometry (0.720512ms)
+✔ missing loaded cosmetic entity is reconstructed from canonical state without creating an item (2.744774ms)
+✔ unloaded meal anchor neither spawns entities nor loses its canonical record (2.595341ms)
+✔ normal pickup is exactly once and leaves no duplicate helper or pending row (1.607031ms)
+✔ full inventory drops one plain plate without changing any full slot (4.338883ms)
+✔ dirty pickup merges ordinary plates and preserves every unrelated full slot (3.178347ms)
+✔ wrong owner and distant player cannot claim the dirty plate (0.284705ms)
+✔ early pickup leaves exactly one dirty plate and persists the original 10-tick interruption (2.583756ms)
+✔ early pickup retains a pruned-order interruption checkpoint across restart until its 10 ticks end (1.034101ms)
+✔ failed interruption tombstone cleanup cannot resume a pruned order as the original eating action (2.342379ms)
+✔ failed durable claim leaves inventory untouched and the restored meal retryable (0.95998ms)
+✔ native inventory exception before writing is rolled back before retrying a claim (2.219714ms)
+✔ native inventory exception after writing rolls back the accepted increment (2.692632ms)
+✔ failed final cleanup save cannot mint a second plate after restart (0.672058ms)
+✔ interrupted claim checkpoint is never replayed as an unclaimed plate (0.443297ms)
+✔ alpha.1 dueAt and duplicate pending rows migrate without creating two claims (0.62528ms)
+✔ paid order history pruning does not erase its dirty-plate lifecycle (0.232301ms)
+✔ restaurant removal returns every outstanding plate once and removes cosmetic helpers (27.85325ms)
+✔ restaurant removal waits for an unloaded plate anchor instead of dropping elsewhere (0.45083ms)
+✔ restaurant removal retries a verified pre-spawn exception without losing the dirty plate (0.43521ms)
+✔ restaurant removal detects a receipt when native spawn succeeds then throws (0.77487ms)
+✔ uncertain native spawn receipt is kept claimed rather than blindly duplicated (0.441036ms)
+✔ uncleared tabletop cannot receive overlapping meals at the same anchor (0.752099ms)
+✔ orphan and duplicate cosmetic actors never carry a second recoverable plate (0.327043ms)
+✔ invalid saved meal rows remain untouched instead of being silently discarded (1.31551ms)
+✔ supporting-table interaction resolves the oldest outstanding canonical plate (0.364437ms)
+✔ same-tick new meals, record replacement and removal bypass earlier location misses (0.374213ms)
+✔ native lookups index meals once per tick while still checking every current restaurant (6.150865ms)
+✔ settled dirty plates avoid customer scans while unresolved reactions and bonuses still retry (1.581778ms)
+✔ native block removal drops once without the use-only early interruption or inventory writes (0.942645ms)
+✔ dropped player claims retry only a verified failed spawn and retain state if writing is uncertain (2.736718ms)
+✔ native stackable-item restriction cannot prevent restaurant removal from returning a plain plate (1.208163ms)
+✔ old helper-backed meals gain native blocks without changing identity or stored data (0.444893ms)
+✔ native reconciliation preserves a replacement player block and waits for a clear anchor (0.324681ms)
+✔ a native plate occupied by another restaurant rejects a second meal at that anchor (0.884543ms)
+✔ native food callbacks, not wall time or restaurant scans, own the saved 100-tick clock (1.809716ms)
+✔ looking with a dirty plate previews the original drawer without moving inventory or saving gameplay state (7.152663ms)
+✔ offhand preview closes on permission loss and never opens a working dishwasher (0.880085ms)
+✔ multiple viewers keep one shared preview open and a batch immediately replaces the preview (2.481145ms)
+✔ preview from an unloaded or removed device does not survive service restart (0.701965ms)
+✔ no idle dishwasher skips player reads and clears the previous preview session (1.771239ms)
+[OrderToCook] Customer spawn delayed: Error: metadata save unavailable
+✔ offered walk-in creates a seated NPC before the player accepts it (8.162866ms)
+✔ ordinary unaccepted machine offers do not create customers (0.453465ms)
+✔ one order remains one NPC when spawn is retried (2.326773ms)
+✔ faraway delivery does not spawn or force-load its destination (0.897886ms)
+✔ finishing a customer starts the full eating animation and creates no rewards or plates (2.397643ms)
+✔ motorcycle custom-item duplicate callback consumes and spawns exactly once (5.628674ms)
+✔ order cleanup removes its NPC and empty chair helper together (1.390098ms)
+✔ entity init uses scheduled startup after the already-fired worldLoad (0.899416ms)
+✔ deferred customer retry runs with a nonzero five-tick interval offset (2.299132ms)
+✔ ordinary accepted dine-in orders retain the Java standing fallback within five blocks (12.288765ms)
+✔ standing guests select nearby ground instead of the stove top (1.196792ms)
+✔ standing guests select nearby ground instead of the countertop top (4.098076ms)
+✔ equipment-only standing space leaves the order pending until safe ground is available (42.322235ms)
+✔ delivery guests also choose ground beside equipment and save that ground address (2.82749ms)
+✔ delivery surface resolution handles land without inventing or moving an existing address (1.055029ms)
+✔ delivery surface resolution handles water without inventing or moving an existing address (3.343176ms)
+✔ delivery surface resolution handles underwater_air without inventing or moving an existing address (3.321084ms)
+✔ delivery surface resolution handles unloaded without inventing or moving an existing address (1.282388ms)
+✔ delivery surface resolution handles blocked without inventing or moving an existing address (4.543318ms)
+✔ a saved valid delivery retries its original anchor after reload and never rerolls an ocean address (29.763229ms)
+✔ walk-in orders still require a chair despite an available standing floor (0.414092ms)
+✔ standing fallback rejects plants, thin floor slabs, liquids and missing support (48.543378ms)
+✔ chair eligibility uses the original circular radius instead of a square corner (0.581027ms)
+✔ idle seed uses upstream weights and the server never changes a client clip mid-cycle (0.895446ms)
+✔ both explicit customer skins are preserved instead of rehashing the wide skin (0.677588ms)
+✔ named special customer is red and reuses the saved identity on actor respawn (0.997136ms)
+✔ loaded reaction preserves native progress through wall-time jumps and service restart (1.080185ms)
+✔ each completion branch waits for native done, never wall time, and duplicate handoffs keep progress (2.737245ms)
+✔ native boom cues remain cosmetic and fire once at their counted phases (0.79614ms)
+✔ old timestamp-only completion adopts its saved phase once and then uses native ticks (0.648052ms)
+✔ pending meal preserves a pruned order and a failed native finish can retry its payment (5.280014ms)
+✔ another early pickup restarts the native ten-tick interruption without extending duplicate callbacks (0.825742ms)
+✔ breaking a chair during eating preserves the canonical completion action and independent dish (1.067112ms)
+✔ orphaned seating restores only the nearby original chair and never jumps to another table (0.673982ms)
+✔ loaded duplicate cleanup keeps the persisted canonical actor regardless of query order (0.621574ms)
+✔ a persisted customer anchor in an unloaded chunk postpones replacement spawning (0.634498ms)
+✔ out-of-range and cross-dimension customer callbacks never reach order submission (1.244309ms)
+✔ bounded respawn retries rotate fairly across more than four blocked destinations (0.831877ms)
+✔ delivery completion saved before NPC notification restores its original take action (4.228837ms)
+✔ a corrupt customer seat reference never removes a vehicle or its cargo (0.471296ms)
+✔ failed seat metadata creation leaves neither orphan seat nor customer behind (1.04811ms)
+✔ standing support remains available when native sub-block rays return no hit (0.325945ms)
+✔ native Up-face boundary normalized to y=0 is accepted like documented y=1 (0.363749ms)
+✔ standing support validates the hit top and all four footprint corners (0.237474ms)
+✔ an upper-half slab is rejected even if a native ray hits its top at y=1 (0.095509ms)
+✔ chair attack starts one three-second clap and sounds at original ticks 0, 12 and 20 (36.613497ms)
+✔ clap consumes only own-chair melee and mining; other actions and mounts stay native (29.662428ms)
+✔ dismount, chair change and leave stop clap and discard delayed voices (152.905315ms)
+✔ missing animation capability never changes seating, rewards or sound lifecycle (107.387544ms)
+✔ seated idle has an immediate native mount guard and stops once when ownership of the seat changes (18.310391ms)
+✔ script reload and player spawn restore the chair idle without repeating requests on later ticks (0.419519ms)
+✔ held items do not prevent the existing chair clap or change its sound/session lifecycle (39.260493ms)
+✔ the old native done flag cannot finish a new action in its property-update tick (1.379155ms)
+✔ alpha.1 departure-only actor adopts generic eating even after order history was pruned (0.74311ms)
+✔ shelf HUD uses the actual packaging 10 and plate 18 capacities (1.981056ms)
+✔ washer HUD distinguishes every phase and never calls dirty intake clean-ready (0.401329ms)
+✔ stove HUD derives cooking percentage and burn seconds from loaded tick state (0.308635ms)
+✔ unavailable or malformed status does not become an invented empty inventory (0.290529ms)
+✔ inspection of an unregistered appliance cannot create a station or helper (5.386754ms)
+✔ fridge inspection reads only the viewed 27/54 partition without writing state (7.10431ms)
+✔ inspection of unavailable native containers preserves cargo without creating a helper (1.414464ms)
+✔ looking at a legacy fridge never migrates a saved helper or changes its upper block ID (0.87691ms)
+✔ an uninitialized native fridge is never initialized merely by looking at it (0.417482ms)
+✔ a stove helper linked to another station never exposes that station inventory (2.8219ms)
+✔ inspection rechecks permission, dimension, distance and current block before reading inventory (0.833362ms)
+✔ equipment inspection preserves malformed saved data for recovery (0.347371ms)
+✔ shelf inspection uses the persisted supply count and the permission callback (0.34315ms)
+✔ washing progress is a read-only HUD source and the service never writes the action bar (6.565456ms)
+✔ looking away produces a bounded cancellation hint and leaves the dirty plate intact (1.109415ms)
+✔ manual stop, restart and player departure cannot leave a stale washing HUD (1.298264ms)
+✔ inspection refuses a saved helper with the wrong dimension without touching its cargo (0.511278ms)
+✔ inspection refuses a saved helper with the wrong location without touching its cargo (0.290784ms)
+✔ audited catalog improves the original 159 without lowering Java upgrade requirements (27.913006ms)
+✔ real food aliases are one dish; quality, heat and fabricated V1 variants add no nutrition (3.648329ms)
+✔ a new canonical dish cannot duplicate an existing legacy alias menu entry (3.592217ms)
+✔ declared same-ID recipe variants have their own nutrition; unknown variants are not guessed (1.505949ms)
+✔ batch announcements are idempotent and update only future snapshots (1.578768ms)
+✔ food declarations require positive sourced nutrition and unambiguous owned aliases (1.640044ms)
+✔ secret skewers, plates and harvested pepper use the exact Java OTC base nutrition (1.151456ms)
+✔ all 282 audited drink IDs resolve to 72 zero-nutrition menu drinks without quality duplication (137.24402ms)
+✔ zero nutrition requires an explicit drink declaration, and invalid numbers cannot become zero drinks (2.147452ms)
+✔ boot announcement and request/reply both work without world access or pack-order dependencies (1.253203ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ real wine quality IDs are one zero-nutrition drink and a drink-only menu generates drinks (447.251463ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ zero-nutrition drinks are prepared from fridge/backpack quality aliases and delivered once for the original base quote (491.17709ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ adding audited zero-nutrition drinks does not admit unknown zero-nutrition food or tools (322.42267ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ a provider serving-kind change while the picker is open rejects the stale selection (407.401924ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ cancelling an accepted drink order keeps the existing no-refund terminal state (410.676494ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ cancelling a packed drink order keeps the existing no-refund terminal state (443.572238ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ fresh store initialization preserves zero-nutrition drink snapshots and legacy food through JSON reload (380.699359ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ a real Grilling food enters the menu without commands and mixed presentation IDs fulfil one dish (227.688626ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ provider declarations supply distinct same-ID variants in the backpack picker without native nutrition (241.278293ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ provider order snapshots survive updates, consume the quoted variants from fridge/backpack and deliver after withdrawal (306.032138ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ old alias-only menu/order data stays exact-ID and is not silently converted by the new catalog (400.800987ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ existing administrator overrides precede providers and keep the old persisted override shape (438.838653ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ changing only provider aliases while the picker is open rejects the stale selection (469.733967ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ cancelling an accepted provider order is terminal and never refunds or pays food (353.531991ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ cancelling a packed provider order is terminal and never refunds or pays food (307.077207ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ fresh initStore restores old and provider menu/order snapshots from saved JSON without a provider registry (288.67161ms)
+✔ existing OTC book has six independent chapters and chapter/topic/entry navigation (7.005479ms)
+✔ all pages, counts and navigation paths are reachable without Cookery screens (6.903726ms)
+✔ book menu opens in its own item and icon; never adds a second Cookery guide (1.328199ms)
+✔ plate and helmet navigation uses the same rendered thumbnails as the inventory (6.144739ms)
+✔ administrator actions are contextual and never exposed to regular players (2.626441ms)
+✔ guide icon is a native 16px Minecraft-style book sprite (0.489972ms)
+✔ first-person pose and shared request use the same bounded empty-hand gate (3.10294ms)
+✔ the existing replacement-stop clip clears a previous or initially missing shared request (0.390443ms)
+✔ clap camera gate is bounded independently from its gameplay session (0.521411ms)
+✔ stopping either action clears only its own actual request producer (0.35336ms)
+✔ washing starts synchronized bounded perspectives and stops both controllers after 80 ticks (8.907215ms)
+✔ all existing cancellation paths stop the visual without issuing a clean plate (16.774923ms)
+✔ Java chair and motorcycle restrictions prevent starting the wash animation (1.131822ms)
+✔ native animation failures cannot cancel washing or change its plate result (5.040677ms)
+✔ duplicate container references cannot inflate item availability (3.879721ms)
+✔ duplicate ingredient requirements aggregate before any extraction (0.477026ms)
+✔ missing one ingredient leaves every other ingredient untouched (2.697239ms)
+✔ negative, fractional and unsafe ingredient counts cannot create or delete items (0.208161ms)
+✔ stale extraction plans validate all source slots before the first write (0.252495ms)
+✔ extraction rolls back when a later write throws before mutation (0.36345ms)
+✔ extraction rolls back when a later write throws after mutation (0.5635ms)
+✔ successful extraction and explicit restoration preserve stack metadata (1.665615ms)
+✔ consumeHeld rejects a negative amount instead of increasing the held stack (4.689647ms)
+✔ mixed coin denominations pay an exact value and retain unrelated metadata (1.256435ms)
+✔ a full inventory can receive change in the slot freed by paying (0.456697ms)
+✔ if all change cannot fit, the payment performs zero writes and keeps the original coins (0.265429ms)
+✔ one freed slot is insufficient when the change requires multiple item types (0.21813ms)
+✔ an exact payment needs no change capacity (0.188821ms)
+✔ insufficient funds and invalid costs leave the inventory unchanged (0.261711ms)
+✔ coin payment restores all originals when writing change fails before mutation (0.312428ms)
+✔ coin payment restores all originals when writing change fails after mutation (0.285361ms)
+✔ partial coin consumption preserves the original coin stack's custom data (0.210713ms)
+✔ a same-count coin stack changed after the snapshot is rejected by metadata validation (0.200442ms)
+✔ coin rewards preserve exact value when normal inventory overflow is dropped (1.307085ms)
+✔ generic rewards respect an unstackable item's actual maximum (0.13151ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ disabled global leather bypasses all shelf IO but preserves exact food remainder and native bags (5238.82501ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ default, explicit true and legacy missing settings retain the leather gate for both carriers and entries (2840.493031ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ server, creative and tagged admins persist strict booleans; ordinary players cannot change the global switch (811.469953ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: countertopConsumeLeather 必須為 boolean（true 或 false）
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: countertopConsumeLeather 必須為 boolean（true 或 false）
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: countertopConsumeLeather 必須為 boolean（true 或 false）
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: countertopConsumeLeather 必須為 boolean（true 或 false）
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: countertopConsumeLeather 必須為 boolean（true 或 false）
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: countertopConsumeLeather 必須為 boolean（true 或 false）
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: countertopConsumeLeather 必須為 boolean（true 或 false）
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: countertopConsumeLeather 必須為 boolean（true 或 false）
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: countertopConsumeLeather 必須為 boolean（true 或 false）
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: countertopConsumeLeather 必須為 boolean（true 或 false）
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: countertopConsumeLeather 必須為 boolean（true 或 false）
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: countertopConsumeLeather 必須為 boolean（true 或 false）
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: countertopConsumeLeather 必須為 boolean（true 或 false）
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: countertopConsumeLeather 必須為 boolean（true 或 false）
+✔ invalid config types reject without persisting or mutating previously enabled/disabled behavior (2932.966099ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Initialization stopped; saved data was preserved. SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)
+[OrderToCook] Initialization stopped; saved data was preserved. Error: Expected settings object
+[OrderToCook] Initialization stopped; saved data was preserved. Error: Expected settings object
+[OrderToCook] Initialization stopped; saved data was preserved. Error: Expected settings object
+[OrderToCook] Initialization stopped; saved data was preserved. Error: Expected settings object
+[OrderToCook] Initialization stopped; saved data was preserved. Error: Expected settings object
+[OrderToCook] Initialization stopped; saved data was preserved. Error: Expected settings JSON string
+✔ invalid saved field types default true without rewriting the raw settings; malformed documents stop safely (3111.199199ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ false survives a fresh worldLoad; true reset affects subsequent preparation without reclaiming shelf stock (816.471115ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: simulated native persistence failure
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: 餐廳設定寫入未確認；全域設定未變更。
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: simulated native persistence failure
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: 餐廳設定寫入未確認；全域設定未變更。
+✔ failed and silently omitted settings writes do not change current preparation behavior (752.657515ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ preparation reads the current global switch after either deferred picker or carrier form closes (902.022089ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ disabled leather still requires food, drops blocked bags and both plate entry modes require a clean plate (755.440168ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Customer spawn delayed: Error: simulated native persistence failure
+✔ chunk failure during arrival cannot revive a rolled-back restaurant (refresh=false) (253.869926ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Customer spawn delayed: Error: simulated native persistence failure
+✔ root failure during arrival cannot revive a rolled-back restaurant (refresh=false) (219.913754ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Customer spawn delayed: Error: Saved record manifest write not confirmed
+✔ silent-root failure during arrival cannot revive a rolled-back restaurant (refresh=false) (287.469142ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Customer spawn delayed: Error: simulated native persistence failure
+✔ chunk failure during arrival cannot revive a rolled-back restaurant (refresh=true) (240.082666ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Customer spawn delayed: Error: simulated native persistence failure
+✔ root failure during arrival cannot revive a rolled-back restaurant (refresh=true) (199.712159ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Customer spawn delayed: Error: Saved record manifest write not confirmed
+✔ silent-root failure during arrival cannot revive a rolled-back restaurant (refresh=true) (295.67331ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ occupied admission handling preserves a simultaneous refresh without a store rollback (352.429368ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Customer spawn delayed: Error: injected spawn rejection
+✔ spawn-rejected admission handling preserves a simultaneous refresh without a store rollback (233.117057ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ a confirmed manifest commit followed by a setter exception remains successful (435.12985ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Customer spawn delayed: Error: simulated native persistence failure
+✔ an older pending order survives arrival rollback and later retries without duplicate customers (678.245145ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ failure of the outer save preserves the already committed customer association (280.867556ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ ordinary placement rejects Java positive face that equipment sphere excludes (296.871187ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ ordinary placement rejects Java horizontal corner that equipment sphere excludes (214.072367ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ portable corner denial preserves item and ledgers; a later retry restores once (180.456378ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ limit 1: all signed faces, corners and self at {"x":100,"y":64,"z":100} (210.356983ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ limit 1: all signed faces, corners and self at {"x":-100,"y":-30,"z":-100} (224.172432ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ limit 2: all signed faces, corners and self at {"x":100,"y":64,"z":100} (494.440092ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ limit 2: all signed faces, corners and self at {"x":-100,"y":-30,"z":-100} (265.251899ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ limit 1: metadata filters before reads; live count stops at threshold (308.089002ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ limit 2: metadata filters before reads; live count stops at threshold (350.45135ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ limit 1: current canonical rollback and membership determine placement without cached records (428.385338ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ limit 2: current canonical rollback and membership determine placement without cached records (316.879408ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ limit 1: owner, staff, stranger, creative and admin cannot bypass count; dimensions remain independent (176.286073ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ limit 2: owner, staff, stranger, creative and admin cannot bypass count; dimensions remain independent (190.001713ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ retained removal journal blocks same-position placement before portable capture (188.889245ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ legacy dense restaurants retain data and machines across normal ticks and reload (577.077788ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ placement rejection uses localized box guidance without changing equipment guidance (314.049684ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ global limit two permits first and second, cancels third with full ordinary or portable item, and permits retry once (880.252643ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ server, creative and tagged admin can persist global count; ordinary source cannot (967.741788ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ signed 32-bit input is normalized to minimum one, never unlimited (1473.44958ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: maxOrderMachinesWithin24 必須為 -2147483648..2147483647 整數；小於 1 時使用 1
+✔ invalid input rejects the whole command and preserves previous count and leather behavior (4920.279505ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ missing or invalid saved count defaults to one without rewriting settings; valid signed inputs normalize (3284.845515ms)
+[OrderToCook] Initialization stopped; saved data was preserved. SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)
+[OrderToCook] Initialization stopped; saved data was preserved. Error: Expected settings object
+[OrderToCook] Initialization stopped; saved data was preserved. Error: Expected settings object
+[OrderToCook] Initialization stopped; saved data was preserved. Error: Expected settings object
+[OrderToCook] Initialization stopped; saved data was preserved. Error: Expected settings object
+[OrderToCook] Initialization stopped; saved data was preserved. Error: Expected settings object
+[OrderToCook] Initialization stopped; saved data was preserved. Error: Expected settings JSON string
+✔ malformed settings stop initialization and cannot be replaced by a count command (1305.536451ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ count persists across worldLoad; reset changes only future attempts and preserves dense restaurants exactly (455.993115ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ restaurant count cannot override global; portable format excludes config and rejects an injected field (159.882785ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: simulated native persistence failure
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: 餐廳設定寫入未確認；全域設定未變更。
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: simulated native persistence failure
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Config: Error: 餐廳設定寫入未確認；全域設定未變更。
+✔ failed and silently omitted settings writes keep prior live count and persisted bytes (607.847756ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ deferred count-aware error retains the attempted limit when global configuration changes (135.248665ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ wall jumps and unloaded time cannot refresh the machine; paused native ticks preserve progress (283.17109ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ the same saved progress resumes after reload without consuming offline wall time (407.009798ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ legacy wall progress is adopted once, retaining a partial tick and all other saved data (824.781402ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ refresh save failure keeps the previous offers and leaves progress due for one retry (609.908048ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ walk-in attempts use active native ticks, reset on reload and obey the configured subsequent interval (708.540807ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ deleting a restaurant removes its owned counter; corrupt progress is preserved and reported (293.26434ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ registered menu-board click opens management with isFirstEvent=true (290.709456ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ registered plate-shelf click inserts one clean plate with isFirstEvent=true (267.131946ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ registered menu-board click opens management with isFirstEvent=false (273.318137ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ registered plate-shelf click inserts one clean plate with isFirstEvent=false (212.447963ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ duplicate canceled and component clicks do not debit a second plate (191.315154ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ registered stove click defers pending storage to its owner (336.262641ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ registered stove click allows the ready native container (346.481505ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ ordinary machine dining accepts without a chair and issues its canonical ticket (287.450888ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ walk-in without a chair remains offered and does not consume or issue any item (355.730542ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ production handoff records one animation/plate and pays the canonical reward once (275.114795ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ production boom selection persists the bonus separately from the initial payment (252.419811ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ wrong physical carrier type and wrong proof cannot complete the order (282.959377ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ handoff native consume failure cannot leave a paid order or lose its parcel (274.078754ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ handoff native consume failure after accepting the write restores the exact proof (158.255999ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ failed canonical completion save rolls back the physical parcel before retry (253.170389ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ dirty plate claim through production hook stays independent from order payout (291.708976ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ occupied dining anchor rejects a fresh handoff before consuming or paying anything (192.087925ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ replaced machine cannot reopen a closing restaurant or accept a late physical handoff (197.678525ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ parcel placement consumes exactly one physical carrier and pickup preserves its proof (169.093888ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ initial display-station persistence failure removes failed placement without consuming its parcel (187.192398ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ parcel-placement consume exception after writing restores one carrier and no display (207.218341ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ native display destruction spills the complete carrier once; registered callbacks never reconstruct it (215.813776ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ a native display emptied by another inventory move cannot mint a replacement from its order link (253.001671ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ failed pickup record cleanup restores the exact native carrier without a duplicate drop (184.579664ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ a pre-native link adopts once and never rebuilds after the adopted carrier leaves its slot (181.8971ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ a failed old-display ownership save never adds native cargo beside its legacy recovery path (188.688092ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ display use cancels native container UI and retains the existing deferred pickup action (253.914585ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ production handoff commits personal earnings with the canonical completed order (309.049223ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Pending progress overworld_0_0_0; ledger retained: Error: Pending restaurant progress: Error: simulated native persistence failure
+✔ a delayed profile write does not fail the paid order and catches up from its saved ledger (287.304848ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ failed restaurant commit rolls back the pending personal ledger with the parcel (230.098418ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Pending progress overworld_0_0_0; ledger retained: Error: Pending restaurant progress: Error: simulated native persistence failure
+[OrderToCook] Pending progress overworld_0_0_0; ledger retained: Error: Pending restaurant progress: Error: simulated native persistence failure
+✔ restaurant removal retains an unacknowledged personal ledger for a later retry (324.67178ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ one HUD update combines equipment with delivery and prioritizes washing without losing navigation (280.288186ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ unloaded crosshair targets do not hide delivery hints and idle HUD clears only once (204.786391ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ placement unlocks only the actual placer and looking at a machine does not grant root (255.827358ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ golden progress excludes known removed blocks but keeps valid distant registered machines (215.689763ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Pending progress overworld_0_0_0; ledger retained: Error: Pending restaurant progress: Error: Pending operation progress: Error: simulated native persistence failure
+✔ successful Lv.8 upgrade retries its persisted progress event without another payment (288.872921ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Pending progress overworld_30_0_0; ledger retained: Error: Pending restaurant progress: Error: Pending operation progress: Error: simulated native persistence failure
+✔ actual placement progress survives a temporary profile failure and automatic retry (233.419583ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Pending station progress overworld_5_0_0; event retained: Error: Pending operation progress: Error: simulated native persistence failure
+✔ dishwasher upgrade retains its operation event and blocks removal until profile acknowledgement (197.411682ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ personal progress form shows eleven entries and returns from details to the same list (308.639606ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ failed Lv.8 restaurant save refunds the upgrade and never creates a progress event (229.687433ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ the existing guide opens chapter, topic and lesson forms with reversible navigation (236.175384ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ registered native block removal returns one plate without paying or inventory writes (225.418959ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ native dining block breaking checks its recorded restaurant permission (245.077903ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ boom coins, restaurant income and personal earnings arrive only at native completion after 120 ticks (265.57874ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ pickup before the dirty stage interrupts and cancels only the pending extra reward (244.308375ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ pickup after five seconds returns a plate while retaining the original six-second reward (216.35512ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ native plate removal does not cancel the customer bonus (294.48217ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ disconnected recipient earns no personal coins or progress; restaurant still receives its bonus once (507.958289ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ pending bonus survives order-history pruning and restaurant reload without replaying completion (510.483254ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ a failed restaurant save leaves the bonus unpaid and retries from restored canonical state (232.594234ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ failed early plate output restores its pending bonus with the original action (237.428427ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ legacy already-paid meal has no pending marker and cannot pay again (226.381433ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ wall time cannot pay a paused meal, and actual customer completion does not require its distant plate (265.880916ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ early pickup interrupts the first nearby eating customer, not the plate order, and preserves that other plate age (231.775305ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ taking a plate without a nearby eating customer does not cancel its distant customer bonus (222.567737ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ native cuboid corners can select an eating customer beyond three blocks in spherical distance (211.664488ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ waiting customer is skipped while the first eating customer is interrupted (164.71375ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ the committed eating reaction wins over the same-tick stale native visual property (228.761606ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ a customer whose dirty plate was already collected still keeps a nearby interruption in its order (218.534461ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Claimed plate cleanup deferred: TypeError: Cannot read properties of null (reading 'status')
+✔ a preserved malformed legacy row does not block interruption of a valid nearby meal (251.810787ms)
+✔ variant 0 is bounded, detached and survives JSON storage (5.122168ms)
+✔ variant 7 is bounded, detached and survives JSON storage (0.541225ms)
+✔ variant 32767 is bounded, detached and survives JSON storage (0.200422ms)
+✔ malformed or unknown variant requirements never become generic requirements (1.839577ms)
+✔ menu identity ignores heat, seasoning and quality, and does not invent nutrition (1.504228ms)
+✔ missing/unsupported metadata retains legacy menu identity; unreadable reads refuse registration (0.354163ms)
+✔ distinct variants can be menu dishes without duplicate nutrition or generic overlap (0.81529ms)
+✔ order requirement and quote are detached from later menu edits (2.506024ms)
+✔ variant-aware extraction skips a same-ID wrong variant and preserves its original stack (0.863797ms)
+✔ missing variant reports the exact requirement and changes no slot (0.746025ms)
+✔ generic requirements cannot reserve the only matching constrained stack first (0.990459ms)
+✔ a slot shared by generic and specific lines is reserved/written only once (0.534345ms)
+✔ different variants never merge into one requirement or reuse another reserved unit (0.549847ms)
+✔ cold or lower-quality matching variants can fulfill a saved requirement (0.34605ms)
+✔ saved variant requirements cannot silently fall back on unsupported or malformed raw lore (0.496645ms)
+✔ later-slot metadata swaps reject the entire plan before a write (2.75977ms)
+✔ multi-container failure restores all earlier variant-aware debits with exact metadata (0.860412ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ idle discovery and same-nutrition variant changes persist without refresh or expiry (414.66526ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ getMachine commits binding before its caller can cancel the form (357.020864ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ unchanged binding and rewards cause no restaurant root writes (295.340472ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ reward-only offer changes persist without changing accepted or packed snapshots (322.652377ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ upgrade cancel retains its discovered menu immediately (242.182708ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ upgrade nutrition retains its discovered menu immediately (224.733666ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ upgrade funds retains its discovered menu immediately (260.37634ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ upgrade max-level retains its discovered menu immediately (218.788104ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ upgrade confirmation commits a board changed while its form was open (190.089027ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ administrator empty refresh persists confirmed board removal (203.760467ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ unavailable bound board (throw) retains snapshot and defers replacement (214.434897ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ unavailable bound board (undefined) retains snapshot and defers replacement (227.185843ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ loaded minecraft:air is confirmed removal, not unloading (249.125499ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ loaded minecraft:stone is confirmed removal, not unloading (341.605459ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ ineligible owner binding is not retained just because unloaded (218.67511ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ ineligible dimension binding is not retained just because unloaded (263.786561ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ ineligible range binding is not retained just because unloaded (281.593268ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ ineligible type binding is not retained just because unloaded (220.416049ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ expiry commits even when menu synchronization defers an unloaded bound board (283.332291ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ rejected chunk save keeps old snapshot and retries binding next tick (266.356112ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ rejected root save keeps old snapshot and retries binding next tick (216.507108ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ saved binding, variant and removal survive loading a fresh production store (242.091194ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ native refresh callback saves empty rebinding even when it generates no offers (185.020674ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ native arrival callback saves empty rebinding even when it generates no walk-in (268.027556ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ unavailable binding defers upgrade rather than authorizing it from a stale snapshot (234.926436ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ unavailable board does not block printer expiry state or unrelated progress acknowledgement (292.183413ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ failed menu commit does not reconcile pending progress on a rolled-back stale object (369.128869ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ V1 metadata alone cannot admit a tool or invent a food nutrition value (303.414638ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ held menu registration preserves the stack and counts one dish, not the held amount (189.095979ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ inventory picker shows distinct same-ID variants and removes only the selected variant (168.162766ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ async menu selection rejects an item removed or swapped while the form was open (436.259435ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ nutrition and names remain snapshots across override changes; explicit remove/re-add updates them (169.23362ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ async selection also rejects a changed nutrition registration instead of storing stale data (241.202668ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ board -> order -> variant-matched cooking counter -> handoff pays once and leaves wrong variant intact (264.160072ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ counter failure for the wrong variant preserves dishes, supplies and order state (263.708476ms)
+[OrderToCook] minecraft:overworld_0_0_0: Error: 冰箱遷移目的格已有物品；兩邊實物均保留，未覆寫。
+[OrderToCook] minecraft:overworld_0_0_0: Error: 冰箱遷移目的格已有物品；兩邊實物均保留，未覆寫。
+[OrderToCook] minecraft:overworld_0_0_0: Error: 冰箱遷移目的格已有物品；兩邊實物均保留，未覆寫。
+✔ new refrigerator uses two bounded native inventories and keeps them across door-state changes (8.504632ms)
+✔ legacy 81-slot helper migrates upper/lower boundary slots with full metadata exactly once (4.966067ms)
+✔ an interrupted native move resumes remaining source slots without duplicating the completed moves (1.988278ms)
+✔ station-save failure retains the empty helper reference and retries without moving already-migrated cargo (2.761706ms)
+✔ migration refuses an occupied destination instead of overwriting either physical stack (8.013281ms)
+✔ a saved helper that has not loaded blocks access and is never replaced by an empty inventory (3.172574ms)
+✔ a foreign or incorrectly anchored helper cannot be migrated through a saved refrigerator reference (3.212486ms)
+✔ without the native container component a fridge preserves legacy cargo and never opens a paginated fallback (1.999034ms)
+✔ breaking either half spills each native stack once and drops only one refrigerator item (28.571196ms)
+✔ command removal cleans the remaining half without replaying automatic native cargo drops (2.499923ms)
+✔ sneak-empty compaction merges matching metadata in first-seen order within one compartment (1.250592ms)
+✔ ordinary use, holding an item and denied access cannot compact fridge cargo (0.77831ms)
+✔ compaction restores full slot snapshots when a write throws before or after acceptance (2.675609ms)
+[OrderToCook] Customer spawn delayed: Error: injected spawn rejection
+✔ normal diners use Java scan order: ascending x before distance (5.511809ms)
+✔ normal diners use Java scan order: ascending z before distance when x ties (0.480628ms)
+✔ normal diners use Java scan order: descending y when x and z tie (0.3283ms)
+✔ normal diners use Java scan order: x takes precedence over z (0.264299ms)
+✔ normal diners use Java scan order: z takes precedence over y (0.35411ms)
+✔ normal diners use Java scan order: both height edges use descending y (0.190092ms)
+✔ registered insertion order 0,1,2 cannot change normal chair selection (0.362769ms)
+✔ registered insertion order 0,2,1 cannot change normal chair selection (0.204772ms)
+✔ registered insertion order 1,0,2 cannot change normal chair selection (0.37675ms)
+✔ registered insertion order 1,2,0 cannot change normal chair selection (0.493113ms)
+✔ registered insertion order 2,0,1 cannot change normal chair selection (0.355112ms)
+✔ registered insertion order 2,1,0 cannot change normal chair selection (0.222029ms)
+✔ normal chair priority is independent of RNG 0 (0.218709ms)
+✔ normal chair priority is independent of RNG 0.5 (0.111558ms)
+✔ normal chair priority is independent of RNG 0.999999 (0.083062ms)
+✔ scan order is unchanged when the machine is translated across negative coordinates (0.183523ms)
+✔ normal scan skips its first occupied candidate and keeps the next eligible chair (0.643052ms)
+✔ normal scan skips its first above candidate and keeps the next eligible chair (0.132574ms)
+✔ normal scan skips its first head candidate and keeps the next eligible chair (0.135943ms)
+✔ normal scan skips its first removed candidate and keeps the next eligible chair (0.127146ms)
+✔ normal scan skips its first unloaded candidate and keeps the next eligible chair (0.265894ms)
+✔ normal scan skips its first dimension candidate and keeps the next eligible chair (0.10318ms)
+✔ normal scan skips its first horizontal-range candidate and keeps the next eligible chair (0.074701ms)
+✔ normal scan skips its first vertical-range candidate and keeps the next eligible chair (0.07666ms)
+✔ normal scan skips its first type candidate and keeps the next eligible chair (0.137138ms)
+✔ normal scan stops loaded-block validation after the first eligible chair (0.437971ms)
+✔ normal scan honors an in-flight claim before the first customer is queryable (0.222012ms)
+✔ packed normal orders use the same scan order (0.109764ms)
+✔ an offered non-walk-in order remains ineligible to create a customer (0.081176ms)
+✔ a first chair unloading during headroom read +1 defers to the next (3.021839ms)
+✔ a first chair unloading during headroom read +2 defers to the next (0.342035ms)
+✔ a rejected spawn releases the normal scan chair claim for a later retry (3.632031ms)
+✔ normal, urgent and walk-in orders keep the Java 36000/12000 world-tick deadlines (5.249282ms)
+✔ wall jumps and JSON reload cannot shorten tick deadlines; the exact tick rejects handoff (1.721808ms)
+✔ timestamp-only order adopts its remaining partial tick once without changing saved data (1.414367ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ production handoff obeys its tick despite an old wall deadline, and exact tick expiry keeps the parcel (666.561505ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ physical bag retains tick expiry through history pruning and native use/consume callbacks (315.428809ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ remaining-time display follows game ticks rather than its compatibility wall timestamp (331.523527ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ legacy held orphan bag adopts one tick deadline without losing ItemStack metadata (296.517685ms)
+✔ real particle callers pass scalar count, spread and speed through the playback boundary (2.879338ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ expired bag requires native consumption, retains its deadline without the order and unlocks once across reload (374.881733ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ fresh, blank and malformed bags cannot start eating or claim progress (137.538489ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Personal progress entity10: Error: simulated native persistence failure
+✔ failed native-consumption progress save returns the complete consumed parcel (258.47565ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ board break emits one complete menu item; relocation and store reload keep variants, aliases and snapshots (343.651353ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ restaurant relocation keeps owner, staff, level and all statistics without copying orders or personal ledgers (308.411536ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ large menus retain all metadata across native-sized property chunks; broken data cancels placement (150.289839ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Portable placement rolled back: Error: simulated native persistence failure
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Portable placement rolled back: Error: simulated native persistence failure
+✔ portable placement returns the original data-bearing item when the world save fails (328.517255ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ native consume callbacks are attached only to items that declare minecraft:food (133.056836ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ a machine refresh raises paper for one second, holds through Java PRINTING, and never loops (294.264398ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ accepting a machine offer hides its paper immediately even with a walk-in offer left (200.618998ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ restored offers hold their terminal pose and unloaded printing does not restart (189.224127ms)
+✔ committed cumulative ledger credits the actual deliverer and retries exactly once (5.220291ms)
+✔ personal income spans restaurants and remains after every restaurant is removed (0.919007ms)
+✔ profile write failure leaves the committed ledger available after history trimming (1.556353ms)
+✔ reloading saved profiles and restaurant ledgers does not replay earnings (0.759185ms)
+✔ a new restaurant at a reused coordinate has a different source checkpoint (0.566322ms)
+✔ alpha.2 restaurant statistics and old paid history are never assigned to a player (0.42085ms)
+✔ one restaurant tracks different physical proof holders independently (0.637491ms)
+✔ bad profile data is preserved and never silently replaced with zero progress (1.657098ms)
+✔ a backwards source checkpoint refuses reconciliation without changing the profile (0.504595ms)
+✔ a duplicate ledger identity cannot be double-counted in the same reconciliation (0.627332ms)
+✔ noncanonical, unpaid, and conflicting delivery receipts cannot create progress (0.429166ms)
+✔ overflow aborts before mutating either the ledger or the order receipt (0.818035ms)
+✔ failed cosmetic event saves neither unlocks nor announces; retry can succeed (1.27359ms)
+✔ public cosmetic events cannot bypass the canonical order ledger (0.300692ms)
+✔ a well-formed but inconsistent personal checkpoint is preserved for recovery (0.688772ms)
+✔ one damaged player cannot block other players but restaurant cleanup still fails closed (1.525406ms)
+✔ earnings without a completed order are rejected in each source before aggregation (1.041302ms)
+✔ operation acknowledgement failure can replay without granting or announcing twice (1.31257ms)
+✔ all eleven pinned advancements have supported runtime triggers (2.912536ms)
+✔ a new personal record starts at zero without guessing alpha.2 earnings (2.934491ms)
+✔ placing a machine unlocks root once without changing earnings or mutating its input (0.718089ms)
+✔ ordinary zero-reward completion still unlocks first_order without manufacturing parent progress (0.316123ms)
+✔ one authoritative snapshot can unlock both order flags and every crossed income threshold (0.73165ms)
+✔ income thresholds use personal lifetime order earnings with exact inclusive boundaries (0.644762ms)
+✔ replaying reconciled absolute totals is idempotent and does not duplicate notifications (0.302251ms)
+✔ absolute totals reject each kind of rollback without modifying the saved input (0.828657ms)
+✔ malformed counters, overflow, and impossible subtype totals cannot award progress (0.79552ms)
+✔ direct trusted completion includes its whole credited reward and strict boolean flags (4.725519ms)
+✔ dishwasher progress requires the upgrade event and has no machine-placement prerequisite (0.53959ms)
+✔ only the successful Lv.8 upgrade event unlocks the maximum-level advancement (0.408581ms)
+✔ golden restaurant counts four owned restaurants rather than four across the server (0.895182ms)
+✔ golden restaurant allows ties including zero and compares individual restaurants rather than combined profit (0.487668ms)
+✔ unloaded or closed placed restaurants count but removing and unplaced restaurants do not (1.800879ms)
+✔ golden restaurant uses stable ownership IDs and fails closed on duplicate or corrupt ranking records (0.455785ms)
+✔ golden advancement remains unlocked after ranking changes without awarding money or parents (0.359071ms)
+✔ unknown triggers cannot claim progress (0.559944ms)
+✔ invalid persisted progress is rejected instead of silently resetting or accepting future schemas (0.893287ms)
+✔ clock rollback cannot rewrite an existing timestamp or invalidate a new unlock (0.50855ms)
+✔ display rows expose bounded counters, source IDs and explicit unsupported status without modifying progress (0.672266ms)
+✔ golden restaurant checks the pinned source's dimension-local persisted rankings (0.690015ms)
+✔ completed expired-bag consumption unlocks once without economic progress (1.006343ms)
+✔ pure marker interpretation keeps explicit state and rejects malformed explicit values (2.992795ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ default survives portable break, actual placement and store reload without resetting durable fields (644.455623ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ custom survives portable break, actual placement and store reload without resetting durable fields (496.345075ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ legacy-generated survives portable break, actual placement and store reload without resetting durable fields (383.51632ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ legacy-empty survives portable break, actual placement and store reload without resetting durable fields (595.528455ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ legacy-custom survives portable break, actual placement and store reload without resetting durable fields (517.105227ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ explicit-generated-custom survives portable break, actual placement and store reload without resetting durable fields (466.084083ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ malformed portable marker null never places or erases the input (193.832078ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ malformed portable marker 1 never places or erases the input (186.104271ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ malformed portable marker "false" never places or erases the input (299.469697ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ malformed portable marker [] never places or erases the input (204.342552ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ malformed portable marker {} never places or erases the input (237.563488ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Device break: Error: Invalid restaurant naming marker; saved data retained
+✔ malformed stored marker cancels player break; force-break adapter cannot remove the saved record (163.29897ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ fresh autogenerated display receives a free first explicit name (237.324391ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ second rename charges one physical unit with denomination change (220.598318ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ same-name confirmation is charged too (201.986ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ insufficient currency preserves the current custom name (260.596982ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ empty submission pays to clear, then naming is free again (196.607374ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ cancel is not a clear and costs nothing (196.818515ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ configured physical currency pays one unit without changing lifetime income (338.500245ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ ordinary staff cannot rename another owner restaurant (346.819666ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ rejected save restores canonical name and original physical currency (220.372985ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ explicit default/custom state persists in JSON and fresh/clear modal quotes are free (715.360743ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ explicit generated-looking custom name stays paid until deliberately cleared (216.234332ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ name sanitation keeps the 32-character limit and empty sanitized input is a deliberate clear (254.199875ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ malformed modal value null never takes payment (216.11737ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ malformed modal value {} never takes payment (190.10419ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ malformed modal value 42 never takes payment (179.18973ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ full inventory rejects unavailable change without dropping money; a freed coin slot can hold change (181.510176ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ custom currency uses its label, preserves remaining stack metadata, and permits free naming without currency (221.571595ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ outsider permission follows owner gate with explicit Bedrock admin override (159.525153ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ admin permission follows owner gate with explicit Bedrock admin override (170.773167ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ creative permission follows owner gate with explicit Bedrock admin override (146.818263ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ name change during deferred modal cancels without applying a stale quote (185.17565ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ marker change during deferred modal cancels without applying a stale quote (200.624578ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ owner change during deferred modal cancels without applying a stale quote (158.275712ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ ownerName change during deferred modal cancels without applying a stale quote (195.694766ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ currency change during deferred modal cancels without applying a stale quote (167.158692ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ machine change during deferred modal cancels without applying a stale quote (156.052571ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ distance change during deferred modal cancels without applying a stale quote (177.008214ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ dimension change during deferred modal cancels without applying a stale quote (169.92095ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ logout change during deferred modal cancels without applying a stale quote (186.886863ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ removing change during deferred modal cancels without applying a stale quote (141.354649ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ canonical change during deferred modal cancels without applying a stale quote (127.123971ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ rolledBackCanonical change during deferred modal cancels without applying a stale quote (141.146247ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ admin permission revoked while modal open cancels payment (152.286288ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ currency removed while modal open is rechecked from real inventory (142.45907ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Payment failed: Error: injected payment failure
+✔ coins payment before-write failure leaves name, marker and complete stacks unchanged (170.446723ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Extraction failed: Error: injected payment failure
+✔ custom payment before-write failure leaves name, marker and complete stacks unchanged (186.165382ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Payment failed: Error: injected payment failure
+✔ coins payment after-write failure leaves name, marker and complete stacks unchanged (146.833997ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Extraction failed: Error: injected payment failure
+✔ custom payment after-write failure leaves name, marker and complete stacks unchanged (165.128412ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ coins chunk persistence preserves canonical recovery and full native payment metadata (151.452936ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ custom chunk persistence preserves canonical recovery and full native payment metadata (155.928642ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ coins root persistence preserves canonical recovery and full native payment metadata (145.82335ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ custom root persistence preserves canonical recovery and full native payment metadata (144.898508ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ coins silent-root persistence preserves canonical recovery and full native payment metadata (131.871069ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ custom silent-root persistence preserves canonical recovery and full native payment metadata (163.678178ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ coins after-commit persistence preserves canonical recovery and full native payment metadata (145.571241ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ custom after-commit persistence preserves canonical recovery and full native payment metadata (152.710282ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ malformed explicit marker null blocks rename and preserves saved data (152.095173ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ malformed explicit marker 0 blocks rename and preserves saved data (144.588299ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ malformed explicit marker 1 blocks rename and preserves saved data (157.98572ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ malformed explicit marker "" blocks rename and preserves saved data (129.620036ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ malformed explicit marker "false" blocks rename and preserves saved data (153.673097ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ malformed explicit marker [] blocks rename and preserves saved data (154.064668ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ malformed explicit marker {} blocks rename and preserves saved data (137.442426ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ legacy generated naming preserves visible text and derives cost from saved owner (157.376389ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ legacy empty naming preserves visible text and derives cost from saved owner (150.038951ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ legacy custom naming preserves visible text and derives cost from saved owner (144.00678ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ legacy different-owner-generated naming preserves visible text and derives cost from saved owner (148.563808ms)
+✔ legacy same-ID/count name change Original -> Replacement is rejected (2.260185ms)
+✔ legacy same-ID/count name change undefined -> Named is rejected (0.394388ms)
+✔ legacy same-ID/count name change Named -> undefined is rejected (0.277906ms)
+✔ legacy same-ID/count name change  -> Named is rejected (0.254434ms)
+✔ unchanged legacy stack undefined can be extracted and restored (1.535954ms)
+✔ unchanged legacy stack  can be extracted and restored (26.958323ms)
+✔ unchanged legacy stack Unchanged can be extracted and restored (0.344425ms)
+✔ a stale second legacy source prevents all writes (0.277176ms)
+✔ name getter failure is unreadable even without raw-lore capability (0.308429ms)
+✔ unsupported remains distinct from raw metadata and does not invoke translated lore (0.570607ms)
+✔ vendored SDK bytes match the pinned canonical export (18.318403ms)
+✔ reads V1 without rounding stored heat or changing the actual item (2.249585ms)
+✔ retains canonical quality 0 without converting it to a multiplier (0.483624ms)
+✔ retains canonical quality 1 without converting it to a multiplier (0.411846ms)
+✔ retains canonical quality 2 without converting it to a multiplier (0.84981ms)
+✔ retains canonical quality 3 without converting it to a multiplier (0.218208ms)
+✔ invalid payload stays opaque: {"v":1,"hotUntil":101,"seasoning":["test:salt"],"nativeVariant":7,"quality":4} (0.347825ms)
+✔ invalid payload stays opaque: {"v":1,"hotUntil":-1,"seasoning":["test:salt"],"nativeVariant":7,"quality":0} (0.357555ms)
+✔ invalid payload stays opaque: {"v":2,"hotUntil":101,"seasoning":["test:salt"],"nativeVariant":7,"quality":0} (0.47166ms)
+✔ invalid payload stays opaque: {"v":1,"hotUntil":101,"seasoning":["invalid"],"nativeVariant":7,"quality":0} (0.459413ms)
+✔ absent, duplicate, malformed, unsupported and unreadable are distinct (1.544416ms)
+✔ large lore fails closed without modifying the source (1.740637ms)
+✔ same-ID same-count quality swap rejects extraction before any write (3.745232ms)
+✔ same-ID same-count seasoning swap rejects extraction before any write (0.629836ms)
+✔ same-ID same-count nativeVariant swap rejects extraction before any write (1.259963ms)
+✔ same-ID same-count hotUntil swap rejects extraction before any write (1.076956ms)
+✔ a changed nameTag cannot be overwritten with the old extraction snapshot (0.67212ms)
+✔ a changed rows cannot be overwritten with the old extraction snapshot (0.248103ms)
+✔ checks all sources before mutating the first slot (0.292412ms)
+✔ unchanged malformed carrier is preserved by ordinary ID-only extraction (3.169229ms)
+✔ different malformed carriers cannot compare equal through schema normalization (0.272943ms)
+✔ read failures reject planning or applying without deleting the item (0.331145ms)
+✔ raw-lore capability loss is not treated as absent metadata (0.164752ms)
+✔ partial extraction and restoration retain native clone data and exact carrier (0.377583ms)
+✔ rollback retains exact carriers after a later rejected write (0.414356ms)
+✔ rollback retains exact carriers after a later accepted write (0.536068ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ main gives appliances its nine-recipe map and sends exactly one deferred startup request (238.900821ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ Server announcements add, update and withdraw a provider catalog on the actual appliance context (314.68314ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ main rejects Entity, Block and malformed provider events without changing accepted data (272.572767ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ main uses native ItemTypes availability for both recipe ends before admitting a provider (226.234625ms)
+✔ OTC alone keeps its nine vanilla recipes without an optional provider (4.80681ms)
+✔ audited Grilling smoker recipes require both native input and output IDs (0.663161ms)
+✔ late provider registration, repeated snapshots, updates and withdrawal share one live map (1.088382ms)
+✔ one invalid row cannot erase a valid snapshot or leave half a replacement (0.488036ms)
+✔ providers cannot claim vanilla or another add-on ingredient namespace (0.325829ms)
+✔ Grilling can replace or withdraw its reviewed defaults without changing another provider (0.452712ms)
+✔ special processes, multi-input recipes and container semantics are not silently flattened (1.484427ms)
+✔ unavailable inputs, ambiguous IDs and wrong API versions preserve existing recipes (0.411096ms)
+✔ restarting without a provider does not restore its previous declarations (0.413309ms)
+✔ one provider can publish two catalogs and withdraw one without erasing the other (0.403668ms)
+✔ a catalog cannot overwrite another catalog input even within the same provider (0.477007ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ denied visitor cannot claim a restaurant board (unregistered block) (225.195302ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ denied visitor cannot claim a restaurant board (legacy record) (319.526581ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ owner can claim a new board through the existing entry (235.579952ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ owner can claim a legacy board through the existing entry (146.52476ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ staff can claim a new board through the existing entry (131.618451ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ staff can claim a legacy board through the existing entry (179.880561ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ revoked staff cannot claim a legacy board and standalone ownership still works (129.962982ms)
+✔ legacy inline JSON loads and migrates to a manifest on the next save (12.729898ms)
+✔ large Unicode metadata spans byte-safe chunks and reloads without loss (14.229939ms)
+✔ new chunks precede the root commit and old-buffer cleanup follows it (17.87215ms)
+✔ a partial new-buffer write preserves disk and restores the canonical Map snapshot (29.982355ms)
+✔ a root commit failure leaves the previous complete snapshot readable (25.383294ms)
+✔ silent chunk write rejection cannot publish a manifest pointing to missing food inventory (18.155473ms)
+✔ silent restaurant root commit rejection retains the old order ledger and live chunks (6.576949ms)
+✔ silent station root deletion rejection never removes the only surviving inventory chunks (14.738169ms)
+✔ a first-save interruption cannot expose a partial new record on reload (20.064913ms)
+✔ an exception after the manifest was applied recognizes the committed save (7.208447ms)
+✔ cleanup failure cannot undo a successful new snapshot (7.383058ms)
+✔ unreadable inline data and incomplete manifests remain fail-closed (12.068874ms)
+✔ manifest-record ID mismatch is not loaded under a second identity (3.06093ms)
+✔ serialization failure restores the last committed mutable record (6.755327ms)
+✔ 32 active orders and the retained 12 history entries can exceed one property safely (18.941615ms)
+✔ failed restaurant completion save restores its prior accepted state in memory (5.409852ms)
+✔ deleting a chunked record clears the root before chunks and excludes it on reload (11.105777ms)
+✔ failed root deletion retains the previous record and all its referenced chunks (7.125041ms)
+✔ personal progress profiles share atomic chunk storage and survive reload without a location (32.097867ms)
+✔ profile manifest failure rolls back the canonical profile before a later retry (41.474978ms)
+✔ unreadable personal progress root is preserved and cannot be overwritten by a default profile (3.34572ms)
+✔ a profile root write that applied before throwing commits exactly once (7.54324ms)
+✔ new stoves expose the existing native seven slots without creating a helper (7.18767ms)
+✔ legacy seven-slot cargo moves intact before retiring its empty helper (5.482937ms)
+✔ an occupied destination keeps both original stacks and the legacy owner (1.544677ms)
+✔ an interrupted native move resumes only the remaining source slots (0.836036ms)
+✔ an unloaded saved helper cannot be replaced by an empty native inventory (0.694318ms)
+✔ save failure preserves native cargo and a retryable legacy reference (0.963503ms)
+✔ unexpected cargo outside the old seven stove slots is retained (2.982422ms)
+✔ missing or wrong-capacity block containers never become the cargo owner (4.327753ms)
+✔ Java ignition stays dark 15 ticks, bursts 5, then cycles every 8 ticks (3.794912ms)
+✔ two stoves keep independent phases and reload resumes without another ignition burst (0.466158ms)
+✔ last burning tick still advances fire; the next unlit tick clears it and fresh fuel restarts delay (0.330418ms)
+✔ generated stove selects the six unmodified Java textures without global animation or extra light (7.910864ms)
+✔ production ignition resolves every even age and material facing north (40.217122ms)
+✔ production ignition resolves every odd age and material facing north (18.772096ms)
+✔ production ignition resolves every even age and material facing south (9.139792ms)
+✔ production ignition resolves every odd age and material facing south (17.624622ms)
+✔ production ignition resolves every even age and material facing west (12.920234ms)
+✔ production ignition resolves every odd age and material facing west (8.600982ms)
+✔ production ignition resolves every even age and material facing east (16.373672ms)
+✔ production ignition resolves every odd age and material facing east (10.991842ms)
+✔ actual service initialization retains its sole two-tick scheduler and first publishes age one (1.601235ms)
+✔ 14/15/19/20 boundaries atomically pair source geometry and texture, without changing cooking (2.435978ms)
+✔ two stoves burn independently and successful ordinary refuelling restarts geometry exactly once (21.004897ms)
+✔ native container use, input removal and full output never restart the active ignition (6.001611ms)
+✔ invalid fuel, invalid input and already full output never create an ignition (10.727079ms)
+✔ reload during ignition age 5 clears geometry without replaying fuel or elapsed offline time (0.850871ms)
+✔ unload during ignition age 5 clears geometry without replaying fuel or elapsed offline time (1.282312ms)
+✔ reload during ignition age 17 clears geometry without replaying fuel or elapsed offline time (1.434812ms)
+✔ unload during ignition age 17 clears geometry without replaying fuel or elapsed offline time (1.459259ms)
+✔ old saves without animation fields initialize neutral and retain progress, material and stock (1.830713ms)
+✔ short custom fuel extinguishes texture while the independent source geometry countdown finishes (4.862911ms)
+✔ breaking or externally removing an igniting block never resurrects its geometry (1.561906ms)
+✔ mixed stove lanes finish together at 200 ticks and keep their paired outputs (19.227937ms)
+✔ a full output and an invalid input leave the other lane free to cook (12.969019ms)
+✔ blocking every lane freezes shared progress while burning, then prevents refuelling (6.69146ms)
+✔ fuel exhaustion cools by two points per tick and new fuel resumes the remaining batch (9.374376ms)
+✔ invalid fuel is retained and lava fuel returns exactly one empty bucket (44.042387ms)
+✔ declared result counts require the whole paired output capacity and legacy strings still work (14.264132ms)
+✔ provider additions and withdrawals affect the existing stove through its live ctx map (15.161117ms)
+✔ input kind or metadata changes reset the shared batch while topping up the same identity does not (2.692506ms)
+✔ native input removal resets progress while same-identity stock keeps it (1.477588ms)
+✔ an observed unload saves the last loaded state and reload does not catch up unloaded time (2.276123ms)
+✔ ignition is persisted immediately so reloading a JSON snapshot does not lose the consumed fuel (7.597462ms)
+✔ batch completion saves zero progress outside the periodic checkpoint and survives reload once (7.65799ms)
+✔ legacy saved stoves seed new fields without resetting progress or consuming fuel again (3.691082ms)
+✔ breaking a stove drops all seven real stacks once and leaves no helper to recover twice (0.847948ms)
+✔ stove clicks use the native container and never script-debit held stock (0.788118ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ no eligible occupied chair withdraws only this new arrival (refresh=false) (269.590778ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ no eligible above chair withdraws only this new arrival (refresh=false) (204.331003ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ no eligible head chair withdraws only this new arrival (refresh=false) (205.093487ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ no eligible head-unloaded chair withdraws only this new arrival (refresh=false) (213.798561ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ no eligible chair-unloaded chair withdraws only this new arrival (refresh=false) (199.692875ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ no eligible occupied chair withdraws only this new arrival (refresh=true) (213.230866ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ no eligible above chair withdraws only this new arrival (refresh=true) (225.432728ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ no eligible head chair withdraws only this new arrival (refresh=true) (215.503517ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ no eligible head-unloaded chair withdraws only this new arrival (refresh=true) (245.136379ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ no eligible chair-unloaded chair withdraws only this new arrival (refresh=true) (308.978508ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ older pending walk-ins survive the new no-chair attempt and can still retry (213.312092ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ no-chair rejection keeps the arrival cooldown and the next due attempt can succeed (206.152054ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Customer spawn delayed: Error: spawn rejected
+✔ spawn-rejected is not a no-chair signal and keeps the existing pending behavior (191.724927ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Customer spawn delayed: Error: metadata rejected
+✔ metadata-rejected is not a no-chair signal and keeps the existing pending behavior (191.431247ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Customer spawn delayed: Error: metadata rejected
+✔ cleanup-unconfirmed is not a no-chair signal and keeps the existing pending behavior (147.200343ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ no nearby player is not classified as a confirmed no-chair rejection (203.412696ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ failed final chunk save restores the snapshot after a no-chair attempt (173.002967ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ failed final root save restores the snapshot after a no-chair attempt (186.830217ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ failed final silent-root save restores the snapshot after a no-chair attempt (190.036997ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ a confirmed final save followed by a setter exception retains the rejected-arrival bookkeeping (180.173485ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ direct retry callers without the optional no-chair reporter retain their order (180.373698ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Customer spawn delayed: Error: spawn applied then threw
+✔ spawn-applied-throws after chair selection does not withdraw the new pending order (178.709581ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Customer spawn delayed: Error: seat metadata rejected
+✔ seat-cleanup-unconfirmed after chair selection does not withdraw the new pending order (205.408673ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ late-headroom after chair selection does not withdraw the new pending order (175.706812ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ a cleanup exception preserves the existing failure path instead of pruning uncertain state (181.355357ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ a menu snapshot committed before no-chair withdrawal remains current (192.078676ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Customer spawn delayed: Error: customer save rejected
+✔ a menu snapshot committed before nested customer rollback is not reverted with the arrival (191.041833ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ an admitted new arrival persists exactly one association and plays its success sound (187.318881ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ nearest restaurant stops native reads at the first valid distance-sorted candidate (439.153262ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ nearest lookup retries unavailable candidates and rechecks load state on every call (183.284723ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ nearest lookup sees canonical rollback, metadata changes and membership without a cache (180.757484ms)
+[OrderToCook] Bedrock 26.60 alpha loaded. Server API 2.11; native refrigerator containers require Upcoming Creator Features.
+✔ main permissions still follow the nearest live owner and immediate staff changes (191.690653ms)
+✔ dishwasher updates visuals once per tick while preserving every phase boundary and write count (3.789787ms)
+✔ a transient cosmetic getter failure retries on the next normal dishwasher update (0.885781ms)
+ℹ tests 980
+ℹ suites 0
+ℹ pass 980
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 29540.715426
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> order-to-cook-bedrock-unofficial@0.1.53-alpha.1 check
+> tsc --noEmit && python3 tools/validate_pack.py
+
+{"jsonFiles": 520, "blocks": 14, "items": 17, "entities": 5, "recipes": 17, "geometries": 450, "animations": 46, "permutations": 578, "errors": []}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> order-to-cook-bedrock-unofficial@0.1.53-alpha.1 build
+> python3 tools/build.py
+
+{
+  "version": "0.1.53-alpha.1",
+  "sourceRepository": "https://github.com/burnt-tea-dev/order-to-cook-unofficial",
+  "sourceTag": "v0.1.53-alpha.1",
+  "sourceRevision": null,
+  "sourceDirty": true,
+  "addon": "OrderToCook-Bedrock-0.1.53-alpha.1.mcaddon",
+  "runtimeTreeSha256": "b42faacc14bf3a8e9f4ea60125b66d7f279e8183b14d8cfebe877b77ac296238",
+  "files": [
+    "870958e56b82e4c7ed8299c91fa39595cf243eeac80452c84974d1760f36ad8a  OrderToCook-BP-0.1.53-alpha.1.mcpack",
+    "f8e48df3882e1de551e00395e6598f3ded57b6d2507bae7884c7de82ab746c0b  OrderToCook-Bedrock-0.1.53-alpha.1.mcaddon",
+    "505e8996332e47d9e66bccfa4447733b714c5cec9a3d0733d89ad031738e952e  OrderToCook-RP-0.1.53-alpha.1.mcpack"
+  ]
+}

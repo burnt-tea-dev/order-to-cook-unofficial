@@ -1,0 +1,100 @@
+[
+  {
+    "id": "geometry.ordertocook.food_plate_display_2",
+    "material_variant": 0,
+    "dish_count_tier": null,
+    "a": [
+      "root",
+      3,
+      "east"
+    ],
+    "b": [
+      "root",
+      4,
+      "west"
+    ],
+    "area": 6.0,
+    "samples": 4096,
+    "same_normal": false,
+    "both_nonzero": 4096,
+    "different_rgba": 2688,
+    "a_alpha": [
+      255
+    ],
+    "b_alpha": [
+      255
+    ],
+    "texture_a": "textures/ordertocook/block/food_plate_variants.png",
+    "texture_b": "textures/ordertocook/block/food_plate_variants.png",
+    "visible_normal_samples": 50,
+    "tested_normal_samples": 64,
+    "witness": {
+      "position": [
+        -0.21086055645203433,
+        2.994203125,
+        -3.1221883449087917
+      ],
+      "a_rgba": [
+        107,
+        18,
+        12,
+        255
+      ],
+      "b_rgba": [
+        136,
+        35,
+        28,
+        255
+      ]
+    }
+  },
+  {
+    "id": "geometry.ordertocook.dining_plate_2",
+    "material_variant": 0,
+    "dish_count_tier": null,
+    "a": [
+      "root",
+      3,
+      "east"
+    ],
+    "b": [
+      "root",
+      4,
+      "west"
+    ],
+    "area": 6.0,
+    "samples": 4096,
+    "same_normal": false,
+    "both_nonzero": 4096,
+    "different_rgba": 2688,
+    "a_alpha": [
+      255
+    ],
+    "b_alpha": [
+      255
+    ],
+    "texture_a": "textures/ordertocook/entity/dining_plate_atlas.png",
+    "texture_b": "textures/ordertocook/entity/dining_plate_atlas.png",
+    "visible_normal_samples": 50,
+    "tested_normal_samples": 64,
+    "witness": {
+      "position": [
+        -0.21086055645203433,
+        2.994203125,
+        -3.1221883449087917
+      ],
+      "a_rgba": [
+        107,
+        18,
+        12,
+        255
+      ],
+      "b_rgba": [
+        136,
+        35,
+        28,
+        255
+      ]
+    }
+  }
+]

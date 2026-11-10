@@ -1,0 +1,8396 @@
+{
+  "meta": {
+    "format_version": "5.0",
+    "model_format": "free",
+    "box_uv": false
+  },
+  "name": "white | JAVA SOURCE X-20 | REPAIRED RP X+20",
+  "resolution": {
+    "width": 128,
+    "height": 128
+  },
+  "elements": [
+    {
+      "name": "JAVA SOURCE body cube0",
+      "uuid": "c69d392f-e17d-5f61-b2d6-1db32d34675b",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -24.0,
+        5.0,
+        -5.0
+      ],
+      "to": [
+        -16.0,
+        10.0,
+        3.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.01,
+      "faces": {
+        "up": {
+          "uv": [
+            53.0,
+            8.0,
+            61.0,
+            0.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            61.0,
+            0.0,
+            69.0,
+            8.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            53.0,
+            8.0,
+            45.0,
+            13.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            61.0,
+            8.0,
+            53.0,
+            13.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            69.0,
+            8.0,
+            61.0,
+            13.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            77.0,
+            8.0,
+            69.0,
+            13.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE body cube1",
+      "uuid": "2502b099-5f57-597b-b941-9202d28ed695",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -24.0,
+        5.0,
+        3.0
+      ],
+      "to": [
+        -16.0,
+        10.0,
+        15.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            55.0,
+            52.0,
+            63.0,
+            40.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            63.0,
+            40.0,
+            71.0,
+            52.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            55.0,
+            52.0,
+            43.0,
+            57.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            63.0,
+            52.0,
+            55.0,
+            57.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            75.0,
+            52.0,
+            63.0,
+            57.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            83.0,
+            52.0,
+            75.0,
+            57.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE body cube2",
+      "uuid": "4ab80d25-f369-5149-8ec4-16aeff572081",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -25.0,
+        10.0,
+        3.0
+      ],
+      "to": [
+        -15.0,
+        19.0,
+        15.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.005,
+      "faces": {
+        "up": {
+          "uv": [
+            12.0,
+            12.0,
+            22.0,
+            0.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            22.0,
+            0.0,
+            32.0,
+            12.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            12.0,
+            12.0,
+            0.0,
+            21.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            22.0,
+            12.0,
+            12.0,
+            21.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            34.0,
+            12.0,
+            22.0,
+            21.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            44.0,
+            12.0,
+            34.0,
+            21.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE body cube3",
+      "uuid": "c0fafea5-21bb-5540-94a3-352908b40888",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -24.0,
+        13.0,
+        15.0
+      ],
+      "to": [
+        -16.0,
+        19.0,
+        21.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            49.0,
+            64.0,
+            57.0,
+            58.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            57.0,
+            58.0,
+            65.0,
+            64.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            49.0,
+            64.0,
+            43.0,
+            70.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            57.0,
+            64.0,
+            49.0,
+            70.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            63.0,
+            64.0,
+            57.0,
+            70.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            71.0,
+            64.0,
+            63.0,
+            70.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE body cube4",
+      "uuid": "6a12032a-b56e-55a1-967d-d8e1f9487aea",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -24.0,
+        23.0,
+        -12.0
+      ],
+      "to": [
+        -16.0,
+        25.0,
+        -7.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            50.0,
+            37.0,
+            58.0,
+            32.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            58.0,
+            32.0,
+            66.0,
+            37.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            50.0,
+            37.0,
+            45.0,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            58.0,
+            37.0,
+            50.0,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            63.0,
+            37.0,
+            58.0,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            71.0,
+            37.0,
+            63.0,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE cube_r1 cube0",
+      "uuid": "00ce3ad1-7382-56a4-bc35-a2fe788c1cd9",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -18.0,
+        5.0,
+        -10.0
+      ],
+      "to": [
+        -17.0,
+        13.0,
+        -7.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            69.0,
+            74.0,
+            70.0,
+            71.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            70.0,
+            71.0,
+            71.0,
+            74.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            69.0,
+            74.0,
+            66.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            70.0,
+            74.0,
+            69.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            73.0,
+            74.0,
+            70.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            74.0,
+            74.0,
+            73.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE cube_r1 cube1",
+      "uuid": "2bc91c32-93b6-53c4-95d2-7804f6692545",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -23.0,
+        5.0,
+        -10.0
+      ],
+      "to": [
+        -22.0,
+        13.0,
+        -7.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            60.0,
+            74.0,
+            61.0,
+            71.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            61.0,
+            71.0,
+            62.0,
+            74.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            60.0,
+            74.0,
+            57.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            61.0,
+            74.0,
+            60.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            64.0,
+            74.0,
+            61.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            65.0,
+            74.0,
+            64.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE cube_r2 cube0",
+      "uuid": "eedd3a70-8182-5ed3-b5ac-43d85a6d2e6c",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -23.0,
+        6.0,
+        13.0
+      ],
+      "to": [
+        -22.0,
+        14.0,
+        16.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            12.0,
+            91.0,
+            13.0,
+            88.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            13.0,
+            88.0,
+            14.0,
+            91.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            12.0,
+            91.0,
+            9.0,
+            99.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            13.0,
+            91.0,
+            12.0,
+            99.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            16.0,
+            91.0,
+            13.0,
+            99.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            17.0,
+            91.0,
+            16.0,
+            99.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE cube_r3 cube0",
+      "uuid": "b83b0f2f-15cc-5be8-a149-8219d41a2d10",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -18.0,
+        6.25,
+        12.75
+      ],
+      "to": [
+        -17.0,
+        14.25,
+        15.75
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            3.0,
+            91.0,
+            4.0,
+            88.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            4.0,
+            88.0,
+            5.0,
+            91.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            3.0,
+            91.0,
+            0.0,
+            99.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            4.0,
+            91.0,
+            3.0,
+            99.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            7.0,
+            91.0,
+            4.0,
+            99.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            8.0,
+            91.0,
+            7.0,
+            99.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE cube_r4 cube0",
+      "uuid": "e409c35e-e4bd-5386-86d0-47690d0697a1",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -24.0,
+        9.75,
+        -14.0
+      ],
+      "to": [
+        -16.0,
+        14.75,
+        -1.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.005,
+      "faces": {
+        "up": {
+          "uv": [
+            13.0,
+            53.0,
+            21.0,
+            40.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            21.0,
+            40.0,
+            29.0,
+            53.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            13.0,
+            53.0,
+            0.0,
+            58.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            21.0,
+            53.0,
+            13.0,
+            58.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            34.0,
+            53.0,
+            21.0,
+            58.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            42.0,
+            53.0,
+            34.0,
+            58.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE cube_r5 cube0",
+      "uuid": "c89647a5-29bb-5be7-b811-d22506c354db",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -24.0,
+        10.0,
+        -16.0
+      ],
+      "to": [
+        -16.0,
+        22.0,
+        -11.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.01,
+      "faces": {
+        "up": {
+          "uv": [
+            50.0,
+            19.0,
+            58.0,
+            14.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            58.0,
+            14.0,
+            66.0,
+            19.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            50.0,
+            19.0,
+            45.0,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            58.0,
+            19.0,
+            50.0,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            63.0,
+            19.0,
+            58.0,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            71.0,
+            19.0,
+            63.0,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE chest cube0",
+      "uuid": "6644a49a-cdd5-5d57-80f7-8bf66f818cc2",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -24.0,
+        18.0,
+        21.0
+      ],
+      "to": [
+        -22.0,
+        19.0,
+        24.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.015,
+      "faces": {
+        "up": {
+          "uv": [
+            91.0,
+            10.0,
+            93.0,
+            7.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            93.0,
+            7.0,
+            95.0,
+            10.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            91.0,
+            10.0,
+            88.0,
+            11.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            93.0,
+            10.0,
+            91.0,
+            11.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            96.0,
+            10.0,
+            93.0,
+            11.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            98.0,
+            10.0,
+            96.0,
+            11.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE chest cube1",
+      "uuid": "6544e129-6a56-55a4-96b9-2b2a1b2d4cbb",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -21.5,
+        22.0,
+        23.25
+      ],
+      "to": [
+        -18.5,
+        25.0,
+        24.25
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            79.0,
+            11.0,
+            82.0,
+            10.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            82.0,
+            10.0,
+            85.0,
+            11.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            79.0,
+            11.0,
+            78.0,
+            14.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            82.0,
+            11.0,
+            79.0,
+            14.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            83.0,
+            11.0,
+            82.0,
+            14.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            86.0,
+            11.0,
+            83.0,
+            14.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE chest cube2",
+      "uuid": "62cc3b64-88c6-57f1-ab28-564df7e9e3d4",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -26.0,
+        19.0,
+        14.0
+      ],
+      "to": [
+        -14.0,
+        27.0,
+        24.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            10.0,
+            32.0,
+            22.0,
+            22.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            22.0,
+            22.0,
+            34.0,
+            32.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            10.0,
+            32.0,
+            0.0,
+            40.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            22.0,
+            32.0,
+            10.0,
+            40.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            32.0,
+            32.0,
+            22.0,
+            40.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            44.0,
+            32.0,
+            32.0,
+            40.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE chest cube3",
+      "uuid": "ef74eb6b-de3a-5225-9dc5-31a8df7acce2",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -18.0,
+        18.0,
+        21.0
+      ],
+      "to": [
+        -16.0,
+        19.0,
+        24.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.015,
+      "faces": {
+        "up": {
+          "uv": [
+            96.0,
+            65.0,
+            98.0,
+            62.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            98.0,
+            62.0,
+            100.0,
+            65.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            96.0,
+            65.0,
+            93.0,
+            66.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            98.0,
+            65.0,
+            96.0,
+            66.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            101.0,
+            65.0,
+            98.0,
+            66.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            103.0,
+            65.0,
+            101.0,
+            66.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE chest cube4",
+      "uuid": "1ea6e29a-6050-52d6-aca7-43cdec1e0cae",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -22.0,
+        18.0,
+        21.75
+      ],
+      "to": [
+        -18.0,
+        19.0,
+        23.75
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.015,
+      "faces": {
+        "up": {
+          "uv": [
+            79.0,
+            9.0,
+            83.0,
+            7.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            83.0,
+            7.0,
+            87.0,
+            9.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            79.0,
+            9.0,
+            77.0,
+            10.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            83.0,
+            9.0,
+            79.0,
+            10.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            85.0,
+            9.0,
+            83.0,
+            10.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            89.0,
+            9.0,
+            85.0,
+            10.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE handle cube0",
+      "uuid": "9f780779-e28a-52df-9b81-61593adc52e5",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -22.5,
+        25.0,
+        -13.0
+      ],
+      "to": [
+        -17.5,
+        30.0,
+        -6.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            7.0,
+            66.0,
+            12.0,
+            59.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            12.0,
+            59.0,
+            17.0,
+            66.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            7.0,
+            66.0,
+            0.0,
+            71.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            12.0,
+            66.0,
+            7.0,
+            71.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            19.0,
+            66.0,
+            12.0,
+            71.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            24.0,
+            66.0,
+            19.0,
+            71.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE cube_r6 cube0",
+      "uuid": "8c7a42ff-071f-5df1-9614-ad9eb7b8b564",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -31.0,
+        26.5,
+        -12.0
+      ],
+      "to": [
+        -21.0,
+        28.5,
+        -10.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            74.0,
+            21.0,
+            84.0,
+            19.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            84.0,
+            19.0,
+            94.0,
+            21.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            74.0,
+            21.0,
+            72.0,
+            23.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            84.0,
+            21.0,
+            74.0,
+            23.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            86.0,
+            21.0,
+            84.0,
+            23.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            96.0,
+            21.0,
+            86.0,
+            23.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE cube_r7 cube0",
+      "uuid": "73de9bdf-23da-5981-a930-c5b59ec1a015",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -26.5,
+        26.0,
+        -13.0
+      ],
+      "to": [
+        -21.5,
+        29.0,
+        -9.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            76.0,
+            28.0,
+            81.0,
+            24.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            81.0,
+            24.0,
+            86.0,
+            28.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            76.0,
+            28.0,
+            72.0,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            81.0,
+            28.0,
+            76.0,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            85.0,
+            28.0,
+            81.0,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            90.0,
+            28.0,
+            85.0,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE cube_r8 cube0",
+      "uuid": "a488d067-56a1-514e-b0a7-094b563552f3",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -18.5,
+        26.0,
+        -13.0
+      ],
+      "to": [
+        -13.5,
+        29.0,
+        -9.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            4.0,
+            76.0,
+            9.0,
+            72.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            9.0,
+            72.0,
+            14.0,
+            76.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            4.0,
+            76.0,
+            0.0,
+            79.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            9.0,
+            76.0,
+            4.0,
+            79.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            13.0,
+            76.0,
+            9.0,
+            79.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            18.0,
+            76.0,
+            13.0,
+            79.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE cube_r9 cube0",
+      "uuid": "46033918-e883-5c64-a799-456b8f9ede18",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -19.0,
+        26.5,
+        -12.0
+      ],
+      "to": [
+        -9.0,
+        28.5,
+        -10.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            74.0,
+            16.0,
+            84.0,
+            14.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            84.0,
+            14.0,
+            94.0,
+            16.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            74.0,
+            16.0,
+            72.0,
+            18.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            84.0,
+            16.0,
+            74.0,
+            18.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            86.0,
+            16.0,
+            84.0,
+            18.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            96.0,
+            16.0,
+            86.0,
+            18.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE front_t cube0",
+      "uuid": "8d0f3d9a-1bf7-502b-bcf9-7dd9bc73eb9a",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -20.0,
+        2.0,
+        -21.0
+      ],
+      "to": [
+        -20.0,
+        10.0,
+        -13.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            101.0,
+            74.0,
+            101.0,
+            66.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            101.0,
+            66.0,
+            101.0,
+            74.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            101.0,
+            74.0,
+            93.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            101.0,
+            74.0,
+            101.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            109.0,
+            74.0,
+            101.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            109.0,
+            74.0,
+            109.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE front_t cube1",
+      "uuid": "787d3bf1-15e7-5618-9694-2151368e36d7",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -22.0,
+        3.5,
+        -23.0
+      ],
+      "to": [
+        -18.0,
+        8.5,
+        -21.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            40.0,
+            90.0,
+            44.0,
+            88.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            44.0,
+            88.0,
+            48.0,
+            90.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            40.0,
+            90.0,
+            38.0,
+            95.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            44.0,
+            90.0,
+            40.0,
+            95.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            46.0,
+            90.0,
+            44.0,
+            95.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            50.0,
+            90.0,
+            46.0,
+            95.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE front_t cube2",
+      "uuid": "eaa1d746-48da-5209-bb82-4239ccf8c11e",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -22.0,
+        0.0,
+        -19.5
+      ],
+      "to": [
+        -18.0,
+        2.0,
+        -14.5
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.001,
+      "faces": {
+        "up": {
+          "uv": [
+            77.0,
+            63.0,
+            81.0,
+            58.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            81.0,
+            58.0,
+            85.0,
+            63.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            77.0,
+            63.0,
+            72.0,
+            65.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            81.0,
+            63.0,
+            77.0,
+            65.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            86.0,
+            63.0,
+            81.0,
+            65.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            90.0,
+            63.0,
+            86.0,
+            65.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE front_t cube3",
+      "uuid": "426d9773-142f-5457-9024-050f3ca64fc5",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -22.0,
+        3.75,
+        -13.000000000000002
+      ],
+      "to": [
+        -18.0,
+        8.75,
+        -11.000000000000002
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            90.0,
+            92.0,
+            94.0,
+            90.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            94.0,
+            90.0,
+            98.0,
+            92.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            90.0,
+            92.0,
+            88.0,
+            97.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            94.0,
+            92.0,
+            90.0,
+            97.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            96.0,
+            92.0,
+            94.0,
+            97.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            100.0,
+            92.0,
+            96.0,
+            97.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE front_t cube4",
+      "uuid": "8fb5057d-c828-5e4a-b69d-b73a0bf47fad",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -22.0,
+        10.0,
+        -19.5
+      ],
+      "to": [
+        -18.0,
+        12.0,
+        -14.5
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.001,
+      "faces": {
+        "up": {
+          "uv": [
+            80.0,
+            79.0,
+            84.0,
+            74.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            84.0,
+            74.0,
+            88.0,
+            79.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            80.0,
+            79.0,
+            75.0,
+            81.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            84.0,
+            79.0,
+            80.0,
+            81.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            89.0,
+            79.0,
+            84.0,
+            81.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            93.0,
+            79.0,
+            89.0,
+            81.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE cube_r10 cube0",
+      "uuid": "0d607efb-c666-5221-82cb-be9345045c89",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -22.0,
+        3.6464,
+        -23.0
+      ],
+      "to": [
+        -18.0,
+        8.6464,
+        -21.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.002,
+      "faces": {
+        "up": {
+          "uv": [
+            20.0,
+            93.0,
+            24.0,
+            91.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            24.0,
+            91.0,
+            28.0,
+            93.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            20.0,
+            93.0,
+            18.0,
+            98.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            24.0,
+            93.0,
+            20.0,
+            98.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            26.0,
+            93.0,
+            24.0,
+            98.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            30.0,
+            93.0,
+            26.0,
+            98.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE cube_r10 cube1",
+      "uuid": "dcee107f-c3e0-59c8-a1ac-48ff519a82fd",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -22.0,
+        10.1768,
+        -19.5303
+      ],
+      "to": [
+        -18.0,
+        12.1768,
+        -14.5303
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.002,
+      "faces": {
+        "up": {
+          "uv": [
+            80.0,
+            71.0,
+            84.0,
+            66.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            84.0,
+            66.0,
+            88.0,
+            71.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            80.0,
+            71.0,
+            75.0,
+            73.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            84.0,
+            71.0,
+            80.0,
+            73.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            89.0,
+            71.0,
+            84.0,
+            73.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            93.0,
+            71.0,
+            89.0,
+            73.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE cube_r10 cube2",
+      "uuid": "4c20abc1-8dba-59b4-9b7d-ffae0ad0d63b",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -22.0,
+        3.6464,
+        -13.0
+      ],
+      "to": [
+        -18.0,
+        8.6464,
+        -11.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.002,
+      "faces": {
+        "up": {
+          "uv": [
+            77.0,
+            92.0,
+            81.0,
+            90.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            81.0,
+            90.0,
+            85.0,
+            92.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            77.0,
+            92.0,
+            75.0,
+            97.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            81.0,
+            92.0,
+            77.0,
+            97.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            83.0,
+            92.0,
+            81.0,
+            97.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            87.0,
+            92.0,
+            83.0,
+            97.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE cube_r10 cube3",
+      "uuid": "becd312a-b18b-51a7-a802-80c268e6d6d3",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -22.0,
+        0.0,
+        -19.3535
+      ],
+      "to": [
+        -18.0,
+        2.0,
+        -14.3535
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.002,
+      "faces": {
+        "up": {
+          "uv": [
+            77.0,
+            37.0,
+            81.0,
+            32.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            81.0,
+            32.0,
+            85.0,
+            37.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            77.0,
+            37.0,
+            72.0,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            81.0,
+            37.0,
+            77.0,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            86.0,
+            37.0,
+            81.0,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            90.0,
+            37.0,
+            86.0,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE cube_r10 cube4",
+      "uuid": "72488295-b4a3-5169-a6b8-4ba917109ed4",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -23.0,
+        4.5,
+        -18.5
+      ],
+      "to": [
+        -17.0,
+        7.5,
+        -15.5
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.002,
+      "faces": {
+        "up": {
+          "uv": [
+            22.0,
+            87.0,
+            28.0,
+            84.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            28.0,
+            84.0,
+            34.0,
+            87.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            22.0,
+            87.0,
+            19.0,
+            90.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            28.0,
+            87.0,
+            22.0,
+            90.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            31.0,
+            87.0,
+            28.0,
+            90.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            37.0,
+            87.0,
+            31.0,
+            90.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE rear_t cube0",
+      "uuid": "ec482a6c-9ce9-56d8-bcd7-c162c6845c09",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -20.0,
+        2.0,
+        12.0
+      ],
+      "to": [
+        -20.0,
+        10.0,
+        20.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            48.0,
+            79.0,
+            48.0,
+            71.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            48.0,
+            71.0,
+            48.0,
+            79.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            48.0,
+            79.0,
+            40.0,
+            87.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            48.0,
+            79.0,
+            48.0,
+            87.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            56.0,
+            79.0,
+            48.0,
+            87.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            56.0,
+            79.0,
+            56.0,
+            87.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE rear_t cube1",
+      "uuid": "57236cad-026c-55f8-8b61-b698106991e0",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -22.0,
+        3.75,
+        10.0
+      ],
+      "to": [
+        -18.0,
+        8.75,
+        12.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            93.0,
+            26.0,
+            97.0,
+            24.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            97.0,
+            24.0,
+            101.0,
+            26.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            93.0,
+            26.0,
+            91.0,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            97.0,
+            26.0,
+            93.0,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            99.0,
+            26.0,
+            97.0,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            103.0,
+            26.0,
+            99.0,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE rear_t cube2",
+      "uuid": "f7762538-5c80-5334-8eb6-5fc55f4b2174",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -22.0,
+        0.0,
+        13.5
+      ],
+      "to": [
+        -18.0,
+        2.0,
+        18.5
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.001,
+      "faces": {
+        "up": {
+          "uv": [
+            83.0,
+            5.0,
+            87.0,
+            0.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            87.0,
+            0.0,
+            91.0,
+            5.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            83.0,
+            5.0,
+            78.0,
+            7.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            87.0,
+            5.0,
+            83.0,
+            7.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            92.0,
+            5.0,
+            87.0,
+            7.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            96.0,
+            5.0,
+            92.0,
+            7.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE rear_t cube3",
+      "uuid": "5f8b8d94-1cc5-5b21-bed3-31d6b45fe8df",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -22.0,
+        3.75,
+        20.0
+      ],
+      "to": [
+        -18.0,
+        8.75,
+        22.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "up": {
+          "uv": [
+            93.0,
+            57.0,
+            97.0,
+            55.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            97.0,
+            55.0,
+            101.0,
+            57.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            93.0,
+            57.0,
+            91.0,
+            62.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            97.0,
+            57.0,
+            93.0,
+            62.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            99.0,
+            57.0,
+            97.0,
+            62.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            103.0,
+            57.0,
+            99.0,
+            62.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE rear_t cube4",
+      "uuid": "dcf5840b-f0f8-5947-8a1d-18f888ac4ea9",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -22.0,
+        10.0,
+        13.5
+      ],
+      "to": [
+        -18.0,
+        12.0,
+        18.5
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.001,
+      "faces": {
+        "up": {
+          "uv": [
+            80.0,
+            87.0,
+            84.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            84.0,
+            82.0,
+            88.0,
+            87.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            80.0,
+            87.0,
+            75.0,
+            89.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            84.0,
+            87.0,
+            80.0,
+            89.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            89.0,
+            87.0,
+            84.0,
+            89.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            93.0,
+            87.0,
+            89.0,
+            89.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE cube_r11 cube0",
+      "uuid": "355f43d4-8787-5688-9a95-441629c7559f",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -22.0,
+        3.4696999999999996,
+        9.8232
+      ],
+      "to": [
+        -18.0,
+        8.4697,
+        11.8232
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.002,
+      "faces": {
+        "up": {
+          "uv": [
+            53.0,
+            96.0,
+            57.0,
+            94.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            57.0,
+            94.0,
+            61.0,
+            96.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            53.0,
+            96.0,
+            51.0,
+            101.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            57.0,
+            96.0,
+            53.0,
+            101.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            59.0,
+            96.0,
+            57.0,
+            101.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            63.0,
+            96.0,
+            59.0,
+            101.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE cube_r11 cube1",
+      "uuid": "09d99fbc-4821-57d5-a19f-e7e613bda16e",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -22.0,
+        10.1768,
+        13.4697
+      ],
+      "to": [
+        -18.0,
+        12.1768,
+        18.4697
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.002,
+      "faces": {
+        "up": {
+          "uv": [
+            5.0,
+            85.0,
+            9.0,
+            80.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            9.0,
+            80.0,
+            13.0,
+            85.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            5.0,
+            85.0,
+            0.0,
+            87.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            9.0,
+            85.0,
+            5.0,
+            87.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            14.0,
+            85.0,
+            9.0,
+            87.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            18.0,
+            85.0,
+            14.0,
+            87.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE cube_r11 cube2",
+      "uuid": "e9beb9ba-62b1-5204-9e12-8d049c80f30f",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -22.0,
+        3.6464,
+        20.0
+      ],
+      "to": [
+        -18.0,
+        8.6464,
+        22.0
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.002,
+      "faces": {
+        "up": {
+          "uv": [
+            93.0,
+            34.0,
+            97.0,
+            32.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            97.0,
+            32.0,
+            101.0,
+            34.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            93.0,
+            34.0,
+            91.0,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            97.0,
+            34.0,
+            93.0,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            99.0,
+            34.0,
+            97.0,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            103.0,
+            34.0,
+            99.0,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE cube_r11 cube3",
+      "uuid": "5aadf4a5-fc0e-5474-9950-c5c174c74140",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -22.0,
+        0.0,
+        13.2929
+      ],
+      "to": [
+        -18.0,
+        2.0,
+        18.2929
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.002,
+      "faces": {
+        "up": {
+          "uv": [
+            24.0,
+            81.0,
+            28.0,
+            76.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            28.0,
+            76.0,
+            32.0,
+            81.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            24.0,
+            81.0,
+            19.0,
+            83.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            28.0,
+            81.0,
+            24.0,
+            83.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            33.0,
+            81.0,
+            28.0,
+            83.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            37.0,
+            81.0,
+            33.0,
+            83.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "JAVA SOURCE cube_r11 cube4",
+      "uuid": "c054efb5-8ccc-530d-a0a2-76f490115f81",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        -23.0,
+        4.5,
+        14.5
+      ],
+      "to": [
+        -17.0,
+        7.5,
+        17.5
+      ],
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.002,
+      "faces": {
+        "up": {
+          "uv": [
+            87.0,
+            43.0,
+            93.0,
+            40.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            93.0,
+            40.0,
+            99.0,
+            43.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            87.0,
+            43.0,
+            84.0,
+            46.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            93.0,
+            43.0,
+            87.0,
+            46.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            96.0,
+            43.0,
+            93.0,
+            46.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            102.0,
+            43.0,
+            96.0,
+            46.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP body cube0",
+      "uuid": "5e2d34eb-4197-5503-b83d-fbab48bd6483",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        16.0,
+        5.0,
+        -5.0
+      ],
+      "to": [
+        24.0,
+        10.0,
+        3.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.01,
+      "faces": {
+        "east": {
+          "uv": [
+            69.0,
+            8.0,
+            61.0,
+            13.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            53.0,
+            8.0,
+            45,
+            13.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            53.0,
+            8.0,
+            61.0,
+            0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            61.0,
+            0,
+            69.0,
+            8.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            77.0,
+            8.0,
+            69.0,
+            13.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            61.0,
+            8.0,
+            53.0,
+            13.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP body cube1",
+      "uuid": "e70c327d-8b49-5f44-910b-807725002ad4",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        16.0,
+        5.0,
+        3.0
+      ],
+      "to": [
+        24.0,
+        10.0,
+        15.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            75.0,
+            52.0,
+            63.0,
+            57.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            55.0,
+            52.0,
+            43,
+            57.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            55.0,
+            52.0,
+            63.0,
+            40
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            63.0,
+            40,
+            71.0,
+            52.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            83.0,
+            52.0,
+            75.0,
+            57.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            63.0,
+            52.0,
+            55.0,
+            57.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP body cube2",
+      "uuid": "68dfa535-5269-5033-a025-fb562924ae78",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        15.0,
+        10.0,
+        3.0
+      ],
+      "to": [
+        25.0,
+        19.0,
+        15.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.005,
+      "faces": {
+        "east": {
+          "uv": [
+            34.0,
+            12.0,
+            22.0,
+            21.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            12.0,
+            12.0,
+            0,
+            21.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            12.0,
+            12.0,
+            22.0,
+            0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            22.0,
+            0,
+            32.0,
+            12.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            44.0,
+            12.0,
+            34.0,
+            21.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            22.0,
+            12.0,
+            12.0,
+            21.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP body cube3",
+      "uuid": "b2fdeb8f-39b9-5c08-8f6d-597aaeec6c61",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        16.0,
+        13.0,
+        15.0
+      ],
+      "to": [
+        24.0,
+        19.0,
+        21.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            63.0,
+            64.0,
+            57.0,
+            70.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            49.0,
+            64.0,
+            43,
+            70.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            49.0,
+            64.0,
+            57.0,
+            58
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            57.0,
+            58,
+            65.0,
+            64.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            71.0,
+            64.0,
+            63.0,
+            70.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            57.0,
+            64.0,
+            49.0,
+            70.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP body cube4",
+      "uuid": "97f02a47-618c-5453-be04-8f5b0ecb1b92",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        16.0,
+        23.0,
+        -12.0
+      ],
+      "to": [
+        24.0,
+        25.0,
+        -7.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            63.0,
+            37.0,
+            58.0,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            50.0,
+            37.0,
+            45,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            50.0,
+            37.0,
+            58.0,
+            32
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            58.0,
+            32,
+            66.0,
+            37.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            71.0,
+            37.0,
+            63.0,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            58.0,
+            37.0,
+            50.0,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP cube_r1 cube0",
+      "uuid": "8682c2b7-35bf-5fd6-ad82-f4cbd0a30201",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        22.0,
+        5.0,
+        -10.0
+      ],
+      "to": [
+        23.0,
+        13.0,
+        -7.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            73.0,
+            74.0,
+            70.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            69.0,
+            74.0,
+            66,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            69.0,
+            74.0,
+            70.0,
+            71
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            70.0,
+            71,
+            71.0,
+            74.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            74.0,
+            74.0,
+            73.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            70.0,
+            74.0,
+            69.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP cube_r1 cube1",
+      "uuid": "38baa0bb-cb78-56cd-9067-8083459162a9",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        17.0,
+        5.0,
+        -10.0
+      ],
+      "to": [
+        18.0,
+        13.0,
+        -7.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            64.0,
+            74.0,
+            61.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            60.0,
+            74.0,
+            57,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            60.0,
+            74.0,
+            61.0,
+            71
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            61.0,
+            71,
+            62.0,
+            74.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            65.0,
+            74.0,
+            64.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            61.0,
+            74.0,
+            60.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP cube_r2 cube0",
+      "uuid": "25485434-9a79-5b5f-b705-83cc57cc2ed5",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        17.0,
+        6.0,
+        13.0
+      ],
+      "to": [
+        18.0,
+        14.0,
+        16.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            16.0,
+            91.0,
+            13.0,
+            99.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            12.0,
+            91.0,
+            9,
+            99.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            12.0,
+            91.0,
+            13.0,
+            88
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            13.0,
+            88,
+            14.0,
+            91.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            17.0,
+            91.0,
+            16.0,
+            99.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            13.0,
+            91.0,
+            12.0,
+            99.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP cube_r3 cube0",
+      "uuid": "4d522001-4d50-59df-a3f5-cc0962015d1e",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        22.0,
+        6.25,
+        12.75
+      ],
+      "to": [
+        23.0,
+        14.25,
+        15.75
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            7.0,
+            91.0,
+            4.0,
+            99.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            3.0,
+            91.0,
+            0,
+            99.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            3.0,
+            91.0,
+            4.0,
+            88
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            4.0,
+            88,
+            5.0,
+            91.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            8.0,
+            91.0,
+            7.0,
+            99.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            4.0,
+            91.0,
+            3.0,
+            99.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP cube_r4 cube0",
+      "uuid": "52a54aaa-014e-5358-88d2-be3f6641275d",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        16.0,
+        9.75,
+        -14.0
+      ],
+      "to": [
+        24.0,
+        14.75,
+        -1.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.005,
+      "faces": {
+        "east": {
+          "uv": [
+            34.0,
+            53.0,
+            21.0,
+            58.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            13.0,
+            53.0,
+            0,
+            58.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            13.0,
+            53.0,
+            21.0,
+            40
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            21.0,
+            40,
+            29.0,
+            53.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            42.0,
+            53.0,
+            34.0,
+            58.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            21.0,
+            53.0,
+            13.0,
+            58.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP cube_r5 cube0",
+      "uuid": "f1c9526e-f4dd-573d-ae85-05b7d071d8ac",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        16.0,
+        10.0,
+        -16.0
+      ],
+      "to": [
+        24.0,
+        22.0,
+        -11.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.01,
+      "faces": {
+        "east": {
+          "uv": [
+            63.0,
+            19.0,
+            58.0,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            50.0,
+            19.0,
+            45,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            50.0,
+            19.0,
+            58.0,
+            14
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            58.0,
+            14,
+            66.0,
+            19.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            71.0,
+            19.0,
+            63.0,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            58.0,
+            19.0,
+            50.0,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP chest cube0",
+      "uuid": "2b2a5831-aab2-5793-81e8-012192bab608",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        16.0,
+        18.0,
+        21.0
+      ],
+      "to": [
+        18.0,
+        19.0,
+        24.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.015,
+      "faces": {
+        "east": {
+          "uv": [
+            96.0,
+            10.0,
+            93.0,
+            11.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            91.0,
+            10.0,
+            88,
+            11.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            91.0,
+            10.0,
+            93.0,
+            7
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            93.0,
+            7,
+            95.0,
+            10.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            98.0,
+            10.0,
+            96.0,
+            11.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            93.0,
+            10.0,
+            91.0,
+            11.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP chest cube1",
+      "uuid": "90ba2cc1-726a-550a-a98f-006940347b8c",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        18.5,
+        22.0,
+        23.25
+      ],
+      "to": [
+        21.5,
+        25.0,
+        24.25
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            83.0,
+            11.0,
+            82.0,
+            14.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            79.0,
+            11.0,
+            78,
+            14.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            79.0,
+            11.0,
+            82.0,
+            10
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            82.0,
+            10,
+            85.0,
+            11.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            86.0,
+            11.0,
+            83.0,
+            14.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            82.0,
+            11.0,
+            79.0,
+            14.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP chest cube2",
+      "uuid": "798cc370-d1e0-5c1b-923e-4743d2adcbcd",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        14.0,
+        19.0,
+        14.0
+      ],
+      "to": [
+        26.0,
+        27.0,
+        24.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            32.0,
+            32.0,
+            22.0,
+            40.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            10.0,
+            32.0,
+            0,
+            40.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            10.0,
+            32.0,
+            22.0,
+            22
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            22.0,
+            22,
+            34.0,
+            32.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            44.0,
+            32.0,
+            32.0,
+            40.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            22.0,
+            32.0,
+            10.0,
+            40.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP chest cube3",
+      "uuid": "8b360a9a-9af8-5d11-b41d-ceb8cbf8eefb",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        22.0,
+        18.0,
+        21.0
+      ],
+      "to": [
+        24.0,
+        19.0,
+        24.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.015,
+      "faces": {
+        "east": {
+          "uv": [
+            101.0,
+            65.0,
+            98.0,
+            66.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            96.0,
+            65.0,
+            93,
+            66.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            96.0,
+            65.0,
+            98.0,
+            62
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            98.0,
+            62,
+            100.0,
+            65.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            103.0,
+            65.0,
+            101.0,
+            66.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            98.0,
+            65.0,
+            96.0,
+            66.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP chest cube4",
+      "uuid": "7ffd3748-9449-5490-a71a-56b4f8ecb4e6",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        18.0,
+        18.015,
+        21.75
+      ],
+      "to": [
+        22.0,
+        19.015,
+        23.75
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.015,
+      "faces": {
+        "east": {
+          "uv": [
+            85.0,
+            9.0,
+            83.0,
+            10.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            79.0,
+            9.0,
+            77,
+            10.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            79.0,
+            9.0,
+            83.0,
+            7
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            83.0,
+            7,
+            87.0,
+            9.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            89.0,
+            9.0,
+            85.0,
+            10.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            83.0,
+            9.0,
+            79.0,
+            10.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP handle cube0",
+      "uuid": "199a5a31-631f-5e90-b57c-c34de5aa9da0",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        17.5,
+        25.0,
+        -13.0
+      ],
+      "to": [
+        22.5,
+        30.0,
+        -6.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            19.0,
+            66.0,
+            12.0,
+            71.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            7.0,
+            66.0,
+            0,
+            71.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            7.0,
+            66.0,
+            12.0,
+            59
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            12.0,
+            59,
+            17.0,
+            66.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            24.0,
+            66.0,
+            19.0,
+            71.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            12.0,
+            66.0,
+            7.0,
+            71.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP cube_r6 cube0",
+      "uuid": "33326c70-bcae-5d0c-86ee-cf84bbdd710b",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        9.0,
+        26.5,
+        -12.0
+      ],
+      "to": [
+        19.0,
+        28.5,
+        -10.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            86.0,
+            21.0,
+            84.0,
+            23.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            74.0,
+            21.0,
+            72,
+            23.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            74.0,
+            21.0,
+            84.0,
+            19
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            84.0,
+            19,
+            94.0,
+            21.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            96.0,
+            21.0,
+            86.0,
+            23.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            84.0,
+            21.0,
+            74.0,
+            23.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP cube_r7 cube0",
+      "uuid": "bf8cae91-a6ec-5fe6-83ad-11d098935b36",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        13.5,
+        26.0,
+        -13.0
+      ],
+      "to": [
+        18.5,
+        29.0,
+        -9.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            85.0,
+            28.0,
+            81.0,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            76.0,
+            28.0,
+            72,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            76.0,
+            28.0,
+            81.0,
+            24
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            81.0,
+            24,
+            86.0,
+            28.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            90.0,
+            28.0,
+            85.0,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            81.0,
+            28.0,
+            76.0,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP cube_r8 cube0",
+      "uuid": "750b1895-c928-5bb7-afe2-51dc22fec21c",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        21.5,
+        26.0,
+        -13.0
+      ],
+      "to": [
+        26.5,
+        29.0,
+        -9.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            13.0,
+            76.0,
+            9.0,
+            79.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            4.0,
+            76.0,
+            0,
+            79.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            4.0,
+            76.0,
+            9.0,
+            72
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            9.0,
+            72,
+            14.0,
+            76.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            18.0,
+            76.0,
+            13.0,
+            79.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            9.0,
+            76.0,
+            4.0,
+            79.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP cube_r9 cube0",
+      "uuid": "054b9551-56f1-5bb2-b20d-bcd882acdca1",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        21.0,
+        26.5,
+        -12.0
+      ],
+      "to": [
+        31.0,
+        28.5,
+        -10.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            86.0,
+            16.0,
+            84.0,
+            18.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            74.0,
+            16.0,
+            72,
+            18.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            74.0,
+            16.0,
+            84.0,
+            14
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            84.0,
+            14,
+            94.0,
+            16.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            96.0,
+            16.0,
+            86.0,
+            18.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            84.0,
+            16.0,
+            74.0,
+            18.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP front_t cube0",
+      "uuid": "38e5450c-3b45-564a-ae05-cc9be63dc669",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        20.0,
+        2.0,
+        -21.0
+      ],
+      "to": [
+        20.0,
+        10.0,
+        -13.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            109.0,
+            74.0,
+            101.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            101.0,
+            74.0,
+            93,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            101.0,
+            74.0,
+            101.0,
+            66
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            101.0,
+            66,
+            101.0,
+            74.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            109.0,
+            74.0,
+            109.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            101.0,
+            74.0,
+            101.0,
+            82.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP front_t cube1",
+      "uuid": "345cb7f6-e41e-57dc-af52-593205f90b7f",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        18.0,
+        3.5,
+        -23.0
+      ],
+      "to": [
+        22.0,
+        8.5,
+        -21.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            46.0,
+            90.0,
+            44.0,
+            95.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            40.0,
+            90.0,
+            38,
+            95.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            40.0,
+            90.0,
+            44.0,
+            88
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            44.0,
+            88,
+            48.0,
+            90.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            50.0,
+            90.0,
+            46.0,
+            95.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            44.0,
+            90.0,
+            40.0,
+            95.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP front_t cube2",
+      "uuid": "58847a69-e2b3-5e95-be0e-86610da0e756",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        18.0,
+        0.0,
+        -19.5
+      ],
+      "to": [
+        22.0,
+        2.0,
+        -14.5
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.001,
+      "faces": {
+        "east": {
+          "uv": [
+            86.0,
+            63.0,
+            81.0,
+            65.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            77.0,
+            63.0,
+            72,
+            65.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            77.0,
+            63.0,
+            81.0,
+            58
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            81.0,
+            58,
+            85.0,
+            63.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            90.0,
+            63.0,
+            86.0,
+            65.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            81.0,
+            63.0,
+            77.0,
+            65.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP front_t cube3",
+      "uuid": "19932dd8-59a1-54b5-a6f1-7cbdc4166b7a",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        18.0,
+        3.75,
+        -13.0
+      ],
+      "to": [
+        22.0,
+        8.75,
+        -11.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            96.0,
+            92.0,
+            94.0,
+            97.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            90.0,
+            92.0,
+            88,
+            97.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            90.0,
+            92.0,
+            94.0,
+            90
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            94.0,
+            90,
+            98.0,
+            92.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            100.0,
+            92.0,
+            96.0,
+            97.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            94.0,
+            92.0,
+            90.0,
+            97.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP front_t cube4",
+      "uuid": "40e3cae3-4674-504d-958f-ddd0cbaeffd6",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        18.0,
+        10.0,
+        -19.5
+      ],
+      "to": [
+        22.0,
+        12.0,
+        -14.5
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.001,
+      "faces": {
+        "east": {
+          "uv": [
+            89.0,
+            79.0,
+            84.0,
+            81.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            80.0,
+            79.0,
+            75,
+            81.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            80.0,
+            79.0,
+            84.0,
+            74
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            84.0,
+            74,
+            88.0,
+            79.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            93.0,
+            79.0,
+            89.0,
+            81.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            84.0,
+            79.0,
+            80.0,
+            81.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP cube_r10 cube0",
+      "uuid": "67fccaf9-2d0a-5dc9-8405-eab55349d887",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        18.0,
+        3.6464,
+        -23.0
+      ],
+      "to": [
+        22.0,
+        8.6464,
+        -21.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.002,
+      "faces": {
+        "east": {
+          "uv": [
+            26.0,
+            93.0,
+            24.0,
+            98.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            20.0,
+            93.0,
+            18,
+            98.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            20.0,
+            93.0,
+            24.0,
+            91
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            24.0,
+            91,
+            28.0,
+            93.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            30.0,
+            93.0,
+            26.0,
+            98.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            24.0,
+            93.0,
+            20.0,
+            98.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP cube_r10 cube1",
+      "uuid": "5143f00c-33f7-5200-8dbc-2bc9179afa42",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        18.0,
+        10.1768,
+        -19.5303
+      ],
+      "to": [
+        22.0,
+        12.1768,
+        -14.5303
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.002,
+      "faces": {
+        "east": {
+          "uv": [
+            89.0,
+            71.0,
+            84.0,
+            73.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            80.0,
+            71.0,
+            75,
+            73.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            80.0,
+            71.0,
+            84.0,
+            66
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            84.0,
+            66,
+            88.0,
+            71.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            93.0,
+            71.0,
+            89.0,
+            73.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            84.0,
+            71.0,
+            80.0,
+            73.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP cube_r10 cube2",
+      "uuid": "f639c3c4-8abf-5cb9-a7f1-54be0ed02751",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        18.0,
+        3.6464,
+        -13.0
+      ],
+      "to": [
+        22.0,
+        8.6464,
+        -11.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.002,
+      "faces": {
+        "east": {
+          "uv": [
+            83.0,
+            92.0,
+            81.0,
+            97.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            77.0,
+            92.0,
+            75,
+            97.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            77.0,
+            92.0,
+            81.0,
+            90
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            81.0,
+            90,
+            85.0,
+            92.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            87.0,
+            92.0,
+            83.0,
+            97.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            81.0,
+            92.0,
+            77.0,
+            97.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP cube_r10 cube3",
+      "uuid": "d54622e6-0f48-524e-810e-df797b6039f0",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        18.0,
+        0.0,
+        -19.3535
+      ],
+      "to": [
+        22.0,
+        2.0,
+        -14.3535
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.002,
+      "faces": {
+        "east": {
+          "uv": [
+            86.0,
+            37.0,
+            81.0,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            77.0,
+            37.0,
+            72,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            77.0,
+            37.0,
+            81.0,
+            32
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            81.0,
+            32,
+            85.0,
+            37.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            90.0,
+            37.0,
+            86.0,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            81.0,
+            37.0,
+            77.0,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP cube_r10 cube4",
+      "uuid": "e3d66358-4f63-5c9d-abbf-4a33815c5435",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        17.0,
+        4.5,
+        -18.5
+      ],
+      "to": [
+        23.0,
+        7.5,
+        -15.5
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.002,
+      "faces": {
+        "east": {
+          "uv": [
+            31.0,
+            87.0,
+            28.0,
+            90.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            22.0,
+            87.0,
+            19,
+            90.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            22.0,
+            87.0,
+            28.0,
+            84
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            28.0,
+            84,
+            34.0,
+            87.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            37.0,
+            87.0,
+            31.0,
+            90.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            28.0,
+            87.0,
+            22.0,
+            90.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP rear_t cube0",
+      "uuid": "4a5d4048-9c59-52ec-a7fb-eec7760fb61b",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        20.0,
+        2.0,
+        12.0
+      ],
+      "to": [
+        20.0,
+        10.0,
+        20.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            56.0,
+            79.0,
+            48.0,
+            87.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            48.0,
+            79.0,
+            40,
+            87.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            48.0,
+            79.0,
+            48.0,
+            71
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            48.0,
+            71,
+            48.0,
+            79.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            56.0,
+            79.0,
+            56.0,
+            87.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            48.0,
+            79.0,
+            48.0,
+            87.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP rear_t cube1",
+      "uuid": "67d7cab3-287a-50ff-8fd4-b63da937c064",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        18.0,
+        3.75,
+        10.0
+      ],
+      "to": [
+        22.0,
+        8.75,
+        12.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            99.0,
+            26.0,
+            97.0,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            93.0,
+            26.0,
+            91,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            93.0,
+            26.0,
+            97.0,
+            24
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            97.0,
+            24,
+            101.0,
+            26.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            103.0,
+            26.0,
+            99.0,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            97.0,
+            26.0,
+            93.0,
+            31.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP rear_t cube2",
+      "uuid": "5f30abd0-2562-58fc-9df0-ccc534842370",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        18.0,
+        0.0,
+        13.5
+      ],
+      "to": [
+        22.0,
+        2.0,
+        18.5
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.001,
+      "faces": {
+        "east": {
+          "uv": [
+            92.0,
+            5.0,
+            87.0,
+            7.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            83.0,
+            5.0,
+            78,
+            7.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            83.0,
+            5.0,
+            87.0,
+            0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            87.0,
+            0,
+            91.0,
+            5.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            96.0,
+            5.0,
+            92.0,
+            7.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            87.0,
+            5.0,
+            83.0,
+            7.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP rear_t cube3",
+      "uuid": "739f681e-e3ff-5f05-9c5c-1ab00d029ece",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        18.0,
+        3.75,
+        20.0
+      ],
+      "to": [
+        22.0,
+        8.75,
+        22.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.0,
+      "faces": {
+        "east": {
+          "uv": [
+            99.0,
+            57.0,
+            97.0,
+            62.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            93.0,
+            57.0,
+            91,
+            62.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            93.0,
+            57.0,
+            97.0,
+            55
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            97.0,
+            55,
+            101.0,
+            57.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            103.0,
+            57.0,
+            99.0,
+            62.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            97.0,
+            57.0,
+            93.0,
+            62.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP rear_t cube4",
+      "uuid": "fbe72e94-5da9-5542-9aed-18a5b60b5c53",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        18.0,
+        10.0,
+        13.5
+      ],
+      "to": [
+        22.0,
+        12.0,
+        18.5
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.001,
+      "faces": {
+        "east": {
+          "uv": [
+            89.0,
+            87.0,
+            84.0,
+            89.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            80.0,
+            87.0,
+            75,
+            89.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            80.0,
+            87.0,
+            84.0,
+            82
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            84.0,
+            82,
+            88.0,
+            87.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            93.0,
+            87.0,
+            89.0,
+            89.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            84.0,
+            87.0,
+            80.0,
+            89.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP cube_r11 cube0",
+      "uuid": "71f1127f-224c-5f53-8e16-ac17205d8dfd",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        18.0,
+        3.4697,
+        9.8232
+      ],
+      "to": [
+        22.0,
+        8.4697,
+        11.8232
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.002,
+      "faces": {
+        "east": {
+          "uv": [
+            59.0,
+            96.0,
+            57.0,
+            101.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            53.0,
+            96.0,
+            51,
+            101.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            53.0,
+            96.0,
+            57.0,
+            94
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            57.0,
+            94,
+            61.0,
+            96.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            63.0,
+            96.0,
+            59.0,
+            101.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            57.0,
+            96.0,
+            53.0,
+            101.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP cube_r11 cube1",
+      "uuid": "8b3b83e8-1e6d-5f98-b936-6151397f3a3a",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        18.0,
+        10.1768,
+        13.4697
+      ],
+      "to": [
+        22.0,
+        12.1768,
+        18.4697
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.002,
+      "faces": {
+        "east": {
+          "uv": [
+            14.0,
+            85.0,
+            9.0,
+            87.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            5.0,
+            85.0,
+            0,
+            87.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            5.0,
+            85.0,
+            9.0,
+            80
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            9.0,
+            80,
+            13.0,
+            85.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            18.0,
+            85.0,
+            14.0,
+            87.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            9.0,
+            85.0,
+            5.0,
+            87.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP cube_r11 cube2",
+      "uuid": "b83294d6-8d48-545e-85ce-afc1f6898ab6",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        18.0,
+        3.6464,
+        20.0
+      ],
+      "to": [
+        22.0,
+        8.6464,
+        22.0
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.002,
+      "faces": {
+        "east": {
+          "uv": [
+            99.0,
+            34.0,
+            97.0,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            93.0,
+            34.0,
+            91,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            93.0,
+            34.0,
+            97.0,
+            32
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            97.0,
+            32,
+            101.0,
+            34.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            103.0,
+            34.0,
+            99.0,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            97.0,
+            34.0,
+            93.0,
+            39.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP cube_r11 cube3",
+      "uuid": "a11e53fc-f56c-5e0c-942a-d0575e5cf328",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        18.0,
+        0.0,
+        13.2929
+      ],
+      "to": [
+        22.0,
+        2.0,
+        18.2929
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.002,
+      "faces": {
+        "east": {
+          "uv": [
+            33.0,
+            81.0,
+            28.0,
+            83.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            24.0,
+            81.0,
+            19,
+            83.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            24.0,
+            81.0,
+            28.0,
+            76
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            28.0,
+            76,
+            32.0,
+            81.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            37.0,
+            81.0,
+            33.0,
+            83.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            28.0,
+            81.0,
+            24.0,
+            83.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    },
+    {
+      "name": "REPAIRED RP cube_r11 cube4",
+      "uuid": "44cc7b7f-6cb0-55cb-956e-cd9551a2e3ef",
+      "type": "cube",
+      "box_uv": false,
+      "autouv": 0,
+      "from": [
+        17.0,
+        4.5,
+        14.5
+      ],
+      "to": [
+        23.0,
+        7.5,
+        17.5
+      ],
+      "origin": [
+        20,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "inflate": 0.002,
+      "faces": {
+        "east": {
+          "uv": [
+            96.0,
+            43.0,
+            93.0,
+            46.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            87.0,
+            43.0,
+            84,
+            46.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            87.0,
+            43.0,
+            93.0,
+            40
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "down": {
+          "uv": [
+            93.0,
+            40,
+            99.0,
+            43.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            102.0,
+            43.0,
+            96.0,
+            46.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            93.0,
+            43.0,
+            87.0,
+            46.0
+          ],
+          "texture": 0,
+          "rotation": 0
+        }
+      },
+      "visibility": true,
+      "export": true
+    }
+  ],
+  "groups": [
+    {
+      "uuid": "6b2b6bb3-8c68-578b-a81a-534bd34d2847",
+      "name": "JAVA SOURCE body",
+      "origin": [
+        -20.1667,
+        12.9547,
+        1.7935
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "2b37a7bc-64f4-5ce4-ac55-9d81edf59a4f",
+      "name": "JAVA SOURCE cube_r1",
+      "origin": [
+        -20.0,
+        27.0,
+        -10.0
+      ],
+      "rotation": [
+        22.001579333023614,
+        0.0,
+        -0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "0c6a0292-b8a1-5478-abb1-2988f712a4d3",
+      "name": "JAVA SOURCE cube_r2",
+      "origin": [
+        -20.0,
+        7.0,
+        14.0
+      ],
+      "rotation": [
+        -45.00010522957486,
+        0.0,
+        -0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "ea7c55cf-3fcd-546a-8d92-4a391bb73bf6",
+      "name": "JAVA SOURCE cube_r3",
+      "origin": [
+        -20.0,
+        7.25,
+        13.75
+      ],
+      "rotation": [
+        -45.00010522957486,
+        0.0,
+        -0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "7ffbc972-ab9f-5f24-aa53-90b728108be4",
+      "name": "JAVA SOURCE cube_r4",
+      "origin": [
+        -20.0,
+        11.75,
+        -9.0
+      ],
+      "rotation": [
+        45.00010522957486,
+        0.0,
+        -0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "49875606-9188-5495-9d3e-497923411a8d",
+      "name": "JAVA SOURCE cube_r5",
+      "origin": [
+        -20.0,
+        13.0,
+        -7.0
+      ],
+      "rotation": [
+        22.001579333023614,
+        0.0,
+        -0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "8b6ed1af-36a3-5665-84d7-3f5de8362520",
+      "name": "JAVA SOURCE chest",
+      "origin": [
+        -22.0,
+        18.0,
+        22.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "d632b31a-f9b4-5016-9ab0-270dcc8bc989",
+      "name": "JAVA SOURCE handle",
+      "origin": [
+        -20.0,
+        27.5,
+        -9.4682
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "ed0df09d-04ce-5930-a247-a7dbb0faa341",
+      "name": "JAVA SOURCE cube_r6",
+      "origin": [
+        -20.0,
+        27.5,
+        -10.0
+      ],
+      "rotation": [
+        -0.0,
+        22.001579333023614,
+        -0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "3316be9d-9c63-5fda-9642-96e0573694f4",
+      "name": "JAVA SOURCE cube_r7",
+      "origin": [
+        -20.5,
+        27.0,
+        -10.0
+      ],
+      "rotation": [
+        -0.0,
+        22.001579333023614,
+        -0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "01cf17e5-54cd-5223-98bb-4768ea318a3c",
+      "name": "JAVA SOURCE cube_r8",
+      "origin": [
+        -19.5,
+        27.0,
+        -10.0
+      ],
+      "rotation": [
+        -0.0,
+        -22.001579333023614,
+        -0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "fdfea07a-a70f-56de-9fef-5deb74cfb963",
+      "name": "JAVA SOURCE cube_r9",
+      "origin": [
+        -20.0,
+        27.5,
+        -10.0
+      ],
+      "rotation": [
+        -0.0,
+        -22.001579333023614,
+        -0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "d4cae6a7-705f-5ecc-88a5-e8a8984f931c",
+      "name": "JAVA SOURCE front_t",
+      "origin": [
+        -20.0,
+        6.050000000000001,
+        -16.9629
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "22654cf6-c6fc-53ad-af4c-4c4d93d48095",
+      "name": "JAVA SOURCE cube_r10",
+      "origin": [
+        -20.0,
+        6.0,
+        -17.0
+      ],
+      "rotation": [
+        45.00010522957486,
+        0.0,
+        -0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "870f10d6-9a52-55be-9dda-3b6f41d7e835",
+      "name": "JAVA SOURCE rear_t",
+      "origin": [
+        -20.0,
+        6.095700000000001,
+        15.9914
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "a80784d1-4a24-5607-99b5-e7233e66fd32",
+      "name": "JAVA SOURCE cube_r11",
+      "origin": [
+        -20.0,
+        6.0,
+        16.0
+      ],
+      "rotation": [
+        45.00010522957486,
+        0.0,
+        -0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "5181e932-fbe2-5964-b680-955a8bb7ca48",
+      "name": "REPAIRED RP body",
+      "origin": [
+        19.8333,
+        12.9547,
+        1.7935
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "89999668-8374-5aa6-a32e-6304c851fe9d",
+      "name": "REPAIRED RP cube_r1",
+      "origin": [
+        20.0,
+        27.0,
+        -10.0
+      ],
+      "rotation": [
+        22.001579,
+        -0.0,
+        0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "99f6d105-0aa7-5534-9f00-b75629f2e996",
+      "name": "REPAIRED RP cube_r2",
+      "origin": [
+        20.0,
+        7.0,
+        14.0
+      ],
+      "rotation": [
+        -45.000105,
+        -0.0,
+        0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "a08ff958-50b6-5087-ac03-64ea40795e3c",
+      "name": "REPAIRED RP cube_r3",
+      "origin": [
+        20.0,
+        7.25,
+        13.75
+      ],
+      "rotation": [
+        -45.000105,
+        -0.0,
+        0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "ad30211d-53e0-55ea-9d1a-eefc6484b53c",
+      "name": "REPAIRED RP cube_r4",
+      "origin": [
+        20.0,
+        11.75,
+        -9.0
+      ],
+      "rotation": [
+        45.000105,
+        -0.0,
+        0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "5df52332-49fb-582f-8359-9800d4d68a26",
+      "name": "REPAIRED RP cube_r5",
+      "origin": [
+        20.0,
+        13.0,
+        -7.0
+      ],
+      "rotation": [
+        22.001579,
+        -0.0,
+        0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "b92ba628-8d94-5143-b624-e91f5a9a7696",
+      "name": "REPAIRED RP chest",
+      "origin": [
+        18.0,
+        18.0,
+        22.0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "43c639a5-281b-5b38-9a38-f408a566a997",
+      "name": "REPAIRED RP handle",
+      "origin": [
+        20.0,
+        27.5,
+        -9.4682
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "2d358f2c-3ede-5c58-8b37-afba485b4701",
+      "name": "REPAIRED RP cube_r6",
+      "origin": [
+        20.0,
+        27.5,
+        -10.0
+      ],
+      "rotation": [
+        -0.0,
+        22.001579,
+        0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "48bd4b74-d16b-52df-b6a2-defefb5c3332",
+      "name": "REPAIRED RP cube_r7",
+      "origin": [
+        19.5,
+        27.0,
+        -10.0
+      ],
+      "rotation": [
+        -0.0,
+        22.001579,
+        0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "ac48d7dd-c937-5aad-95d6-110ae0bc0e7d",
+      "name": "REPAIRED RP cube_r8",
+      "origin": [
+        20.5,
+        27.0,
+        -10.0
+      ],
+      "rotation": [
+        -0.0,
+        -22.001579,
+        0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "946a7ee9-683c-58a3-8898-def5c98f1947",
+      "name": "REPAIRED RP cube_r9",
+      "origin": [
+        20.0,
+        27.5,
+        -10.0
+      ],
+      "rotation": [
+        -0.0,
+        -22.001579,
+        0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "7b84b520-d7b0-510a-aa8b-7e804bd4dddd",
+      "name": "REPAIRED RP front_t",
+      "origin": [
+        20.0,
+        6.05,
+        -16.9629
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "53e40090-2b51-57f8-ad33-674f41df4177",
+      "name": "REPAIRED RP cube_r10",
+      "origin": [
+        20.0,
+        6.0,
+        -17.0
+      ],
+      "rotation": [
+        45.000105,
+        -0.0,
+        0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "c27f1837-cc09-5d22-891d-a92f865b85ae",
+      "name": "REPAIRED RP rear_t",
+      "origin": [
+        20.0,
+        6.0957,
+        15.9914
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    },
+    {
+      "uuid": "6dfe9e90-48eb-5bee-82b5-114cb168382b",
+      "name": "REPAIRED RP cube_r11",
+      "origin": [
+        20.0,
+        6.0,
+        16.0
+      ],
+      "rotation": [
+        45.000105,
+        -0.0,
+        0.0
+      ],
+      "visibility": true,
+      "export": true,
+      "isOpen": false
+    }
+  ],
+  "outliner": [
+    {
+      "uuid": "6b2b6bb3-8c68-578b-a81a-534bd34d2847",
+      "isOpen": false,
+      "children": [
+        "c69d392f-e17d-5f61-b2d6-1db32d34675b",
+        "2502b099-5f57-597b-b941-9202d28ed695",
+        "4ab80d25-f369-5149-8ec4-16aeff572081",
+        "c0fafea5-21bb-5540-94a3-352908b40888",
+        "6a12032a-b56e-55a1-967d-d8e1f9487aea",
+        {
+          "uuid": "2b37a7bc-64f4-5ce4-ac55-9d81edf59a4f",
+          "isOpen": false,
+          "children": [
+            "00ce3ad1-7382-56a4-bc35-a2fe788c1cd9",
+            "2bc91c32-93b6-53c4-95d2-7804f6692545"
+          ]
+        },
+        {
+          "uuid": "0c6a0292-b8a1-5478-abb1-2988f712a4d3",
+          "isOpen": false,
+          "children": [
+            "eedd3a70-8182-5ed3-b5ac-43d85a6d2e6c"
+          ]
+        },
+        {
+          "uuid": "ea7c55cf-3fcd-546a-8d92-4a391bb73bf6",
+          "isOpen": false,
+          "children": [
+            "b83b0f2f-15cc-5be8-a149-8219d41a2d10"
+          ]
+        },
+        {
+          "uuid": "7ffbc972-ab9f-5f24-aa53-90b728108be4",
+          "isOpen": false,
+          "children": [
+            "e409c35e-e4bd-5386-86d0-47690d0697a1"
+          ]
+        },
+        {
+          "uuid": "49875606-9188-5495-9d3e-497923411a8d",
+          "isOpen": false,
+          "children": [
+            "c89647a5-29bb-5be7-b811-d22506c354db"
+          ]
+        },
+        {
+          "uuid": "8b6ed1af-36a3-5665-84d7-3f5de8362520",
+          "isOpen": false,
+          "children": [
+            "6644a49a-cdd5-5d57-80f7-8bf66f818cc2",
+            "6544e129-6a56-55a4-96b9-2b2a1b2d4cbb",
+            "62cc3b64-88c6-57f1-ab28-564df7e9e3d4",
+            "ef74eb6b-de3a-5225-9dc5-31a8df7acce2",
+            "1ea6e29a-6050-52d6-aca7-43cdec1e0cae"
+          ]
+        }
+      ]
+    },
+    {
+      "uuid": "d632b31a-f9b4-5016-9ab0-270dcc8bc989",
+      "isOpen": false,
+      "children": [
+        "9f780779-e28a-52df-9b81-61593adc52e5",
+        {
+          "uuid": "ed0df09d-04ce-5930-a247-a7dbb0faa341",
+          "isOpen": false,
+          "children": [
+            "8c7a42ff-071f-5df1-9614-ad9eb7b8b564"
+          ]
+        },
+        {
+          "uuid": "3316be9d-9c63-5fda-9642-96e0573694f4",
+          "isOpen": false,
+          "children": [
+            "73de9bdf-23da-5981-a930-c5b59ec1a015"
+          ]
+        },
+        {
+          "uuid": "01cf17e5-54cd-5223-98bb-4768ea318a3c",
+          "isOpen": false,
+          "children": [
+            "a488d067-56a1-514e-b0a7-094b563552f3"
+          ]
+        },
+        {
+          "uuid": "fdfea07a-a70f-56de-9fef-5deb74cfb963",
+          "isOpen": false,
+          "children": [
+            "46033918-e883-5c64-a799-456b8f9ede18"
+          ]
+        }
+      ]
+    },
+    {
+      "uuid": "d4cae6a7-705f-5ecc-88a5-e8a8984f931c",
+      "isOpen": false,
+      "children": [
+        "8d0f3d9a-1bf7-502b-bcf9-7dd9bc73eb9a",
+        "787d3bf1-15e7-5618-9694-2151368e36d7",
+        "eaa1d746-48da-5209-bb82-4239ccf8c11e",
+        "426d9773-142f-5457-9024-050f3ca64fc5",
+        "8fb5057d-c828-5e4a-b69d-b73a0bf47fad",
+        {
+          "uuid": "22654cf6-c6fc-53ad-af4c-4c4d93d48095",
+          "isOpen": false,
+          "children": [
+            "0d607efb-c666-5221-82cb-be9345045c89",
+            "dcee107f-c3e0-59c8-a1ac-48ff519a82fd",
+            "4c20abc1-8dba-59b4-9b7d-ffae0ad0d63b",
+            "becd312a-b18b-51a7-a802-80c268e6d6d3",
+            "72488295-b4a3-5169-a6b8-4ba917109ed4"
+          ]
+        }
+      ]
+    },
+    {
+      "uuid": "870f10d6-9a52-55be-9dda-3b6f41d7e835",
+      "isOpen": false,
+      "children": [
+        "ec482a6c-9ce9-56d8-bcd7-c162c6845c09",
+        "57236cad-026c-55f8-8b61-b698106991e0",
+        "f7762538-5c80-5334-8eb6-5fc55f4b2174",
+        "5f8b8d94-1cc5-5b21-bed3-31d6b45fe8df",
+        "dcf5840b-f0f8-5947-8a1d-18f888ac4ea9",
+        {
+          "uuid": "a80784d1-4a24-5607-99b5-e7233e66fd32",
+          "isOpen": false,
+          "children": [
+            "355f43d4-8787-5688-9a95-441629c7559f",
+            "09d99fbc-4821-57d5-a19f-e7e613bda16e",
+            "e9beb9ba-62b1-5204-9e12-8d049c80f30f",
+            "5aadf4a5-fc0e-5474-9950-c5c174c74140",
+            "c054efb5-8ccc-530d-a0a2-76f490115f81"
+          ]
+        }
+      ]
+    },
+    {
+      "uuid": "5181e932-fbe2-5964-b680-955a8bb7ca48",
+      "isOpen": false,
+      "children": [
+        "5e2d34eb-4197-5503-b83d-fbab48bd6483",
+        "e70c327d-8b49-5f44-910b-807725002ad4",
+        "68dfa535-5269-5033-a025-fb562924ae78",
+        "b2fdeb8f-39b9-5c08-8f6d-597aaeec6c61",
+        "97f02a47-618c-5453-be04-8f5b0ecb1b92",
+        {
+          "uuid": "89999668-8374-5aa6-a32e-6304c851fe9d",
+          "isOpen": false,
+          "children": [
+            "8682c2b7-35bf-5fd6-ad82-f4cbd0a30201",
+            "38baa0bb-cb78-56cd-9067-8083459162a9"
+          ]
+        },
+        {
+          "uuid": "99f6d105-0aa7-5534-9f00-b75629f2e996",
+          "isOpen": false,
+          "children": [
+            "25485434-9a79-5b5f-b705-83cc57cc2ed5"
+          ]
+        },
+        {
+          "uuid": "a08ff958-50b6-5087-ac03-64ea40795e3c",
+          "isOpen": false,
+          "children": [
+            "4d522001-4d50-59df-a3f5-cc0962015d1e"
+          ]
+        },
+        {
+          "uuid": "ad30211d-53e0-55ea-9d1a-eefc6484b53c",
+          "isOpen": false,
+          "children": [
+            "52a54aaa-014e-5358-88d2-be3f6641275d"
+          ]
+        },
+        {
+          "uuid": "5df52332-49fb-582f-8359-9800d4d68a26",
+          "isOpen": false,
+          "children": [
+            "f1c9526e-f4dd-573d-ae85-05b7d071d8ac"
+          ]
+        },
+        {
+          "uuid": "b92ba628-8d94-5143-b624-e91f5a9a7696",
+          "isOpen": false,
+          "children": [
+            "2b2a5831-aab2-5793-81e8-012192bab608",
+            "90ba2cc1-726a-550a-a98f-006940347b8c",
+            "798cc370-d1e0-5c1b-923e-4743d2adcbcd",
+            "8b360a9a-9af8-5d11-b41d-ceb8cbf8eefb",
+            "7ffd3748-9449-5490-a71a-56b4f8ecb4e6"
+          ]
+        }
+      ]
+    },
+    {
+      "uuid": "43c639a5-281b-5b38-9a38-f408a566a997",
+      "isOpen": false,
+      "children": [
+        "199a5a31-631f-5e90-b57c-c34de5aa9da0",
+        {
+          "uuid": "2d358f2c-3ede-5c58-8b37-afba485b4701",
+          "isOpen": false,
+          "children": [
+            "33326c70-bcae-5d0c-86ee-cf84bbdd710b"
+          ]
+        },
+        {
+          "uuid": "48bd4b74-d16b-52df-b6a2-defefb5c3332",
+          "isOpen": false,
+          "children": [
+            "bf8cae91-a6ec-5fe6-83ad-11d098935b36"
+          ]
+        },
+        {
+          "uuid": "ac48d7dd-c937-5aad-95d6-110ae0bc0e7d",
+          "isOpen": false,
+          "children": [
+            "750b1895-c928-5bb7-afe2-51dc22fec21c"
+          ]
+        },
+        {
+          "uuid": "946a7ee9-683c-58a3-8898-def5c98f1947",
+          "isOpen": false,
+          "children": [
+            "054b9551-56f1-5bb2-b20d-bcd882acdca1"
+          ]
+        }
+      ]
+    },
+    {
+      "uuid": "7b84b520-d7b0-510a-aa8b-7e804bd4dddd",
+      "isOpen": false,
+      "children": [
+        "38e5450c-3b45-564a-ae05-cc9be63dc669",
+        "345cb7f6-e41e-57dc-af52-593205f90b7f",
+        "58847a69-e2b3-5e95-be0e-86610da0e756",
+        "19932dd8-59a1-54b5-a6f1-7cbdc4166b7a",
+        "40e3cae3-4674-504d-958f-ddd0cbaeffd6",
+        {
+          "uuid": "53e40090-2b51-57f8-ad33-674f41df4177",
+          "isOpen": false,
+          "children": [
+            "67fccaf9-2d0a-5dc9-8405-eab55349d887",
+            "5143f00c-33f7-5200-8dbc-2bc9179afa42",
+            "f639c3c4-8abf-5cb9-a7f1-54be0ed02751",
+            "d54622e6-0f48-524e-810e-df797b6039f0",
+            "e3d66358-4f63-5c9d-abbf-4a33815c5435"
+          ]
+        }
+      ]
+    },
+    {
+      "uuid": "c27f1837-cc09-5d22-891d-a92f865b85ae",
+      "isOpen": false,
+      "children": [
+        "4a5d4048-9c59-52ec-a7fb-eec7760fb61b",
+        "67d7cab3-287a-50ff-8fd4-b63da937c064",
+        "5f30abd0-2562-58fc-9df0-ccc534842370",
+        "739f681e-e3ff-5f05-9c5c-1ab00d029ece",
+        "fbe72e94-5da9-5542-9aed-18a5b60b5c53",
+        {
+          "uuid": "6dfe9e90-48eb-5bee-82b5-114cb168382b",
+          "isOpen": false,
+          "children": [
+            "71f1127f-224c-5f53-8e16-ac17205d8dfd",
+            "8b3b83e8-1e6d-5f98-b936-6151397f3a3a",
+            "b83294d6-8d48-545e-85ce-afc1f6898ab6",
+            "a11e53fc-f56c-5e0c-942a-d0575e5cf328",
+            "44cc7b7f-6cb0-55cb-956e-cd9551a2e3ef"
+          ]
+        }
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "name": "motorcycle.png",
+      "id": "0",
+      "uuid": "804d3088-a3fe-5dcf-952d-1789ce94f406",
+      "width": 128,
+      "height": 128,
+      "uv_width": 128,
+      "uv_height": 128,
+      "render_mode": "default",
+      "render_sides": "auto",
+      "internal": true,
+      "saved": true,
+      "source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAOAklEQVR4nOyde6wdRR3H57Snj/QFtFwaSEottVWiBGihiRW0vRhrDBrxkfgPEo3xkbRUGmKiBMojxsQQaEPUmJgYgn+YCGKEkLRAW2zTRBCLgXgrpdzW1hKoLd7ah33dw/nO6ffc2bkzs7N79nl2P83t7t2dPXfP/n7zm9/85jezTRGRBfOvafmUe/ThR32KiS997TMNkTDDw8OtZ59+Vdx629LAcR7b8LPHxYcXfbx7fN68i8WBA/+V+2/teUNs/OX9se5p9iWXB57NRbMuDd7X/tcT/6690hQRmTplptzOmH6x8fzxE50HiQeKB+uCDz1v0roPPqsiE1kBfAkTvm+ZJP9+mn+vrERWgP+f/l9g2wtp1bw5c+a0/997Yasy/hjNv9oMVIlYTYDN/BM2A2EUpUamdR9JVJK0Sa0JyJMjR44EtqZzKj7+io7u8JkYOfaf0GuOvv9Oro5hrCagDJp97Q0LvY71Yv5VL18XdpQyeZJrE1AU4ggfNfeBex9zWoE1677aaJfr/n7j9Z8PlH9l13O5dwtL2QSgn2879/e/7pU/LlYO3mS0Bh2W4rxTsGnELvKilE2AS8D+8Qe3kriwtf/rH1ojt23LILePPfKkLAdLIApK5Bu7evFy+aXCAkE//cmDwoc4tcllAUCYBbDXfr/rcc98DoSVQm/nF37o+u7+3n27rOfyag5K2QTofXl49jxm8vJdn6FeO4ZbAVzh8LkDC8S7h4fldujNnRBqt6zB4/cKq6dJV5OhwQxdhu2rx3RMZXz3t2z7k3AxuOKLMp6+9vv35/rgNr+4edwx3D9qP71+fK8LClBomgHTNUt47avHdExlvPdDYJm4gzVJwUqjClgemyW6yg8rUAYaf/z9C161SXeuTM6WTxkXPm2zzWcI8wv0EUAVnxFAmH3Vspm2YMngKrn925ZNwqd83iOEzbCHPsZeTUB7DQLzKROfXj7LJvywc/2OdALHO0FBfB0rG2l/fpr45j8Q1PwyMUHUOKHfgS0dPds2Tvm8idwNHKvN7uHWOLUaGTsMpugguKJn+OjY+u+9NB3oujGcm9Y2TwoTBwgLvqhlGGEDulKojqe6z3JQMh2UoTN81913iXVr18vjagSvb51A/BeltqplfYdbk27jITDUal2YOHbgwKvdGq/uq0AZqEwcCGK5S2fP6/6NKtBcsGBBKQY22rVx3LGwtK84aWH3/HhdYHSw351A7ybgzu+tb02YMEGMjo52Lmw2xblz5+Q+jgOca7VaotFoyJ8o5B3cscHonh7gMm1ZLkr5vPFWAAgZ/WVsz58/L7cQNuDvUAAoxu6h16QCYNjVh61bdogoqGbd5HSqjmqv1E7gBSBc/FDw2J45c0aeu+qqAfH224flPqxC1NqfBDah2wZ6xpQoGKzq7NsDWL6RU9coZ1g6WZZpYpF6ARA6hItaDuFjC/bvP9o9D+WAokycOFFkAWt+WLApaaggPr2XIhOpCYDwz549223jsQ+wz+YAgodi8PessPU0wnogvrmDtvPY91WCMIeSwSFaiCwsgbcC0LRDEa688hLZ7tNbRo2fP3+2FP7BgyNdnyAv0g4tQ+CDq5YpR/ytgGsYPQ8iWQB6/TTxNPPY0jmEkkyaNEnupw0U8NobRKqY2nwKf8uml72vK2oeoXc1pWmHgPftOyIfPsw8fqAYOIbaz65g2qAWok+vJ4GqfXhTtm/c2T80+6r5D1qB8eX5U2S8LQD79xAwajiPERyDTwBLoMYLfIgzHJv1g1WVTG1ibD4AjpnOFW1OhbdZWv2de1v0AYgaAOIWliKOBShqIKjfaaxb/VCLThvbcJpxClht/ydPnizLMAYAgavdPnwGrqVfwLK0DPQNcI2uUFQe/i1TRNGmKFwTIC5RUrd7XQegcHGAFSs/KX9hd47CgkmHaUekDudWfW5QlmPbT2FCcNiHj4BrXtq2U/4+eMvN4wJI/MHnbXlxuzz+6RXLA3+fn0PFo2Ls2P4X55cJGy52sWadiE0Z1gGw0YSgIGA8dJclwO+bN23tCsVlCSjs5zdvc1oCKtkLz78UsAY+lqCMMA6gJ4PoFqT9uyyXxVCxtAAfvfo6KRDWYtU8Y4vYPli0+Jqu8FgOqMoiewnDu2UZlIcwIUgqGGs5yv9r/5vyHMqpCqgGnKgkU6ZMEUP/2CXKjJoHYDqXB01VcKytPMbj6sgfhMT2ns4ezqGpoLmmIGnKGRdgzcbnw4Kon3/69OmusmDLXgWjjUWmDLOlbTQpHD5w1maaY5yDUChsxv9pMVhjCf0CRg7pK9A5pMD5O60I74NhZN4TFZH3BtQUcHaz1AQPU0YQsXUfTWnlyJXol3UAbJRyapjq7euOnxoZNEUJXT2FRzY+IDOCvnH7twLHk1oHwGUp8rIi3W4g21vUXJpo1ma1X08LwZpMx08dK1AdOHYJWYZNhdrNVGETpI4n4FqOPm74xfo6XpAgsR6mzywcF1kFfXCfrkxh3OcTv/uV8fztX/9uz/eJ8QC9yeH9qGFkRBZds57SJLUmwDUNKysYjrWdywpbqnwRJsTEHrO1xb918syudY0XZDWWkHWiSlRSdwKrtvYe5yww9dyWsfT4rztTzFFB0BwMrpojjh071sq6OUgtawNfTE/RLlOufS8TRiF8V28DlULtvUDo/Mmaem5gCpiErwtXL5NXUxG7CTAttKRm6Oimv6hNAeYcwjFljed+XGe1yAtCmYitAJyeFWRMIbL09nuB96neb1nuPQn6uhvoQ1nuMy1SawLKSBVXDE+lCSjjcixVXTa+L1cLr/GnVAqA2HqUlcd81gxW4ed2YhY3tc93cvv5N5E5lebYQR40bQM7ar+UfVj1gbqmVPFB8nf9s269bThy2jDG5sMmbqZH529GncVcBgIWIFhjxjt4wCfxkqt3YIWOjjIkv3ZPTTIEFMA07x6g1kb17lVFMVmTJHCv9+v3t5JYdzgqpZ0enjfMM8jDFPej+QfeCy//4Id3iDiEJYcQV/cQ1qQsaxm5CKv5ebxosi/Sq8Lm3Ye9xTTq0GvcmUG4T1dOoZ4ansVq484mwDQ12hQkyXsARH1wfJGF/t4iW3AniSHqUs8MCiugOoboJZh6Ab1Mq8oS0+rmVacvIoFqSnWRJ2m41gd2vYMhTZwKoPfTi9pv92kC0sRX6UzdO75KDu8MymPZuFALkFYfvixkNTNIVQSRIU4FKFpGq+39RmFNwI/uuU+YriO2XgS9+X54Q6gNp7YhS1U/9s21Y6+De+o3D2eqrer0aj5wn4etlo1yXVoROdR21yvkSBbWIPDOIHVNG9cCSFwdy2eNvCTTm5FybXtPkesdRnHP+dy7bj10xTIpkU+zYrs2aZqu4VW0+ReJPWLWFcvEsUMvixGxyNossEt1xZc7jszSZ4R45uzlIklsSSj2UcJez4WjxwBGRH6WJQ7SB9BXvlSFfHIYJv++znbBE0Itr069wsgfhP/cb1eL66Y9JZZOekd8of2zRtQUme68ANsyaLs3vi5Gtt4ptyq2ZdAg/NdOfiXx2l+TDsZ8AAiWSrBwQ2d5mIUrO2VcXcFDf+gIHUoAklaCIq62WebVQUDl5to/+8b+1vDmV5zjF7YycN6S6BIWzgdQSWI9/H4myituy4AxEKTm8rkWRK4aRV3npxdCQ8GIB5RdCbiK6B3f/qz0YT7WHtFUE1ORbBJMjh2VZYR4ssVrbAkpceIA+r3xHuKc7xWjAhR9UYMiEScOoBK2vG0vy9/60Axr822133c9/F7X1c2LtBNDi4LRAkDoDAixr6/3+W3Hw8gje6ZoFs20sLW6sghwnU+yORinAGpUUNV+XchxhJ83cd6QCuVxXVf2OECzTN25uA5TUmbcFAcwdfm0Zs64Ain3WbMZc9DT68LO94qxCejVs3XRS43Jw2HSlacScYC4nm1R19WlYrgUxHZOPZ5GHIBtvq1mh53vFeMXYuYNeffwcOC87UGkESp1vQnE9Up4nk97Qkma1jILEs0KVt+zG1JO9Au9xgHyJpXoFkCc4NSpc913D0yfPkV0VntvifePnhKjchl4eNnT5CLTPs6o7hBFPZ8Gca1lUWgm5dmO/6INLBUuTp48K5Z/6iPyyM4//1MMDEzrXNxqiE/cvFge3zN0UNTkQ8M3Py0MXQGehgVoC//EiTNi6tSmWLKsE1/YM3RAHDl6Uoye71iAgYHpbQswoW0BbgmtKXnHzU2U3QdI9ObU8DDM+vHjp6WpX3LjWHAJCtBo/3vv8AlpGbZvGxKttjKcOz/azU0samyi7/MBUIPufvDnznRveuWmdlbNFWxdaONnzpgcKINj7x0+Li67bIbYAeHjtXLCTpEWUwCViAPEBYqhZhirLxB9a/e/ZdsPywDhg7lzZ4lDh0aCBQtMJfMBopCk982ar48e2gJJWQonjlUqmiUjjbDXv4xPljCX4X5SX5Ttrd7PZjcL51RlqBUgHvVCkRHwXeJFffNnnGtEhiSmAEU22UmhWx39nCnXIc41WZKoBTB9IYZGXQ/ChmvRBNdnFdXcFpHCNgEUUj+NGxSRvvIB0m6G4izxEnbN1IGZuWYVNX2SKHwTLeKa7CRJuhlSCVMYk7WKc02WJGYBapNdTvrKGSpy7KCo9F0coAjNUJmou0MVp44EVpxaASpOrQAVp1aAilMrQMWpFaDi1ApQcWoFqDi1AlScWgEqTq0AFadWgIpTK0DFqRWg4tQKUHFqBag4tQJUnFoBKk6tABWnVoCKUytAxakVoOLUClBxagWoOLUCVJxaASrOBwAAAP//27kO4QAAAAZJREFUAwAQnSjTUTc6lgAAAABJRU5ErkJggg=="
+    }
+  ]
+}
