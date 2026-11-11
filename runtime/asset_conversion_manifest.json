@@ -610,138 +610,6 @@
       "operation": "Java elements, rescale, reflected coordinates and per-face UV conversion"
     },
     {
-      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
-      "output": "RP/models/blocks/takeout_bag.geo.json",
-      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
-      "output": "RP/models/blocks/takeout_bag.geo.json",
-      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
-      "output": "RP/models/blocks/takeout_bag_1.geo.json",
-      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
-      "output": "RP/models/blocks/takeout_bag_1.geo.json",
-      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
-      "output": "RP/models/blocks/takeout_bag_2.geo.json",
-      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
-      "output": "RP/models/blocks/takeout_bag_2.geo.json",
-      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
-      "output": "RP/models/blocks/takeout_bag_3.geo.json",
-      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
-      "output": "RP/models/blocks/takeout_bag_3.geo.json",
-      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
-      "output": "RP/models/blocks/takeout_bag_4.geo.json",
-      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
-      "output": "RP/models/blocks/takeout_bag_4.geo.json",
-      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
-      "output": "RP/models/blocks/takeout_bag_5.geo.json",
-      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
-      "output": "RP/models/blocks/takeout_bag_5.geo.json",
-      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
-      "output": "RP/models/blocks/takeout_bag_6.geo.json",
-      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
-      "output": "RP/models/blocks/takeout_bag_6.geo.json",
-      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
-      "output": "RP/models/blocks/takeout_bag_7.geo.json",
-      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
-      "output": "RP/models/blocks/takeout_bag_7.geo.json",
-      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
-      "output": "RP/models/blocks/takeout_bag_8.geo.json",
-      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
-      "output": "RP/models/blocks/takeout_bag_8.geo.json",
-      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
-      "output": "RP/models/blocks/takeout_bag_9.geo.json",
-      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
-      "output": "RP/models/blocks/takeout_bag_9.geo.json",
-      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
-      "output": "RP/models/blocks/takeout_bag_10.geo.json",
-      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
-      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
-      "output": "RP/models/blocks/takeout_bag_10.geo.json",
-      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
-      "operation": "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
-    },
-    {
       "source": "common/src/main/resources/assets/ordertocook/models/block/shelf_idle.json",
       "output": "RP/models/blocks/shelf_0.geo.json",
       "sha256": "268c0d0175f43cff56da5430fbc7906422c2c1c2b60c6dec5036c80f1c540442",
@@ -5810,6 +5678,138 @@
       "output": "RP/models/entity/dining_plate.geo.json",
       "sha256": "b233e3750f620834648f08386244ddeceeb6d0ce2f439315e02d424ed79eb2e1",
       "operation": "Original food stage shapes and UVs with plate tops cut behind opaque stain texels, remapped to the exact-pixel entity atlas"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/blocks/takeout_bag.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/blocks/takeout_bag_1.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag_1.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/blocks/takeout_bag_2.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag_2.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/blocks/takeout_bag_3.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag_3.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/blocks/takeout_bag_4.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag_4.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/blocks/takeout_bag_5.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag_5.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/blocks/takeout_bag_6.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag_6.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/blocks/takeout_bag_7.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag_7.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/blocks/takeout_bag_8.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag_8.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/blocks/takeout_bag_9.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag_9.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/geo/block/takeout_bag_placed.geo.json",
+      "output": "RP/models/blocks/takeout_bag_10.geo.json",
+      "sha256": "d2b6aab1971db1cfba3898df4f09521b89d08c9cc7b289144ab066d6215e06c3",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
+    },
+    {
+      "source": "common/src/main/resources/assets/ordertocook/animations/takeout_bag_placed.animation.json",
+      "output": "RP/models/blocks/takeout_bag_10.geo.json",
+      "sha256": "69f87baa4e538221b06324a48bb5d10fcb25fa734165c0b78398d3d8d3d6f95d",
+      "operation": "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint"
     }
   ],
   "port_assets": [

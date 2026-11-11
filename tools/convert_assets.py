@@ -1043,6 +1043,16 @@ def make_player_riding_source(natives, output):
         rig = {b['name']: b for b in read_json(ASSETS / f'geo/{filename}.geo.json')['minecraft:geometry'][0]['bones']}
         identifier = f'geometry.{NS}.player.riding_{variant}'
         model = segmented_player_geometry(native, rig, identifier)
+        # All player geometry aliases share the actor's locator table. Native
+        # Geometry.default already owns lead_hold; declaring it again with
+        # Slim's different Y offset makes Bedrock discard that definition.
+        # Keep the original Item bone and its elbow parent, and leave the
+        # shared locator to the unchanged native player geometry.
+        for bone in model['minecraft:geometry'][0]['bones']:
+            locators = bone.get('locators', {})
+            locators.pop('lead_hold', None)
+            if not locators:
+                bone.pop('locators', None)
         path = f'RP/models/entity/ordertocook_riding_{variant}.geo.json'
         write_json(output / path, model)
         variants[variant] = {'geometry': identifier, 'file': path,
@@ -1093,7 +1103,7 @@ def make_player_riding_source(natives, output):
         for mode in range(len(descriptor['clips'])):
             name = f'drive_{mode}_{phase}'
             code = mode + phase*8
-            targets.append({name: f'variable.ordertocook_drive_tp && {prop} == {code}'})
+            targets.append({name: f'variable.ordertocook_drive_tp ? ({prop} == {code}) : 0'})
             playing = []
             for index, variant in enumerate(('classic', 'slim'), 1):
                 gate = f'variable.ordertocook_drive_tp && variable.ordertocook_drive_variant == {index}'
@@ -1402,10 +1412,12 @@ def separate_plate_surface_layers(g, model):
                 sx1, _, sz1 = stain["to"]
                 keep = not (sx0 <= x < sx1 and sz0 <= z < sz1)
                 if not keep:
-                    # Java UP UV runs from max X/Z to min X/Z. Feed cropped
-                    # source faces through java_cube's existing reflection.
-                    u = su0+(sx1-x)/(sx1-sx0)*(su1-su0)
-                    v = sv0+(sz1-z)/(sz1-sz0)*(sv1-sv0)
+                    # Source UP UV runs from min X/Z to max X/Z.
+                    # java_cube and the Bedrock importer perform matching
+                    # X reflections and UP endpoint swaps; do not apply those
+                    # transforms again while sampling source-space texels.
+                    u = su0+(x-sx0)/(sx1-sx0)*(su1-su0)
+                    v = sv0+(z-sz0)/(sz1-sz0)*(sv1-sv0)
                     keep = image.getpixel((math.floor(u*image.width/16),
                                            math.floor(v*image.height/16)))[3] == 0
             if keep and start is None:
@@ -1414,10 +1426,10 @@ def separate_plate_surface_layers(g, model):
                 left, right = x0+start*dx, x0+column*dx
                 near, far = z0+row*dz, z0+(row+1)*dz
                 face = copy.deepcopy(plate["faces"]["up"])
-                face["uv"] = [u0+(x1-right)/(x1-x0)*(u1-u0),
-                              v0+(z1-far)/(z1-z0)*(v1-v0),
-                              u0+(x1-left)/(x1-x0)*(u1-u0),
-                              v0+(z1-near)/(z1-z0)*(v1-v0)]
+                face["uv"] = [u0+(left-x0)/(x1-x0)*(u1-u0),
+                              v0+(near-z0)/(z1-z0)*(v1-v0),
+                              u0+(right-x0)/(x1-x0)*(u1-u0),
+                              v0+(far-z0)/(z1-z0)*(v1-v0)]
                 cubes.append(java_cube({"from": [left, y, near], "to": [right, y, far],
                                         "faces": {"up": face}}, model["textures"]))
                 start = None
@@ -1586,16 +1598,36 @@ def make_stove_ui():
         "ui/ordertocook_stove.json", "ui/ordertocook_stove_pocket.json"]})
 
 
-def make_blocks():
-    simple_block("board", "board", False, {"origin": [-8, 0, 4], "size": [16, 16, 4]})
-    simple_block("countertop", "countertop")
-    simple_block("chair", "chair", {"origin": [-5, 0, -5], "size": [10, 8, 10]}, {"origin": [-5, 0, -5], "size": [10, 16, 10]})
+def separate_takeout_bag_folds(g):
+    """Give the two crossing paper folds distinct north/south depth surfaces.
+
+    The original +/-22.5 degree folds have identical Z bounds, so their
+    differently textured faces compete above the body. Inset only the inner
+    fold by 1/32 model pixel on each side before sampling the original motion.
+    Keep its X/Y outline, pivot, rotation, all UVs and the source alpha mask.
+    The imported geometry archive stays an unmodified source reference.
+    """
+    group = next(bone for bone in g["minecraft:geometry"][0]["bones"]
+                 if bone["name"] == "group")
+    outer, inner = group["cubes"][1:3]
+    if (outer.get("rotation") != [0, 0, 22.5]
+            or inner.get("rotation") != [0, 0, -22.5]
+            or outer["origin"][2] != inner["origin"][2]
+            or outer["size"][2] != inner["size"][2]):
+        raise ValueError("Placed bag fold topology changed; review its face ownership")
+    inset = 1 / 32
+    inner["origin"][2] += inset
+    inner["size"][2] -= 2 * inset
+
+
+def make_takeout_bag(*, include_block_definition=True):
     # Java's placed bag has an empty block model and a complete Geo renderer.
     # Keep frame zero settled for existing worlds; frames 1..10 play maked at
     # one source tick each. Only an active placement requests native block ticks.
     bag_source = ASSETS / "geo/block/takeout_bag_placed.geo.json"
     bag_animation = ASSETS / "animations/takeout_bag_placed.animation.json"
     bag = normalize_geo(bag_source, f"geometry.{NS}.takeout_bag_source")
+    separate_takeout_bag_folds(bag)
     bag_clip = read_json(bag_animation)["animations"]["maked"]
     bag_tile = texture_tile(f"{NS}:block/takeout_bag_placed")
     mats = {"*": {"texture": bag_tile, "render_method": "alpha_test", "ambient_occlusion": False}}
@@ -1607,12 +1639,21 @@ def make_blocks():
         assert_block_bounds(g)
         identifier = emit_geo(name, g)
         for source in (bag_source, bag_animation):
-            record(source, RP / "models/blocks" / f"{name}.geo.json", "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint")
+            record(source, RP / "models/blocks" / f"{name}.geo.json", "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint")
         variants.append({"condition": state_condition({"frame": frame}), "components": {"minecraft:geometry": identifier}})
+    if not include_block_definition:
+        return
     variants.append({"condition": f"q.block_state('{NS}:frame') > 0", "components": {
         "minecraft:tick": {"interval_range": [1, 1], "looping": True}, f"{NS}:bag_motion": {}}})
     block_definition("takeout_bag", f"geometry.{NS}.takeout_bag", mats, {"frame": list(range(11))}, variants,
                      False, {"origin": [-5, 0, -5], "size": [10, 10, 10]}, native_container={"slot_count": 1})
+
+
+def make_blocks():
+    simple_block("board", "board", False, {"origin": [-8, 0, 4], "size": [16, 16, 4]})
+    simple_block("countertop", "countertop")
+    simple_block("chair", "chair", {"origin": [-5, 0, -5], "size": [10, 8, 10]}, {"origin": [-5, 0, -5], "size": [10, 16, 10]})
+    make_takeout_bag()
     for name, state, maximum in (("shelf", "papers", 10), ("plate_shelf", "plates", 18), ("washingtable", "plates", 10)):
         item_visual = None
         if name == "washingtable":
@@ -2680,6 +2721,7 @@ def main():
     parser.add_argument("--creative-only", action="store_true", help="Regenerate only creative menus, catalog and group labels")
     parser.add_argument("--languages-only", action="store_true", help="Regenerate only language files from upstream and owned localization sources")
     parser.add_argument("--item-names-only", action="store_true", help="Regenerate only native item/block-item display bindings and language files")
+    parser.add_argument("--bag-only", action="store_true", help="Regenerate only the placed bag frames and their existing provenance entries")
     parser.add_argument("--plates-only", action="store_true", help="Regenerate only placed meal geometry and its existing provenance entries")
     parser.add_argument("--stove-ui-only", action="store_true", help="Generate only native stove UI routing/layout and its RP UI definitions")
     parser.add_argument("--segmented-player-native", type=Path, help="External native input for local model-source prototypes only")
@@ -2706,6 +2748,15 @@ def main():
     if args.item_names_only:
         make_display_names()
         make_languages()
+        return
+    if args.bag_only:
+        make_takeout_bag(include_block_definition=False)
+        manifest_path = OUT / "asset_conversion_manifest.json"
+        manifest = read_json(manifest_path)
+        outputs = {entry["output"] for entry in PROVENANCE}
+        manifest["assets"] = [entry for entry in manifest["assets"] if entry["output"] not in outputs] + PROVENANCE
+        write_json(manifest_path, manifest)
+        print("Generated placed bag frames; no pack identity or other asset families changed")
         return
     if args.plates_only:
         make_food_plate_display()
