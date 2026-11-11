@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.56-alpha.1 (local integration, unpublished)
+
+- Restore the stove slot layout through the existing native container screen. Desktop uses the original Java texture and positions; pocket preserves native touch slots and inventory. Other container titles retain their native panels.
+- Keep cooking, item storage and timing unchanged. Real progress bindings, per-slot restrictions and client behavior remain unresolved. Pure source generation only; no tests, CI or client observation.
+
 ## 0.1.55-alpha.1 (local integration, unpublished)
 
 - Integrate the received creative-tab source, preserving the selected Forge tab's 23-item order in one native Items group and keeping the two port-only entries outside it.

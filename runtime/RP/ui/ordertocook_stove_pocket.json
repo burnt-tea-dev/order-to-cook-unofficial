@@ -1,0 +1,293 @@
+{
+  "namespace": "pocket_containers",
+  "otc_stove_slots": {
+    "type": "panel",
+    "size": [
+      "100%",
+      84
+    ],
+    "controls": [
+      {
+        "slots": {
+          "type": "grid",
+          "size": [
+            "100%",
+            196
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "grid_dimensions": [
+            1,
+            7
+          ],
+          "collection_name": "container_items",
+          "$item_collection_name": "container_items",
+          "controls": [
+            {
+              "slot_0": {
+                "type": "panel",
+                "size": [
+                  "100%",
+                  28
+                ],
+                "grid_position": [
+                  0,
+                  0
+                ],
+                "controls": [
+                  {
+                    "item@common.pocket_ui_container_item": {
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "offset": [
+                        0,
+                        0
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "slot_1": {
+                "type": "panel",
+                "size": [
+                  "100%",
+                  28
+                ],
+                "grid_position": [
+                  0,
+                  1
+                ],
+                "controls": [
+                  {
+                    "item@common.pocket_ui_container_item": {
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "offset": [
+                        28,
+                        -28
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "slot_2": {
+                "type": "panel",
+                "size": [
+                  "100%",
+                  28
+                ],
+                "grid_position": [
+                  0,
+                  2
+                ],
+                "controls": [
+                  {
+                    "item@common.pocket_ui_container_item": {
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "offset": [
+                        56,
+                        -56
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "slot_3": {
+                "type": "panel",
+                "size": [
+                  "100%",
+                  28
+                ],
+                "grid_position": [
+                  0,
+                  3
+                ],
+                "controls": [
+                  {
+                    "item@common.pocket_ui_container_item": {
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "offset": [
+                        28,
+                        -28
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "slot_4": {
+                "type": "panel",
+                "size": [
+                  "100%",
+                  28
+                ],
+                "grid_position": [
+                  0,
+                  4
+                ],
+                "controls": [
+                  {
+                    "item@common.pocket_ui_container_item": {
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "offset": [
+                        "100% - 84px",
+                        -84
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "slot_5": {
+                "type": "panel",
+                "size": [
+                  "100%",
+                  28
+                ],
+                "grid_position": [
+                  0,
+                  5
+                ],
+                "controls": [
+                  {
+                    "item@common.pocket_ui_container_item": {
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "offset": [
+                        "100% - 56px",
+                        -112
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "slot_6": {
+                "type": "panel",
+                "size": [
+                  "100%",
+                  28
+                ],
+                "grid_position": [
+                  0,
+                  6
+                ],
+                "controls": [
+                  {
+                    "item@common.pocket_ui_container_item": {
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "offset": [
+                        "100% - 28px",
+                        -140
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "otc_stove_panel@pocket_containers.data_driven_container_panel": {
+    "controls": [
+      {
+        "container_gamepad_helpers@common.container_gamepad_helpers": {
+          "layer": 3
+        }
+      },
+      {
+        "header@pocket_containers.header_area": {
+          "layer": 2
+        }
+      },
+      {
+        "bg@pocket_containers.background_panel": {
+          "layer": 0
+        }
+      },
+      {
+        "inventory@pocket_containers.half_screen": {
+          "$container_size": 36,
+          "$pane_collection": "combined_hotbar_and_inventory_items"
+        }
+      },
+      {
+        "container@pocket_containers.half_screen": {
+          "anchor_from": "top_middle",
+          "$pane_collection": "container_items",
+          "controls": [
+            {
+              "inventory_panel": {
+                "type": "panel",
+                "size": [
+                  "100% - 8px",
+                  "95%"
+                ],
+                "anchor_from": "center",
+                "anchor_to": "center",
+                "controls": [
+                  {
+                    "scrolling_panel@common.scrolling_panel": {
+                      "$allow_scrolling_even_when_content_fits": false,
+                      "layer": 1,
+                      "$scrolling_pane_size": [
+                        "100%",
+                        "100%-2px"
+                      ],
+                      "$scrolling_content": "pocket_containers.otc_stove_slots",
+                      "$scroll_box_mouse_image_control": "common-classic.button_state_default",
+                      "$scroll_size": [
+                        "8px",
+                        "100%"
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "selected_item_details_factory@common.selected_item_details_factory": {}
+      },
+      {
+        "item_lock_notification_factory@common.item_lock_notification_factory": {
+          "$offset": [
+            0,
+            "85%"
+          ]
+        }
+      },
+      {
+        "gamepad_cursor@common.gamepad_cursor_button": {}
+      },
+      {
+        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+      },
+      {
+        "hold_icon@common.inventory_take_progress_icon_button": {}
+      },
+      {
+        "flying_item_renderer@common.flying_item_renderer": {
+          "layer": 12
+        }
+      }
+    ]
+  }
+}

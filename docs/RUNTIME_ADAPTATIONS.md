@@ -1,6 +1,6 @@
 # 顧客、載具與廚房設備：基岩版實作及差異
 
-本文件對應 **0.1.7-alpha.1（整合來源）** 的 `entities.js`、`dining.js`、`appliances.js`、`appliance_motion.js`、`native_fridge.js` 與 `stove_controls.js`。這是基岩版改編；Java 的介面、實體物理和 GeckoLib 方塊動畫不能原樣載入。**型別檢查、模擬測試及原生服務端探針均不能代替真實 Player 的容器操作、客戶端畫面與觸控驗收。**
+本文件對應 [package.json 的整合來源](../package.json) 的 `entities.js`、`dining.js`、`appliances.js`、`appliance_motion.js`、`native_fridge.js` 與 `stove_controls.js`。這是基岩版改編；Java 的介面、實體物理和 GeckoLib 方塊動畫不能原樣載入。**型別檢查、模擬測試及原生服務端探針均不能代替真實 Player 的容器操作、客戶端畫面與觸控驗收。**
 
 本文件涵蓋 alpha.3 玩法基線與 **視覺／音效修復**的 `runtime/BP/scripts/`。本輪修正及實際驗證範圍見 [VISUAL_AUDIO_PARITY.md](VISUAL_AUDIO_PARITY.md)。Java 的介面、實體物理和 GeckoLib 方塊動畫需要基岩適配；**型別檢查、模擬測試、離線渲染及原生服務端探針，均不能代替 Blockbench 互動檢視、Minecraft 客戶端畫面、表單及觸控驗收。** 本候選尚未執行這些客戶端視覺驗收，歷史記錄不改寫為通過。
 
@@ -12,7 +12,7 @@
 
 方塊及物品自訂元件由 `main.js` 在 `system.beforeEvents.startup` 註冊；世界存檔讀取及服務建立在 `world.afterEvents.worldLoad` 執行。服務的 `init()` 接著啟動更新，不再等待另一個 `worldLoad`；設備每 2 tick 更新，顧客與餐盤每 5 tick 更新。這遵循 [Script V2 的 early execution 限制](https://learn.microsoft.com/en-us/minecraft/creator/documents/scripting/v2-overview?view=minecraft-bedrock-stable)。
 
-冰箱直接使用原生方塊容器視窗，鍵鼠、控制器、觸控交由 Bedrock 庫存操作處理；爐灶與操作台以直接互動及單頁 [ActionFormData](https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server-ui/actionformdata?view=minecraft-bedrock-stable) 縮短操作。表單使用現有 stable UI 2.0 即可，不需要測試版表單 API。各裝置實際操作仍待驗收，不能宣稱相同於 Java 拖曳、快捷移動及專用槽位佈局。本模組沒有覆寫 `player.json`。
+冰箱與爐灶直接使用原生方塊容器視窗，鍵鼠、控制器、觸控交由 Bedrock 庫存操作處理；操作台沿用直接互動及單頁 [ActionFormData](https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server-ui/actionformdata?view=minecraft-bedrock-stable)。表單使用現有 stable UI 2.0 即可，不需要測試版表單 API。各裝置實際操作仍待驗收，不能宣稱相同於 Java 拖曳、快捷移動及專用槽位佈局。本模組沒有覆寫 `player.json`。
 
 ## 新打單機放置
 
@@ -58,8 +58,8 @@
 | 燃料用盡 | 每 tick 先扣剩餘燃料，再決定能否出菜；無下一份燃料時進度每 tick 回退 2。 |
 | 無效原料 | 與 Java 一樣可以放入，但留在原格，不加工、不產生物品，也不觸發新燃料。 |
 | 換料／取空 | 成功改變輸入種類或 metadata、取空輸入時重置共用進度。同身份補量、取成品、取消或滿背包失敗不重置。內部烹調扣料亦不當作換料。 |
-| 關閉表單 | 不會暫停烹調；要停止某路須取走原料。已點燃燃料仍會燒完。 |
-| 卸載／重啟 | 庫存沿用原生 helper；保存已處理的剩餘 tick，不補算離線時間。卸載使舊表單 session 失效，重載不讓它重新取得權限。 |
+| 關閉原生容器 | 不會暫停烹調；要停止某路須取走原料。已點燃燃料仍會燒完。 |
+| 卸載／重啟 | 實物在方塊原生七槽；既有 appliance 記錄保存已處理的剩餘 tick，不補算離線時間。尚未完成 helper 遷移時保留原來源，不建立替代空庫存。 |
 
 原版九條煙燻配方保留，另以原生 `ItemTypes.get` 逐筆確認煙火兩條實際配方的輸入及輸出
 存在後，接入烤雞翅、烤番薯。完整 ID、原始 JSON、供應商契約及排除製程見
@@ -99,7 +99,9 @@ checkpoint 保存而使正常重啟倒退。點火扣燃料、批次出菜與玩
 不依賴不可寫入世界的 shutdown before-event。存檔仍由既有 `store.js` 單獨持有，UUID、
 設備 ID 與七槽原生物品不遷移；世界突然斷電時，原生 inventory 與世界屬性仍不是共同原子交易。
 
-手持支援的食材／燃料點擊，直接把該堆疊存入可用輸入槽／燃料槽；放不下則保留原堆疊。空手或手持其他物品時開啟單頁七槽控制：點槽取出、收全部成品、從背包補料、刷新或關閉，不需進入槽位子選單。整批取出先核對背包容量；槽位已被其他玩家改動時拒絕舊選擇並刷新。表單返回後重新驗證距離、權限及設備；取消、設備移除或失去權限直接退出。同步寫入例外嘗試回復原 ItemStack，完整成敗邊界以本輪測試報告為準。
+爐灶目前沿 `canOpenStove` 的認領／權限／就緒檢查放行引擎原生容器；首次被攔住後就緒會提示再點一次。物品由玩家在真槽位移動，不再手持點擊直接扣物，也沒有「點槽取出／收全部／補料」的七槽 ActionForm。`stove_controls.js` 現在只負責原生容器及逐槽 `moveItem` 遷移；貨物與 metadata 不另存一份。目的槽衝突、舊 helper 未載入或保存失敗時保留來源，只有來源清空且新狀態保存成功後才移除 helper。已開容器的即時撤權限制仍存在。
+
+2026-11-11 本題已將固定 Java Screen／Menu／BlockEntity、實際七槽順序、原 PNG consumer 與選定 BDS 1.26.60.6 的接口缺口集中到 [原操作與畫面接口核對](NATIVE-CONTAINERS.md#原操作與畫面接口核對2026-11-11)。爐灶專用布局已由 `tools/convert_assets.py::make_stove_ui` 按原始 title key 接入同一原生七槽；正常生成與來源審閱完成，客戶端未觀察。真進度綁定仍缺，現有 `ContainerRules` 也沒有可設定的逐槽規則；燃料篩選、輸出鎖及快捷移動分流仍未完成。
 
 ## 洗碗池及洗碗機
 
@@ -221,7 +223,7 @@ Java 的設備準星讀數來自可選的 Jade 相容層，不是 OTC 本體常�
 
 Microsoft 的 [ItemFoodComponent 文件](https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/itemfoodcomponent?view=minecraft-bedrock-stable) 明確限定其適用於 data-driven items。本版以已核對的原版食品清單為基礎，再加可讀 component 及管理員登記規則；不能據此宣稱任意已安裝附加包食品都會自動被正確識別。
 
-設備狀態、餐廳及訂單使用世界 dynamic properties；冰箱 ItemStack 使用原生方塊 inventory，爐灶及載具使用原生實體 inventory。[官方多人腳本指南](https://learn.microsoft.com/en-us/minecraft/creator/documents/scripting/multiplayer-scripts?view=minecraft-bedrock-stable)說明 dynamic properties 會跨伺服器重新啟動保留。套件 header UUID 需要保持固定。讀取異常資料時保留原值，不以清空存檔作「修復」。
+設備狀態、餐廳及訂單使用世界 dynamic properties；冰箱與爐灶 ItemStack 使用原生方塊 inventory，載具使用原生實體 inventory。[官方多人腳本指南](https://learn.microsoft.com/en-us/minecraft/creator/documents/scripting/multiplayer-scripts?view=minecraft-bedrock-stable)說明 dynamic properties 會跨伺服器重新啟動保留。套件 header UUID 需要保持固定。讀取異常資料時保留原值，不以清空存檔作「修復」。
 
 設備只有載入時處理；離線、遠離區塊或重新載入不補算大量烹飪 tick。訂單期限、餐盤進食及顧客完成時間使用真實毫秒，離線期間仍推進。餐盤名義 0.75／3／4／5 秒對應原 20 TPS 的門檻，但世界卡頓或暫停時並不保證與 Java 世界 tick 完全同步。
 

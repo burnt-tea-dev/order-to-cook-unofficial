@@ -1454,6 +1454,138 @@ def make_food_plate_display():
     record(blockstates_source, BP / "blocks/food_plate_display.json", "Original stage1..40 mapping with original placed-meal renderer geometry at stage zero")
 
 
+def make_stove_ui():
+    """Route only the raw stove title to native slots in the Java arrangement.
+
+    References: Mojang bedrock-samples 15701fa9, data_driven_container_screen,
+    pocket_containers, ui_common and brewing_stand_screen (explicit grid cells
+    with offset children). Java e59e3dbc StoveScreenHandler supplies the positions.
+    The grid owns collection indices; moving its children never moves inventory.
+    """
+    title_match = "($container_title = 'container.ordertocook.stove')"
+    desktop_slots = []
+    pocket_slots = []
+    java_positions = ((38, 17), (56, 17), (74, 17), (56, 53),
+                      (116, 35), (134, 35), (152, 35))
+    for index, (x, y) in enumerate(java_positions):
+        # Java positions describe the 16px item; the native 18px cell starts
+        # one pixel earlier. Grid cells stay in index order, each 18px wide.
+        desktop_slots.append({f"slot_{index}": {
+            "type": "panel", "size": [18, 18], "grid_position": [index, 0],
+            "controls": [{"item@chest.chest_grid_item": {
+                "anchor_from": "top_left", "anchor_to": "top_left",
+                "offset": [x - 1 - index * 18, y - 1]}}]}})
+        # Pocket keeps native 28px touch targets. Outputs anchor to the right
+        # of the available pane instead of stretching or shrinking those slots.
+        if index < 3:
+            pocket_x, pocket_y = index * 28, 0
+        elif index == 3:
+            pocket_x, pocket_y = 28, 56
+        else:
+            pocket_x, pocket_y = f"100% - {28 * (7 - index)}px", 28
+        pocket_slots.append({f"slot_{index}": {
+            "type": "panel", "size": ["100%", 28], "grid_position": [0, index],
+            "controls": [{"item@common.pocket_ui_container_item": {
+                "anchor_from": "top_left", "anchor_to": "top_left",
+                "offset": [pocket_x, pocket_y - index * 28]}}]}})
+
+    desktop = {
+        "namespace": "data_driven_container",
+        "otc_stove_background": {
+            "type": "image", "texture": f"textures/{NS}/gui/stove",
+            "uv": [0, 0], "uv_size": [176, 166], "size": [176, 166]},
+        "otc_stove_slots": {
+            "type": "grid", "size": [126, 18],
+            "anchor_from": "top_left", "anchor_to": "top_left",
+            "grid_dimensions": [7, 1], "collection_name": "container_items",
+            "$item_collection_name": "container_items", "controls": desktop_slots},
+        "otc_stove_desktop_panel": {
+            "type": "panel", "controls": [
+                {"container_gamepad_helpers@common.container_gamepad_helpers": {}},
+                {"selected_item_details_factory@common.selected_item_details_factory": {
+                    "control_name": "@data_driven_container.selected_item_details"}},
+                {"item_lock_notification_factory@common.item_lock_notification_factory": {
+                    "control_name": "@common.item_lock_notification"}},
+                {"root_panel@common.root_panel": {
+                    "size": [176, 166], "layer": 1, "controls": [
+                        {"common_panel@common.common_panel": {
+                            "$dialog_background": "data_driven_container.otc_stove_background"}},
+                        {"container_panel": {
+                            "type": "panel", "layer": 5, "controls": [
+                                {"container_label@data_driven_container.container_label": {
+                                    "offset": [7, 6]}},
+                                {"stove_slots@data_driven_container.otc_stove_slots": {}},
+                                # Native inventory/cursor/button implementations remain in
+                                # charge. Offsets align their cells with the Java PNG.
+                                {"inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {
+                                    "offset": [0, -3]}},
+                                {"hotbar_grid@common.hotbar_grid_template": {"offset": [0, -7]}},
+                                {"inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}},
+                                {"flying_item_renderer@common.flying_item_renderer": {"layer": 15}}]}},
+                        {"inventory_selected_icon_button@common.inventory_selected_icon_button": {}},
+                        {"gamepad_cursor@common.gamepad_cursor_button": {}}]}}]},
+        # Retain the official screen base, close policy, background and pocket
+        # toast. Only this title key selects the two owned content panels.
+        "screen@common.inventory_screen_common": {
+            "$close_on_player_hurt|default": True,
+            "$use_custom_pocket_toast|default": False,
+            "close_on_player_hurt": "$close_on_player_hurt",
+            "use_custom_pocket_toast": "$use_custom_pocket_toast",
+            "variables": [
+                {"requires": f"($desktop_screen and (not {title_match}))",
+                 "$screen_content": "data_driven_container.desktop_panel",
+                 "$screen_bg_content": "common.screen_background", "$screen_background_alpha": 0.4},
+                {"requires": f"($pocket_screen and (not {title_match}))",
+                 "$use_custom_pocket_toast": True,
+                 "$screen_content": "pocket_containers.data_driven_container_panel"},
+                {"requires": f"($desktop_screen and {title_match})",
+                 "$screen_content": "data_driven_container.otc_stove_desktop_panel",
+                 "$screen_bg_content": "common.screen_background", "$screen_background_alpha": 0.4},
+                {"requires": f"($pocket_screen and {title_match})",
+                 "$use_custom_pocket_toast": True,
+                 "$screen_content": "pocket_containers.otc_stove_panel"}]}}
+    pocket = {
+        "namespace": "pocket_containers",
+        "otc_stove_slots": {
+            "type": "panel", "size": ["100%", 84], "controls": [
+                {"slots": {
+                    "type": "grid", "size": ["100%", 196],
+                    "anchor_from": "top_left", "anchor_to": "top_left",
+                    "grid_dimensions": [1, 7], "collection_name": "container_items",
+                    "$item_collection_name": "container_items", "controls": pocket_slots}}]},
+        "otc_stove_panel@pocket_containers.data_driven_container_panel": {
+            # These are the official pocket panel's controls, with only the
+            # container half's scroll content replaced. Declare them in their
+            # original namespace so inherited unqualified references resolve.
+            "controls": [
+                {"container_gamepad_helpers@common.container_gamepad_helpers": {"layer": 3}},
+                {"header@pocket_containers.header_area": {"layer": 2}},
+                {"bg@pocket_containers.background_panel": {"layer": 0}},
+                {"inventory@pocket_containers.half_screen": {
+                    "$container_size": 36, "$pane_collection": "combined_hotbar_and_inventory_items"}},
+                {"container@pocket_containers.half_screen": {
+                    "anchor_from": "top_middle", "$pane_collection": "container_items",
+                    "controls": [{"inventory_panel": {
+                        "type": "panel", "size": ["100% - 8px", "95%"],
+                        "anchor_from": "center", "anchor_to": "center", "controls": [
+                            {"scrolling_panel@common.scrolling_panel": {
+                                "$allow_scrolling_even_when_content_fits": False,
+                                "layer": 1, "$scrolling_pane_size": ["100%", "100%-2px"],
+                                "$scrolling_content": "pocket_containers.otc_stove_slots",
+                                "$scroll_box_mouse_image_control": "common-classic.button_state_default",
+                                "$scroll_size": ["8px", "100%"]}}]}}]}},
+                {"selected_item_details_factory@common.selected_item_details_factory": {}},
+                {"item_lock_notification_factory@common.item_lock_notification_factory": {"$offset": [0, "85%"]}},
+                {"gamepad_cursor@common.gamepad_cursor_button": {}},
+                {"inventory_selected_icon_button@common.inventory_selected_icon_button": {}},
+                {"hold_icon@common.inventory_take_progress_icon_button": {}},
+                {"flying_item_renderer@common.flying_item_renderer": {"layer": 12}}]}}
+    write_json(RP / "ui/ordertocook_stove.json", desktop)
+    write_json(RP / "ui/ordertocook_stove_pocket.json", pocket)
+    write_json(RP / "ui/_ui_defs.json", {"ui_defs": [
+        "ui/ordertocook_stove.json", "ui/ordertocook_stove_pocket.json"]})
+
+
 def make_blocks():
     simple_block("board", "board", False, {"origin": [-8, 0, 4], "size": [16, 16, 4]})
     simple_block("countertop", "countertop")
@@ -1675,6 +1807,7 @@ def make_blocks():
                      {"lit": [False, True], "fire_frame": list(range(6)),
                       "ignition_frame": list(range(20))}, variants,
                      native_container={"slot_count": 7, "title": "container.ordertocook.stove"})
+    make_stove_ui()
 
 
 def transform3(v, rotation, pivot=(0, 0, 0)):
@@ -2548,6 +2681,7 @@ def main():
     parser.add_argument("--languages-only", action="store_true", help="Regenerate only language files from upstream and owned localization sources")
     parser.add_argument("--item-names-only", action="store_true", help="Regenerate only native item/block-item display bindings and language files")
     parser.add_argument("--plates-only", action="store_true", help="Regenerate only placed meal geometry and its existing provenance entries")
+    parser.add_argument("--stove-ui-only", action="store_true", help="Generate only native stove UI routing/layout and its RP UI definitions")
     parser.add_argument("--segmented-player-native", type=Path, help="External native input for local model-source prototypes only")
     parser.add_argument("--segmented-player-slim", type=Path, help="External legacy mobs.json containing standalone native customSlim")
     parser.add_argument("--segmented-camera-frames", type=Path, help="Explicit right/left model-space camera frames for that prototype")
@@ -2559,6 +2693,9 @@ def main():
         parser.error("Expected OrdertoCook source inputs with LICENSE.txt and common resources")
     if args.customer_controller_only:
         make_customer_animation_controller()
+        return
+    if args.stove_ui_only:
+        make_stove_ui()
         return
     if args.creative_only:
         make_creative_metadata()
