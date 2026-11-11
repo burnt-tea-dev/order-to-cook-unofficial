@@ -1,5 +1,11 @@
 # 可行性與原作還原對照
 
+## 客戶端顧客動畫語法（2026-11-11，來源修正）
+
+使用者回報測試服 `controller.animation.ordertocook.customer` 的 idle／idle_next 轉移包含 `if (...)`，客戶端報 unknown／unrecognized token。`tools/convert_assets.py` 已把這兩個早退分支改成 Molang 的 `條件 ? { ... };`，保留原坐姿變更、state_time 等待與0.55／0.7／0.85隨機門檻。抽出同一controller生成入口，正常使用 `--customer-controller-only` 重產 [customer.animation_controllers.json](../runtime/RP/animation_controllers/customer.animation_controllers.json)，沒有改 entity、幾何、版本或世界資料。依Owner reset未執行測試，未發布／部署，也未觀察修後client。
+
+同批模型找不到訊息尚未確診：貼文列出的OTC34個geometry ID，在測試服實裝OTC RP0.1.54都存在。其他Baking9／Grilling3／TACZ2個ID也在各自實裝包內。檔案存在不代表client成功載入；仍需完整用戶端版本及同次登入更早的資源／geometry錯誤，不能把來源庫存讀回當渲染成功，也不據此改名或移除模型。詳見本次[交接紀錄](/root/senluo-baseline-20260930/java-parity-20261105/restart-20261110/CLIENT-CONTENT-ERRORS-20261111.result.md)。
+
 ## 洗碗機顯示狀態本地原型（0.1.53，尚未發布）
 
 洗碗機盤片依 Java 只分成 0、1、2、3 片以上四種外觀。原型由同一生成器把顯示 state 收成四值，原服務只投影 `min(station.appliance.plates, 3)`；真批次 0–16、phase、剩餘 tick、洗碗時長及返還數量不變。方塊／動畫 mesh、UV 與通用餐盤架 wide setter 均保留。宣告的組合由 14336 收為 1792，不代表已量測效能改善。
@@ -36,7 +42,7 @@ HUD／使用查看詳情讀目前 `order.destination`。外送袋在原 `onUse` 
 | 爐灶按鈕列表 | 改為真七槽方塊容器，沿原權限認領、完整物品遷移及 200 tick 烹調；首次被攔住後提示再點。操作及 Java 專用槽位／進度條差距見 [原生容器](NATIVE-CONTAINERS.md#原生七槽爐灶)。 |
 | 顧客站在設備頂面 | 非入座的站立顧客不採 OTC 設備表面作地板，保留原椅子入座及載具支撐規則。 |
 | 外送目標在水面／找不到顧客 | 0.1.50 的「無安全地址便不發單」已由 2026-11-10 未發布來源取代：新候選依 Java 嘗試 8 次並保留最後地址，未載入不丟單；顧客仍待目的地可用才生成。選址與既有已接單恢復的界線見[來單規則](UPSTREAM_RULES.md#來客與來單節奏)。 |
-| 創造物品混雜 | 編輯來源由 `tools/convert_assets.py` 產生原生分類目錄：建築頁放置物架／座椅，裝備頁放載具／頭盔，物品頁分餐廳設備、餐盤外賣、訂單、廚師幣及指南。內部展示方塊隱藏，真餐盤物品與保存 ID 保留。三語名稱及排序有來源／生成回歸，不代表客戶端分類畫面已確認。 |
+| 創造分頁與原序 | [data/java-creative-tabs.json](../data/java-creative-tabs.json) 分開保存固定 Java Forge／NeoForge `ModItemGroups.displayItems` 的23項原序；沿已選 Forge 參考，投影為一個 Items 原生群組，圖示為 order_machine。九個用途組退役；guide／controller保留為明列群組外 port 項，內部展示、ID及metadata保持。NeoForge工具箱位置不同，未混入Forge。`tools/convert_assets.py --creative-only` 只生成分類／語系；2026-11-10僅本機來源與產物，未跑測試或觀察client，「＋不展開」仍未確診。 |
 
 ## 結論
 
@@ -128,6 +134,16 @@ Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedro
 | 小電驢 | 原Java模型、四車色、保溫箱、燈面、喇叭 | 原生載具物理及按鍵；現版未綁把手／前輪轉向，輪轉以無方向累積距離驅動，與 Java 的帶方向內部速度、倒車及碰撞語義不同，見[來源與GUI對照](validation/visual-audio/MOTORCYCLE_VISUAL_BINDING_20261108.md)。燈面發光但不照亮地形。原騎車自動頭盔屬玩家渲染層，本版未重建該層及完整玩家姿勢。 |
 | 原始美術 | 67原PNG、12原OGG原樣保留；原geo／動畫正規化存档 | 保存未使用片段不等於其在玩法中已被觸發；動畫清單詳見ASSET_PROVENANCE。 |
 
+## 機車第一人稱乘座座標
+
+2026-11-11 收件審閱：已撤回本題未充分成立的 seat Y `+0.4` 及其生成器常數／註解，正常重產原 `[0,0.6,-0.45]`。PNX 的 `getMountedOffset`／`getSeatOffsetFor`／`applySeatOffsets` 是第三方引擎產生 `SEAT_OFFSET` 的路徑，不能證明本機 BDS 客戶端眼位；舊 `1.62−1.22=0.4` 只是假說，未定位遮擋根因，也不是已確認的補償量。提高 rideable seat 會改乘客附著位置，原草稿沒有獨立處理人物 mesh；不能保證臀部仍貼座墊，故不保留該變更，也不加反向 mesh 抵銷。
+
+2026-11-11 來源重建補入獨立的 `make_player_riding_source`，把五個原 drive 片段轉為兩份真 native 基底的分段 TP 動畫。`player-presentation.json.riding` 由此入口實際讀取，共享 Grilling composer 與 Core／private 的完整玩家 prepare 已接入其讀取與回寫路徑；實際接線及保留範圍只維護於 [玩家來源文件](PLAYER-RIG-PROTOTYPE.md#機車第三人稱的共享來源接線)。原 imported 動畫不再被當成有效 player 已在播放的證據；一般手洗／椅子與 FP 原型的邊界不變。
+
+尚未完成：新來源 pin、完整 BP／RP owner 的配對身份與選包由總協調串行固化，本次未改它們，也未執行 prepare、測試或部署。TP 選型、皮膚／衣物／持物、轉頭與離座恢復仍沒有新 client 畫面。FP 遮擋的完整根因及眼位仍未知；保留原 seat，不加 camera override，不宣稱新 TP 接線就是遮擋的全部修復。
+
+Java 的 [Forge RidePerspectiveSwitch](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/animation/RidePerspectiveSwitch.java)／[NeoForge 同類別](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/neoforge-1.21.1/src/client/java/cn/breezeth/ordertocook/client/animation/RidePerspectiveSwitch.java)確實由 client setup 註冊，上車時切一次背後第三人稱、下車時回第一人稱；狀態不變時不再改視角。Bedrock 現用 server 2.11.0 有 `Camera.setCamera`／`setDefaultCamera`，但後者是重設 preset 的位置與旋轉，不是修改玩家的自由視角選項。[官方 camera 語義](https://learn.microsoft.com/en-us/minecraft/creator/documents/camerasystem/cameracommandintroduction?view=minecraft-bedrock-stable)說明 set 持續到 clear／斷線，clear 回到玩家原選項。因此本草稿沒有以持續 camera override 冒充 Java 的一次切換；目前所讀原生入口未找到保留手動切換的等價方式，該差異仍開放。未新增或執行測試，未提交、發布或部署，不能記作已還原。
+
 ## 未交付的展示餐點
 
 操作台做好的餐盤／外送袋，以及玩家蹲下擺放的同一件成品，直接保存在展示方塊的一格原生 inventory。準備時只建立一次成品；擺放與取回使用 `Container.moveItem` 搬動完整 ItemStack，保留名稱、lore、自訂資料與原訂單 proof，不列舉欄位重建。訂單後來失效也可取回格子中的實物，交付仍由原訂單檢查決定。滿包保留原處；拆除／替換由原生容器掉出真物品，腳本不另造副本。
@@ -162,9 +178,9 @@ Java選定source與API版本查 [upstream鎖](../upstream/source.lock.json)。Fo
 
 所選官方[原生骨架](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/models/entity/humanoid.custom.geo.json)保留 `rightItem`／`leftItem` 及lead locator。[原生胸甲attachable](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/attachables/iron_chestplate.player.json)另設 `chest_layer_visible=0`，使用[armor geometry](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/models/entity/player_armor.json)的native body／waist／Arm等骨名；不能只看玩家皮膚網格。Java也須分支核對：上述Forge入口只替換base model的renderToBuffer；Neo則在自訂renderer成功後取消整個PlayerRenderer。所選兩分支RiderGeoRenderer只自加motorcycle helmet layer，沒有另加一般armor／held-item layer。這不等於已觀察兩分支穿甲實景，也不要求額外重做所有盔甲分節。
 
-classic／slim的原rig與UV已存在，但自動選取仍需證據。[官方skin pack規格](https://learn.microsoft.com/en-us/minecraft/creator/documents/packagingaskinpack?view=minecraft-bedrock-stable)把 `geometry.humanoid.custom`／`customSlim` 分別當Steve／Alex；該metadata不是client_entity的slim query。所選[Molang參考](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/documentation/Molang.html)有bone_aabb、bone_origin、get_default_bone_pivot；skin_id則關聯實體skin_id component。有效owner目前沒有骨架／slim偵測，也未宣告queryable_geometry；官方[client schema](https://learn.microsoft.com/en-us/minecraft/creator/reference/content/visualreference/actor_resource_definition.v1.10.0?view=minecraft-bedrock-stable)雖列出該欄位，尚未驗證這些查詢在所選玩家skin／取樣階段的值，不能直接拿它們決定粗細手臂，也不能由此斷言它們不支援玩家。
+classic／slim 的來源及目前機車 selector 見 [玩家來源文件](PLAYER-RIG-PROTOTYPE.md#機車第三人稱的共享來源接線)。025 的「未宣告 queryable_geometry」只描述當時輸入；現有 IE 宿主輸入已宣告 `default`，而完整 TACZ 玩家 prepare 由同一 composer 補入它。來源中已按真 native 肩 pivot 選型，不代表已觀察 client 查詢結果；不以 skin_id、名稱或手臂寬度猜身形。
 
-全身、前臂及分段FP的可重現生成與矩陣測試現已具備，見[來源原型與接入契約](PLAYER-RIG-PROTOTYPE.md)。classic與customSlim已各讀固定Mojang真基底，補償slim網格／樞紐／持物的半像素座標框差並保留其鏡射UV，不再共用classic只改寬度。它保留分段上下肢、下袖／褲、持物錨點及每手獨立view／body矩陣；參考相機框架明確傳入，未自動選native skin或校準Bedrock絕對相機。這些來源未進runtime，現行rigid姿勢不變。後續接入沿共同持有的Core／既有composer保留同一有效owner的default、皮膚與native骨名，再按實際動作選相容geometry；native自動選型／客製avatar、持物／armor與相機未核清前，不加入全域geometry替換、額外player覆寫或機器專屬玩法。
+全身、前臂與分段 FP 的歷史來源原型及矩陣結果仍見 [玩家來源文件](PLAYER-RIG-PROTOTYPE.md)。本次機車 TP 重用它的雙基底、分段 UV 與父鏈，並接入完整玩家 prepare；沒有把一般手洗／椅子或 FP 原型一併換成新 runtime，也沒有部署。眼位、特殊 avatar 與實際持物／衣物畫面仍未確認。
 
 ## 手洗第一人稱左臂
 

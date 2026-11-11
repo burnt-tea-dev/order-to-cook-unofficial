@@ -20,7 +20,11 @@ export function joinMessages(parts, separator = '\n') {
  * they must not fix every viewer to the language used when a menu was saved.
  */
 export function menuFoodText(food) {
-  const key = ItemTypes.get(food.typeId)?.localizationKey;
+  const nativeKey = ItemTypes.get(food.typeId)?.localizationKey;
+  // Only our explicit display-key contract wraps a plain translation key.
+  // Unknown addon keys and vanilla's irregular keys are used exactly as given.
+  const prefix = 'senluo.tooltip.';
+  const key = nativeKey?.startsWith(prefix) ? nativeKey.slice(prefix.length) : nativeKey;
   const name = key ? translate(key) : message(food.label || food.typeId);
   const identity = normalizeFoodIdentity(food.foodIdentity);
   return identity ? message(name, ' · ', translate('otc.food.variant', identity.nativeVariant)) : name;

@@ -5,7 +5,7 @@
       "identifier": "ordertocook:refrigerator",
       "menu_category": {
         "category": "items",
-        "group": "ordertocook:itemGroup.restaurant_equipment"
+        "group": "ordertocook:itemGroup.order_group"
       },
       "traits": {
         "minecraft:placement_direction": {
@@ -100,7 +100,8 @@
             "face_dimming": true
           }
         }
-      }
+      },
+      "minecraft:display_name": "senluo.tooltip.tile.ordertocook:refrigerator.name"
     },
     "permutations": [
       {

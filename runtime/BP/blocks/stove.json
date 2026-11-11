@@ -5,7 +5,7 @@
       "identifier": "ordertocook:stove",
       "menu_category": {
         "category": "items",
-        "group": "ordertocook:itemGroup.restaurant_equipment"
+        "group": "ordertocook:itemGroup.order_group"
       },
       "traits": {
         "minecraft:placement_direction": {
@@ -93,7 +93,8 @@
           "slot_count": 7,
           "title": "container.ordertocook.stove"
         }
-      }
+      },
+      "minecraft:display_name": "senluo.tooltip.tile.ordertocook:stove.name"
     },
     "permutations": [
       {

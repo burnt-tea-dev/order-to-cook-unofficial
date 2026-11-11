@@ -123,6 +123,14 @@ working live catalog intact and log the rejected declaration.
 The runtime [presentation consumer](../runtime/BP/scripts/i18n.js) resolves a
 loaded item's `ItemType.localizationKey` and passes it as `RawMessage.translate`
 through menu buttons, order details, missing-food messages and new parcel lore.
+Native item displays may use the explicit `senluo.tooltip.<plain-key>` contract
+to add a blue addon source line. The consumer unwraps only that owned key prefix
+before translation; an already plain key, vanilla key or other addon key is used
+unchanged. The original `.name` resource remains the single-line name for menus
+and guides. This does not split rendered strings or change saved item metadata.
+Obtainable block-items use the block `minecraft:display_name` component with
+`senluo.tooltip.<tile-key>` under the same convention. Hidden helper blocks are
+excluded; `tile.*.name` and `container.*` titles remain plain translations.
 Each client selects its language; neither the server language nor a saved
 catalog `label` selects it. If the supplying item is no longer loaded, the saved
 label/ID remains readable as a literal fallback. Nutrition, recipe identity,

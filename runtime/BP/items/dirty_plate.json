@@ -5,12 +5,12 @@
       "identifier": "ordertocook:dirty_plate",
       "menu_category": {
         "category": "items",
-        "group": "ordertocook:itemGroup.tableware"
+        "group": "ordertocook:itemGroup.order_group"
       }
     },
     "components": {
       "minecraft:display_name": {
-        "value": "item.ordertocook:dirty_plate.name"
+        "value": "senluo.tooltip.item.ordertocook:dirty_plate.name"
       },
       "minecraft:icon": {
         "textures": {

@@ -104,6 +104,7 @@ export function createEntityService(ctx) {
   const hornTimes = new Map();
   const chairClaps = new Map();
   const chairIdles = new Map();
+  const motorcycleRiders = new Map();
   const retryTimes = new Map();
   const entityInteractions = new Map();
   const chairClaims = new Set();
@@ -587,6 +588,68 @@ export function createEntityService(ctx) {
     return bikes[0];
   }
 
+  function trackMotorcycleRider(player) {
+    const bike = player.getComponent("minecraft:riding")?.entityRidingOn;
+    if (bike?.typeId !== MOTORCYCLE) {
+      motorcycleRiders.delete(player.id);
+      property(player, "drive_action", 0);
+      return undefined;
+    }
+    let session = motorcycleRiders.get(player.id);
+    if (session?.bike.id !== bike.id || session.player !== player) {
+      session = { player, bike, phase: 0, firstHorn: -100, hornUntil: -1,
+        hornMode: 2, lightFrom: Infinity, lightUntil: -1 };
+      motorcycleRiders.set(player.id, session);
+      property(player, "drive_action", 0);
+    }
+    return session;
+  }
+
+  function updateMotorcyclePresentation(session) {
+    const { player, bike } = session;
+    if (!player.isValid || !bike.isValid ||
+        player.getComponent("minecraft:riding")?.entityRidingOn?.id !== bike.id) {
+      motorcycleRiders.delete(player.id);
+      if (player.isValid) property(player, "drive_action", 0);
+      return;
+    }
+    // Read the actual vehicle, not the rider's freely turning head/body yaw.
+    const velocity = bike.getVelocity(), yaw = bike.getRotation().y * Math.PI / 180;
+    const forwardSpeed = -Math.sin(yaw) * velocity.x + Math.cos(yaw) * velocity.z;
+    const now = gameSystem.currentTick;
+    const mode = forwardSpeed < -0.01 ? 1 :
+      now >= session.lightFrom && now < session.lightUntil ? 4 :
+      now < session.hornUntil ? session.hornMode : 0;
+    const action = mode + session.phase * 8;
+    if (currentProperty(player, "drive_action", -1) !== action) property(player, "drive_action", action);
+  }
+
+  function motorcycleGesture(bike, kind) {
+    for (const player of bike.getComponent("minecraft:rideable")?.getRiders() ?? []) {
+      if (player.typeId !== "minecraft:player") continue;
+      const session = trackMotorcycleRider(player);
+      if (!session) continue;
+      const now = gameSystem.currentTick;
+      session.phase ^= 1; // Repeated same gestures must restart the client clip.
+      if (kind === "horn") {
+        const repeat = now < session.hornUntil || now - session.firstHorn <= 27;
+        if (!repeat) session.firstHorn = now;
+        session.hornMode = repeat ? 3 : 2;
+        session.hornUntil = now + (repeat ? 21 : 27);
+        gameSystem.runTimeout(() => {
+          if (motorcycleRiders.get(player.id) === session) updateMotorcyclePresentation(session);
+        }, repeat ? 21 : 27);
+      } else {
+        session.lightFrom = now + 6;
+        session.lightUntil = now + 6 + 17;
+        for (const delay of [6, 23]) gameSystem.runTimeout(() => {
+          if (motorcycleRiders.get(player.id) === session) updateMotorcyclePresentation(session);
+        }, delay);
+      }
+      updateMotorcyclePresentation(session);
+    }
+  }
+
   function bikeAccessible(player, entity, range = 14) {
     return player.isValid && entity?.isValid && player.dimension.id === entity.dimension.id && dist2(player.location, entity.location) <= range * range;
   }
@@ -666,6 +729,7 @@ export function createEntityService(ctx) {
     const now = gameSystem.currentTick;
     if ((hornTimes.get(entity.id) ?? -100) + 12 > now) return;
     hornTimes.set(entity.id, now);
+    motorcycleGesture(entity, "horn");
     playSound(entity, `${NS}horn`, 1);
   }
 
@@ -709,6 +773,7 @@ export function createEntityService(ctx) {
         });
       } else if (result.selection === 1) horn(entity);
       else if (result.selection === 2) {
+        motorcycleGesture(entity, "light");
         property(entity, "light", !currentProperty(entity, "light", true));
         playSound(entity, "random.click", 0.8);
         notify(player, "已切換車燈。");
@@ -809,7 +874,10 @@ export function createEntityService(ctx) {
     if (player.getComponent("minecraft:riding")?.entityRidingOn) { void openMotorcycle(player, entity); return true; }
     const rideable = entity.getComponent("minecraft:rideable");
     if (rideable?.getRiders().length) { notify(player, "這輛小電驢已有駕駛。"); return true; }
-    rideable?.addRider(player);
+    if (rideable?.addRider(player)) {
+      const session = trackMotorcycleRider(player);
+      if (session) updateMotorcyclePresentation(session);
+    }
     return true;
   }
 
@@ -949,6 +1017,7 @@ export function createEntityService(ctx) {
     const now = gameSystem.currentTick;
     if (now === lastTick || now < readyTick) return;
     lastTick = now;
+    for (const session of motorcycleRiders.values()) updateMotorcyclePresentation(session);
     for (const [id, session] of chairClaps) {
       if (now >= session.until || playerChair(session.player)?.id !== session.seatId) stopChairClap(id);
     }
@@ -1024,7 +1093,11 @@ export function createEntityService(ctx) {
   }
 
   function init() {
-    gameWorld.afterEvents.playerSpawn.subscribe(event => gameSystem.run(() => chairIdleAnimation(event.player)));
+    gameWorld.afterEvents.playerSpawn.subscribe(event => gameSystem.run(() => {
+      chairIdleAnimation(event.player);
+      const session = trackMotorcycleRider(event.player);
+      if (session) updateMotorcyclePresentation(session);
+    }));
     gameSystem.afterEvents.scriptEventReceive.subscribe(event => {
       if (event.id !== `${NS}reaction_finished` || event.sourceEntity?.typeId !== CUSTOMER) return;
       const entity = event.sourceEntity, action = Number(event.message);
@@ -1066,6 +1139,7 @@ export function createEntityService(ctx) {
       if (bike?.typeId === MOTORCYCLE) horn(bike);
     });
     gameWorld.afterEvents.playerLeave.subscribe(event => {
+      motorcycleRiders.delete(event.playerId);
       stopChairClap(event.playerId, false);
       stopChairIdle(event.playerId);
       activeForms.delete(event.playerId);
@@ -1076,7 +1150,11 @@ export function createEntityService(ctx) {
       readyTick = gameSystem.currentTick + 40;
       // Restore mounted players on a script reload; reconnects use playerSpawn.
       // No new polling interval or saved player state is needed for the pose.
-      for (const player of gameWorld.getAllPlayers()) chairIdleAnimation(player);
+      for (const player of gameWorld.getAllPlayers()) {
+        chairIdleAnimation(player);
+        const session = trackMotorcycleRider(player);
+        if (session) updateMotorcyclePresentation(session);
+      }
       gameSystem.runInterval(tick, 5);
     });
   }

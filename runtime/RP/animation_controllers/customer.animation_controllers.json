@@ -59,7 +59,7 @@
               "action_7": "q.property('ordertocook:action') == 7"
             },
             {
-              "idle_next": "if (v.idle_seated != q.is_riding_any_entity_of_type('ordertocook:seat')) { v.idle_variant = q.property('ordertocook:animation_variant'); return 1; } if (q.state_time < v.idle_length) { return 0; } v.idle_roll = math.random(0, 1); v.idle_variant = v.idle_roll < 0.55 ? 1 : (v.idle_roll < 0.7 ? 2 : (v.idle_roll < 0.85 ? 3 : 4)); return 1;"
+              "idle_next": "(v.idle_seated != q.is_riding_any_entity_of_type('ordertocook:seat')) ? { v.idle_variant = q.property('ordertocook:animation_variant'); return 1; }; (q.state_time < v.idle_length) ? { return 0; }; v.idle_roll = math.random(0, 1); v.idle_variant = v.idle_roll < 0.55 ? 1 : (v.idle_roll < 0.7 ? 2 : (v.idle_roll < 0.85 ? 3 : 4)); return 1;"
             }
           ]
         },
@@ -118,7 +118,7 @@
               "action_7": "q.property('ordertocook:action') == 7"
             },
             {
-              "idle": "if (v.idle_seated != q.is_riding_any_entity_of_type('ordertocook:seat')) { v.idle_variant = q.property('ordertocook:animation_variant'); return 1; } if (q.state_time < v.idle_length) { return 0; } v.idle_roll = math.random(0, 1); v.idle_variant = v.idle_roll < 0.55 ? 1 : (v.idle_roll < 0.7 ? 2 : (v.idle_roll < 0.85 ? 3 : 4)); return 1;"
+              "idle": "(v.idle_seated != q.is_riding_any_entity_of_type('ordertocook:seat')) ? { v.idle_variant = q.property('ordertocook:animation_variant'); return 1; }; (q.state_time < v.idle_length) ? { return 0; }; v.idle_roll = math.random(0, 1); v.idle_variant = v.idle_roll < 0.55 ? 1 : (v.idle_roll < 0.7 ? 2 : (v.idle_roll < 0.85 ? 3 : 4)); return 1;"
             }
           ]
         },

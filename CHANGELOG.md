@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.55-alpha.1 (local integration, unpublished)
+
+- Integrate the received creative-tab source, preserving the selected Forge tab's 23-item order in one native Items group and keeping the two port-only entries outside it.
+- Separate native tooltip names with the blue addon source line from plain menu/order translations through the existing `senluo.tooltip.` contract. Keep saved item metadata and container titles unchanged.
+- Regenerate the plate surface correction from the pinned original models and binary-alpha stain texture. Keep the original food, rim, heights and UVs; no client flicker or performance result is claimed.
+- Preserve the received motorcycle caller and descriptor-driven riding exporter, including separate complete native classic/customSlim geometry inputs, animations and the supplied native licence. The shared player pair still requires coordinator assembly; no FP, seat or camera change is included.
+- Carry the received customer-controller Molang syntax correction. Freeze complete BP/RP payloads with paired modules/dependency at 0.1.55 and append release history; keep UUIDs, APIs, previous source work and player-data protections.
+- Only directed asset generation, source review, local version freezing and packaging were performed. No tests, lint/typecheck, CI, game probes, world/service operations, deployment or remote writes were performed.
+
 ## 0.1.51-alpha.1
 
 - Recover unexpired delivery orders with a loaded water/blocked destination only when no customer or saved anchor exists. Reuse the original radial rules and four-candidate bound through the existing customer retry; accept only loaded safe ground near a player. Unknown chunks and established customers retain their addresses.

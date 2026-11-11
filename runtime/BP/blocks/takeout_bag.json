@@ -5,7 +5,7 @@
       "identifier": "ordertocook:takeout_bag",
       "menu_category": {
         "category": "items",
-        "group": "ordertocook:itemGroup.tableware"
+        "group": "ordertocook:itemGroup.order_group"
       },
       "traits": {
         "minecraft:placement_direction": {
@@ -75,7 +75,8 @@
         "container": {
           "slot_count": 1
         }
-      }
+      },
+      "minecraft:display_name": "senluo.tooltip.tile.ordertocook:takeout_bag.name"
     },
     "permutations": [
       {

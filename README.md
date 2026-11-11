@@ -2,6 +2,8 @@
 
 [简体中文](README.zh-CN.md) · **繁體中文** · [English](README.en.md)
 
+本批分類、來源／菜單名稱分離、餐盤面、機車 caller 與 player-presentation exporter 已本機整合，見 [CHANGELOG](CHANGELOG.md#0155-alpha1-local-integration-unpublished)。完整配對身份見 [baseline.json](baseline.json)；共享玩家 pair 仍需另行組裝。只做正常生成與本機固化，未測試、發布、部署或觀察修後遊戲。
+
 0.1.53-alpha.1 是本地、尚未發布的洗碗機顯示原型：四種外觀值保留真 0–16 批次與原盤片模型，減少宣告組合。舊 palette／同世界重啟尚未原生驗證，不能當作可安全升級的交付。[範圍](docs/PARITY.md#洗碗機顯示狀態本地原型0153尚未發布)。
 
 0.1.52-alpha.1 讓打包沿 Java 在受阻台面上掉出完整袋子，保留原成品；裝盤仍需空位。沿原扣料、包材設定與訂單證明，已知掉落失敗會回復本次交易。來源回歸已過，尚未新增原生／客戶端結果。[規則與範圍](docs/PARITY.md#受阻台面的打包掉袋0152)。
