@@ -1603,6 +1603,7 @@ def make_stove_ui():
     (RP / "ui/ordertocook_stove.json").unlink(missing_ok=True)
     write_json(RP / "ui/ordertocook_stove_pocket.json", pocket)
     write_json(RP / "ui/_ui_defs.json", {"ui_defs": [
+        "ui/data_driven_container_screen.json",
         "ui/ordertocook_stove_pocket.json"]})
 
 

@@ -94,7 +94,7 @@ python3 tools/convert_assets.py --stove-ui-only
 
 此命令只寫下面三個 RP UI 檔，不呼叫測試、lint/typecheck、打包或服務。完整既有 `python3 tools/convert_assets.py` 也會由 `make_blocks` 的爐灶段呼叫相同 `make_stove_ui`；本題只執行定向生成，避免重產無關資產。
 
-- [`ui/_ui_defs.json`](../runtime/RP/ui/_ui_defs.json) 只登記新增的 pocket 定義。桌面入口沿用官方已登記的同路徑，不重複登記，也不複製官方 UI 清單。
+- [`ui/_ui_defs.json`](../runtime/RP/ui/_ui_defs.json) 明確登記既有同路徑的 data_driven_container_screen.json 與 pocket 定義，不再只依賴客戶端基底清單載入覆寫檔；不新增別名 screen，也不複製官方 UI 清單。此註冊修正已作靜態生成比對，真客戶端路由與操作仍待驗證。
 - [`ui/data_driven_container_screen.json`](../runtime/RP/ui/data_driven_container_screen.json) 在官方原路徑覆寫同一 `data_driven_container.screen`，保留傷害關閉、桌面背景與觸控 toast；四個互斥分支按 desktop／pocket 及「七槽＋原始爐灶 title key」選內容。原 `ordertocook_stove.json` 由生成器移除，避免留下第二個 screen writer。未覆寫官方普通 panel 或任何 `chest.*` 定義。
 - 桌面專用 panel 用原 `stove.png` 的 `(0,0,176,166)` 區域作底圖。七個 cell 外框座標比 Java 的 16px 物品座標各減一，讓 native 18px cell 內的物品正好落在上表位置。玩家背包與 hotbar 仍用 `common` 的原生集合及控件，只對齊原圖位置。
 - [`ui/ordertocook_stove_pocket.json`](../runtime/RP/ui/ordertocook_stove_pocket.json) 在原 `pocket_containers` namespace 繼承 data-driven panel，保留標頭、關閉按鈕、左側 36 格玩家庫存、原生捲動、手把 helpers、selected item、item lock、cursor、tooltip 與 flying item 路徑。只有右側容器內容改成三個 28px 輸入、下方燃料、右側三個輸出；輸出靠右隨可用寬度移動，不將觸控格縮成桌面大小。觸控沿原生格子底圖，不硬拉伸 Java 整頁背景。
