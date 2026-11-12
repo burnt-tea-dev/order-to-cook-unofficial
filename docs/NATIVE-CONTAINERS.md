@@ -74,11 +74,11 @@ Java 的四個同步數值為 `litTime`、`litDuration`、`cookProgress`、`cook
 - [main.js](../runtime/BP/scripts/main.js) 的爐灶 before-interact 分支沿 `canOpenStove` 決定放行原生操作；未就緒時沿原 owner 認領／遷移流程處理。本題沒有修改共用訂閱。
 - [convert_assets.py](../tools/convert_assets.py) 的 `make_blocks` 爐灶段生成同 ID 的七槽與標題 `container.ordertocook.stove`，現在同段呼叫 `make_stove_ui` 生成下面的 UI 接線；`make_textures_and_sounds` 已將原 `textures/gui/stove.png` 正常複製到 [RP 原貼圖](../runtime/RP/textures/ordertocook/gui/stove.png)。已直接檢視原 256×256 圖：含設備背景、背包區、火焰與箭頭區域；本題沿用原圖，沒有新造或修改 PNG。
 
-官方同代樣本固定到 `15701fa9c13923f12662984c32c124327e40e3d3`（1.26.60.5），不能冒稱取得了 1.26.60.6 客戶端內部程式。其 [`_ui_defs.json`][ui-defs] 載入 [`data_driven_container_screen.json`][data-driven-ui]：`data_driven_container.screen` 的桌面／觸控分支各選 `desktop_panel`／`pocket_containers.data_driven_container_panel`。官方註解明示 `$container_size` 由 `ChestScreenController::addStaticScreenVars` 發布；同檔 `container_label` 與 [chest_label][chest-ui] 讀 `$container_title` 並以 `$localize_title` 控制顯示翻譯。因此不能把舊畫面失敗直接歸咎於「size 變數不存在」或「標題已翻譯」。本次保留前輪 `$container_size = 7` 分支以隔離入口／槽號修正；本包其他原生設備不是七槽。這不是跨所有第三方 addon 的唯一身份契約，其他七槽 data-driven 容器會匹配同一分支，仍需收斂為經 client 證實的精確身份。原生資料集合仍是 `container_items`，不是另一份腳本庫存。
+官方同代樣本固定到 `15701fa9c13923f12662984c32c124327e40e3d3`（1.26.60.5），不能冒稱取得了 1.26.60.6 客戶端內部程式。其 [`_ui_defs.json`][ui-defs] 載入 [`data_driven_container_screen.json`][data-driven-ui]：`data_driven_container.screen` 的桌面／觸控分支各選 `desktop_panel`／`pocket_containers.data_driven_container_panel`。官方註解明示 `$container_size` 由 `ChestScreenController::addStaticScreenVars` 發布；同檔 `container_label` 與 [chest_label][chest-ui] 讀 `$container_title` 並以 `$localize_title` 控制顯示翻譯。因此不能把舊畫面失敗直接歸咎於「size 變數不存在」或「標題已翻譯」。本次要求 `$container_size = 7` 與原始 `$container_title = 'container.ordertocook.stove'` 同時成立，避免把第三方七槽容器套成爐灶。實際選擇階段能否取得原始 key 仍需 client 確認；不匹配時保留原生通用 panel，不猜譯名或退回無身份的七槽條件。原生資料集合仍是 `container_items`，不是另一份腳本庫存。
 
 | 所需接口 | 已讀接口與確定邊界 | 本題決定 |
 | --- | --- | --- |
-| 選擇爐灶畫面 | 官方登記的入口是 `ui/data_driven_container_screen.json`，controller 提供 `$container_size`。 | 改在同路徑覆寫 screen；不再於另一檔重複宣告同名 screen。保留七槽分支，非七槽仍用原 panel；其他 addon 的七槽識別及真 client 選窗仍未確認。 |
+| 選擇爐灶畫面 | 官方登記的入口是 `ui/data_driven_container_screen.json`，controller 提供 `$container_size`。 | 改在同路徑覆寫 screen；不再於另一檔重複宣告同名 screen。同時要求七槽和原始爐灶 key；不匹配仍用原 panel。原始 key 在實際分支作用域是否可用、真 client 選窗均未確認。 |
 | 真燃料／料理進度 | `tickStove` 已有真數值；已讀 data-driven UI 沒有對應這四個數值的 binding，block container schema 也沒有自訂進度通道。 | 不接普通熔爐的進度 binding，不加玩家 HUD／lore carrier、第二份保存或 timer。這是本次已讀接口的缺口，不是未來 API 的永久結論。 |
 | 燃料限定、輸出禁止放入 | 固定 container schema 無逐槽 filter。現用 server 2.11.0 的 `Container.containerRules` 是唯讀可選屬性；`ContainerRules` 描述整個容器的 allowed／banned items、巢狀儲物及重量，沒有逐槽 `mayPlace`／fuel／output 設定入口。 | 不靠修改 rules 快照、鎖住成品 ItemStack 或事後搬回物品冒充原生交易限制；保留現有可用槽位。 |
 
@@ -95,7 +95,7 @@ python3 tools/convert_assets.py --stove-ui-only
 此命令只寫下面三個 RP UI 檔，不呼叫測試、lint/typecheck、打包或服務。完整既有 `python3 tools/convert_assets.py` 也會由 `make_blocks` 的爐灶段呼叫相同 `make_stove_ui`；本題只執行定向生成，避免重產無關資產。
 
 - [`ui/_ui_defs.json`](../runtime/RP/ui/_ui_defs.json) 只登記新增的 pocket 定義。桌面入口沿用官方已登記的同路徑，不重複登記，也不複製官方 UI 清單。
-- [`ui/data_driven_container_screen.json`](../runtime/RP/ui/data_driven_container_screen.json) 在官方原路徑覆寫同一 `data_driven_container.screen`，保留傷害關閉、桌面背景與觸控 toast；四個互斥分支按 desktop／pocket 及七槽條件選內容。原 `ordertocook_stove.json` 由生成器移除，避免留下第二個 screen writer。未覆寫官方普通 panel 或任何 `chest.*` 定義。
+- [`ui/data_driven_container_screen.json`](../runtime/RP/ui/data_driven_container_screen.json) 在官方原路徑覆寫同一 `data_driven_container.screen`，保留傷害關閉、桌面背景與觸控 toast；四個互斥分支按 desktop／pocket 及「七槽＋原始爐灶 title key」選內容。原 `ordertocook_stove.json` 由生成器移除，避免留下第二個 screen writer。未覆寫官方普通 panel 或任何 `chest.*` 定義。
 - 桌面專用 panel 用原 `stove.png` 的 `(0,0,176,166)` 區域作底圖。七個 cell 外框座標比 Java 的 16px 物品座標各減一，讓 native 18px cell 內的物品正好落在上表位置。玩家背包與 hotbar 仍用 `common` 的原生集合及控件，只對齊原圖位置。
 - [`ui/ordertocook_stove_pocket.json`](../runtime/RP/ui/ordertocook_stove_pocket.json) 在原 `pocket_containers` namespace 繼承 data-driven panel，保留標頭、關閉按鈕、左側 36 格玩家庫存、原生捲動、手把 helpers、selected item、item lock、cursor、tooltip 與 flying item 路徑。只有右側容器內容改成三個 28px 輸入、下方燃料、右側三個輸出；輸出靠右隨可用寬度移動，不將觸控格縮成桌面大小。觸控沿原生格子底圖，不硬拉伸 Java 整頁背景。
 

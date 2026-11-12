@@ -1474,7 +1474,10 @@ def make_stove_ui():
     sequential collection cells with an offset on the whole native input_panel.
     Java e59e3dbc StoveScreenHandler supplies the item positions below.
     """
-    stove_match = "($container_size = 7)"
+    # Do not restyle an unrelated addon merely because it also has seven slots.
+    # The official label reads the title separately from $localize_title.
+    # If a client does not expose the raw key here, preserve its native panel.
+    stove_match = "(($container_size = 7) and ($container_title = 'container.ordertocook.stove'))"
     desktop_slots = []
     pocket_slots = []
     # Grid positions own the actual collection indices, not just the pixels.
