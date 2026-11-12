@@ -1474,12 +1474,11 @@ def make_stove_ui():
     with offset children). Java e59e3dbc StoveScreenHandler supplies the positions.
     The grid owns collection indices; moving its children never moves inventory.
     """
-    # The engine may hand the label either the raw title key or its localized
-    # text. Accept every shipped translation so the stove screen is selected
-    # in en_US, zh_CN and zh_TW without matching unrelated container titles.
-    title_match = "(" + " or ".join(
-        f"($container_title = '{value}')" for value in
-        ('container.ordertocook.stove', 'Stove', '炉灶', '爐灶')) + ")"
+    # Select by the controller-published container size. The title may arrive
+    # localized, which broke the old title-key branch at runtime; this pack's
+    # data-driven containers are 1, 7, 27 and 54 slots, so 7 identifies the
+    # stove without depending on any translation.
+    title_match = "($container_size = 7)"
     desktop_slots = []
     pocket_slots = []
     # Native 18px cells are placed at the Java 16px slot coordinates. The grid
