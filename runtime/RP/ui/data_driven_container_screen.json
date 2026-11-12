@@ -19,18 +19,14 @@
   "otc_stove_slots": {
     "type": "grid",
     "size": [
-      162,
-      54
+      126,
+      18
     ],
     "anchor_from": "top_left",
     "anchor_to": "top_left",
-    "offset": [
-      4,
-      16
-    ],
     "grid_dimensions": [
-      9,
-      3
+      7,
+      1
     ],
     "collection_name": "container_items",
     "$item_collection_name": "container_items",
@@ -43,12 +39,19 @@
             18
           ],
           "grid_position": [
-            2,
+            0,
             0
           ],
           "controls": [
             {
-              "item@chest.chest_grid_item": {}
+              "item@chest.chest_grid_item": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  37,
+                  16
+                ]
+              }
             }
           ]
         }
@@ -61,12 +64,19 @@
             18
           ],
           "grid_position": [
-            3,
+            1,
             0
           ],
           "controls": [
             {
-              "item@chest.chest_grid_item": {}
+              "item@chest.chest_grid_item": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  37,
+                  16
+                ]
+              }
             }
           ]
         }
@@ -79,12 +89,19 @@
             18
           ],
           "grid_position": [
-            4,
+            2,
             0
           ],
           "controls": [
             {
-              "item@chest.chest_grid_item": {}
+              "item@chest.chest_grid_item": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  37,
+                  16
+                ]
+              }
             }
           ]
         }
@@ -98,11 +115,18 @@
           ],
           "grid_position": [
             3,
-            2
+            0
           ],
           "controls": [
             {
-              "item@chest.chest_grid_item": {}
+              "item@chest.chest_grid_item": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  1,
+                  52
+                ]
+              }
             }
           ]
         }
@@ -115,12 +139,19 @@
             18
           ],
           "grid_position": [
-            6,
-            1
+            4,
+            0
           ],
           "controls": [
             {
-              "item@chest.chest_grid_item": {}
+              "item@chest.chest_grid_item": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  43,
+                  34
+                ]
+              }
             }
           ]
         }
@@ -133,12 +164,19 @@
             18
           ],
           "grid_position": [
-            7,
-            1
+            5,
+            0
           ],
           "controls": [
             {
-              "item@chest.chest_grid_item": {}
+              "item@chest.chest_grid_item": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  43,
+                  34
+                ]
+              }
             }
           ]
         }
@@ -151,12 +189,19 @@
             18
           ],
           "grid_position": [
-            8,
-            1
+            6,
+            0
           ],
           "controls": [
             {
-              "item@chest.chest_grid_item": {}
+              "item@chest.chest_grid_item": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  43,
+                  34
+                ]
+              }
             }
           ]
         }

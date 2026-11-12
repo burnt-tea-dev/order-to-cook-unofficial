@@ -1467,28 +1467,28 @@ def make_food_plate_display():
 
 
 def make_stove_ui():
-    """Route only the raw stove title to native slots in the Java arrangement.
+    """Generate one vanilla-path entry and native indexed stove cells.
 
-    References: Mojang bedrock-samples 15701fa9, data_driven_container_screen,
-    pocket_containers, ui_common and brewing_stand_screen (explicit grid cells
-    with offset children). Java e59e3dbc StoveScreenHandler supplies the positions.
-    The grid owns collection indices; moving its children never moves inventory.
+    Mojang bedrock-samples 15701fa9 data_driven_container_screen is the entry.
+    Its controller publishes $container_size; brewing_stand_screen demonstrates
+    sequential collection cells with an offset on the whole native input_panel.
+    Java e59e3dbc StoveScreenHandler supplies the item positions below.
     """
-    # Select by the controller-published container size. The title may arrive
-    # localized, which broke the old title-key branch at runtime; this pack's
-    # data-driven containers are 1, 7, 27 and 54 slots, so 7 identifies the
-    # stove without depending on any translation.
-    title_match = "($container_size = 7)"
+    stove_match = "($container_size = 7)"
     desktop_slots = []
     pocket_slots = []
-    # Native 18px cells are placed at the Java 16px slot coordinates. The grid
-    # is sparse: controls keep container_items order while grid_position fixes
-    # each cell (background, hit area and drag target) at its Java location.
-    desktop_cells = ((2, 0), (3, 0), (4, 0), (3, 2), (6, 1), (7, 1), (8, 1))
-    for index, (column, row) in enumerate(desktop_cells):
+    # Grid positions own the actual collection indices, not just the pixels.
+    # Keep them contiguous 0..6. Offset the complete container_item, including
+    # its background, item renderer, focus/drag controls and slot button.
+    # Native cells are 18px with a centered 16px item, hence the -1 border.
+    java_slots = ((38, 17), (56, 17), (74, 17), (56, 53),
+                  (116, 35), (134, 35), (152, 35))
+    for index, (x, y) in enumerate(java_slots):
         desktop_slots.append({f"slot_{index}": {
-            "type": "panel", "size": [18, 18], "grid_position": [column, row],
-            "controls": [{"item@chest.chest_grid_item": {}}]}})
+            "type": "panel", "size": [18, 18], "grid_position": [index, 0],
+            "controls": [{"item@chest.chest_grid_item": {
+                "anchor_from": "top_left", "anchor_to": "top_left",
+                "offset": [x - 1 - index * 18, y - 1]}}]}})
         # Pocket keeps native 28px touch targets. Outputs anchor to the right
         # of the available pane instead of stretching or shrinking those slots.
         if index < 3:
@@ -1509,9 +1509,9 @@ def make_stove_ui():
             "type": "image", "texture": f"textures/{NS}/gui/stove",
             "uv": [0, 0], "uv_size": [176, 166], "size": [176, 166]},
         "otc_stove_slots": {
-            "type": "grid", "size": [162, 54],
-            "anchor_from": "top_left", "anchor_to": "top_left", "offset": [4, 16],
-            "grid_dimensions": [9, 3], "collection_name": "container_items",
+            "type": "grid", "size": [126, 18],
+            "anchor_from": "top_left", "anchor_to": "top_left",
+            "grid_dimensions": [7, 1], "collection_name": "container_items",
             "$item_collection_name": "container_items", "controls": desktop_slots},
         "otc_stove_desktop_panel": {
             "type": "panel", "controls": [
@@ -1546,16 +1546,16 @@ def make_stove_ui():
             "close_on_player_hurt": "$close_on_player_hurt",
             "use_custom_pocket_toast": "$use_custom_pocket_toast",
             "variables": [
-                {"requires": f"($desktop_screen and (not {title_match}))",
+                {"requires": f"($desktop_screen and (not {stove_match}))",
                  "$screen_content": "data_driven_container.desktop_panel",
                  "$screen_bg_content": "common.screen_background", "$screen_background_alpha": 0.4},
-                {"requires": f"($pocket_screen and (not {title_match}))",
+                {"requires": f"($pocket_screen and (not {stove_match}))",
                  "$use_custom_pocket_toast": True,
                  "$screen_content": "pocket_containers.data_driven_container_panel"},
-                {"requires": f"($desktop_screen and {title_match})",
+                {"requires": f"($desktop_screen and {stove_match})",
                  "$screen_content": "data_driven_container.otc_stove_desktop_panel",
                  "$screen_bg_content": "common.screen_background", "$screen_background_alpha": 0.4},
-                {"requires": f"($pocket_screen and {title_match})",
+                {"requires": f"($pocket_screen and {stove_match})",
                  "$use_custom_pocket_toast": True,
                  "$screen_content": "pocket_containers.otc_stove_panel"}]}}
     pocket = {
@@ -1594,10 +1594,13 @@ def make_stove_ui():
                 {"inventory_selected_icon_button@common.inventory_selected_icon_button": {}},
                 {"hold_icon@common.inventory_take_progress_icon_button": {}},
                 {"flying_item_renderer@common.flying_item_renderer": {"layer": 12}}]}}
-    write_json(RP / "ui/ordertocook_stove.json", desktop)
+    # This overrides the vanilla file actually registered by the engine.
+    # A second screen declaration in a separately registered file is ambiguous.
+    write_json(RP / "ui/data_driven_container_screen.json", desktop)
+    (RP / "ui/ordertocook_stove.json").unlink(missing_ok=True)
     write_json(RP / "ui/ordertocook_stove_pocket.json", pocket)
     write_json(RP / "ui/_ui_defs.json", {"ui_defs": [
-        "ui/ordertocook_stove.json", "ui/ordertocook_stove_pocket.json"]})
+        "ui/ordertocook_stove_pocket.json"]})
 
 
 def separate_takeout_bag_folds(g):
