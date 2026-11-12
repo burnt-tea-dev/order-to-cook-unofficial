@@ -255,10 +255,10 @@ test('named special customer is red and reuses the saved identity on actor respa
   const env = makeEnvironment(), fixture = restaurantFixture(env), service = readyService(env);
   Object.assign(fixture.order, { customerName: '微风(作者)', easterEgg: true, customerVariant: 0, skinAccount: 'Breezeth' });
   const customer = service.spawnCustomer(fixture.restaurant, fixture.order);
-  assert.match(customer.nameTag, /^§c微风\(作者\)§r\n/);
+  assert.equal(customer.nameTag, '§c微风(作者)§r');
   service.cleanupOrder(fixture.order.id);
   const resumed = service.spawnCustomer(fixture.restaurant, fixture.order);
-  assert.match(resumed.nameTag, /^§c微风\(作者\)§r\n/);
+  assert.equal(resumed.nameTag, '§c微风(作者)§r');
   assert.equal(resumed.getProperty('ordertocook:variant'), 0);
   assert.equal(fixture.order.skinAccount, 'Breezeth');
 });
@@ -690,3 +690,37 @@ test('held items do not prevent the existing chair clap or change its sound/sess
   nativePhase(customer, 110, true); tickAt(service, env, start + 60000);
   assert.equal(customer.isValid, false);
 });
+
+for (const type of ['dine_in', 'delivery']) {
+  test(`${type} customer nameplate contains only the name and retains order associations`, () => {
+    const env = makeEnvironment(), fixture = restaurantFixture(env), service = readyService(env);
+    Object.assign(fixture.order, { type, customerName: '蓋倫', destination: { x: 5, y: 0, z: 0, dimensionId: env.dimension.id } });
+    place(env, 'minecraft:stone', { x: 5, y: -1, z: 0 });
+    const customer = service.spawnCustomer(fixture.restaurant, fixture.order);
+    assert.ok(customer);
+    assert.equal(customer.nameTag, '蓋倫§r');
+    assert.equal(customer.getDynamicProperty('ordertocook:order_id'), fixture.order.id);
+    assert.equal(customer.getDynamicProperty('ordertocook:restaurant_id'), fixture.restaurant.id);
+    assert.equal(fixture.restaurant.name, '測試餐廳');
+    assert.equal(fixture.order.id, 'r1-order1');
+  });
+}
+
+for (const route of ['retry', 'reload tick']) {
+  test(`legacy customer subtitle is removed on ${route} without replacing the actor or order`, () => {
+    const env = makeEnvironment(), fixture = restaurantFixture(env), service = readyService(env);
+    Object.assign(fixture.order, { customerName: '微风(作者)', easterEgg: true });
+    const customer = service.spawnCustomer(fixture.restaurant, fixture.order);
+    customer.nameTag = '§c微风(作者)§r\n§e測試餐廳 · order1';
+    const savedOrder = structuredClone(fixture.order);
+    const spawnCount = env.dimension.spawnCount;
+    if (route === 'retry') assert.equal(service.spawnCustomer(fixture.restaurant, fixture.order), customer);
+    else { const restarted = readyService(env); env.system.currentTick += 40; restarted.tick(); }
+    assert.equal(customer.nameTag, '§c微风(作者)§r');
+    assert.equal(customer.isValid, true);
+    assert.equal(env.dimension.spawnCount, spawnCount);
+    assert.deepEqual(fixture.order, savedOrder);
+    assert.equal(customer.getDynamicProperty('ordertocook:order_id'), savedOrder.id);
+    assert.equal(customer.getDynamicProperty('ordertocook:restaurant_id'), fixture.restaurant.id);
+  });
+}
