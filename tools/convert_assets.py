@@ -1477,16 +1477,14 @@ def make_stove_ui():
     title_match = "($container_title = 'container.ordertocook.stove')"
     desktop_slots = []
     pocket_slots = []
-    java_positions = ((38, 17), (56, 17), (74, 17), (56, 53),
-                      (116, 35), (134, 35), (152, 35))
-    for index, (x, y) in enumerate(java_positions):
-        # Java positions describe the 16px item; the native 18px cell starts
-        # one pixel earlier. Grid cells stay in index order, each 18px wide.
+    # Native 18px cells are placed at the Java 16px slot coordinates. The grid
+    # is sparse: controls keep container_items order while grid_position fixes
+    # each cell (background, hit area and drag target) at its Java location.
+    desktop_cells = ((2, 0), (3, 0), (4, 0), (3, 2), (6, 1), (7, 1), (8, 1))
+    for index, (column, row) in enumerate(desktop_cells):
         desktop_slots.append({f"slot_{index}": {
-            "type": "panel", "size": [18, 18], "grid_position": [index, 0],
-            "controls": [{"item@chest.chest_grid_item": {
-                "anchor_from": "top_left", "anchor_to": "top_left",
-                "offset": [x - 1 - index * 18, y - 1]}}]}})
+            "type": "panel", "size": [18, 18], "grid_position": [column, row],
+            "controls": [{"item@chest.chest_grid_item": {}}]}})
         # Pocket keeps native 28px touch targets. Outputs anchor to the right
         # of the available pane instead of stretching or shrinking those slots.
         if index < 3:
@@ -1507,9 +1505,9 @@ def make_stove_ui():
             "type": "image", "texture": f"textures/{NS}/gui/stove",
             "uv": [0, 0], "uv_size": [176, 166], "size": [176, 166]},
         "otc_stove_slots": {
-            "type": "grid", "size": [126, 18],
-            "anchor_from": "top_left", "anchor_to": "top_left",
-            "grid_dimensions": [7, 1], "collection_name": "container_items",
+            "type": "grid", "size": [162, 54],
+            "anchor_from": "top_left", "anchor_to": "top_left", "offset": [4, 16],
+            "grid_dimensions": [9, 3], "collection_name": "container_items",
             "$item_collection_name": "container_items", "controls": desktop_slots},
         "otc_stove_desktop_panel": {
             "type": "panel", "controls": [

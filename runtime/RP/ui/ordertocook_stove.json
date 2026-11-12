@@ -19,14 +19,18 @@
   "otc_stove_slots": {
     "type": "grid",
     "size": [
-      126,
-      18
+      162,
+      54
     ],
     "anchor_from": "top_left",
     "anchor_to": "top_left",
+    "offset": [
+      4,
+      16
+    ],
     "grid_dimensions": [
-      7,
-      1
+      9,
+      3
     ],
     "collection_name": "container_items",
     "$item_collection_name": "container_items",
@@ -39,19 +43,12 @@
             18
           ],
           "grid_position": [
-            0,
+            2,
             0
           ],
           "controls": [
             {
-              "item@chest.chest_grid_item": {
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "offset": [
-                  37,
-                  16
-                ]
-              }
+              "item@chest.chest_grid_item": {}
             }
           ]
         }
@@ -64,19 +61,12 @@
             18
           ],
           "grid_position": [
-            1,
+            3,
             0
           ],
           "controls": [
             {
-              "item@chest.chest_grid_item": {
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "offset": [
-                  37,
-                  16
-                ]
-              }
+              "item@chest.chest_grid_item": {}
             }
           ]
         }
@@ -89,19 +79,12 @@
             18
           ],
           "grid_position": [
-            2,
+            4,
             0
           ],
           "controls": [
             {
-              "item@chest.chest_grid_item": {
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "offset": [
-                  37,
-                  16
-                ]
-              }
+              "item@chest.chest_grid_item": {}
             }
           ]
         }
@@ -115,18 +98,11 @@
           ],
           "grid_position": [
             3,
-            0
+            2
           ],
           "controls": [
             {
-              "item@chest.chest_grid_item": {
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "offset": [
-                  1,
-                  52
-                ]
-              }
+              "item@chest.chest_grid_item": {}
             }
           ]
         }
@@ -139,19 +115,12 @@
             18
           ],
           "grid_position": [
-            4,
-            0
+            6,
+            1
           ],
           "controls": [
             {
-              "item@chest.chest_grid_item": {
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "offset": [
-                  43,
-                  34
-                ]
-              }
+              "item@chest.chest_grid_item": {}
             }
           ]
         }
@@ -164,19 +133,12 @@
             18
           ],
           "grid_position": [
-            5,
-            0
+            7,
+            1
           ],
           "controls": [
             {
-              "item@chest.chest_grid_item": {
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "offset": [
-                  43,
-                  34
-                ]
-              }
+              "item@chest.chest_grid_item": {}
             }
           ]
         }
@@ -189,19 +151,12 @@
             18
           ],
           "grid_position": [
-            6,
-            0
+            8,
+            1
           ],
           "controls": [
             {
-              "item@chest.chest_grid_item": {
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "offset": [
-                  43,
-                  34
-                ]
-              }
+              "item@chest.chest_grid_item": {}
             }
           ]
         }
