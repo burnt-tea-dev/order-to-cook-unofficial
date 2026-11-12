@@ -1,5 +1,7 @@
 # Project instructions
 
+Use the shared [pstack agent workflow](https://github.com/burnt-tea-dev/kaleidoscope-tavern-unofficial/blob/5bc82d3d60e1837306eeb3f0ae4da64c7df4b392/family/UPDATE-WORKFLOW.md#pstack-代理入口) for task routing, host adaptation, scoped verification and Draft PR delivery. Its project constraints override upstream defaults; retain the repository-specific contracts below.
+
 This is an unofficial GPL-3.0 Bedrock adaptation of breezeth-CN/OrdertoCook.
 Preserve upstream attribution, pinned source provenance, and all license notices.
 Do not distribute the Java mod JAR in this repository or Bedrock packages.
