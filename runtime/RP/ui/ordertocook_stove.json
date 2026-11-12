@@ -253,24 +253,24 @@
     "use_custom_pocket_toast": "$use_custom_pocket_toast",
     "variables": [
       {
-        "requires": "($desktop_screen and (not ($container_title = 'container.ordertocook.stove')))",
+        "requires": "($desktop_screen and (not (($container_title = 'container.ordertocook.stove') or ($container_title = 'Stove') or ($container_title = '炉灶') or ($container_title = '爐灶'))))",
         "$screen_content": "data_driven_container.desktop_panel",
         "$screen_bg_content": "common.screen_background",
         "$screen_background_alpha": 0.4
       },
       {
-        "requires": "($pocket_screen and (not ($container_title = 'container.ordertocook.stove')))",
+        "requires": "($pocket_screen and (not (($container_title = 'container.ordertocook.stove') or ($container_title = 'Stove') or ($container_title = '炉灶') or ($container_title = '爐灶'))))",
         "$use_custom_pocket_toast": true,
         "$screen_content": "pocket_containers.data_driven_container_panel"
       },
       {
-        "requires": "($desktop_screen and ($container_title = 'container.ordertocook.stove'))",
+        "requires": "($desktop_screen and (($container_title = 'container.ordertocook.stove') or ($container_title = 'Stove') or ($container_title = '炉灶') or ($container_title = '爐灶')))",
         "$screen_content": "data_driven_container.otc_stove_desktop_panel",
         "$screen_bg_content": "common.screen_background",
         "$screen_background_alpha": 0.4
       },
       {
-        "requires": "($pocket_screen and ($container_title = 'container.ordertocook.stove'))",
+        "requires": "($pocket_screen and (($container_title = 'container.ordertocook.stove') or ($container_title = 'Stove') or ($container_title = '炉灶') or ($container_title = '爐灶')))",
         "$use_custom_pocket_toast": true,
         "$screen_content": "pocket_containers.otc_stove_panel"
       }
