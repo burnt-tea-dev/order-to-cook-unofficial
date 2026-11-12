@@ -33,8 +33,8 @@ async function setup({ walkIn = false, seated = true, consumeLeather = true } = 
   const ticket = env.player.container.getItem(0);
   const counter = place(env, 'ordertocook:countertop', { x: 1, y: 0, z: 0 });
   const shelfBlock = place(env, 'ordertocook:shelf', { x: 1, y: 0, z: 1 });
-  env.player.container.setItem(0, new FakeItem('minecraft:leather', 3)); env.player.isSneaking = true;
-  env.hooks.shelfInteract(env.player, shelfBlock); env.player.isSneaking = false;
+  env.player.container.setItem(0, new FakeItem('minecraft:leather', 3));
+  for (let i = 0; i < 3; i++) env.hooks.shelfInteract(env.player, shelfBlock);
   env.player.container.setItem(0, ticket); env.player.container.setItem(1, new FakeItem('minecraft:bread', 64));
   const shelf = env.store.findStation(shelfBlock);
   if (!consumeLeather) {

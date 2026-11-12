@@ -30,9 +30,12 @@ function stock(env, count = 3, typeId = 'ordertocook:shelf') {
   const block = place(env, typeId, { x: 1, y: 0, z: 1 });
   const ticket = env.player.container.getItem(0);
   env.player.container.setItem(0, new FakeItem(typeId === 'ordertocook:shelf' ? 'minecraft:leather' : 'ordertocook:clean_plate', Math.max(count, 1)));
-  env.player.isSneaking = true;
-  if (count) env.hooks.shelfInteract(env.player, block); else env.store.saveStation(env.store.getStation(block));
-  env.player.isSneaking = false; env.player.container.setItem(0, ticket);
+  if (count) {
+    for (let i = 0; i < count; i++) env.hooks.shelfInteract(env.player, block);
+  } else {
+    env.store.saveStation(env.store.getStation(block));
+  }
+  env.player.container.setItem(0, ticket);
   return { block, station: env.store.findStation(block) };
 }
 const inventory = env => Array.from({ length: env.player.container.size }, (_, slot) => structuredClone(env.player.container.getItem(slot)));

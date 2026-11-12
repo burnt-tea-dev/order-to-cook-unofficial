@@ -2722,9 +2722,13 @@ def make_languages():
 
 def main():
     global SOURCE, ASSETS, OUT, BP, RP
+    # Sibling imports belong to the CLI entrypoint. Import-only geometry
+    # consumers load this file directly without tools/ on sys.path.
+    from customer_skins import make_customer_skin_resources
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source",type=Path,default=ROOT / "upstream/reference",help="Bundled upstream/reference source subset (default), or a local OrdertoCook checkout")
     parser.add_argument("--output",type=Path,default=ROOT / "runtime")
+    parser.add_argument("--customer-skins-only", action="store_true", help="Regenerate customer appearance bindings and supplied skin resources only")
     parser.add_argument("--customer-controller-only", action="store_true", help="Regenerate only the customer idle/action animation controller")
     parser.add_argument("--creative-only", action="store_true", help="Regenerate only creative menus, catalog and group labels")
     parser.add_argument("--languages-only", action="store_true", help="Regenerate only language files from upstream and owned localization sources")
@@ -2741,6 +2745,9 @@ def main():
     SOURCE=args.source.resolve(); ASSETS=SOURCE / ASSET_REL; OUT=args.output.resolve(); BP=OUT / "BP"; RP=OUT / "RP"
     if not (SOURCE / "LICENSE.txt").is_file() or not ASSETS.is_dir():
         parser.error("Expected OrdertoCook source inputs with LICENSE.txt and common resources")
+    if args.customer_skins_only:
+        make_customer_skin_resources(ROOT, BP, RP)
+        return
     if args.customer_controller_only:
         make_customer_animation_controller()
         return
@@ -2815,6 +2822,7 @@ def main():
     make_guide_icons()
     make_helmet_attachable()
     make_entities(animations)
+    make_customer_skin_resources(ROOT, BP, RP)
     make_dining_plate()
     preserve_imported_geometry()
     make_recipes()
@@ -2830,7 +2838,7 @@ def main():
             "Dishwasher drawer, door, plate-count visibility and wash vibration sampled into 82 poses including look-target preview; preview geometry is shared rather than per-client",
             "Native dining plate uses the original two-part collision and forty block stages; the existing actor handles only stage-zero placement animation; canonical meal records own drops",
             "Seven original customer actions seek from canonical elapsed time; weighted idle variation changes only between completed clips",
-            "Default customer skins prebundled; runtime web skin lookup not available", "Source-model inventory thumbnails", "Early-game furniture recipes added for survival access"]})
+            "Ordinary skins plus seven dated Mojang profile snapshots; optional registered custom lists; separate external-skin provenance, no runtime web skin lookup", "Source-model inventory thumbnails", "Early-game furniture recipes added for survival access"]})
     print(f"Converted {len(PROVENANCE)} source resource references; {len(list(BP.rglob('*.json')))} BP JSON, {len(list(RP.rglob('*.json')))} RP JSON")
 
 

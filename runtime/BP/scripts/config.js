@@ -53,6 +53,7 @@ export const DEFAULT_CONFIG = Object.freeze({
   normalCustomerRate: 0.90,
   easterEggCustomerRate: 0.10,
   customerFemaleRate: 0.50,
+  customMultipleCustomerSkins: false,
   namesLanguage: 'default',
   tipNormalChance: 0.10,
   tipUrgentChance: 0.50,

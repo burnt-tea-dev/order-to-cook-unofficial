@@ -8,11 +8,19 @@
       },
       "textures": {
         "wide": "textures/ordertocook/entity/otc_zombie_custom",
-        "slim": "textures/ordertocook/entity/otc_zombie_custom2"
+        "slim": "textures/ordertocook/entity/otc_zombie_custom2",
+        "special_1": "textures/ordertocook/entity/customer_skins/special/breezeth",
+        "special_2": "textures/ordertocook/entity/customer_skins/special/kuroneko_rikop",
+        "special_3": "textures/ordertocook/entity/customer_skins/special/yyn0114",
+        "special_4": "textures/ordertocook/entity/customer_skins/special/yunan_ovo",
+        "special_5": "textures/ordertocook/entity/customer_skins/special/ao2333",
+        "special_6": "textures/ordertocook/entity/customer_skins/special/assumine",
+        "special_7": "textures/ordertocook/entity/customer_skins/special/zsdr"
       },
       "geometry": {
         "wide": "geometry.ordertocook.customer",
-        "slim": "geometry.ordertocook.customer_slim"
+        "slim": "geometry.ordertocook.customer_slim",
+        "wide_legacy": "geometry.ordertocook.customer_legacy"
       },
       "animations": {
         "action1": "animation.ordertocook.npc_transition.npc_sitspawn",

@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Bedrock adaptation of Order To Cook by breezeth-CN; see THIRD_PARTY_NOTICES.md.
 import { ButtonState, EntityDamageCause, EntitySwingSource, InputButton, ItemStack, MolangVariableMap, system, world } from "@minecraft/server";
-import { orderRemainingMs, orderCarrier, chooseDeliveryDestination } from './core.js';
+import { orderRemainingMs, orderCarrier, chooseDeliveryDestination, EASTER_EGG_CUSTOMERS } from './core.js';
 import { ActionFormData } from "@minecraft/server-ui";
 import { containerCapacity, dropContainerContents, itemLabel, openContainerForm, playerInventory } from "./appliances.js";
 import { playEffects, playbackVolume, customerCompletionEffects, customerPortalEffects, customerExplosionEffects, customerUnsuccessfulEffects, motorcycleHitEffects } from "./audiovisual.js";
 
 const NS = "ordertocook:";
 const CUSTOMER = `${NS}customer`;
+const CUSTOMER_SKIN_PROFILES = new Map(EASTER_EGG_CUSTOMERS.map((profile, index) => [profile[2].replaceAll("-", ""), index + 1]));
 const MOTORCYCLE = `${NS}motorcycle`;
 const CONTROLLER = `${NS}controller`;
 const SEAT = `${NS}seat`;
@@ -99,6 +100,58 @@ function playSound(entity, id, volume = 0.5, pitch = 1) {
 export function createEntityService(ctx) {
   const gameWorld = ctx.world ?? world;
   const gameSystem = ctx.system ?? system;
+  // Cosmetic properties only. Identity/rewards stay on the persisted order.
+  // Reuse the existing scan for old actors; do not add a timer or reroll a profile.
+  const APPEARANCE_CACHE = `${NS}appearance`;
+  function appearanceFromOrder(order) {
+    const uuid = String(order.skinUuid ?? "").replaceAll("-", "").toLowerCase();
+    let hash = 0;
+    for (const character of String(order.id)) hash = (hash * 31 + character.charCodeAt(0)) | 0;
+    return {
+      variant: [0, 1].includes(order.customerVariant) ? order.customerVariant : stableVariant(order.id),
+      skin_profile: order.easterEgg ? (CUSTOMER_SKIN_PROFILES.get(uuid) ?? 0) : 0,
+      // Entity.id is opaque on Bedrock. Saved order identity is stable across
+      // respawn; 20 bits stays exactly representable in client Molang floats.
+      skin_seed: hash & 0xfffff
+    };
+  }
+  function cachedAppearance(entity) {
+    try {
+      const raw = entity.getDynamicProperty(APPEARANCE_CACHE);
+      if (typeof raw !== "string") return undefined;
+      const value = JSON.parse(raw);
+      const association = customerOrder(entity);
+      if (!value || typeof value !== "object" || Array.isArray(value) ||
+          typeof association.restaurantId !== "string" || typeof association.orderId !== "string" ||
+          value.restaurantId !== association.restaurantId || value.orderId !== association.orderId ||
+          ![0, 1].includes(value.variant) || !Number.isInteger(value.skin_profile) ||
+          value.skin_profile < 0 || value.skin_profile > EASTER_EGG_CUSTOMERS.length ||
+          !Number.isInteger(value.skin_seed) || value.skin_seed < 0 || value.skin_seed > 0xfffff) return undefined;
+      // Never forward arbitrary saved fields to Entity.setProperty.
+      return { variant: value.variant, skin_profile: value.skin_profile, skin_seed: value.skin_seed };
+    } catch { return undefined; }
+  }
+  function synchronizeCustomerAppearance(entity, order) {
+    // An actor can outlive the last twelve finished orders. Keep its last
+    // order-derived appearance on that same actor, bound to its association.
+    const appearance = order ? appearanceFromOrder(order) : cachedAppearance(entity);
+    if (order) {
+      try {
+        const association = customerOrder(entity);
+        if (typeof association.restaurantId === "string" && association.orderId === order.id) {
+          const cached = JSON.stringify({ ...association, ...appearance });
+          if (entity.getDynamicProperty(APPEARANCE_CACHE) !== cached) entity.setDynamicProperty(APPEARANCE_CACHE, cached);
+        }
+      } catch { /* Cosmetic cache must not consume orders or block their appearance. */ }
+    }
+    // This is a current world setting, not part of the saved customer identity.
+    // Unknown legacy identities retain their existing properties; never guess
+    // from a display name or overwrite them with a default profile.
+    const properties = { ...appearance, custom_skins: ctx.customCustomerSkins?.() === true };
+    for (const [name, value] of Object.entries(properties)) {
+      if (currentProperty(entity, name, undefined) !== value) property(entity, name, value);
+    }
+  }
   const activeForms = new Set();
   const lastUse = new Map();
   const hornTimes = new Map();
@@ -374,6 +427,27 @@ export function createEntityService(ctx) {
     return { status: unloaded ? 'unloaded' : water ? 'water' : 'blocked' };
   }
 
+  // Java CustomerProfile.toNameText exposes only the name (red for easter eggs).
+  // Associations stay in dynamic properties, not in the visible nameplate.
+  function refreshCustomerName(entity, order, restaurant) {
+    if (!order) {
+      // A pre-upgrade actor may outlive its last twelve completed orders.
+      // Only remove our exact old subtitle; keep the displayed name/color,
+      // and never infer a skin identity or replace an unknown custom name.
+      const association = customerOrder(entity);
+      if (!restaurant || restaurant.id !== association.restaurantId || typeof association.orderId !== "string") return;
+      const previous = entity.nameTag;
+      if (typeof previous !== "string" || previous.includes("\r")) return;
+      const lines = previous.split("\n");
+      if (lines.length !== 2 || lines[0].length <= 2 || !lines[0].endsWith("§r")) return;
+      const subtitle = `§e${restaurant.name || "餐廳"} · ${association.orderId.slice(-6)}`;
+      if (lines[1] === subtitle) entity.nameTag = lines[0];
+      return;
+    }
+    const name = `${order.easterEgg ? '§c' : ''}${order.customerName || (order.type === "delivery" ? "外送顧客" : "堂食顧客")}§r`;
+    if (entity.nameTag !== name) entity.nameTag = name;
+  }
+
   /** @param {() => void} [onNoEligibleChair] Only reports the pre-allocation walk-in chair gate. */
   function spawnCustomer(restaurant, order, onNoEligibleChair) {
     if (!restaurant || !needsCustomer(order)) return undefined;
@@ -388,6 +462,8 @@ export function createEntityService(ctx) {
         try { ctx.saveRestaurant?.(restaurant); }
         catch (error) { Object.assign(order, previous); console.warn(`[OrderToCook] Customer association save deferred: ${String(error)}`); }
       }
+      synchronizeCustomerAppearance(canonical, order);
+      refreshCustomerName(canonical, order, restaurant);
       return canonical;
     }
     const destination = order.type === "delivery" ? order.destination : restaurant.location;
@@ -450,9 +526,9 @@ export function createEntityService(ctx) {
       entity.setDynamicProperty(`${NS}restaurant_id`, restaurant.id);
       entity.setDynamicProperty(`${NS}order_id`, order.id);
       entity.addTag(`${NS}order_customer`);
-      property(entity, "variant", [0, 1].includes(order.customerVariant) ? order.customerVariant : stableVariant(order.id));
+      synchronizeCustomerAppearance(entity, order);
       property(entity, "stage", "waiting");
-      entity.nameTag = `${order.easterEgg ? '§c' : ''}${order.customerName || (order.type === "delivery" ? "外送顧客" : "堂食顧客")}§r\n§e${restaurant.name || "餐廳"} · ${String(order.id).slice(-6)}`;
+      refreshCustomerName(entity, order, restaurant);
       if (chair && !sitOnChair(entity, chair)) { entity.remove(); return undefined; }
       startSpawnAction(entity, !!chair);
       order.customerEntityId = entity.id;
@@ -1038,6 +1114,8 @@ export function createEntityService(ctx) {
         if (!association.orderId || !association.restaurantId) continue;
         const restaurant = ctx.getRestaurant?.(association.restaurantId);
         const order = restaurant?.orders?.find(entry => entry.id === association.orderId);
+        if (refresh) synchronizeCustomerAppearance(entity, order);
+        refreshCustomerName(entity, order, restaurant);
         const meal = canonicalMeal(restaurant, order, association.orderId);
         if (meal) {
           applyCompletion(entity, meal, true, true);

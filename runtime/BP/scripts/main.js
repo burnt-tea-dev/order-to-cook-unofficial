@@ -15,8 +15,8 @@ import {
   nearbyStations, nearestRestaurant, hasMachinePlacementConflict, loadedBlock, distanceSquared, setBlockState
 } from './store.js';
 import {
-  containerOf, heldItem, freeSlot, countItem, planExtraction, applyExtraction,
-  restoreExtraction, consumeHeld, giveStack, giveItems, coinBalance, giveCoins, payCoins
+  containerOf, heldItem, offhandItem, freeSlot, countItem, planExtraction, applyExtraction,
+  restoreExtraction, consumeHeld, consumeOffhand, giveStack, giveItems, coinBalance, giveCoins, payCoins
 } from './inventory.js';
 import { inspectSenluoFood, matchesSenluoFoodSnapshot, snapshotMenuFood, menuFoodKey, menuFoodsOverlap } from './senluo_food.js';
 import { message, translate as tr, joinMessages, menuFoodText, foodAmountText } from './i18n.js';
@@ -51,7 +51,7 @@ const foodOverrides = new Map();
 const foodCatalog = createFoodCatalog();
 const requestFoodCatalogs = connectFoodCatalog(system, foodCatalog);
 const weatherByDimension = new Map();
-let settings = { deliveryRate: Number(DEFAULT_CONFIG.deliveryRate), maxOrderMachinesWithin24: Number(DEFAULT_CONFIG.maxOrderMachinesWithin24), countertopConsumeLeather: DEFAULT_CONFIG.countertopConsumeLeather, currencyItem: '', refreshMs: Number(DEFAULT_CONFIG.refreshMs), orderMachineUpgradeBoardHunger: [...DEFAULT_CONFIG.orderMachineUpgradeBoardHunger] };
+let settings = { customMultipleCustomerSkins: DEFAULT_CONFIG.customMultipleCustomerSkins, deliveryRate: Number(DEFAULT_CONFIG.deliveryRate), maxOrderMachinesWithin24: Number(DEFAULT_CONFIG.maxOrderMachinesWithin24), countertopConsumeLeather: DEFAULT_CONFIG.countertopConsumeLeather, currencyItem: '', refreshMs: Number(DEFAULT_CONFIG.refreshMs), orderMachineUpgradeBoardHunger: [...DEFAULT_CONFIG.orderMachineUpgradeBoardHunger] };
 let ready = false;
 /** @type {any} */ let entities;
 /** @type {any} */ let appliances;
@@ -333,7 +333,10 @@ async function machineForm(player, block) {
     [tr(restaurant.active ? 'otc.machine.pause' : 'otc.machine.start'), message(tr('otc.order.offers'), ` (${available.length})`), message(tr('otc.order.working'), ` (${working.length})`), ...['upgrade', 'shop', 'rankings', 'settings', 'progress', 'guide'].map(key => tr(`otc.machine.${key}`))]);
   if (selection === undefined || !validRestaurant(player, restaurant, block)) return;
   if (selection === 0) {
-    if (!restaurant.active && !nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:chair', { shape: 'cylinder', halfHeight: 8 }).length) { notify(player, tr('otc.order.chair_required')); return; }
+    if (!restaurant.active && !nearbyStations(restaurant.dimensionId, restaurant.location, 24, 'ordertocook:chair', { shape: 'cylinder', halfHeight: 8 }).length) {
+      player.onScreenDisplay.setActionBar(message('§c', tr('otc.machine.no_chair')));
+      return;
+    }
     restaurant.active = !restaurant.active;
     // Java preserves progress across open/close, clears only machine offers
     // when closing, and does not award a free round on the first opening.
@@ -344,7 +347,6 @@ async function machineForm(player, block) {
     }
     saveRestaurant(restaurant);
     syncPrinter(restaurant, block);
-    notify(player, restaurant.active ? tr('otc.machine.started', Math.ceil((restaurant.config?.refreshMs ?? DEFAULT_CONFIG.refreshMs) / 1000)) : tr('otc.machine.paused'));
   } else if (selection === 1) await orderList(player, block, restaurant, 'offered');
   else if (selection === 2) await orderList(player, block, restaurant, 'working');
   else if (selection === 3) await upgradeForm(player, block, restaurant);
@@ -553,22 +555,20 @@ function shelfInteract(player, block) {
   const plates = block.typeId === 'ordertocook:plate_shelf';
   const typeId = plates ? 'ordertocook:clean_plate' : 'minecraft:leather';
   const maximum = plates ? 18 : 10;
-  const current = heldItem(player);
-  if (current?.typeId === typeId) {
-    if (station.supplies >= maximum) { notify(player, '架子已滿。'); return; }
-    const amount = player.isSneaking ? Math.min(current.amount, maximum - station.supplies) : 1;
-    if (!consumeHeld(player, typeId, amount)) return;
-    station.supplies += amount;
-    saveStation(station);
-    setBlockState(block, plates ? 'ordertocook:plates' : 'ordertocook:papers', station.supplies);
-    playAt(block, plates ? 'plate_place' : 'bag_place', plates ? 0.75 : 1, plates ? 0.95 + Math.random() * 0.1 : 1);
-  } else if (!current && player.isSneaking && station.supplies > 0) {
-    station.supplies--;
-    saveStation(station);
-    giveItems(player, typeId, 1);
-    setBlockState(block, plates ? 'ordertocook:plates' : 'ordertocook:papers', station.supplies);
+  // Java: plate shelf falls back to the offhand only when the main hand is empty;
+  // packaging shelf falls back whenever the main hand is not leather.
+  let source = 'main';
+  let supply = heldItem(player);
+  if (plates ? !supply : supply?.typeId !== typeId) { supply = offhandItem(player); source = 'offhand'; }
+  if (supply?.typeId !== typeId || station.supplies >= maximum) return;
+  if (player.getGameMode() !== GameMode.Creative) {
+    const consumed = source === 'offhand' ? consumeOffhand(player, typeId, 1) : consumeHeld(player, typeId, 1);
+    if (!consumed) return;
   }
-  notify(player, `${plates ? '餐盤' : '包材'} ${station.supplies}/${maximum}。用${plates ? '乾淨餐盤' : '皮革'}點擊補充；蹲下可整疊補入，空手蹲下取出一份。`);
+  station.supplies += 1;
+  saveStation(station);
+  setBlockState(block, plates ? 'ordertocook:plates' : 'ordertocook:papers', station.supplies);
+  playAt(block, plates ? 'plate_place' : 'bag_place', plates ? 0.75 : 1, plates ? 0.95 + Math.random() * 0.1 : 1);
 }
 
 function ingredientContainers(player, block) {
@@ -1368,6 +1368,11 @@ function registerConfiguration() {
       } else if (event.id === 'ordertocook:config') {
         const data = JSON.parse(event.message);
         const next = { ...settings };
+        const hasCustomSkinSetting = Object.hasOwn(data, 'customMultipleCustomerSkins');
+        if (hasCustomSkinSetting) {
+          if (typeof data.customMultipleCustomerSkins !== 'boolean') throw new Error('customMultipleCustomerSkins 必須為 boolean（true 或 false）');
+          next.customMultipleCustomerSkins = data.customMultipleCustomerSkins;
+        }
         const hasDeliveryRateSetting = Object.hasOwn(data, 'deliveryRate');
         if (hasDeliveryRateSetting) {
           if (!isDeliveryRate(data.deliveryRate)) throw new Error('deliveryRate 必須為 0..1 有限數字');
@@ -1390,11 +1395,11 @@ function registerConfiguration() {
         world.setDynamicProperty('ordertocook:settings', encoded);
         // Verify these global settings before changing live behavior. Per-restaurant
         // propagation follows this commit; it is not an atomic multi-record update.
-        if ((hasLeatherSetting || hasMachineLimitSetting || hasDeliveryRateSetting) && world.getDynamicProperty('ordertocook:settings') !== encoded) throw new Error('餐廳設定寫入未確認；全域設定未變更。');
+        if ((hasLeatherSetting || hasMachineLimitSetting || hasDeliveryRateSetting || hasCustomSkinSetting) && world.getDynamicProperty('ordertocook:settings') !== encoded) throw new Error('餐廳設定寫入未確認；全域設定未變更。');
         settings = next;
-        // A count-only command affects future placements, not existing restaurant
-        // records. Preserve the legacy propagation when its fields are supplied.
-        if (!hasMachineLimitSetting || ['deliveryRate', 'countertopConsumeLeather', 'currencyItem', 'refreshSeconds', 'upgradeNutrition'].some(key => Object.hasOwn(data, key))) {
+        // Count-only and appearance-only commands do not rewrite restaurant records.
+        // Preserve the legacy propagation when its fields are supplied.
+        if ((!hasMachineLimitSetting && !hasCustomSkinSetting) || ['deliveryRate', 'countertopConsumeLeather', 'currencyItem', 'refreshSeconds', 'upgradeNutrition'].some(key => Object.hasOwn(data, key))) {
           for (const restaurant of restaurants()) { restaurant.config = { ...restaurant.config, deliveryRate: settings.deliveryRate, refreshMs: settings.refreshMs, orderMachineUpgradeBoardHunger: settings.orderMachineUpgradeBoardHunger }; saveRestaurant(restaurant); }
         }
         if (player) notify(player, '伺服器餐廳設定已儲存。新刷新間隔於下次刷新後使用。');
@@ -1633,7 +1638,7 @@ world.afterEvents.worldLoad.subscribe(() => {
       if (!saved || typeof saved !== 'object' || Array.isArray(saved)) throw new Error('Expected settings object');
       // Old saves and invalid field types fail safe to the Java default. Do not
       // repair/write the saved document during load; preserve recovery evidence.
-      settings = { ...settings, ...saved, deliveryRate: isDeliveryRate(saved.deliveryRate) ? saved.deliveryRate : Number(DEFAULT_CONFIG.deliveryRate), maxOrderMachinesWithin24: isMachineLimit(saved.maxOrderMachinesWithin24) ? Math.max(1, saved.maxOrderMachinesWithin24) : Number(DEFAULT_CONFIG.maxOrderMachinesWithin24), countertopConsumeLeather: typeof saved.countertopConsumeLeather === 'boolean' ? saved.countertopConsumeLeather : DEFAULT_CONFIG.countertopConsumeLeather };
+      settings = { ...settings, ...saved, customMultipleCustomerSkins: typeof saved.customMultipleCustomerSkins === 'boolean' ? saved.customMultipleCustomerSkins : DEFAULT_CONFIG.customMultipleCustomerSkins, deliveryRate: isDeliveryRate(saved.deliveryRate) ? saved.deliveryRate : Number(DEFAULT_CONFIG.deliveryRate), maxOrderMachinesWithin24: isMachineLimit(saved.maxOrderMachinesWithin24) ? Math.max(1, saved.maxOrderMachinesWithin24) : Number(DEFAULT_CONFIG.maxOrderMachinesWithin24), countertopConsumeLeather: typeof saved.countertopConsumeLeather === 'boolean' ? saved.countertopConsumeLeather : DEFAULT_CONFIG.countertopConsumeLeather };
     }
     const rawFoods = world.getDynamicProperty('ordertocook:food_overrides');
     if (typeof rawFoods === 'string') for (const food of JSON.parse(rawFoods)) foodOverrides.set(food.typeId, food);
@@ -1648,6 +1653,7 @@ world.afterEvents.worldLoad.subscribe(() => {
     if (typeof rawWeather === 'string') for (const [id, weather] of JSON.parse(rawWeather)) if (!weatherByDimension.has(id)) weatherByDimension.set(id, weather);
     const smoking = createSmokingRecipeRegistry({ hasItem: id => !!ItemTypes.get(id) });
     const context = { world, system, getStation, saveStation, deleteStation, stations, getRestaurant, restaurants, saveRestaurant, notify, canUseStation, smokingRecipes: smoking.recipes, food: { isFood: stack => !!foodFromStack(stack) }, onCustomerInteract: customerInteract, orderTime,
+      customCustomerSkins: () => settings.customMultipleCustomerSkins,
       onCustomerReactionFinished: (restaurantId, orderId) => dining?.finishReaction(restaurantId, orderId) };
     progression = createProgressionService({ getProfile, saveProfile, restaurants, saveRestaurant, saveStation,
       onUnlock: (playerId, definitions) => {
