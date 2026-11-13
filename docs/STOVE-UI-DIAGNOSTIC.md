@@ -1,23 +1,33 @@
-# Temporary staging-only stove UI diagnostic A
+# Staging-only comparison diagnostic B
 
-Not a fix or client acceptance. This adds a passive yellow bottom-left banner to the data-driven screen only. It intentionally appears on other data-driven containers for a control comparison, but does not change their routes, slots, item collections, transactions, BP, data, or controls. Normal chest screen definitions are untouched.
+This is a hypothesis test, NOT a repair or acceptance. Apply comparison.patch to current 0.1.63 source, preserving integration version fields; owner allocates next paired version. Do not deploy this copied source wholesale. No deployment was performed here.
 
-The marker identifies this screen writer; raw title uses localize=false. Boolean labels expose desktop/pocket, size=7 and exact stove title-key match. No numeric-to-text coercion is assumed. No fake progress is shown.
+## Evidence and question
 
-## Build and withdrawal
+Client 26.63 reported DIAG A, desktop=true, size7=true, direct title-key=false while the nonlocalized title rendered container.ordertocook.stove. A also displayed only its banner over the world, without slots. We do NOT claim the injected screen controls preserve inherited controls: the blank screen may be a diagnostic inheritance side effect. Do not move items or perform gameplay acceptance on this diagnostic.
 
-The normal generator remains the production generator. After any regeneration, explicitly run `python3 tools/stove_ui_diagnostic.py` only for this diagnostic staging package. Reapplying is refused. `python3 tools/stove_ui_diagnostic.py --remove` removes only the exact expected banner and modification; if changed, it refuses rollback. Removing restores the original UI bytes with canonical JSON formatting. A source reverse patch is supplied in the delivery directory. Never ship this diagnostic to LIVE or as a release.
+The Bedrock Wiki's author-tested actionbar example requires copying an engine text variable before comparing it. This supports an experiment, not a proven statement that container title follows the same rule:
+https://wiki.bedrock.dev/json-ui/json-ui-intro#conditional-rendering-with-variables
+Official string equality in requires is valid, e.g. Mojang game_tip_screen.json at 15701fa9c13923f12662984c32c124327e40e3d3. Do not claim strings cannot be compared.
 
-Integration owner must allocate a new paired BP/RP version with unchanged UUIDs and preserve all unrelated work. Do not deploy the copied source version fields as-is. No deployment was performed by this worker.
+## Read all rows in one screenshot
 
-## Client comparison
+- DIAG B confirms this new marker, then original raw title, desktop/pocket, size7, direct title-key.
+- panel-copy compares a local panel alias of the engine title in visible.
+- literal compares the exact key to itself in visible. This is an expression control.
+- screen-copy-visible compares a screen-level alias in visible.
+- screen-requires-copy reports whether a screen variables.requires branch using that alias fired.
+- screen-requires-literal reports the literal control at the requires stage.
+- Last row prints the screen-level copied title, localize=false.
 
-1. Confirm the new candidate cache manifest and UI hashes, after exiting the server before deployment.
-2. Open the stove. Record full screenshot including marker, raw title, all flags and layout; do not move items solely to collect diagnostics.
-3. If allowed, open a different data-driven container to compare marker and flags, then reopen stove. Ordinary chest remains a separate unaffected control.
-4. Marker absent with verified new bytes: screen path/loader is still unproven; do not relax title guard. Marker present with title-key=false: record exact raw title before designing an identity-safe correction. Marker present with both match flags true but wrong layout: investigate screen variable evaluation/override semantics. Both/neither profile labels: investigate profile scope, not client settings assumptions.
-5. Withdraw diagnostic using integration owner's normal staging deployment and a new version, restoring the prediagnostic UI hash f2bda88378f3011ddd38c51131f030e0f2b89afd37edccb6c045715363589b9d. Do not mutate installed packs or delete client caches in place.
+The two appended requires entries only set diagnostic flags. The first four routing entries, exact identity guard, native collections, slots, BP and all version metadata remain unchanged.
 
-## Verification limits
+## Interpretation
 
-Focused unittest checks validate roundtrip, passive-only controls, raw-title settings, stacking/rollback refusal and 50 routing cases. These do not simulate Bedrock's UI loader, render placement or actual screen variables. Real client validation is required. Content Log UI inspection was blocked before executing; no workaround attempted. The available on-disk client log predates this session.
+Direct=false and copies=true supports the engine-variable copy hypothesis. Only if screen-requires-copy also succeeds should a screen requires repair use that alias. Visible-copy=true but requires-copy=false is evidence of a stage/scope difference, not permission to remove identity protection. A false literal control invalidates interpretation of the corresponding stage. Copy text blank or different distinguishes alias resolution from equality.
+
+## Withdrawal and validation
+
+python3 tools/stove_ui_diagnostic.py --remove validates the exact owned overlay, flags and appended branches then restores production UI SHA256 f2bda88378f3011ddd38c51131f030e0f2b89afd37edccb6c045715363589b9d. Reapplying refuses. Normal asset generator produces nondiagnostic UI; apply helper only for the dedicated staging build. withdraw-to-production.patch also removes diagnostic helper/docs/tests, for integration-owner use with a new paired version. No installed packs or caches should be edited in place.
+
+Seven focused tests passed, including original-route preservation, exact removal, passive labels/panels, rollback refusal and 50 modelled route cases. This Python evaluation is NOT the Bedrock engine. No full npm verify or client validation of B has run. New B client test is required; never release to LIVE.

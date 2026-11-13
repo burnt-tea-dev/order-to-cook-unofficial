@@ -1,4 +1,5 @@
 import copy
+import hashlib
 import json
 import unittest
 from pathlib import Path
@@ -34,12 +35,18 @@ class DiagnosticTests(unittest.TestCase):
         changed = copy.deepcopy(self.current)
         changed[scope['KEY']]['layer'] = 4
         with self.assertRaises(ValueError): scope['remove_diagnostic'](changed)
+    def test_comparison_does_not_change_original_routes(self):
+        canonical = (json.dumps(self.base, indent=2) + '\n').encode()
+        self.assertEqual(hashlib.sha256(canonical).hexdigest(), 'f2bda88378f3011ddd38c51131f030e0f2b89afd37edccb6c045715363589b9d')
+        self.assertEqual(self.current[scope['SCREEN']]['variables'][:4], self.base[scope['SCREEN']]['variables'])
+        for branch in self.current[scope['SCREEN']]['variables'][4:]:
+            self.assertNotIn('$screen_content', branch)
     def test_route_matrix_is_exclusive_and_identity_safe(self):
         for desktop in (False, True):
             for size in (5, 7, 9, 27, 54):
                 for title in ('container.ordertocook.stove', 'other.seven.slot', 'Stove', '炉灶', ''):
                     chosen = []
-                    for b in self.current[scope['SCREEN']]['variables']:
+                    for b in self.current[scope['SCREEN']]['variables'][:4]:
                         e = b['requires'].replace(' = ', ' == ')
                         for k, v in {'$desktop_screen':desktop, '$pocket_screen':not desktop,
                                      '$container_size':size, '$container_title':title}.items():

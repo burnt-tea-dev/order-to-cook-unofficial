@@ -318,8 +318,19 @@
         "requires": "($pocket_screen and (($container_size = 7) and ($container_title = 'container.ordertocook.stove')))",
         "$use_custom_pocket_toast": true,
         "$screen_content": "pocket_containers.otc_stove_panel"
+      },
+      {
+        "requires": "($otc_diag_screen_copy = 'container.ordertocook.stove')",
+        "$otc_diag_requires_copy": true
+      },
+      {
+        "requires": "('container.ordertocook.stove' = 'container.ordertocook.stove')",
+        "$otc_diag_requires_literal": true
       }
     ],
+    "$otc_diag_screen_copy": "$container_title",
+    "$otc_diag_requires_copy|default": false,
+    "$otc_diag_requires_literal|default": false,
     "modifications": [
       {
         "array_name": "controls",
@@ -341,15 +352,16 @@
       -4
     ],
     "size": [
-      320,
-      60
+      500,
+      110
     ],
+    "$otc_diag_panel_copy": "$container_title",
     "layer": 1000,
     "controls": [
       {
         "source": {
           "type": "label",
-          "text": "OTC UI DIAG A | data_driven.screen",
+          "text": "OTC UI DIAG B | direct/copy comparison",
           "localize": false,
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -569,6 +581,281 @@
           "shadow": true,
           "text_alignment": "left",
           "visible": "(not ($container_title = 'container.ordertocook.stove'))"
+        }
+      },
+      {
+        "copy_yes": {
+          "type": "label",
+          "text": "panel-copy=true",
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            60
+          ],
+          "size": [
+            320,
+            10
+          ],
+          "color": [
+            1,
+            1,
+            0
+          ],
+          "shadow": true,
+          "text_alignment": "left",
+          "visible": "($otc_diag_panel_copy = 'container.ordertocook.stove')"
+        }
+      },
+      {
+        "copy_no": {
+          "type": "label",
+          "text": "panel-copy=false",
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            60
+          ],
+          "size": [
+            320,
+            10
+          ],
+          "color": [
+            1,
+            1,
+            0
+          ],
+          "shadow": true,
+          "text_alignment": "left",
+          "visible": "(not ($otc_diag_panel_copy = 'container.ordertocook.stove'))"
+        }
+      },
+      {
+        "literal_yes": {
+          "type": "label",
+          "text": "literal=true",
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            200,
+            60
+          ],
+          "size": [
+            320,
+            10
+          ],
+          "color": [
+            1,
+            1,
+            0
+          ],
+          "shadow": true,
+          "text_alignment": "left",
+          "visible": "('container.ordertocook.stove' = 'container.ordertocook.stove')"
+        }
+      },
+      {
+        "literal_no": {
+          "type": "label",
+          "text": "literal=false",
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            200,
+            60
+          ],
+          "size": [
+            320,
+            10
+          ],
+          "color": [
+            1,
+            1,
+            0
+          ],
+          "shadow": true,
+          "text_alignment": "left",
+          "visible": "(not ('container.ordertocook.stove' = 'container.ordertocook.stove'))"
+        }
+      },
+      {
+        "screen_copy_yes": {
+          "type": "label",
+          "text": "screen-copy-visible=true",
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            70
+          ],
+          "size": [
+            320,
+            10
+          ],
+          "color": [
+            1,
+            1,
+            0
+          ],
+          "shadow": true,
+          "text_alignment": "left",
+          "visible": "($otc_diag_screen_copy = 'container.ordertocook.stove')"
+        }
+      },
+      {
+        "screen_copy_no": {
+          "type": "label",
+          "text": "screen-copy-visible=false",
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            70
+          ],
+          "size": [
+            320,
+            10
+          ],
+          "color": [
+            1,
+            1,
+            0
+          ],
+          "shadow": true,
+          "text_alignment": "left",
+          "visible": "(not ($otc_diag_screen_copy = 'container.ordertocook.stove'))"
+        }
+      },
+      {
+        "requires_copy_yes": {
+          "type": "label",
+          "text": "screen-requires-copy=true",
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            80
+          ],
+          "size": [
+            320,
+            10
+          ],
+          "color": [
+            1,
+            1,
+            0
+          ],
+          "shadow": true,
+          "text_alignment": "left",
+          "visible": "$otc_diag_requires_copy"
+        }
+      },
+      {
+        "requires_copy_no": {
+          "type": "label",
+          "text": "screen-requires-copy=false",
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            80
+          ],
+          "size": [
+            320,
+            10
+          ],
+          "color": [
+            1,
+            1,
+            0
+          ],
+          "shadow": true,
+          "text_alignment": "left",
+          "visible": "(not $otc_diag_requires_copy)"
+        }
+      },
+      {
+        "requires_literal_yes": {
+          "type": "label",
+          "text": "screen-requires-literal=true",
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            90
+          ],
+          "size": [
+            320,
+            10
+          ],
+          "color": [
+            1,
+            1,
+            0
+          ],
+          "shadow": true,
+          "text_alignment": "left",
+          "visible": "$otc_diag_requires_literal"
+        }
+      },
+      {
+        "requires_literal_no": {
+          "type": "label",
+          "text": "screen-requires-literal=false",
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            90
+          ],
+          "size": [
+            320,
+            10
+          ],
+          "color": [
+            1,
+            1,
+            0
+          ],
+          "shadow": true,
+          "text_alignment": "left",
+          "visible": "(not $otc_diag_requires_literal)"
+        }
+      },
+      {
+        "copied_title": {
+          "type": "label",
+          "text": "$otc_diag_screen_copy",
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            100
+          ],
+          "size": [
+            320,
+            10
+          ],
+          "color": [
+            1,
+            1,
+            0
+          ],
+          "shadow": true,
+          "text_alignment": "left",
+          "visible": true
         }
       }
     ]
