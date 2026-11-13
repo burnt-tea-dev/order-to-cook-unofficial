@@ -550,8 +550,7 @@ async function boardForm(player, block) {
   }
 }
 
-function shelfInteract(player, block) {
-  const station = getStation(block);
+function shelfInput(player, block) {
   const plates = block.typeId === 'ordertocook:plate_shelf';
   const typeId = plates ? 'ordertocook:clean_plate' : 'minecraft:leather';
   const maximum = plates ? 18 : 10;
@@ -560,7 +559,15 @@ function shelfInteract(player, block) {
   let source = 'main';
   let supply = heldItem(player);
   if (plates ? !supply : supply?.typeId !== typeId) { supply = offhandItem(player); source = 'offhand'; }
-  if (supply?.typeId !== typeId || station.supplies >= maximum) return;
+  return supply?.typeId === typeId ? { plates, typeId, maximum, source } : undefined;
+}
+
+function shelfInteract(player, block) {
+  const input = shelfInput(player, block);
+  if (!input) return;
+  const { plates, typeId, maximum, source } = input;
+  const station = getStation(block);
+  if (station.supplies >= maximum) return;
   if (player.getGameMode() !== GameMode.Creative) {
     const consumed = source === 'offhand' ? consumeOffhand(player, typeId, 1) : consumeHeld(player, typeId, 1);
     if (!consumed) return;
@@ -1092,8 +1099,32 @@ function claimStation(player, block) {
   if (restaurant) return true;
   return station.ownerId === player.id || isAdmin(player);
 }
+function handlesUpgrade(player, block) {
+  return heldItem(player)?.typeId === 'ordertocook:otc_upgrade_box' &&
+    ['minecraft:barrel', 'minecraft:smoker', 'minecraft:lit_smoker', 'ordertocook:washingtable'].includes(block.typeId);
+}
+
+// Read-only: Java's block use can PASS without cancelling the held item's use.
+// Read again in the deferred owner before claiming a station or taking supplies.
+function handlesBlockInteraction(player, block) {
+  if (player.isSneaking && (heldItem(player) || offhandItem(player))) return false;
+  if (['ordertocook:order_machine', 'ordertocook:board', 'ordertocook:countertop',
+    'ordertocook:takeout_bag', 'ordertocook:food_plate_display', DINING_BLOCK].includes(block.typeId)) return true;
+  if (['ordertocook:shelf', 'ordertocook:plate_shelf'].includes(block.typeId)) {
+    if (!shelfInput(player, block)) return false;
+    // ShelfBlock consumes the action even when full; PlateShelfBlock returns PASS.
+    return block.typeId === 'ordertocook:shelf' || !((findStation(block)?.supplies ?? 0) >= 18);
+  }
+  if (block.typeId === 'ordertocook:chair') {
+    if (player.getComponent('minecraft:riding')?.entityRidingOn) return false;
+    return !!block.above()?.isAir && !!block.above(2)?.isAir;
+  }
+  return appliances?.handlesInteraction(player, block) ?? false;
+}
+
 async function interactBlock(player, block, { nativeEntryCancelled = false } = {}) {
   if (!ready || !nearBlock(player, block)) return;
+  if (!handlesBlockInteraction(player, block) && !handlesUpgrade(player, block)) return;
   if (block.typeId === DINING_BLOCK) { collectDiningPlate(player, block); return; }
   const tick = interactionTicks.get(player.id) ?? -100;
   if (system.currentTick - tick < 3) return;
@@ -1453,8 +1484,7 @@ system.beforeEvents.startup.subscribe(event => {
       if (!['ordertocook:board', 'ordertocook:order_machine', DINING_BLOCK, 'ordertocook:food_plate_display', 'ordertocook:takeout_bag'].includes(event.brokenBlockPermutation.type.id)) {
         try { onBreak(event); } catch (error) { console.warn(`[OrderToCook] Break: ${error}`); }
       }
-    },
-    onPlayerInteract: event => { if (event.player) safely(event.player, () => interactBlock(event.player, event.block)); }
+    }
   });
   event.blockComponentRegistry.registerCustomComponent('ordertocook:machine_timing', {
     onTick: event => tickMachine(event.block)
@@ -1477,27 +1507,23 @@ world.beforeEvents.itemUse.subscribe(event => {
 });
 
 world.beforeEvents.playerInteractWithBlock.subscribe(event => {
+  if (event.cancel) return;
   if (!ready) { if (isFridge(event.block) || isParcelDisplay(event.block) || event.block.typeId === 'ordertocook:stove') event.cancel = true; return; }
   const item = event.itemStack;
+  const handled = handlesBlockInteraction(event.player, event.block);
   const meal = dining?.atBlock(event.block);
-  if (meal) {
+  if (meal && handled) {
     event.cancel = true;
     if (event.isFirstEvent) system.run(() => safely(event.player, () => collectDiningPlate(event.player, meal)));
     return;
   }
-  const parcel = ['ordertocook:takeout_bag', 'ordertocook:food_plate'].includes(item?.typeId);
-  if (parcel) {
-    event.cancel = true;
-    if (event.isFirstEvent) system.run(() => safely(event.player, () => placeParcel(event.player, event.block, event.blockFace)));
-    return;
-  }
-  if (event.block.typeId === 'ordertocook:stove' && item?.typeId !== 'ordertocook:otc_upgrade_box') {
+  if (handled && event.block.typeId === 'ordertocook:stove') {
     if (appliances.canOpenStove(event.player, event.block)) return;
     event.cancel = true;
     system.run(() => safely(event.player, () => interactBlock(event.player, event.block, { nativeEntryCancelled: true })));
     return;
   }
-  if (isFridge(event.block) && item?.typeId !== 'ordertocook:otc_upgrade_box') {
+  if (handled && isFridge(event.block)) {
     // Ordinary use opens the native container; sneak-empty use compacts this
     // compartment through the same deferred permission check as other actions.
     const station = findStation(appliances.normalizeBlock(event.block));
@@ -1507,11 +1533,19 @@ world.beforeEvents.playerInteractWithBlock.subscribe(event => {
     if (event.isFirstEvent) system.run(() => safely(event.player, () => interactBlock(event.player, event.block)));
     return;
   }
-  if (event.block.typeId.startsWith(PREFIX) || item?.typeId === 'ordertocook:otc_upgrade_box') {
+  if (handled || handlesUpgrade(event.player, event.block)) {
     event.cancel = true;
-    // Cancellation suppresses the component callback too. A continuation must
-    // still reach our owner; interactBlock already coalesces nearby callbacks.
+    // This before-event owns script dispatch. Do not dispatch again from the
+    // component after native use: placing the last item can leave an empty hand.
     system.run(() => safely(event.player, () => interactBlock(event.player, event.block)));
+    return;
+  }
+  // The block declined first. Keep the existing parcel item owner and its
+  // complete native-stack move.
+  const parcel = ['ordertocook:takeout_bag', 'ordertocook:food_plate'].includes(item?.typeId);
+  if (parcel) {
+    event.cancel = true;
+    if (event.isFirstEvent) system.run(() => safely(event.player, () => placeParcel(event.player, event.block, event.blockFace)));
   }
 });
 world.beforeEvents.playerBreakBlock.subscribe(event => {

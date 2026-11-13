@@ -599,6 +599,23 @@ export function createApplianceService(ctx) {
     return handEmpty(player) && ![`${NS}seat`, `${NS}motorcycle`].includes(mount?.typeId);
   }
 
+  // No getStation/data here: the before-event may read the existing record,
+  // but claiming ownership and initializing/migrating storage stay deferred.
+  function handlesInteraction(player, block) {
+    if (!KINDS.has(block.typeId)) return false;
+    if (isFridge(block) || block.typeId === STOVE) return true;
+    const station = (ctx.stations?.() ?? []).find(value => value.dimensionId === block.dimension.id && sameLocation(value.location, block.location));
+    const d = station?.appliance;
+    const main = playerInventory(player)?.getItem(player.selectedSlotIndex);
+    const off = player.getComponent('minecraft:equippable')?.getEquipment(EquipmentSlot.Offhand);
+    const empty = !main && !off;
+    if (block.typeId === SINK) {
+      return empty ? (d?.plates ?? 0) > 0 : (main || off)?.typeId === DIRTY && (d?.plates ?? 0) < 10;
+    }
+    return ((main?.typeId === DIRTY || off?.typeId === DIRTY) && (d?.phase ?? 0) === 0) ||
+      (empty && d?.phase === 5 && d.plates > 0);
+  }
+
   function interactSink(player, station) {
     const d = data(station);
     const inventory = playerInventory(player);
@@ -682,30 +699,35 @@ export function createApplianceService(ctx) {
     }
     if (d.phase !== 0) { say(ctx, player, `洗碗機正在運作 · ${d.plates} 個盤子。`); return; }
     const held = inventory.getItem(player.selectedSlotIndex);
-    if (held?.typeId !== DIRTY) { say(ctx, player, "手持髒盤點擊，一次放入背包內最多 16 個；完成後空手點擊取出。"); return; }
+    const offhand = player.getComponent('minecraft:equippable')?.getEquipmentSlot(EquipmentSlot.Offhand);
+    if (held?.typeId !== DIRTY && offhand?.getItem()?.typeId !== DIRTY) return;
     const changes = [];
     const beforeState = { ...d };
     let count = 0;
-    for (let i = 0; i < inventory.size && count < 16; i++) {
-      const stack = inventory.getItem(i);
+    // Java's player inventory scan includes the offhand after the main slots.
+    const slots = Array.from({ length: inventory.size }, (_, i) => inventory.getSlot(i));
+    if (offhand) slots.push(offhand);
+    for (const slot of slots) {
+      if (count >= 16) break;
+      const stack = slot.getItem();
       if (stack?.typeId !== DIRTY) continue;
       const take = Math.min(16 - count, stack.amount);
-      changes.push({ i, stack, take });
+      changes.push({ slot, stack, take });
       count += take;
     }
     if (!count) { say(ctx, player, "背包放入髒盤子後點擊洗碗機，一次最多清洗 16 個。"); return; }
     try {
       for (const change of changes) {
         const next = change.stack.clone();
-        if (next.amount === change.take) inventory.setItem(change.i, undefined);
-        else { next.amount -= change.take; inventory.setItem(change.i, next); }
+        if (next.amount === change.take) change.slot.setItem(undefined);
+        else { next.amount -= change.take; change.slot.setItem(next); }
       }
       d.plates = count;
       d.phase = 2;
       d.remainingTicks = 30;
       ctx.saveStation(station);
     } catch (error) {
-      for (const change of changes) inventory.setItem(change.i, change.stack);
+      for (const change of changes) change.slot.setItem(change.stack);
       Object.assign(d, beforeState);
       throw error;
     }
@@ -923,7 +945,7 @@ export function createApplianceService(ctx) {
   }
 
   function onInteract(player, block, { nativeEntryCancelled = false } = {}) {
-    if (!KINDS.has(block.typeId)) return false;
+    if (!handlesInteraction(player, block)) return false;
     const normalized = normalizeApplianceBlock(block);
     const station = ctx.getStation(normalized);
     if (!accessible(player, station)) return true;
@@ -1160,5 +1182,5 @@ export function createApplianceService(ctx) {
   }
 
   return { init, tick, onPlace, onInteract, onBreak, getStorage, countFood, consumeFood, getWashingProgress,
-    canOpenFridge, canOpenStove, onContainerOpened, onContainerClosed, normalizeBlock: normalizeApplianceBlock };
+    canOpenFridge, canOpenStove, handlesInteraction, onContainerOpened, onContainerClosed, normalizeBlock: normalizeApplianceBlock };
 }
