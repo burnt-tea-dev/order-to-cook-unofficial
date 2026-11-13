@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased tooling
+
+- Share the same generated native-smoker source with installed Grilling through its existing secret-skewer registration contract. OTC keeps the source output count; Grilling resolves one edible cooked ingredient, matching Java. Existing recipe discovery, ownership limits and original author inputs are unchanged.
+
+- Compile optional stove recipe providers from the effective author's native smoker JSON through the existing OTC v1 contract. Coalesce identical recipes and report ambiguous, foreign-input or unsupported recipes; preserve author source and use public Core's paired release planner for local output. Nine Cookery/Chinese Food/Nether/End/Sculk inputs are source-checked and exercised through the generated publisher and real stove logic. OTC runtime, current pack identity and installed worlds are unchanged.
+
 ## 0.1.51-alpha.1
 
 - Recover unexpired delivery orders with a loaded water/blocked destination only when no customer or saved anchor exists. Reuse the original radial rules and four-candidate bound through the existing customer retry; accept only loaded safe ground near a player. Unknown chunks and established customers retain their addresses.

@@ -12,7 +12,7 @@ const core = [
   // Shipped interaction owners, permissions, menu updates and physical handoff.
   'main', 'station-access', 'menu-runtime', 'menu-persistence', 'dine-in-takeout',
   // Native storage migration/reload, item-bearing relocation and live customers.
-  'appliances', 'stove', 'native-fridge', 'portable-runtime', 'entities', 'delivery-recovery',
+  'appliances', 'stove', 'smoking-recipes', 'smoking-provider', 'native-fridge', 'portable-runtime', 'entities', 'delivery-recovery',
 ].map(name => `tests/${name}.test.js`);
 const args = process.argv.slice(2);
 
