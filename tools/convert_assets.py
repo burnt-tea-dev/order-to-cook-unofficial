@@ -1477,7 +1477,7 @@ def make_stove_ui():
     # Do not restyle an unrelated addon merely because it also has seven slots.
     # The official label reads the title separately from $localize_title.
     # If a client does not expose the raw key here, preserve its native panel.
-    stove_match = "(($container_size = 7) and ($container_title = 'container.ordertocook.stove'))"
+    stove_match = "(($container_size = 7) and ($otc_title_copy = 'container.ordertocook.stove'))"
     desktop_slots = []
     pocket_slots = []
     # Grid positions own the actual collection indices, not just the pixels.
@@ -1544,6 +1544,9 @@ def make_stove_ui():
         # Retain the official screen base, close policy, background and pocket
         # toast. Only this title key selects the two owned content panels.
         "screen@common.inventory_screen_common": {
+            # Engine-backed text can render directly but require a local copy
+            # for comparison. Keep the exact key + seven-slot identity guard.
+            "$otc_title_copy": "$container_title",
             "$close_on_player_hurt|default": True,
             "$use_custom_pocket_toast|default": False,
             "close_on_player_hurt": "$close_on_player_hurt",
