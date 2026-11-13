@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Bedrock adaptation of Order To Cook by breezeth-CN; see THIRD_PARTY_NOTICES.md.
-import { BlockPermutation, EquipmentSlot, ItemStack, MolangVariableMap, system, world } from "@minecraft/server";
+import { BlockPermutation, EquipmentSlot, GameMode, ItemStack, MolangVariableMap, system, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { advanceDoorMotion, fridgeRootFrame, dishwasherFrame, APPLIANCE_TICK_INTERVAL, FRIDGE_MOTION_TICKS, FRIDGE_LAST_FRAME } from "./appliance_motion.js";
 import { createNativeFridgeStorage, compactFridgeInventory, FRIDGE_UPPER, isFridge, isUpperFridge } from "./native_fridge.js";
@@ -582,18 +582,6 @@ export function createApplianceService(ctx) {
     return !!station?.ownerId && accessible(player, station) && !!nativeStove.peek(station);
   }
 
-  function consumeHeld(player, expectedId, count = 1) {
-    const inventory = playerInventory(player);
-    const index = player.selectedSlotIndex;
-    const stack = inventory?.getItem(index);
-    if (!stack || stack.typeId !== expectedId || stack.amount < count) return false;
-    // Storage/economy consumes physical items even in Creative, preventing a
-    // creative-mode toggle from duplicating stock into another player's station.
-    if (stack.amount === count) inventory.setItem(index, undefined);
-    else { stack.amount -= count; inventory.setItem(index, stack); }
-    return true;
-  }
-
   function giveItem(player, stack) {
     const inventory = playerInventory(player);
     if (!inventory || containerCapacity(inventory, stack) < stack.amount) return false;
@@ -614,15 +602,40 @@ export function createApplianceService(ctx) {
   function interactSink(player, station) {
     const d = data(station);
     const inventory = playerInventory(player);
-    const held = inventory?.getItem(player.selectedSlotIndex);
+    let handSlot = inventory?.getSlot(player.selectedSlotIndex);
+    let held = handSlot?.getItem();
+    // Java selects the offhand only when the main hand is empty, not when
+    // the main-hand item happens to be something other than a dirty plate.
+    if (!held) {
+      handSlot = player.getComponent("minecraft:equippable")?.getEquipmentSlot(EquipmentSlot.Offhand);
+      held = handSlot?.getItem();
+    }
     if (held?.typeId === DIRTY) {
       if (d.plates >= 10) { say(ctx, player, "洗碗池最多可放 10 個髒盤子。"); return; }
-      if (consumeHeld(player, DIRTY)) {
+      const creative = player.getGameMode() === GameMode.Creative;
+      const remaining = !creative && held.amount > 1 ? held.clone() : undefined;
+      if (remaining) remaining.amount--;
+      const beforePlates = d.plates;
+      let handWriteAttempted = false;
+      try {
         d.plates++;
         ctx.saveStation(station);
-        updateVisual(station);
-        playEffects(player.dimension, plateSound(center(station.location)), MolangVariableMap);
+        if (!creative) {
+          handWriteAttempted = true;
+          handSlot.setItem(remaining);
+        }
+      } catch (error) {
+        d.plates = beforePlates;
+        // A save failure has not touched the hand. A failed hand write must
+        // undo the saved insertion and restore the original complete stack.
+        if (handWriteAttempted) {
+          try { ctx.saveStation(station); }
+          finally { handSlot.setItem(held); }
+        }
+        throw error;
       }
+      updateVisual(station);
+      playEffects(player.dimension, plateSound(center(station.location)), MolangVariableMap);
       return;
     }
     if (washing.has(player.id)) { stopWashing(player.id); say(ctx, player, "已停止洗碗。"); return; }

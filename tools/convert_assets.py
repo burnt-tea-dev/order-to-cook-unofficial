@@ -2038,6 +2038,9 @@ def make_items():
         components = {"minecraft:display_name": {"value": item_display_key(name)},
             "minecraft:icon": {"textures": {"default": f"{NS}_{name}"}},
             "minecraft:max_stack_size": 1 if name in ("guide","controller","order","food_plate","takeout_bag","motorcycle","helmet") else 64}
+        if name == "dirty_plate":
+            # WashingTableBlock.use also accepts a plate held in the offhand.
+            components["minecraft:allow_off_hand"] = True
         if name in ("guide", "controller", "order", "food_plate", "takeout_bag", "motorcycle", "otc_upgrade_box"):
             components[f"{NS}:use"] = {}
             components["minecraft:interact_button"] = True
