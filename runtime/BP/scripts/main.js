@@ -1686,7 +1686,7 @@ world.afterEvents.worldLoad.subscribe(() => {
     const rawWeather = world.getDynamicProperty('ordertocook:weather');
     if (typeof rawWeather === 'string') for (const [id, weather] of JSON.parse(rawWeather)) if (!weatherByDimension.has(id)) weatherByDimension.set(id, weather);
     const smoking = createSmokingRecipeRegistry({ hasItem: id => !!ItemTypes.get(id) });
-    const context = { world, system, getStation, saveStation, deleteStation, stations, getRestaurant, restaurants, saveRestaurant, notify, canUseStation, smokingRecipes: smoking.recipes, food: { isFood: stack => !!foodFromStack(stack) }, onCustomerInteract: customerInteract, orderTime,
+    const context = { world, system, getStation, getStationById, saveStation, deleteStation, stations, getRestaurant, restaurants, saveRestaurant, notify, canUseStation, smokingRecipes: smoking.recipes, food: { isFood: stack => !!foodFromStack(stack) }, onCustomerInteract: customerInteract, orderTime,
       customCustomerSkins: () => settings.customMultipleCustomerSkins,
       onCustomerReactionFinished: (restaurantId, orderId) => dining?.finishReaction(restaurantId, orderId) };
     progression = createProgressionService({ getProfile, saveProfile, restaurants, saveRestaurant, saveStation,

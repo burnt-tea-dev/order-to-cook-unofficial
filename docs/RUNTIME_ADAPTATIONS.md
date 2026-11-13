@@ -105,9 +105,13 @@ checkpoint 保存而使正常重啟倒退。點火扣燃料、批次出菜與玩
 
 ## 洗碗池及洗碗機
 
-洗碗池依 `block/WashingTableBlock.java`、`core/WashingTableManager.java`，最多放 **10 個髒盤子**。手持髒盤點擊加入 1 個；騰空雙手後點擊開始洗 1 個，保持距離 4 格內、空手及望著洗碗池 **80 tick / 4 秒**。看向別處、換物品、離開、斷線、權限被撤銷或再次點擊會中止；未完成的盤子留在池內。
+洗碗池依固定 Forge 1.20.1 的 [`WashingTableBlock.use`](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/WashingTableBlock.java) 及 [`WashingTableManager.start/tick/completeWash`](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/core/WashingTableManager.java)。最多放 **10 個髒盤子**；主手空才選副手，持髒盤點擊加入 1 個，Creative 不扣持物。其他持物或池滿時沿既有互動 PASS 路徑。
 
-原版採「持續按住使用鍵」。本版為「點擊開始並保持望著池子」，避免依賴 Java 自訂封包與客戶端按鍵事件。手洗保留原身體／前臂端點適配，第一人稱左右臂資料及共用顯示請求的目前範圍、接線要求與未確認項統一見 [PARITY](PARITY.md#手洗第一人稱左臂)；真肘關節另列，未改 `player.json`。水花、聲音及 action bar 進度提供操作回饋。
+手洗由 [appliances.js](../runtime/BP/scripts/appliances.js) 的同一 `washing` map 按玩家保存進度。多名合資格玩家可同池開始，各自計時／顯示進度，不預扣或預留盤子。每人完成時讀取原站登記中的當前共用盤數，同步逐人交付一乾淨盤、扣一髒盤並沿原 `saveStation` 保存；最後一盤只交給該次迴圈中先完成交付的人，後續 session 讀到空池便停止。不保證誰先取得，也沒有另設 queue 或鎖。保存失敗沿既有完整物品快照方式撤回該人的交付；其餘 session 重新讀取原存檔 owner 恢復的站記錄。滿包仍不扣池盤，沒有新增 Java 的主／副手兜底。
+
+取消、離開或斷線只清該玩家的 session；正常拆池沿 `onBreak` 掉落剩餘髒盤並停止該池所有 session。每人的進度只在記憶體，池內盤數仍用原存檔格式，沒有新增保存欄位。這是來源行為，尚無本題客戶端觀察。
+
+**原作手洗輸入仍未還原。** Java 按住使用鍵，開始後可轉頭，按實際毫秒計時並可續洗；本版保留空手點擊開始／再次點擊停止、持續視線與 **80 tick** 單盤即停（20 TPS 時約 4 秒）。距離仍沿原 `accessible` 的池中心 6 格及頭部 4 格射線條件，與 Java 池中心 4 格不同；看向別處、換物品、超距、騎本包椅子／小電驢、權限被撤銷等會中止，未完成盤子留在池內。沒有猜測 release 超時或新增移動鎖。手洗保留原身體／前臂端點適配，第一人稱左右臂資料及共用顯示請求的目前範圍、接線要求與未確認項統一見 [PARITY](PARITY.md#手洗第一人稱左臂)；真肘關節另列，未改 `player.json`。水花、聲音及 action bar 進度仍走原接點。
 
 洗碗機依 `block/entity/DishwasherBlockEntity.java`，沿用既有的直接批次操作：**手持髒盤點擊**，一次從玩家背包收取最多 **16 個**髒盤子；洗好後必須**雙手空**才可點擊領取整批。這不是本輪才加入的無表單介面；本輪補強手持條件與保存錯誤時的回退。
 
