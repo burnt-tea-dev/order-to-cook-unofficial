@@ -58,7 +58,8 @@ Java 的 ingredient tag 不會直接拿來猜其他 Bedrock Addon 的物品 ID�
 | Cookery 炒鍋、湯鍋、砧板、磨坊 | 保持 Cookery 工作站製程，不轉成單槽煙燻 |
 | Tavern 酒桶、壓榨槽、雪克杯 | 不註冊到爐灶 |
 | 世界名酒釀造、調酒、冷凍櫃 | 不註冊到爐灶 |
-| Farmer's Delight、Let's Do、Cookery 的其他煙燻配方 | 尚無本次可核對的已安裝 Bedrock 供應目錄；須由供應商透過下述契約明確提交有效 ID |
+| Cookery、Chinese Food、Nether、End、Sculk 的原生 smoker 配方 | 可用下述公開工具從實際作者 BP 產生供應模組；不是 OTC 內建白名單，也不會在未接入的原包上自動生效 |
+| Farmer's Delight、Let's Do 及其他供應商 | 同一工具可讀明確的原生 smoker 配方；專屬腳本製程仍須由供應端提供有效目錄 |
 
 已逐檔核對 Tavern
 [`5b209aa9b365735bcbfcb42eea232fb90bf71c10`](https://github.com/burnt-tea-dev/kaleidoscope-tavern-unofficial/tree/5b209aa9b365735bcbfcb42eea232fb90bf71c10)：
@@ -69,7 +70,64 @@ Java 的 ingredient tag 不會直接拿來猜其他 Bedrock Addon 的物品 ID�
 飲品可否加入餐廳菜單與能否在爐灶生產，是兩個獨立問題。
 
 Java 對外部鍋具的熱源 tag 相容，不代表那些鍋具的專屬料理會成為
-`RecipeType.SMOKING`。本次只接入已核實的單原料煙燻製程；不改外部 Addon。
+`RecipeType.SMOKING`。爐灶只接入已核實的單原料煙燻製程，作者工作站保持其原有行為。
+
+## 從原作者配方產生可選接入
+
+[`tools/build_smoking_provider.py`](../tools/build_smoking_provider.py) 讀取實際
+BP 的 `recipes/`，只選有 `smoker` 標籤的 `minecraft:recipe_furnace`，
+將可表達的單原料／明確產量交給下方既有 v1 介面。沒有作者名稱白名單、
+另外抄寫的九條 runtime 配方或額外相容包。腳本加入原 BP 已宣告的唯一入口；
+保留原作者程式內容、配方、資源和存檔 ID；OTC runtime 不改寫。
+
+公開本機用法只需要合法作者 BP/RP、OTC 及公開 Core 來源。若已有其他相容
+處理，應使用**目前有效的整個作者 BP/RP**，不要從舊原包重建並蓋掉它：
+
+```sh
+python3 tools/build_smoking_provider.py \
+  --bp /inputs/author/BP --rp /inputs/author/RP \
+  --core-source /sources/senluo-bedrock-core \
+  --version 1.6.30001 --output /outputs/author-with-otc
+```
+
+版本只是範例，須選高於輸入 BP/RP 且未用過的配對身份。工具沿用 Core
+`tools/paired_release.py::plan_pair` 更新兩側及既有互相相依，保留 UUID、
+其他依賴和資產，輸出新的 `author-with-otc-smoking.mcaddon` 與來源摘要。
+原輸入保持不變。使用新作者配對時，其他明確鎖定該作者舊版本的包仍須
+沿既有配套工具同步相依；本工具不猜其他包的版本，也不部署世界。
+
+供既有組裝器使用的純函式為
+`compile_smoking_provider(bp_files)`，輸入是 BP 相對路徑到 bytes 的 mapping，
+回傳 `updates`、`removals`、`recipes`、`duplicates`、`skipped`。沒有可接入配方時不產生
+腳本；有配方時僅更新入口 import 與自有 `scripts/otc_smoking_provider.js`。
+組裝器負責在既有作者配對中採用這兩個輸出。作者撤除全部相關配方時，退役
+先前生成的自有模組及入口 import，避免留下舊供應資料；同名非自有檔案拒絕覆蓋。
+
+相同輸入／產量／輸出的重複原生配方只發布一次；競爭輸出、衝突 recipe ID、
+tag 材料、物品 data、額外條件及跨 namespace／原版輸入列入摘要而不猜測。
+這保留 OTC 的原版配方和其他供應商的責任。生成模組只在 `worldLoad` 及
+OTC request 事件時發布，逐筆檢查原生輸入和輸出存在，訊息切成最多
+2048 字元的完整快照，沒有輪詢。分組使用該供應商 `native_smoker_0`、`native_smoker_1`…，
+保留作者自行提供的 `main` 分組；若同一輸入已有其他分組擁有，既有 registry 會拒絕新快照，不會覆蓋；
+同一作者不要同時載入兩份相互競爭的 v1 publisher。
+
+### 已核對的原始作者來源
+
+2026-11-13 對原始歸檔的只讀編譯找到下列 **9 個不同輸入**；測試把生成
+publisher 的事件送入正式 OTC registry，再讓正式爐灶每三路跑完 200 tick。
+這是來源與離線行為範圍，尚未新增這些配對的 BDS、存檔或玩家畫面結果。
+
+| 原始來源 | 本機 SHA-256 | 可接入輸入 → 輸出（省略同欄 namespace） |
+| --- | --- | --- |
+| [Cookery 1.6.6，file 9511094](https://edge.forgecdn.net/files/9511/94/Kaleidoscope-Cookery-v1.6.6.mcaddon) | `4bd85c214d063e07ea66639edcff367337db12d59b430b26595c71d1b61b3b64` | `kaleidoscope_cookery`: `stuffed_dough_food → samsa` |
+| [Chinese Food 1.1.2，file 9511115](https://edge.forgecdn.net/files/9511/115/Kaleidoscope-Chinese-Food-v1.1.2.mcaddon) | `7d26fbb8af615ac8c531d8c76f0a49620dcfd8a427d3e38ab8fc14bfea8b4949` | `kaleidoscope_chinesefood`: `raw_mooncake → mooncake`；三份等價配方合一 |
+| [Nether 1.0.3，file 9227368](https://edge.forgecdn.net/files/9227/368/Kaleidoscope%20Nether%20v1.0.3.mcaddon) | `62b8e598780d60c909d3bc3448c31a77327d8b43419ad034529bc257c364ff24` | `kaleidoscope_nether`: `raw_piglin_meat → cooked_piglin_meat`、`raw_strider_meat → cooked_strider_meat`、`ghast_tentacle → roasted_ghast_tentacle`、`ham → roasted_ham` |
+| [End 1.0.3，file 9227361](https://edge.forgecdn.net/files/9227/361/Kaleidoscope%20End%20v1.0.3.mcaddon) | `5cb77a000ed0f42c820602c50b67c208e85e99634d3454fb969aa39d5c2d903a` | `kaleidoscope_end`: `raw_ender_dragon_meat → cooked_ender_dragon_meat`、`raw_endermite_meat → roasted_endermite_meat` |
+| [Sculk 1.0.0，file 9317015](https://edge.forgecdn.net/files/9317/15/Kaleidoscope%20Sculk%20v1.0.0.mcaddon) | `15b64840f20c0ab7da26c6af4f5108512345a5947f381f202594a7f04137c4dd` | `kaleidoscope_sculk`: `eerie_meat → cooked_eerie_meat`；兩份等價配方合一 |
+
+Chinese Food 的 `minecraft:water_bucket → kaleidoscope_chinesefood:salt_bucket`
+因原版輸入責任而保持未接入。原料／輸出不是食品的 smoker 配方也不能僅憑
+名稱斷言可加入餐廳菜單；菜單營養和料理製程仍各自走其契約。
 
 ## 供應商契約 v1
 
@@ -207,3 +265,7 @@ world.afterEvents.worldLoad.subscribe(() => {
 單組撤銷、跨分組輸入衝突拒絕。
 爐灶烹調、庫存、燃料與重載的執行驗證由爐灶測試覆蓋。
 上述 Node 測試不能證明真實客戶端 UI、聲音、效果或實際世界重啟已通過。
+
+`tests/smoking-provider.test.js` 在既有核心入口執行真編譯器、生成模組及正式
+registry／爐灶，覆蓋原作者 bytes 保留、可重播輸出、九條來源配方的三路烹調、
+跨包無效輸入／衝突拒絕、延遲要求、可選物品缺席和大型目錄訊息限制。
