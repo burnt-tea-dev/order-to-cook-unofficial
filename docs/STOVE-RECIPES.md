@@ -111,6 +111,25 @@ OTC request 事件時發布，逐筆檢查原生輸入和輸出存在，訊息�
 保留作者自行提供的 `main` 分組；若同一輸入已有其他分組擁有，既有 registry 會拒絕新快照，不會覆蓋；
 同一作者不要同時載入兩份相互競爭的 v1 publisher。
 
+### 與煙火秘製串共用原生配方
+
+同一個生成模組在世界載入後，若原生物品註冊表已有
+`kaleidoscope_grilling:secret_skewer`，會把同一批已確認存在的輸入／輸出
+送到煙火既有的 `kaleidoscope_grilling:register_secret_compat`。
+OTC 仍使用來源的成品數量；煙火沿用自己的食材快照與可食用檢查，每種食材
+只保留一份烤熟結果，對齊 Java
+[`SkeweringHandler.ensureCookedIngredientStacks`](https://github.com/breezeth-CN/KaleidoscopeGrilling/blob/9a1acdab27698457bec16c9362678e574895a28c/forge-1.20.1/src/main/java/cn/breezeth/kaleidoscope_grilling/skewer/SkeweringHandler.java#L138-L159)
+對原生 `SMOKING` 配方結果的處理。沒有第二份配方表、私人煙燻實作或新相容包。
+
+兩個接收端的既有 request 事件只重送各自的宣告；未安裝煙火時不發布煙火事件。
+煙火目前使用啟動期註冊，沒有 OTC 的完整快照撤回能力；修改或移除作者配方
+應重建作者配對並重載世界，不聲稱可以熱撤回已登記映射。既有名稱
+`scripts/otc_smoking_provider.js` 保留，以便原地更新或退役同一個生成模組。
+
+這條路徑只共用原生煙燻配方，不推斷作者腳本的食用效果、容器返還或食材貼圖。
+Java 對食材的 `finishUsingItem` 效果仍需供應端沿煙火既有食物行為契約提供，
+不能以煙燻映射已登記宣稱那些效果也已接入。
+
 ### 已核對的原始作者來源
 
 2026-11-13 對原始歸檔的只讀編譯找到下列 **9 個不同輸入**；測試把生成

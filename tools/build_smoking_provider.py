@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-only
-"""Connect an author's actual native smoker recipes to OTC without a patch pack.
+"""Share an author's native smoker recipes with OTC and Grilling.
 
 The pure compiler accepts effective BP-relative bytes. The public CLI copies an
 existing BP/RP pair to a new location and uses Core's existing paired-release
@@ -67,17 +67,28 @@ def _publisher(catalogs):
     return (MARKER + "import { system, world, ItemTypes } from '@minecraft/server';\n" +
             'const catalogs = ' + _message(catalogs) + ';\n' + """
 let loaded = false;
-function publish() {
+function publish(target) {
   if (!loaded) return;
+  const grilling = target !== 'otc' && ItemTypes.get('kaleidoscope_grilling:secret_skewer');
   for (const snapshot of catalogs) {
     const recipes = snapshot.recipes.filter(recipe =>
       ItemTypes.get(recipe.input) && ItemTypes.get(recipe.output));
-    system.sendScriptEvent('ordertocook:smoking_recipes_v1', JSON.stringify({ ...snapshot, recipes }));
+    if (target !== 'grilling') {
+      system.sendScriptEvent('ordertocook:smoking_recipes_v1', JSON.stringify({ ...snapshot, recipes }));
+    }
+    if (grilling && recipes.length) {
+      system.sendScriptEvent('kaleidoscope_grilling:register_secret_compat', JSON.stringify({
+        smoking: recipes.map(({ input, output }) => ({ input, output }))
+      }));
+    }
   }
 }
 system.afterEvents.scriptEventReceive.subscribe(event => {
-  if (event.sourceType === 'Server' && event.id === 'ordertocook:request_smoking_recipes_v1') {
-    system.run(publish);
+  if (event.sourceType !== 'Server') return;
+  if (event.id === 'ordertocook:request_smoking_recipes_v1') {
+    system.run(() => publish('otc'));
+  } else if (event.id === 'kaleidoscope_grilling:request_secret_compat') {
+    system.run(() => publish('grilling'));
   }
 });
 world.afterEvents.worldLoad.subscribe(() => {
