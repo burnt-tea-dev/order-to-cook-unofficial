@@ -319,6 +319,258 @@
         "$use_custom_pocket_toast": true,
         "$screen_content": "pocket_containers.otc_stove_panel"
       }
+    ],
+    "modifications": [
+      {
+        "array_name": "controls",
+        "operation": "insert_back",
+        "value": [
+          {
+            "otc_ui_diagnostic_a@data_driven_container.otc_ui_diagnostic_a": {}
+          }
+        ]
+      }
+    ]
+  },
+  "otc_ui_diagnostic_a": {
+    "type": "panel",
+    "anchor_from": "bottom_left",
+    "anchor_to": "bottom_left",
+    "offset": [
+      4,
+      -4
+    ],
+    "size": [
+      320,
+      60
+    ],
+    "layer": 1000,
+    "controls": [
+      {
+        "source": {
+          "type": "label",
+          "text": "OTC UI DIAG A | data_driven.screen",
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            0
+          ],
+          "size": [
+            320,
+            10
+          ],
+          "color": [
+            1,
+            1,
+            0
+          ],
+          "shadow": true,
+          "text_alignment": "left",
+          "visible": true
+        }
+      },
+      {
+        "title_heading": {
+          "type": "label",
+          "text": "RAW TITLE (localize=false):",
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            10
+          ],
+          "size": [
+            320,
+            10
+          ],
+          "color": [
+            1,
+            1,
+            0
+          ],
+          "shadow": true,
+          "text_alignment": "left",
+          "visible": true
+        }
+      },
+      {
+        "raw_title": {
+          "type": "label",
+          "text": "$container_title",
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            20
+          ],
+          "size": [
+            320,
+            10
+          ],
+          "color": [
+            1,
+            1,
+            0
+          ],
+          "shadow": true,
+          "text_alignment": "left",
+          "visible": true
+        }
+      },
+      {
+        "desktop": {
+          "type": "label",
+          "text": "desktop=true",
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            30
+          ],
+          "size": [
+            320,
+            10
+          ],
+          "color": [
+            1,
+            1,
+            0
+          ],
+          "shadow": true,
+          "text_alignment": "left",
+          "visible": "$desktop_screen"
+        }
+      },
+      {
+        "pocket": {
+          "type": "label",
+          "text": "pocket=true",
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            40
+          ],
+          "size": [
+            320,
+            10
+          ],
+          "color": [
+            1,
+            1,
+            0
+          ],
+          "shadow": true,
+          "text_alignment": "left",
+          "visible": "$pocket_screen"
+        }
+      },
+      {
+        "size7_yes": {
+          "type": "label",
+          "text": "size7=true",
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            50
+          ],
+          "size": [
+            320,
+            10
+          ],
+          "color": [
+            1,
+            1,
+            0
+          ],
+          "shadow": true,
+          "text_alignment": "left",
+          "visible": "($container_size = 7)"
+        }
+      },
+      {
+        "size7_no": {
+          "type": "label",
+          "text": "size7=false",
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            50
+          ],
+          "size": [
+            320,
+            10
+          ],
+          "color": [
+            1,
+            1,
+            0
+          ],
+          "shadow": true,
+          "text_alignment": "left",
+          "visible": "(not ($container_size = 7))"
+        }
+      },
+      {
+        "title_yes": {
+          "type": "label",
+          "text": "title-key=true",
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            100,
+            50
+          ],
+          "size": [
+            320,
+            10
+          ],
+          "color": [
+            1,
+            1,
+            0
+          ],
+          "shadow": true,
+          "text_alignment": "left",
+          "visible": "($container_title = 'container.ordertocook.stove')"
+        }
+      },
+      {
+        "title_no": {
+          "type": "label",
+          "text": "title-key=false",
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            100,
+            50
+          ],
+          "size": [
+            320,
+            10
+          ],
+          "color": [
+            1,
+            1,
+            0
+          ],
+          "shadow": true,
+          "text_alignment": "left",
+          "visible": "(not ($container_title = 'container.ordertocook.stove'))"
+        }
+      }
     ]
   }
 }
