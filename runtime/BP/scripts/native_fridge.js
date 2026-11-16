@@ -31,32 +31,41 @@ export function joinedFridgeInventory(upper, lower) {
 /** Java compaction keeps first-seen groups; native equality preserves opaque item data. */
 export function compactFridgeInventory(container) {
   const before = Array.from({ length: container.size }, (_, slot) => container.getItem(slot));
-  const groups = [];
-  for (const stack of before) {
+  const groups = [], sourceGroups = [];
+  for (let slot = 0; slot < before.length; slot++) {
+    const stack = before[slot];
     if (!stack) continue;
-    const group = groups.find(row => row.stack.isStackableWith(stack));
+    let group = groups.find(row => row.stack.isStackableWith(stack));
     if (group) group.amount += stack.amount;
-    else groups.push({ stack, amount: stack.amount });
+    else { group = { stack, amount: stack.amount }; groups.push(group); }
+    sourceGroups[slot] = group;
   }
-  const compacted = [];
-  for (const { stack, amount } of groups) {
+  const compacted = [], changed = [];
+  for (const group of groups) {
+    const { stack, amount } = group;
     for (let remaining = amount; remaining > 0;) {
       const next = stack.clone();
       next.amount = Math.min(remaining, stack.maxAmount);
+      const slot = compacted.length;
       compacted.push(next);
+      // Group membership already proved native stack compatibility. Reuse it
+      // only within this snapshot, and compare amount separately; an unchanged
+      // non-stackable item keeps its own unique group and needs no rewrite.
+      if (sourceGroups[slot] !== group || before[slot].amount !== next.amount) changed.push(slot);
       remaining -= next.amount;
     }
   }
-  let attempted = -1;
+  for (let slot = compacted.length; slot < before.length; slot++) if (before[slot]) changed.push(slot);
+  const attempted = [];
   try {
-    for (let slot = 0; slot < container.size; slot++) {
-      attempted = slot;
+    for (const slot of changed) {
+      attempted.push(slot);
       container.setItem(slot, compacted[slot]);
     }
   } catch (error) {
     // A native write can throw after accepting it; restore that slot as well.
     let rollbackError;
-    for (let slot = attempted; slot >= 0; slot--) {
+    for (const slot of attempted.reverse()) {
       try { container.setItem(slot, before[slot]); }
       catch (failure) { rollbackError ??= failure; }
     }
