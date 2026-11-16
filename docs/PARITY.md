@@ -191,7 +191,7 @@ Java拍手可持物，兩分支HeldItemRendererMixin會取消原held-item繪製�
 | 原作能力 | Bedrock 路線 |
 | --- | --- |
 | 食物自動識別 | 未發布來源加入可選供應目錄：40 種原版＋森羅 67 種正營養食品，合計 490；秘製串、串盤、花椒按 Java 基礎營養各 1。另有 72 種飲品／282 個實際 ID，以明示的 Bedrock 擴充允許營養 0 的飲品進入訂單，僅沿用既有服務報酬。森羅共 139 種／425 個實際 ID，品質／呈現別名合併；每牌仍限 150 道。實際持有即可登記，其他 Addon 可自動發布供應資料，保留原管理員覆寫。完整清單、花椒手持食用與取得限制見 [FOOD-CATALOG.md](FOOD-CATALOG.md)，協議見 [FOOD-PROVIDERS.md](FOOD-PROVIDERS.md)。喜糖排除後為 470，仍不足 Lv.8 的 600，未宣稱新世界全部可取得。 |
-| Java mod cooking integration | 共用既有ctx.smokingRecipes；已核對煙火烤雞翅／番薯，Server事件提供可撤回的供應目錄，輸入輸出須實際存在。只收單料smoking，烤架／調酒／鍋具留原製程。Farmer's Delight、Let's Do、其他Cookery煙燻及外部鍋具熱源尚待各供應端明確接入，詳見[配方契約](STOVE-RECIPES.md)。 |
+| Java mod cooking integration | 共用既有ctx.smokingRecipes；已核對煙火烤雞翅／番薯，Server事件提供可撤回的供應目錄，輸入輸出須實際存在。公開本機工具可從有效作者 BP 的原生 smoker 配方生成供應模組，已核對 Cookery／Chinese Food／Nether／End／Sculk 共九個輸入；未採用生成配對時不會自動接入。只收單料smoking，烤架／調酒／鍋具留原製程；原版輸入、歧義配方與外部熱源仍有界線，詳見[配方契約](STOVE-RECIPES.md)。 |
 | 自訂貨幣 | 可指定一個已安裝的物品作貨幣，每件一單位。沒有直接呼叫SDM數位帳本。 |
 | Jade 顯示 | 改為看向設備的唯讀 action bar：包材／盤數、洗碗 phase、冰箱分區占用槽、爐灶進度。權限即時重新檢查；手洗優先一行，外送另一行；6 格視線、10 tick 更新，不是 Jade 原介面。 |
 | 女僕、航空學等API | 沒有直接移植。需要對相應基岩附加包建立各自的協議。 |
