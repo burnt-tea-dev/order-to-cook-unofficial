@@ -59,3 +59,7 @@ Any concrete asset-specific licence conflict or credible ownership objection
 must still be resolved for the affected material. See
 `docs/ASSET_LICENSE_REGISTER.md` and `docs/RELEASE_COMPLIANCE.md`. The earlier
 blanket hold based only on an unanswered author inquiry has been superseded.
+
+## External player-skin snapshots
+
+The seven special-customer PNGs in assets/customer_skins/special and runtime/RP/textures/ordertocook/entity/customer_skins/special are public Mojang profile snapshots requested by the pinned Java identities, not files licensed by the OrderToCook repository. The GPL declaration for this adaptation does not relicense these external player images. Their accounts do not establish artist identity; no separate permissive redistribution license was found. Preserve assets/customer_skins/README.md, the exact profile/texture provenance and RP/LEGAL/CUSTOMER_SKINS.*. No public upload or release of these snapshots was performed for this source change. See docs/CUSTOMER_SKINS.md for source and distribution limitations.

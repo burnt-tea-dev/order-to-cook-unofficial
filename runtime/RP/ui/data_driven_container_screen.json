@@ -1,0 +1,325 @@
+{
+  "namespace": "data_driven_container",
+  "otc_stove_background": {
+    "type": "image",
+    "texture": "textures/ordertocook/gui/stove",
+    "uv": [
+      0,
+      0
+    ],
+    "uv_size": [
+      176,
+      166
+    ],
+    "size": [
+      176,
+      166
+    ]
+  },
+  "otc_stove_slots": {
+    "type": "grid",
+    "size": [
+      126,
+      18
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "grid_dimensions": [
+      7,
+      1
+    ],
+    "collection_name": "container_items",
+    "$item_collection_name": "container_items",
+    "controls": [
+      {
+        "slot_0": {
+          "type": "panel",
+          "size": [
+            18,
+            18
+          ],
+          "grid_position": [
+            0,
+            0
+          ],
+          "controls": [
+            {
+              "item@chest.chest_grid_item": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  37,
+                  16
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "slot_1": {
+          "type": "panel",
+          "size": [
+            18,
+            18
+          ],
+          "grid_position": [
+            1,
+            0
+          ],
+          "controls": [
+            {
+              "item@chest.chest_grid_item": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  37,
+                  16
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "slot_2": {
+          "type": "panel",
+          "size": [
+            18,
+            18
+          ],
+          "grid_position": [
+            2,
+            0
+          ],
+          "controls": [
+            {
+              "item@chest.chest_grid_item": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  37,
+                  16
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "slot_3": {
+          "type": "panel",
+          "size": [
+            18,
+            18
+          ],
+          "grid_position": [
+            3,
+            0
+          ],
+          "controls": [
+            {
+              "item@chest.chest_grid_item": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  1,
+                  52
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "slot_4": {
+          "type": "panel",
+          "size": [
+            18,
+            18
+          ],
+          "grid_position": [
+            4,
+            0
+          ],
+          "controls": [
+            {
+              "item@chest.chest_grid_item": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  43,
+                  34
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "slot_5": {
+          "type": "panel",
+          "size": [
+            18,
+            18
+          ],
+          "grid_position": [
+            5,
+            0
+          ],
+          "controls": [
+            {
+              "item@chest.chest_grid_item": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  43,
+                  34
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "slot_6": {
+          "type": "panel",
+          "size": [
+            18,
+            18
+          ],
+          "grid_position": [
+            6,
+            0
+          ],
+          "controls": [
+            {
+              "item@chest.chest_grid_item": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  43,
+                  34
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "otc_stove_desktop_panel": {
+    "type": "panel",
+    "controls": [
+      {
+        "container_gamepad_helpers@common.container_gamepad_helpers": {}
+      },
+      {
+        "selected_item_details_factory@common.selected_item_details_factory": {
+          "control_name": "@data_driven_container.selected_item_details"
+        }
+      },
+      {
+        "item_lock_notification_factory@common.item_lock_notification_factory": {
+          "control_name": "@common.item_lock_notification"
+        }
+      },
+      {
+        "root_panel@common.root_panel": {
+          "size": [
+            176,
+            166
+          ],
+          "layer": 1,
+          "controls": [
+            {
+              "common_panel@common.common_panel": {
+                "$dialog_background": "data_driven_container.otc_stove_background"
+              }
+            },
+            {
+              "container_panel": {
+                "type": "panel",
+                "layer": 5,
+                "controls": [
+                  {
+                    "container_label@data_driven_container.container_label": {
+                      "offset": [
+                        7,
+                        6
+                      ]
+                    }
+                  },
+                  {
+                    "stove_slots@data_driven_container.otc_stove_slots": {}
+                  },
+                  {
+                    "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {
+                      "offset": [
+                        0,
+                        -3
+                      ]
+                    }
+                  },
+                  {
+                    "hotbar_grid@common.hotbar_grid_template": {
+                      "offset": [
+                        0,
+                        -7
+                      ]
+                    }
+                  },
+                  {
+                    "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
+                  },
+                  {
+                    "flying_item_renderer@common.flying_item_renderer": {
+                      "layer": 15
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+            },
+            {
+              "gamepad_cursor@common.gamepad_cursor_button": {}
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "screen@common.inventory_screen_common": {
+    "$otc_title_copy": "$container_title",
+    "$close_on_player_hurt|default": true,
+    "$use_custom_pocket_toast|default": false,
+    "close_on_player_hurt": "$close_on_player_hurt",
+    "use_custom_pocket_toast": "$use_custom_pocket_toast",
+    "variables": [
+      {
+        "requires": "($desktop_screen and (not (($container_size = 7) and ($otc_title_copy = 'container.ordertocook.stove'))))",
+        "$screen_content": "data_driven_container.desktop_panel",
+        "$screen_bg_content": "common.screen_background",
+        "$screen_background_alpha": 0.4
+      },
+      {
+        "requires": "($pocket_screen and (not (($container_size = 7) and ($otc_title_copy = 'container.ordertocook.stove'))))",
+        "$use_custom_pocket_toast": true,
+        "$screen_content": "pocket_containers.data_driven_container_panel"
+      },
+      {
+        "requires": "($desktop_screen and (($container_size = 7) and ($otc_title_copy = 'container.ordertocook.stove')))",
+        "$screen_content": "data_driven_container.otc_stove_desktop_panel",
+        "$screen_bg_content": "common.screen_background",
+        "$screen_background_alpha": 0.4
+      },
+      {
+        "requires": "($pocket_screen and (($container_size = 7) and ($otc_title_copy = 'container.ordertocook.stove')))",
+        "$use_custom_pocket_toast": true,
+        "$screen_content": "pocket_containers.otc_stove_panel"
+      }
+    ]
+  }
+}

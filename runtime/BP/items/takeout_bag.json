@@ -5,12 +5,12 @@
       "identifier": "ordertocook:takeout_bag",
       "menu_category": {
         "category": "items",
-        "group": "ordertocook:itemGroup.tableware"
+        "group": "ordertocook:itemGroup.order_group"
       }
     },
     "components": {
       "minecraft:display_name": {
-        "value": "item.ordertocook:takeout_bag.name"
+        "value": "senluo.tooltip.item.ordertocook:takeout_bag.name"
       },
       "minecraft:icon": {
         "textures": {

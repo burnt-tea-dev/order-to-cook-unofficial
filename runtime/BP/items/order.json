@@ -5,12 +5,12 @@
       "identifier": "ordertocook:order",
       "menu_category": {
         "category": "items",
-        "group": "ordertocook:itemGroup.orders"
+        "group": "ordertocook:itemGroup.order_group"
       }
     },
     "components": {
       "minecraft:display_name": {
-        "value": "item.ordertocook:order.name"
+        "value": "senluo.tooltip.item.ordertocook:order.name"
       },
       "minecraft:icon": {
         "textures": {

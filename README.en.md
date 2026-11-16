@@ -2,6 +2,8 @@
 
 [简体中文](README.zh-CN.md) · [繁體中文](README.md) · **English**
 
+0.1.53-alpha.1 is a local, unpublished dishwasher display prototype. Four visual values retain the real 0–16 batch and original plate meshes while reducing declared combinations. Existing palette loading and same-world restart remain Native NOT_RUN; this is not an upgrade-ready release. [Scope](docs/PARITY.md#洗碗機顯示狀態本地原型0153尚未發布).
+
 0.1.52-alpha.1 follows Java PACK when the counter output is occupied: drop the complete bag while retaining the existing block or meal. Plating still needs free space. Existing ingredients, packaging settings and order proofs are retained; known drop failures compensate this transaction. Source regressions pass; new Native/client behavior is not yet observed. [Behavior and scope](docs/PARITY.md#受阻台面的打包掉袋0152).
 
 0.1.51-alpha.1 source recovers loaded unsafe delivery addresses while retaining the original order, parcel proof, deadline and accepted reward. An existing bag updates only its generated coordinate lore when used. Unknown chunks and existing customers/anchors retain their addresses. See [PARITY](docs/PARITY.md#已接外送單的壞地址恢復0151) for behavior and unverified Native/client scope.

@@ -4,13 +4,13 @@
     "description": {
       "identifier": "ordertocook:helmet",
       "menu_category": {
-        "category": "equipment",
-        "group": "ordertocook:itemGroup.armor"
+        "category": "items",
+        "group": "ordertocook:itemGroup.order_group"
       }
     },
     "components": {
       "minecraft:display_name": {
-        "value": "item.ordertocook:helmet.name"
+        "value": "senluo.tooltip.item.ordertocook:helmet.name"
       },
       "minecraft:icon": {
         "textures": {

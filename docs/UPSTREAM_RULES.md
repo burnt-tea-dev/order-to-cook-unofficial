@@ -6,7 +6,7 @@
 
 授權基線為上游 [LICENSE.txt](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/LICENSE.txt) 的 GNU GPL v3。上游 README 也聲明程式碼使用 GPL v3；檢查目錄後未發現另外的素材授權排除文件。本移植保留上游作者 breezeth、來源及修改聲明，派生程式使用 GPL-3.0-only。發行包不含上游 Java JAR。這是非官方基岩版移植，與上游 Java 模組分別維護。
 
-本文件描述目前[配對manifest](../runtime/BP/manifest.json)所對應來源。領域規則由 `runtime/BP/scripts/core.js`、`config.js` 實作，世界配接由 `main.js`、`entities.js`、`dining.js` 及 `appliances.js` 處理。下文區分上游規則與有意適配；原版 GUI、玩家動畫、家電畫面、實體物理及模組聯動不能由純邏輯測試推定完成。實際驗證範圍以 [VALIDATION.md](VALIDATION.md) 為準，真實客戶端、表單與觸控仍待驗收。
+本文件描述目前開發來源；2026-11-10 的來單修正尚未發布，[配對manifest](../runtime/BP/manifest.json)沒有隨草稿改版。領域規則由 `runtime/BP/scripts/core.js`、`config.js` 實作，世界配接由 `main.js`、`entities.js`、`dining.js` 及 `appliances.js` 處理。下文區分上游規則與有意適配；原版 GUI、玩家動畫、家電畫面、實體物理及模組聯動不能由純邏輯測試推定完成。歷史驗證範圍以 [VALIDATION.md](VALIDATION.md) 為準；本次只讀來源、人工審閱差異，未執行任何測試或遊戲觀察。
 
 ## 一、餐廳與立牌
 
@@ -32,7 +32,7 @@
 | 7 | 500 | 400 | 5 | 50% | 35% | 30% |
 | 8 | 800 | 600 | 5 | 75% | 40% | 35% |
 
-到店機率是在每 60 秒一次的到店嘗試中判定，並非每張一般訂單的機率。升級不刷新候選單，也不重置打單冷卻；原版已有的訂單仍按原刷新節奏替換。
+到店機率是在約每 60 秒一次的到店嘗試中判定，並非每張一般訂單的機率；精確 tick 與條件見[來客與來單節奏](#來客與來單節奏)。升級不刷新候選單，也不重置打單冷卻；原版已有的訂單仍按原刷新節奏替換。
 
 移除高營養菜單後，已購買的餐廳等級保留；可享獎勵的有效等級會降到目前菜單支援的級別。候選單槽數與稀有度權重仍以購買等級計算。已接受的訂單報價固定，不因之後修改菜單而改價。
 
@@ -43,6 +43,46 @@
 一般候選在營業機器實際運作 **12000tick（20 TPS時600秒）**後刷新；進度保存，停業／停止模擬時不前進。普通單 **30 分鐘**到期，加急單 **10 分鐘**到期，**從生成時開始計時**；接單、打包、存檔重載都不會延長期限。到店顧客訂單固定為堂食、加急，期限從顧客到店生成時開始。
 
 接下一張打單機候選單，就放棄同一輪其餘機器候選單。到店顧客是獨立來源，接受到店單不會清掉機器候選，接受機器候選也不清掉到店單。每輪槽數只限制可選候選數，不等於玩家最多可持有多少尚未完成的訂單。
+
+### 來客與來單節奏
+
+沿 `upstream/source.lock.json` 的固定提交閱讀作者兩個分支；2026-11-10 重新讀取[作者 main](https://api.github.com/repos/breezeth-CN/OrdertoCook/commits/main)，仍為 `e59e3dbcabe19b783d9adb933db5fcb8bc1e4642`。這是來源基線，不是玩家世界設定或公開 JAR 實測。
+
+| 路徑 | 原作預設（正常 20 TPS，機器持續營業、持續模擬） |
+| --- | --- |
+| 自動到店堂食 | 初始倒數 1200 tick；先減至 0，下一 tick 才抽機率並重設。因此每 **1201 tick，約 60.05 秒**嘗試一次，沒有再多等整整一分鐘。每次最多一位，抽中後還要找到空椅並成功生成。 |
+| 打單機堂食／外送候選 | 每 **12000 tick，10 分鐘**刷新一輪；Lv.0／1／2–3／4／5–8 分別給 1／2／3／4／5 張候選。每張預設 30% 外送、70% 堂食；不是每輪保證有外送。普通堂食候選要玩家接單後才出現顧客。 |
+
+| 已購買等級 | 每次自動到店機率 | 入座條件持續滿足時，平均等一位（約數，非保證） |
+| --- | ---: | ---: |
+| 0–2 | 0% | 不會自動到店；仍可接機器堂食單 |
+| 3 | 10% | 10 分鐘 |
+| 4 | 15% | 6 分 40 秒 |
+| 5 | 20% | 5 分鐘 |
+| 6 | 25% | 4 分鐘 |
+| 7 | 30% | 3 分 20 秒 |
+| 8 | 35% | 2 分 52 秒 |
+
+平均值由 `1201 tick ÷ 20 ÷ 機率` 推得；可能連續多輪沒有客人。自訂間隔按 Java 的 `max(1, seconds) × 20` 換 tick，之後的到店嘗試仍多一個判定 tick；新載入機器的首次到店倒數固定 1200 tick，不隨自訂間隔改變。
+
+- **營業與載入：** 關店停止兩條來單計時，重開接續；關店清掉未接機器候選，不取消已接單或獨立到店客。新店開業不立即贈單。機器刷新進度保存；到店倒數不保存，重新載入從 1200 開始。正常放置另先走 20 tick 初始化，這段即使關店也前進，但兩條來單倒數都不前進；第 20 tick 仍返回，第 21 tick 才可開始營業計時。重載只接續尚未完成的初始化，不重新加 20 tick；重開店也不觸發初始化。沒有放置 caller、也沒有待完成延遲的舊機器直接進入正常 tick。
+- **椅子：** 開店要水平半徑 24、上下 8 格內有椅子；抽中到店客後，同範圍要有上方空間足夠、未占用的空椅。滿座／建立 NPC 失敗便錯過這次，不立即重抽。普通機器堂食接單時無椅可使用附近站立 fallback。
+- **菜單、評分、等級：** 菜單不控制排程或到店機率，空菜單依生成器回退蘋果。用已購買等級，不用營養不足時降階的收益等級；收入、完成數及評分不參與這兩條排程。
+- **在線、距離、上限：** 排程與餐廳顧客生成沒有額外的店主在線或玩家距離條件，仍須引擎實際模擬該區域；沒有「32 張未結單停收」規則。空椅自然限制同時到店的人數。外送地點的顧客生成是靠近目的地後的另一條流程，不是外送候選單的刷新條件。
+
+兩分支的正常來單節奏、預設值與上述門檻相同。[Forge getTicker L229–230](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/OrderMachineBlock.java#L229-L230)接到[機器 tick／刷新 L234–309](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/OrderMachineBlockEntity.java#L234-L309)；[NeoForge 對應 L370–457](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/neoforge-1.21.1/src/main/java/cn/breezeth/ordertocook/block/entity/OrderMachineBlockEntity.java#L370-L457)。預設見 [Forge ModConfig L12–50](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/config/ModConfig.java#L12-L50)、[NeoForge 同段](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/neoforge-1.21.1/src/main/java/cn/breezeth/ordertocook/config/ModConfig.java#L12-L50)。
+
+開關店見 [Forge L594–612](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/OrderMachineBlockEntity.java#L594-L612)、[NeoForge L731–749](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/neoforge-1.21.1/src/main/java/cn/breezeth/ordertocook/block/entity/OrderMachineBlockEntity.java#L731-L749)。到店 caller 為 [WalkInNpcManager L24–53](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/core/WalkInNpcManager.java#L24-L53) → [findEmptyChair L220–253](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/core/OrderNpcManager.java#L220-L253) → `createNpc`／`spawnPreparedNpc` L1165–1287。機器堂食在 [OrderSlot.onTake L152–200](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/screen/OrderMachineScreenHandler.java#L152-L200)才接 NormalOrderNpcManager。
+
+初始化的真 caller 是 [Forge setPlacedBy L147–155](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/OrderMachineBlock.java#L147-L155)／[NeoForge L152–160](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/neoforge-1.21.1/src/main/java/cn/breezeth/ordertocook/block/OrderMachineBlock.java#L152-L160)的 `scheduleInitialization(20)`；還原 portable 店資料不會覆蓋它。`initDelay` 初值為 −1，存取時寫回／讀回餘數，並非每次 `load` 重設為 20，見 [Forge L59–63、L148–174](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/OrderMachineBlockEntity.java#L148-L174)／[NeoForge L150–176](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/neoforge-1.21.1/src/main/java/cn/breezeth/ordertocook/block/entity/OrderMachineBlockEntity.java#L150-L176)。若放置後立刻營業且持續模擬，首次到店抽籤在第 **1221 tick**、首次候選刷新在第 **12020 tick**；若先關店等初始化完成，開店後就是原來的 1201／12000 tick。這是 caller 順序推導，不是遊戲量測。
+
+外送地址生成有 8 次候選，全部不合仍留最後地址，不丟訂單；見 [Forge OrderGenerator L189–238](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/core/OrderGenerator.java#L189-L238)。[NeoForge L194–244](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/neoforge-1.21.1/src/main/java/cn/breezeth/ordertocook/core/OrderGenerator.java#L194-L244)另把移動餐廳座標轉成世界座標；機器 tick 另有移動結構維護。這些不改間隔，未混入 Bedrock 靜態餐廳規則。
+
+**本次來源修正：** `main.js` 移除空菜單／32 張未結單的生成攔截，開店改查椅子、取消首次免費刷新，關店只撤未接機器候選；`entities.js::spawnCustomer` 的 64 格玩家門檻只留給外送顧客；`core.js::makeOrder` 新外送選址用 8 次及最後候選 fallback，`main.js::refreshMachineOrders` 不再因地址未載入丟單。初始化只從正常放置 caller 接入 `machine_timing.js::placed`（含 portable 重放），不用開店／worldLoad 啟動；沿既有方塊 tick，在兩條來單計時前消耗 20 tick。原間隔、機率、存檔格式及既有 4 次已接外送地址恢復保留。
+
+初始化仍使用既有 `MACHINE_TICKS` 數字及 `machineRefreshOrigin` 數字：放置把刷新起點定在目前累計值加 20，方塊 tick 先將累計值推到起點才開始營業計時。起點尚在前方的差值就是未完成初始化餘時；重新載入沿原兩個數字接續，沒有新增欄位、儲存鍵、格式版本、全域 timer 或 registry。刷新餘時只計營業進度，初始化中手動刷新也不提早結束初始化。
+
+**仍有界線：** 已綁菜單板未載入時，保留 `syncMenu` 的資料保護並延後生成；Java 噪聲生態域選址與 Bedrock 已載入表面搜尋仍不同。實體結果不確定時保留原待辦／安全重試；短於既有 20 tick 觀察的卸載重載也未確認。不能宣稱整個 addon 完全等價。玩家世界的等級、設定覆寫、營業／模擬／座位狀態未讀取，本次沒有測試、部署或畫面觀察；20 tick 初始化的本次結果僅為來源修正與直接人工審閱。
 
 | 品質 | 基礎權重 | 菜種上限 | 每種件數 | 基礎金幣 |
 |---|---:|---:|---:|---:|

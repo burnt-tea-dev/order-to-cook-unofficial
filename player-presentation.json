@@ -7,5 +7,10 @@
   "rig_references": {
     "classic": "runtime/RP/models/entity/imported/drive_idle.geo.json",
     "slim": "runtime/RP/models/entity/imported/drive_idle_alex.geo.json"
+  },
+  "riding": {
+    "entity_type": "ordertocook:motorcycle",
+    "action_property": "ordertocook:drive_action",
+    "clips": ["drive_idle", "drive_back", "drive_didi", "drive_didi_repeat", "drive_didi_light"]
   }
 }

@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
-import { ItemStack } from '@minecraft/server';
+import { ItemStack, EquipmentSlot } from '@minecraft/server';
 import { inspectSenluoFood, matchesSenluoFoodSnapshot, normalizeFoodIdentity, normalizeFoodAliases, menuFoodKey, matchesFoodIdentity, matchesFoodType } from './senluo_food.js';
 
 export function containerOf(entity) { return entity.getComponent('minecraft:inventory')?.container; }
 export function heldItem(player) { return containerOf(player)?.getItem(player.selectedSlotIndex); }
+export function offhandItem(player) { return player.getComponent('minecraft:equippable')?.getEquipment(EquipmentSlot.Offhand); }
 export function freeSlot(container) {
   if (!container) return -1;
   for (let slot = 0; slot < container.size; slot++) if (!container.getItem(slot)) return slot;
@@ -109,6 +110,15 @@ export function consumeHeld(player, typeId, amount = 1) {
   if (!stack || stack.typeId !== typeId || stack.amount < amount) return false;
   if (stack.amount === amount) container.setItem(player.selectedSlotIndex, undefined);
   else { stack.amount -= amount; container.setItem(player.selectedSlotIndex, stack); }
+  return true;
+}
+export function consumeOffhand(player, typeId, amount = 1) {
+  if (!Number.isSafeInteger(amount) || amount < 1) return false;
+  const equippable = player.getComponent('minecraft:equippable');
+  const stack = equippable?.getEquipment(EquipmentSlot.Offhand);
+  if (!stack || stack.typeId !== typeId || stack.amount < amount) return false;
+  if (stack.amount === amount) equippable.setEquipment(EquipmentSlot.Offhand, undefined);
+  else { stack.amount -= amount; equippable.setEquipment(EquipmentSlot.Offhand, stack); }
   return true;
 }
 export function giveStack(player, stack) {

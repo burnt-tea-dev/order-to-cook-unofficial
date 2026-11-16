@@ -1,0 +1,408 @@
+{
+  "schema": 1,
+  "namespace": "ordertocook",
+  "sources": [
+    {
+      "minecraft": "1.20.1",
+      "loader": "Forge",
+      "repository": "breezeth-CN/OrdertoCook",
+      "commit": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+      "caller": "forge-1.20.1/src/main/java/cn/breezeth/ordertocook/registry/ModItemGroups.java",
+      "entries": [
+        {
+          "position": 1,
+          "java": "ordertocook:order_machine",
+          "bedrock": "ordertocook:order_machine"
+        },
+        {
+          "position": 2,
+          "java": "ordertocook:countertop",
+          "bedrock": "ordertocook:countertop"
+        },
+        {
+          "position": 3,
+          "java": "ordertocook:washingtable",
+          "bedrock": "ordertocook:washingtable"
+        },
+        {
+          "position": 4,
+          "java": "ordertocook:dishwasher",
+          "bedrock": "ordertocook:dishwasher"
+        },
+        {
+          "position": 5,
+          "java": "ordertocook:refrigerator",
+          "bedrock": "ordertocook:refrigerator"
+        },
+        {
+          "position": 6,
+          "java": "ordertocook:stove",
+          "bedrock": "ordertocook:stove"
+        },
+        {
+          "position": 7,
+          "java": "ordertocook:takeout_bag",
+          "bedrock": "ordertocook:takeout_bag"
+        },
+        {
+          "position": 8,
+          "java": "ordertocook:chair",
+          "bedrock": "ordertocook:chair"
+        },
+        {
+          "position": 9,
+          "java": "ordertocook:shelf",
+          "bedrock": "ordertocook:shelf"
+        },
+        {
+          "position": 10,
+          "java": "ordertocook:plate_shelf",
+          "bedrock": "ordertocook:plate_shelf"
+        },
+        {
+          "position": 11,
+          "java": "ordertocook:board",
+          "bedrock": "ordertocook:board"
+        },
+        {
+          "position": 12,
+          "java": "ordertocook:clean_plate",
+          "bedrock": "ordertocook:clean_plate"
+        },
+        {
+          "position": 13,
+          "java": "ordertocook:dirty_plate",
+          "bedrock": "ordertocook:dirty_plate"
+        },
+        {
+          "position": 14,
+          "java": "ordertocook:food_plate",
+          "bedrock": "ordertocook:food_plate"
+        },
+        {
+          "position": 15,
+          "java": "ordertocook:motorcycle",
+          "bedrock": "ordertocook:motorcycle"
+        },
+        {
+          "position": 16,
+          "java": "ordertocook:helmet",
+          "bedrock": "ordertocook:helmet"
+        },
+        {
+          "position": 17,
+          "java": "ordertocook:otc_upgrade_box",
+          "bedrock": "ordertocook:otc_upgrade_box"
+        },
+        {
+          "position": 18,
+          "java": "ordertocook:order",
+          "bedrock": "ordertocook:order"
+        },
+        {
+          "position": 19,
+          "java": "ordertocook:chef_coin_1",
+          "bedrock": "ordertocook:chef_coin_1"
+        },
+        {
+          "position": 20,
+          "java": "ordertocook:chef_coin_5",
+          "bedrock": "ordertocook:chef_coin_5"
+        },
+        {
+          "position": 21,
+          "java": "ordertocook:chef_coin_20",
+          "bedrock": "ordertocook:chef_coin_20"
+        },
+        {
+          "position": 22,
+          "java": "ordertocook:chef_coin_100",
+          "bedrock": "ordertocook:chef_coin_100"
+        },
+        {
+          "position": 23,
+          "java": "ordertocook:chef_coin_10000",
+          "bedrock": "ordertocook:chef_coin_10000"
+        }
+      ]
+    },
+    {
+      "minecraft": "1.21.1",
+      "loader": "NeoForge",
+      "repository": "breezeth-CN/OrdertoCook",
+      "commit": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+      "caller": "neoforge-1.21.1/src/main/java/cn/breezeth/ordertocook/registry/ModItemGroups.java",
+      "entries": [
+        {
+          "position": 1,
+          "java": "ordertocook:order_machine",
+          "bedrock": "ordertocook:order_machine"
+        },
+        {
+          "position": 2,
+          "java": "ordertocook:countertop",
+          "bedrock": "ordertocook:countertop"
+        },
+        {
+          "position": 3,
+          "java": "ordertocook:washingtable",
+          "bedrock": "ordertocook:washingtable"
+        },
+        {
+          "position": 4,
+          "java": "ordertocook:dishwasher",
+          "bedrock": "ordertocook:dishwasher"
+        },
+        {
+          "position": 5,
+          "java": "ordertocook:refrigerator",
+          "bedrock": "ordertocook:refrigerator"
+        },
+        {
+          "position": 6,
+          "java": "ordertocook:stove",
+          "bedrock": "ordertocook:stove"
+        },
+        {
+          "position": 7,
+          "java": "ordertocook:otc_upgrade_box",
+          "bedrock": "ordertocook:otc_upgrade_box"
+        },
+        {
+          "position": 8,
+          "java": "ordertocook:takeout_bag",
+          "bedrock": "ordertocook:takeout_bag"
+        },
+        {
+          "position": 9,
+          "java": "ordertocook:chair",
+          "bedrock": "ordertocook:chair"
+        },
+        {
+          "position": 10,
+          "java": "ordertocook:shelf",
+          "bedrock": "ordertocook:shelf"
+        },
+        {
+          "position": 11,
+          "java": "ordertocook:plate_shelf",
+          "bedrock": "ordertocook:plate_shelf"
+        },
+        {
+          "position": 12,
+          "java": "ordertocook:board",
+          "bedrock": "ordertocook:board"
+        },
+        {
+          "position": 13,
+          "java": "ordertocook:clean_plate",
+          "bedrock": "ordertocook:clean_plate"
+        },
+        {
+          "position": 14,
+          "java": "ordertocook:dirty_plate",
+          "bedrock": "ordertocook:dirty_plate"
+        },
+        {
+          "position": 15,
+          "java": "ordertocook:food_plate",
+          "bedrock": "ordertocook:food_plate"
+        },
+        {
+          "position": 16,
+          "java": "ordertocook:motorcycle",
+          "bedrock": "ordertocook:motorcycle"
+        },
+        {
+          "position": 17,
+          "java": "ordertocook:helmet",
+          "bedrock": "ordertocook:helmet"
+        },
+        {
+          "position": 18,
+          "java": "ordertocook:order",
+          "bedrock": "ordertocook:order"
+        },
+        {
+          "position": 19,
+          "java": "ordertocook:chef_coin_1",
+          "bedrock": "ordertocook:chef_coin_1"
+        },
+        {
+          "position": 20,
+          "java": "ordertocook:chef_coin_5",
+          "bedrock": "ordertocook:chef_coin_5"
+        },
+        {
+          "position": 21,
+          "java": "ordertocook:chef_coin_20",
+          "bedrock": "ordertocook:chef_coin_20"
+        },
+        {
+          "position": 22,
+          "java": "ordertocook:chef_coin_100",
+          "bedrock": "ordertocook:chef_coin_100"
+        },
+        {
+          "position": 23,
+          "java": "ordertocook:chef_coin_10000",
+          "bedrock": "ordertocook:chef_coin_10000"
+        }
+      ]
+    }
+  ],
+  "selected_source": {
+    "minecraft": "1.20.1",
+    "loader": "Forge"
+  },
+  "projection": "One native Items group for the original Java tab. Keep Forge order; NeoForge moves otc_upgrade_box immediately after stove.",
+  "tabs": [
+    {
+      "id": "ordertocook:order_group",
+      "title": "itemGroup.ordertocook.group",
+      "category": "items",
+      "group": "ordertocook:itemGroup.order_group",
+      "icon": "ordertocook:order_machine",
+      "labels": {
+        "en_US": "Order To Cook",
+        "zh_CN": "下单了",
+        "zh_TW": "下單了"
+      },
+      "entries": [
+        {
+          "position": 1,
+          "java": "ordertocook:order_machine",
+          "bedrock": "ordertocook:order_machine"
+        },
+        {
+          "position": 2,
+          "java": "ordertocook:countertop",
+          "bedrock": "ordertocook:countertop"
+        },
+        {
+          "position": 3,
+          "java": "ordertocook:washingtable",
+          "bedrock": "ordertocook:washingtable"
+        },
+        {
+          "position": 4,
+          "java": "ordertocook:dishwasher",
+          "bedrock": "ordertocook:dishwasher"
+        },
+        {
+          "position": 5,
+          "java": "ordertocook:refrigerator",
+          "bedrock": "ordertocook:refrigerator"
+        },
+        {
+          "position": 6,
+          "java": "ordertocook:stove",
+          "bedrock": "ordertocook:stove"
+        },
+        {
+          "position": 7,
+          "java": "ordertocook:takeout_bag",
+          "bedrock": "ordertocook:takeout_bag"
+        },
+        {
+          "position": 8,
+          "java": "ordertocook:chair",
+          "bedrock": "ordertocook:chair"
+        },
+        {
+          "position": 9,
+          "java": "ordertocook:shelf",
+          "bedrock": "ordertocook:shelf"
+        },
+        {
+          "position": 10,
+          "java": "ordertocook:plate_shelf",
+          "bedrock": "ordertocook:plate_shelf"
+        },
+        {
+          "position": 11,
+          "java": "ordertocook:board",
+          "bedrock": "ordertocook:board"
+        },
+        {
+          "position": 12,
+          "java": "ordertocook:clean_plate",
+          "bedrock": "ordertocook:clean_plate"
+        },
+        {
+          "position": 13,
+          "java": "ordertocook:dirty_plate",
+          "bedrock": "ordertocook:dirty_plate"
+        },
+        {
+          "position": 14,
+          "java": "ordertocook:food_plate",
+          "bedrock": "ordertocook:food_plate"
+        },
+        {
+          "position": 15,
+          "java": "ordertocook:motorcycle",
+          "bedrock": "ordertocook:motorcycle"
+        },
+        {
+          "position": 16,
+          "java": "ordertocook:helmet",
+          "bedrock": "ordertocook:helmet"
+        },
+        {
+          "position": 17,
+          "java": "ordertocook:otc_upgrade_box",
+          "bedrock": "ordertocook:otc_upgrade_box"
+        },
+        {
+          "position": 18,
+          "java": "ordertocook:order",
+          "bedrock": "ordertocook:order"
+        },
+        {
+          "position": 19,
+          "java": "ordertocook:chef_coin_1",
+          "bedrock": "ordertocook:chef_coin_1"
+        },
+        {
+          "position": 20,
+          "java": "ordertocook:chef_coin_5",
+          "bedrock": "ordertocook:chef_coin_5"
+        },
+        {
+          "position": 21,
+          "java": "ordertocook:chef_coin_20",
+          "bedrock": "ordertocook:chef_coin_20"
+        },
+        {
+          "position": 22,
+          "java": "ordertocook:chef_coin_100",
+          "bedrock": "ordertocook:chef_coin_100"
+        },
+        {
+          "position": 23,
+          "java": "ordertocook:chef_coin_10000",
+          "bedrock": "ordertocook:chef_coin_10000"
+        }
+      ]
+    }
+  ],
+  "bedrock_additions": [
+    {
+      "bedrock": "ordertocook:guide",
+      "reason": "Port guide has no entry in the selected Java displayItems; retain visibly outside the Java group.",
+      "category": "items"
+    },
+    {
+      "bedrock": "ordertocook:controller",
+      "reason": "Port delivery controller has no entry in the selected Java displayItems; retain visibly outside the Java group.",
+      "category": "items"
+    }
+  ],
+  "hidden": [
+    {
+      "bedrock": "ordertocook:food_plate_display",
+      "reason": "Placed-meal implementation has no Java creative entry."
+    }
+  ]
+}

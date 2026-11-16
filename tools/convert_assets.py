@@ -31,61 +31,59 @@ NOTES: list[str] = []
 GEOMETRY_SOURCES: dict[str, tuple[list[Path], str]] = {}
 FACES = ("north", "east", "south", "west", "up", "down")
 
-# These are native creative groups, not new gameplay items. Vanilla icons keep
-# each group usable when the pack is installed without companion addons.
-CREATIVE_GROUPS = {
-    "restaurant_equipment": ("items", "minecraft:furnace", {
-        "en_US": "Restaurant Equipment", "zh_CN": "餐厅设备", "zh_TW": "餐廳設備"},
-        ("order_machine", "board", "countertop", "stove", "washingtable", "dishwasher", "refrigerator", "otc_upgrade_box")),
-    "storage": ("construction", "minecraft:chest", {
-        "en_US": "Shelves", "zh_CN": "置物架", "zh_TW": "置物架"}, ("shelf", "plate_shelf")),
-    "furniture": ("construction", "minecraft:oak_stairs", {
-        "en_US": "Chairs", "zh_CN": "座椅", "zh_TW": "座椅"}, ("chair",)),
-    "tableware": ("items", "minecraft:bowl", {
-        "en_US": "Plates and Takeout", "zh_CN": "餐盘与外卖", "zh_TW": "餐盤與外賣"},
-        ("clean_plate", "dirty_plate", "food_plate", "takeout_bag")),
-    "orders": ("items", "minecraft:paper", {
-        "en_US": "Restaurant Orders", "zh_CN": "餐厅订单", "zh_TW": "餐廳訂單"}, ("order",)),
-    "currency": ("items", "minecraft:gold_nugget", {
-        "en_US": "Chef Coins", "zh_CN": "厨师币", "zh_TW": "廚師幣"},
-        tuple(f"chef_coin_{value}" for value in (1, 5, 20, 100, 10000))),
-    "guides": ("items", "minecraft:book", {
-        "en_US": "Restaurant Guide", "zh_CN": "餐厅指南", "zh_TW": "餐廳指南"}, ("guide",)),
-    "vehicles": ("equipment", "minecraft:minecart", {
-        "en_US": "Delivery Vehicles", "zh_CN": "外卖载具", "zh_TW": "外賣載具"}, ("motorcycle", "controller")),
-    "armor": ("equipment", "minecraft:iron_helmet", {
-        "en_US": "Delivery Gear", "zh_CN": "外卖装备", "zh_TW": "外賣裝備"}, ("helmet",)),
-}
+# The owner plan contains literal Java displayItems order for each loader.
+# No name, component or food/tool taxonomy decides creative membership.
+CREATIVE_PLAN = json.loads((ROOT / "data/java-creative-tabs.json").read_text(encoding="utf-8"))
 
 
 def creative_menu(name):
-    # Both Java tabs omit this implementation block, while keeping the plate.
-    if name == "food_plate_display":
-        return {"category": "none"}
-    for key, (category, _, _, members) in CREATIVE_GROUPS.items():
-        if name in members:
-            return {"category": category, "group": f"{NS}:itemGroup.{key}"}
-    return {"category": "construction"}
+    item = f"{NS}:{name}"
+    for tab in CREATIVE_PLAN["tabs"]:
+        if any(entry.get("bedrock") == item for entry in tab["entries"]):
+            return {"category": tab["category"], "group": tab["group"]}
+    for entry in CREATIVE_PLAN.get("bedrock_additions", []):
+        if entry["bedrock"] == item:
+            return {"category": entry["category"]}
+    return {"category": "none"}
 
 
 def make_creative_catalog():
-    visible = set()
-    for folder, kind in (("items", "minecraft:item"), ("blocks", "minecraft:block")):
-        for path in (BP / folder).glob("*.json"):
-            desc = read_json(path)[kind]["description"]
-            if desc.get("menu_category", {}).get("category", "none") != "none":
-                visible.add(desc["identifier"])
     categories = []
-    for category in ("construction", "equipment", "items", "nature"):
-        groups = []
-        for key, (page, icon, _, members) in CREATIVE_GROUPS.items():
-            items = [f"{NS}:{name}" for name in members if f"{NS}:{name}" in visible]
-            if page == category and items:
-                groups.append({"group_identifier": {"name": f"{NS}:itemGroup.{key}", "icon": icon}, "items": items})
-        if groups:
-            categories.append({"category_name": category, "groups": groups})
+    for tab in CREATIVE_PLAN["tabs"]:
+        categories.append({"category_name": tab["category"], "groups": [{
+            "group_identifier": {"name": tab["group"], "icon": tab["icon"]},
+            "items": [entry["bedrock"] for entry in tab["entries"] if entry.get("bedrock")]}]})
+    for entry in CREATIVE_PLAN.get("bedrock_additions", []):
+        category = next((row for row in categories if row["category_name"] == entry["category"]), None)
+        if category is None:
+            category = {"category_name": entry["category"], "groups": []}
+            categories.append(category)
+        category["groups"].append({"items": [entry["bedrock"]]})
     write_json(BP / "item_catalog/crafting_item_catalog.json", {
         "format_version": "1.21.60", "minecraft:crafting_items_catalog": {"categories": categories}})
+
+
+def make_creative_metadata():
+    """Regenerate only menus, catalog and group labels on existing definitions."""
+    for folder, kind in (("items", "minecraft:item"), ("blocks", "minecraft:block")):
+        for path in (BP / folder).glob("*.json"):
+            document = read_json(path)
+            desc = document[kind]["description"]
+            # Hidden placed halves keep their category; only visible entry points move.
+            if desc.get("menu_category", {}).get("category") in ("construction", "equipment", "items", "nature"):
+                menu = creative_menu(desc["identifier"].split(":", 1)[1])
+                desc["menu_category"] = {**desc["menu_category"], **menu}
+                if "group" not in menu:
+                    desc["menu_category"].pop("group", None)
+                write_json(path, document)
+    make_creative_catalog()
+    for locale in ("en_US", "zh_CN", "zh_TW"):
+        path = RP / "texts" / (locale + ".lang")
+        # Retire the previous nine generated taxonomy labels, preserving tooltip keys.
+        lines = [line for line in path.read_text(encoding="utf-8").splitlines()
+                 if not line.startswith(f"{NS}:itemGroup.")]
+        lines.extend(tab["group"] + "=" + tab["labels"][locale] for tab in CREATIVE_PLAN["tabs"])
+        path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def read_json(path: Path):
@@ -209,9 +207,49 @@ def java_cube(element, textures):
     return rounded(cube)
 
 
+def inset_cube_axis(cube, axis, amount):
+    """Symmetric inset with side UV cropping, retaining surviving texel density."""
+    size = cube['size'][axis]
+    if size <= 2*amount:
+        raise ValueError('Overlap inset would remove the cube')
+    fraction = amount/size
+    # Bedrock face coordinates: X spans north/south U and top/bottom U;
+    # Z spans east/west U and top/bottom V. Symmetric cropping is sign-safe.
+    uv_axes = ({'north':0,'south':0,'up':0,'down':0},
+               {'north':1,'south':1,'east':1,'west':1},
+               {'east':0,'west':0,'up':1,'down':1})[axis]
+    for name, uv_axis in uv_axes.items():
+        if name not in cube['uv']:
+            continue
+        face = cube['uv'][name]
+        if face.get('uv_rotation',0) % 180:
+            uv_axis = 1-uv_axis
+        face['uv'][uv_axis] += face['uv_size'][uv_axis]*fraction
+        face['uv_size'][uv_axis] *= 1-2*fraction
+    cube['origin'][axis] += amount
+    cube['size'][axis] -= 2*amount
+
+
+def separate_food_cap_faces(name, cubes):
+    """Two pinned food stages have rotated caps coplanar with their center bar."""
+    indices = {'ordertocook:block/food_plate_anim/2_1':(3,4,5,6),
+               'ordertocook:block/food_plate_anim/2_2':(3,4)}.get(name)
+    if indices is None:
+        return False
+    if len(cubes) != (10 if len(indices) == 4 else 8):
+        raise ValueError('Changed food cap source contract')
+    for index in indices:
+        cube = cubes[index]
+        if cube['size'] != [2,2,2] or cube.get('rotation') not in ([0,0,22.5],[0,0,-22.5]):
+            raise ValueError('Changed food cap source contract')
+        inset_cube_axis(cube,2,.015)
+    return True
+
+
 def convert_java_model(name, identifier, extra_models=()):
     cubes, materials = [], {}
     sources = []
+    food_caps_adapted = False
     for model_name in (name, *extra_models):
         parent_name = model_name
         while parent_name.startswith(NS + ":"):
@@ -219,8 +257,9 @@ def convert_java_model(name, identifier, extra_models=()):
             sources.append(source_path)
             parent_name = read_json(source_path).get("parent", "")
         model = resolve_model(model_name)
-        for cube in model.get("elements", []):
-            cubes.append(java_cube(cube, model.get("textures", {})))
+        converted = [java_cube(cube, model.get("textures", {})) for cube in model.get("elements", [])]
+        food_caps_adapted = separate_food_cap_faces(model_name, converted) or food_caps_adapted
+        cubes.extend(converted)
         for tex in model.get("textures", {}).values():
             resolved = resolve_texture(tex, model["textures"])
             if texture_file(resolved).is_file():
@@ -229,7 +268,10 @@ def convert_java_model(name, identifier, extra_models=()):
     if not materials:
         materials[NS + "_block_order_machine"] = {"texture": NS + "_block_order_machine", "render_method": "alpha_test"}
     materials["*"] = copy.deepcopy(next(iter(materials.values())))
-    GEOMETRY_SOURCES[identifier] = (list(dict.fromkeys(sources)), "Java elements, rescale, reflected coordinates and per-face UV conversion")
+    operation = "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    if food_caps_adapted:
+        operation += "; food cap Z inset 0.015px with side UV crop"
+    GEOMETRY_SOURCES[identifier] = (list(dict.fromkeys(sources)), operation)
     return geometry(identifier, [{"name": "root", "pivot": [0, 0, 0], "cubes": cubes}]), materials
 
 
@@ -715,6 +757,12 @@ def convert_animations():
                 body["anim_time_update"] = (f"math.min({length}, math.max(q.anim_time + q.delta_time, "
                                             f"q.property('{NS}:action_elapsed')))")
                 body["loop"] = "hold_on_last_frame"
+            elif family == "npc":
+                # The idle controller changes variant only at the source clip's
+                # end. State time also restarts a repeated selection without an
+                # animationless reset frame exposing the standing bind pose.
+                body["anim_time_update"] = "q.state_time"
+                body["loop"] = True
             elif family == "food_plate_placed":
                 body["anim_time_update"] = (f"math.min(0.5, math.max(q.anim_time + q.delta_time, "
                                             f"q.property('{NS}:placement_age')))")
@@ -847,11 +895,11 @@ def player_segment_frame_offset(source_rig, native_rig, side, limb):
 
 
 def segmented_player_geometry(native, source_rig, identifier):
-    """Local prototype only: native controls with independent elbows/knees.
+    """Native controls with independent elbows/knees.
 
     The caller explicitly selects matching native and author source variants.
     This does not detect or select a client's actual skin.
-    No runtime exporter calls this function until the shared selector exists.
+    The riding exporter and the local action prototype share this source.
     """
     result = copy.deepcopy(native)
     entry = result['minecraft:geometry'][0]
@@ -893,8 +941,8 @@ def _player_bone_below_torso(channels, pivot, native_pivot, torso, torso_pivot, 
     position = sample_channel(channels.get('position'), seconds, [0]*3)
     torso_position = sample_channel(torso.get('position'), seconds, [0]*3)
     inverse_torso = [-v for v in sample_channel(torso.get('rotation'), seconds, [0]*3)]
-    # The selected source torso is a fixed X rotation or identity. Its inverse
-    # is exact here; this is not a general inverse-Euler implementation.
+    # Selected clips use one torso axis at a time (including drive_back's Y).
+    # Negating that axis is exact; this is not a general inverse Euler codec.
     axes = [geometry_transform3(geometry_transform3([int(i == j) for i in range(3)], rotation), inverse_torso) for j in range(3)]
     angles, _ = closest_cuboid_axes([[axes[j][i] for j in range(3)] for i in range(3)])
     source_anchor = [a+b for a,b in zip(native_pivot, frame_offset)]
@@ -1023,6 +1071,114 @@ def make_segmented_player_source(natives, camera_frames, output):
             contract['part_visibility'][f'ordertocook_{side}_{joint}'] = side+parent
             contract['part_visibility'][f'ordertocook_{side}_{joint}_{overlay.lower()}'] = side+overlay
     write_json(output / 'player-rig-source.json', contract)
+
+
+def make_player_riding_source(natives, output):
+    """Export a user-local input for the single shared player composer.
+
+    Native geometry stays in this local bundle, with its supplied license.
+    This exports TP model animation only, never a camera or rideable offset.
+    """
+    descriptor = read_json(ROOT / 'player-presentation.json')['riding']
+    animations, aliases, variants, visibility = {}, {}, {}, {}
+    for variant, filename in (('classic', 'drive_idle'), ('slim', 'drive_idle_alex')):
+        native = natives[variant]
+        native_rig = {b['name']: b for b in native['minecraft:geometry'][0]['bones']}
+        rig = {b['name']: b for b in read_json(ASSETS / f'geo/{filename}.geo.json')['minecraft:geometry'][0]['bones']}
+        identifier = f'geometry.{NS}.player.riding_{variant}'
+        model = segmented_player_geometry(native, rig, identifier)
+        # All player geometry aliases share the actor's locator table. Native
+        # Geometry.default already owns lead_hold; declaring it again with
+        # Slim's different Y offset makes Bedrock discard that definition.
+        # Keep the original Item bone and its elbow parent, and leave the
+        # shared locator to the unchanged native player geometry.
+        for bone in model['minecraft:geometry'][0]['bones']:
+            locators = bone.get('locators', {})
+            locators.pop('lead_hold', None)
+            if not locators:
+                bone.pop('locators', None)
+        path = f'RP/models/entity/ordertocook_riding_{variant}.geo.json'
+        write_json(output / path, model)
+        variants[variant] = {'geometry': identifier, 'file': path,
+            'arm_pivots': {side: native_rig[side+'Arm']['pivot'] for side in ('right', 'left')}}
+        for bone in model['minecraft:geometry'][0]['bones']:
+            name = bone['name']
+            if name not in native_rig and ('forearm' in name or 'shin' in name):
+                side = 'right' if '_right_' in name else 'left'
+                parent = ('Sleeve' if name.endswith('_sleeve') else 'Pants' if name.endswith('_pants')
+                          else 'Arm' if '_forearm' in name else 'Leg')
+                visibility[name] = side+parent
+        originals = read_json(ASSETS / 'animations/drive.animation.json')['animations']
+        for mode, name in enumerate(descriptor['clips']):
+            original = unwrap_vectors(originals[name])
+            duration = original['animation_length']
+            bones = segmented_player_action_pose(original, rig, model, duration)
+            # Forge calls renderGeoRiderBody inside vanilla's parent matrix.
+            # GeoObjectRenderer adds (0.5,0.51,0.5); RiderGeoRenderer cancels
+            # all of it, then applies -(standing bbHeight - 4/16). Vanilla
+            # already used -1.501 before the cancelling model flips.
+            # This is the resulting MODEL frame, not an eye or seat correction.
+            bones['root']['position'][1] += 16 * (1.501 - 1.8 + 4/16)
+            bones['root']['rotation'] = [0, 0, 0]
+            bones['waist'].update(position=[0, 0, 0], scale=[1, 1, 1])
+            bones['body'].setdefault('scale', [1, 1, 1])
+            head = bones.pop('head')
+            groups = {'body': bones, 'head': {'head': head}}
+            for side in ('right', 'left'):
+                names = [side+'Arm', f'ordertocook_{side}_arm_view', f'ordertocook_{side}_arm_body',
+                         f'ordertocook_{side}_forearm', f'ordertocook_{side}_forearm_sleeve']
+                groups[side] = {key: bones.pop(key) for key in names}
+            for part, selected in groups.items():
+                alias = f'otc_drive_{variant}_{mode}_{part}'
+                key = f'animation.{NS}.player.riding.{variant}.{name}.{part}'
+                aliases[alias] = key
+                animations[key] = {'animation_length': duration, 'loop': True if mode < 2 else 'hold_on_last_frame',
+                    'anim_time_update': 'q.state_time', 'bones': selected}
+                # Head rotation adds to native look, so the player can still
+                # look around. Body/limbs replace the native riding channels.
+                if part != 'head':
+                    animations[key]['override_previous_animation'] = True
+    write_json(output / 'RP/animations/ordertocook_player_riding.animation.json',
+               {'format_version': '1.8.0', 'animations': animations})
+    states = {'default': {}}
+    targets = []
+    prop = "q.property('" + descriptor['action_property'] + "')"
+    for phase in range(2):
+        for mode in range(len(descriptor['clips'])):
+            name = f'drive_{mode}_{phase}'
+            code = mode + phase*8
+            targets.append({name: f'variable.ordertocook_drive_tp ? ({prop} == {code}) : 0'})
+            playing = []
+            for index, variant in enumerate(('classic', 'slim'), 1):
+                gate = f'variable.ordertocook_drive_tp && variable.ordertocook_drive_variant == {index}'
+                for part in ('body', 'head', 'right', 'left'):
+                    weight = gate
+                    if part in ('right', 'left'):
+                        slot = 'main_hand' if part == 'right' else 'off_hand'
+                        # IE, TACZ and native held-item actions retain each
+                        # occupied arm; an empty opposite arm can still drive.
+                        weight += f" && !q.is_item_equipped('{slot}')"
+                    playing.append({f'otc_drive_{variant}_{mode}_{part}': weight})
+            states[name] = {'animations': playing,
+                            'transitions': [{'default': '!variable.ordertocook_drive_tp'}]}
+    # A real mount/skin/view transition must never expose a standing bind pose
+    # while the controller selects its first state.
+    states['default']['animations'] = copy.deepcopy(states['drive_0_0']['animations'])
+    states['default']['transitions'] = targets
+    for name, state in states.items():
+        if name != 'default':
+            state['transitions'] += [row for row in targets if name not in row]
+    controller = f'controller.animation.{NS}.player.riding'
+    write_json(output / 'RP/animation_controllers/ordertocook_player_riding.json',
+               {'format_version': '1.10.0', 'animation_controllers': {
+                   controller: {'initial_state': 'default', 'states': states}}})
+    aliases['otc_player_riding'] = controller
+    write_json(output / 'player-riding.json', {'schema': 1, 'entity_type': descriptor['entity_type'],
+        'action_property': descriptor['action_property'], 'action_max': 12,
+        'variants': variants, 'animations': aliases, 'part_visibility': visibility,
+        'files': [row['file'] for row in variants.values()] + [
+            'RP/animations/ordertocook_player_riding.animation.json',
+            'RP/animation_controllers/ordertocook_player_riding.json']})
 
 
 def player_action_pose(original, rig, duration, period=None):
@@ -1168,6 +1324,36 @@ def state_condition(states):
     return " && ".join(f"q.block_state('{NS}:{key}') == " + (f"'{value}'" if isinstance(value, str) else str(value).lower()) for key, value in states.items())
 
 
+def make_fridge_item_visual():
+    """Use Java's complete block item, independently of the two placed halves."""
+    model_name = f"{NS}:item/refrigerator"
+    identifier = f"geometry.{NS}.refrigerator_item"
+    g, materials = convert_java_model(model_name, identifier)
+    entry = g["minecraft:geometry"][0]
+    # The complete 32px cabinet exceeds the block-item geometry envelope.
+    # Halve it around the item centre (0,8,0), then compensate in each source
+    # display scale. Keep all faces/UVs; never clip it to a placed half.
+    for cube in entry["bones"][0]["cubes"]:
+        cube["origin"] = [cube["origin"][0]/2, 4+cube["origin"][1]/2, cube["origin"][2]/2]
+        cube["size"] = [value/2 for value in cube["size"]]
+    display = resolve_model(model_name)["display"]
+    entry["item_display_transforms"] = {}
+    for context in ("gui", "ground", "fixed", "firstperson_righthand", "firstperson_lefthand",
+                    "thirdperson_righthand", "thirdperson_lefthand"):
+        transform = copy.deepcopy(display[context])
+        transform["scale"] = [value*2 for value in transform["scale"]]
+        entry["item_display_transforms"][context] = transform
+    for material in materials.values():
+        material["ambient_occlusion"] = 0
+    sources, _ = GEOMETRY_SOURCES[identifier]
+    operation = "Complete Java refrigerator item parent, all faces/UVs; half-size mesh about item centre with compensated source display scales; independent of placed halves"
+    GEOMETRY_SOURCES[identifier] = (sources, operation)
+    item_visual = {"geometry": emit_geo("refrigerator_item", g), "material_instances": materials}
+    for source in sources:
+        record(source, BP / "blocks/refrigerator.json", operation)
+    return item_visual
+
+
 def block_definition(name, base_geo, materials, states=None, variants=(), collision=True, selection=None,
                      native_container=None, hidden=False, loot_table=None, item_visual=None):
     if native_container is not None:
@@ -1206,6 +1392,8 @@ def block_definition(name, base_geo, materials, states=None, variants=(), collis
         "minecraft:destruction_particles": {"texture": particle, "particle_count": 50},
         "minecraft:light_dampening": 0, "minecraft:map_color": "#9b9286",
         "minecraft:movable": {"movement_type": "immovable"}, f"{NS}:interact": {}}
+    if description["menu_category"].get("category", "none") != "none":
+        components["minecraft:display_name"] = block_display_key(name)
     if native_container is not None:
         components["minecraft:block_entity"] = {"dynamic_properties": True, "container": native_container}
     if item_visual is not None:
@@ -1225,22 +1413,289 @@ def block_definition(name, base_geo, materials, states=None, variants=(), collis
         write_json(BP / "loot_tables" / "blocks" / (name + ".json"), loot)
 
 
+def remove_duplicate_chair_leg(g):
+    """Drop only the pinned chair's second identical leg, without moving faces."""
+    cubes = g["minecraft:geometry"][0]["bones"][0]["cubes"]
+    if len(cubes) != 7 or cubes[2] != cubes[3]:
+        raise ValueError("Changed chair duplicate-leg source contract")
+    del cubes[3]
+
+
 def simple_block(name, model, collision=True, selection=None):
     g, mats = convert_java_model(NS + ":block/" + model, f"geometry.{NS}.{name}")
+    if name == "chair":
+        remove_duplicate_chair_leg(g)
+        sources, operation = GEOMETRY_SOURCES[g["minecraft:geometry"][0]["description"]["identifier"]]
+        GEOMETRY_SOURCES[g["minecraft:geometry"][0]["description"]["identifier"]] = (sources, operation + '; one exact duplicate chair leg removed')
     emit_geo(name, g)
     block_definition(name, g["minecraft:geometry"][0]["description"]["identifier"], mats, collision=collision, selection=selection)
 
 
-def make_blocks():
-    simple_block("board", "board", False, {"origin": [-8, 0, 4], "size": [16, 16, 4]})
-    simple_block("countertop", "countertop")
-    simple_block("chair", "chair", {"origin": [-5, 0, -5], "size": [10, 8, 10]}, {"origin": [-5, 0, -5], "size": [10, 16, 10]})
+def separate_plate_surface_layers(g, model):
+    """Keep source stain texels without a second plate face behind opaque ones.
+
+    Java's plate-wide stain is only 0.01563 model pixels above the plate. Cut
+    the hidden plate top instead of increasing that gap or changing the stain.
+    All source masks are binary alpha; transparent texels retain the plate.
+    """
+    plate = model["elements"][0]
+    stain = next((element for element in model["elements"][1:]
+                  if element["from"][1] == element["to"][1]
+                  and element["from"][0] == plate["from"][0]
+                  and element["to"][0] == plate["to"][0]
+                  and set(element["faces"]) == {"up"}
+                  and not element.get("rotation", {}).get("angle")), None)
+    if stain is None:
+        return
+    texture = resolve_texture(stain["faces"]["up"]["texture"], model["textures"])
+    image = Image.open(texture_file(texture)).convert("RGBA")
+    u0, v0, u1, v1 = plate["faces"]["up"]["uv"]
+    su0, sv0, su1, sv1 = stain["faces"]["up"]["uv"]
+    x0, _, z0 = plate["from"]
+    x1, y, z1 = plate["to"]
+    columns = round(abs(u1-u0) * image.width / 16)
+    rows = round(abs(v1-v0) * image.height / 16)
+    dx, dz = (x1-x0)/columns, (z1-z0)/rows
+    cubes = g["minecraft:geometry"][0]["bones"][0]["cubes"]
+    cubes[0]["uv"].pop("up")
+    for row in range(rows):
+        start = None
+        for column in range(columns+1):
+            keep = False
+            if column < columns:
+                x, z = x0+(column+0.5)*dx, z0+(row+0.5)*dz
+                sx0, _, sz0 = stain["from"]
+                sx1, _, sz1 = stain["to"]
+                keep = not (sx0 <= x < sx1 and sz0 <= z < sz1)
+                if not keep:
+                    # Source UP UV runs from min X/Z to max X/Z.
+                    # java_cube and the Bedrock importer perform matching
+                    # X reflections and UP endpoint swaps; do not apply those
+                    # transforms again while sampling source-space texels.
+                    u = su0+(x-sx0)/(sx1-sx0)*(su1-su0)
+                    v = sv0+(z-sz0)/(sz1-sz0)*(sv1-sv0)
+                    keep = image.getpixel((math.floor(u*image.width/16),
+                                           math.floor(v*image.height/16)))[3] == 0
+            if keep and start is None:
+                start = column
+            if not keep and start is not None:
+                left, right = x0+start*dx, x0+column*dx
+                near, far = z0+row*dz, z0+(row+1)*dz
+                face = copy.deepcopy(plate["faces"]["up"])
+                face["uv"] = [u0+(left-x0)/(x1-x0)*(u1-u0),
+                              v0+(near-z0)/(z1-z0)*(v1-v0),
+                              u0+(right-x0)/(x1-x0)*(u1-u0),
+                              v0+(far-z0)/(z1-z0)*(v1-v0)]
+                cubes.append(java_cube({"from": [left, y, near], "to": [right, y, far],
+                                        "faces": {"up": face}}, model["textures"]))
+                start = None
+    identifier = g["minecraft:geometry"][0]["description"]["identifier"]
+    sources, operation = GEOMETRY_SOURCES[identifier]
+    GEOMETRY_SOURCES[identifier] = (sources + [texture_file(texture)],
+        operation + "; plate top omitted only behind opaque source stain texels")
+
+
+def make_food_plate_display():
+    # Stage zero is drawn by Java's placed-meal renderer. The block fallback
+    # retains its terminal geometry; the dining entity plays the actual clip.
+    blockstates_source = ASSETS / "blockstates" / "food_plate_display.json"
+    blockstates = read_json(blockstates_source)["variants"]
+    variants = []
+    for stage in range(41):
+        spec = blockstates[f"facing=north,stage={stage}"]
+        if isinstance(spec, list):
+            spec = spec[0]
+        if stage == 0:
+            source = ASSETS / "geo/block/food_plate_placed.geo.json"
+            geometry_id = f"geometry.{NS}.food_plate_display_{stage}"
+            g = normalize_geo(source, geometry_id)
+            tile = texture_tile(f"{NS}:block/food_plate_placed")
+            mats = {"*": {"texture": tile, "render_method": "alpha_test", "ambient_occlusion": False, "face_dimming": True}}
+            GEOMETRY_SOURCES[geometry_id] = ([source], "Original placed-meal renderer terminal pose for the static block display")
+        else:
+            g, mats = convert_java_model(spec["model"], f"geometry.{NS}.food_plate_display_{stage}")
+            separate_plate_surface_layers(g, resolve_model(spec["model"]))
+        identifier = emit_geo(f"food_plate_display_{stage}", g)
+        variants.append({"condition": state_condition({"stage": stage}), "components": {"minecraft:geometry": identifier, "minecraft:material_instances": mats}})
+    block_definition("food_plate_display", f"geometry.{NS}.food_plate_display_0", mats, {"stage": list(range(41))}, variants,
+                     False, {"origin": [-6, 0, -6], "size": [12, 5, 12]}, native_container={"slot_count": 1})
+    record(blockstates_source, BP / "blocks/food_plate_display.json", "Original stage1..40 mapping with original placed-meal renderer geometry at stage zero")
+
+
+def make_stove_ui():
+    """Generate one vanilla-path entry and native indexed stove cells.
+
+    Mojang bedrock-samples 15701fa9 data_driven_container_screen is the entry.
+    Its controller publishes $container_size; brewing_stand_screen demonstrates
+    sequential collection cells with an offset on the whole native input_panel.
+    Java e59e3dbc StoveScreenHandler supplies the item positions below.
+    """
+    # Do not restyle an unrelated addon merely because it also has seven slots.
+    # The official label reads the title separately from $localize_title.
+    # If a client does not expose the raw key here, preserve its native panel.
+    stove_match = "(($container_size = 7) and ($otc_title_copy = 'container.ordertocook.stove'))"
+    desktop_slots = []
+    pocket_slots = []
+    # Grid positions own the actual collection indices, not just the pixels.
+    # Keep them contiguous 0..6. Offset the complete container_item, including
+    # its background, item renderer, focus/drag controls and slot button.
+    # Native cells are 18px with a centered 16px item, hence the -1 border.
+    java_slots = ((38, 17), (56, 17), (74, 17), (56, 53),
+                  (116, 35), (134, 35), (152, 35))
+    for index, (x, y) in enumerate(java_slots):
+        desktop_slots.append({f"slot_{index}": {
+            "type": "panel", "size": [18, 18], "grid_position": [index, 0],
+            "controls": [{"item@chest.chest_grid_item": {
+                "anchor_from": "top_left", "anchor_to": "top_left",
+                "offset": [x - 1 - index * 18, y - 1]}}]}})
+        # Pocket keeps native 28px touch targets. Outputs anchor to the right
+        # of the available pane instead of stretching or shrinking those slots.
+        if index < 3:
+            pocket_x, pocket_y = index * 28, 0
+        elif index == 3:
+            pocket_x, pocket_y = 28, 56
+        else:
+            pocket_x, pocket_y = f"100% - {28 * (7 - index)}px", 28
+        pocket_slots.append({f"slot_{index}": {
+            "type": "panel", "size": ["100%", 28], "grid_position": [0, index],
+            "controls": [{"item@common.pocket_ui_container_item": {
+                "anchor_from": "top_left", "anchor_to": "top_left",
+                "offset": [pocket_x, pocket_y - index * 28]}}]}})
+
+    desktop = {
+        "namespace": "data_driven_container",
+        "otc_stove_background": {
+            "type": "image", "texture": f"textures/{NS}/gui/stove",
+            "uv": [0, 0], "uv_size": [176, 166], "size": [176, 166]},
+        "otc_stove_slots": {
+            "type": "grid", "size": [126, 18],
+            "anchor_from": "top_left", "anchor_to": "top_left",
+            "grid_dimensions": [7, 1], "collection_name": "container_items",
+            "$item_collection_name": "container_items", "controls": desktop_slots},
+        "otc_stove_desktop_panel": {
+            "type": "panel", "controls": [
+                {"container_gamepad_helpers@common.container_gamepad_helpers": {}},
+                {"selected_item_details_factory@common.selected_item_details_factory": {
+                    "control_name": "@data_driven_container.selected_item_details"}},
+                {"item_lock_notification_factory@common.item_lock_notification_factory": {
+                    "control_name": "@common.item_lock_notification"}},
+                {"root_panel@common.root_panel": {
+                    "size": [176, 166], "layer": 1, "controls": [
+                        {"common_panel@common.common_panel": {
+                            "$dialog_background": "data_driven_container.otc_stove_background"}},
+                        {"container_panel": {
+                            "type": "panel", "layer": 5, "controls": [
+                                {"container_label@data_driven_container.container_label": {
+                                    "offset": [7, 6]}},
+                                {"stove_slots@data_driven_container.otc_stove_slots": {}},
+                                # Native inventory/cursor/button implementations remain in
+                                # charge. Offsets align their cells with the Java PNG.
+                                {"inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {
+                                    "offset": [0, -3]}},
+                                {"hotbar_grid@common.hotbar_grid_template": {"offset": [0, -7]}},
+                                {"inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}},
+                                {"flying_item_renderer@common.flying_item_renderer": {"layer": 15}}]}},
+                        {"inventory_selected_icon_button@common.inventory_selected_icon_button": {}},
+                        {"gamepad_cursor@common.gamepad_cursor_button": {}}]}}]},
+        # Retain the official screen base, close policy, background and pocket
+        # toast. Only this title key selects the two owned content panels.
+        "screen@common.inventory_screen_common": {
+            # Engine-backed text can render directly but require a local copy
+            # for comparison. Keep the exact key + seven-slot identity guard.
+            "$otc_title_copy": "$container_title",
+            "$close_on_player_hurt|default": True,
+            "$use_custom_pocket_toast|default": False,
+            "close_on_player_hurt": "$close_on_player_hurt",
+            "use_custom_pocket_toast": "$use_custom_pocket_toast",
+            "variables": [
+                {"requires": f"($desktop_screen and (not {stove_match}))",
+                 "$screen_content": "data_driven_container.desktop_panel",
+                 "$screen_bg_content": "common.screen_background", "$screen_background_alpha": 0.4},
+                {"requires": f"($pocket_screen and (not {stove_match}))",
+                 "$use_custom_pocket_toast": True,
+                 "$screen_content": "pocket_containers.data_driven_container_panel"},
+                {"requires": f"($desktop_screen and {stove_match})",
+                 "$screen_content": "data_driven_container.otc_stove_desktop_panel",
+                 "$screen_bg_content": "common.screen_background", "$screen_background_alpha": 0.4},
+                {"requires": f"($pocket_screen and {stove_match})",
+                 "$use_custom_pocket_toast": True,
+                 "$screen_content": "pocket_containers.otc_stove_panel"}]}}
+    pocket = {
+        "namespace": "pocket_containers",
+        "otc_stove_slots": {
+            "type": "panel", "size": ["100%", 84], "controls": [
+                {"slots": {
+                    "type": "grid", "size": ["100%", 196],
+                    "anchor_from": "top_left", "anchor_to": "top_left",
+                    "grid_dimensions": [1, 7], "collection_name": "container_items",
+                    "$item_collection_name": "container_items", "controls": pocket_slots}}]},
+        "otc_stove_panel@pocket_containers.data_driven_container_panel": {
+            # These are the official pocket panel's controls, with only the
+            # container half's scroll content replaced. Declare them in their
+            # original namespace so inherited unqualified references resolve.
+            "controls": [
+                {"container_gamepad_helpers@common.container_gamepad_helpers": {"layer": 3}},
+                {"header@pocket_containers.header_area": {"layer": 2}},
+                {"bg@pocket_containers.background_panel": {"layer": 0}},
+                {"inventory@pocket_containers.half_screen": {
+                    "$container_size": 36, "$pane_collection": "combined_hotbar_and_inventory_items"}},
+                {"container@pocket_containers.half_screen": {
+                    "anchor_from": "top_middle", "$pane_collection": "container_items",
+                    "controls": [{"inventory_panel": {
+                        "type": "panel", "size": ["100% - 8px", "95%"],
+                        "anchor_from": "center", "anchor_to": "center", "controls": [
+                            {"scrolling_panel@common.scrolling_panel": {
+                                "$allow_scrolling_even_when_content_fits": False,
+                                "layer": 1, "$scrolling_pane_size": ["100%", "100%-2px"],
+                                "$scrolling_content": "pocket_containers.otc_stove_slots",
+                                "$scroll_box_mouse_image_control": "common-classic.button_state_default",
+                                "$scroll_size": ["8px", "100%"]}}]}}]}},
+                {"selected_item_details_factory@common.selected_item_details_factory": {}},
+                {"item_lock_notification_factory@common.item_lock_notification_factory": {"$offset": [0, "85%"]}},
+                {"gamepad_cursor@common.gamepad_cursor_button": {}},
+                {"inventory_selected_icon_button@common.inventory_selected_icon_button": {}},
+                {"hold_icon@common.inventory_take_progress_icon_button": {}},
+                {"flying_item_renderer@common.flying_item_renderer": {"layer": 12}}]}}
+    # This overrides the vanilla file actually registered by the engine.
+    # A second screen declaration in a separately registered file is ambiguous.
+    write_json(RP / "ui/data_driven_container_screen.json", desktop)
+    (RP / "ui/ordertocook_stove.json").unlink(missing_ok=True)
+    write_json(RP / "ui/ordertocook_stove_pocket.json", pocket)
+    write_json(RP / "ui/_ui_defs.json", {"ui_defs": [
+        "ui/data_driven_container_screen.json",
+        "ui/ordertocook_stove_pocket.json"]})
+
+
+def separate_takeout_bag_folds(g):
+    """Give the two crossing paper folds distinct north/south depth surfaces.
+
+    The original +/-22.5 degree folds have identical Z bounds, so their
+    differently textured faces compete above the body. Inset only the inner
+    fold by 1/32 model pixel on each side before sampling the original motion.
+    Keep its X/Y outline, pivot, rotation, all UVs and the source alpha mask.
+    The imported geometry archive stays an unmodified source reference.
+    """
+    group = next(bone for bone in g["minecraft:geometry"][0]["bones"]
+                 if bone["name"] == "group")
+    outer, inner = group["cubes"][1:3]
+    if (outer.get("rotation") != [0, 0, 22.5]
+            or inner.get("rotation") != [0, 0, -22.5]
+            or outer["origin"][2] != inner["origin"][2]
+            or outer["size"][2] != inner["size"][2]):
+        raise ValueError("Placed bag fold topology changed; review its face ownership")
+    inset = 1 / 32
+    inner["origin"][2] += inset
+    inner["size"][2] -= 2 * inset
+
+
+def make_takeout_bag(*, include_block_definition=True):
     # Java's placed bag has an empty block model and a complete Geo renderer.
     # Keep frame zero settled for existing worlds; frames 1..10 play maked at
     # one source tick each. Only an active placement requests native block ticks.
     bag_source = ASSETS / "geo/block/takeout_bag_placed.geo.json"
     bag_animation = ASSETS / "animations/takeout_bag_placed.animation.json"
     bag = normalize_geo(bag_source, f"geometry.{NS}.takeout_bag_source")
+    separate_takeout_bag_folds(bag)
     bag_clip = read_json(bag_animation)["animations"]["maked"]
     bag_tile = texture_tile(f"{NS}:block/takeout_bag_placed")
     mats = {"*": {"texture": bag_tile, "render_method": "alpha_test", "ambient_occlusion": False}}
@@ -1252,12 +1707,21 @@ def make_blocks():
         assert_block_bounds(g)
         identifier = emit_geo(name, g)
         for source in (bag_source, bag_animation):
-            record(source, RP / "models/blocks" / f"{name}.geo.json", "Complete original placed-bag Geo and material; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint")
+            record(source, RP / "models/blocks" / f"{name}.geo.json", "Original placed-bag Geo, UVs and material; only the overlapping inner rim has 1/32px face separation; original 0.5s maked rise/scale/wobble sampled every tick; frame zero is the settled endpoint")
         variants.append({"condition": state_condition({"frame": frame}), "components": {"minecraft:geometry": identifier}})
+    if not include_block_definition:
+        return
     variants.append({"condition": f"q.block_state('{NS}:frame') > 0", "components": {
         "minecraft:tick": {"interval_range": [1, 1], "looping": True}, f"{NS}:bag_motion": {}}})
     block_definition("takeout_bag", f"geometry.{NS}.takeout_bag", mats, {"frame": list(range(11))}, variants,
                      False, {"origin": [-5, 0, -5], "size": [10, 10, 10]}, native_container={"slot_count": 1})
+
+
+def make_blocks():
+    simple_block("board", "board", False, {"origin": [-8, 0, 4], "size": [16, 16, 4]})
+    simple_block("countertop", "countertop")
+    simple_block("chair", "chair", {"origin": [-5, 0, -5], "size": [10, 8, 10]}, {"origin": [-5, 0, -5], "size": [10, 16, 10]})
+    make_takeout_bag()
     for name, state, maximum in (("shelf", "papers", 10), ("plate_shelf", "plates", 18), ("washingtable", "plates", 10)):
         item_visual = None
         if name == "washingtable":
@@ -1281,29 +1745,7 @@ def make_blocks():
         if name == "washingtable":
             record(renderer_source, BP / "blocks/washingtable.json", WASHING_WATER_OPERATION)
             record(model_path(f"{NS}:item/washingtable"), BP / "blocks/washingtable.json", "Dry block-item geometry and alpha-test material kept separate from the placed water renderer")
-    # Stage zero is drawn by Java's placed-meal renderer. The block fallback
-    # retains its terminal geometry; the dining entity plays the actual clip.
-    blockstates_source = ASSETS / "blockstates" / "food_plate_display.json"
-    blockstates = read_json(blockstates_source)["variants"]
-    variants = []
-    for stage in range(41):
-        spec = blockstates[f"facing=north,stage={stage}"]
-        if isinstance(spec, list):
-            spec = spec[0]
-        if stage == 0:
-            source = ASSETS / "geo/block/food_plate_placed.geo.json"
-            geometry_id = f"geometry.{NS}.food_plate_display_{stage}"
-            g = normalize_geo(source, geometry_id)
-            tile = texture_tile(f"{NS}:block/food_plate_placed")
-            mats = {"*": {"texture": tile, "render_method": "alpha_test", "ambient_occlusion": False, "face_dimming": True}}
-            GEOMETRY_SOURCES[geometry_id] = ([source], "Original placed-meal renderer terminal pose for the static block display")
-        else:
-            g, mats = convert_java_model(spec["model"], f"geometry.{NS}.food_plate_display_{stage}")
-        identifier = emit_geo(f"food_plate_display_{stage}", g)
-        variants.append({"condition": state_condition({"stage": stage}), "components": {"minecraft:geometry": identifier, "minecraft:material_instances": mats}})
-    block_definition("food_plate_display", f"geometry.{NS}.food_plate_display_0", mats, {"stage": list(range(41))}, variants,
-                     False, {"origin": [-6, 0, -6], "size": [12, 5, 12]}, native_container={"slot_count": 1})
-    record(blockstates_source, BP / "blocks/food_plate_display.json", "Original stage1..40 mapping with original placed-meal renderer geometry at stage zero")
+    make_food_plate_display()
     # Fixed Java blockstates are empty; the Geo renderer owns the entire
     # printer. Sample its real 1s neworder rise/squash/wobble, then hold the
     # terminal paper pose until all pending machine orders are taken.
@@ -1371,7 +1813,8 @@ def make_blocks():
     # compartment its actual capacity; the old upper state remains migratable.
     block_definition("refrigerator", f"geometry.{NS}.refrigerator_lower_0", mats,
                      {"half": ["lower", "upper"], "open": [False, True], "closing": [False, True], "frame": list(range(11)), "root_frame": list(range(len(fridge_roots)))}, variants,
-                     native_container={"slot_count": 54, "title": f"container.{NS}.refrigerator.lower"})
+                     native_container={"slot_count": 54, "title": f"container.{NS}.refrigerator.lower"},
+                     item_visual=make_fridge_item_visual())
     block_definition("refrigerator_upper", f"geometry.{NS}.refrigerator_upper_0", mats,
                      {"half": ["upper"], "open": [False, True], "closing": [False, True], "frame": list(range(11)), "root_frame": list(range(len(fridge_roots)))}, upper_variants,
                      native_container={"slot_count": 27, "title": f"container.{NS}.refrigerator.upper"},
@@ -1399,7 +1842,7 @@ def make_blocks():
     phase_clips = {0: None, 1: "empty_in", 2: "dirty_in", 3: "washing", 4: "clear_out", 5: "clear_out", 6: "empty_out"}
     # Java DishwasherRenderer: 1 plate -> cube 2, 2 -> cubes 2 and 5,
     # 3+ -> all six. Separate child bones keep the original cube transforms.
-    plate_count = f"(q.block_state('{NS}:plates') + 16 * q.block_state('{NS}:plates_high'))"
+    plate_count = f"q.block_state('{NS}:plates')"
     visibility = {f"{dish}_{index}": f"{plate_count} >= {1 if index == 2 else 2 if index == 5 else 3}"
                   for dish in ("drity_dish", "clear_dish") for index in range(1, 7)}
     for old in (RP / "models/blocks").glob("dishwasher_[0-5].geo.json"):
@@ -1435,7 +1878,7 @@ def make_blocks():
             condition = {"phase": phase} if phase in (0, 5) else {"phase": phase, "frame": frame}
             variants.append({"condition": state_condition(condition), "components": {"minecraft:geometry": {"identifier": identifier, "bone_visibility": visibility}}})
     block_definition("dishwasher", {"identifier": f"geometry.{NS}.dishwasher_0_0", "bone_visibility": visibility}, mats,
-                     {"phase": list(range(7)), "plates": list(range(17)), "frame": list(range(16))}, variants)
+                     {"phase": list(range(7)), "plates": list(range(4)), "frame": list(range(16))}, variants)
     g, mats = convert_java_model(f"{NS}:block/stove", f"geometry.{NS}.stove")
     emit_geo("stove", g)
     # Each stove owns its ignition delay, burst and four 8-tick cycle frames.
@@ -1473,6 +1916,7 @@ def make_blocks():
                      {"lit": [False, True], "fire_frame": list(range(6)),
                       "ignition_frame": list(range(20))}, variants,
                      native_container={"slot_count": 7, "title": "container.ordertocook.stove"})
+    make_stove_ui()
 
 
 def transform3(v, rotation, pivot=(0, 0, 0)):
@@ -1604,6 +2048,31 @@ def make_customer_names():
     destination.write_text(source, encoding="utf-8")
 
 
+def item_display_key(name):
+    return f"senluo.tooltip.item.{NS}:{name}.name"
+
+
+def block_display_key(name):
+    return f"senluo.tooltip.tile.{NS}:{name}.name"
+
+
+def make_display_names():
+    """Regenerate native item and obtainable block-item display bindings."""
+    for path in sorted((BP / "items").glob("*.json")):
+        definition = read_json(path)
+        name = definition["minecraft:item"]["description"]["identifier"].split(":", 1)[1]
+        definition["minecraft:item"]["components"]["minecraft:display_name"]["value"] = item_display_key(name)
+        write_json(path, definition)
+    for path in sorted((BP / "blocks").glob("*.json")):
+        definition = read_json(path)
+        block = definition["minecraft:block"]
+        if block["description"].get("menu_category", {}).get("category", "none") == "none":
+            continue
+        name = block["description"]["identifier"].split(":", 1)[1]
+        block["components"]["minecraft:display_name"] = block_display_key(name)
+        write_json(path, definition)
+
+
 def make_items():
     flat = {f"chef_coin_{n}": f"item/chef_coin_{n}" for n in (1,5,20,100,10000)}
     flat.update({"order": "item/order", "otc_upgrade_box": "item/otc_upgrade_box", "guide": "item/guide_book", "controller": "item/order"})
@@ -1622,9 +2091,12 @@ def make_items():
         render_item_icon(f"{NS}:{model}", dest)
         icon_map[f"{NS}_{name}"] = {"textures": f"textures/items/{name}"}
     for name in (*flat, *models):
-        components = {"minecraft:display_name": {"value": f"item.{NS}:{name}.name"},
+        components = {"minecraft:display_name": {"value": item_display_key(name)},
             "minecraft:icon": {"textures": {"default": f"{NS}_{name}"}},
             "minecraft:max_stack_size": 1 if name in ("guide","controller","order","food_plate","takeout_bag","motorcycle","helmet") else 64}
+        if name == "dirty_plate":
+            # WashingTableBlock.use also accepts a plate held in the offhand.
+            components["minecraft:allow_off_hand"] = True
         if name in ("guide", "controller", "order", "food_plate", "takeout_bag", "motorcycle", "otc_upgrade_box"):
             components[f"{NS}:use"] = {}
             components["minecraft:interact_button"] = True
@@ -1645,7 +2117,7 @@ def make_items():
     for name in ("board", "order_machine"):
         write_json(BP / "items" / (name + ".json"), {"format_version": BLOCK_VERSION, "minecraft:item": {
             "description": {"identifier": f"{NS}:{name}", "menu_category": creative_menu(name)},
-            "components": {"minecraft:display_name": {"value": f"item.{NS}:{name}.name"}, "minecraft:max_stack_size": 1,
+            "components": {"minecraft:display_name": {"value": item_display_key(name)}, "minecraft:max_stack_size": 1,
                 "minecraft:block_placer": {"block": f"{NS}:{name}", "replace_block_item": True}}}})
     write_json(RP / "textures/item_texture.json", {"resource_pack_name": "Order To Cook Unofficial", "texture_name": "atlas.items", "texture_data": icon_map})
 
@@ -1667,10 +2139,21 @@ def make_helmet_attachable():
             if "pivot" in cube:
                 cube["pivot"][1] += 24
             cubes.append(cube)
+        if part == "visor":
+            # Side panels overlap 1/16px into the front pane at both corners.
+            # Trim the front pane to their inner edges, without changing the
+            # outer silhouette, source pixels, or the side-panel dimensions.
+            if (len(cubes) != 3 or cubes[0]['origin'] != [-5.2,29.1,-6.3]
+                    or cubes[0]['size'] != [10.4,3.4,.0625]):
+                raise ValueError('Changed helmet visor source contract')
+            inset_cube_axis(cubes[0],0,.0625)
         identifier = f"geometry.{NS}.helmet_{part}"
         dest = RP / "models/entity" / f"helmet_{part}.geo.json"
         write_json(dest, geometry(identifier, [{"name":"head","pivot":[0,24,0],"cubes":cubes}]))
-        record(model_path(f"{NS}:item/helmet"), dest, "Head armor attachment; source shell/visor materials retained")
+        operation = "Head armor attachment; source shell/visor materials retained"
+        if part == "visor":
+            operation += "; front visor joins side panels without overlap, UV cropped"
+        record(model_path(f"{NS}:item/helmet"), dest, operation)
         geometries[part] = identifier
         textures[part] = "textures/" + NS + "/" + texture.split(":",1)[1]
         controllers[f"controller.render.{NS}.helmet_{part}"] = {"geometry": f"Geometry.{part}",
@@ -1704,7 +2187,7 @@ def write_entity(name, components, properties=None, events=None, groups=None):
 
 
 def make_dining_plate():
-    """Cosmetic meal entity with 41 exact stage shapes and one real atlas.
+    """Cosmetic meal entity with 41 source-derived stages and one real atlas.
 
     Entity render controllers bind one texture; block material_instance names
     cannot select different source PNGs there. Remap every face into the atlas
@@ -1739,6 +2222,7 @@ def make_dining_plate():
             model_name = spec["model"]
             g, _ = convert_java_model(model_name, identifier)
             model = resolve_model(model_name)
+            separate_plate_surface_layers(g, model)
             for value in model.get("textures", {}).values():
                 name = resolve_texture(value, model["textures"])
                 textures[texture_tile(name)] = texture_file(name)
@@ -1782,7 +2266,7 @@ def make_dining_plate():
     write_json(geometry_path, {"format_version": GEOMETRY_VERSION, "minecraft:geometry": rounded(meshes)})
     record(blockstates_source, geometry_path, "Original stage1..40 mapping; stage0 uses the original FoodPlatePlacedRenderer meal")
     for path in sorted({source for mesh in meshes for source in GEOMETRY_SOURCES[mesh['description']['identifier']][0]}):
-        record(path, geometry_path, "Original food stage cube shapes and per-face UVs remapped to the exact-pixel entity atlas")
+        record(path, geometry_path, "Source food stages with explicit cap clearance and plate tops cut behind opaque stain texels, remapped to the exact-pixel entity atlas")
     components = entity_base("ordertocook_dining_plate")
     components.update({
         "minecraft:collision_box": {"width": 0.01, "height": 0.01},
@@ -1913,9 +2397,16 @@ def make_motorcycle_geo():
         bones.append(bone)
     if len(bones) != 16 or sum(len(b["cubes"]) for b in bones) != 41:
         raise ValueError(f"Upstream motorcycle model changed: {len(bones)} bones / {sum(len(b['cubes']) for b in bones)} cubes; inspect converter")
+    connector = next(b for b in bones if b['name'] == 'chest')['cubes'][4]
+    if (connector['origin'] != [-2,18,21.75] or connector['size'] != [4,1,2]
+            or connector.get('inflate') != .015 or connector['uv'] != [77,7]):
+        raise ValueError('Changed motorcycle chest connector source contract')
+    # Its source inflation overlaps both flanking pads on their bottom plane.
+    # A translation preserves box-UV dimensions and all four source palettes.
+    connector['origin'][1] += .015
     dest = RP / "models/entity/motorcycle.geo.json"
     write_json(dest, geometry(f"geometry.{NS}.motorcycle", bones, 128, 128))
-    record(source, dest, "CubeListBuilder hierarchy, PartPose and box-UV conversion")
+    record(source, dest, "CubeListBuilder hierarchy, PartPose and box-UV conversion; chest connector Y+0.015px separates inflated bottom faces")
 
 
 def customer_reaction_clock(durations=None):
@@ -1954,6 +2445,63 @@ def customer_reaction_clock(durations=None):
     return properties, groups, events
 
 
+def make_motorcycle_entity():
+    motorcycle = entity_base("ordertocook_motorcycle", True, True)
+    # Java positionRider uses +Z behind its -Z forward vector. Bedrock's
+    # native actor faces +Z; the unchanged -Z-front mesh is turned by the
+    # client renderer, so its seat must be behind the actor at -Z too.
+    motorcycle.update({"minecraft:collision_box": {"width": 1.2, "height": 1.2}, "minecraft:movement": {"value": .35},
+        "minecraft:movement.basic": {}, "minecraft:input_ground_controlled": {}, "minecraft:jump.static": {},
+        "minecraft:variable_max_auto_step": {"base_value":1, "controlled_value":1, "jump_prevented_value":.5625},
+        "minecraft:rideable": {"seat_count": 1, "controlling_seat": 0, "crouching_skip_interact": True,
+            "family_types": ["player"], "interact_text": "action.interact.ride.horse", "pull_in_entities": False,
+            "seats": [{"position": [0,.6,-.45]}]},
+        "minecraft:inventory": {"inventory_size": 54, "container_type": "inventory", "private": True, "can_be_siphoned_from": False}})
+    write_entity("motorcycle", motorcycle, {
+        f"{NS}:color": {"type":"int","range":[0,3],"default":0,"client_sync":True},
+        f"{NS}:light": {"type":"bool","default":True,"client_sync":True}})
+
+
+def make_customer_animation_controller():
+    """Regenerate the idle/action controller independently of entity assets."""
+    stages = {}
+    action_transitions = [{f"action_{action}": f"q.property('{NS}:action') == {action}"} for action in range(1, 8)]
+    idle_transitions = [{"idle": f"q.property('{NS}:action') == 0"}]
+    riding = f"q.is_riding_any_entity_of_type('{NS}:seat')"
+    source_idles = read_json(ASSETS / "animations/npc.animation.json")["animations"]
+    idle_length = "0"
+    for stage, clip in (("waiting", "wait"), ("seated", "sit")):
+        for index in range(1, 5):
+            length = source_idles[f"customer_{clip}_{index}"]["animation_length"]
+            condition = f"{'v.idle_seated' if stage == 'seated' else '!v.idle_seated'} && v.idle_variant == {index}"
+            idle_length = f"({condition} ? {length} : {idle_length})"
+    for state, other in (("idle", "idle_next"), ("idle_next", "idle")):
+        # Both cycle states play a complete original clip. The native state
+        # clock resets on entry even if the same variant was selected again.
+        # Ride ownership, as in CustomerEntity.isChairCustomer(), selects the
+        # pose; the order's eating/leaving label is not a seating decision.
+        stages[state] = {
+            "on_entry": [f"v.idle_seated = {riding};",
+                         f"v.idle_length = {idle_length};"],
+            "animations": [{f"{stage}{index}": f"{'v.idle_seated' if stage == 'seated' else '!v.idle_seated'} && v.idle_variant == {index}"}
+                           for stage in ("waiting", "seated") for index in range(1, 5)],
+            "blend_transition": 0,
+            "transitions": copy.deepcopy(action_transitions) + [
+                {other: f"(v.idle_seated != {riding}) ? {{ v.idle_variant = q.property('{NS}:animation_variant'); return 1; }}; "
+                        "(q.state_time < v.idle_length) ? { return 0; }; "
+                        "v.idle_roll = math.random(0, 1); "
+                        "v.idle_variant = v.idle_roll < 0.55 ? 1 : (v.idle_roll < 0.7 ? 2 : (v.idle_roll < 0.85 ? 3 : 4)); return 1;"}]}
+    for action in range(1, 8):
+        # Authoritative server action/timer decides completion. Never loop a
+        # completed eating/arrival effect simply because the clip ended locally.
+        transitions = [entry for entry in action_transitions if f"action_{action}" not in entry]+copy.deepcopy(idle_transitions)
+        stages[f"action_{action}"] = {"animations": [f"action{action}"], "blend_transition": 0,
+            "on_exit": [f"v.idle_variant = q.property('{NS}:animation_variant');"], "transitions": transitions}
+    write_json(RP / "animation_controllers/customer.animation_controllers.json", {"format_version":"1.10.0","animation_controllers":{
+        f"controller.animation.{NS}.customer":{"initial_state":"idle","states":stages}}})
+    return riding, idle_length
+
+
 def make_entities(animation_names):
     customer = entity_base("ordertocook_customer", True, True)
     customer.update({"minecraft:collision_box": {"width": .6, "height": 1.8}, "minecraft:movement": {"value": 0},
@@ -1978,17 +2526,7 @@ def make_entities(animation_names):
             components["minecraft:rideable"] = {"seat_count": 1, "family_types": ["player", "ordertocook_customer"],
                 "interact_text": "action.interact.sit", "pull_in_entities": False, "seats": [{"position": [0,0,0], "lock_rider_rotation": 45}]}
         write_entity(name, components)
-    motorcycle = entity_base("ordertocook_motorcycle", True, True)
-    motorcycle.update({"minecraft:collision_box": {"width": 1.2, "height": 1.2}, "minecraft:movement": {"value": .35},
-        "minecraft:movement.basic": {}, "minecraft:input_ground_controlled": {}, "minecraft:jump.static": {},
-        "minecraft:variable_max_auto_step": {"base_value":1, "controlled_value":1, "jump_prevented_value":.5625},
-        "minecraft:rideable": {"seat_count": 1, "controlling_seat": 0, "crouching_skip_interact": True,
-            "family_types": ["player"], "interact_text": "action.interact.ride.horse", "pull_in_entities": False,
-            "seats": [{"position": [0,.6,.45]}]},
-        "minecraft:inventory": {"inventory_size": 54, "container_type": "inventory", "private": True, "can_be_siphoned_from": False}})
-    write_entity("motorcycle", motorcycle, {
-        f"{NS}:color": {"type":"int","range":[0,3],"default":0,"client_sync":True},
-        f"{NS}:light": {"type":"bool","default":True,"client_sync":True}})
+    make_motorcycle_entity()
     make_motorcycle_geo()
     for original, short in (("drive_idle", "customer"), ("drive_idle_alex", "customer_slim")):
         source = ASSETS / "geo" / (original + ".geo.json")
@@ -2002,49 +2540,27 @@ def make_entities(animation_names):
     for index in range(1,5):
         anims[f"waiting{index}"] = animation_names[("npc",f"customer_wait_{index}")]
         anims[f"seated{index}"] = animation_names[("npc",f"customer_sit_{index}")]
-    # The original waiting/seated clips are once-off in Java's controller; the
-    # Bedrock controller cycles back through reset to preserve their duration.
+    # Customers use the original idle/action clips exclusively. They have zero
+    # movement in Java; the old synthetic customer walk has no runtime caller.
     write_json(RP / "animations/runtime.animation.json", {"format_version":"1.8.0","animations":{
-        f"animation.{NS}.customer.walk": {"loop":True, "bones":{
-            "right_leg":{"rotation":["math.cos(q.modified_distance_moved * 38.17) * 28",0,0]},
-            "left_leg":{"rotation":["-math.cos(q.modified_distance_moved * 38.17) * 28",0,0]},
-            "right_arm":{"rotation":["-math.cos(q.modified_distance_moved * 38.17) * 14",0,0]},
-            "left_arm":{"rotation":["math.cos(q.modified_distance_moved * 38.17) * 14",0,0]}}},
         f"animation.{NS}.motorcycle.drive": {"loop":True,"bones":{
-            "front_t":{"rotation":["q.modified_distance_moved * -114.6",0,0]},
-            "rear_t":{"rotation":["q.modified_distance_moved * -114.6",0,0]}}}}})
-    stages = {}
-    action_transitions = [{f"action_{action}": f"q.property('{NS}:action') == {action}"} for action in action_clips]
-    idle_transitions = [{"select": f"q.property('{NS}:action') == 0"}]
-    stages["select"] = {"on_entry": [f"v.idle_variant = q.property('{NS}:animation_variant');"],
-        "transitions": copy.deepcopy(action_transitions) + [
-            {"seated": f"q.property('{NS}:stage') == 'seated'"}, {"waiting": "1.0"}]}
-    for stage in ("waiting", "seated"):
-        other = "seated" if stage == "waiting" else "waiting"
-        condition = f"q.property('{NS}:stage') {'==' if other == 'seated' else '!='} 'seated'"
-        transitions = copy.deepcopy(action_transitions)+[{"select": condition}, {stage+"_reset": "q.all_animations_finished"}]
-        # Java selects a new weighted idle only when the current clip finishes
-        # on the client. Latch it for that cycle; a server timer must not change
-        # animation weights halfway through a late-loaded four-second clip.
-        stages[stage] = {"animations": [{f"{stage}{index}": f"v.idle_variant == {index}"} for index in range(1, 5)],
-                         "blend_transition": 0, "transitions": transitions}
-        stages[stage+"_reset"] = {
-            "on_entry": ["v.idle_roll = math.random(0, 1);",
-                         "v.idle_variant = v.idle_roll < 0.55 ? 1 : (v.idle_roll < 0.7 ? 2 : (v.idle_roll < 0.85 ? 3 : 4));"],
-            "transitions": copy.deepcopy(action_transitions)+[{"select": condition}, {stage: "1.0"}]}
-    for action in action_clips:
-        # Authoritative server action/timer decides completion. Never loop a
-        # completed eating/arrival effect simply because the clip ended locally.
-        transitions = [entry for entry in action_transitions if f"action_{action}" not in entry]+copy.deepcopy(idle_transitions)
-        stages[f"action_{action}"] = {"animations": [f"action{action}"], "blend_transition": 0, "transitions": transitions}
-    write_json(RP / "animation_controllers/customer.animation_controllers.json", {"format_version":"1.10.0","animation_controllers":{
-        f"controller.animation.{NS}.customer":{"initial_state":"select","states":stages}}})
+            "front_t":{"rotation":["q.modified_distance_moved * 114.6",0,0]},
+            "rear_t":{"rotation":["q.modified_distance_moved * 114.6",0,0]}}}}})
+    riding, idle_length = make_customer_animation_controller()
     anims["controller"] = f"controller.animation.{NS}.customer"
+    # Entity variables are lost when the client unloads the actor. Create every
+    # idle variable before any controller state is evaluated, independently of
+    # initial-state entry events; state entry only updates an existing cycle.
     write_json(RP / "entity/customer.entity.json", {"format_version":"1.10.0","minecraft:client_entity":{"description":{
         "identifier":f"{NS}:customer", "materials":{"default":"entity_alphatest"},
         "textures":{"wide":f"textures/{NS}/entity/otc_zombie_custom","slim":f"textures/{NS}/entity/otc_zombie_custom2"},
         "geometry":{"wide":f"geometry.{NS}.customer","slim":f"geometry.{NS}.customer_slim"},
-        "animations":anims,"scripts":{"animate":["controller"]},"render_controllers":[f"controller.render.{NS}.customer"],
+        "animations":anims,"scripts":{
+            "initialize":[f"v.idle_variant = q.property('{NS}:animation_variant');",
+                          f"v.idle_seated = {riding};",
+                          f"v.idle_length = {idle_length};",
+                          "v.idle_roll = 0;"],
+            "animate":["controller"]},"render_controllers":[f"controller.render.{NS}.customer"],
         "spawn_egg":{"base_color":"c89d5a","overlay_color":"f3e3ca"}}}})
     for name in ("seat","storage"):
         write_json(RP / "entity" / (name + ".entity.json"), {"format_version":"1.10.0","minecraft:client_entity":{"description":{
@@ -2213,16 +2729,28 @@ def make_languages():
     for value in (1,5,20,100,10000):
         traditional[f"chef_coin_{value}"]=f"廚師幣（{value}）"
     english_extra = {"guide":"Order To Cook Guide", "controller":"Restaurant Controller"}
+    simplified_extra = {"guide": "Order To Cook 使用指南", "controller": "餐厅控制器"}
     fridge_labels = {
         "en_US": {"upper": "Refrigerator — Upper (27 slots)", "lower": "Refrigerator — Lower (54 slots)", "block": "Upper Refrigerator"},
         "zh_CN": {"upper": "冰箱上层（27格）", "lower": "冰箱下层（54格）", "block": "冰箱上层"},
         "zh_TW": {"upper": "冰箱上層（27格）", "lower": "冰箱下層（54格）", "block": "冰箱上層"},
     }
+    motorcycle_exit_hints = {
+        "en_US": ("Sneak to dismount", "Press :_input_key.sneak: to dismount", "Tap dismount to get off"),
+        "zh_CN": ("潜行下车", "按 :_input_key.sneak: 下车", "轻触离座按钮下车"),
+        "zh_TW": ("蹲下離座", "按 :_input_key.sneak: 離座", "輕觸離座按鈕下車"),
+    }
+    entity_labels = {
+        "en_US": ("Customer", "Delivery Motorcycle", "Dining Plate", "Check plate"),
+        "zh_CN": ("顾客", "小电驴", "用餐餐盘", "查看餐盘"),
+        "zh_TW": ("顧客", "外賣電單車", "用餐餐盤", "查看餐盤"),
+    }
     for src_name, out_name in (("en_us","en_US"),("zh_cn","zh_CN"),("zh_cn","zh_TW")):
         lang = read_json(ASSETS / "lang" / (src_name + ".json"))
+        source_name = "下單了" if out_name == "zh_TW" else lang["modmenu.nameTranslation.ordertocook"]
         lines=["## Order To Cook — source translations by breezeth-CN; Bedrock additions by this port.","pack.name=Order To Cook Unofficial","pack.description=Unofficial Bedrock adaptation of Order To Cook."]
-        for key, (_, _, labels, _) in CREATIVE_GROUPS.items():
-            lines.append(f"{NS}:itemGroup.{key}={labels[out_name]}")
+        for tab in CREATIVE_PLAN["tabs"]:
+            lines.append(tab["group"] + "=" + tab["labels"][out_name])
         lines.append(f"container.{NS}.stove=" + {"en_US": "Stove", "zh_CN": "炉灶", "zh_TW": "爐灶"}[out_name])
         for path in sorted((BP / "blocks").glob("*.json")):
             name=path.stem
@@ -2232,16 +2760,31 @@ def make_languages():
             if name == "refrigerator_upper":
                 value = fridge_labels[out_name]["block"]
             lines.append(f"tile.{NS}:{name}.name={value}")
+            block = read_json(path)["minecraft:block"]
+            if block["description"].get("menu_category", {}).get("category", "none") != "none":
+                lines.append(f"{block_display_key(name)}={value}\\n§9§o{source_name}§r")
         for half in ("upper", "lower"):
             lines.append(f"container.{NS}.refrigerator.{half}={fridge_labels[out_name][half]}")
         for path in sorted((BP / "items").glob("*.json")):
             name=path.stem
             fallback=english_extra.get(name,name.replace("_"," ").title())
-            value=traditional[name] if out_name == "zh_TW" else lang.get(f"item.{NS}.{name}",fallback if out_name == "en_US" else traditional[name])
+            # Block-items use their upstream block label, rather than falling
+            # through to the Traditional Chinese table for every Chinese locale.
+            value=traditional[name] if out_name == "zh_TW" else lang.get(f"item.{NS}.{name}", lang.get(f"block.{NS}.{name}", fallback if out_name == "en_US" else simplified_extra.get(name, fallback)))
             lines.append(f"item.{NS}:{name}.name={value}")
-        lines += [f"entity.{NS}:customer.name="+("Customer" if out_name=="en_US" else "顧客"), f"entity.{NS}:motorcycle.name="+("Delivery Motorcycle" if out_name=="en_US" else "外賣電單車"),
-                  f"entity.{NS}:dining_plate.name="+("Dining Plate" if out_name=="en_US" else "用餐餐盤"),
-                  f"action.interact.{NS}.plate="+("Check plate" if out_name=="en_US" else "查看餐盤")]
+            lines.append(f"{item_display_key(name)}={value}\\n§9§o{source_name}§r")
+        customer, motorcycle, dining_plate, plate_action = entity_labels[out_name]
+        lines += [f"entity.{NS}:customer.name={customer}", f"entity.{NS}:motorcycle.name={motorcycle}",
+                  f"entity.{NS}:dining_plate.name={dining_plate}", f"action.interact.{NS}.plate={plate_action}"]
+        for suffix, hint in zip(("", "console.", "scheme."), motorcycle_exit_hints[out_name]):
+            lines.append(f"action.hint.exit.{suffix}{NS}:motorcycle={hint}")
+        # Reuse the Java order names. The port's Traditional Chinese wording
+        # and platform-specific UI text have one editable .lang source per locale.
+        port_text = (ROOT / "assets/localization" / (out_name + ".lang")).read_text(encoding="utf-8")
+        port_keys = {line.partition("=")[0] for line in port_text.splitlines() if "=" in line}
+        lines += [f"{key}={value}" for key, value in lang.items()
+                  if key.startswith(f"order.{NS}.name.") and key not in port_keys]
+        lines += port_text.splitlines()
         dest=RP / "texts" / (out_name+".lang")
         # Handbook and runtime messages are maintained independently of Java
         # asset labels. Regeneration must retain those additional keys.
@@ -2260,16 +2803,76 @@ def make_languages():
 
 def main():
     global SOURCE, ASSETS, OUT, BP, RP
+    # Sibling imports belong to the CLI entrypoint. Import-only geometry
+    # consumers load this file directly without tools/ on sys.path.
+    from customer_skins import make_customer_skin_resources
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source",type=Path,default=ROOT / "upstream/reference",help="Bundled upstream/reference source subset (default), or a local OrdertoCook checkout")
     parser.add_argument("--output",type=Path,default=ROOT / "runtime")
+    parser.add_argument("--customer-skins-only", action="store_true", help="Regenerate customer appearance bindings and supplied skin resources only")
+    parser.add_argument("--customer-controller-only", action="store_true", help="Regenerate only the customer idle/action animation controller")
+    parser.add_argument("--creative-only", action="store_true", help="Regenerate only creative menus, catalog and group labels")
+    parser.add_argument("--languages-only", action="store_true", help="Regenerate only language files from upstream and owned localization sources")
+    parser.add_argument("--item-names-only", action="store_true", help="Regenerate only native item/block-item display bindings and language files")
+    parser.add_argument("--bag-only", action="store_true", help="Regenerate only the placed bag frames and their existing provenance entries")
+    parser.add_argument("--plates-only", action="store_true", help="Regenerate only placed meal geometry and its existing provenance entries")
+    parser.add_argument("--stove-ui-only", action="store_true", help="Generate only native stove UI routing/layout and its RP UI definitions")
     parser.add_argument("--segmented-player-native", type=Path, help="External native input for local model-source prototypes only")
     parser.add_argument("--segmented-player-slim", type=Path, help="External legacy mobs.json containing standalone native customSlim")
     parser.add_argument("--segmented-camera-frames", type=Path, help="Explicit right/left model-space camera frames for that prototype")
+    parser.add_argument("--player-riding-only", action="store_true", help="Generate only the local shared-composer riding input; requires both native bases and their license")
+    parser.add_argument("--native-player-license", type=Path, help="License accompanying the supplied native player geometry")
     args=parser.parse_args()
     SOURCE=args.source.resolve(); ASSETS=SOURCE / ASSET_REL; OUT=args.output.resolve(); BP=OUT / "BP"; RP=OUT / "RP"
     if not (SOURCE / "LICENSE.txt").is_file() or not ASSETS.is_dir():
         parser.error("Expected OrdertoCook source inputs with LICENSE.txt and common resources")
+    if args.customer_skins_only:
+        make_customer_skin_resources(ROOT, BP, RP)
+        return
+    if args.customer_controller_only:
+        make_customer_animation_controller()
+        return
+    if args.stove_ui_only:
+        make_stove_ui()
+        return
+    if args.creative_only:
+        make_creative_metadata()
+        return
+    if args.languages_only:
+        make_languages()
+        return
+    if args.item_names_only:
+        make_display_names()
+        make_languages()
+        return
+    if args.bag_only:
+        make_takeout_bag(include_block_definition=False)
+        manifest_path = OUT / "asset_conversion_manifest.json"
+        manifest = read_json(manifest_path)
+        outputs = {entry["output"] for entry in PROVENANCE}
+        manifest["assets"] = [entry for entry in manifest["assets"] if entry["output"] not in outputs] + PROVENANCE
+        write_json(manifest_path, manifest)
+        print("Generated placed bag frames; no pack identity or other asset families changed")
+        return
+    if args.plates_only:
+        make_food_plate_display()
+        make_dining_plate()
+        manifest_path = OUT / "asset_conversion_manifest.json"
+        manifest = read_json(manifest_path)
+        outputs = {entry["output"] for entry in PROVENANCE}
+        manifest["assets"] = [entry for entry in manifest["assets"] if entry["output"] not in outputs] + PROVENANCE
+        write_json(manifest_path, manifest)
+        print('Generated placed meal assets; no pack identity or other asset families changed')
+        return
+    if args.player_riding_only:
+        if not (args.segmented_player_native and args.segmented_player_slim and args.native_player_license):
+            parser.error("Riding needs separate native classic/slim inputs and their license")
+        if OUT.is_relative_to(ROOT / 'runtime'):
+            parser.error("Native-derived player geometry is a user-local assembly input; choose an output outside runtime")
+        natives = native_player_variants(read_json(args.segmented_player_native), read_json(args.segmented_player_slim))
+        make_player_riding_source(natives, OUT)
+        shutil.copyfile(args.native_player_license, OUT / 'MOJANG-VANILLA-LICENSE.md')
+        return
     if args.segmented_player_native or args.segmented_player_slim or args.segmented_camera_frames:
         if not (args.segmented_player_native and args.segmented_player_slim and args.segmented_camera_frames):
             parser.error("Segmented prototypes need separate native classic/slim inputs and explicit camera frames")
@@ -2300,6 +2903,7 @@ def main():
     make_guide_icons()
     make_helmet_attachable()
     make_entities(animations)
+    make_customer_skin_resources(ROOT, BP, RP)
     make_dining_plate()
     preserve_imported_geometry()
     make_recipes()
@@ -2307,7 +2911,7 @@ def main():
     write_json(OUT / "asset_conversion_manifest.json", {"upstream":"https://github.com/breezeth-CN/OrdertoCook","revision":revision,
         "license":"GPL-3.0", "assets":PROVENANCE,
         "port_assets": [{"source": str(path.relative_to(ROOT)), "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
-                        for path in sorted((ROOT / "assets/guidebook").glob("*")) if path.suffix in (".png", ".lang")],
+                        for path in sorted([*(ROOT / "assets/guidebook").glob("*"), *(ROOT / "assets/localization").glob("*.lang")]) if path.suffix in (".png", ".lang")],
         "adaptations":["Two-part refrigerator with complete independent doors; separate 11-pose open/close source clips; at most 0.126px intermediate hinge translation bounds the sweep",
             "Washing table includes the source renderer's static translucent water quad in all 11 plate states; whole-block blend and reverse-winding underside require native sorting/backface review",
             "Original GeckoLib elastic/bounce easing and appliance squash retained in sampled static cuboids; refrigerator halves share four common-root samples with active-lower controller priority; residual descendant shear, reversal/STOP adaptation and non-atomic block writes remain documented",
@@ -2315,7 +2919,7 @@ def main():
             "Dishwasher drawer, door, plate-count visibility and wash vibration sampled into 82 poses including look-target preview; preview geometry is shared rather than per-client",
             "Native dining plate uses the original two-part collision and forty block stages; the existing actor handles only stage-zero placement animation; canonical meal records own drops",
             "Seven original customer actions seek from canonical elapsed time; weighted idle variation changes only between completed clips",
-            "Default customer skins prebundled; runtime web skin lookup not available", "Source-model inventory thumbnails", "Early-game furniture recipes added for survival access"]})
+            "Ordinary skins plus seven dated Mojang profile snapshots; optional registered custom lists; separate external-skin provenance, no runtime web skin lookup", "Source-model inventory thumbnails", "Early-game furniture recipes added for survival access"]})
     print(f"Converted {len(PROVENANCE)} source resource references; {len(list(BP.rglob('*.json')))} BP JSON, {len(list(RP.rglob('*.json')))} RP JSON")
 
 
