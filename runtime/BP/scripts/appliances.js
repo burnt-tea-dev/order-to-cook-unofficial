@@ -615,16 +615,10 @@ export function createApplianceService(ctx) {
     return !!station?.ownerId && accessible(player, station) && !!nativeStove.peek(station);
   }
 
-  function consumeHeld(player, expectedId, count = 1) {
-    const inventory = playerInventory(player);
-    const index = player.selectedSlotIndex;
-    const stack = inventory?.getItem(index);
-    if (!stack || stack.typeId !== expectedId || stack.amount < count) return false;
-    // Storage/economy consumes physical items even in Creative, preventing a
-    // creative-mode toggle from duplicating stock into another player's station.
-    if (stack.amount === count) inventory.setItem(index, undefined);
-    else { stack.amount -= count; inventory.setItem(index, stack); }
-    return true;
+  function writeOffhand(equipment, stack) {
+    if (!equipment?.setEquipment(EquipmentSlot.Offhand, stack)) {
+      throw new Error("副手物品寫入未完成，請稍後再試。");
+    }
   }
 
   function giveItem(player, stack) {
@@ -647,15 +641,29 @@ export function createApplianceService(ctx) {
   function interactSink(player, station) {
     const d = data(station);
     const inventory = playerInventory(player);
-    const held = inventory?.getItem(player.selectedSlotIndex);
+    const index = player.selectedSlotIndex;
+    const mainhand = inventory?.getItem(index);
+    // Java only falls back to the offhand when the main hand is empty.
+    const equipment = mainhand ? undefined : player.getComponent("minecraft:equippable");
+    const held = mainhand ?? equipment?.getEquipment(EquipmentSlot.Offhand);
     if (held?.typeId === DIRTY) {
       if (d.plates >= 10) { say(ctx, player, "洗碗池最多可放 10 個髒盤子。"); return; }
-      if (consumeHeld(player, DIRTY)) {
+      const beforeState = { ...d };
+      const write = stack => mainhand ? inventory.setItem(index, stack) : writeOffhand(equipment, stack);
+      const next = held.amount > 1 ? held.clone() : undefined;
+      if (next) next.amount--;
+      // Keep the existing physical-stock rule, including Creative mode.
+      try {
+        write(next);
         d.plates++;
         ctx.saveStation(station);
-        updateVisual(station);
-        playEffects(player.dimension, plateSound(center(station.location)), MolangVariableMap);
+      } catch (error) {
+        Object.assign(d, beforeState);
+        write(held);
+        throw error;
       }
+      updateVisual(station);
+      playEffects(player.dimension, plateSound(center(station.location)), MolangVariableMap);
       return;
     }
     if (washing.has(player.id)) { stopWashing(player.id); say(ctx, player, "已停止洗碗。"); return; }
@@ -702,7 +710,9 @@ export function createApplianceService(ctx) {
     }
     if (d.phase !== 0) { say(ctx, player, `洗碗機正在運作 · ${d.plates} 個盤子。`); return; }
     const held = inventory.getItem(player.selectedSlotIndex);
-    if (held?.typeId !== DIRTY) { say(ctx, player, "手持髒盤點擊，一次放入背包內最多 16 個；完成後空手點擊取出。"); return; }
+    const equipment = player.getComponent("minecraft:equippable");
+    const offhand = equipment?.getEquipment(EquipmentSlot.Offhand);
+    if (held?.typeId !== DIRTY && offhand?.typeId !== DIRTY) { say(ctx, player, "主手或副手持髒盤點擊，一次放入最多 16 個；完成後空手點擊取出。"); return; }
     const changes = [];
     const beforeState = { ...d };
     let count = 0;
@@ -713,20 +723,29 @@ export function createApplianceService(ctx) {
       changes.push({ i, stack, take });
       count += take;
     }
+    // Bedrock's player container excludes equipment. Match Java's inventory
+    // traversal by using any remaining batch capacity from the offhand last.
+    if (count < 16 && offhand?.typeId === DIRTY) {
+      const take = Math.min(16 - count, offhand.amount);
+      changes.push({ i: -1, stack: offhand, take });
+      count += take;
+    }
     if (!count) { say(ctx, player, "背包放入髒盤子後點擊洗碗機，一次最多清洗 16 個。"); return; }
+    const write = (change, stack) => change.i < 0
+      ? writeOffhand(equipment, stack) : inventory.setItem(change.i, stack);
     try {
       for (const change of changes) {
         const next = change.stack.clone();
-        if (next.amount === change.take) inventory.setItem(change.i, undefined);
-        else { next.amount -= change.take; inventory.setItem(change.i, next); }
+        if (next.amount === change.take) write(change, undefined);
+        else { next.amount -= change.take; write(change, next); }
       }
       d.plates = count;
       d.phase = 2;
       d.remainingTicks = 30;
       ctx.saveStation(station);
     } catch (error) {
-      for (const change of changes) inventory.setItem(change.i, change.stack);
       Object.assign(d, beforeState);
+      for (const change of changes) write(change, change.stack);
       throw error;
     }
     updateVisual(station);
