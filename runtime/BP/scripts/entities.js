@@ -12,6 +12,7 @@ const MOTORCYCLE = `${NS}motorcycle`;
 const CONTROLLER = `${NS}controller`;
 const SEAT = `${NS}seat`;
 const CHAIR = `${NS}chair`;
+const HORN_COOLDOWN_TICKS = 12;
 const LIVE_ORDER = new Set(["accepted", "packed"]);
 const COLORS = ["白色", "紅色", "藍色", "黃色"];
 const DYES = Object.freeze({ "minecraft:white_dye": 0, "minecraft:red_dye": 1, "minecraft:blue_dye": 2, "minecraft:yellow_dye": 3 });
@@ -656,7 +657,7 @@ export function createEntityService(ctx) {
 
   function horn(entity) {
     const now = gameSystem.currentTick;
-    if ((hornTimes.get(entity.id) ?? -100) + 12 > now) return;
+    if ((hornTimes.get(entity.id) ?? -100) + HORN_COOLDOWN_TICKS > now) return;
     hornTimes.set(entity.id, now);
     playSound(entity, `${NS}horn`, 1);
   }
@@ -948,6 +949,8 @@ export function createEntityService(ctx) {
       entities = queryAll(CUSTOMER);
       deduplicateCustomers();
       scanTick = now;
+      // Expired entries no longer affect admission, even if a bike is unloaded.
+      for (const [id, tick] of hornTimes) if (tick + HORN_COOLDOWN_TICKS <= now) hornTimes.delete(id);
     }
     const currentTime = clock();
     for (const entity of entities) {
