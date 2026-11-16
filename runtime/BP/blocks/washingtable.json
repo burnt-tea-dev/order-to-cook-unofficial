@@ -72,6 +72,7 @@
         "movement_type": "immovable"
       },
       "ordertocook:interact": {},
+      "minecraft:display_name": "senluo.tooltip.tile.ordertocook:washingtable.name",
       "minecraft:item_visual": {
         "geometry": "geometry.ordertocook.washingtable_item",
         "material_instances": {
@@ -94,8 +95,7 @@
             "face_dimming": true
           }
         }
-      },
-      "minecraft:display_name": "senluo.tooltip.tile.ordertocook:washingtable.name"
+      }
     },
     "permutations": [
       {

@@ -91,6 +91,7 @@
         "movement_type": "immovable"
       },
       "ordertocook:interact": {},
+      "minecraft:display_name": "senluo.tooltip.tile.ordertocook:order_machine.name",
       "minecraft:tick": {
         "interval_range": [
           1,
@@ -98,8 +99,7 @@
         ],
         "looping": true
       },
-      "ordertocook:machine_timing": {},
-      "minecraft:display_name": "senluo.tooltip.tile.ordertocook:order_machine.name"
+      "ordertocook:machine_timing": {}
     },
     "permutations": [
       {

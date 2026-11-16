@@ -1,5 +1,13 @@
 # 可行性與原作還原對照
 
+## 現有模型 PR 的來源整合範圍（2026-11-16）
+
+生成器沿 #87 的原數值去掉一根完全重複椅腿，將餐點階段5／6端塊沿Z各端內縮0.015模型像素，面罩前片沿X各端裁去0.0625，並將機車箱底連接塊沿Y上移0.015。端塊與面罩同步裁切UV，原貼圖不改。除椅腿去重外，這些是明列的幾何適配，不能稱Java原頂點完全相等。機車的來源映射與適配分界見[MOTORCYCLE_SOURCE_MAPPING.md](MOTORCYCLE_SOURCE_MAPPING.md#connector-clearance)。
+
+污漬沿現有 `separate_plate_surface_layers`，只省去不透明污漬下的盤面，保留原污漬高度與像素；不另加#87的烘焙貼圖／刪污漬薄片路徑。洗碗機門背／抽屜修法仍待圈選位置的具體面證據。#88的完整冰箱物品及item_visual已有後修接線，其第一人稱0.8降0.4是另一份縮小適配，本次不混入。176份放置姿態、顧客皮膚、玩家骨架及爐灶title-copy來源保留。
+
+本節描述來源差異，不代表已生成、實裝或通過客戶端觀察。舊PR的有限編輯器角度、測試結果及模型計數只適用原來的輸入。完整動畫、相反朝向薄面及本次精確輸出的聲畫仍未確認。
+
 ## 客戶端顧客動畫語法（2026-11-11，來源修正）
 
 使用者回報測試服 `controller.animation.ordertocook.customer` 的 idle／idle_next 轉移包含 `if (...)`，客戶端報 unknown／unrecognized token。`tools/convert_assets.py` 已把這兩個早退分支改成 Molang 的 `條件 ? { ... };`，保留原坐姿變更、state_time 等待與0.55／0.7／0.85隨機門檻。抽出同一controller生成入口，正常使用 `--customer-controller-only` 重產 [customer.animation_controllers.json](../runtime/RP/animation_controllers/customer.animation_controllers.json)，沒有改 entity、幾何、版本或世界資料。依Owner reset未執行測試，未發布／部署，也未觀察修後client。

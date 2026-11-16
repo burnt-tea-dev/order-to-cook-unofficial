@@ -87,14 +87,14 @@
         "movement_type": "immovable"
       },
       "ordertocook:interact": {},
+      "minecraft:display_name": "senluo.tooltip.tile.ordertocook:stove.name",
       "minecraft:block_entity": {
         "dynamic_properties": true,
         "container": {
           "slot_count": 7,
           "title": "container.ordertocook.stove"
         }
-      },
-      "minecraft:display_name": "senluo.tooltip.tile.ordertocook:stove.name"
+      }
     },
     "permutations": [
       {

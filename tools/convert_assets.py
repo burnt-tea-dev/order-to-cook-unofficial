@@ -207,9 +207,49 @@ def java_cube(element, textures):
     return rounded(cube)
 
 
+def inset_cube_axis(cube, axis, amount):
+    """Symmetric inset with side UV cropping, retaining surviving texel density."""
+    size = cube['size'][axis]
+    if size <= 2*amount:
+        raise ValueError('Overlap inset would remove the cube')
+    fraction = amount/size
+    # Bedrock face coordinates: X spans north/south U and top/bottom U;
+    # Z spans east/west U and top/bottom V. Symmetric cropping is sign-safe.
+    uv_axes = ({'north':0,'south':0,'up':0,'down':0},
+               {'north':1,'south':1,'east':1,'west':1},
+               {'east':0,'west':0,'up':1,'down':1})[axis]
+    for name, uv_axis in uv_axes.items():
+        if name not in cube['uv']:
+            continue
+        face = cube['uv'][name]
+        if face.get('uv_rotation',0) % 180:
+            uv_axis = 1-uv_axis
+        face['uv'][uv_axis] += face['uv_size'][uv_axis]*fraction
+        face['uv_size'][uv_axis] *= 1-2*fraction
+    cube['origin'][axis] += amount
+    cube['size'][axis] -= 2*amount
+
+
+def separate_food_cap_faces(name, cubes):
+    """Two pinned food stages have rotated caps coplanar with their center bar."""
+    indices = {'ordertocook:block/food_plate_anim/2_1':(3,4,5,6),
+               'ordertocook:block/food_plate_anim/2_2':(3,4)}.get(name)
+    if indices is None:
+        return False
+    if len(cubes) != (10 if len(indices) == 4 else 8):
+        raise ValueError('Changed food cap source contract')
+    for index in indices:
+        cube = cubes[index]
+        if cube['size'] != [2,2,2] or cube.get('rotation') not in ([0,0,22.5],[0,0,-22.5]):
+            raise ValueError('Changed food cap source contract')
+        inset_cube_axis(cube,2,.015)
+    return True
+
+
 def convert_java_model(name, identifier, extra_models=()):
     cubes, materials = [], {}
     sources = []
+    food_caps_adapted = False
     for model_name in (name, *extra_models):
         parent_name = model_name
         while parent_name.startswith(NS + ":"):
@@ -217,8 +257,9 @@ def convert_java_model(name, identifier, extra_models=()):
             sources.append(source_path)
             parent_name = read_json(source_path).get("parent", "")
         model = resolve_model(model_name)
-        for cube in model.get("elements", []):
-            cubes.append(java_cube(cube, model.get("textures", {})))
+        converted = [java_cube(cube, model.get("textures", {})) for cube in model.get("elements", [])]
+        food_caps_adapted = separate_food_cap_faces(model_name, converted) or food_caps_adapted
+        cubes.extend(converted)
         for tex in model.get("textures", {}).values():
             resolved = resolve_texture(tex, model["textures"])
             if texture_file(resolved).is_file():
@@ -227,7 +268,10 @@ def convert_java_model(name, identifier, extra_models=()):
     if not materials:
         materials[NS + "_block_order_machine"] = {"texture": NS + "_block_order_machine", "render_method": "alpha_test"}
     materials["*"] = copy.deepcopy(next(iter(materials.values())))
-    GEOMETRY_SOURCES[identifier] = (list(dict.fromkeys(sources)), "Java elements, rescale, reflected coordinates and per-face UV conversion")
+    operation = "Java elements, rescale, reflected coordinates and per-face UV conversion"
+    if food_caps_adapted:
+        operation += "; food cap Z inset 0.015px with side UV crop"
+    GEOMETRY_SOURCES[identifier] = (list(dict.fromkeys(sources)), operation)
     return geometry(identifier, [{"name": "root", "pivot": [0, 0, 0], "cubes": cubes}]), materials
 
 
@@ -1369,8 +1413,20 @@ def block_definition(name, base_geo, materials, states=None, variants=(), collis
         write_json(BP / "loot_tables" / "blocks" / (name + ".json"), loot)
 
 
+def remove_duplicate_chair_leg(g):
+    """Drop only the pinned chair's second identical leg, without moving faces."""
+    cubes = g["minecraft:geometry"][0]["bones"][0]["cubes"]
+    if len(cubes) != 7 or cubes[2] != cubes[3]:
+        raise ValueError("Changed chair duplicate-leg source contract")
+    del cubes[3]
+
+
 def simple_block(name, model, collision=True, selection=None):
     g, mats = convert_java_model(NS + ":block/" + model, f"geometry.{NS}.{name}")
+    if name == "chair":
+        remove_duplicate_chair_leg(g)
+        sources, operation = GEOMETRY_SOURCES[g["minecraft:geometry"][0]["description"]["identifier"]]
+        GEOMETRY_SOURCES[g["minecraft:geometry"][0]["description"]["identifier"]] = (sources, operation + '; one exact duplicate chair leg removed')
     emit_geo(name, g)
     block_definition(name, g["minecraft:geometry"][0]["description"]["identifier"], mats, collision=collision, selection=selection)
 
@@ -2083,10 +2139,21 @@ def make_helmet_attachable():
             if "pivot" in cube:
                 cube["pivot"][1] += 24
             cubes.append(cube)
+        if part == "visor":
+            # Side panels overlap 1/16px into the front pane at both corners.
+            # Trim the front pane to their inner edges, without changing the
+            # outer silhouette, source pixels, or the side-panel dimensions.
+            if (len(cubes) != 3 or cubes[0]['origin'] != [-5.2,29.1,-6.3]
+                    or cubes[0]['size'] != [10.4,3.4,.0625]):
+                raise ValueError('Changed helmet visor source contract')
+            inset_cube_axis(cubes[0],0,.0625)
         identifier = f"geometry.{NS}.helmet_{part}"
         dest = RP / "models/entity" / f"helmet_{part}.geo.json"
         write_json(dest, geometry(identifier, [{"name":"head","pivot":[0,24,0],"cubes":cubes}]))
-        record(model_path(f"{NS}:item/helmet"), dest, "Head armor attachment; source shell/visor materials retained")
+        operation = "Head armor attachment; source shell/visor materials retained"
+        if part == "visor":
+            operation += "; front visor joins side panels without overlap, UV cropped"
+        record(model_path(f"{NS}:item/helmet"), dest, operation)
         geometries[part] = identifier
         textures[part] = "textures/" + NS + "/" + texture.split(":",1)[1]
         controllers[f"controller.render.{NS}.helmet_{part}"] = {"geometry": f"Geometry.{part}",
@@ -2120,7 +2187,7 @@ def write_entity(name, components, properties=None, events=None, groups=None):
 
 
 def make_dining_plate():
-    """Cosmetic meal entity with 41 exact stage shapes and one real atlas.
+    """Cosmetic meal entity with 41 source-derived stages and one real atlas.
 
     Entity render controllers bind one texture; block material_instance names
     cannot select different source PNGs there. Remap every face into the atlas
@@ -2199,7 +2266,7 @@ def make_dining_plate():
     write_json(geometry_path, {"format_version": GEOMETRY_VERSION, "minecraft:geometry": rounded(meshes)})
     record(blockstates_source, geometry_path, "Original stage1..40 mapping; stage0 uses the original FoodPlatePlacedRenderer meal")
     for path in sorted({source for mesh in meshes for source in GEOMETRY_SOURCES[mesh['description']['identifier']][0]}):
-        record(path, geometry_path, "Original food stage shapes and UVs with plate tops cut behind opaque stain texels, remapped to the exact-pixel entity atlas")
+        record(path, geometry_path, "Source food stages with explicit cap clearance and plate tops cut behind opaque stain texels, remapped to the exact-pixel entity atlas")
     components = entity_base("ordertocook_dining_plate")
     components.update({
         "minecraft:collision_box": {"width": 0.01, "height": 0.01},
@@ -2330,9 +2397,16 @@ def make_motorcycle_geo():
         bones.append(bone)
     if len(bones) != 16 or sum(len(b["cubes"]) for b in bones) != 41:
         raise ValueError(f"Upstream motorcycle model changed: {len(bones)} bones / {sum(len(b['cubes']) for b in bones)} cubes; inspect converter")
+    connector = next(b for b in bones if b['name'] == 'chest')['cubes'][4]
+    if (connector['origin'] != [-2,18,21.75] or connector['size'] != [4,1,2]
+            or connector.get('inflate') != .015 or connector['uv'] != [77,7]):
+        raise ValueError('Changed motorcycle chest connector source contract')
+    # Its source inflation overlaps both flanking pads on their bottom plane.
+    # A translation preserves box-UV dimensions and all four source palettes.
+    connector['origin'][1] += .015
     dest = RP / "models/entity/motorcycle.geo.json"
     write_json(dest, geometry(f"geometry.{NS}.motorcycle", bones, 128, 128))
-    record(source, dest, "CubeListBuilder hierarchy, PartPose and box-UV conversion")
+    record(source, dest, "CubeListBuilder hierarchy, PartPose and box-UV conversion; chest connector Y+0.015px separates inflated bottom faces")
 
 
 def customer_reaction_clock(durations=None):
@@ -2470,8 +2544,8 @@ def make_entities(animation_names):
     # movement in Java; the old synthetic customer walk has no runtime caller.
     write_json(RP / "animations/runtime.animation.json", {"format_version":"1.8.0","animations":{
         f"animation.{NS}.motorcycle.drive": {"loop":True,"bones":{
-            "front_t":{"rotation":["q.modified_distance_moved * -114.6",0,0]},
-            "rear_t":{"rotation":["q.modified_distance_moved * -114.6",0,0]}}}}})
+            "front_t":{"rotation":["q.modified_distance_moved * 114.6",0,0]},
+            "rear_t":{"rotation":["q.modified_distance_moved * 114.6",0,0]}}}}})
     riding, idle_length = make_customer_animation_controller()
     anims["controller"] = f"controller.animation.{NS}.customer"
     # Entity variables are lost when the client unloads the actor. Create every

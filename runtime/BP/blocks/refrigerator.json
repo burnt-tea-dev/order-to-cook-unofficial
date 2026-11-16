@@ -77,6 +77,7 @@
         "movement_type": "immovable"
       },
       "ordertocook:interact": {},
+      "minecraft:display_name": "senluo.tooltip.tile.ordertocook:refrigerator.name",
       "minecraft:block_entity": {
         "dynamic_properties": true,
         "container": {
@@ -100,8 +101,7 @@
             "face_dimming": true
           }
         }
-      },
-      "minecraft:display_name": "senluo.tooltip.tile.ordertocook:refrigerator.name"
+      }
     },
     "permutations": [
       {
