@@ -126,9 +126,19 @@ export function giveItems(player, typeId, amount) {
 }
 
 const COINS = [10000, 100, 20, 5, 1];
+const COIN_VALUES = new Map(COINS.map(value => [`ordertocook:chef_coin_${value}`, value]));
 export function coinBalance(player) {
   const container = containerOf(player);
-  return COINS.reduce((total, value) => total + countItem([container], `ordertocook:chef_coin_${value}`) * value, 0);
+  if (!container) return 0;
+  let total = 0;
+  // Read each native slot once, as Java CoinUtils.countCoins does. The fixed
+  // denomination lookup stores no player inventory or balance between calls.
+  for (let slot = 0; slot < container.size; slot++) {
+    const stack = container.getItem(slot);
+    const value = COIN_VALUES.get(stack?.typeId);
+    if (value !== undefined) total += stack.amount * value;
+  }
+  return total;
 }
 export function giveCoins(player, value) {
   if (!Number.isSafeInteger(value) || value < 0) throw new Error('Invalid coin value');
