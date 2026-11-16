@@ -13,7 +13,7 @@
 | 方塊格式 | 兩個冰箱與爐灶定義使用 `format_version: "1.26.60"`；本地化容器 `title` 於 26.60 加入。其他未變更方塊可保留既有格式版本。 |
 | 材質格式 | `ambient_occlusion` 自 format 1.26.20 起只接受 0–10 數值，不能再寫 `false`。兩個冰箱使用 `0`，舊格式設備維持原值；依據 [官方 material_instances 文件][materials]。 |
 
-API 模組使用 stable 與方塊需要實驗是兩件事。啟用更多 Test／Beta 功能並不會自動提供缺少的槽位篩選或容器關閉方法；本輪只啟用實際所需能力。
+API 模組使用 stable 與方塊需要實驗是兩件事。本版仍採上述 26.60 能力；較新的可撤權虛擬容器候選見下方 [26.70.24 API 重審](#267024-api-重審2026-11-16)，不能把本版的限制推成所有 Bedrock API 都無法實現。
 
 ## 為什麼上下層使用不同方塊 ID
 
@@ -64,7 +64,7 @@ Forge 1.20.1 與 NeoForge 1.21.1 的原爐灶均由方塊互動開啟七槽 GUI�
 
 [26.70.20 Preview 紀錄][preview70]才新增 `show_ui_on_interaction` 與自訂容器遵守 chest permissions 等修正；它們不是本輪 26.60 的能力，也不代表餐廳自訂員工權限可直接交給引擎。
 
-## 無法 1:1 的項目
+## 目前保留的差異
 
 | Java 行為／需求 | 26.60 的實際處理 |
 | --- | --- |
@@ -78,6 +78,65 @@ Forge 1.20.1 與 NeoForge 1.21.1 的原爐灶均由方塊互動開啟七槽 GUI�
 | 撤權即關閉已開原生容器 | 缺少可用 API；已列明限制，沒有以回滾快照或刪容器偽造保證。 |
 | 鍵鼠、觸控、手把、多玩家 GUI | 採原生輸入與單頁表單；需逐裝置及真雙人驗收，不能由 CI 或 BDS 探針代填通過。 |
 
+## 26.70.24 API 重審（2026-11-16）
+
+[2026-11-10 的官方 Preview 公告][preview7024]新增 beta `VirtualContainer`、
+`World.virtualContainerManager`、`open`／`close` 及內容變動／關閉事件。
+本次下載並查閱官方 npm **`@minecraft/server@2.13.0-beta.1.26.70-preview.24`**
+的型別宣告；正式依賴仍是 2.11.0，沒有升級世界或啟用新的實驗。
+這提供了**可由伺服器撤回操作權的容器介面路徑**，不再將「任何容器都不能關閉」
+當作通用引擎結論。它不能直接關閉另一個現有方塊的原生容器。
+
+### 已有能力及邊界
+
+- `create({size, title})` 建立 1–54 格記憶體容器，畫面每行九格；同一容器可由多位玩家共看。
+  `size`／`title` 建立後固定。沒有任意槽位座標、逐槽輸入規則或燃燒／烹調進度欄位；
+  它本身不補齊 Java 爐灶專用布局。現有 [#91 JSON UI 原型][stove-ui-pr]仍是另一條路線。
+- `close(player?)` 開始關閉後，指定觀看者便不能再經畫面改動容器；
+  客戶端關屏及已在途庫存請求完成後才發 close event，可能跨 tick。
+  撤權可只關閉該玩家，不能在請求關閉的當刻就假定所有在途交易已排清。
+- `open` 正常返回只表示已送出請求。`ContainerScreenOpen`、`PreviousScreenClosing`
+  等失敗以及稍後 `UserBusy` 都要保留既有庫存，不能把呼叫成功當成已顯示。
+- `virtualContainerItemChange` 是玩家 GUI 改物**之後**的通知；腳本寫入不會觸發它，
+  也沒有 `cancel`。無法單靠這個事件安全仿造燃料限定或輸出槽禁止放入。
+- 這個容器**不會保存到世界**。無腳本引用且無觀看者時可銷毀；世界關閉／script reload
+  會直接關屏而不發 close event。`PlayerLeft` close event 的玩家也已失效。
+  因此不能以「最後一位玩家關閉才寫回」保證物品安全。
+
+### 改善計劃：保留一份權威貨物，再評估 UI 所有權
+
+虛擬容器是可以研究的 UI 能力，現階段不把它接到冰箱／爐灶真實貨物。
+把原生 ItemStack **移入**記憶體會在 reload／崩潰時失去原持久承載；
+把它**複製進去**再等 after-event 回寫會產生可取出的第二份貨物。
+同一設備同時有多位玩家、操作台取料、爐灶加工、漏斗及拆除時，這兩種簡單接線都不成立。
+
+後續需先確認原生單一權威容器能否直接作介面 backing，或找到可完整保存任意
+ItemStack（含 bundles 等內部庫存）的明確交易路徑，再決定是否採用。
+本次型別的 `VirtualContainerOptions` 只有 size／title，沒有外部 container backing 參數。
+官方類別註解提及 shutdown 保存，但同一套 `ShutdownBeforeEventSignal` 明列 restricted callback，
+`Container.moveItem`／`setItem` 仍不允許 restricted execution；不能由該建議推定關服時能搬回原生槽。
+一般 JSON 屬性保存也不等於完整 ItemStack 的序列化或跨玩家背包原子提交。
+
+若以後建立可用的承載契約，原型應先處理每設備唯一 session、同容器多人觀看、
+撤權／拆除後等待 close 完成、`PlayerLeft` 的失效玩家、`UserBusy`、reload／shutdown
+及斷電資料歸屬；不能用過期 close 快照覆蓋其他玩家或加工的新內容。
+這些是尚待解決的具體 API 組合問題，分類為**有新能力、資料安全未證明**，
+不分類為「基岩永久不支援」。本次沒有新增測試、fixtures、常駐同步器或持久庫存副本。
+
+效能也需分別核對：虛擬容器可少用表單往返，但內容快照、事件回寫及跨容器同步可能增加成本。
+本次僅核對官方宣告，沒有原生執行、多人 GUI、記憶體或 FPS 收益結論。
+
+可重查的官方輸入：
+
+- [官方 npm 套件][virtual-types]：tarball SHA-256 `836357f5b46a82f1b15dbafcbca8d803846876e820ab11ff5467e14fdd622ae2`；
+  `index.d.ts` SHA-256 `88fb2ff9d0a1adf4b85e7f4cb05b8fea006967407e3ce47eff9403dfbdb7b9e8`。
+- 宣告項：`VirtualContainer`／`VirtualContainerManager`／`VirtualContainerOptions`、
+  `VirtualContainerCloseAfterEvent`／`VirtualContainerItemChangeAfterEvent`、
+  `ShutdownBeforeEventSignal` 及 `Container`。部分 Learn 類別頁此次未能開啟，
+  因此細節以這個固定官方套件為準，沒有由類別名稱猜功能。
+- [官方模組版本索引][server-module]與 [WorldAfterEvents][world-after-events]
+  列出新類別／事件；頁面選到 stable 不代表其中標為 pre-release 的 API 已進入 2.11.0。
+
 [release]: https://feedback.minecraft.net/hc/en-us/articles/49852828563853-Minecraft-Bedrock-Edition-26-60-Changelog
 [update50]: https://learn.microsoft.com/en-us/minecraft/creator/documents/update1.26.50?view=minecraft-bedrock-stable
 [materials]: https://learn.microsoft.com/en-us/minecraft/creator/reference/content/blockreference/examples/blockcomponents/minecraftblock_material_instances?view=minecraft-bedrock-stable
@@ -89,3 +148,8 @@ Forge 1.20.1 與 NeoForge 1.21.1 的原爐灶均由方塊互動開啟七槽 GUI�
 [player]: https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/player?view=minecraft-bedrock-experimental
 [ui-manager]: https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server-ui/uimanager?view=minecraft-bedrock-stable
 [preview70]: https://feedback.minecraft.net/hc/en-us/articles/49576818675597-Minecraft-Beta-Preview-26-70-20
+[preview7024]: https://feedback.minecraft.net/hc/en-us/articles/50285693907213-Minecraft-Beta-Preview-26-70-24
+[virtual-types]: https://registry.npmjs.org/@minecraft/server/-/server-2.13.0-beta.1.26.70-preview.24.tgz
+[server-module]: https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/minecraft-server?view=minecraft-bedrock-experimental
+[world-after-events]: https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/worldafterevents?view=minecraft-bedrock-experimental
+[stove-ui-pr]: https://github.com/burnt-tea-dev/order-to-cook-unofficial/pull/91
