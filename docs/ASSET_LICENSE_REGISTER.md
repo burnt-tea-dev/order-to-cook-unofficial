@@ -37,3 +37,7 @@ GPL-covered material may be modified and conveyed under the existing licence, su
 Issue #3 remains a non-blocking clarification record. Do not repeatedly contact the author or treat silence as affirmative permission. Record a substantive response and any asset-specific exception when received. The pending JSON evidence has not been changed to `CONFIRMED`.
 
 Required attribution, source correspondence and licence checks remain release requirements. Missing paperwork that the applicable licence actually requires, a documented rights conflict or a gameplay release blocker is not waived by this change.
+
+## External customer profile images (2026-11-11 source draft)
+
+The seven special-customer PNG snapshots have a separate record in assets/customer_skins/manifest.json and runtime/customer_skin_manifest.json. They are not included under the upstream GPL asset ledger. Their official Mojang UUID/texture URLs, image hashes and public profile responses establish source and identity, not artist ownership or a blanket redistribution license. No separate permissive license was found. Preserve the distinct notices and assess the applicable rights before distributing those specific files; do not treat this as a blanket veto on unrelated GPL-covered work. The source draft has not been publicly uploaded or released.

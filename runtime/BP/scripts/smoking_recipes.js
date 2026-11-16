@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // OTC's stove accepts smoking recipes; it is not a replacement for other kitchens.
+import { NATIVE_SMOKING_PROVIDERS } from './native_smoking_recipes.js';
+export { NATIVE_SMOKING_PROVIDERS as AUDITED_SMOKING_PROVIDERS };
 
 /** Existing public input/output shorthand, also accepted by ctx.smokingRecipes. */
 export const SMOKING_RECIPES = Object.freeze({
@@ -13,20 +15,6 @@ export const SMOKING_RECIPES = Object.freeze({
   "minecraft:potato": "minecraft:baked_potato",
   "minecraft:kelp": "minecraft:dried_kelp",
 });
-
-/** Reviewed native smoker recipes. Provenance and the 200-tick OTC rule are in docs/STOVE-RECIPES.md. */
-export const AUDITED_SMOKING_PROVIDERS = Object.freeze([
-  Object.freeze({
-    version: 1,
-    provider: "kaleidoscope_grilling",
-    recipes: Object.freeze([
-      Object.freeze({ id: "kaleidoscope_grilling:roasted_chicken_wing", process: "smoking",
-        input: "kaleidoscope_grilling:chicken_wing", output: "kaleidoscope_grilling:roasted_chicken_wing", count: 1 }),
-      Object.freeze({ id: "kaleidoscope_grilling:roasted_sweet_potato", process: "smoking",
-        input: "kaleidoscope_grilling:sweet_potato", output: "kaleidoscope_grilling:roasted_sweet_potato", count: 1 }),
-    ]),
-  }),
-]);
 
 const NAMESPACE = /^[a-z0-9_.-]+$/;
 const ITEM_ID = /^[a-z0-9_.-]+:[a-z0-9_./-]+$/;
@@ -63,11 +51,17 @@ export function createSmokingRecipeRegistry({ hasItem }) {
           [recipe.id, recipe.input, recipe.output].some(id => typeof id !== "string" || !ITEM_ID.test(id))) {
         return { ok: false, reason: "invalid_smoking_recipe" };
       }
-      if (!recipe.id.startsWith(`${provider}:`) || !recipe.input.startsWith(`${provider}:`)) {
+      if (!recipe.id.startsWith(`${provider}:`)) {
         return { ok: false, reason: "foreign_recipe_namespace" };
       }
-      if (ids.has(recipe.id) || entries.has(recipe.input)) {
+      if (ids.has(recipe.id)) {
         return { ok: false, reason: "duplicate_recipe_or_input" };
+      }
+      const previous = entries.get(recipe.input);
+      // Native recipes can have different IDs for the same transformation.
+      // Keep their single observable result; a different result is a conflict.
+      if (previous && (previous.output !== recipe.output || previous.count !== recipe.count)) {
+        return { ok: false, reason: "conflicting_recipe_input" };
       }
       if (Object.hasOwn(recipes, recipe.input) && owners.get(recipe.input) !== ownerKey) {
         return { ok: false, reason: "recipe_owned_by_another_catalog" };
@@ -92,7 +86,7 @@ export function createSmokingRecipeRegistry({ hasItem }) {
     return { ok: true, provider, catalog, registered: entries.size };
   }
 
-  for (const provider of AUDITED_SMOKING_PROVIDERS) {
+  for (const provider of NATIVE_SMOKING_PROVIDERS) {
     registerProvider({ ...provider,
       recipes: provider.recipes.filter(recipe => hasItem(recipe.input) && hasItem(recipe.output)) });
   }

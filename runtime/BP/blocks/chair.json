@@ -4,8 +4,8 @@
     "description": {
       "identifier": "ordertocook:chair",
       "menu_category": {
-        "category": "construction",
-        "group": "ordertocook:itemGroup.furniture"
+        "category": "items",
+        "group": "ordertocook:itemGroup.order_group"
       },
       "traits": {
         "minecraft:placement_direction": {
@@ -72,7 +72,8 @@
       "minecraft:movable": {
         "movement_type": "immovable"
       },
-      "ordertocook:interact": {}
+      "ordertocook:interact": {},
+      "minecraft:display_name": "senluo.tooltip.tile.ordertocook:chair.name"
     },
     "permutations": [
       {

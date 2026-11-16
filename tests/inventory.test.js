@@ -8,9 +8,10 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
 const inventorySource = await readFile(new URL("../runtime/BP/scripts/inventory.js", import.meta.url), "utf8");
-const importLine = /^import \{ ItemStack \} from '@minecraft\/server';$/m;
+const importLine = /^import \{ ItemStack, EquipmentSlot \} from '@minecraft\/server';$/m;
 assert.match(inventorySource, importLine, "update the explicit Minecraft import adapter if the production import changes");
 const stackAdapter = `
+const EquipmentSlot = { Offhand: "Offhand" };
 class ItemStack {
   constructor(typeId, amount = 1) {
     if (typeof typeId !== "string" || !typeId.includes(":")) throw new Error("Invalid item ID");

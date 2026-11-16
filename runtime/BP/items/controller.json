@@ -4,13 +4,12 @@
     "description": {
       "identifier": "ordertocook:controller",
       "menu_category": {
-        "category": "equipment",
-        "group": "ordertocook:itemGroup.vehicles"
+        "category": "items"
       }
     },
     "components": {
       "minecraft:display_name": {
-        "value": "item.ordertocook:controller.name"
+        "value": "senluo.tooltip.item.ordertocook:controller.name"
       },
       "minecraft:icon": {
         "textures": {

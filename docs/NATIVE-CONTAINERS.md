@@ -13,7 +13,7 @@
 | 方塊格式 | 兩個冰箱與爐灶定義使用 `format_version: "1.26.60"`；本地化容器 `title` 於 26.60 加入。其他未變更方塊可保留既有格式版本。 |
 | 材質格式 | `ambient_occlusion` 自 format 1.26.20 起只接受 0–10 數值，不能再寫 `false`。兩個冰箱使用 `0`，舊格式設備維持原值；依據 [官方 material_instances 文件][materials]。 |
 
-API 模組使用 stable 與方塊需要實驗是兩件事。本版仍採上述 26.60 能力；較新的可撤權虛擬容器候選見下方 [26.70.24 API 重審](#267024-api-重審2026-11-16)，不能把本版的限制推成所有 Bedrock API 都無法實現。
+API 模組使用 stable 與方塊需要實驗是兩件事。啟用更多 Test／Beta 功能並不會自動提供缺少的槽位篩選或容器關閉方法；本輪只啟用實際所需能力。
 
 ## 為什麼上下層使用不同方塊 ID
 
@@ -50,7 +50,58 @@ Forge 1.20.1 與 NeoForge 1.21.1 的原爐灶均由方塊互動開啟七槽 GUI�
 
 舊爐灶的七個實物槽以原生 `moveItem` 移入相同編號的方塊槽位，保留完整 ItemStack。目的槽有物、舊 helper 未載入、額外貨物或保存失敗時保留兩端；只有來源已空且新 owner 狀態成功保存後才移除空 helper。沒有重建空貨物來取代未載入的原記錄。
 
-目前 schema 只有通用容器布局，沒有逐槽角色／可放物品篩選，不能禁止玩家把物品放入燃料槽或輸出槽；也沒有 Java 專用燃燒／進度條。腳本只按上述七槽分工烹調，不清掉放錯的物品。這次僅有來源回歸結果，未新增 BDS、真客戶端七槽畫面或完整 Java UI 驗證。
+目前生成源已提供爐灶專用原生七槽布局候選：桌面使用 Java 原圖與槽位座標；觸控保留原生左右背包分區與 28px 格子，按同樣角色排成三輸入、下方燃料、右側三輸出。仍沒有逐槽可放物品篩選，也沒有真燃燒／料理進度條。腳本只按上述七槽分工烹調，不清掉放錯的物品。2026-11-12 的使用者截圖仍是原生通用七格單排，不能把舊候選視為成功。最新來源已修正同路徑 UI 入口與連續槽號並正常生成；**修後真客戶端尚未看過，不代表完整爐灶 parity**。沒有新增或執行測試。
+
+### 原操作與畫面接口核對（2026-11-11）
+
+本題指定 **BDS 1.26.60.6**，沿既有 Upcoming Creator Features。此處是來源核對，不是重新讀取 staging 安裝或客戶端結果。Java 固定於 [source.lock.json](../upstream/source.lock.json) 的 `e59e3dbcabe19b783d9adb933db5fcb8bc1e4642`；本機已讀 Forge 1.20.1、NeoForge 1.21.1 的 `StoveBlock`、`StoveBlockEntity`、`StoveScreenHandler` 與 `StoveScreen`，兩分支的七槽位置與進度繪製相同。
+
+真呼叫鏈為 `StoveBlock.use`（NeoForge：`useWithoutItem`）→ `player.openMenu(stove)` → `StoveBlockEntity.createMenu` → `StoveScreenHandler`；client 的 `MenuScreens.register(..., StoveScreen::new)` 才把這個 menu 接到畫面。不能只複製 PNG 就稱為已接入。
+
+| Java 槽位 | 原畫面內座標（x, y） | 玩家放入規則 | 現有 Bedrock 實物槽 |
+| --- | --- | --- | --- |
+| 輸入 0／1／2 | (38,17)／(56,17)／(74,17) | 全部允許，非煙燻原料留在原槽 | 0／1／2，同序 |
+| 燃料 3 | (56,53) | Forge `ForgeHooks.getBurnTime(stack, SMOKING)>0`；NeoForge `stack.getBurnTime(SMOKING)>0` | 3，目前無原生放入篩選 |
+| 輸出 4／5／6 | (116,35)／(134,35)／(152,35) | `OutputSlot.mayPlace=false`；block entity 的 `canPlaceItem` 也拒絕 | 4／5／6，目前仍可由玩家放入 |
+
+Java 快捷移動把設備內物品移至玩家背包；從背包移入時先辨認燃料，燃料只嘗試槽 3，其他物品只嘗試槽 0–2。這是原生 menu 的交易規則，重排格子的外觀不會令 Bedrock 引擎自動採用它。`canPlaceItem` 也是 Java 自動化可用的限制；本題沒有改動 Bedrock 自動化，也沒有將既有通用移物宣稱為相同規則。
+
+Java 的四個同步數值為 `litTime`、`litDuration`、`cookProgress`、`cookTotalTime=200`。`StoveScreenHandler.litProgress()` 取整數 `litTime*13/litDuration`；`cookProgress(lane)` 實際不使用 lane，取整數 `cookProgress*24/cookTotalTime`，所以三路共用一支箭頭。`StoveScreen.renderBg` 只在數值大於零時裁切原圖：火焰目的地 `(57,48-flame)`、來源 `(176,12-flame)`、尺寸 `14×(flame+1)`；箭頭目的地 `(79,35)`、來源 `(176,14)`、尺寸 `(progress+1)×16`。不是依時間自行循環的動畫。
+
+現有真 consumer 與生成責任：
+
+- [stove_controls.js](../runtime/BP/scripts/stove_controls.js) 的 `createNativeStoveStorage` 只管理七槽實物與舊 helper 遷移；[appliances.js](../runtime/BP/scripts/appliances.js) 的 `getStorage`、`canOpenStove`、`interact`、`tickStove` 使用同一方塊容器。`tickStove` 持有既有料理及燃料數值，仍由原設備更新與 `ctx.saveStation` 保存。`lit`／爐火貼圖／點火姿態不是料理進度的資料通道。
+- [main.js](../runtime/BP/scripts/main.js) 的爐灶 before-interact 分支沿 `canOpenStove` 決定放行原生操作；未就緒時沿原 owner 認領／遷移流程處理。本題沒有修改共用訂閱。
+- [convert_assets.py](../tools/convert_assets.py) 的 `make_blocks` 爐灶段生成同 ID 的七槽與標題 `container.ordertocook.stove`，現在同段呼叫 `make_stove_ui` 生成下面的 UI 接線；`make_textures_and_sounds` 已將原 `textures/gui/stove.png` 正常複製到 [RP 原貼圖](../runtime/RP/textures/ordertocook/gui/stove.png)。已直接檢視原 256×256 圖：含設備背景、背包區、火焰與箭頭區域；本題沿用原圖，沒有新造或修改 PNG。
+
+官方同代樣本固定到 `15701fa9c13923f12662984c32c124327e40e3d3`（1.26.60.5），不能冒稱取得了 1.26.60.6 客戶端內部程式。其 [`_ui_defs.json`][ui-defs] 載入 [`data_driven_container_screen.json`][data-driven-ui]：`data_driven_container.screen` 的桌面／觸控分支各選 `desktop_panel`／`pocket_containers.data_driven_container_panel`。官方註解明示 `$container_size` 由 `ChestScreenController::addStaticScreenVars` 發布；同檔 `container_label` 與 [chest_label][chest-ui] 讀 `$container_title` 並以 `$localize_title` 控制顯示翻譯。因此不能把舊畫面失敗直接歸咎於「size 變數不存在」或「標題已翻譯」。本次先將 `$container_title` 複製至 `$otc_title_copy`，再要求 `$container_size = 7` 與 `$otc_title_copy = 'container.ordertocook.stove'` 同時成立，避免把第三方七槽容器套成爐灶。2026-11-13 的 0.1.64 診斷 B 客戶端實測：原變數直接比較為 false，副本的 visible 與 screen requires 比較均為 true，字面量對照亦為 true。這支持先複製再比較；移除診斷後的完整版面仍待實測。不匹配時保留原生通用 panel，不猜譯名或退回無身份的七槽條件。原生資料集合仍是 `container_items`，不是另一份腳本庫存。
+
+| 所需接口 | 已讀接口與確定邊界 | 本題決定 |
+| --- | --- | --- |
+| 選擇爐灶畫面 | 官方登記的入口是 `ui/data_driven_container_screen.json`，controller 提供 `$container_size`。 | 改在同路徑覆寫 screen；不再於另一檔重複宣告同名 screen。同時要求七槽和原始爐灶 key；不匹配仍用原 panel。原始 key 在實際分支作用域是否可用、真 client 選窗均未確認。 |
+| 真燃料／料理進度 | `tickStove` 已有真數值；已讀 data-driven UI 沒有對應這四個數值的 binding，block container schema 也沒有自訂進度通道。 | 不接普通熔爐的進度 binding，不加玩家 HUD／lore carrier、第二份保存或 timer。這是本次已讀接口的缺口，不是未來 API 的永久結論。 |
+| 燃料限定、輸出禁止放入 | 固定 container schema 無逐槽 filter。現用 server 2.11.0 的 `Container.containerRules` 是唯讀可選屬性；`ContainerRules` 描述整個容器的 allowed／banned items、巢狀儲物及重量，沒有逐槽 `mayPlace`／fuel／output 設定入口。 | 不靠修改 rules 快照、鎖住成品 ItemStack 或事後搬回物品冒充原生交易限制；保留現有可用槽位。 |
+
+### 布局候選的生成與接入（2026-11-12 修正）
+
+使用者截圖顯示的是原生通用 176×130 單排面板，沒有進入候選 176×166 爐灶面板。staging 的 0.1.60 確有前輪 sparse grid 與 size selector，但這不證明 client 載入了哪份定義。跨檔同名 screen 的勝出順序未獲官方文件保證，因此本次移除歧義入口；沒有把這個推論寫成已重現的引擎根因。另將 sparse 9×3 改回連續索引 0–6，避免把位置索引當成控制陣列順序。Java 槽座標及料理、保存、原生庫存 owner 均未改。
+
+正常定向生成命令（在本 repo 根目錄執行）是：
+
+```sh
+python3 tools/convert_assets.py --stove-ui-only
+```
+
+此命令只寫下面三個 RP UI 檔，不呼叫測試、lint/typecheck、打包或服務。完整既有 `python3 tools/convert_assets.py` 也會由 `make_blocks` 的爐灶段呼叫相同 `make_stove_ui`；本題只執行定向生成，避免重產無關資產。
+
+- [`ui/_ui_defs.json`](../runtime/RP/ui/_ui_defs.json) 明確登記既有同路徑的 data_driven_container_screen.json 與 pocket 定義，不再只依賴客戶端基底清單載入覆寫檔；不新增別名 screen，也不複製官方 UI 清單。此註冊修正已作靜態生成比對，真客戶端路由與操作仍待驗證。
+- [`ui/data_driven_container_screen.json`](../runtime/RP/ui/data_driven_container_screen.json) 在官方原路徑覆寫同一 `data_driven_container.screen`，保留傷害關閉、桌面背景與觸控 toast；四個互斥分支按 desktop／pocket 及「七槽＋原始爐灶 title key」選內容。原 `ordertocook_stove.json` 由生成器移除，避免留下第二個 screen writer。未覆寫官方普通 panel 或任何 `chest.*` 定義。
+- 桌面專用 panel 用原 `stove.png` 的 `(0,0,176,166)` 區域作底圖。七個 cell 外框座標比 Java 的 16px 物品座標各減一，讓 native 18px cell 內的物品正好落在上表位置。玩家背包與 hotbar 仍用 `common` 的原生集合及控件，只對齊原圖位置。
+- [`ui/ordertocook_stove_pocket.json`](../runtime/RP/ui/ordertocook_stove_pocket.json) 在原 `pocket_containers` namespace 繼承 data-driven panel，保留標頭、關閉按鈕、左側 36 格玩家庫存、原生捲動、手把 helpers、selected item、item lock、cursor、tooltip 與 flying item 路徑。只有右側容器內容改成三個 28px 輸入、下方燃料、右側三個輸出；輸出靠右隨可用寬度移動，不將觸控格縮成桌面大小。觸控沿原生格子底圖，不硬拉伸 Java 整頁背景。
+
+集合索引沿官方 [brewing_output_slots][brewing-ui] 與 [armor_grid][inventory-ui] 的接法：有 `collection_name` 的 grid，用顯式 `grid_position` 指定槽號，在 cell 的 panel 內 offset 原生 item 控件。桌面 `[7,1]` 的 `[0,0]`–`[6,0]`、觸控 `[1,7]` 的 `[0,0]`–`[0,6]` 都對應**同一** `container_items` 0–6；位移施於完整 `common.container_item` input_panel，其子樹包含背景、物品、按鈕與選取控制，不是只移圖示；不搬貨。桌面 item 沿 `chest.chest_grid_item → common.container_item`；觸控沿 `common.pocket_ui_container_item → common.container_item`，原拖放、數量、耐久、focus、鎖定與 bundle 控件均保留。
+
+來源與三個 RP 產物已更新並直接對照原版控件與 Java 座標，未執行測試、lint/typecheck、CI 或 gameplay probe；僅作未改版的本機布局候選，manifest、baseline、發版與 staging 安裝由總協調接手。真客戶端、不同 GUI 比例／小螢幕的觸控顯示、手把導航與實際移物仍未觀察。真進度還缺原 `tickStove` 到 native container UI 的資料接口；逐槽放入／快捷移動分流仍缺引擎交易接口。沒有接普通 furnace binding、另造 timer／DP／lore／HUD carrier、假火焰循環或事後回搬。既有按鈕列表與手持投入沒有復活。
 
 ## 權限與多人界線
 
@@ -64,7 +115,7 @@ Forge 1.20.1 與 NeoForge 1.21.1 的原爐灶均由方塊互動開啟七槽 GUI�
 
 [26.70.20 Preview 紀錄][preview70]才新增 `show_ui_on_interaction` 與自訂容器遵守 chest permissions 等修正；它們不是本輪 26.60 的能力，也不代表餐廳自訂員工權限可直接交給引擎。
 
-## 目前保留的差異
+## 無法 1:1 的項目
 
 | Java 行為／需求 | 26.60 的實際處理 |
 | --- | --- |
@@ -72,70 +123,11 @@ Forge 1.20.1 與 NeoForge 1.21.1 的原爐灶均由方塊互動開啟七槽 GUI�
 | 只收食品 | schema 沒有 allowed-items／槽位篩選，冰箱可收其他物品；操作台仍只消耗訂單匹配的食品。 |
 | 同層整理 | 蹲下空手點擊目前上／下層，按 Java 初次出現順序合併同資料物品；不跨層搬運。原生可堆疊判定及完整 ItemStack 副本保留名稱、lore 與額外資料；寫入失敗時回復觸及格子。 |
 | 每格 128 件 | 整理仍遵守 Bedrock 原生堆疊上限；不將 128 件寫進原生 64 件格子，也不改成分頁儲物表單。 |
-| 爐灶 3 輸入＋燃料＋3 輸出的專用槽位 | 已使用真正七槽方塊 inventory，移物交給原生 GUI；沒有 Java 專用布局、燃燒／進度條、燃料限定及輸出鎖，不使用按鈕列表補成假專用槽位。 |
+| 爐灶 3 輸入＋燃料＋3 輸出的專用槽位 | 已使用真正七槽方塊 inventory；本機來源與 RP 已生成專用布局候選，真 client 未看。燃燒／進度條、燃料限定、輸出鎖與 Java 快捷移動分流仍未解，不以按鈕列表或事後回搬冒充。 |
 | 操作台原 12 格與進度布局 | 持有效票據直接製作，或同頁顯示訂單菜名／數量／缺料；沿用現有食品變體與交易。 |
 | 洗碗機批次介面 | 既有手持髒盤裝入最多 16 盤，雙手空領整批；本輪補強保存錯誤回退，並非首次改為直接互動。 |
 | 撤權即關閉已開原生容器 | 缺少可用 API；已列明限制，沒有以回滾快照或刪容器偽造保證。 |
 | 鍵鼠、觸控、手把、多玩家 GUI | 採原生輸入與單頁表單；需逐裝置及真雙人驗收，不能由 CI 或 BDS 探針代填通過。 |
-
-## 26.70.24 API 重審（2026-11-16）
-
-[2026-11-10 的官方 Preview 公告][preview7024]新增 beta `VirtualContainer`、
-`World.virtualContainerManager`、`open`／`close` 及內容變動／關閉事件。
-本次下載並查閱官方 npm **`@minecraft/server@2.13.0-beta.1.26.70-preview.24`**
-的型別宣告；正式依賴仍是 2.11.0，沒有升級世界或啟用新的實驗。
-這提供了**可由伺服器撤回操作權的容器介面路徑**，不再將「任何容器都不能關閉」
-當作通用引擎結論。它不能直接關閉另一個現有方塊的原生容器。
-
-### 已有能力及邊界
-
-- `create({size, title})` 建立 1–54 格記憶體容器，畫面每行九格；同一容器可由多位玩家共看。
-  `size`／`title` 建立後固定。沒有任意槽位座標、逐槽輸入規則或燃燒／烹調進度欄位；
-  它本身不補齊 Java 爐灶專用布局。現有 [#91 JSON UI 原型][stove-ui-pr]仍是另一條路線。
-- `close(player?)` 開始關閉後，指定觀看者便不能再經畫面改動容器；
-  客戶端關屏及已在途庫存請求完成後才發 close event，可能跨 tick。
-  撤權可只關閉該玩家，不能在請求關閉的當刻就假定所有在途交易已排清。
-- `open` 正常返回只表示已送出請求。`ContainerScreenOpen`、`PreviousScreenClosing`
-  等失敗以及稍後 `UserBusy` 都要保留既有庫存，不能把呼叫成功當成已顯示。
-- `virtualContainerItemChange` 是玩家 GUI 改物**之後**的通知；腳本寫入不會觸發它，
-  也沒有 `cancel`。無法單靠這個事件安全仿造燃料限定或輸出槽禁止放入。
-- 這個容器**不會保存到世界**。無腳本引用且無觀看者時可銷毀；世界關閉／script reload
-  會直接關屏而不發 close event。`PlayerLeft` close event 的玩家也已失效。
-  因此不能以「最後一位玩家關閉才寫回」保證物品安全。
-
-### 改善計劃：保留一份權威貨物，再評估 UI 所有權
-
-虛擬容器是可以研究的 UI 能力，現階段不把它接到冰箱／爐灶真實貨物。
-把原生 ItemStack **移入**記憶體會在 reload／崩潰時失去原持久承載；
-把它**複製進去**再等 after-event 回寫會產生可取出的第二份貨物。
-同一設備同時有多位玩家、操作台取料、爐灶加工、漏斗及拆除時，這兩種簡單接線都不成立。
-
-後續需先確認原生單一權威容器能否直接作介面 backing，或找到可完整保存任意
-ItemStack（含 bundles 等內部庫存）的明確交易路徑，再決定是否採用。
-本次型別的 `VirtualContainerOptions` 只有 size／title，沒有外部 container backing 參數。
-官方類別註解提及 shutdown 保存，但同一套 `ShutdownBeforeEventSignal` 明列 restricted callback，
-`Container.moveItem`／`setItem` 仍不允許 restricted execution；不能由該建議推定關服時能搬回原生槽。
-一般 JSON 屬性保存也不等於完整 ItemStack 的序列化或跨玩家背包原子提交。
-
-若以後建立可用的承載契約，原型應先處理每設備唯一 session、同容器多人觀看、
-撤權／拆除後等待 close 完成、`PlayerLeft` 的失效玩家、`UserBusy`、reload／shutdown
-及斷電資料歸屬；不能用過期 close 快照覆蓋其他玩家或加工的新內容。
-這些是尚待解決的具體 API 組合問題，分類為**有新能力、資料安全未證明**，
-不分類為「基岩永久不支援」。本次沒有新增測試、fixtures、常駐同步器或持久庫存副本。
-
-效能也需分別核對：虛擬容器可少用表單往返，但內容快照、事件回寫及跨容器同步可能增加成本。
-本次僅核對官方宣告，沒有原生執行、多人 GUI、記憶體或 FPS 收益結論。
-
-可重查的官方輸入：
-
-- [官方 npm 套件][virtual-types]：tarball SHA-256 `836357f5b46a82f1b15dbafcbca8d803846876e820ab11ff5467e14fdd622ae2`；
-  `index.d.ts` SHA-256 `88fb2ff9d0a1adf4b85e7f4cb05b8fea006967407e3ce47eff9403dfbdb7b9e8`。
-- 宣告項：`VirtualContainer`／`VirtualContainerManager`／`VirtualContainerOptions`、
-  `VirtualContainerCloseAfterEvent`／`VirtualContainerItemChangeAfterEvent`、
-  `ShutdownBeforeEventSignal` 及 `Container`。部分 Learn 類別頁此次未能開啟，
-  因此細節以這個固定官方套件為準，沒有由類別名稱猜功能。
-- [官方模組版本索引][server-module]與 [WorldAfterEvents][world-after-events]
-  列出新類別／事件；頁面選到 stable 不代表其中標為 pre-release 的 API 已進入 2.11.0。
 
 [release]: https://feedback.minecraft.net/hc/en-us/articles/49852828563853-Minecraft-Bedrock-Edition-26-60-Changelog
 [update50]: https://learn.microsoft.com/en-us/minecraft/creator/documents/update1.26.50?view=minecraft-bedrock-stable
@@ -148,8 +140,8 @@ ItemStack（含 bundles 等內部庫存）的明確交易路徑，再決定是�
 [player]: https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/player?view=minecraft-bedrock-experimental
 [ui-manager]: https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server-ui/uimanager?view=minecraft-bedrock-stable
 [preview70]: https://feedback.minecraft.net/hc/en-us/articles/49576818675597-Minecraft-Beta-Preview-26-70-20
-[preview7024]: https://feedback.minecraft.net/hc/en-us/articles/50285693907213-Minecraft-Beta-Preview-26-70-24
-[virtual-types]: https://registry.npmjs.org/@minecraft/server/-/server-2.13.0-beta.1.26.70-preview.24.tgz
-[server-module]: https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/minecraft-server?view=minecraft-bedrock-experimental
-[world-after-events]: https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/worldafterevents?view=minecraft-bedrock-experimental
-[stove-ui-pr]: https://github.com/burnt-tea-dev/order-to-cook-unofficial/pull/91
+[ui-defs]: https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/ui/_ui_defs.json
+[data-driven-ui]: https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/ui/data_driven_container_screen.json
+[chest-ui]: https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/ui/chest_screen.json
+[brewing-ui]: https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/ui/brewing_stand_screen.json
+[inventory-ui]: https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/ui/inventory_screen.json

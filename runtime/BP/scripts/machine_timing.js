@@ -32,13 +32,22 @@ export function createMachineTiming(ctx) {
   }
 
   function remaining(restaurant) {
-    return Math.max(0, refreshInterval(restaurant) - (total(restaurant) - restaurant.machineRefreshOrigin));
+    return Math.max(0, refreshInterval(restaurant) - Math.max(0, total(restaurant) - restaurant.machineRefreshOrigin));
+  }
+
+  function placed(restaurant) {
+    // setPlacedBy schedules 20 initialization ticks, even while closed. A
+    // future origin reserves them in the existing saved counters; load resumes
+    // the remainder without adding fields or resetting an initialized machine.
+    restaurant.machineRefreshOrigin = total(restaurant) + 20;
+    arrivals.delete(restaurant.id);
   }
 
   function refreshed(restaurant) {
     // The origin and the new offers commit in the same restaurant save. A
     // failed save leaves progress due, rather than losing a refresh interval.
-    restaurant.machineRefreshOrigin = total(restaurant);
+    // An explicit refresh during initialization must not finish the warmup.
+    restaurant.machineRefreshOrigin = Math.max(total(restaurant), restaurant.machineRefreshOrigin);
     delete restaurant.nextRefreshAt;
     delete restaurant.nextWalkInAt;
   }
@@ -51,10 +60,18 @@ export function createMachineTiming(ctx) {
       arrival = { remaining: ticks(DEFAULT_CONFIG.walkInIntervalMs) };
       arrivals.set(restaurant.id, arrival);
     }
-    if (!restaurant.active || restaurant.removing) return;
+    if (restaurant.removing) return;
+    const elapsed = total(restaurant);
+    if (elapsed < restaurant.machineRefreshOrigin) {
+      // Java returns on the twentieth initialization tick too. Neither order
+      // progress nor walkInTimer advances until the next block callback.
+      ctx.world.setDynamicProperty(MACHINE_TICKS + restaurant.id, elapsed + 1);
+      return;
+    }
+    if (!restaurant.active) return;
     // This callback exists only while the native block is simulated. Persist
     // a small number, as dining already does, not the full menu/order record.
-    const advanced = total(restaurant) + 1;
+    const advanced = elapsed + 1;
     ctx.world.setDynamicProperty(MACHINE_TICKS + restaurant.id, advanced);
     let changed = false;
     if (advanced - restaurant.machineRefreshOrigin >= refreshInterval(restaurant)) changed = ctx.refresh(restaurant, block);
@@ -71,5 +88,5 @@ export function createMachineTiming(ctx) {
     if (changed) ctx.saveRestaurant(restaurant);
   }
 
-  return { adopt, remaining, refreshed, tick, forget: id => arrivals.delete(id) };
+  return { adopt, placed, remaining, refreshed, tick, forget: id => arrivals.delete(id) };
 }

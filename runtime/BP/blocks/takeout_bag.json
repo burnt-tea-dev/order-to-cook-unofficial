@@ -5,7 +5,7 @@
       "identifier": "ordertocook:takeout_bag",
       "menu_category": {
         "category": "items",
-        "group": "ordertocook:itemGroup.tableware"
+        "group": "ordertocook:itemGroup.order_group"
       },
       "traits": {
         "minecraft:placement_direction": {
@@ -70,6 +70,7 @@
         "movement_type": "immovable"
       },
       "ordertocook:interact": {},
+      "minecraft:display_name": "senluo.tooltip.tile.ordertocook:takeout_bag.name",
       "minecraft:block_entity": {
         "dynamic_properties": true,
         "container": {

@@ -34,7 +34,8 @@ async function setup({ walkIn = false, seated = true, consumeLeather = true } = 
   const counter = place(env, 'ordertocook:countertop', { x: 1, y: 0, z: 0 });
   const shelfBlock = place(env, 'ordertocook:shelf', { x: 1, y: 0, z: 1 });
   env.player.container.setItem(0, new FakeItem('minecraft:leather', 3)); env.player.isSneaking = true;
-  env.hooks.shelfInteract(env.player, shelfBlock); env.player.isSneaking = false;
+  for (let plate = 0; plate < 3; plate++) env.hooks.shelfInteract(env.player, shelfBlock);
+  env.player.isSneaking = false;
   env.player.container.setItem(0, ticket); env.player.container.setItem(1, new FakeItem('minecraft:bread', 64));
   const shelf = env.store.findStation(shelfBlock);
   if (!consumeLeather) {
@@ -121,7 +122,7 @@ test('ordinary and walk-in bag handoffs keep tips/statistics and use seated or s
     assert.equal(env.hooks.dining.queueMeal(env.restaurant, env.order, env.customer), undefined);
     assert.equal(env.restaurant.pendingDishes.length, 0);
     assert.equal(env.dimension.sounds.slice(soundAt).some(sound => /food_plate|explosion/.test(sound)), false);
-    assert.doesNotMatch(env.player.messages.at(-1), /髒餐盤/);
+    assert.deepEqual(env.player.messages.at(-1), {"rawtext": [{"translate": "otc.order.completed", "with": {"rawtext": [{"text": String(env.order.reward + 1)}, {"translate": "otc.currency"}]}}, {"text": " "}, {"translate": "otc.order.tip", "with": {"rawtext": [{"text": "1"}]}}]});
     env.player.container.setItem(5, bag); env.player.selectedSlotIndex = 5;
     env.hooks.customerInteract(env.player, env.customer, env.linkage, { rng: () => { throw Error('duplicate payment'); } });
     assert.equal(balance(env.player), env.order.paidReward); assert.equal(env.restaurant.stats.completed, 1);

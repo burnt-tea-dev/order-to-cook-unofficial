@@ -103,7 +103,7 @@ Use the actual supplier's edible output, recipe and nutrition facts.
 | `typeId` | Canonical dish/drink ID. This and its aliases must represent the same real consumable. |
 | `nutrition` | Explicit integer `1..10000` for ordinary food, or `0..10000` when `servingKind` is `drink`, in hunger points. No inferred quality, heat, seasoning or price multiplier. |
 | `servingKind` | Optional literal `drink`. Required for zero nutrition; omit for ordinary food. Unknown values are rejected. Declaring a drink does not change its actual eating/drinking components or container behavior. |
-| `label` | Optional display name, at most 100 characters; otherwise the ID. |
+| `label` | Optional saved fallback name, at most 100 characters; otherwise the ID. Loaded items use their native localization key for client display. This literal is not a per-player translation. |
 | `aliases` | Optional additional physical item IDs for that dish. An alias cannot belong to two different canonical dishes in a provider catalog. |
 | `nativeVariant` | Optional integer `0..32767` identifying a specific recipe in valid public V1 item metadata. Omit for a fixed dish. |
 
@@ -117,6 +117,41 @@ Only `Server`-origin script events are accepted for this contract. Player,
 command-block and NPC-origin messages cannot silently register a catalog. The
 existing administrator command is unchanged. Invalid batches leave the previous
 working live catalog intact and log the rejected declaration.
+
+## Menu, order and meal names
+
+The runtime [presentation consumer](../runtime/BP/scripts/i18n.js) resolves a
+loaded item's `ItemType.localizationKey` and passes it as `RawMessage.translate`
+through menu buttons, order details, missing-food messages and new parcel lore.
+Native item displays may use the explicit `senluo.tooltip.<plain-key>` contract
+to add a blue addon source line. The consumer unwraps only that owned key prefix
+before translation; an already plain key, vanilla key or other addon key is used
+unchanged. The original `.name` resource remains the single-line name for menus
+and guides. This does not split rendered strings or change saved item metadata.
+Obtainable block-items use the block `minecraft:display_name` component with
+`senluo.tooltip.<tile-key>` under the same convention. Hidden helper blocks are
+excluded; `tile.*.name` and `container.*` titles remain plain translations.
+Each client selects its language; neither the server language nor a saved
+catalog `label` selects it. If the supplying item is no longer loaded, the saved
+label/ID remains readable as a literal fallback. Nutrition, recipe identity,
+aliases and quoted order requirements are unchanged.
+
+Item producers own their item translation keys and words. OTC does not duplicate
+their food-name dictionaries. A missing key or an incorrect translation in a
+producer's resource pack must be corrected by that producer. The port's own
+menu/order wording lives in [assets/localization](../assets/localization/);
+English and Simplified Chinese order-tier names come from the pinned Java
+language assets. Traditional Chinese has its own wording. Regenerate language
+files with `python3 tools/convert_assets.py --languages-only`; this entry only
+writes language resources and does not run the full asset conversion or a build.
+
+`ItemStack.nameTag` accepts a literal string, whereas `setLore` accepts
+`RawMessage`. New tickets and meals therefore keep their native translated item
+name and place the restaurant/carrier title in the first lore row. Existing
+custom names and lore are not bulk rewritten. The existing bag destination
+update reads raw lore, changes only its own coordinate row and preserves the
+other components and item metadata. This is a source change; client rendering
+and per-player language selection have not been observed in game.
 
 ## Automatic registration without a pack order dependency
 

@@ -15,18 +15,9 @@ import {
 import { normalizeFoodIdentity, normalizeFoodAliases, menuFoodsOverlap } from "./senluo_food.js";
 import { DEFAULT_CUSTOMER_NAMES, ENGLISH_CUSTOMER_NAMES } from './customer_names.js';
 
-// CustomerProfileLibrary.java at the pinned upstream commit. Bedrock cannot
-// fetch these accounts' player skins; their original identity still travels
-// with the order and drives its name, tips and completion reaction.
-export const EASTER_EGG_CUSTOMERS = Object.freeze([
-  ['Breezeth', '微风(作者)', 'a1b3e264-652b-42db-b8e7-5393b409776b'],
-  ['Kuroneko_RikoP', '猫猫子(贡献)', 'e2ca8e07-c1b5-46e1-86f9-932718a44e60'],
-  ['YYN0114', '以诺(贡献)', '035c0419-c744-47eb-b2a2-470d92b3bb0c'],
-  ['Yunan_ovo', '遇南(贡献)', '772fcb25-c047-42b8-9d5e-df82d7a4a233'],
-  ['Ao2333', 'Ao(美术)', '25b8aea8-c9c2-41ef-8f17-3b9c0f7aa365'],
-  ['Assumine', 'Assumine(贡献)', '76640ae8-c4da-44ea-9d4b-53329ea02b2d'],
-  ['zsdr', 'N44(美术)', '5a33e9b0-35bc-44ed-9b4e-03e3e180a3d2']
-]);
+// Fixed identity order from pinned Java; resource generation uses the same catalog.
+import { EASTER_EGG_CUSTOMERS } from './customer-skin-catalog.js';
+export { EASTER_EGG_CUSTOMERS };
 
 /** @typedef {number | {wall: number, tick: number}} OrderTime */
 
@@ -349,9 +340,9 @@ function destinationFor(restaurant, longDistance, cfg, rng) {
 }
 
 /** Reuse the original radial candidates without allocating or changing an order. */
-export function chooseDeliveryDestination(restaurant, longDistance, resolveDestination, rng = Math.random) {
+export function chooseDeliveryDestination(restaurant, longDistance, resolveDestination, rng = Math.random, attempts = 4) {
   const cfg = configFor(restaurant);
-  for (let attempt = 0; attempt < (resolveDestination ? 4 : 1); attempt++) {
+  for (let attempt = 0; attempt < (resolveDestination ? attempts : 1); attempt++) {
     const candidate = destinationFor(restaurant, longDistance, cfg, rng);
     const destination = resolveDestination ? resolveDestination(candidate) : candidate;
     if (destination) return destination;
@@ -381,9 +372,13 @@ function makeOrder(restaurant, now, rng, walkIn, resolveDestination) {
   const longDistance = delivery && unit(rng) < chance(cfg.longDistanceDeliveryChance);
   let destination;
   if (delivery) {
-    // Resolve terrain before assigning an ID or publishing a delivery offer.
-    destination = chooseDeliveryDestination(restaurant, longDistance, resolveDestination, rng);
-    if (!destination) return undefined;
+    // Java always publishes the offer, retaining the last radial candidate if
+    // all eight terrain choices fail. Customer placement resolves it later.
+    let fallback;
+    destination = chooseDeliveryDestination(restaurant, longDistance, candidate => {
+      fallback = candidate;
+      return resolveDestination ? resolveDestination(candidate) : candidate;
+    }, rng, 8) ?? fallback;
   }
   const pool = normalizeMenu(restaurant.menu);
   if (!pool.length) pool.push({ ...VANILLA_FOOD_BY_ID["minecraft:apple"] });

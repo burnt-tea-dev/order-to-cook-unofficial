@@ -144,13 +144,13 @@ test("short/long delivery destinations use the upstream radial ranges", () => {
   assert.equal(long.destination.distance, 2250);
 });
 
-test('unresolved delivery terrain defers the offer without consuming an ID or changing the restaurant', () => {
+test('unresolved delivery terrain retains the eighth Java candidate and publishes one offer', () => {
   const r = restaurant(); r.config = { deliveryRate: 1 };
   const before = structuredClone(r), candidates = [];
   const result = generateOrder(r, NOW, () => 0.5, candidate => { candidates.push(candidate); return undefined; });
-  assert.equal(result, undefined);
-  assert.equal(candidates.length, 4);
-  assert.deepEqual(r, before);
+  assert.deepEqual(result.destination, candidates.at(-1));
+  assert.equal(candidates.length, 8);
+  assert.deepEqual(r, { ...before, orders: [result], orderSequence: before.orderSequence + 1 });
 });
 
 test('delivery generation publishes only the resolved candidate and preserves the original radial source', () => {
@@ -336,20 +336,20 @@ test("refreshing a machine does not discard already accepted or packed work", ()
   assert.equal(r.stats.failed, 0);
 });
 
-test('a refresh with no safe delivery point keeps accepted proof and skips undefined offers', () => {
+test('a refresh with no safe delivery point keeps accepted proof and publishes Java fallback offers', () => {
   const r = restaurant({ level: 4, menu: richMenu });
   r.config = { deliveryRate: 1 };
   const order = packed(r); order.proof = 'original-delivery-proof';
   const destination = structuredClone(order.destination), sequence = r.orderSequence;
   let attempts = 0;
   const result = refreshOrders(r, NOW + 200, () => 0.5, () => { attempts++; return undefined; });
-  assert.deepEqual(result.orders, []);
-  assert.deepEqual(r.orders, [order]);
-  assert.equal(r.orderSequence, sequence);
+  assert.equal(result.orders.length, getUnlockedSlots(r));
+  assert.deepEqual(r.orders, [order, ...result.orders]);
+  assert.equal(r.orderSequence, sequence + getUnlockedSlots(r));
   assert.equal(order.status, 'packed');
   assert.equal(order.proof, 'original-delivery-proof');
   assert.deepEqual(order.destination, destination);
-  assert.equal(attempts, getUnlockedSlots(r) * 4);
+  assert.equal(attempts, getUnlockedSlots(r) * 8);
   assert.ok(r.nextRefreshAt > NOW + 200);
 });
 

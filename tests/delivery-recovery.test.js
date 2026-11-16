@@ -119,7 +119,7 @@ async function heldBag() {
   const bag = env.hooks.parcelFor(env.restaurant, env.order);
   bag.nameTag = 'Original named parcel'; bag.keepOnDeath = true;
   bag.setDynamicProperty('other:untouched', 'original');
-  bag.setLore(['Player prefix', ...bag.getLore(), '目的地 X:777 Z:888', 'Player suffix']);
+  bag.setLore(['Player prefix', ...bag.getRawLore(), '目的地 X:777 Z:888', 'Player suffix']);
   env.player.container.setItem(0, bag); env.player.location = { x: 50.5, y: 0, z: 50.5 };
   return env;
 }
@@ -140,7 +140,7 @@ test('the same physical recovered bag lazily updates only its factory coordinate
   env.player.container.setItem = (...args) => { writes++; return set(...args); };
   useBag(env);
   const updated = env.player.container.getItem(0);
-  const expected = before.clone(); expected.setLore(before.getLore().map(line => line === '目的地 X:50 Z:50' ? '目的地 X:0 Z:50' : line));
+  const expected = before.clone(); expected.setLore(before.getRawLore().map(line => line.translate === 'otc.parcel.destination' ? { translate: 'otc.parcel.destination', with: { rawtext: [{ text: '0' }, { text: '50' }] } } : line));
   assert.deepEqual(updated, expected);
   assert.equal(writes, 1);
   useBag(env); assert.equal(writes, 1, 'Current lore does not cause an unconditional native write.');

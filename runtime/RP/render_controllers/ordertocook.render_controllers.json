@@ -7,23 +7,49 @@
           "Array.skins": [
             "Texture.wide",
             "Texture.slim"
+          ],
+          "Array.profiles": [
+            "Texture.wide",
+            "Texture.special_1",
+            "Texture.special_2",
+            "Texture.special_3",
+            "Texture.special_4",
+            "Texture.special_5",
+            "Texture.special_6",
+            "Texture.special_7"
+          ],
+          "Array.custom_wide": [
+            "Texture.wide"
+          ],
+          "Array.custom_slim": [
+            "Texture.slim"
           ]
         },
         "geometries": {
           "Array.models": [
             "Geometry.wide",
             "Geometry.slim"
+          ],
+          "Array.profile_models": [
+            "Geometry.wide",
+            "Geometry.wide",
+            "Geometry.slim",
+            "Geometry.slim",
+            "Geometry.slim",
+            "Geometry.wide",
+            "Geometry.wide_legacy",
+            "Geometry.slim"
           ]
         }
       },
-      "geometry": "Array.models[q.property('ordertocook:variant')]",
+      "geometry": "q.property('ordertocook:skin_profile') > 0 ? Array.profile_models[q.property('ordertocook:skin_profile')] : Array.models[q.property('ordertocook:variant')]",
       "materials": [
         {
           "*": "Material.default"
         }
       ],
       "textures": [
-        "Array.skins[q.property('ordertocook:variant')]"
+        "q.property('ordertocook:skin_profile') > 0 ? Array.profiles[q.property('ordertocook:skin_profile')] : (q.property('ordertocook:custom_skins') ? (q.property('ordertocook:variant') == 1 ? Array.custom_slim[math.mod(q.property('ordertocook:skin_seed'), 1)] : Array.custom_wide[math.mod(q.property('ordertocook:skin_seed'), 1)]) : Array.skins[q.property('ordertocook:variant')])"
       ]
     },
     "controller.render.ordertocook.helper": {

@@ -5,7 +5,7 @@
       "identifier": "ordertocook:stove",
       "menu_category": {
         "category": "items",
-        "group": "ordertocook:itemGroup.restaurant_equipment"
+        "group": "ordertocook:itemGroup.order_group"
       },
       "traits": {
         "minecraft:placement_direction": {
@@ -87,6 +87,7 @@
         "movement_type": "immovable"
       },
       "ordertocook:interact": {},
+      "minecraft:display_name": "senluo.tooltip.tile.ordertocook:stove.name",
       "minecraft:block_entity": {
         "dynamic_properties": true,
         "container": {

@@ -96,6 +96,8 @@ geometry 統一使用 `1.21.0` 格式，以支援原作已使用的逐面 `uv_ro
 
 餐盤架保留 0–18 盤、包裝架保留 0–10 份包材、洗碗檯保留 0–10 盤的原 multipart 外形。`food_plate_display` 方塊與用餐 helper 均保留原 40 個食物／進食階段。Java stage 0 的空 blockstate 另由 `FoodPlatePlacedRenderer` 顯示食物；候選使用該原 Geo 與專用材質，靜態方塊保留完成姿態，用餐 helper 播放原 0.5 秒 `maked` 並按已過時間定位。
 
+2026-11-10 未發布來源針對餐盤面層閃爍，將階段模型的盤底頂面按原污漬貼圖的二值 alpha 切開：只省略被不透明污漬遮住的部分，透明處仍保留盤底。污漬面本身、食物、盤緣、原有高度差與來源 UV 不變，不增加深度偏移或另造貼圖；方塊模型及餐盤 atlas 模型使用同一生成邏輯。`tools/convert_assets.py --plates-only` 只重產相關餐盤資產及原有來源記錄，不經測試或發行流程。這消除了上述兩層在不透明污漬範圍的重複覆蓋；未部署，也未觀察修後客戶端閃爍、斜角或遠景。
+
 洗碗檯的 Java 模型只宣告 water 紋理，沒有水面；水面由固定 Forge `WashingTableWaterRenderer.java` 另畫。本轉換器讀取其 X=3–13、Z=3–12、Y=15.08 像素及完整 0–1 UV，為全部 11 個世界盤數狀態加入同一零厚度薄片。頂／底面使用相反繞序與相同物理 UV 角點，以表達原 renderer 的 no-cull 平面；沒有新增貼圖、體積或水面動畫。來源 Git blob 為 `a47acf4717344c0196066cccbf199c8c21347585`，SHA-256 為 `f6f7b7b7781e30acded9d3e2cf17ad6d8ab01d234dd1e2b2d517fd4ea9130d1d`；每個輸出均有來源清單條目。
 
 原 water.png 的 alpha 固定為 133，不能用只容許全透明／不透明的 `alpha_test`。依官方同方塊所有材質共用 render_method 的限制，世界本體與水面全部使用 `blend`。Java 物品只繼承乾的 idle 模型，故另外生成 `washingtable_item`，由 `minecraft:item_visual` 使用原 `alpha_test` 材質，沒有讓水面溢入物品。全方塊透明排序、背面、盤子與池壁遮擋，以及原生持物／物品欄仍需 Bedrock 客戶端驗證；來源角點測試不是這些驗收的替代。詳見[水面修正契約](validation/UNRELEASED-washingtable-water.md)。
