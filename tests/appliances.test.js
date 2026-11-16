@@ -87,7 +87,7 @@ test('sixteen-plate washer follows 30+80+24 ticks and produces plates once', () 
   const block = place(env, 'ordertocook:dishwasher'); service.onPlace(block); const station = env.ctx.getStation(block);
   player.container.setItem(0, new FakeItem('ordertocook:dirty_plate', 20)); service.onInteract(player, block); service.tick();
   assert.equal(player.container.getItem(0).amount, 4); assert.equal(station.appliance.phase, 2); assert.equal(station.appliance.plates, 16);
-  assert.equal(block.permutation.getState('ordertocook:plates'), 0); assert.equal(block.permutation.getState('ordertocook:plates_high'), true);
+  assert.equal(block.permutation.getState('ordertocook:plates'), 3); assert.equal(block.permutation.getState('ordertocook:plates_high'), undefined);
   advance(service, env, 30); assert.equal(station.appliance.phase, 3); advance(service, env, 80); assert.equal(station.appliance.phase, 4);
   advance(service, env, 24); assert.equal(station.appliance.phase, 5);
   player.selectedSlotIndex = 1; // Empty main hand; the four excess dirty plates remain in slot 0.

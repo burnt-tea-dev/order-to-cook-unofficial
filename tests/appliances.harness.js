@@ -236,6 +236,7 @@ export function makeEnvironment() {
       if (!records.has(id)) records.set(id, { id, dimensionId: block.dimension.id, location: { ...block.location }, typeId: block.typeId });
       return records.get(id);
     },
+    getStationById: id => records.get(id),
     stations: () => [...records.values()], saveStation: station => records.set(station.id, station),
     deleteStation: station => records.delete(typeof station === 'string' ? station : station.id),
     getRestaurant: id => restaurants.get(id), restaurants: () => [...restaurants.values()], saveRestaurant: restaurant => restaurants.set(restaurant.id, restaurant),

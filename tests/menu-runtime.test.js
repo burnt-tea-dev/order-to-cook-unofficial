@@ -39,6 +39,7 @@ test('V1 metadata alone cannot admit a tool or invent a food nutrition value', a
 test('held menu registration preserves the stack and counts one dish, not the held amount', async () => {
   const env = await mainFixture(), { block, station } = boardFixture(env);
   const item = new FoodStack(7, 64); env.player.container.setItem(0, item);
+  env.formResponses.push(0, 0);
   await env.hooks.boardForm(env.player, block);
   assert.equal(env.core.getMenuNutrition(station.menu), 7);
   assert.deepEqual(station.menu[0].foodIdentity, { carrier: 'senluo.public.food.v1', nativeVariant: 7 });
@@ -50,7 +51,7 @@ test('inventory picker shows distinct same-ID variants and removes only the sele
   env.player.container.setItem(0, new FoodStack(7)); env.player.container.setItem(1, new FoodStack(8));
   env.player.isSneaking = true;
   env.formResponses.push(0, (player, title, body, buttons) => {
-    assert.equal(buttons.length, 2); assert.match(buttons[0], /變體 7/); assert.match(buttons[1], /變體 8/); return 0;
+    assert.equal(buttons.length, 2); assert.deepEqual(buttons[0], {"rawtext": [{"rawtext": [{"rawtext": [{"text": "原菜名"}]}, {"text": " · "}, {"translate": "otc.food.variant", "with": {"rawtext": [{"text": "7"}]}}]}, {"text": " · "}, {"translate": "otc.food.nutrition", "with": {"rawtext": [{"text": "7"}]}}]}); assert.deepEqual(buttons[1], {"rawtext": [{"rawtext": [{"rawtext": [{"text": "原菜名"}]}, {"text": " · "}, {"translate": "otc.food.variant", "with": {"rawtext": [{"text": "8"}]}}]}, {"text": " · "}, {"translate": "otc.food.nutrition", "with": {"rawtext": [{"text": "7"}]}}]}); return 0;
   });
   await env.hooks.boardForm(env.player, block);
   env.formResponses.push(0, 0); await env.hooks.boardForm(env.player, block);
@@ -66,13 +67,14 @@ test('async menu selection rejects an item removed or swapped while the form was
     env.formResponses.push(0, () => { env.player.container.setItem(0, replacement); return 0; });
     await env.hooks.boardForm(env.player, block);
     assert.deepEqual(station.menu, []);
-    assert.match(env.player.messages.at(-1), /已改變/);
+    assert.deepEqual(env.player.messages.at(-1), { translate: 'otc.menu.food_changed' });
   }
 });
 
 test('nutrition and names remain snapshots across override changes; explicit remove/re-add updates them', async () => {
   const env = await mainFixture(), { block, station } = boardFixture(env);
   configureFood(env, 7, '登記菜名'); env.player.container.setItem(0, new FoodStack(7));
+  env.formResponses.push(0, 0);
   await env.hooks.boardForm(env.player, block); env.hooks.syncMenu(env.restaurant);
   const order = env.core.generateOrder(env.restaurant, Date.now(), () => 0.999);
   env.core.acceptOrder(env.restaurant, order.id);
@@ -80,10 +82,11 @@ test('nutrition and names remain snapshots across override changes; explicit rem
   configureFood(env, 900, '新設定名稱'); env.hooks.syncMenu(env.restaurant);
   assert.equal(env.core.getMenuNutrition(env.restaurant), 7);
   assert.equal(env.restaurant.menu[0].label, '登記菜名'); assert.deepEqual(order, before);
-  assert.match(env.hooks.orderBody(order), /登記菜名 · 變體 7/);
-  assert.doesNotMatch(env.hooks.orderBody(order), /新設定名稱/);
-  assert.match(env.hooks.parcelFor(env.restaurant, order).getLore().join('\n'), /登記菜名 · 變體 7/);
+  assert.deepEqual(env.hooks.orderBody(order).rawtext[2], {"rawtext": [{"rawtext": [{"rawtext": [{"text": "登記菜名"}]}, {"text": " · "}, {"translate": "otc.food.variant", "with": {"rawtext": [{"text": "7"}]}}]}, {"text": ' ×' + order.items[0].amount}]});
+  assert.doesNotMatch(JSON.stringify(env.hooks.orderBody(order)), /新設定名稱/);
+  assert.deepEqual(env.hooks.parcelFor(env.restaurant, order).getRawLore()[2], {"rawtext": [{"rawtext": [{"rawtext": [{"text": "登記菜名"}]}, {"text": " · "}, {"translate": "otc.food.variant", "with": {"rawtext": [{"text": "7"}]}}]}, {"text": ' ×' + order.items[0].amount}]});
   env.core.removeMenuFood(station, 'test:meal', station.menu[0].foodIdentity);
+  env.formResponses.push(0, 0);
   await env.hooks.boardForm(env.player, block); env.hooks.syncMenu(env.restaurant);
   assert.equal(env.core.getMenuNutrition(env.restaurant), 900);
   assert.equal(env.restaurant.menu[0].label, '新設定名稱'); assert.deepEqual(order, before);
@@ -99,7 +102,7 @@ test('async selection also rejects a changed nutrition registration instead of s
 
 test('board -> order -> variant-matched cooking counter -> handoff pays once and leaves wrong variant intact', async () => {
   const env = await mainFixture(), { block, station } = boardFixture(env);
-  env.player.container.setItem(0, new FoodStack(7)); await env.hooks.boardForm(env.player, block);
+  env.player.container.setItem(0, new FoodStack(7)); env.formResponses.push(0, 0); await env.hooks.boardForm(env.player, block);
   env.hooks.syncMenu(env.restaurant); env.restaurant.orders = [];
   const order = env.core.generateOrder(env.restaurant, Date.now(), () => 0.999);
   env.core.acceptOrder(env.restaurant, order.id); env.store.saveRestaurant(env.restaurant);
@@ -116,7 +119,7 @@ test('board -> order -> variant-matched cooking counter -> handoff pays once and
   const parcelSlot = env.player.container.slots.findIndex(s => s?.typeId === 'ordertocook:food_plate');
   assert.ok(parcelSlot >= 0); env.player.selectedSlotIndex = parcelSlot;
   const parcel = env.player.container.getItem(parcelSlot);
-  assert.match(parcel.getLore().join('\n'), /原菜名 · 變體 7/);
+  assert.deepEqual(parcel.getRawLore()[2], {"rawtext": [{"rawtext": [{"rawtext": [{"text": "原菜名"}]}, {"text": " · "}, {"translate": "otc.food.variant", "with": {"rawtext": [{"text": "7"}]}}]}, {"text": ' ×' + order.items[0].amount}]});
   const linkage = { restaurantId: env.restaurant.id, orderId: order.id };
   env.customer.setDynamicProperty('ordertocook:order_id', order.id);
   env.hooks.customerInteract(env.player, env.customer, linkage, { rng: () => 0.999 });
@@ -132,7 +135,7 @@ test('board -> order -> variant-matched cooking counter -> handoff pays once and
 
 test('counter failure for the wrong variant preserves dishes, supplies and order state', async () => {
   const env = await mainFixture(), { block } = boardFixture(env);
-  env.player.container.setItem(0, new FoodStack(7)); await env.hooks.boardForm(env.player, block);
+  env.player.container.setItem(0, new FoodStack(7)); env.formResponses.push(0, 0); await env.hooks.boardForm(env.player, block);
   env.hooks.syncMenu(env.restaurant); env.restaurant.orders = [];
   const order = env.core.generateOrder(env.restaurant, Date.now(), () => 0.999);
   env.core.acceptOrder(env.restaurant, order.id); env.store.saveRestaurant(env.restaurant);
@@ -144,5 +147,5 @@ test('counter failure for the wrong variant preserves dishes, supplies and order
   env.hooks.prepareOrderAtCountertop(env.player, counter, env.restaurant, order);
   assert.equal(order.status, 'accepted'); assert.equal(shelf.supplies, 3); assert.equal(counter.above().isAir, true);
   assert.deepEqual(structuredClone(env.player.container.slots), before);
-  assert.match(env.player.messages.at(-1), /變體 7/);
+  assert.deepEqual(env.player.messages.at(-1), {"translate": "otc.counter.missing_details", "with": {"rawtext": [{"rawtext": [{"rawtext": [{"rawtext": [{"rawtext": [{"text": "原菜名"}]}, {"text": " · "}, {"translate": "otc.food.variant", "with": {"rawtext": [{"text": "7"}]}}]}, {"text": ' ×' + order.items[0].amount}]}]}]}});
 });

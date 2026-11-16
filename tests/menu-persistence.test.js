@@ -113,7 +113,7 @@ test('upgrade confirmation commits a board changed while its form was open', asy
   await env.hooks.upgradeForm(env.player, env.machine, env.restaurant);
   assert.deepEqual(savedRestaurant(env).menu, []);
   assert.equal(savedRestaurant(env).level, 0);
-  assert.match(env.player.messages.at(-1), /菜單總營養值不足/);
+  assert.deepEqual(env.player.messages.at(-1), {"translate": "otc.reason.menu_nutrition", "with": {"rawtext": [{"text": "menu_nutrition"}]}});
 });
 
 test('administrator empty refresh persists confirmed board removal', async () => {
