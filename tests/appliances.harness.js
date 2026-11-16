@@ -24,6 +24,7 @@ export class FakeItem {
   getDynamicProperty(id) { return this.properties[id]; }
   setDynamicProperty(id, value) { if (value === undefined) delete this.properties[id]; else this.properties[id] = value; }
   getLore() { return [...this.lore]; }
+  getRawLore() { return structuredClone(this.lore.map(line => typeof line === 'string' ? { text: line } : line)); }
   setLore(lore) { this.lore = [...lore]; }
   getCanDestroy() { return []; }
   getCanPlaceOn() { return []; }
@@ -44,6 +45,10 @@ export class FakeContainer {
     if (this.failNextSlot === i) { this.failNextSlot = undefined; throw Error('simulated container write failure'); }
     if (stack && (stack.amount < 1 || stack.amount > stack.maxAmount)) throw Error('stack bounds');
     this.slots[i] = stack?.clone();
+  }
+  getSlot(i) {
+    this.getItem(i); // Keep the existing bounds and container-lifetime behavior.
+    return { getItem: () => this.getItem(i), setItem: stack => this.setItem(i, stack) };
   }
   // Adapter model of a single native move, not evidence of engine atomicity.
   moveItem(fromSlot, toSlot, toContainer) {
@@ -156,6 +161,7 @@ export class FakePlayer extends FakeEntity {
     this.animations = [];
     this.onScreenDisplay = { setActionBar: message => this.messages.push(message) };
   }
+  getGameMode() { return 'Survival'; }
   sendMessage(message) { this.messages.push(message); }
   playAnimation(name, options) { this.animations.push({ name, options: { ...options } }); }
   getBlockFromViewDirection() { return this.viewedBlock ? { block: this.viewedBlock } : undefined; }
@@ -249,7 +255,7 @@ export class FakeMolangVariableMap {
   setFloat(name, value) { this.floats[name] = value; }
 }
 
-globalThis.__otcApplianceMocks = { MolangVariableMap: FakeMolangVariableMap, ItemStack: FakeItem, EquipmentSlot: { Offhand: 'Offhand' }, BlockPermutation: FakePermutation, system: {}, world: {}, ActionFormData: FakeForm };
+globalThis.__otcApplianceMocks = { MolangVariableMap: FakeMolangVariableMap, ItemStack: FakeItem, EquipmentSlot: { Offhand: 'Offhand' }, GameMode: { Creative: 'Creative', Survival: 'Survival' }, BlockPermutation: FakePermutation, system: {}, world: {}, ActionFormData: FakeForm };
 // Only Minecraft dependencies are replaced. Pure relative helpers keep their
 // actual shipped implementation when the service is loaded from a data URL.
 function resolveLocalImports(source, moduleUrl) {
@@ -258,7 +264,7 @@ function resolveLocalImports(source, moduleUrl) {
 }
 const applianceUrl = new URL('../runtime/BP/scripts/appliances.js', import.meta.url);
 let applianceSource = await readFile(applianceUrl, 'utf8');
-applianceSource = applianceSource.replace(/import \{[^}]+\} from "@minecraft\/server";/, 'const {BlockPermutation, EquipmentSlot, ItemStack, MolangVariableMap, system, world} = globalThis.__otcApplianceMocks;');
+applianceSource = applianceSource.replace(/import \{[^}]+\} from "@minecraft\/server";/, 'const {BlockPermutation, EquipmentSlot, GameMode, ItemStack, MolangVariableMap, system, world} = globalThis.__otcApplianceMocks;');
 applianceSource = applianceSource.replace(/import \{[^}]+\} from "@minecraft\/server-ui";/, 'const {ActionFormData} = globalThis.__otcApplianceMocks;');
 applianceSource = resolveLocalImports(applianceSource, applianceUrl);
 export const appliances = await import(`data:text/javascript;base64,${Buffer.from(applianceSource).toString('base64')}`);
