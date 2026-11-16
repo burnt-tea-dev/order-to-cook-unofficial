@@ -59,7 +59,8 @@ pendingDishes 陣列替換或長度變化亦會重建。同 tick 的 queue、mig
 - 每秒餐廳進度對歷史玩家深拷貝 profile 並核對來源帳本。未來應在正式 store owner 上建立
   已驗證 revision／dirty queue，保留失敗重試與防重付；不能隨意剪掉 checkpoint。
 - `entities.hornTimes` 以鳴笛車輛 ID 保存 cooldown，缺少淘汰；屬小型長期累積風險，
-  沒有證據顯示單獨足以 OOM。本輪保留由 #11／#77 同檔開發線協調後處理。
+  此處是 .49 的歷史狀態，後續 .60 已在原 owner 清理過期記錄，見下方新段落；
+  不將記錄數改善外推為 OOM 已解決。
 - #11 的舊原生 POI 密集場景性能仍退化；其歷史數據不可套用本次 main／.49。
 
 基線 RP 為 546 檔、7,843,095 bytes；79 張 PNG 按 width×height×4 的 RGBA8 base level
@@ -85,3 +86,36 @@ pendingDishes 陣列替換或長度變化亦會重建。同 tick 的 queue、mig
 ## 獨立驗收補充
 
 [獨立重現、80,000 次差分、負控制與計時原始數據](validation/low-memory-20261109/README.md) 已補齊。稀疏查詢時建立索引可能更慢，並非所有負載均改善；原生 BDS／手機性能仍未測。
+
+## 小電驢鳴笛冷卻記錄的生命週期（2026-11-16）
+
+基線為 main `379dbab5c6fadf9e73e376a1db7db89fcf705737`；候選 **0.1.60-alpha.1**。
+`entities.js::horn` 對鳴笛過的每個車輛 ID 留下一筆記錄，原來即使車輛已回收或冷卻已過，
+Map 仍一直保留到腳本重載。現在只在原有顧客服務的 20-tick refresh 清除已滿 12 tick 的記錄；
+同一 `HORN_COOLDOWN_TICKS` 供鳴笛資格與清理共用。不按車輛是否載入猜測失效，
+不增加計時器、實體查詢或持久資料；每輪清理成本與尚留在 Map 的鳴笛 ID 數成正比。
+
+固定 Java 的 [OrderToCookModClient](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/OrderToCookModClient.java)
+在騎乘時按滑鼠左鍵上升緣送出鳴笛；[ModNetworking.handleRiderSound](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/network/ModNetworking.java)
+核對乘坐資格後播放。12-tick 冷卻、跳躍鍵和車輛表單入口是本移植既有適配，這次保持原值，
+沒有將其宣稱成 Java 的相同按鍵／冷卻契約。原音效 ID、音量倍率、音高與播放失敗仍消耗冷卻的語義保留。
+
+臨時離線 A/B 沿用 `tests/appliances.harness.js` 的原生邊界替代，載入兩版完整正式 entity service，
+從已註冊的 `playerButtonInput` 回呼觸發；僅以 Map 子類觀察服務建立的記錄，不改函式或新增測試檔：
+
+- tick 40 對 4,096 個不同車輛 ID 各鳴笛一次，tick 60 執行原 `tick`：過期保留記錄 **4,096 → 0**。
+  兩版原生邊界呼叫數相同；本場景 block reads 都為 0、entity queries 都為 3、服務 interval 都為 1。
+- tick 40／41／51／52／59／60／63／64／80 各連按兩次：兩版都只在 **40／52／64／80** 嘗試播放，
+  ID `ordertocook:horn`、實際倍率後 volume 1.2、pitch 1 完全相同。同車多次事件繼續共用冷卻。
+- tick 40 的聲音 API 拋錯、tick 51 重試、tick 52 恢復：兩版都只在 40／52 呼叫聲音 API，
+  52 才成功；清理不提前重試失敗音效。單車停止鳴笛後的過期記錄 **1 → 0**。
+
+`npm run verify` 通過既有 **328／328**、TypeScript、520 JSON（errors=[]）及配對建置；
+`python3 tools/check_compliance.py`、`python3 tests/check_release_policy.py` 通過。
+歷史 release 記錄逐筆保留，只追加 .60；UUID、API 及引擎需求不變。
+#11、#77、#82、#92 的 `entities.js` 實際變更已核對；清理放在 refresh 區塊末端，
+避開 #82 的 tick 開頭插入與其餘車輛／NPC hunk。相關文件只更正已存在的原生七槽、
+世界／已載入 tick 和 portable 資料保存描述，保留 #95 的副手輸入工作。
+
+以上是過期記錄數與正式函式行為對照；沒有量測 heap／GC、FPS、MSPT、手機記憶體或 OOM。
+沒有新增 tests、fixtures、CI、客戶端操作或部署；原車輛手感、鳴笛動作與其他 Java 差距仍保留。
