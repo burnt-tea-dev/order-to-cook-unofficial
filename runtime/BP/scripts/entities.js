@@ -367,6 +367,14 @@ export function createEntityService(ctx) {
     return { status: unloaded ? 'unloaded' : water ? 'water' : 'blocked' };
   }
 
+  // Java CustomerProfile.toNameText exposes only the name (red for easter eggs).
+  // Associations stay in dynamic properties, not in the visible nameplate.
+  function refreshCustomerName(entity, order) {
+    if (!order) return;
+    const name = `${order.easterEgg ? '§c' : ''}${order.customerName || (order.type === "delivery" ? "外送顧客" : "堂食顧客")}§r`;
+    if (entity.nameTag !== name) entity.nameTag = name;
+  }
+
   /** @param {() => void} [onNoEligibleChair] Only reports the pre-allocation walk-in chair gate. */
   function spawnCustomer(restaurant, order, onNoEligibleChair) {
     if (!restaurant || !needsCustomer(order)) return undefined;
@@ -381,6 +389,7 @@ export function createEntityService(ctx) {
         try { ctx.saveRestaurant?.(restaurant); }
         catch (error) { Object.assign(order, previous); console.warn(`[OrderToCook] Customer association save deferred: ${String(error)}`); }
       }
+      refreshCustomerName(canonical, order);
       return canonical;
     }
     const destination = order.type === "delivery" ? order.destination : restaurant.location;
@@ -443,7 +452,7 @@ export function createEntityService(ctx) {
       entity.addTag(`${NS}order_customer`);
       property(entity, "variant", [0, 1].includes(order.customerVariant) ? order.customerVariant : stableVariant(order.id));
       property(entity, "stage", "waiting");
-      entity.nameTag = `${order.easterEgg ? '§c' : ''}${order.customerName || (order.type === "delivery" ? "外送顧客" : "堂食顧客")}§r\n§e${restaurant.name || "餐廳"} · ${String(order.id).slice(-6)}`;
+      refreshCustomerName(entity, order);
       if (chair && !sitOnChair(entity, chair)) { entity.remove(); return undefined; }
       startSpawnAction(entity, !!chair);
       order.customerEntityId = entity.id;
@@ -957,6 +966,7 @@ export function createEntityService(ctx) {
         if (!association.orderId || !association.restaurantId) continue;
         const restaurant = ctx.getRestaurant?.(association.restaurantId);
         const order = restaurant?.orders?.find(entry => entry.id === association.orderId);
+        refreshCustomerName(entity, order);
         const meal = canonicalMeal(restaurant, order, association.orderId);
         if (meal) {
           applyCompletion(entity, meal, true, true);
