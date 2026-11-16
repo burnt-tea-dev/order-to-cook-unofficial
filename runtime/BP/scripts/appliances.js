@@ -360,6 +360,20 @@ export function createApplianceService(ctx) {
     } catch { /* Resources missing: gameplay state remains in the persistent station. */ }
   }
 
+  function setVisualStates(block, states) {
+    try {
+      let permutation = block.permutation;
+      let changed = false;
+      for (const [state, value] of Object.entries(states)) {
+        if (permutation.getState(state) !== value) {
+          permutation = permutation.withState(state, value);
+          changed = true;
+        }
+      }
+      if (changed) block.setPermutation(permutation);
+    } catch { /* Read the actual block again on the next visual update. */ }
+  }
+
   function updateVisual(station) {
     const block = loadedStation(station);
     if (!block) return;
@@ -367,30 +381,23 @@ export function createApplianceService(ctx) {
     if (station.typeId === SINK) setState(block, `${NS}plates`, d.plates);
     if (station.typeId === DISHWASHER) {
       const preview = d.phase === 0 ? dishwasherPreviews.get(station.id) : undefined;
-      setState(block, `${NS}phase`, preview ? 6 : d.phase);
-      setState(block, `${NS}frame`, preview
-        ? Math.min(15, Math.floor((gameSystem.currentTick - preview.start) / (1.1667 * 20) * 15))
-        : dishwasherFrame(d));
-      setState(block, `${NS}plates`, d.plates % 16);
-      setState(block, `${NS}plates_high`, d.plates === 16);
+      // Phase, pose and both halves of the visible plate count describe one
+      // snapshot. Publish it once without intermediate mixed permutations.
+      setVisualStates(block, {
+        [`${NS}phase`]: preview ? 6 : d.phase,
+        [`${NS}frame`]: preview
+          ? Math.min(15, Math.floor((gameSystem.currentTick - preview.start) / (1.1667 * 20) * 15))
+          : dishwasherFrame(d),
+        [`${NS}plates`]: d.plates % 16,
+        [`${NS}plates_high`]: d.plates === 16,
+      });
     }
     if (station.typeId === STOVE) {
       // Commit texture and both halves of the pose age atomically. Separate
       // writes can briefly bind a new texture to the previous ignition pose.
       const age = stoveIgnitionFrame(d);
-      const states = { [`${NS}lit`]: d.litTime > 0, [`${NS}fire_frame`]: stoveFireFrame(d),
-        [`${NS}ignition_frame`]: age % 16, [`${NS}ignition_frame_high`]: age >= 16 };
-      try {
-        let permutation = block.permutation;
-        let changed = false;
-        for (const [state, value] of Object.entries(states)) {
-          if (permutation.getState(state) !== value) {
-            permutation = permutation.withState(state, value);
-            changed = true;
-          }
-        }
-        if (changed) block.setPermutation(permutation);
-      } catch { /* Missing resources cannot change the saved cooking state. */ }
+      setVisualStates(block, { [`${NS}lit`]: d.litTime > 0, [`${NS}fire_frame`]: stoveFireFrame(d),
+        [`${NS}ignition_frame`]: age % 16, [`${NS}ignition_frame_high`]: age >= 16 });
     }
   }
 
