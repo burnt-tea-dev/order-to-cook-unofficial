@@ -130,7 +130,10 @@ test('a stove helper linked to another station never exposes that station invent
   const env = makeEnvironment(), player = new FakePlayer(env.dimension), service = appliances.createApplianceService(env.ctx);
   const block = place(env, 'ordertocook:stove');
   service.onPlace(block);
-  const station = env.ctx.getStation(block), helper = env.dimension.entities.get(station.storageId);
+  const station = env.ctx.getStation(block);
+  const helper = env.dimension.spawnEntity('ordertocook:storage', { x: 0.5, y: 0.1, z: 0.5 });
+  helper.setDynamicProperty('ordertocook:station_id', station.id);
+  station.storageId = helper.id;
   helper.setDynamicProperty('ordertocook:station_id', 'other-restaurant');
   helper.container.getItem = () => { throw Error('read foreign inventory'); };
   assert.equal(service.getInspection(player, block), '§f爐灶 · 儲物尚未載入');
@@ -248,7 +251,10 @@ for (const wrongAnchor of ['dimension', 'location']) {
     const env = makeEnvironment(), player = new FakePlayer(env.dimension), service = appliances.createApplianceService(env.ctx);
     const block = place(env, 'ordertocook:stove');
     service.onPlace(block);
-    const station = env.ctx.getStation(block), helper = env.dimension.entities.get(station.storageId);
+    const station = env.ctx.getStation(block);
+  const helper = env.dimension.spawnEntity('ordertocook:storage', { x: 0.5, y: 0.1, z: 0.5 });
+  helper.setDynamicProperty('ordertocook:station_id', station.id);
+  station.storageId = helper.id;
     if (wrongAnchor === 'dimension') helper.dimension = { ...env.dimension, id: 'minecraft:nether' };
     else helper.location = { x: 1000, y: 10, z: 1000 };
     const before = JSON.stringify(station);

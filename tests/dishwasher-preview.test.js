@@ -30,7 +30,10 @@ test('looking with a dirty plate previews the original drawer without moving inv
   assert.equal(station.appliance.plates, 0);
   assert.equal(player.container.getItem(0).amount, 2);
   assert.equal(saves, 0);
-  assert.deepEqual(player.sounds, [{ id: 'ordertocook:dishwasher_out', location: { x: 0.5, y: 0.6, z: 0.5 }, volume: 0.75, pitch: 1 }]);
+  assert.equal(player.sounds.length, 1);
+  const { volume, ...preview } = player.sounds[0];
+  assert.ok(Math.abs(volume - 0.9) < 1e-12);
+  assert.deepEqual(preview, { id: 'ordertocook:dishwasher_out', location: { x: 0.5, y: 0.6, z: 0.5 }, pitch: 1 });
   player.viewedBlock = undefined; advance(service, env, 2);
   assert.equal(value(block, 'phase'), 0);
   assert.equal(value(block, 'frame'), 0);
@@ -79,4 +82,23 @@ test('preview from an unloaded or removed device does not survive service restar
   assert.equal(value(block, 'phase'), 0);
   assert.equal(station.appliance.phase, 0);
   assert.equal(player.container.getItem(0).amount, 2);
+});
+
+test('no idle dishwasher skips player reads and clears the previous preview session', () => {
+  const empty = makeEnvironment(), emptyService = appliances.createApplianceService(empty.ctx);
+  let emptyQueries = 0;
+  empty.world.getAllPlayers = () => { emptyQueries++; return []; };
+  emptyService.tick(); advance(emptyService, empty, 20);
+  assert.equal(emptyQueries, 0);
+
+  const { env, service, station, player } = setup();
+  let queries = 0;
+  env.world.getAllPlayers = () => { queries++; return env.world.players; };
+  service.tick(); assert.equal(queries, 1); assert.equal(player.sounds.length, 1);
+  station.appliance = { ...station.appliance, phase: 3, remainingTicks: 40, plates: 2 };
+  env.system.currentTick += 2; service.tick();
+  assert.equal(queries, 1, 'working appliances have no preview and need no player inventory clones');
+  station.appliance = { ...station.appliance, phase: 0, remainingTicks: 0, plates: 0 };
+  env.system.currentTick += 2; service.tick();
+  assert.equal(queries, 2); assert.equal(player.sounds.length, 2, 'returning to idle begins a fresh preview');
 });

@@ -1,12 +1,35 @@
-# 分段玩家骨架與第一人稱：來源原型
+# 分段玩家骨架、機車接線與第一人稱原型
 
-2026-11-07 HKT。沿c84／PR49的分段矩陣原型，改為明確選定各自的native classic／customSlim基底，不再共用classic改寬度。這仍是後續有效owner接線的來源原型：普通資源轉換不呼叫它；只有明確指定兩份外部native輸入、相機框架及runtime外的輸出目錄才生成。runtime、目前配對版本、descriptor、baseline及release-history不變。來源合併不代表已接通玩家或安裝；現在可用的玩法與仍未完成項由 [PARITY](PARITY.md#玩家動作的來源與骨架) 負責。
+2026-11-11 HKT。classic／customSlim 各讀完整 native 基底，不共用 classic 改寬度。機車 TP 現有定向 exporter 與共享 composer／完整玩家 prepare 來源接線，見下節；一般資源生成不會偷偷切換玩家。手洗、安坐、拍手及 FP 的分段參考仍是來源原型。本批 OTC 本機固化記錄見 [CHANGELOG](../CHANGELOG.md#0155-alpha1-local-integration-unpublished)，配對身份以 [baseline.json](../baseline.json) 為準；共享玩家 pair 尚未組裝或安裝，沒有本次測試、CI 或客戶端觀察。玩法差距由 [PARITY](PARITY.md#玩家動作的來源與骨架) 負責。
+
+## 機車第三人稱的共享來源接線
+
+2026-11-17：`make_player_riding_source` 先從 raw drive 原片段保留 GeckoLib 4.8.3 的目的節點 easing、Catmull-Rom anchors 與 `pre=t−0.001`，再以 20 TPS 加來源節點供既有分段轉換；普通手洗／安坐／拍手轉換不變。來源節點之間仍為 Bedrock 線性近似，沒有改變共享 owner／人物選型、root、seat、camera 或 runtime caller。[本輪修復、重現及未驗證項](validation/motorcycle-riding-20261117/README.md)。
+
+`make_player_riding_source` 由 `player-presentation.json.riding` 讀取車種、動作 property 與五個原片段。它沿既有雙骨架、分段 UV／Item／lead parent 轉換，生成供同一共享 composer 使用的本地 RP 資料與 `player-riding.json`，不產生第二個玩家或假乘客。一般動作原型的相機框架不被拿來猜機車 FP。
+
+```sh
+python3 -B tools/convert_assets.py --player-riding-only \
+  --segmented-player-native /path/native-humanoid.geo.json \
+  --segmented-player-slim /path/mobs.json \
+  --native-player-license /path/MOJANG-LICENSE.md --output /path/local-riding-input
+```
+
+Grilling 的 `tools/compose_held_player.py::compose_riding` 是唯一人物接線 owner。Core 的 `tools/install_player_presentation.py::compose_players` 仍經它組裝；新增 `behavior_player` 入口可直接擴充選中的完整 BP／RP，保留已接受的 IE／TACZ 改動。private 的 `tools/prepare_first_person_inputs.py::prepare_pair` 已接此入口，收回全部輸出，分別寫回同一對原 owner。若宿主檔只含 FP controller，呼叫者要另供相同引擎的 native controller；Core 合併時以現有宿主同名條目優先。不能只取回 `player.entity.json`。
+
+選型保留 `Geometry.default`／`Texture.default`，以 `queryable_geometry: default` 的左右 `q.bone_origin` 比對兩份真 native 肩 pivot；這不是 `skin_id` 或假造 `is_slim`。僅在非 UI／非 spectator 的真 motorcycle TP 乘座且形狀匹配時，選對應分段模型。Persona／premium 與不匹配的形狀保留原模型；查詢能否讀到玩家實際當前 skin、換皮膚時機及特殊 avatar 仍未由 client 確認。[bone_origin](https://learn.microsoft.com/en-us/minecraft/creator/reference/content/molangreference/examples/molangconcepts/queryfunctions/query_bone_origin?view=minecraft-bedrock-stable) 與 [Persona 查詢](https://learn.microsoft.com/en-us/minecraft/creator/reference/content/molangreference/examples/molangconcepts/queryfunctions/query_is_persona_or_premium_skin?view=minecraft-bedrock-stable) 的官方欄位本身不能替代這份觀察。
+
+`entities.js` 在真 `addRider` 成功、重載／spawn 恢復後追蹤該乘客，沿既有五 tick 服務讀車速與車 yaw；用 `ordertocook:drive_action` 傳遞 idle／back／horn／repeat horn／light。這個欄位只在選中完整 BP 玩家宣告，沒有 DP 或保存 ID 登記。controller 以真乘座決定啟停；離座、換視角與不再匹配立即不再施加 drive。原騎乘 root／legs 被此狀態替換，空手的原騎乘 arms 也讓出；其他載具仍走原動畫。有物品的手臂保留原生／IE／TACZ 路由，空手的另一側才播 drive 前臂。頭部補原片段的相對變換，保留原生 look 動作，不改 camera／玩家旋轉。
+
+模型 root 只套 Forge 真 `LivingEntityRendererMixin → renderGeoRiderBody → RiderGeoRenderer.preRender` 的模型框架。原作鎖定 GeckoLib 4.8.3，其 `GeoObjectRenderer.preRender` 的 `(0.5,0.51,0.5)` 被 rider 抵銷；再合併 vanilla `-1.501`、站立身高 `1.8` 與 DRIVE 額外下移 `-4/16`，得到模型局部 Y `16*(1.501-1.8+4/16)`。沒有套未被此 caller 使用的 `renderIfAnimated` 的 `-0.68`，也沒有移動 seat 或推算眼位。這是站立玩家的來源座標轉換，未證明本機 BDS 的臀部／車座或鏡頭已對齊。
+
+FP 模型、眼位及 Java 上下車一次切換視角仍未接成等價行為。本地 bundle／prepare 程式存在不代表選包已固化、已安裝或已達 Java parity；須由總協調把新來源 pin 與完整 owner 輸入串行選定。本次保留原聲音與按鍵／面板入口，因此喇叭原有 12 tick 節流／即時發聲、切燈即時改光與 Java 的完整時序差距仍存在。
 
 ## 輸入與重現
 
 兩個原生輸入均固定 Mojang bedrock-samples `15701fa9c13923f12662984c32c124327e40e3d3`／1.26.60.5：classic讀 [humanoid.custom.geo.json](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/models/entity/humanoid.custom.geo.json) 的 `geometry.humanoid.custom`；slim讀 [models/mobs.json](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/models/mobs.json) 的獨立 `geometry.humanoid.customSlim`。後者本身包含完整骨鏈，沒有繼承後綴；只將legacy外層格式正規化，逐骨保留原定義，不補造骨、不展開或借用另一個帶繼承的classic定義。其 [LICENSE.md](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/LICENSE.md) 引用Minecraft EULA，並非MIT；完整輸入只在本地／CI臨時目錄，不加入公開倉庫或遊戲包。作者動作仍分別讀pinned `drive_idle`／`drive_idle_alex` 父鏈。明確選定native來源不等於已辨識目前玩家skin。
 
-目前主機可重現：
+2026-11-07 的歷史測試命令如下；目前禁止執行，不作本輪門檻：
 
 ```sh
 OTC_NATIVE_PLAYER_GEOMETRY=/root/senluo-baseline-20260930/java-parity-20261105/source/otc-player-actions-026/segmented-prototype/inputs/native-humanoid.geo.json \
@@ -66,8 +89,8 @@ skin仍需沿該有效owner的 `Texture.default`，不是改用Steve貼圖。原
 
 原作者的foot skin有−0.05 inflate；這與保持未彎native外殼的目標不同，不能把作者縮小的皮膚塊當成native外表基準。Slim手臂側面UV與作者相同，左腿鏡射差異如上；左上袖蓋面原為 `[53,48]`／3×4，native box為 `[52,48]`／3×4，左前臂袖底面原為 `[56,52]`／4×−4，native為 `[55,52]`／3×−4。原型維持native box定義，沒有為通過比較改動上游資產；原作者個別內部蓋面差異也沒有冒充native標準。這是來源適配取捨，尚未由真client觀察接縫或蓋面。
 
-## 共享selector仍缺的證據
+## 尚未觀察的客戶端部分
 
 有效owner需保留原default／皮膚／普通FP、TP及持槍副手路由，再按實際動作選新幾何。新增下半骨的顯示對應已由來源contract列明，並非假設「顯示原Arm／Sleeve就一定覆蓋新的子骨」。本原型已完成分段FP的模型空間矩陣，原026的rigid FP仍是當前runtime；Java ACTION到Bedrock絕對攝影機的投影未校準。原生armor依原骨名與自身幾何保留，不把所有armor分節。
 
-目前仍缺真player的classic／slim／客製avatar選擇值與查詢時機、實際skin／slot binding、FP投影、可見子骨與切回default的client證據。有效025輸入沒有queryable_geometry或slim偵測；官方欄位／bone查詢的存在不能當作這些值已成立，也不構成不支援的結論。下一步由同一effective owner核定最小selector與動作接口；此原型不新增全域geometry替換、第二player、持久狀態或機器專屬開關。
+機車 selector 的現行來源見本文件前節；025 當時沒有 queryable_geometry 只是歷史輸入，不能當成目前宿主的事實。仍缺真 player 的 classic／slim／客製 avatar 選擇值與查詢時機、實際 skin／slot binding、FP 投影、可見子骨與切回 default 的 client 證據。機車接線不擴大為其他動作或 FP 已完成。

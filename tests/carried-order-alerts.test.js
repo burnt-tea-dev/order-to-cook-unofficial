@@ -20,7 +20,11 @@ function counter(env) {
   env.player.container.setItem(1,new FakeItem('minecraft:bread',64));return block;
 }
 async function fixture(carrier='ticket',type='dine_in') {
-  const env=await mainFixture();env.restaurant.orders=[];
+  // This suite exercises carrier alerts, not terrain admission. Delivery cases
+  // explicitly substitute the entity-service boundary instead of inventing land.
+  const env=await mainFixture([],type==='delivery'?{
+    deliveryResolver:(_restaurant,candidate)=>({status:'ready',destination:candidate})
+  }:{});env.restaurant.orders=[];
   for(let i=0;i<36;i++)env.player.container.setItem(i,undefined);
   const board=place(env,P+'board',{x:0,y:0,z:3});const record=env.store.getStation(board);
   record.initialized=true;record.menu=[{typeId:'minecraft:bread',label:'Bread',nutrition:5}];env.store.saveStation(record);env.hooks.syncMenu(env.restaurant);

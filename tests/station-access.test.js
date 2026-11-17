@@ -56,7 +56,7 @@ for (const role of ['owner', 'staff']) for (const registered of [false, true]) {
     }
     await interact(env, actor, board);
     assert.equal(env.store.findStation(board).ownerId, actor.id);
-    assert.equal(env.forms.at(-1)[1], '菜單立牌');
+    assert.deepEqual(env.forms.at(-1)[1], { translate: 'otc.menu.title' });
   });
 }
 

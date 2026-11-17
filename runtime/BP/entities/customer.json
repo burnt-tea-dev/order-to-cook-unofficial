@@ -65,6 +65,29 @@
         "ordertocook:reaction_done": {
           "type": "bool",
           "default": false
+        },
+        "ordertocook:skin_profile": {
+          "type": "int",
+          "range": [
+            0,
+            7
+          ],
+          "default": 0,
+          "client_sync": true
+        },
+        "ordertocook:custom_skins": {
+          "type": "bool",
+          "default": false,
+          "client_sync": true
+        },
+        "ordertocook:skin_seed": {
+          "type": "int",
+          "range": [
+            0,
+            1048575
+          ],
+          "default": 0,
+          "client_sync": true
         }
       }
     },

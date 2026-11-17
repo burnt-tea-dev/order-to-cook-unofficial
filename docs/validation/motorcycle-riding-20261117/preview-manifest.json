@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "purpose": "Actual-export before/after offline model visualization",
+  "baseline_commit": "1c47c5779e6b7a7ef111c70a276541d84468eb74",
+  "baseline_converter_sha256": "55f20b1adf851193490be095b66fe8d98ed93e341bf02382eb566580db3e7ecd",
+  "candidate_git_head": "b8d078b89d694669866ac869d7f5f9b2cebe724f",
+  "candidate_identity": "Working tree program hashes below; git head alone does not identify the candidate",
+  "java_commit": "e59e3dbcabe19b783d9adb933db5fcb8bc1e4642",
+  "native_commit": "15701fa9c13923f12662984c32c124327e40e3d3",
+  "native_input_sha256": {
+    "classic": "d3688f959a95f6b39c9bd8b15312a19361256ae161d2d055ba63d810e17a8ca8",
+    "slim": "0279492e5f6a7b5bbafb4fbaa80290146acb79332d06ac39619376a4831ff464"
+  },
+  "native_license_sha256": "be3564338140626538c57993573b65798d0ef2afdd4d71f285d43ebb2eedb972",
+  "native_license_url": "https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/LICENSE.md",
+  "source_files_sha256": {
+    "tools/convert_assets.py": "71ee382139a33c03224d135bbe9fc6e850f5974d3015536c506bc4e139fe215d",
+    "tools/render_visual_review.py": "9edf2579de7fc92189c72ff88693ed6e7567d9578991e56ab4815bdca6a7ae80",
+    "docs/validation/motorcycle-riding-20261117/preview.py": "3e62a4e9d1b376a4ed438ae290085f6b084365831dd07f1e3d5d8ba9652b73c6",
+    "tools/motorcycle_curves.py": "bababf0b6530d7b8b901f2d77fa567f42141cc17ab58a82046ffb19f4d4a92a7",
+    "player-presentation.json": "68b7f887eb13db20e0b5f80e883389953c4496aad375e2e75003d1ee1200e65b",
+    "upstream/reference/common/src/main/resources/assets/ordertocook/animations/drive.animation.json": "4b1d97058b3164bf9027c90ea6a6cd221e4bd06ff5fcde51a2e159e3812a092c",
+    "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+    "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f"
+  },
+  "before_output_sha256": {
+    "RP/animation_controllers/ordertocook_player_riding.json": "00691330dd0dfa1aa07ac09284b837bba34d8e588e1e8cbe40451778ae555aa1",
+    "RP/animations/ordertocook_player_riding.animation.json": "c454258638c1d645d6d0aced41d729c61afac656f5a03c59e7426c97fc3c953c",
+    "RP/models/entity/ordertocook_riding_classic.geo.json": "7316c25ddd2addeb6c572faf522d676450678fbbf8b99ac1d61c93dde52a56ac",
+    "RP/models/entity/ordertocook_riding_slim.geo.json": "4d7b4d32875be6dd8ec69332441b956510a432ce455afce39a3cb8eeed651b49",
+    "player-riding.json": "9a0e906a33e83b37ef7c7f6b0e03a080b2c272b9a04fc579595c64cf0c4f6ec1"
+  },
+  "after_output_sha256": {
+    "RP/animation_controllers/ordertocook_player_riding.json": "00691330dd0dfa1aa07ac09284b837bba34d8e588e1e8cbe40451778ae555aa1",
+    "RP/animations/ordertocook_player_riding.animation.json": "84adc07d1af39d8e92ae761c458606b819d6887a1d6402808dc57bac08b79770",
+    "RP/models/entity/ordertocook_riding_classic.geo.json": "7316c25ddd2addeb6c572faf522d676450678fbbf8b99ac1d61c93dde52a56ac",
+    "RP/models/entity/ordertocook_riding_slim.geo.json": "4d7b4d32875be6dd8ec69332441b956510a432ce455afce39a3cb8eeed651b49",
+    "player-riding.json": "9a0e906a33e83b37ef7c7f6b0e03a080b2c272b9a04fc579595c64cf0c4f6ec1"
+  },
+  "camera": [
+    4,
+    2.2,
+    -5
+  ],
+  "visible_mesh_bones": [
+    "body",
+    "head",
+    "leftArm",
+    "leftLeg",
+    "ordertocook_left_forearm",
+    "ordertocook_left_shin",
+    "ordertocook_right_forearm",
+    "ordertocook_right_shin",
+    "rightArm",
+    "rightLeg"
+  ],
+  "parts_combined": [
+    "body",
+    "head",
+    "right",
+    "left"
+  ],
+  "pose_sheet": [
+    {
+      "variant": "classic",
+      "clip": "drive_idle",
+      "seconds": 0.5,
+      "max_visible_mesh_corner_delta_model_px": 0.054578399347169564
+    },
+    {
+      "variant": "slim",
+      "clip": "drive_idle",
+      "seconds": 0.5,
+      "max_visible_mesh_corner_delta_model_px": 0.053869596794492804
+    },
+    {
+      "variant": "classic",
+      "clip": "drive_didi",
+      "seconds": 0.2,
+      "max_visible_mesh_corner_delta_model_px": 2.12236847853364
+    },
+    {
+      "variant": "slim",
+      "clip": "drive_didi",
+      "seconds": 0.2,
+      "max_visible_mesh_corner_delta_model_px": 2.0679767508894242
+    },
+    {
+      "variant": "classic",
+      "clip": "drive_back",
+      "seconds": 0.5,
+      "max_visible_mesh_corner_delta_model_px": 3.333333370482499e-07
+    },
+    {
+      "variant": "slim",
+      "clip": "drive_back",
+      "seconds": 0.5,
+      "max_visible_mesh_corner_delta_model_px": 3.333333370482499e-07
+    }
+  ],
+  "horn_gif": {
+    "clip": "drive_didi",
+    "times_seconds": [
+      0.0,
+      0.05,
+      0.1,
+      0.15000000000000002,
+      0.2,
+      0.25,
+      0.30000000000000004,
+      0.35000000000000003,
+      0.4,
+      0.45,
+      0.5,
+      0.55,
+      0.6000000000000001,
+      0.65,
+      0.7000000000000001,
+      0.75,
+      0.8,
+      0.8500000000000001,
+      0.9,
+      0.9500000000000001,
+      1.0,
+      1.05,
+      1.1,
+      1.1500000000000001,
+      1.2000000000000002,
+      1.25,
+      1.3,
+      1.3333
+    ],
+    "max_visible_mesh_corner_delta_model_px": 3.048810759512418,
+    "final_frame_display_hold_ms": 300,
+    "note": "Repeated comparison GIF; not a claim that the non-looping horn clip loops in game."
+  },
+  "artifacts_sha256": {
+    "riding-before-after.png": "11443786884a69420ca96334cbef44a5162177b6a20e6736de5b86e341896834",
+    "horn-before-after.gif": "a64bc7b61002c01ec8c50a95f2e3432d60caa07b5114a0550124a40be771c31c"
+  },
+  "limits": [
+    "CPU rasterizer; not Minecraft screenshots or in-game acceptance",
+    "Compares actual exported outputs; source correctness is established separately by independent witnesses",
+    "Debug solid colors; hides hat, cape, clothing overlays and items; no skin or UV comparison",
+    "Neutral native head look and empty hands; evaluates all four exported animation parts together",
+    "Explicit clip time; no game controller, long loop, blending, camera, selector or network evaluation",
+    "20 TPS sampled intervals remain a linear approximation between keys",
+    "No native input or generated player geometry is redistributed with these images"
+  ]
+}

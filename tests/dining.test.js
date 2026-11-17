@@ -2,7 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createDiningService, mealStage, resolveMealAnchor, DINING_ENTITY, DINING_BLOCK, MEAL_TOKEN } from '../runtime/BP/scripts/dining.js';
-import { FakeItem, FakePlayer, makeEnvironment, place } from './appliances.harness.js';
+import { FakeItem, FakePlayer, makeEnvironment, place, entityServices } from './appliances.harness.js';
 
 const NOW = 1800000000000;
 
@@ -254,11 +254,15 @@ test('failed interruption tombstone cleanup cannot resume a pruned order as the 
 
 test('failed durable claim leaves inventory untouched and the restored meal retryable', () => {
   const env = fixture(); env.service.tick(NOW + 5000); env.failNextSave();
+  assert.equal(env.service.atBlock(nativePlate(env)).meal, env.meal);
   assert.throws(() => env.service.claim(env.player, env.restaurant, env.meal, NOW + 5100));
   assert.equal(dirtyCount(env.player), 0);
   const restored = env.restaurants.get('r');
   assert.equal(restored.pendingDishes[0].status, 'dirty');
+  assert.equal(env.service.atBlock(nativePlate(env)).restaurant, restored);
+  assert.equal(env.service.atBlock(nativePlate(env)).meal, restored.pendingDishes[0]);
   assert.equal(env.service.claim(env.player, restored, restored.pendingDishes[0], NOW + 5200).ok, true);
+  assert.equal(env.service.atBlock(nativePlate(env), false), undefined);
 });
 
 test('native inventory exception before writing is rolled back before retrying a claim', () => {
@@ -399,6 +403,96 @@ test('supporting-table interaction resolves the oldest outstanding canonical pla
   const support = place(env, 'minecraft:stone', { x: 0, y: 0, z: 1 });
   assert.equal(env.service.atBlock(support).meal, env.meal);
   assert.equal(env.service.atBlock(place(env, 'minecraft:stone', { x: 1, y: 0, z: 1 })), undefined);
+  const sameLevel = { ...env.meal, id: 'same-level', token: 'same-level', location: { ...env.meal.location, y: 0.0125 } };
+  env.restaurant.pendingDishes = [env.meal, sameLevel];
+  assert.equal(env.service.atBlock(support).meal, env.meal, 'upper and same-cell ties retain array order');
+  env.restaurant.pendingDishes = [sameLevel, env.meal];
+  assert.equal(env.service.atBlock(support).meal, sameLevel, 'same-tick array replacement changes the authoritative tie');
+  const other = { ...env.restaurant, id: 'other', pendingDishes: [{ ...sameLevel, id: 'other-meal' }] };
+  env.restaurants.set(other.id, other);
+  assert.equal(env.service.atBlock(support).restaurant, env.restaurant, 'restaurant enumeration order breaks an equal-time tie');
+});
+
+test('same-tick new meals, record replacement and removal bypass earlier location misses', () => {
+  const env = fixture(), first = nativePlate(env);
+  const elsewhere = place(env, DINING_BLOCK, { x: 3, y: 1, z: 1 });
+  assert.equal(env.service.atBlock(elsewhere), undefined);
+  const replacement = { ...env.restaurant, pendingDishes: [{ ...env.meal, location: { x: 3.5, y: 1.0125, z: 1.5 } }] };
+  env.restaurants.set('r', replacement);
+  assert.equal(env.service.atBlock(elsewhere).restaurant, replacement);
+  assert.equal(env.service.atBlock(first, false), undefined);
+  env.restaurants.set('r', env.restaurant);
+  assert.equal(env.service.atBlock(first, false).meal, env.meal);
+  const nextOrder = { ...env.order, id: 'r:next', meal: { ...env.order.meal, startedAt: NOW - 1 } };
+  env.restaurant.orders.push(nextOrder);
+  const next = env.service.queueMeal(env.restaurant, nextOrder, env.customer, NOW);
+  assert.equal(env.service.atBlock(first, false).meal, next, 'queue invalidates an already-built same-tick index');
+  env.restaurants.delete('r');
+  assert.equal(env.service.atBlock(first, false), undefined);
+});
+
+test('native lookups index meals once per tick while still checking every current restaurant', () => {
+  const env = makeEnvironment();
+  let mealReads = 0, restaurantVisits = 0;
+  const count = 80, perRestaurant = 10;
+  for (let start = 0; start < count; start += perRestaurant) {
+    const dishes = Array.from({ length: perRestaurant }, (_, offset) => {
+      const id = start + offset;
+      return { id: String(id), token: String(id), dimensionId: env.dimension.id, location: { x: id + 0.5, y: 1.0125, z: 0.5 },
+        startedAt: NOW, finishAt: NOW + 5000, status: 'eating' };
+    });
+    env.restaurants.set(String(start), { id: String(start), pendingDishes: new Proxy(dishes, {
+      get(target, key, receiver) {
+        if (typeof key === 'string' && /^\d+$/.test(key)) mealReads++;
+        return Reflect.get(target, key, receiver);
+      }
+    }) });
+  }
+  env.ctx.restaurants = () => ({
+    *[Symbol.iterator]() { for (const restaurant of env.restaurants.values()) { restaurantVisits++; yield restaurant; } }
+  });
+  const service = createDiningService(env.ctx);
+  for (let id = 0; id < count; id++) {
+    const block = place(env, DINING_BLOCK, { x: id, y: 1, z: 0 });
+    assert.equal(service.atBlock(block).meal.id, String(id));
+  }
+  assert.equal(mealReads, count, '80 queries read 80 meal rows, not 80 squared');
+  assert.equal(restaurantVisits, count * (count / perRestaurant), 'the canonical restaurant pass remains P times R');
+  env.system.currentTick++;
+  assert.equal(service.atBlock(env.dimension.getBlock({ x: 0, y: 1, z: 0 })).meal.id, '0');
+  assert.equal(mealReads, count * 2, 'the next native tick rebuilds from canonical meals');
+  delete env.ctx.system;
+  service.atBlock(env.dimension.getBlock({ x: 0, y: 1, z: 0 }));
+  service.atBlock(env.dimension.getBlock({ x: 0, y: 1, z: 0 }));
+  assert.equal(mealReads, count * 4, 'without a tick clock each query stays uncached');
+});
+
+test('settled dirty plates avoid customer scans while unresolved reactions and bonuses still retry', () => {
+  const env = fixture();
+  const entities = entityServices.createEntityService(env.ctx);
+  env.ctx.resumeCustomerMeal = (...args) => entities.resumeCustomerMeal(...args);
+  let customerQueries = 0;
+  const getDimension = env.world.getDimension.bind(env.world);
+  env.world.getDimension = id => {
+    const dimension = getDimension(id);
+    return { ...dimension, getEntities: options => {
+      if (options.type === 'ordertocook:customer') customerQueries++;
+      return dimension.getEntities(options);
+    } };
+  };
+  env.meal.reactionPending = false;
+  env.service.tick(NOW + 5000);
+  env.service.tick(NOW + 5250);
+  assert.equal(customerQueries, 0);
+  assert.equal(nativeStage(env), 32); assert.equal(env.restaurant.pendingDishes.length, 1);
+  assert.equal(dirtyCount(env.player), 0);
+  for (const state of [undefined, true]) {
+    env.meal.reactionPending = state;
+    env.service.tick(NOW + 5300);
+  }
+  env.meal.reactionPending = false; env.meal.bonusPlayerId = env.player.id;
+  env.service.tick(NOW + 5400);
+  assert.equal(customerQueries, 9, 'each of three unresolved states still queries all three dimensions');
 });
 
 test('native block removal drops once without the use-only early interruption or inventory writes', () => {

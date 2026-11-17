@@ -4,7 +4,8 @@
     "description": {
       "identifier": "ordertocook:countertop",
       "menu_category": {
-        "category": "construction"
+        "category": "items",
+        "group": "ordertocook:itemGroup.order_group"
       },
       "traits": {
         "minecraft:placement_direction": {
@@ -49,7 +50,8 @@
       "minecraft:movable": {
         "movement_type": "immovable"
       },
-      "ordertocook:interact": {}
+      "ordertocook:interact": {},
+      "minecraft:display_name": "senluo.tooltip.tile.ordertocook:countertop.name"
     },
     "permutations": [
       {

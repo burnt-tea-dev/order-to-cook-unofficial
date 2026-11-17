@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
-import { ItemStack } from '@minecraft/server';
+import { ItemStack, EquipmentSlot } from '@minecraft/server';
 import { inspectSenluoFood, matchesSenluoFoodSnapshot, normalizeFoodIdentity, normalizeFoodAliases, menuFoodKey, matchesFoodIdentity, matchesFoodType } from './senluo_food.js';
 
 export function containerOf(entity) { return entity.getComponent('minecraft:inventory')?.container; }
 export function heldItem(player) { return containerOf(player)?.getItem(player.selectedSlotIndex); }
+export function offhandItem(player) { return player.getComponent('minecraft:equippable')?.getEquipment(EquipmentSlot.Offhand); }
 export function freeSlot(container) {
   if (!container) return -1;
   for (let slot = 0; slot < container.size; slot++) if (!container.getItem(slot)) return slot;
@@ -111,6 +112,15 @@ export function consumeHeld(player, typeId, amount = 1) {
   else { stack.amount -= amount; container.setItem(player.selectedSlotIndex, stack); }
   return true;
 }
+export function consumeOffhand(player, typeId, amount = 1) {
+  if (!Number.isSafeInteger(amount) || amount < 1) return false;
+  const equippable = player.getComponent('minecraft:equippable');
+  const stack = equippable?.getEquipment(EquipmentSlot.Offhand);
+  if (!stack || stack.typeId !== typeId || stack.amount < amount) return false;
+  if (stack.amount === amount) equippable.setEquipment(EquipmentSlot.Offhand, undefined);
+  else { stack.amount -= amount; equippable.setEquipment(EquipmentSlot.Offhand, stack); }
+  return true;
+}
 export function giveStack(player, stack) {
   const container = containerOf(player);
   const leftover = container ? container.addItem(stack) : stack;
@@ -126,9 +136,19 @@ export function giveItems(player, typeId, amount) {
 }
 
 const COINS = [10000, 100, 20, 5, 1];
+const COIN_VALUES = new Map(COINS.map(value => [`ordertocook:chef_coin_${value}`, value]));
 export function coinBalance(player) {
   const container = containerOf(player);
-  return COINS.reduce((total, value) => total + countItem([container], `ordertocook:chef_coin_${value}`) * value, 0);
+  if (!container) return 0;
+  let total = 0;
+  // Read each native slot once, as Java CoinUtils.countCoins does. The fixed
+  // denomination lookup stores no player inventory or balance between calls.
+  for (let slot = 0; slot < container.size; slot++) {
+    const stack = container.getItem(slot);
+    const value = COIN_VALUES.get(stack?.typeId);
+    if (value !== undefined) total += stack.amount * value;
+  }
+  return total;
 }
 export function giveCoins(player, value) {
   if (!Number.isSafeInteger(value) || value < 0) throw new Error('Invalid coin value');

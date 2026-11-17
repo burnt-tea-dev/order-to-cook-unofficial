@@ -34,7 +34,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: npm ci --ignore-scripts
-      - run: npm run verify
+      - run: npm run verify:full
       - name: Reproduce appliance, dining and guide assets from pinned editable sources
         run: |
           python -m pip install Pillow==12.3.0 numpy==2.3.5

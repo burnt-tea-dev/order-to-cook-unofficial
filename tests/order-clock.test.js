@@ -49,7 +49,7 @@ test('physical bag retains tick expiry through history pruning and native use/co
  const env=await mainFixture(),deadline=env.system.currentTick+40;
  const bag=env.hooks.parcelFor(env.restaurant,{...env.order,type:'delivery',carrier:'bag',expiresTick:deadline,expiresAt:Date.now()-600000});
  assert.equal(bag.getDynamicProperty('ordertocook:expires_tick'),deadline);
- assert.ok(bag.getLore().every(line=>!line.includes('UTC')));
+ assert.ok(bag.getRawLore().every(line=>!JSON.stringify(line).includes('UTC')));
  env.restaurant.orders=[];env.store.saveRestaurant(env.restaurant);
  const before=emit(env.world.beforeEvents.itemUse,{source:env.player,itemStack:bag,cancel:false});
  assert.equal(before.cancel,true);assert.equal(env.store.getProfile(env.player.id),undefined);
@@ -61,7 +61,7 @@ test('physical bag retains tick expiry through history pruning and native use/co
 
 test('remaining-time display follows game ticks rather than its compatibility wall timestamp',async()=>{
  const env=await mainFixture();env.order.expiresTick=env.system.currentTick+1200;env.order.expiresAt=Date.now()-600000;
- assert.match(env.hooks.orderBody(env.order),/剩餘：1 分鐘/);
+ assert.deepEqual(env.hooks.orderBody(env.order).rawtext.at(-1), {translate:'otc.order.remaining',with:{rawtext:[{text:'1'}]}});
 });
 
  test('legacy held orphan bag adopts one tick deadline without losing ItemStack metadata',async()=>{

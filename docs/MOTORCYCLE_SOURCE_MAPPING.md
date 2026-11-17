@@ -1,7 +1,8 @@
 # Motorcycle neutral source mapping
 
-This is a source-only static geometry/UV correction. It does not establish native
-Minecraft rendering parity, repair steering or unsigned-distance wheel animation,
+This documents the static source geometry/UV mapping and the explicit connector
+clearance below. It does not establish native Minecraft rendering parity,
+repair steering or unsigned-distance wheel animation,
 change input/movement behavior, or freeze a new runtime version.
 
 [Nine subsequent Blockbench before/candidate captures](validation/visual-audio/motorcycle-source-mapping-20261109/README.md)
@@ -57,7 +58,8 @@ it nor these tests proves native shader, filtering, culling or engine parity.
 ## Bounded correction
 
 The existing authored origins/pivots, hierarchy, sizes, atlas offsets and
-inflation stay unchanged. Seven X-only child rotations change sign
+inflation stay unchanged except the connector origin described below.
+Seven X-only child rotations change sign
 (`cube_r1` through `cube_r5`, `cube_r10`, `cube_r11`), covering 16 of 41 boxes.
 Every cube gains box `mirror: true`, implementing U inversion plus east/west
 exchange. The four original color PNGs and light data remain untouched.
@@ -73,6 +75,16 @@ silently extending this model-specific derivation.
 Both original zero-width wheel planes remain zero-width, and their east/west
 physical faces remain distinct in the oracle. Inflation is applied before
 world transforms without modifying authored dimensions or UV endpoints.
+
+## Connector clearance
+
+The generated `chest` cube 4 has source-derived origin `[-2,18,21.75]`, size
+`[4,1,2]`, inflation `0.015` and box UV `[77,7]`. Its bottom overlaps the
+inflated pads on either side. The converter raises only this connector by
+`0.015` model pixels, retaining its size, inflation, box UV, mirror flag and
+parent. This is the bounded output adaptation from model PR #87. It changes
+source vertices and is not a claim of exact Java geometry or native flicker
+acceptance. The earlier source-mapping comparisons below predate this clearance.
 
 ## Reproduction and controls
 

@@ -184,13 +184,17 @@ test('preparation reads the current global switch after either deferred picker o
   }
 });
 
-test('disabled leather still enforces food/output gates and both plate entry modes require a clean plate', async () => {
-  for (const failure of ['food', 'output']) {
-    const env = await counter(); configure(env, { countertopConsumeLeather: false });
-    if (failure === 'food') env.player.container.setItem(1, undefined); else place(env, 'minecraft:stone', env.block.above().location);
-    const before = inventory(env); await prepare(env);
-    assert.equal(env.order.status, 'accepted'); assert.deepEqual(inventory(env), before);
-  }
+test('disabled leather still requires food, drops blocked bags and both plate entry modes require a clean plate', async () => {
+  const missing = await counter(); configure(missing, { countertopConsumeLeather: false });
+  missing.player.container.setItem(1, undefined);
+  const before = inventory(missing); await prepare(missing);
+  assert.equal(missing.order.status, 'accepted'); assert.deepEqual(inventory(missing), before);
+  const blocked = await counter(); configure(blocked, { countertopConsumeLeather: false });
+  place(blocked, 'minecraft:stone', blocked.block.above().location);
+  await prepare(blocked);
+  assert.equal(blocked.order.status, 'packed'); assert.equal(itemCount(blocked.player, 'minecraft:bread'), 3);
+  assert.equal(blocked.block.above().typeId, 'minecraft:stone'); assert.equal(blocked.dimension.drops.length, 1);
+  assert.deepEqual(structuredClone(blocked.dimension.drops[0].stack), structuredClone(blocked.hooks.parcelFor(blocked.restaurant, blocked.order)));
   for (const choice of ['default', 'explicit']) {
     const env = await counter({ type: 'dine_in' }); configure(env, { countertopConsumeLeather: false });
     env.player.isSneaking = choice === 'explicit'; if (choice === 'explicit') env.formResponses.push(0);

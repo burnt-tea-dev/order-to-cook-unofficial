@@ -55,6 +55,45 @@ class ApplianceGeometryTests(unittest.TestCase):
         self.source = converter.normalize_geo(converter.ASSETS / "geo/block/refrigerator.geo.json", "geometry.source")
         self.clips = converter.read_json(converter.ASSETS / "animations/refrigerator.animation.json")["animations"]
 
+    def test_creative_catalog_groups_real_entries_and_hides_internal_display(self):
+        with TemporaryDirectory() as temp:
+            output = Path(temp)
+            # The generator consumes the real definitions, including the two
+            # block-item replacements; do not invent a second item inventory.
+            for folder in ("blocks", "items"):
+                for source in (ROOT / "runtime/BP" / folder).glob("*.json"):
+                    target = output / folder / source.name
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_bytes(source.read_bytes())
+            with patch.object(converter, "BP", output, create=True):
+                converter.make_creative_catalog()
+            catalog = converter.read_json(output / "item_catalog/crafting_item_catalog.json")
+            self.assertEqual(catalog, converter.read_json(ROOT / "runtime/BP/item_catalog/crafting_item_catalog.json"))
+            visible = {}
+            for folder, kind in (("blocks", "minecraft:block"), ("items", "minecraft:item")):
+                for path in (output / folder).glob("*.json"):
+                    desc = converter.read_json(path)[kind]["description"]
+                    menu = desc.get("menu_category", {})
+                    if menu.get("category", "none") != "none":
+                        visible[desc["identifier"]] = menu
+            entries = {}
+            for page in catalog["minecraft:crafting_items_catalog"]["categories"]:
+                for group in page["groups"]:
+                    for item in group["items"]:
+                        self.assertNotIn(item, entries, "a visible item must have only one group")
+                        entries[item] = {"category": page["category_name"], "group": group["group_identifier"]["name"]}
+            self.assertEqual(entries, visible)
+            self.assertEqual(entries["ordertocook:stove"], {"category": "items", "group": "ordertocook:itemGroup.restaurant_equipment"})
+            self.assertEqual(entries["ordertocook:chair"]["category"], "construction")
+            self.assertEqual(entries["ordertocook:helmet"]["category"], "equipment")
+            self.assertIn("ordertocook:food_plate", entries)
+            self.assertNotIn("ordertocook:food_plate_display", entries)
+            for language in ("en_US", "zh_CN", "zh_TW"):
+                translations = dict(line.split("=", 1) for line in (ROOT / f"runtime/RP/texts/{language}.lang").read_text().splitlines()
+                                    if "=" in line and not line.startswith("#"))
+                for entry in entries.values():
+                    self.assertTrue(translations[entry["group"]])
+
     def test_feedback_factory_emits_scalar_defaults_and_matches_shipped_particles(self):
         defaults = ("variable.count = variable.count ?? 1; "
                     "variable.spread_x = variable.spread_x ?? 0; "

@@ -1,10 +1,62 @@
 # 可行性與原作還原對照
 
+## 現有模型 PR 的來源整合範圍（2026-11-16）
+
+生成器沿 #87 的原數值去掉一根完全重複椅腿，將餐點階段5／6端塊沿Z各端內縮0.015模型像素，面罩前片沿X各端裁去0.0625，並將機車箱底連接塊沿Y上移0.015。端塊與面罩同步裁切UV，原貼圖不改。除椅腿去重外，這些是明列的幾何適配，不能稱Java原頂點完全相等。機車的來源映射與適配分界見[MOTORCYCLE_SOURCE_MAPPING.md](MOTORCYCLE_SOURCE_MAPPING.md#connector-clearance)。
+
+污漬沿現有 `separate_plate_surface_layers`，只省去不透明污漬下的盤面，保留原污漬高度與像素；不另加#87的烘焙貼圖／刪污漬薄片路徑。洗碗機門背／抽屜修法仍待圈選位置的具體面證據。#88的完整冰箱物品及item_visual已有後修接線，其第一人稱0.8降0.4是另一份縮小適配，本次不混入。176份放置姿態、顧客皮膚、玩家骨架及爐灶title-copy來源保留。
+
+本節描述來源差異，不代表已生成、實裝或通過客戶端觀察。舊PR的有限編輯器角度、測試結果及模型計數只適用原來的輸入。完整動畫、相反朝向薄面及本次精確輸出的聲畫仍未確認。
+
+## 客戶端顧客動畫語法（2026-11-11，來源修正）
+
+使用者回報測試服 `controller.animation.ordertocook.customer` 的 idle／idle_next 轉移包含 `if (...)`，客戶端報 unknown／unrecognized token。`tools/convert_assets.py` 已把這兩個早退分支改成 Molang 的 `條件 ? { ... };`，保留原坐姿變更、state_time 等待與0.55／0.7／0.85隨機門檻。抽出同一controller生成入口，正常使用 `--customer-controller-only` 重產 [customer.animation_controllers.json](../runtime/RP/animation_controllers/customer.animation_controllers.json)，沒有改 entity、幾何、版本或世界資料。依Owner reset未執行測試，未發布／部署，也未觀察修後client。
+
+同批模型找不到訊息尚未確診：貼文列出的OTC34個geometry ID，在測試服實裝OTC RP0.1.54都存在。其他Baking9／Grilling3／TACZ2個ID也在各自實裝包內。檔案存在不代表client成功載入；仍需完整用戶端版本及同次登入更早的資源／geometry錯誤，不能把來源庫存讀回當渲染成功，也不據此改名或移除模型。詳見本次[交接紀錄](/root/senluo-baseline-20260930/java-parity-20261105/restart-20261110/CLIENT-CONTENT-ERRORS-20261111.result.md)。
+
+## 洗碗機顯示狀態本地原型（0.1.53，尚未發布）
+
+洗碗機盤片依 Java 只分成 0、1、2、3 片以上四種外觀。原型由同一生成器把顯示 state 收成四值，原服務只投影 `min(station.appliance.plates, 3)`；真批次 0–16、phase、剩餘 tick、洗碗時長及返還數量不變。方塊／動畫 mesh、UV 與通用餐盤架 wide setter 均保留。宣告的組合由 14336 收為 1792，不代表已量測效能改善。
+
+**舊世界 palette 讀回仍未驗證。** 舊低位值 15、16 盤的 high=true 等是否仍載成原方塊，不能由來源回歸推定。此分支僅固定本地配對原型，未推送／合併／安裝；尚無新原生保存、遷移或客戶端結論。[原型範圍](validation/0.1.53-alpha.1/DISPLAY_STATES_PROTOTYPE.md)。
+
+## 受阻台面的打包掉袋（0.1.52）
+
+PACK 與 PLATE 分開處理輸出。打包時上方為空氣，沿用原展示方塊與原生實物格；上方已有方塊或另一份餐點時，保留原物件，將同一 `parcelFor` 完整袋子掉在操作台中心上方 1.2 格，清除隨機初速再給向上 0.2 的原生 impulse。外送與明確選擇的堂食袋均適用；裝盤仍需空位。介面文字跟隨兩種操作，不再一律顯示台上受阻。
+
+這與固定 Java 的 [Forge PACK](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/main/java/cn/breezeth/ordertocook/block/entity/TakeoutBoxBlockEntity.java)及[NeoForge PACK](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/neoforge-1.21.1/src/main/java/cn/breezeth/ordertocook/block/entity/TakeoutBoxBlockEntity.java)同分支。沿原權限、期限、proof、食品抽取及 `countertopConsumeLeather` 設定；同一訂單只完成一次。掉落／速度設定的已知失敗走原交易回復，只移除本次新掉落物或新展示，不清除被擋住的原成品。未新增 timer、物品 ID、registry 或保存格式。
+
+新增回歸直接走原 `countertopForm` 與正式 main/core/store/factory；確定失敗及可撤回掉落實體的補償由原生 I/O doubles 驗證，不表示原生跨儲存層原子性。尚未新增 BDS／客戶端掉落軌跡、聲畫或 FPS 結果。具體來源與測試見 [052 驗證說明](validation/0.1.52-alpha.1/BLOCKED_PACK_OUTPUT.md)。
+
+## 已接外送單的壞地址恢復（0.1.51）
+
+050 只為新單驗地形；已接／已備妥的海上單原本仍會重試原地址。051 在同一顧客重試 owner 中補上恢復：原目的地已載入且確定是水面或受阻、訂單尚未逾時、沒有顧客或保存 anchor 時，最多嘗試四個原短／長距離候選，只接受附近真玩家已載入的安全地面。沿每單至少 40 tick、每輪最多四單的既有重試，不新增 timer、registry 或強制載入。未載入不是水；既有顧客／anchor 不搬移。沒有找到安全候選就保留原待辦，原期限繼續計時，不宣稱所有海單都已恢復。
+
+只在原 spawn＋save 提交成功時更新地址與顧客關聯，失敗走原回復。orderId、狀態、食品、proof、已接報酬、原距離報價、長距離分類、建立／接取／打包時間與兩種期限不重建。原袋直接沿正式交付 owner 扣物與付款，不能藉修復重置倒數、補發袋子或再次領款。
+
+HUD／使用查看詳情讀目前 `order.destination`。外送袋在原 `onUse` 才讀回同一件現存物品，僅替換「座標行＋原 factory 操作提示」可辨識的自有 lore；名稱、其他 lore、DP、數量和完整 stack 保留。文字已正確、自訂 lore、過期／終態或已消耗的袋子不寫回。箱內未使用物品不掃描；紙單／自訂文字的靜態 lore 不會批量改寫，查看詳情與導航仍以目前訂單為準。
+
+現有真 main/core/entity/store harness 覆蓋海水／阻塞恢復、四候選與原 cooldown、未載入／anchor／逾時不變、spawn／save 失敗回復，以及同袋更新自有行、走正式交付一次付款、晚到 callback 不復活袋子。Minecraft 邊界仍由既有 harness 替代，這不是新 Native／世界重啟／client 結果。這些來源回歸不改寫既有原生結果的範圍。
+
+## 取消點擊後的設備互動（0.1.50）
+
+菜單立牌與餐盤架共用的 before-event 入口原先先取消原生操作，再只在 `isFirstEvent=true` 時排程，因此 false 事件沒有管理選單／補盤動作，取消後的 custom component 也不能補接。現在每個已接管的設備點擊都交回原互動 owner，由既有三 tick 去重；權限、距離、主手讀回、餐盤扣取與保存格式不變。既有 main fixture 直接呼叫正式已註冊事件，涵蓋 true／false 的開選單與補一盤，以及重複事件／component 不雙扣。這是來源回歸，尚不代表使用者 client／正式世界已恢復。
+
+同批來源亦包含以下修正；它們仍需由共同流程選入候選，不能以本表當作已安裝：
+
+| 問題 | 本批實作與界線 |
+| --- | --- |
+| 音效太小 | 既有播放入口統一乘 1.2；音檔、音調、次數與時序不改。未宣稱已量測玩家聽感或 FPS。 |
+| 爐灶按鈕列表 | 改為真七槽方塊容器，沿原權限認領、完整物品遷移及 200 tick 烹調；首次被攔住後提示再點。操作及 Java 專用槽位／進度條差距見 [原生容器](NATIVE-CONTAINERS.md#原生七槽爐灶)。 |
+| 顧客站在設備頂面 | 非入座的站立顧客不採 OTC 設備表面作地板，保留原椅子入座及載具支撐規則。 |
+| 外送目標在水面／找不到顧客 | 0.1.50 的「無安全地址便不發單」已由 2026-11-10 未發布來源取代：新候選依 Java 嘗試 8 次並保留最後地址，未載入不丟單；顧客仍待目的地可用才生成。選址與既有已接單恢復的界線見[來單規則](UPSTREAM_RULES.md#來客與來單節奏)。 |
+| 創造分頁與原序 | [data/java-creative-tabs.json](../data/java-creative-tabs.json) 分開保存固定 Java Forge／NeoForge `ModItemGroups.displayItems` 的23項原序；沿已選 Forge 參考，投影為一個 Items 原生群組，圖示為 order_machine。九個用途組退役；guide／controller保留為明列群組外 port 項，內部展示、ID及metadata保持。NeoForge工具箱位置不同，未混入Forge。`tools/convert_assets.py --creative-only` 只生成分類／語系；2026-11-10僅本機來源與產物，未跑測試或觀察client，「＋不展開」仍未確診。 |
+
 ## 結論
 
-Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedrock 行為包、資源包及穩定 Script API 重寫；本輪原生冰箱另需啟用 Upcoming Creator Features。原作已有 GeckoLib／Blockbench 格式資源，因此能保留大量原模型、UV、紋理及聲音；跨平台主要成本在程式、介面與動畫驅動。
+Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedrock 行為包、資源包及穩定 Script API 重寫；原生冰箱與爐灶另需啟用 Upcoming Creator Features。原作已有 GeckoLib／Blockbench 格式資源，因此能保留大量原模型、UV、紋理及聲音；跨平台主要成本在程式、介面與動畫驅動。
 
-本文件對應 [package.json 的目前整合來源](../package.json)。冰箱改用 Bedrock 26.60 的上下獨立原生容器；爐灶改為直接存入及單頁七槽控制，操作台支援持訂單直接製作與同頁缺料，洗碗機沿用批次操作並補強寫入失敗回退。使用 stable `@minecraft/server 2.11.0`／`@minecraft/server-ui 2.0.0`，不要求 Beta APIs。**完整一比一仍未達成**，尤其原生冰箱已開介面的即時撤權沒有可用 API；入口攔截、鍵鼠／觸控／手把及真實多人 GUI 仍需客戶端驗收。官方能力核對見 [NATIVE-CONTAINERS.md](NATIVE-CONTAINERS.md)，容器既有實測見 [0.1.5 驗證報告](validation/0.1.5-alpha.1/CONTAINER_GUI.md)。
+本文件對應 [package.json 的目前整合來源](../package.json)。冰箱改用 Bedrock 26.60 的上下獨立原生容器；爐灶改用原生方塊七槽容器，不再使用按鈕列表或手持直接投入，操作台支援持訂單直接製作與同頁缺料，洗碗機沿用批次操作並補強寫入失敗回退。使用 stable `@minecraft/server 2.11.0`／`@minecraft/server-ui 2.0.0`，不要求 Beta APIs。**完整一比一仍未達成**，原生爐灶已有 Java 專用布局候選，燃燒／進度條及逐槽放入限制仍缺；冰箱與爐灶已開介面的即時撤權沒有可用 API。入口攔截、鍵鼠／觸控／手把及真實多人 GUI 仍需客戶端驗收。官方能力核對見 [NATIVE-CONTAINERS.md](NATIVE-CONTAINERS.md)，冰箱既有實測見 [0.1.5 驗證報告](validation/0.1.5-alpha.1/CONTAINER_GUI.md)，不將該歷史結果當作新爐灶 GUI 通過。
 
 2026-11-05 原生 BDS 1.26.60.6 載入抓到 0.1.8／0.1.9 共用物品元件的 `onConsume` 註冊錯誤；兩版不適用遊戲交付。0.1.10 將此回呼只掛到具有 `minecraft:food` 的包裹；修正後固定來源已通過原生命令破壞、完整metadata及同一QA世界正常保存／重啟；具體範圍與原失敗見 [原生報告](validation/0.1.10-alpha.1/PORTABLE_NATIVE.md)，不以來源CI或fixture actor冒稱真人輸入。
 
@@ -24,7 +76,7 @@ Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedro
 
 全域已提交、餐廳保存後續失敗時，仍以已提交值控制未來生成，不聲稱所有記錄一起原子提交。寫入後例外／讀回失敗可能保留新存檔但舊即時值，重載後才生效；.40 不確定原生結果界線與 .41 count-only 不遷移餐廳規則不變。未開放其他機率欄位，未改 core 取樣、機車或 NPC 生成，也未完成原生／客戶端驗收。[固定來源、紅綠測試及限制](validation/0.1.42-alpha.1/DELIVERY_RATE.md)。
 
-0.1.40 接上 Java 全域 `countertopConsumeLeather`（預設 true）。管理員設定為 false 時，外送與選擇堂食袋的製作不查找／修改任何包裝架，食品與原生完整成品交易、權限、期限及 proof 仍核對；裝盤照常消耗乾淨盤。設定保存於同一世界屬性，表單關閉後才讀取最新值；缺值／錯誤型別安全預設 true，損壞文件保留而停止初始化。沒有新增每餐廳選項；該 .40 修正未接入機器數量或配送比例，機器數量與配送比例由後續修正分別補上。Java PACK 可在輸出受阻時掉袋的行為仍不同，本版仍需台上空置。僅來源／adapter 驗證，非原生存檔、效能或客戶端驗收。[來源、設定與保存界線](validation/0.1.40-alpha.1/LEATHER_CONFIG.md)。
+0.1.40 接上 Java 全域 `countertopConsumeLeather`（預設 true）。管理員設定為 false 時，外送與選擇堂食袋的製作不查找／修改任何包裝架，食品與原生完整成品交易、權限、期限及 proof 仍核對；裝盤照常消耗乾淨盤。設定保存於同一世界屬性，表單關閉後才讀取最新值；缺值／錯誤型別安全預設 true，損壞文件保留而停止初始化。沒有新增每餐廳選項；該 .40 修正未接入機器數量或配送比例，機器數量與配送比例由後續修正分別補上。當時仍需台上空置的 PACK 限制已由 [0.1.52](#受阻台面的打包掉袋0152)補回；裝盤仍需空位。僅來源／adapter 驗證，非原生存檔、效能或客戶端驗收。[來源、設定與保存界線](validation/0.1.40-alpha.1/LEATHER_CONFIG.md)。
 
 0.1.38 堂食打包來源修正：普通入口仍預設裝盤，蹲下點台可改選袋；canonical 訂單獨立保存 carrier 並與 proof 一起驗證。堂食袋保留堂食／到店報酬與統計，只走坐姿或站姿取餐，沒有用餐盤、髒盤或 boom。已備妥舊單缺 carrier 時按原 type 推定；擺放與交付不會把明確錯誤值降級為預設承載物。[來源、回歸與未驗證界線](validation/0.1.38-alpha.1/DINE_IN_TAKEOUT.md)。
 
@@ -51,18 +103,30 @@ Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedro
 | 五階候選單 | 已實作並適配 | 刷新按營業中的原生機器tick累計並保存，暫停／停止模擬／關服不補算；同QA原生seed4／restart7及真離區停止／恢復通過，見[機器計時](validation/0.1.21-alpha.1/MACHINE_TIMING.md)。原權重50/25/15/8/2、菜種數與每種數量範圍、等級加成。不同平台亂數序列不逐位相同。 |
 | 接單互斥 | 已實作 | 接打單機的一張後取消同輪其他普通候選，到店單獨立。 |
 | 普通、加急、外送、遠距 | 已實作 | 36000／12000世界tick（20 TPS時30／10分鐘），關服不倒數；30%基礎配送、配送中10%遠距、50–450與1500–3000格等來源常數。 |
-| 到店顧客 | 已實作並適配 | 到店等待按營業機器callback遞減，重新載入重起初始等待；20tick載入觀察間隔內完整卸載／重載未確認。按原等級機率判定；offered 就有可點顧客，必須有空椅。Java 本來就直接生成並入座，沒有需補回的預設入店路線。 |
-| 普通顧客與座位 | 已實作 | 優先使用水平 24 格、垂直 ±8 格內空椅；沒有椅子時在打單機 5 格內找可站位置。顧客 movement 為 0，依上游直接安排位置。 |
+| 到店顧客 | 已實作並適配；來單修正為未部署來源草稿 | 到店等待按營業機器 callback 遞減；預設每 1201 tick 抽已購買等級的機率，必須有空椅。2026-11-10 移除空菜單、32 張未結單與餐廳顧客 64 格玩家門檻，未改原間隔／機率；沒有執行測試或觀察畫面。完整條件及剩餘界線由[來單規則](UPSTREAM_RULES.md#來客與來單節奏)維護。 |
+| 普通顧客與座位 | 已實作；姿態修正為未部署來源草稿 | 優先使用水平 24 格、垂直 ±8 格內空椅；沒有椅子時在打單機 5 格內找可站位置。顧客 movement 為 0，依上游直接安排位置。2026-11-10 修正 [`entities.js`](../runtime/BP/scripts/entities.js) 的顧客座位高度與原椅上的位置維持，與玩家座位分開；沒有遊戲觀察，未確認畫面。 |
 | 訂單物品／包裹／餐盤 | 已實作 | 真ItemStack附餐廳、訂單和proof；存入載具保留元資料；核心狀態與獨立 carrier 防重複或錯誤承載物結算；堂食可用盤或袋，外送只用袋。 |
 | 操作台取料 | 已實作並適配 | 取玩家背包與可使用的附近原生冰箱；持有效訂單直接裝盤／打包，空手同頁顯示菜名、數量、可製作／缺料；蹲下點台額外選擇堂食裝盤或打包。沿用完整需求、食品變體與交易核對，不照搬原 12 格 GUI。 |
 | 真實擺放成品 | 已實作 | 在操作台上方生成原盤／袋模型；點取、蹲下擺放、破壞掉回有效成品。 |
 | 菜品模型的逐段變化 | 已實作並適配 | stage 0 使用原放盤食物模型、材質與 0.5 秒 `maked` 動畫；按原生方塊計數第15／60／80／100 tick依次切換該型1–4階段。10 種 ×4 形狀由原像素 entity atlas 顯示，第 4 階段為髒盤。區域停止模擬及關服時不補算進度；保存後重開接續計數。 |
-| 收盤與洗碗循環 | 已實作並適配 | 髒盤持續留在用餐位置，店主／員工點餐盤或下方桌面取回；打破餐盤及滿包回收時落地一盤；裝盤交付時同一位置先清舊盤；打包堂食不占用桌面，不留下髒盤。食品第100 tick前收盤同樣返一個髒盤，並按原生查詢順序中斷盤周圍方盒內第一位進食者約0.5秒；可能是另一桌，其食品進度保持原值。洗碗採點擊開始並保持空手／視線4秒；本包椅子／小電驢上不可洗，中途騎乘即取消。 |
+| 收盤與洗碗循環 | 收盤已實作；多人手洗來源已修，原作輸入未還原 | 髒盤持續留在用餐位置，店主／員工點餐盤或下方桌面取回；打破餐盤及滿包回收時落地一盤；裝盤交付時同一位置先清舊盤；打包堂食不占用桌面，不留下髒盤。食品第100 tick前收盤同樣返一個髒盤，並按原生查詢順序中斷盤周圍方盒內第一位進食者約0.5秒；可能是另一桌，其食品進度保持原值。多人手洗共用盤數、各人進度、完成保存／交付與清理，以及仍保留的點擊／視線／計時差距，統一見[洗碗池行為](RUNTIME_ADAPTATIONS.md#洗碗池及洗碗機)；尚無本題客戶端觀察。 |
 | 8級餐廳 | 已實作 | Lv0起步、原成本／營養門檻；營養下降使收益福利降階，不退款已買等級。 |
 | 金幣、小費及排行 | 已實作並適配 | 1/5/20/100/10000 面額、可回滾找零、多維統計；雨天由穩定 weatherChange 事件追蹤。「好吃到爆炸」加賞在顧客原生計數120 tick完成後另付；提前收盤按原作的附近查找中斷第一位進食者並取消其加賞；離線者不收個人幣／收益但餐廳照記加賞。舊版已支付餐點不重付。見[計時與付款範圍](validation/0.1.18-alpha.1/LOADED_MEALS.md)。 |
 | 「好吃到爆炸」 | 已實作並適配 | 普通椅上堂食 10% 機率、加賞 1–4＋實際餐廳級別，使用原120 tick動作；不造成真實爆炸、傷害或方塊破壞。 |
-| 特殊彩蛋人物 | 已實作並適配 | 原七人姓名／帳號／UUID、預設10%抽選、紅色姓名、特殊小費與60%驚喜動作已接入普通和到店訂單，選定後隨訂單保存，不在重生時重抽。網路玩家皮膚未移植，目前用已內附寬版外觀；原生聲畫尚未確認。普通顧客用原姓名名單、預設50%窄版比例。 |
+| 特殊彩蛋人物 | 已實作並適配 | 原七人姓名／帳號／UUID、預設10%抽選、紅色姓名、特殊小費與60%驚喜動作已接入普通和到店訂單，選定後隨訂單保存，不在重生時重抽。後續未版本化來源以七個官方 UUID 的原 PNG 快照選擇正確模型，Assumine 舊式64×32另有鏡像UV骨架；自訂皮膚預設關閉、經生成器註冊後可切換，特殊人物優先。[實作與限制](CUSTOMER_SKINS.md)。非即時下載，尚未部署／觀察。普通顧客用原姓名名單、預設50%窄版比例。 |
 | 原作進度 | 已實作 11／11 並適配 | 包內個人清單／通知，不是 Xbox 平台成就、不加獎勵。依實際交餐玩家累積結算；首單／加急／遠距、三個收益門檻、放置機器／洗碗機升級／八星／金牌均已接線。逾時包裹由原生食用完成事件解鎖，零營養／零飽和；新包裹自帶到期時間，訂單歷史裁剪後仍可食用。詳見 [PROGRESSION.md](PROGRESSION.md)。 |
+
+## 手洗完整使用輸入
+
+2026-11-13 投料來源已另行修正：`interactSink` 以主手非空優先，主手空才使用副手；每次一盤、最多十盤，成功保存池數後 Survival 扣所選手一盤，Creative 不寫手槽。剩餘疊用原物 clone 保留資料；已退役僅供此處使用、硬扣 Creative 的 `consumeHeld`。`tools/convert_assets.py:make_items` 同時為髒盤加入 `minecraft:allow_off_hand` 並重新生成物品定義，讓玩家能正常放入副手。真入口沒有主手髒盤 gate，因此不用另增 listener。已直接審閱 Java `WashingTableBlock.use` 及現有 caller；投料與原作手洗輸入是不同功能，不以投料修正稱以下輸入已還原。
+
+2026-11-13 直接對照 `upstream/source.lock.json` 固定的 Forge 1.20.1 原碼，未執行測試。真正的輸入入口是 [OrderToCookModClient.processWashingInput／canContinueWashing](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/OrderToCookModClient.java#L411)，經 Start／Stop payload 交給 `WashingTableManager`；不能只從方塊 `use` 推斷整條操作。
+
+Java 要雙手空、開始時瞄準有盤的池子，按住使用並在放開時停止。開始後可轉頭；玩家的移動、跳躍和蹲下輸入被抑制。超出池中心 4 格、持物、開介面或騎上本包座椅／小電驢會停止。服務端按玩家保存 session，沒有同池單人鎖；按住且條件仍成立可每約 4,000 ms 接續洗盤，完成才扣池內一盤並交付成品。
+
+現有 `appliances.js` 的 `interactSink`／`tickWashing`／`getWashingProgress` 仍是點擊切換、持續視線與遊戲 tick 計時，沒有上述移動輸入抑制。`main.js` 在 before-event 取消原生操作後直接呼叫此服務；這個入口的放開訊號尚未接通。2026-11-13 的獨立多人來源修正已移除同池單人限制，並接原站當前盤數與保存回退；詳細行為統一見[洗碗池行為](RUNTIME_ADAPTATIONS.md#洗碗池及洗碗機)，沒有新實機結論。
+
+選定 stable 2.11.0 及對應 26.60 的 2.12.0-beta 輸入列舉沒有 Use；但 [ItemStartUseOn](https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/itemstartuseonafterevent?view=minecraft-bedrock-stable) 明列部分空手互動。因此仍要追自訂方塊正常接手後的成功使用／停止契約，不能把現有 cancel 路線的缺口當成整個平台永久不支援，也不能用假物品或超時推斷放開。
 
 ## 新打單機的放置範圍
 
@@ -83,12 +147,38 @@ Order To Cook 的訂單、菜單、等級、餐盤及設備狀態均能以 Bedro
 | 洗碗檯水面 | 原 renderer 的 10×9 像素平面、Y=15.08、完整原 UV／alpha；0–10 盤世界狀態均包含，物品保留乾檯 | 為符合原生同方塊材質規則，世界材質全部改用 blend；兩面、透明排序、池壁／盤子遮擋及乾檯 item_visual 尚待原生客戶端驗收。[來源與測試](validation/UNRELEASED-washingtable-water.md)。 |
 | 冰箱 | 上 27／下 54 格原生方塊容器、上下門獨立；蹲下空手點擊可整理目前那層 | 整理依 Java `RefrigeratorScreenHandler.compactRefrigerator` 的初次出現順序分組，僅合併 native 可堆疊物品並保留 metadata；寫入失敗回復已觸及格子。`native-fridge.test.js` 13項通過；BDS1.26.60.6首次7項、同世界重啟4項通過，真實cargo含名稱、lore、自訂資料、耐久與keepOnDeath。控制入口由實際adapter測試，未宣稱真人輸入或GUI畫面驗收。仍無食品限定槽、每格 128 件及內部食品陳列；原生容器已開啟時無法強制關閉。 |
 | 洗碗機 | 16 盤容量、原 phase／時間、82 個門／抽屜姿態 | 批次存取失敗保留物品，補回非均勻機身變形、原盤數可見規則與 `empty_out` 預覽。預覽由合資格玩家共用方塊狀態，與 Java 每客戶端獨立預覽不同；旋轉子部件的剩餘剪切誤差與有限取樣詳見素材說明。 |
-| 三槽爐灶 | 3輸入＋1燃料＋3配對輸出、共用200 tick；實際產量、堵塞、換料重置與保存；15／5／8 tick獨立爐火 | 原版9條＋有效安裝時煙火2條，其他供應商以明確smoking契約接入；單頁控制與直接存取，點火骨骼已按來源20 tick倒數接入有限姿態，每2 tick發布；連續插值、封包起點、STOP後5 tick復位與粒子分布仍有適配，[來源驗證](validation/stove-ignition/README.md)，客戶端待驗收。 |
-| 顧客 | 兩款原皮膚／骨架、等待與坐姿各 4 變體、7 個 action | idle 權重 55／15／15／15，完成片段後再選變體；action 按原生實體已模擬的tick定位，保留12／40／60／120／110／10 tick時長及保存進度；完成通知下一tick處理，原生測試中10 tick中斷至移除共13 tick；不下載網路皮膚。 |
+| 三槽爐灶 | 原生方塊7槽：0–2輸入、3燃料、4–6配對輸出；共用200 tick，保留實際產量、堵塞、換料重置與保存；15／5／8 tick獨立爐火 | Forge／NeoForge 原作確有七槽 GUI。沿 Bedrock 原生容器移物；專用七槽布局已由生成源接入，燃燒／進度條、燃料限定和輸出槽放入鎖仍缺。首次互動沿原規則認領，若此次開啟被攔截則提示再次點擊；不再用按鈕列表或手持直接扣物。舊 helper 原生逐槽移入並成功保存後才退役，異常保留貨物。原版9條＋有效安裝時煙火2條，其他供應商沿既有smoking契約；爐火來源與其餘畫面限制見[來源驗證](validation/stove-ignition/README.md)。本次只完成來源審閱與正常布局生成，未執行測試或觀察客戶端 GUI。 |
+| 顧客 | 兩款原皮膚／骨架、等待與坐姿各 4 變體、7 個 action | idle 權重 55／15／15／15，完成片段後再選變體；action 按原生實體已模擬的tick定位，保留12／40／60／120／110／10 tick時長及保存進度。2026-11-10 [`convert_assets.py`](../tools/convert_assets.py) 來源草稿以真乘座關係選坐姿，使用原生 controller state time 重播原片段，移除無動畫的 select／reset 和未使用的自製 walk；已生成相關 RP，未執行測試、未部署或觀察修後畫面。後續來源已另取得七個有來源/hash的官方玩家皮膚快照，非即時下載，仍未部署或觀察，見 [顧客皮膚](CUSTOMER_SKINS.md)。 |
 | 用餐餐盤 | 原生方塊、原兩層碰撞、40個進食模型；stage 0沿用原食物與放盤短動畫 | 舊記錄及token保留，穩定階段舊helper會移除；點取／拆除走唯一領取記錄。Java 用餐中或完成後刻意回傳新髒盤；未交付成品的完整物品另見[展示餐點保存](#未交付的展示餐點)。選取框是兩層形狀的外接長方體，原作沒有重力。用餐部分見[原生餐盤](validation/0.1.15-alpha.1/NATIVE_PLATE.md)，不由服務端推定客戶端聲畫。 |
 | 椅子／玩家動作 | 原安坐循環、拍手全身／前臂／足端轉換、手洗身體及獨立FP雙臂 | 原生整臂／整腿匹配分段來源的兩端；手洗FP補回臂長及肩端補位，拍手TP／FP分開，安坐保持同一身體高度。可見性仍須共享player/controller接線；單包不保證空手左臂。真肘／膝、Java ACTION絕對校準、Slim／客製骨架及可見姿勢／停止仍未完成或未確認。沒有player.json覆寫；目前範圍見[玩家來源與骨架](#玩家動作的來源與骨架)、[手洗FP](#手洗第一人稱左臂)及[安坐與拍手](#安坐與拍手)。[020](validation/0.1.20-alpha.1/PLAYER_POSES.md)／[013](validation/0.1.13-alpha.1/CHAIR_CLAP.md)原生證據保留原範圍，不回填新畫面結論。 |
-| 小電驢 | 原Java模型、四車色、保溫箱、燈面、喇叭；原 `drive_idle` 第三人稱基底 | .51 修正輪轉 X 角映射，仍以無方向累積距離驅動；把手／前輪轉向、Java 帶方向內部輪速、倒車／碰撞及滑行語義尚未接回。TP基底以原曲線163時刻轉為classic整臂／整腿端點近似；倒車仍用同基底，`drive_back`、body yaw、自動頭盔、FP及喇叭／切燈玩家片段未實作。原生皮膚、座位接觸、控制與client圖層未驗證，見[來源、定點測試與離線預覽](validation/MOTORCYCLE_PRESENTATION_20261109.md)。燈面發光但不照亮地形。 |
+| 小電驢 | 原Java模型、四車色、保溫箱、燈面、喇叭；共享TP乘坐來源 | 原生載具物理；輪子 X 正向映射已在現行生成器，仍以無方向累積距離驅動，未綁把手／前輪轉向，不能等同 Java 內部速度、倒車及碰撞語義。現行 caller 已依車輛速度／yaw 選 idle／back／horn／light；共享 classic／slim 分段 TP 輸入另由原人物 owner 組裝，單 OTC 包不保證可見。11/17 修正該 exporter 的曲線／pre，見[來源與離線預覽](validation/motorcycle-riding-20261117/README.md)。燈面不照亮地形；自動頭盔、FP與原生畫面仍未完成或未驗證。 |
 | 原始美術 | 67原PNG、12原OGG原樣保留；原geo／動畫正規化存档 | 保存未使用片段不等於其在玩法中已被觸發；動畫清單詳見ASSET_PROVENANCE。 |
+
+## 機車第一人稱乘座座標
+
+2026-11-11 收件審閱：已撤回本題未充分成立的 seat Y `+0.4` 及其生成器常數／註解，正常重產原 `[0,0.6,-0.45]`。PNX 的 `getMountedOffset`／`getSeatOffsetFor`／`applySeatOffsets` 是第三方引擎產生 `SEAT_OFFSET` 的路徑，不能證明本機 BDS 客戶端眼位；舊 `1.62−1.22=0.4` 只是假說，未定位遮擋根因，也不是已確認的補償量。提高 rideable seat 會改乘客附著位置，原草稿沒有獨立處理人物 mesh；不能保證臀部仍貼座墊，故不保留該變更，也不加反向 mesh 抵銷。
+
+2026-11-11 來源重建補入獨立的 `make_player_riding_source`，把五個原 drive 片段轉為兩份真 native 基底的分段 TP 動畫。`player-presentation.json.riding` 由此入口實際讀取，共享 Grilling composer 與 Core／private 的完整玩家 prepare 已接入其讀取與回寫路徑；實際接線及保留範圍只維護於 [玩家來源文件](PLAYER-RIG-PROTOTYPE.md#機車第三人稱的共享來源接線)。原 imported 動畫不再被當成有效 player 已在播放的證據；一般手洗／椅子與 FP 原型的邊界不變。
+
+上述來源已收入 [0.1.55 本機固化批次](../CHANGELOG.md#0155-alpha1-local-integration-unpublished)。2026-11-11 後續 camera 題只作來源審閱與本節更正，沒有新增 runtime 修復，也不能併稱已包含在55。完整共享玩家的配對與選包仍查其實際 owner；TP 選型、皮膚／衣物／持物、轉頭與離座恢復仍沒有本題的新 client 畫面。
+
+Java 的 [Forge RidePerspectiveSwitch](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/animation/RidePerspectiveSwitch.java)／[NeoForge 同類別](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/neoforge-1.21.1/src/client/java/cn/breezeth/ordertocook/client/animation/RidePerspectiveSwitch.java)由各自 `OrderToCookModClient::onClientSetup` 註冊，按真 `MotorcycleEntity.fromVehicle` 的狀態邊緣切換。失敗掛載不切換；上車切一次背後第三人稱，騎乘中仍可手動切回FP；下車切第一人稱，**不保存／恢復上車前的視角選項**。client player 為空只清 `wasRidingMotorcycle`，重新進入按當前乘座重新判定。`RideOrientationLock` 只寫 body yaw，不能移作鎖 head yaw／pitch 的理由。
+
+固定來源與現行接線須分開看：
+
+| 路徑 | 已讀來源可確定的事實 | 仍缺什麼 |
+| --- | --- | --- |
+| 乘客位置 | 兩個Java分支 `MotorcycleEntity::positionRider` 都用旋轉後 `(0,0.6,0.45)`；Bedrock [生成 owner](../tools/convert_assets.py) 的 `make_motorcycle_entity` 保留反轉Z後的 `[0,0.6,-0.45]`。 | 這是乘客附著位置，不是獨立眼位；不能據此重加Y補償。 |
+| 車體及裁切 | [Forge 車體 renderer](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/render/MotorcycleRenderer.java)與NeoForge同路徑均畫完整模型／燈面，沒有依FP隱藏車頭或整車的分支；座標詳見[車體來源](MOTORCYCLE_SOURCE_MAPPING.md#authority-and-coordinate-frame)。 | 來源沒這個分支不等於已量出遊戲 near plane 或眼位；目前遮擋的完整根因仍未知。 |
+| 相機高度 | [Forge CameraMixin](https://github.com/breezeth-CN/OrdertoCook/blob/e59e3dbcabe19b783d9adb933db5fcb8bc1e4642/forge-1.20.1/src/client/java/cn/breezeth/ordertocook/mixin/client/vehicle/CameraMixin.java)與NeoForge同類只對無機車parent的普通椅子FP降低 `8/16`；直接騎機車或機車parent seat均跳過。 | 機車沿原版camera／玩家眼位路徑，沒有可從此抽出的機車eye補償值；不能套普通椅子的下降量。 |
+| TP模型與FP雙臂 | 55已有TP接線；Java另由 `HeldItemRendererMixin → RiderFirstPersonArmRenderer` 用 `FirstPersonArmCalibration.Profile.DRIVE` 的左右獨立矩陣、原drive骨鏈、喇叭附加變換及 `ROOT_Y=-27/16` 畫FP雙臂。這些都是人物renderer，不會設定Camera。 | TP exporter沒有輸出這條FP consumer；須由既有共享人物owner協調，不能再造player覆寫。補手臂不能直接算車體遮擋修復。 |
+| 騎乘生命週期 | [entities.js](../runtime/BP/scripts/entities.js) 的 `onEntityInteract → addRider成功 → trackMotorcycleRider`、既有tick的 `updateMotorcyclePresentation`、`playerLeave`、`playerSpawn`／script reload已有真車判斷及短暫pose狀態清理／恢復。 | 目前沒有本題camera override需釋放；不能為補空白camera owner而在取消／下車清掉別人的相機。這是直接讀碼結論，沒有新遊戲觀察。 |
+
+2026-11-11重新核對現用 server 2.11.0 型別與官方 [stable camera語義](https://learn.microsoft.com/en-us/minecraft/creator/documents/camerasystem/cameracommandintroduction?view=minecraft-bedrock-stable)、[experimental Camera](https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/camera?view=minecraft-bedrock-experimental)及[原生rideable欄位](https://learn.microsoft.com/en-us/minecraft/creator/reference/content/entityreference/examples/entitycomponents/minecraftcomponent_rideable?view=minecraft-bedrock-stable)：`setCamera`持續到clear／斷線，`setDefaultCamera`重設preset的位置／旋轉；`clear`回玩家原選項，不會改成Java要求的FIRST_PERSON。`attachToEntity`只附著非玩家實體；`CameraFixedBoomOptions.entityOffset`是第三人稱boom設定。rideable的`position`移乘客，`third_person_camera_radius`與`camera_relax_distance_smoothing`調第三人稱距離／回彈，均不是獨立FP眼位入口。不能以一次set、下一tick clear或短相機動畫冒充一次改選項。
+
+同引擎固定 Mojang 1.26.60.5／`15701fa9c13923f12662984c32c124327e40e3d3` 的 [player.entity.json](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/entity/player.entity.json)只對列出的原生minecart／boat／chest_boat／strider給 `riding_y_offset=-3`；[player.animation.json](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/animations/player.animation.json)的 `animation.player.riding.root`將它寫入模型root。該列表不含OTC機車，這也不是可移用的眼位公式。原生boat／horse的rideable定義沒有另外給出FP眼位接點；這些開放資產不包含BDS內部eye frame的實作。
+
+**仍未修復：FP車體遮擋、獨立眼位及Java一次視角選擇。** 本次所讀原生入口沒有找到保留自由切視角的等價能力；不能擴大成平台永遠不支援。未改seat／車體、共享人物來源或camera狀態；無受影響資產需重產。本題只有文檔來源更正與跨owner回件，未執行測試、提交、發布或部署，沒有實際新畫面。
 
 ## 未交付的展示餐點
 
@@ -124,9 +214,9 @@ Java選定source與API版本查 [upstream鎖](../upstream/source.lock.json)。Fo
 
 所選官方[原生骨架](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/models/entity/humanoid.custom.geo.json)保留 `rightItem`／`leftItem` 及lead locator。[原生胸甲attachable](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/attachables/iron_chestplate.player.json)另設 `chest_layer_visible=0`，使用[armor geometry](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/models/entity/player_armor.json)的native body／waist／Arm等骨名；不能只看玩家皮膚網格。Java也須分支核對：上述Forge入口只替換base model的renderToBuffer；Neo則在自訂renderer成功後取消整個PlayerRenderer。所選兩分支RiderGeoRenderer只自加motorcycle helmet layer，沒有另加一般armor／held-item layer。這不等於已觀察兩分支穿甲實景，也不要求額外重做所有盔甲分節。
 
-classic／slim的原rig與UV已存在，但自動選取仍需證據。[官方skin pack規格](https://learn.microsoft.com/en-us/minecraft/creator/documents/packagingaskinpack?view=minecraft-bedrock-stable)把 `geometry.humanoid.custom`／`customSlim` 分別當Steve／Alex；該metadata不是client_entity的slim query。所選[Molang參考](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/documentation/Molang.html)有bone_aabb、bone_origin、get_default_bone_pivot；skin_id則關聯實體skin_id component。有效owner目前沒有骨架／slim偵測，也未宣告queryable_geometry；官方[client schema](https://learn.microsoft.com/en-us/minecraft/creator/reference/content/visualreference/actor_resource_definition.v1.10.0?view=minecraft-bedrock-stable)雖列出該欄位，尚未驗證這些查詢在所選玩家skin／取樣階段的值，不能直接拿它們決定粗細手臂，也不能由此斷言它們不支援玩家。
+classic／slim 的來源及目前機車 selector 見 [玩家來源文件](PLAYER-RIG-PROTOTYPE.md#機車第三人稱的共享來源接線)。025 的「未宣告 queryable_geometry」只描述當時輸入；現有 IE 宿主輸入已宣告 `default`，而完整 TACZ 玩家 prepare 由同一 composer 補入它。來源中已按真 native 肩 pivot 選型，不代表已觀察 client 查詢結果；不以 skin_id、名稱或手臂寬度猜身形。
 
-全身、前臂及分段FP的可重現生成與矩陣測試現已具備，見[來源原型與接入契約](PLAYER-RIG-PROTOTYPE.md)。classic與customSlim已各讀固定Mojang真基底，補償slim網格／樞紐／持物的半像素座標框差並保留其鏡射UV，不再共用classic只改寬度。它保留分段上下肢、下袖／褲、持物錨點及每手獨立view／body矩陣；參考相機框架明確傳入，未自動選native skin或校準Bedrock絕對相機。這些來源未進runtime，現行rigid姿勢不變。後續接入沿共同持有的Core／既有composer保留同一有效owner的default、皮膚與native骨名，再按實際動作選相容geometry；native自動選型／客製avatar、持物／armor與相機未核清前，不加入全域geometry替換、額外player覆寫或機器專屬玩法。
+全身、前臂與分段 FP 的歷史來源原型及矩陣結果仍見 [玩家來源文件](PLAYER-RIG-PROTOTYPE.md)。本次機車 TP 重用它的雙基底、分段 UV 與父鏈，並接入完整玩家 prepare；沒有把一般手洗／椅子或 FP 原型一併換成新 runtime，也沒有部署。眼位、特殊 avatar 與實際持物／衣物畫面仍未確認。
 
 ## 手洗第一人稱左臂
 
@@ -161,9 +251,9 @@ Java拍手可持物，兩分支HeldItemRendererMixin會取消原held-item繪製�
 | 食物自動識別 | 未發布來源加入可選供應目錄：40 種原版＋森羅 67 種正營養食品，合計 490；秘製串、串盤、花椒按 Java 基礎營養各 1。另有 72 種飲品／282 個實際 ID，以明示的 Bedrock 擴充允許營養 0 的飲品進入訂單，僅沿用既有服務報酬。森羅共 139 種／425 個實際 ID，品質／呈現別名合併；每牌仍限 150 道。實際持有即可登記，其他 Addon 可自動發布供應資料，保留原管理員覆寫。完整清單、花椒手持食用與取得限制見 [FOOD-CATALOG.md](FOOD-CATALOG.md)，協議見 [FOOD-PROVIDERS.md](FOOD-PROVIDERS.md)。喜糖排除後為 470，仍不足 Lv.8 的 600，未宣稱新世界全部可取得。 |
 | Java mod cooking integration | 共用既有ctx.smokingRecipes；已核對煙火烤雞翅／番薯，Server事件提供可撤回的供應目錄，輸入輸出須實際存在。只收單料smoking，烤架／調酒／鍋具留原製程。Farmer's Delight、Let's Do、其他Cookery煙燻及外部鍋具熱源尚待各供應端明確接入，詳見[配方契約](STOVE-RECIPES.md)。 |
 | 自訂貨幣 | 可指定一個已安裝的物品作貨幣，每件一單位。沒有直接呼叫SDM數位帳本。 |
-| Jade 顯示 | 改為看向設備的唯讀 action bar：包材／盤數、洗碗 phase、冰箱分區占用槽、爐灶進度。權限即時重新檢查；手洗優先一行，外送另一行；6 格視線、10 tick 更新，不是 Jade 原介面。 |
+| Jade 顯示（Java 可選相容） | 未發布來源已移除自加的設備視線 action bar；手洗操作回饋、外送導航及互動後訊息保留。來源依據與未部署界線見[設備準星資訊](RUNTIME_ADAPTATIONS.md#設備準星資訊與個人進度)。 |
 | 女僕、航空學等API | 沒有直接移植。需要對相應基岩附加包建立各自的協議。 |
-| 多人資料 | 餐廳、設備與個人進度用固定 UUID 下的分片 world dynamic properties；冰箱實物在方塊原生 inventory，爐灶／載具使用實體 inventory。兩 buffer 最後提交 manifest；原生冰箱已開視窗不具有即時撤權保證。 |
+| 多人資料 | 餐廳、設備與個人進度用固定 UUID 下的分片 world dynamic properties；冰箱與新爐灶實物在方塊原生 inventory，載具沿用實體 inventory；爐灶舊 helper 遷移未完成時保留原來源。兩 buffer 最後提交 manifest；原生容器已開視窗不具有即時撤權保證。 |
 | 跨版本／重啟 | 舊 81 格冰箱 helper 以 native moveItem 逐槽移入上下容器，未載入時等待且不重建空庫存；門姿態與廚電剩餘 tick 恢復。執行範圍見 [本輪報告](validation/0.1.5-alpha.1/CONTAINER_GUI.md)；歷史結果仍在 [VALIDATION.md](VALIDATION.md)，真客戶端卸載、手機及多人待驗收。 |
 
 存檔分片保證單筆記錄切換完整快照；**世界磁碟、玩家背包、方塊庫存和實體庫存並不是可跨服務提交的同一筆資料庫交易**。目前同步操作預檢及回退能防止常見競態／扣物失敗，不能把它描述成任何強制斷電時刻都絕不丟失物品的保證。

@@ -2,12 +2,17 @@
 // Exercise shipped order transactions and their visible native block states.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mainFixture } from './main.harness.js';
+import { mainFixture, configure } from './main.harness.js';
 
 const state = machine => [machine.permutation.getState('ordertocook:mode'), machine.permutation.getState('ordertocook:frame')];
+async function fixture() {
+  const env = await mainFixture();
+  configure(env, { deliveryRate: 0 }, 'server');
+  return env;
+}
 
 test('a machine refresh raises paper for one second, holds through Java PRINTING, and never loops', async () => {
-  const f = await mainFixture();
+  const f = await fixture();
   f.system.currentTick = 100;
   f.hooks.refreshMachineOrders(f.restaurant, f.machine);
   assert.deepEqual(state(f.machine), ['printing', 0]);
@@ -26,7 +31,7 @@ test('a machine refresh raises paper for one second, holds through Java PRINTING
 });
 
 test('accepting a machine offer hides its paper immediately even with a walk-in offer left', async () => {
-  const f = await mainFixture();
+  const f = await fixture();
   f.hooks.refreshMachineOrders(f.restaurant, f.machine);
   const offer = f.restaurant.orders.find(order => order.status === 'offered' && !order.walkIn);
   const walkIn = f.core.generateWalkInOrder(f.restaurant);
@@ -41,7 +46,7 @@ test('accepting a machine offer hides its paper immediately even with a walk-in 
 });
 
 test('restored offers hold their terminal pose and unloaded printing does not restart', async () => {
-  const f = await mainFixture();
+  const f = await fixture();
   f.core.refreshOrders(f.restaurant);
   f.hooks.syncPrinter(f.restaurant);
   assert.deepEqual(state(f.machine), ['waiting', 0]);

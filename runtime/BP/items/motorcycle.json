@@ -4,12 +4,13 @@
     "description": {
       "identifier": "ordertocook:motorcycle",
       "menu_category": {
-        "category": "items"
+        "category": "items",
+        "group": "ordertocook:itemGroup.order_group"
       }
     },
     "components": {
       "minecraft:display_name": {
-        "value": "item.ordertocook:motorcycle.name"
+        "value": "senluo.tooltip.item.ordertocook:motorcycle.name"
       },
       "minecraft:icon": {
         "textures": {

@@ -4,12 +4,13 @@
     "description": {
       "identifier": "ordertocook:otc_upgrade_box",
       "menu_category": {
-        "category": "items"
+        "category": "items",
+        "group": "ordertocook:itemGroup.order_group"
       }
     },
     "components": {
       "minecraft:display_name": {
-        "value": "item.ordertocook:otc_upgrade_box.name"
+        "value": "senluo.tooltip.item.ordertocook:otc_upgrade_box.name"
       },
       "minecraft:icon": {
         "textures": {

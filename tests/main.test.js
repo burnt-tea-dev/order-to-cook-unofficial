@@ -4,6 +4,77 @@ import assert from 'node:assert/strict';
 import { mainFixture, balance, itemCount } from './main.harness.js';
 import { FakeItem, place } from './appliances.harness.js';
 
+for (const isFirstEvent of [true, false]) {
+  test(`registered menu-board click opens management with isFirstEvent=${isFirstEvent}`, async () => {
+    const env = await mainFixture();
+    const block = place(env, 'ordertocook:board', { x: 0, y: 0, z: 2 });
+    env.player.container.setItem(0, undefined);
+    const event = { player: env.player, block, isFirstEvent, cancel: false };
+    for (const fn of env.world.beforeEvents.playerInteractWithBlock.subscriptions) fn(event);
+    assert.equal(event.cancel, true);
+    for (const fn of env.system.callbacks.splice(0)) await fn();
+    assert.equal(env.forms.length, 1);
+    assert.deepEqual(env.forms[0][1], { translate: 'otc.menu.title' });
+  });
+
+  test(`registered plate-shelf click inserts one clean plate with isFirstEvent=${isFirstEvent}`, async () => {
+    const env = await mainFixture();
+    const block = place(env, 'ordertocook:plate_shelf', { x: 0, y: 0, z: 2 });
+    env.player.container.setItem(0, new FakeItem('ordertocook:clean_plate', 3));
+    const event = { player: env.player, block, itemStack: env.player.container.getItem(0), isFirstEvent, cancel: false };
+    for (const fn of env.world.beforeEvents.playerInteractWithBlock.subscriptions) fn(event);
+    assert.equal(event.cancel, true);
+    for (const fn of env.system.callbacks.splice(0)) await fn();
+    assert.equal(env.store.getStation(block).supplies, 1);
+    assert.equal(env.player.container.getItem(0).amount, 2);
+    assert.equal(block.permutation.getState('ordertocook:plates'), 1);
+  });
+}
+
+test('duplicate canceled clicks before and after deferred dispatch do not debit a second plate', async () => {
+  const env = await mainFixture();
+  const block = place(env, 'ordertocook:plate_shelf', { x: 0, y: 0, z: 2 });
+  env.player.container.setItem(0, new FakeItem('ordertocook:clean_plate', 3));
+  const event = { player: env.player, block, itemStack: env.player.container.getItem(0), isFirstEvent: false, cancel: false };
+  for (let i = 0; i < 2; i++) {
+    for (const fn of env.world.beforeEvents.playerInteractWithBlock.subscriptions) fn(event);
+  }
+  for (const fn of env.system.callbacks.splice(0)) await fn();
+  for (const fn of env.world.beforeEvents.playerInteractWithBlock.subscriptions) fn(event);
+  await Promise.resolve();
+  assert.equal(env.store.getStation(block).supplies, 1);
+  assert.equal(env.player.container.getItem(0).amount, 2);
+});
+
+for (const nativeReady of [false, true]) {
+  test(`registered stove click ${nativeReady ? 'allows the ready native container' : 'defers pending storage to its owner'}`, async () => {
+    const env = await mainFixture();
+    const block = place(env, 'ordertocook:stove', { x: 0, y: 0, z: 2 });
+    env.player.container.setItem(0, undefined);
+    let permissionChecks = 0, ownerCalls = 0;
+    env.hooks.appliances.handlesInteraction = () => true;
+    // The separate appliance service owns permissions and native migration.
+    // This test exercises the registered main routing against that interface.
+    env.hooks.appliances.canOpenStove = (player, target) => {
+      assert.equal(player, env.player); assert.equal(target, block);
+      permissionChecks++; return nativeReady;
+    };
+    env.hooks.appliances.onInteract = (_player, target, options) => {
+      assert.equal(target, block);
+      assert.equal(options.nativeEntryCancelled, true);
+      assert.equal(env.store.getStation(block).ownerId, env.player.id, 'the existing first interaction still claims ownership');
+      ownerCalls++; return true;
+    };
+    const event = { player: env.player, block, isFirstEvent: false, cancel: false };
+    for (const fn of env.world.beforeEvents.playerInteractWithBlock.subscriptions) fn(event);
+    assert.equal(event.cancel, !nativeReady);
+    for (const fn of env.system.callbacks.splice(0)) await fn();
+    assert.equal(permissionChecks, 1);
+    assert.equal(ownerCalls, nativeReady ? 0 : 1);
+    assert.equal(env.forms.length, 0);
+  });
+}
+
 test('ordinary machine dining accepts without a chair and issues its canonical ticket', async () => {
   const env = await mainFixture(); env.chair.setType('minecraft:air');
   const order = env.core.generateOrder(env.restaurant, Date.now(), () => 0.9999);
@@ -32,7 +103,7 @@ test('walk-in without a chair remains offered and does not consume or issue any 
   assert.deepEqual(Array.from({ length: env.player.container.size }, (_, slot) => env.player.container.getItem(slot)), before);
   assert.deepEqual(env.restaurant.stats, stats);
   assert.equal(itemCount(env.player, 'ordertocook:order'), 0);
-  assert.match(env.player.messages.at(-1), /到店顧客.*椅子/);
+  assert.deepEqual(env.player.messages.at(-1), { translate: 'otc.order.chair_required' });
 });
 
 test('production handoff records one animation/plate and pays the canonical reward once', async () => {
@@ -118,7 +189,7 @@ test('occupied dining anchor rejects a fresh handoff before consuming or paying 
   env.hooks.customerInteract(env.player, env.customer, env.linkage);
   assert.equal(env.order.status, 'packed'); assert.equal(itemCount(env.player, 'ordertocook:food_plate'), 1);
   assert.equal(balance(env.player), 0); assert.equal(env.restaurant.stats.completed, 0);
-  assert.match(env.player.messages.at(-1), /先收走/);
+  assert.deepEqual(env.player.messages.at(-1), { translate: 'otc.order.collect_plate' });
 });
 
 test('replaced machine cannot reopen a closing restaurant or accept a late physical handoff', async () => {
@@ -301,7 +372,7 @@ test('restaurant removal retains an unacknowledged personal ledger for a later r
   assert.equal(env.hooks.progression.getState(env.player.id).totals.earned, env.order.paidReward);
 });
 
-test('one HUD update combines equipment with delivery and prioritizes washing without losing navigation', async () => {
+test('one HUD update preserves delivery and washing without forced equipment inspection', async () => {
   const env = await mainFixture();
   env.order.type = 'delivery'; env.order.carrier = 'bag'; env.order.destination = { dimensionId: env.player.dimension.id, x: 100, y: 0, z: 100 };
   env.store.saveRestaurant(env.restaurant);
@@ -309,7 +380,7 @@ test('one HUD update combines equipment with delivery and prioritizes washing wi
   env.hooks.appliances.getInspection = () => '設備讀數';
   env.hooks.appliances.getWashingProgress = () => undefined;
   env.hooks.updateHud();
-  assert.match(env.player.messages.at(-1), /^設備讀數\n§r§6外送/);
+  assert.match(env.player.messages.at(-1), /^§6外送 [^\n]+$/);
   env.hooks.appliances.getWashingProgress = () => '手洗進度';
   env.hooks.updateHud();
   assert.match(env.player.messages.at(-1), /^手洗進度\n§r§6外送/);

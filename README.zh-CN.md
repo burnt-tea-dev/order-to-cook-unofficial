@@ -2,6 +2,12 @@
 
 **简体中文** · [繁體中文](README.md) · [English](README.en.md)
 
+0.1.53-alpha.1 是本地、尚未发布的洗碗机显示原型：四种外观值保留真实 0–16 批次及原盘片模型，减少声明组合。旧 palette／同世界重启尚未原生验证，不能当作可安全升级的交付。[范围](docs/PARITY.md#洗碗機顯示狀態本地原型0153尚未發布)。
+
+0.1.52-alpha.1 让打包沿 Java 在受阻台面上掉出完整袋子，保留原成品；装盘仍需空位。沿原扣料、包材设置与订单凭据，已知掉落失败会恢复本次交易。来源回归已过，尚未新增原生／客户端结果。[规则与范围](docs/PARITY.md#受阻台面的打包掉袋0152)。
+
+0.1.51-alpha.1 来源补上已接外送单的坏地址恢复，保留原订单、包裹凭据、期限及已接报酬；同一包裹只在使用时更新自有坐标行。未加载或已有顾客／anchor 的地址不移动。规则和未验证范围见 [PARITY](docs/PARITY.md#已接外送單的壞地址恢復0151)。
+
 0.1.48-alpha.1 是**已整合至 #75 合并后主线、尚未发布的候选**。修正小电驴 7 根静态骨骼 X 旋转符号及 41 个 box UV 镜像配置，保留原贴图与全部玩法、转向／轮速行为。9 张原始共同编辑器图片支持有限静态对照，不代表原生或动态车辆验收。配对身份已冻结，套件绑定整合后的确切候选提交；来源再次变更时必须重新验证并重建。[范围、身份与限制](docs/validation/0.1.48-alpha.1/MOTORCYCLE_STATIC_MAPPING.md)。
 
 0.1.47 候选补回冰箱共同根变形：上下门保留各自姿态，两半共用原关门 root 样本；下门 close 按 controller 顺序覆盖上门，包括中性样本。也修正上半读取抛异常时下半保留旧变形的问题，不削弱库存迁移保护。配对身份已冻结但尚未发布；有限采样、SRT 剪切近似、反转／STOP 差异与两方块非原子写入仍需保留。[来源、版本与验证](docs/validation/0.1.47-alpha.1/FRIDGE_SHARED_ROOT.md)。
@@ -229,14 +235,16 @@ Server 事件、创造模式与 `otc_admin` 玩家可使用。只接受 signed 3
 ```sh
 npm ci
 npm run verify
-python tools/check_compliance.py
+python3 tools/check_compliance.py
 ```
+
+`npm run verify` 默认运行订单／付款、物品交付、容器保存及真实交互 owner 的核心测试，再做类型／资源检查和构建。`npm test -- tests/delivery-recovery.test.js` 只运行指定文件，可列多档；`npm test -- --full` 运行全部现有 JS，`npm run verify:full` 再加类型／资源和构建。模型、像素及逐资产矩阵保留在手动 build 工作流的 `full_validation` 选项及版本 tag／候选检查。修改对应素材时另跑相关现有测试或完整手动入口；普通 PR 不重放全部素材矩阵。详见[统一测试入口](README.md#開發與重現)。
 
 `dist/` 包含 `.mcaddon`、独立 `.mcpack`、`SHA256SUMS.txt` 和 runtime 指纹。若修改原始模型或转换器：
 
 ```sh
-python -m pip install Pillow==12.3.0
-python tools/convert_assets.py
+python3 -m pip install Pillow==12.3.0
+python3 tools/convert_assets.py
 npm run verify
 ```
 
@@ -245,8 +253,8 @@ npm run verify
 原生服务器测试须从 [Minecraft 官网](https://www.minecraft.net/en-us/download/server/bedrock) 自行获取 Linux BDS，解压到**没有其他世界的独立临时测试目录**：
 
 ```sh
-python tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode initial
-python tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode reload
+python3 tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode initial
+python3 tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode reload
 ```
 
 探针不在正式安装包中启用，仅由测试工具注入一次性副本。

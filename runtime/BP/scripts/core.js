@@ -15,18 +15,9 @@ import {
 import { normalizeFoodIdentity, normalizeFoodAliases, menuFoodsOverlap } from "./senluo_food.js";
 import { DEFAULT_CUSTOMER_NAMES, ENGLISH_CUSTOMER_NAMES } from './customer_names.js';
 
-// CustomerProfileLibrary.java at the pinned upstream commit. Bedrock cannot
-// fetch these accounts' player skins; their original identity still travels
-// with the order and drives its name, tips and completion reaction.
-export const EASTER_EGG_CUSTOMERS = Object.freeze([
-  ['Breezeth', '微风(作者)', 'a1b3e264-652b-42db-b8e7-5393b409776b'],
-  ['Kuroneko_RikoP', '猫猫子(贡献)', 'e2ca8e07-c1b5-46e1-86f9-932718a44e60'],
-  ['YYN0114', '以诺(贡献)', '035c0419-c744-47eb-b2a2-470d92b3bb0c'],
-  ['Yunan_ovo', '遇南(贡献)', '772fcb25-c047-42b8-9d5e-df82d7a4a233'],
-  ['Ao2333', 'Ao(美术)', '25b8aea8-c9c2-41ef-8f17-3b9c0f7aa365'],
-  ['Assumine', 'Assumine(贡献)', '76640ae8-c4da-44ea-9d4b-53329ea02b2d'],
-  ['zsdr', 'N44(美术)', '5a33e9b0-35bc-44ed-9b4e-03e3e180a3d2']
-]);
+// Fixed identity order from pinned Java; resource generation uses the same catalog.
+import { EASTER_EGG_CUSTOMERS } from './customer-skin-catalog.js';
+export { EASTER_EGG_CUSTOMERS };
 
 /** @typedef {number | {wall: number, tick: number}} OrderTime */
 
@@ -348,6 +339,17 @@ function destinationFor(restaurant, longDistance, cfg, rng) {
   };
 }
 
+/** Reuse the original radial candidates without allocating or changing an order. */
+export function chooseDeliveryDestination(restaurant, longDistance, resolveDestination, rng = Math.random, attempts = 4) {
+  const cfg = configFor(restaurant);
+  for (let attempt = 0; attempt < (resolveDestination ? attempts : 1); attempt++) {
+    const candidate = destinationFor(restaurant, longDistance, cfg, rng);
+    const destination = resolveDestination ? resolveDestination(candidate) : candidate;
+    if (destination) return destination;
+  }
+  return undefined;
+}
+
 function nextOrderId(restaurant, now) {
   let sequence = integer(restaurant.orderSequence);
   let id;
@@ -360,7 +362,7 @@ function nextOrderId(restaurant, now) {
 }
 
 /** @param {OrderTime} now */
-function makeOrder(restaurant, now, rng, walkIn) {
+function makeOrder(restaurant, now, rng, walkIn, resolveDestination) {
   const at = clock(now);
   const cfg = configFor(restaurant);
   const level = levelOf(restaurant);
@@ -368,7 +370,16 @@ function makeOrder(restaurant, now, rng, walkIn) {
   const delivery = walkIn ? false : unit(rng) < chance(cfg.deliveryRate);
   const rush = walkIn ? true : unit(rng) < chance(Number(cfg.urgentRate) + URGENT_LEVEL_BONUSES[level]);
   const longDistance = delivery && unit(rng) < chance(cfg.longDistanceDeliveryChance);
-  const destination = delivery ? destinationFor(restaurant, longDistance, cfg, rng) : undefined;
+  let destination;
+  if (delivery) {
+    // Java always publishes the offer, retaining the last radial candidate if
+    // all eight terrain choices fail. Customer placement resolves it later.
+    let fallback;
+    destination = chooseDeliveryDestination(restaurant, longDistance, candidate => {
+      fallback = candidate;
+      return resolveDestination ? resolveDestination(candidate) : candidate;
+    }, rng, 8) ?? fallback;
+  }
   const pool = normalizeMenu(restaurant.menu);
   if (!pool.length) pool.push({ ...VANILLA_FOOD_BY_ID["minecraft:apple"] });
   // Fisher-Yates gives the same uniform unique-dish selection as Java shuffle;
@@ -415,8 +426,8 @@ function makeOrder(restaurant, now, rng, walkIn) {
 
 /** Returns the new order and appends it to restaurant.orders. */
 /** @param {OrderTime} [now] */
-export function generateOrder(restaurant, now = Date.now(), rng = Math.random) {
-  return makeOrder(restaurant, now, rng, false);
+export function generateOrder(restaurant, now = Date.now(), rng = Math.random, resolveDestination = undefined) {
+  return makeOrder(restaurant, now, rng, false, resolveDestination);
 }
 
 /** Walk-ins have independent offers, are always dine-in/rush, and expire from arrival. */
@@ -449,7 +460,7 @@ function cancelOffer(order, now, reason) {
 
 /** Accepted/packed orders survive machine refreshes. Only the remaining offers change. */
 /** @param {OrderTime} [now] */
-export function refreshOrders(restaurant, now = Date.now(), rng = Math.random) {
+export function refreshOrders(restaurant, now = Date.now(), rng = Math.random, resolveDestination = undefined) {
   const at = clock(now);
   expireOrders(restaurant, now);
   for (const order of ordersOf(restaurant)) {
@@ -457,7 +468,8 @@ export function refreshOrders(restaurant, now = Date.now(), rng = Math.random) {
   }
   const fresh = [];
   for (let index = 0; index < getUnlockedSlots(restaurant); index++) {
-    fresh.push(generateOrder(restaurant, now, rng));
+    const order = generateOrder(restaurant, now, rng, resolveDestination);
+    if (order) fresh.push(order);
   }
   restaurant.nextRefreshAt = at + integer(configFor(restaurant).refreshMs, DEFAULT_CONFIG.refreshMs, 1);
   restaurant.updatedAt = at;

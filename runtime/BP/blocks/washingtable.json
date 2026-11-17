@@ -4,7 +4,8 @@
     "description": {
       "identifier": "ordertocook:washingtable",
       "menu_category": {
-        "category": "construction"
+        "category": "items",
+        "group": "ordertocook:itemGroup.order_group"
       },
       "traits": {
         "minecraft:placement_direction": {
@@ -71,6 +72,7 @@
         "movement_type": "immovable"
       },
       "ordertocook:interact": {},
+      "minecraft:display_name": "senluo.tooltip.tile.ordertocook:washingtable.name",
       "minecraft:item_visual": {
         "geometry": "geometry.ordertocook.washingtable_item",
         "material_instances": {

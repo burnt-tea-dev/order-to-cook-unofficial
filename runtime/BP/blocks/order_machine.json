@@ -4,7 +4,8 @@
     "description": {
       "identifier": "ordertocook:order_machine",
       "menu_category": {
-        "category": "construction"
+        "category": "items",
+        "group": "ordertocook:itemGroup.order_group"
       },
       "traits": {
         "minecraft:placement_direction": {
@@ -90,6 +91,7 @@
         "movement_type": "immovable"
       },
       "ordertocook:interact": {},
+      "minecraft:display_name": "senluo.tooltip.tile.ordertocook:order_machine.name",
       "minecraft:tick": {
         "interval_range": [
           1,

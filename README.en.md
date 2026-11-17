@@ -2,6 +2,12 @@
 
 [简体中文](README.zh-CN.md) · [繁體中文](README.md) · **English**
 
+0.1.53-alpha.1 is a local, unpublished dishwasher display prototype. Four visual values retain the real 0–16 batch and original plate meshes while reducing declared combinations. Existing palette loading and same-world restart remain Native NOT_RUN; this is not an upgrade-ready release. [Scope](docs/PARITY.md#洗碗機顯示狀態本地原型0153尚未發布).
+
+0.1.52-alpha.1 follows Java PACK when the counter output is occupied: drop the complete bag while retaining the existing block or meal. Plating still needs free space. Existing ingredients, packaging settings and order proofs are retained; known drop failures compensate this transaction. Source regressions pass; new Native/client behavior is not yet observed. [Behavior and scope](docs/PARITY.md#受阻台面的打包掉袋0152).
+
+0.1.51-alpha.1 source recovers loaded unsafe delivery addresses while retaining the original order, parcel proof, deadline and accepted reward. An existing bag updates only its generated coordinate lore when used. Unknown chunks and existing customers/anchors retain their addresses. See [PARITY](docs/PARITY.md#已接外送單的壞地址恢復0151) for behavior and unverified Native/client scope.
+
 0.1.48-alpha.1 is an **unpublished candidate integrated onto merged #75 main**. It corrects seven static motorcycle X-angle signs and 41 physical box-UV mirror mappings while retaining every original texture and all gameplay/steering/wheel behavior. Nine original common-editor photographs support the bounded static comparison, not native or moving-vehicle acceptance. Paired identity is frozen; packages are built from the exact integrated candidate commit. Any later source change requires fresh build proofs. [Scope, identity and limits](docs/validation/0.1.48-alpha.1/MOTORCYCLE_STATIC_MAPPING.md).
 
 0.1.47 restores a shared refrigerator root across both independently posed doors, with lower-close controller priority including neutral samples. Cosmetic recovery now continues when reading the upper block throws, without weakening inventory migration safeguards. The paired candidate identity is frozen, not published; finite sampling, SRT shear approximation, reversal/STOP differences and non-atomic two-block writes remain. [Source, identity and validation](docs/validation/0.1.47-alpha.1/FRIDGE_SHARED_ROOT.md).
@@ -229,14 +235,24 @@ Requires Node.js 22+ and Python 3.12+. Generated assets are checked in; ordinary
 ```sh
 npm ci
 npm run verify
-python tools/check_compliance.py
+python3 tools/check_compliance.py
 ```
+
+`npm run verify` runs the core order/payment, item handoff, saved-container and
+interaction-owner suites, then type/resource checks and packaging. Use
+`npm test -- tests/delivery-recovery.test.js` to run only named files,
+`npm test -- --full` for all existing JS tests, or `npm run verify:full` for all
+JS tests plus checks/build. Model, pixel and asset matrices remain available in
+the manual build workflow's `full_validation` option and version-tag/candidate
+validation. Run the relevant existing asset tests when changing those sources;
+ordinary PR validation does not replay every asset matrix. See the
+[maintained test entry](README.md#開發與重現).
 
 `dist/` contains `.mcaddon`, standalone `.mcpack`, `SHA256SUMS.txt` and runtime fingerprint. If changing source models or conversion tools:
 
 ```sh
-python -m pip install Pillow==12.3.0
-python tools/convert_assets.py
+python3 -m pip install Pillow==12.3.0
+python3 tools/convert_assets.py
 npm run verify
 ```
 
@@ -245,8 +261,8 @@ The converter defaults to pinned assets in `upstream/reference/`; `--source /pat
 For native BDS tests, obtain Linux BDS from the [official Minecraft site](https://www.minecraft.net/en-us/download/server/bedrock) and unpack it into a **separate disposable test directory without other worlds**:
 
 ```sh
-python tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode initial
-python tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode reload
+python3 tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode initial
+python3 tools/bedrock_smoke.py --server-dir /path/to/disposable-bds --mode reload
 ```
 
 The probe is never enabled in production installers and is only injected by the test tool into disposable copies.

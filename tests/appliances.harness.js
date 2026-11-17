@@ -24,6 +24,7 @@ export class FakeItem {
   getDynamicProperty(id) { return this.properties[id]; }
   setDynamicProperty(id, value) { if (value === undefined) delete this.properties[id]; else this.properties[id] = value; }
   getLore() { return [...this.lore]; }
+  getRawLore() { return structuredClone(this.lore.map(line => typeof line === 'string' ? { text: line } : line)); }
   setLore(lore) { this.lore = [...lore]; }
   getCanDestroy() { return []; }
   getCanPlaceOn() { return []; }
@@ -44,6 +45,10 @@ export class FakeContainer {
     if (this.failNextSlot === i) { this.failNextSlot = undefined; throw Error('simulated container write failure'); }
     if (stack && (stack.amount < 1 || stack.amount > stack.maxAmount)) throw Error('stack bounds');
     this.slots[i] = stack?.clone();
+  }
+  getSlot(i) {
+    this.getItem(i); // Keep the existing bounds and container-lifetime behavior.
+    return { getItem: () => this.getItem(i), setItem: stack => this.setItem(i, stack) };
   }
   // Adapter model of a single native move, not evidence of engine atomicity.
   moveItem(fromSlot, toSlot, toContainer) {
@@ -89,6 +94,7 @@ export class FakeBlock {
   makeContainer(typeId) {
     return typeId === 'ordertocook:refrigerator' ? new FakeContainer(54)
       : typeId === 'ordertocook:refrigerator_upper' ? new FakeContainer(27)
+      : typeId === 'ordertocook:stove' ? new FakeContainer(7)
       : ['ordertocook:food_plate_display', 'ordertocook:takeout_bag'].includes(typeId) ? new FakeContainer(1) : undefined;
   }
   get typeId() { return this.permutation.type.id; }
@@ -144,6 +150,8 @@ export class FakeEntity {
   addTag(tag) { this.tags.add(tag); }
   hasTag(tag) { return this.tags.has(tag); }
   remove() { this.isValid = false; this.dimension.entities.delete(this.id); }
+  clearVelocity() { this.velocity = { x: 0, y: 0, z: 0 }; }
+  applyImpulse(value) { this.velocity = Object.fromEntries(['x', 'y', 'z'].map(axis => [axis, (this.velocity?.[axis] || 0) + value[axis]])); }
 }
 
 export class FakePlayer extends FakeEntity {
@@ -153,6 +161,7 @@ export class FakePlayer extends FakeEntity {
     this.animations = [];
     this.onScreenDisplay = { setActionBar: message => this.messages.push(message) };
   }
+  getGameMode() { return 'Survival'; }
   sendMessage(message) { this.messages.push(message); }
   playAnimation(name, options) { this.animations.push({ name, options: { ...options } }); }
   getBlockFromViewDirection() { return this.viewedBlock ? { block: this.viewedBlock } : undefined; }
@@ -173,15 +182,17 @@ export function makeEnvironment() {
     },
     getBlockFromRay(origin, direction, options = {}) {
       // Model only the downward, full-floor collision queries used by customer
-      // spawning. Slabs/plants/fixtures are deliberately not full ground here.
+      // spawning. Include the actual full-cube kitchen collisions; whether a
+      // customer may use equipment as ground belongs to the production owner.
       if (direction.x !== 0 || direction.z !== 0 || direction.y >= 0) return undefined;
-      const fullFloor = new Set(['minecraft:stone', 'minecraft:dirt', 'minecraft:grass_block', 'minecraft:oak_planks']);
+      const fullFloor = new Set(['minecraft:stone', 'minecraft:dirt', 'minecraft:grass_block', 'minecraft:oak_planks',
+        'ordertocook:stove', 'ordertocook:countertop', 'ordertocook:washingtable', 'ordertocook:dishwasher']);
       const bottom = origin.y - (options.maxDistance ?? 250);
       for (let y = Math.floor(origin.y); y >= Math.floor(bottom) - 1; y--) {
         const top = y + 1;
         if (top > origin.y + 1e-7 || top < bottom - 1e-7) continue;
         const block = this.getBlock({ x: origin.x, y, z: origin.z });
-        if (fullFloor.has(block.typeId)) return { block, face: 'Up', faceLocation: { x: origin.x - Math.floor(origin.x), y: 1, z: origin.z - Math.floor(origin.z) } };
+        if (fullFloor.has(block.typeId) || (options.includeLiquidBlocks && block.isLiquid)) return { block, face: 'Up', faceLocation: { x: origin.x - Math.floor(origin.x), y: 1, z: origin.z - Math.floor(origin.z) } };
       }
       return undefined;
     },
@@ -192,7 +203,14 @@ export function makeEnvironment() {
         (!options.volume || ['x', 'y', 'z'].every(axis => entity.location[axis] >= options.location[axis] && entity.location[axis] < options.location[axis] + options.volume[axis] + 1)));
     },
     spawnEntity(typeId, location) { const entity = new FakeEntity(this, typeId, location); this.entities.set(entity.id, entity); this.spawnCount++; return entity; },
-    spawnItem(stack, location) { this.drops.push({ stack: stack.clone(), location: { ...location } }); },
+    spawnItem(stack, location) {
+      const drop = { stack: stack.clone(), location: { ...location } };
+      this.drops.push(drop);
+      const entity = new FakeEntity(this, 'minecraft:item', location);
+      const remove = entity.remove.bind(entity);
+      entity.remove = () => { remove(); this.drops.splice(this.drops.indexOf(drop), 1); };
+      return entity;
+    },
     playSound(id) { this.sounds.push(id); }, spawnParticle() {},
   };
   const gameSystem = {
@@ -218,6 +236,7 @@ export function makeEnvironment() {
       if (!records.has(id)) records.set(id, { id, dimensionId: block.dimension.id, location: { ...block.location }, typeId: block.typeId });
       return records.get(id);
     },
+    getStationById: id => records.get(id),
     stations: () => [...records.values()], saveStation: station => records.set(station.id, station),
     deleteStation: station => records.delete(typeof station === 'string' ? station : station.id),
     getRestaurant: id => restaurants.get(id), restaurants: () => [...restaurants.values()], saveRestaurant: restaurant => restaurants.set(restaurant.id, restaurant),
@@ -237,7 +256,7 @@ export class FakeMolangVariableMap {
   setFloat(name, value) { this.floats[name] = value; }
 }
 
-globalThis.__otcApplianceMocks = { MolangVariableMap: FakeMolangVariableMap, ItemStack: FakeItem, EquipmentSlot: { Offhand: 'Offhand' }, BlockPermutation: FakePermutation, system: {}, world: {}, ActionFormData: FakeForm };
+globalThis.__otcApplianceMocks = { MolangVariableMap: FakeMolangVariableMap, ItemStack: FakeItem, EquipmentSlot: { Offhand: 'Offhand' }, GameMode: { Creative: 'Creative', Survival: 'Survival' }, BlockPermutation: FakePermutation, system: {}, world: {}, ActionFormData: FakeForm };
 // Only Minecraft dependencies are replaced. Pure relative helpers keep their
 // actual shipped implementation when the service is loaded from a data URL.
 function resolveLocalImports(source, moduleUrl) {
@@ -246,7 +265,7 @@ function resolveLocalImports(source, moduleUrl) {
 }
 const applianceUrl = new URL('../runtime/BP/scripts/appliances.js', import.meta.url);
 let applianceSource = await readFile(applianceUrl, 'utf8');
-applianceSource = applianceSource.replace(/import \{[^}]+\} from "@minecraft\/server";/, 'const {BlockPermutation, EquipmentSlot, ItemStack, MolangVariableMap, system, world} = globalThis.__otcApplianceMocks;');
+applianceSource = applianceSource.replace(/import \{[^}]+\} from "@minecraft\/server";/, 'const {BlockPermutation, EquipmentSlot, GameMode, ItemStack, MolangVariableMap, system, world} = globalThis.__otcApplianceMocks;');
 applianceSource = applianceSource.replace(/import \{[^}]+\} from "@minecraft\/server-ui";/, 'const {ActionFormData} = globalThis.__otcApplianceMocks;');
 applianceSource = resolveLocalImports(applianceSource, applianceUrl);
 export const appliances = await import(`data:text/javascript;base64,${Buffer.from(applianceSource).toString('base64')}`);

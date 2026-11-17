@@ -50,6 +50,32 @@ class SegmentedPlayerTests(unittest.TestCase):
             original = converter.unwrap_vectors(converter.read_json(converter.ASSETS / f'animations/{file}.animation.json')['animations'][name])
             yield name, original, duration, period
 
+    def riding_output(self, raw):
+        source_path = converter.ASSETS / 'animations/drive.animation.json'
+        read_json = converter.read_json
+        with TemporaryDirectory() as temp, patch.object(converter, 'read_json',
+                side_effect=lambda path: raw if path == source_path else read_json(path)):
+            output = Path(temp)
+            converter.make_player_riding_source(self.natives, output)
+            animations = read_json(output / 'RP/animations/ordertocook_player_riding.animation.json')['animations']
+            models = {variant: read_json(output / f'RP/models/entity/ordertocook_riding_{variant}.geo.json')
+                      ['minecraft:geometry'][0]['bones'] for variant in self.variants}
+        return models, animations
+
+    def riding_clip(self, animations, variant, name):
+        return {'bones': {bone: channels for part in ('body', 'head', 'right', 'left')
+            for bone, channels in animations[f'animation.ordertocook.player.riding.{variant}.{name}.{part}']['bones'].items()}}
+
+    def source_snapshot(self, original, seconds, overrides):
+        # Only constant/linear channels use the old generic sampler here.
+        # Curved witnesses are independently calculated fixed source vectors.
+        snapshot = {'bones': {bone: {channel: converter.sample_channel(value, seconds,
+            [1]*3 if channel == 'scale' else [0]*3) for channel, value in channels.items()}
+            for bone, channels in converter.unwrap_vectors(original)['bones'].items()}}
+        for (bone, channel), value in overrides.items():
+            snapshot['bones'][bone][channel] = value
+        return snapshot
+
     def test_variants_retain_the_two_real_native_definitions_without_inventing_inheritance(self):
         self.assertEqual(self.natives['classic'], self.classic_input)
         self.assertEqual(self.original_bones['slim'], self.slim_input['geometry.humanoid.customSlim']['bones'])
@@ -260,6 +286,108 @@ class SegmentedPlayerTests(unittest.TestCase):
                 expected = converter.geometry_transform3(expected, views['right']['rotation'])
                 expected = [a+b for a,b in zip(expected, views['right']['position'])]
                 self.assertLess(math.dist(posed_point(bones, bent, .5, 'rightItem', point), expected), .002)
+
+    def test_riding_export_matches_independent_gecko_curve_witnesses_on_segmented_meshes(self):
+        raw = converter.read_json(converter.ASSETS / 'animations/drive.animation.json')
+        models, animations = self.riding_output(raw)
+        # Gecko 4.8.3's p0=p1 Catmull polynomial at .5, and elastic at
+        # t/end=.2/.6667, .05/.1667, .1/.31. These source-degree vectors are
+        # independent of the baker and inverse retargeter under test.
+        witnesses = [
+            ('drive_idle', .5, {
+                ('right_arm', 'rotation'): [-73.59375, 12.5, 0],
+                ('left_arm', 'rotation'): [-76.5625, -12.5, 0]},
+                [('right_arm', 'rightArm'), ('left_arm', 'leftArm')]),
+            ('drive_idle', 4.5, {('head', 'rotation'): [0, -3.125, 0]}, [('head', 'head')]),
+            ('drive_didi', .2, {
+                ('right_arm', 'rotation'): [-109.294654919648, 45.805824429089, -11.721569340789],
+                ('right_hand', 'rotation'): [-7.898462368838, -1.503506855794, -61.852954665676],
+                ('right_hand', 'position'): [-.263748866859, 1.804995467438, 0]}, None),
+            ('drive_didi_light', .05, {
+                ('right_arm', 'rotation'): [-81.699454189303, 16.705846163026, -2.932853514480],
+                ('right_hand', 'rotation'): [-5.963582686897, -.497237807671, -24.134906930948],
+                ('right_hand', 'position'): [-.065936454912, 1.013745819647, 0]}, None),
+            ('drive_didi_repeat', .1, {
+                ('right_arm', 'rotation'): [-87.802425996790, 23.140188750599, -4.867507645549],
+                ('right_hand', 'rotation'): [-6.588557827123, -1.823022683668, -27.863635235055],
+                ('right_hand', 'position'): [-.371160713713, 1.259020407378, 0]}, None)]
+        for name, seconds, overrides, pairs in witnesses:
+            snapshot = self.source_snapshot(raw['animations'][name], seconds, overrides)
+            pairs = pairs or [('right_arm', 'rightArm'), ('right_arm', 'rightSleeve'),
+                ('right_hand', 'ordertocook_right_forearm'), ('right_hand', 'ordertocook_right_forearm_sleeve')]
+            for variant, source in self.variants.items():
+                clip = self.riding_clip(animations, variant, name)
+                target = {bone['name']: bone for bone in models[variant]}
+                for old, new in pairs:
+                    for vertex in corners(target[new]['cubes'][0]):
+                        source_vertex = [vertex[0], vertex[1]+(.5 if variant == 'slim' and old != 'head' else 0), vertex[2]]
+                        expected = posed_point(list(source.values()), snapshot, 0, old, source_vertex)
+                        expected[1] -= .784  # Existing model-frame offset; not a seat/camera claim.
+                        actual = posed_point(models[variant], clip, seconds, new, vertex)
+                        self.assertLess(math.dist(actual, expected), .0001, (variant, name, seconds, new))
+
+    def test_riding_expanded_pre_and_easing_args_survive_the_actual_exporter(self):
+        raw = converter.read_json(converter.ASSETS / 'animations/drive.animation.json')
+        # Distinguish pre from post: the authored idle has equal values here,
+        # which alone cannot catch a decoder that merely deletes pre.
+        head = raw['animations']['drive_idle']['bones']['head']['rotation']['4.0']
+        head['pre']['vector'] = [0, 20, 0]
+        head['post']['vector'] = [0, -10, 0]
+        raw['animations']['drive_didi']['bones']['right_hand']['rotation']['0.6667']['easingArgs'] = [2]
+        before = copy.deepcopy(raw)
+        models, animations = self.riding_output(raw)
+        self.assertEqual(raw, before)
+        for variant, source in self.variants.items():
+            clip = self.riding_clip(animations, variant, 'drive_idle')
+            self.assertIn('3.999', clip['bones']['head']['rotation'])
+            for seconds, value in [(3.999, 20), (4.0, -10)]:
+                snapshot = self.source_snapshot(raw['animations']['drive_idle'], seconds,
+                    {('head', 'rotation'): [0, value, 0]})
+                expected = posed_point(list(source.values()), snapshot, 0, 'head', [4, 32, -4])
+                expected[1] -= .784
+                self.assertLess(math.dist(expected, posed_point(models[variant], clip, seconds, 'head', [4, 32, -4])), .0001)
+            forearm = self.riding_clip(animations, variant, 'drive_didi')['bones']['ordertocook_right_forearm']
+            # easeOutElastic with arg=2: cos((1-u)*pi/2)^3*cos(2*(1-u)*pi), u=.2/.6667.
+            for actual, expected in zip(forearm['rotation']['0.2'], [-7.834670707865, -1.470438801775, -60.609295557484]):
+                self.assertAlmostEqual(actual, expected, places=5)
+        raw['animations']['drive_didi']['bones']['right_arm']['rotation']['0.6667']['easing'] = 'unreviewedCurve'
+        with self.assertRaisesRegex(ValueError, 'Unsupported drive easing'):
+            self.riding_output(raw)
+
+    def test_riding_linear_back_policy_and_constant_channels_are_preserved(self):
+        raw = converter.read_json(converter.ASSETS / 'animations/drive.animation.json')
+        models, animations = self.riding_output(raw)
+        back = converter.unwrap_vectors(raw['animations']['drive_back'])
+        for variant, source in self.variants.items():
+            actual = self.riding_clip(animations, variant, 'drive_back')['bones']
+            geometry = {'minecraft:geometry': [{'bones': models[variant]}]}
+            previous = converter.segmented_player_action_pose(back, source, geometry, 8)
+            for name, channels in previous.items():
+                for channel, value in channels.items():
+                    # The bake must preserve the previous linear source values.
+                    # Root/waist receive their existing exporter frame below it.
+                    if name in ('root', 'waist'):
+                        continue
+                    for seconds in converter.player_action_times(back, 8):
+                        default = [1]*3 if channel == 'scale' else [0]*3
+                        a = converter.sample_channel(actual[name][channel], seconds, default)
+                        b = converter.sample_channel(value, seconds, default)
+                        self.assertLess(math.dist(a, b), .000002, (variant, name, channel, seconds))
+            idle = self.riding_clip(animations, variant, 'drive_idle')['bones']
+            self.assertEqual(idle['body']['rotation'], [17.5, 0, 0])
+            self.assertEqual(idle['ordertocook_right_forearm']['rotation'], [-10, 0, -5])
+            for name, pre in [('drive_idle', '3.999'), ('drive_didi', '1.3323'),
+                              ('drive_didi_light', '.8323'), ('drive_didi_repeat', '1.059')]:
+                keys = self.riding_clip(animations, variant, name)['bones']['rightArm']['rotation']
+                self.assertIn(float(pre), {float(time) for time in keys})
+            for name in raw['animations']:
+                for part in ('body', 'head', 'right', 'left'):
+                    clip = animations[f'animation.ordertocook.player.riding.{variant}.{name}.{part}']
+                    self.assertEqual(clip['loop'], True if name in ('drive_idle', 'drive_back') else 'hold_on_last_frame')
+                    self.assertEqual(clip['anim_time_update'], 'q.state_time')
+        # The general action sampler is deliberately outside this correction.
+        idle = converter.unwrap_vectors(raw['animations']['drive_idle'])
+        self.assertEqual(converter.sample_channel(idle['bones']['right_arm']['rotation'], .5, [0]*3), [-73.75, 12.5, 0])
 
     def test_prototype_does_not_mutate_native_or_author_inputs(self):
         native = copy.deepcopy(self.natives)

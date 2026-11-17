@@ -4,12 +4,13 @@
     "description": {
       "identifier": "ordertocook:food_plate",
       "menu_category": {
-        "category": "items"
+        "category": "items",
+        "group": "ordertocook:itemGroup.order_group"
       }
     },
     "components": {
       "minecraft:display_name": {
-        "value": "item.ordertocook:food_plate.name"
+        "value": "senluo.tooltip.item.ordertocook:food_plate.name"
       },
       "minecraft:icon": {
         "textures": {

@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.1.56-alpha.1 (local integration, unpublished)
+
+- Restore the stove slot layout through the existing native container screen. Desktop uses the original Java texture and positions; pocket preserves native touch slots and inventory. Other container titles retain their native panels.
+- Keep cooking, item storage and timing unchanged. Real progress bindings, per-slot restrictions and client behavior remain unresolved. Pure source generation only; no tests, CI or client observation.
+
+## 0.1.55-alpha.1 (local integration, unpublished)
+
+- Integrate the received creative-tab source, preserving the selected Forge tab's 23-item order in one native Items group and keeping the two port-only entries outside it.
+- Separate native tooltip names with the blue addon source line from plain menu/order translations through the existing `senluo.tooltip.` contract. Keep saved item metadata and container titles unchanged.
+- Regenerate the plate surface correction from the pinned original models and binary-alpha stain texture. Keep the original food, rim, heights and UVs; no client flicker or performance result is claimed.
+- Preserve the received motorcycle caller and descriptor-driven riding exporter, including separate complete native classic/customSlim geometry inputs, animations and the supplied native licence. The shared player pair still requires coordinator assembly; no FP, seat or camera change is included.
+- Carry the received customer-controller Molang syntax correction. Freeze complete BP/RP payloads with paired modules/dependency at 0.1.55 and append release history; keep UUIDs, APIs, previous source work and player-data protections.
+- Only directed asset generation, source review, local version freezing and packaging were performed. No tests, lint/typecheck, CI, game probes, world/service operations, deployment or remote writes were performed.
+
+## 0.1.51-alpha.1
+
+- Recover unexpired delivery orders with a loaded water/blocked destination only when no customer or saved anchor exists. Reuse the original radial rules and four-candidate bound through the existing customer retry; accept only loaded safe ground near a player. Unknown chunks and established customers retain their addresses.
+- Commit the replacement through the original customer spawn/save rollback. Keep the same order, physical proof, items, accepted reward, distance quote, delivery class and deadlines; never regenerate, renew or repack the order. No new timer, registry or chunk loading is added.
+- On use of an existing live bag, update only the factory coordinate lore line identified by its following use hint. Preserve the same native stack, name, other lore, dynamic properties and count; skip unchanged/custom lore and absent, terminal or expired bags. A late callback cannot recreate a consumed parcel.
+- Freeze fresh paired 0.1.51 with unchanged UUIDs/APIs and prior history retained. Source regressions cover bounded recovery, rollback, unknown terrain, unchanged anchors/deadlines, original-bag handoff and single payment. This source delivery does not update the fixed 0.1.50 candidate or claim new Native, client or performance results.
+
+## 0.1.50-alpha.1
+
+- Dispatch canceled native clicks to the existing station interaction owner even when `isFirstEvent` is false. Empty-hand menu-board use opens management and clean-plate shelf use reaches the normal debit/storage path. Preserve the existing three-tick duplicate guard and component fallback.
+- Raise OTC sound playback volumes by 20% across the existing effects, appliance, customer and direct block playback paths. Preserve cue timing, pitch and original audio assets; this is a playback gain change, not a measured loudness or performance result.
+- Replace the stove's button-list controls with a real native seven-slot block container: three inputs, shared fuel and three matching outputs. Keep cooking/fuel timing and full native stacks. Adopt legacy helper cargo through native moves and retire the empty helper only after saving; blocked or incomplete migration retains both sides. The first claimed interaction gives a visible retry prompt. Bedrock's generic layout still lacks Java's slot filters, output locks and progress/flame bars, and already-open containers cannot be forcibly closed on permission changes.
+- Keep standing customers off OTC equipment tops. Resolve new delivery offers against bounded loaded surface candidates before assigning IDs; reject water, underwater pockets and blocked ground. Unloaded terrain defers generation without inventing a water result, printing success or scanning every tick. Existing accepted/packed destinations, proofs and loaded actors are retained; old offshore orders are not silently moved.
+- Organize OTC creative entries into nine native groups across construction, equipment and items, with translated labels and deterministic order. Hide the internal plated-food display block while retaining its real plate item and saved ID. Regenerate definitions, the native catalog and handbook languages from their editable sources.
+- Freeze the final unused paired 0.1.50 identity with unchanged UUIDs/APIs and all prior release history retained. Registered event, cooking/migration, terrain and real-generator regressions cover this batch; source/build results do not claim new BDS, client GUI, multiplayer, FPS or LIVE acceptance.
+
 ## 0.1.48-alpha.1 (unpublished candidate)
 
 - Correct only the motorcycle static source mapping: seven X-rotation signs and 41 box mirror flags. Preserve original images, hierarchy, pivots, inflation, dimensions and all gameplay/steering/wheel behavior.

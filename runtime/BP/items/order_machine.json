@@ -4,12 +4,13 @@
     "description": {
       "identifier": "ordertocook:order_machine",
       "menu_category": {
-        "category": "construction"
+        "category": "items",
+        "group": "ordertocook:itemGroup.order_group"
       }
     },
     "components": {
       "minecraft:display_name": {
-        "value": "item.ordertocook:order_machine.name"
+        "value": "senluo.tooltip.item.ordertocook:order_machine.name"
       },
       "minecraft:max_stack_size": 1,
       "minecraft:block_placer": {

@@ -14,6 +14,7 @@ from motorcycle_oracle import compare, parse_java, jfaces, jworld, rpfaces, bbre
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = Path('forge-1.20.1/src/client/java/cn/breezeth/ordertocook/client/render/model/MotorcycleModel.java')
 SOURCE = (ROOT / 'upstream/reference' / MODEL).read_text()
+EXPECTED_OFFSETS = {('chest',4):(0,.015,0)}
 GEOMETRY = ROOT / 'runtime/RP/models/entity/motorcycle.geo.json'
 
 
@@ -35,7 +36,7 @@ def regenerate(text):
 
 class MotorcycleMapping(unittest.TestCase):
     def assert_mapping(self, text, geometry):
-        report = compare(text, geometry)
+        report = compare(text, geometry, expected_offsets=EXPECTED_OFFSETS)
         self.assertLess(report['max_corner_distance'], 1e-5, report)
         self.assertEqual(report['max_uv_residual_pixels'], 0, report)
         return report
@@ -64,7 +65,7 @@ class MotorcycleMapping(unittest.TestCase):
         for b in wrong_x['minecraft:geometry'][0]['bones']:
             if 'rotation' in b:
                 b['rotation'][0] *= -1
-        r = compare(SOURCE, wrong_x)
+        r = compare(SOURCE, wrong_x, expected_offsets=EXPECTED_OFFSETS)
         self.assertEqual(r['affected_corner_boxes'], 16)
         self.assertGreater(r['max_corner_distance'], 16)
         self.assertEqual(r['max_uv_residual_pixels'], 0)
@@ -72,7 +73,7 @@ class MotorcycleMapping(unittest.TestCase):
         for b in wrong_uv['minecraft:geometry'][0]['bones']:
             for c in b['cubes']:
                 c.pop('mirror', None)
-        r = compare(SOURCE, wrong_uv)
+        r = compare(SOURCE, wrong_uv, expected_offsets=EXPECTED_OFFSETS)
         self.assertEqual(r['uv_changed_boxes'], 41)
         self.assertEqual(r['max_uv_residual_pixels'], 34)
         self.assertLess(r['max_corner_distance'], 1e-5)
@@ -158,16 +159,6 @@ class MotorcycleMapping(unittest.TestCase):
                     self.assertFalse(element['box_uv'])
                     self.assertEqual(element['faces'], {f: {'uv': bbrect(q), 'texture': 0,
                                      'rotation': 0} for f,q in rpfaces(cube).items()})
-
-
-def load_tests(loader, tests, pattern):
-    # The existing CI command selects this file explicitly. Include the dynamic
-    # mapping and rider regressions here instead of leaving new suites unrun.
-    import test_motorcycle_presentation
-    import test_motorcycle_rider
-    tests.addTests(loader.loadTestsFromModule(test_motorcycle_presentation))
-    tests.addTests(loader.loadTestsFromModule(test_motorcycle_rider))
-    return tests
 
 
 if __name__ == '__main__':

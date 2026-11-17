@@ -1,18 +1,20 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Bedrock adaptation of Order To Cook by breezeth-CN; see THIRD_PARTY_NOTICES.md.
 import { ButtonState, EntityDamageCause, EntitySwingSource, InputButton, ItemStack, MolangVariableMap, system, world } from "@minecraft/server";
-import { orderRemainingMs, orderCarrier } from './core.js';
+import { orderRemainingMs, orderCarrier, chooseDeliveryDestination, EASTER_EGG_CUSTOMERS } from './core.js';
 import { ActionFormData } from "@minecraft/server-ui";
 import { containerCapacity, dropContainerContents, itemLabel, openContainerForm, playerInventory } from "./appliances.js";
-import { playEffects, customerCompletionEffects, customerPortalEffects, customerExplosionEffects, customerUnsuccessfulEffects, motorcycleHitEffects } from "./audiovisual.js";
-import { createMotorcyclePresentation } from "./motorcycle_presentation.js";
+import { playEffects, playbackVolume, customerCompletionEffects, customerPortalEffects, customerExplosionEffects, customerUnsuccessfulEffects, motorcycleHitEffects } from "./audiovisual.js";
 
 const NS = "ordertocook:";
 const CUSTOMER = `${NS}customer`;
+const CUSTOMER_SKIN_PROFILES = new Map(EASTER_EGG_CUSTOMERS.map((profile, index) => [profile[2].replaceAll("-", ""), index + 1]));
 const MOTORCYCLE = `${NS}motorcycle`;
 const CONTROLLER = `${NS}controller`;
 const SEAT = `${NS}seat`;
 const CHAIR = `${NS}chair`;
+// OrderNpcManager.SEAT_Y_OFFSET: chair.above() - (1 - 9/16 + 0.6).
+const CUSTOMER_SEAT_HEIGHT = 9 / 16 - 0.6;
 const LIVE_ORDER = new Set(["accepted", "packed"]);
 const COLORS = ["白色", "紅色", "藍色", "黃色"];
 const DYES = Object.freeze({ "minecraft:white_dye": 0, "minecraft:red_dye": 1, "minecraft:blue_dye": 2, "minecraft:yellow_dye": 3 });
@@ -28,18 +30,27 @@ function horizontalDist2(a, b) { return (a.x - b.x) ** 2 + (a.z - b.z) ** 2; }
 function center(location, height = 0.5) { return { x: Math.floor(location.x) + 0.5, y: Math.floor(location.y) + height, z: Math.floor(location.z) + 0.5 }; }
 function sameBlock(a, b) { return a.x === b.x && a.y === b.y && a.z === b.z; }
 
+function standingOffsets(radius) {
+  const offsets = [];
+  for (let dx = -radius; dx <= radius; dx++) for (let dz = -radius; dz <= radius; dz++) {
+    if (dx * dx + dz * dz <= radius * radius) offsets.push([dx, dz]);
+  }
+  return offsets.sort((a, b) => a[0] ** 2 + a[1] ** 2 - b[0] ** 2 - b[1] ** 2);
+}
+
 /** The Java idle-animation weights are 55%, 15%, 15%, 15%. */
 export function rollCustomerAnimationVariant(roll = Math.random()) {
   return roll < 0.55 ? 1 : roll < 0.70 ? 2 : roll < 0.85 ? 3 : 4;
 }
 
 /** Stable loaded-block support check for the 0.6-wide customer footprint. */
-export function hasFullStandingSupport(dimension, location) {
+export function hasFullStandingSupport(dimension, location, acceptFloor) {
   try {
     const feet = dimension.getBlock(location);
     const head = dimension.getBlock({ ...location, y: location.y + 1 });
     const floor = dimension.getBlock({ ...location, y: location.y - 1 });
-    if (!feet?.isAir || !head?.isAir || !floor || floor.isAir || floor.isLiquid || floor.isWaterlogged) return false;
+    if (!feet?.isAir || !head?.isAir || !floor || floor.isAir || floor.isLiquid || floor.isWaterlogged ||
+        (acceptFloor && !acceptFloor(floor))) return false;
     // A top slab can have a hit at y=1 despite not being a full floor block.
     // Exclude thin fixtures explicitly; the footprint rays also reject narrow
     // modded support shapes without relying on beta Block.isSolid.
@@ -82,19 +93,71 @@ function currentProperty(entity, name, fallback) {
 }
 
 function playSound(entity, id, volume = 0.5, pitch = 1) {
-  try { entity.dimension.playSound(id, entity.location, { volume, pitch }); } catch { /* Cosmetic only. */ }
+  try { entity.dimension.playSound(id, entity.location, { volume: playbackVolume(volume), pitch }); } catch { /* Cosmetic only. */ }
 }
 
 /** Owns world-facing NPC/vehicle/seat behavior; core remains the only reward owner. */
 export function createEntityService(ctx) {
   const gameWorld = ctx.world ?? world;
   const gameSystem = ctx.system ?? system;
+  // Cosmetic properties only. Identity/rewards stay on the persisted order.
+  // Reuse the existing scan for old actors; do not add a timer or reroll a profile.
+  const APPEARANCE_CACHE = `${NS}appearance`;
+  function appearanceFromOrder(order) {
+    const uuid = String(order.skinUuid ?? "").replaceAll("-", "").toLowerCase();
+    let hash = 0;
+    for (const character of String(order.id)) hash = (hash * 31 + character.charCodeAt(0)) | 0;
+    return {
+      variant: [0, 1].includes(order.customerVariant) ? order.customerVariant : stableVariant(order.id),
+      skin_profile: order.easterEgg ? (CUSTOMER_SKIN_PROFILES.get(uuid) ?? 0) : 0,
+      // Entity.id is opaque on Bedrock. Saved order identity is stable across
+      // respawn; 20 bits stays exactly representable in client Molang floats.
+      skin_seed: hash & 0xfffff
+    };
+  }
+  function cachedAppearance(entity) {
+    try {
+      const raw = entity.getDynamicProperty(APPEARANCE_CACHE);
+      if (typeof raw !== "string") return undefined;
+      const value = JSON.parse(raw);
+      const association = customerOrder(entity);
+      if (!value || typeof value !== "object" || Array.isArray(value) ||
+          typeof association.restaurantId !== "string" || typeof association.orderId !== "string" ||
+          value.restaurantId !== association.restaurantId || value.orderId !== association.orderId ||
+          ![0, 1].includes(value.variant) || !Number.isInteger(value.skin_profile) ||
+          value.skin_profile < 0 || value.skin_profile > EASTER_EGG_CUSTOMERS.length ||
+          !Number.isInteger(value.skin_seed) || value.skin_seed < 0 || value.skin_seed > 0xfffff) return undefined;
+      // Never forward arbitrary saved fields to Entity.setProperty.
+      return { variant: value.variant, skin_profile: value.skin_profile, skin_seed: value.skin_seed };
+    } catch { return undefined; }
+  }
+  function synchronizeCustomerAppearance(entity, order) {
+    // An actor can outlive the last twelve finished orders. Keep its last
+    // order-derived appearance on that same actor, bound to its association.
+    const appearance = order ? appearanceFromOrder(order) : cachedAppearance(entity);
+    if (order) {
+      try {
+        const association = customerOrder(entity);
+        if (typeof association.restaurantId === "string" && association.orderId === order.id) {
+          const cached = JSON.stringify({ ...association, ...appearance });
+          if (entity.getDynamicProperty(APPEARANCE_CACHE) !== cached) entity.setDynamicProperty(APPEARANCE_CACHE, cached);
+        }
+      } catch { /* Cosmetic cache must not consume orders or block their appearance. */ }
+    }
+    // This is a current world setting, not part of the saved customer identity.
+    // Unknown legacy identities retain their existing properties; never guess
+    // from a display name or overwrite them with a default profile.
+    const properties = { ...appearance, custom_skins: ctx.customCustomerSkins?.() === true };
+    for (const [name, value] of Object.entries(properties)) {
+      if (currentProperty(entity, name, undefined) !== value) property(entity, name, value);
+    }
+  }
   const activeForms = new Set();
   const lastUse = new Map();
   const hornTimes = new Map();
   const chairClaps = new Map();
   const chairIdles = new Map();
-  const motorcyclePresentation = createMotorcyclePresentation();
+  const motorcycleRiders = new Map();
   const retryTimes = new Map();
   const entityInteractions = new Map();
   const chairClaims = new Set();
@@ -249,14 +312,18 @@ export function createEntityService(ctx) {
     if (chairOccupied(block, rider)) return false;
     let seat = seatAt(block);
     if (seat?.getComponent("minecraft:rideable")?.getRiders().length) return false;
+    // OrderNpcManager uses chair.above() - (1 - 9/16 + 0.6) for customers;
+    // ChairBlock's player seat uses +9/16. The source customer rig includes
+    // its own seated hip height, so sharing the player origin raises it 0.6m.
+    const seatLocation = center(block.location, rider.typeId === CUSTOMER ? CUSTOMER_SEAT_HEIGHT : 9 / 16);
     if (!seat) {
-      seat = block.dimension.spawnEntity(SEAT, center(block.location, 0.5625));
+      seat = block.dimension.spawnEntity(SEAT, seatLocation);
       try {
         seat.setDynamicProperty(`${NS}chair_anchor`, JSON.stringify({ dimensionId: block.dimension.id, location: block.location }));
         seat.addTag(`${NS}chair_seat`);
         seat.setRotation({ x: 0, y: chairYaw(block) });
       } catch (error) { clearSeat(seat); throw error; }
-    }
+    } else seat.teleport(seatLocation);
     const mounted = seat.getComponent("minecraft:rideable")?.addRider(rider) ?? false;
     if (!mounted) { clearSeat(seat); return false; }
     rider.setRotation({ x: 0, y: chairYaw(block) });
@@ -304,13 +371,9 @@ export function createEntityService(ctx) {
   }
 
   /** Ground checks read loaded blocks only, never tickingarea/structure commands. */
-  function standPosition(dimension, requested, radius = 2) {
-    const offsets = [];
-    for (let dx = -radius; dx <= radius; dx++) for (let dz = -radius; dz <= radius; dz++) {
-      if (dx * dx + dz * dz <= radius * radius) offsets.push([dx, dz]);
-    }
-    offsets.sort((a, b) => a[0] ** 2 + a[1] ** 2 - b[0] ** 2 - b[1] ** 2);
-    const clearAt = location => hasFullStandingSupport(dimension, location);
+  function standPosition(dimension, requested, radius = 2, acceptFloor) {
+    const offsets = standingOffsets(radius);
+    const clearAt = location => hasFullStandingSupport(dimension, location, acceptFloor);
     for (const [dx, dz] of offsets) {
       for (const dy of [0, 1, -1, 2, -2, 3, -3, 4, -4]) {
         const location = { x: Math.floor(requested.x) + dx, y: Math.floor(requested.y) + dy, z: Math.floor(requested.z) + dz };
@@ -336,6 +399,55 @@ export function createEntityService(ctx) {
     return undefined;
   }
 
+  /** Read loaded surface columns only; an unavailable column is not water. */
+  function resolveDeliveryDestination(restaurant, requested, radius = 2) {
+    const dimensionId = requested.dimensionId ?? restaurant.dimensionId;
+    let dimension;
+    try { dimension = gameWorld.getDimension(dimensionId); }
+    catch { return { status: 'unloaded' }; }
+    let unloaded = false, water = false;
+    for (const [dx, dz] of standingOffsets(radius)) {
+      try {
+        const range = dimension.heightRange;
+        const x = Math.floor(requested.x) + dx, z = Math.floor(requested.z) + dz;
+        const probeY = Math.max(range.min + 1, Math.min(range.max - 2, Math.floor(requested.y)));
+        if (!dimension.getBlock({ x, y: probeY, z })) { unloaded = true; continue; }
+        const originY = dimension.id === 'minecraft:overworld' ? range.max - 2 : Math.min(range.max - 2, probeY + 24);
+        const hit = dimension.getBlockFromRay({ x: x + 0.5, y: originY, z: z + 0.5 },
+          { x: 0, y: -1, z: 0 },
+          { maxDistance: Math.min(384, originY - range.min), includeLiquidBlocks: true, includePassableBlocks: false });
+        if (!hit) continue;
+        if (hit.block.isLiquid || hit.block.isWaterlogged) { water = true; continue; }
+        const location = { ...hit.block.location, y: hit.block.location.y + 1 };
+        if (!hasFullStandingSupport(dimension, location, floor => !floor.typeId.startsWith(NS))) continue;
+        return { status: 'ready', destination: { ...requested, ...location, dimensionId: dimension.id,
+          distance: Math.round(Math.sqrt(horizontalDist2(location, restaurant.location))) } };
+      } catch { unloaded = true; }
+    }
+    return { status: unloaded ? 'unloaded' : water ? 'water' : 'blocked' };
+  }
+
+  // Java CustomerProfile.toNameText exposes only the name (red for easter eggs).
+  // Associations stay in dynamic properties, not in the visible nameplate.
+  function refreshCustomerName(entity, order, restaurant) {
+    if (!order) {
+      // A pre-upgrade actor may outlive its last twelve completed orders.
+      // Only remove our exact old subtitle; keep the displayed name/color,
+      // and never infer a skin identity or replace an unknown custom name.
+      const association = customerOrder(entity);
+      if (!restaurant || restaurant.id !== association.restaurantId || typeof association.orderId !== "string") return;
+      const previous = entity.nameTag;
+      if (typeof previous !== "string" || previous.includes("\r")) return;
+      const lines = previous.split("\n");
+      if (lines.length !== 2 || lines[0].length <= 2 || !lines[0].endsWith("§r")) return;
+      const subtitle = `§e${restaurant.name || "餐廳"} · ${association.orderId.slice(-6)}`;
+      if (lines[1] === subtitle) entity.nameTag = lines[0];
+      return;
+    }
+    const name = `${order.easterEgg ? '§c' : ''}${order.customerName || (order.type === "delivery" ? "外送顧客" : "堂食顧客")}§r`;
+    if (entity.nameTag !== name) entity.nameTag = name;
+  }
+
   /** @param {() => void} [onNoEligibleChair] Only reports the pre-allocation walk-in chair gate. */
   function spawnCustomer(restaurant, order, onNoEligibleChair) {
     if (!restaurant || !needsCustomer(order)) return undefined;
@@ -350,6 +462,8 @@ export function createEntityService(ctx) {
         try { ctx.saveRestaurant?.(restaurant); }
         catch (error) { Object.assign(order, previous); console.warn(`[OrderToCook] Customer association save deferred: ${String(error)}`); }
       }
+      synchronizeCustomerAppearance(canonical, order);
+      refreshCustomerName(canonical, order, restaurant);
       return canonical;
     }
     const destination = order.type === "delivery" ? order.destination : restaurant.location;
@@ -357,8 +471,11 @@ export function createEntityService(ctx) {
     const dimensionId = destination.dimensionId ?? restaurant.dimensionId;
     let dimension;
     try { dimension = gameWorld.getDimension(dimensionId); } catch { return undefined; }
-    const playerNear = gameWorld.getAllPlayers().some(player => player.dimension.id === dimension.id && horizontalDist2(player.location, destination) <= 64 ** 2);
-    if (!playerNear) return undefined;
+    const players = gameWorld.getAllPlayers();
+    const playerNear = point => players.some(player => player.dimension.id === dimension.id && horizontalDist2(player.location, point) <= 64 ** 2);
+    // Restaurant customers are admitted by the simulated machine/chair, not
+    // a player-distance gate. Remote delivery actors still wait for a visit.
+    if (order.type === "delivery" && !playerNear(destination)) return undefined;
     if (order.customerEntityId && order.customerAnchor?.location) {
       // A persisted actor may be outside the currently loaded entity set. Do
       // not spawn a replacement while its last known chunk is unavailable.
@@ -374,7 +491,31 @@ export function createEntityService(ctx) {
       onNoEligibleChair?.();
       return undefined;
     }
-    const location = chair ? center(chair.location, 1) : standPosition(dimension, destination, order.type === "dine_in" ? 5 : 2);
+    // Standing guests need ground, not the full collision top of our kitchen
+    // equipment. Seating above and the generic vehicle support check stay separate.
+    let location;
+    if (chair) location = center(chair.location, 1);
+    else if (order.type === 'delivery') {
+      const previousAnchor = order.customerEntityId && order.customerAnchor?.location;
+      let resolved = resolveDeliveryDestination(restaurant, previousAnchor
+        ? { ...destination, ...previousAnchor, dimensionId: order.customerAnchor.dimensionId ?? dimension.id } : destination,
+      previousAnchor ? 0 : 2);
+      if (['water', 'blocked'].includes(resolved.status) && !order.customerEntityId && !order.customerAnchor &&
+          orderRemainingMs(order, ctx.orderTime?.() ?? clock()) > 0) {
+        // Unknown chunks and established customers retain their original address.
+        // Commit a replacement only with the normal spawn/save transaction below;
+        // the accepted quote, physical proof and deadline are never regenerated.
+        const replacement = chooseDeliveryDestination(restaurant, order.longDistance, candidate => {
+          if (candidate.dimensionId !== dimension.id || !playerNear(candidate)) return undefined;
+          const result = resolveDeliveryDestination(restaurant, candidate);
+          return result.status === 'ready' ? result.destination : undefined;
+        }, ctx.random ?? Math.random);
+        if (replacement) resolved = { status: 'ready', destination: replacement };
+      }
+      if (resolved.status !== 'ready') return undefined;
+      location = center(resolved.destination, 0);
+      if (previousAnchor && !sameBlock(location, previousAnchor)) return undefined;
+    } else location = standPosition(dimension, destination, 5, floor => !floor.typeId.startsWith(NS));
     if (!location) return undefined;
     const claim = chair ? chairKey(chair) : undefined;
     if (claim) chairClaims.add(claim);
@@ -385,9 +526,9 @@ export function createEntityService(ctx) {
       entity.setDynamicProperty(`${NS}restaurant_id`, restaurant.id);
       entity.setDynamicProperty(`${NS}order_id`, order.id);
       entity.addTag(`${NS}order_customer`);
-      property(entity, "variant", [0, 1].includes(order.customerVariant) ? order.customerVariant : stableVariant(order.id));
+      synchronizeCustomerAppearance(entity, order);
       property(entity, "stage", "waiting");
-      entity.nameTag = `${order.easterEgg ? '§c' : ''}${order.customerName || (order.type === "delivery" ? "外送顧客" : "堂食顧客")}§r\n§e${restaurant.name || "餐廳"} · ${String(order.id).slice(-6)}`;
+      refreshCustomerName(entity, order, restaurant);
       if (chair && !sitOnChair(entity, chair)) { entity.remove(); return undefined; }
       startSpawnAction(entity, !!chair);
       order.customerEntityId = entity.id;
@@ -523,6 +664,68 @@ export function createEntityService(ctx) {
     return bikes[0];
   }
 
+  function trackMotorcycleRider(player) {
+    const bike = player.getComponent("minecraft:riding")?.entityRidingOn;
+    if (bike?.typeId !== MOTORCYCLE) {
+      motorcycleRiders.delete(player.id);
+      property(player, "drive_action", 0);
+      return undefined;
+    }
+    let session = motorcycleRiders.get(player.id);
+    if (session?.bike.id !== bike.id || session.player !== player) {
+      session = { player, bike, phase: 0, firstHorn: -100, hornUntil: -1,
+        hornMode: 2, lightFrom: Infinity, lightUntil: -1 };
+      motorcycleRiders.set(player.id, session);
+      property(player, "drive_action", 0);
+    }
+    return session;
+  }
+
+  function updateMotorcyclePresentation(session) {
+    const { player, bike } = session;
+    if (!player.isValid || !bike.isValid ||
+        player.getComponent("minecraft:riding")?.entityRidingOn?.id !== bike.id) {
+      motorcycleRiders.delete(player.id);
+      if (player.isValid) property(player, "drive_action", 0);
+      return;
+    }
+    // Read the actual vehicle, not the rider's freely turning head/body yaw.
+    const velocity = bike.getVelocity(), yaw = bike.getRotation().y * Math.PI / 180;
+    const forwardSpeed = -Math.sin(yaw) * velocity.x + Math.cos(yaw) * velocity.z;
+    const now = gameSystem.currentTick;
+    const mode = forwardSpeed < -0.01 ? 1 :
+      now >= session.lightFrom && now < session.lightUntil ? 4 :
+      now < session.hornUntil ? session.hornMode : 0;
+    const action = mode + session.phase * 8;
+    if (currentProperty(player, "drive_action", -1) !== action) property(player, "drive_action", action);
+  }
+
+  function motorcycleGesture(bike, kind) {
+    for (const player of bike.getComponent("minecraft:rideable")?.getRiders() ?? []) {
+      if (player.typeId !== "minecraft:player") continue;
+      const session = trackMotorcycleRider(player);
+      if (!session) continue;
+      const now = gameSystem.currentTick;
+      session.phase ^= 1; // Repeated same gestures must restart the client clip.
+      if (kind === "horn") {
+        const repeat = now < session.hornUntil || now - session.firstHorn <= 27;
+        if (!repeat) session.firstHorn = now;
+        session.hornMode = repeat ? 3 : 2;
+        session.hornUntil = now + (repeat ? 21 : 27);
+        gameSystem.runTimeout(() => {
+          if (motorcycleRiders.get(player.id) === session) updateMotorcyclePresentation(session);
+        }, repeat ? 21 : 27);
+      } else {
+        session.lightFrom = now + 6;
+        session.lightUntil = now + 6 + 17;
+        for (const delay of [6, 23]) gameSystem.runTimeout(() => {
+          if (motorcycleRiders.get(player.id) === session) updateMotorcyclePresentation(session);
+        }, delay);
+      }
+      updateMotorcyclePresentation(session);
+    }
+  }
+
   function bikeAccessible(player, entity, range = 14) {
     return player.isValid && entity?.isValid && player.dimension.id === entity.dimension.id && dist2(player.location, entity.location) <= range * range;
   }
@@ -602,6 +805,7 @@ export function createEntityService(ctx) {
     const now = gameSystem.currentTick;
     if ((hornTimes.get(entity.id) ?? -100) + 12 > now) return;
     hornTimes.set(entity.id, now);
+    motorcycleGesture(entity, "horn");
     playSound(entity, `${NS}horn`, 1);
   }
 
@@ -645,6 +849,7 @@ export function createEntityService(ctx) {
         });
       } else if (result.selection === 1) horn(entity);
       else if (result.selection === 2) {
+        motorcycleGesture(entity, "light");
         property(entity, "light", !currentProperty(entity, "light", true));
         playSound(entity, "random.click", 0.8);
         notify(player, "已切換車燈。");
@@ -652,6 +857,9 @@ export function createEntityService(ctx) {
     } catch (error) { if (player.isValid) notify(player, `車輛操作未完成：${String(error)}`); }
     finally { activeForms.delete(player.id); }
   }
+
+  // Java uses instabuild for both motorcycle placement and recoloring.
+  function isCreative(player) { return player.getGameMode?.() === 'Creative'; }
 
   function consumeItem(player, typeId) {
     const inventory = playerInventory(player);
@@ -685,7 +893,7 @@ export function createEntityService(ctx) {
       property(entity, "light", true);
       entity.setDynamicProperty(`${NS}owner_id`, player.id);
       entity.setDynamicProperty(`${NS}hit_count`, 0);
-      if (!consumeItem(player, MOTORCYCLE)) { entity.remove(); return undefined; }
+      if (!isCreative(player) && !consumeItem(player, MOTORCYCLE)) { entity.remove(); return undefined; }
       notify(player, "小電驢已放置：右鍵上車，蹲下右鍵開保溫箱及車輛面板。");
       return entity;
     } catch (error) {
@@ -736,7 +944,7 @@ export function createEntityService(ctx) {
     if (player.isSneaking) { void openMotorcycle(player, entity); return true; }
     const held = playerInventory(player)?.getItem(player.selectedSlotIndex);
     if (held && DYES[held.typeId] !== undefined) {
-      if (consumeItem(player, held.typeId)) {
+      if (isCreative(player) || consumeItem(player, held.typeId)) {
         property(entity, "color", DYES[held.typeId]);
         notify(player, `已染成${COLORS[DYES[held.typeId]]}。`);
       }
@@ -746,8 +954,8 @@ export function createEntityService(ctx) {
     const rideable = entity.getComponent("minecraft:rideable");
     if (rideable?.getRiders().length) { notify(player, "這輛小電驢已有駕駛。"); return true; }
     if (rideable?.addRider(player)) {
-      motorcyclePresentation.start(player, true);
-      notify(player, "用移動鍵駕駛、跳躍鍵鳴笛、蹲下離座。遙控器可切換車燈。");
+      const session = trackMotorcycleRider(player);
+      if (session) updateMotorcyclePresentation(session);
     }
     return true;
   }
@@ -821,14 +1029,18 @@ export function createEntityService(ctx) {
   }
 
   function restoreCustomerChair(entity) {
-    if (entity.getComponent("minecraft:riding")?.entityRidingOn) return;
+    const riding = entity.getComponent("minecraft:riding")?.entityRidingOn;
+    if (riding && riding.typeId !== SEAT) return;
     const anchor = readAnchor(entity.getDynamicProperty(`${NS}chair_anchor`));
     if (!anchor || anchor.dimensionId !== entity.dimension.id) return;
     try {
       const chair = entity.dimension.getBlock(anchor.location);
       if (!chair) return;
       if (chair.typeId !== CHAIR) { releaseCustomerChair(entity); return; }
-      sitOnChair(entity, chair);
+      if (riding) {
+        const location = center(chair.location, CUSTOMER_SEAT_HEIGHT);
+        if (dist2(riding.location, location) > 0.000001) riding.teleport(location);
+      } else sitOnChair(entity, chair);
     } catch { /* Preserve the association until the original chair loads. */ }
   }
 
@@ -884,7 +1096,7 @@ export function createEntityService(ctx) {
     const now = gameSystem.currentTick;
     if (now === lastTick || now < readyTick) return;
     lastTick = now;
-    motorcyclePresentation.tick();
+    for (const session of motorcycleRiders.values()) updateMotorcyclePresentation(session);
     for (const [id, session] of chairClaps) {
       if (now >= session.until || playerChair(session.player)?.id !== session.seatId) stopChairClap(id);
     }
@@ -905,6 +1117,8 @@ export function createEntityService(ctx) {
         if (!association.orderId || !association.restaurantId) continue;
         const restaurant = ctx.getRestaurant?.(association.restaurantId);
         const order = restaurant?.orders?.find(entry => entry.id === association.orderId);
+        if (refresh) synchronizeCustomerAppearance(entity, order);
+        refreshCustomerName(entity, order, restaurant);
         const meal = canonicalMeal(restaurant, order, association.orderId);
         if (meal) {
           applyCompletion(entity, meal, true, true);
@@ -962,7 +1176,8 @@ export function createEntityService(ctx) {
   function init() {
     gameWorld.afterEvents.playerSpawn.subscribe(event => gameSystem.run(() => {
       chairIdleAnimation(event.player);
-      motorcyclePresentation.start(event.player);
+      const session = trackMotorcycleRider(event.player);
+      if (session) updateMotorcyclePresentation(session);
     }));
     gameSystem.afterEvents.scriptEventReceive.subscribe(event => {
       if (event.id !== `${NS}reaction_finished` || event.sourceEntity?.typeId !== CUSTOMER) return;
@@ -1005,9 +1220,9 @@ export function createEntityService(ctx) {
       if (bike?.typeId === MOTORCYCLE) horn(bike);
     });
     gameWorld.afterEvents.playerLeave.subscribe(event => {
+      motorcycleRiders.delete(event.playerId);
       stopChairClap(event.playerId, false);
       stopChairIdle(event.playerId);
-      motorcyclePresentation.stop(event.playerId);
       activeForms.delete(event.playerId);
       lastUse.delete(event.playerId);
       for (const key of entityInteractions.keys()) if (key.startsWith(`${event.playerId}:`)) entityInteractions.delete(key);
@@ -1018,14 +1233,15 @@ export function createEntityService(ctx) {
       // No new polling interval or saved player state is needed for the pose.
       for (const player of gameWorld.getAllPlayers()) {
         chairIdleAnimation(player);
-        motorcyclePresentation.start(player);
+        const session = trackMotorcycleRider(player);
+        if (session) updateMotorcyclePresentation(session);
       }
       gameSystem.runInterval(tick, 5);
     });
   }
 
   return {
-    init, tick, spawnCustomer, finishCustomer, resumeCustomerMeal, interruptCustomerMeal, cleanupOrder, getCustomerSeat, spawnMotorcycle, openMotorcycle,
+    init, tick, spawnCustomer, resolveDeliveryDestination, finishCustomer, resumeCustomerMeal, interruptCustomerMeal, cleanupOrder, getCustomerSeat, spawnMotorcycle, openMotorcycle,
     onItemUse, onEntityInteract, onBlockInteract, onBlockBreak, sitOnChair, clapOnChair,
   };
 }

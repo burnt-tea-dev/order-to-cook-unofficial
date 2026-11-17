@@ -2,10 +2,37 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { fridgeDoorEffects, customerCompletionEffects, customerPortalEffects, customerExplosionEffects, motorcycleHitEffects, newOrderEffects, customerUnsuccessfulEffects } from '../runtime/BP/scripts/audiovisual.js';
-import { entityServices, makeEnvironment, FakePlayer, place } from './appliances.harness.js';
+import { playEffects, handwashingEffects, fridgeDoorEffects, customerCompletionEffects, customerPortalEffects, customerExplosionEffects, motorcycleHitEffects, newOrderEffects, customerUnsuccessfulEffects } from '../runtime/BP/scripts/audiovisual.js';
+import { entityServices, makeEnvironment, FakeItem, FakePlayer, FakeMolangVariableMap, place } from './appliances.harness.js';
+import { mainFixture } from './main.harness.js';
 
 const json = async path => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
+
+test('playback raises custom and vanilla cues by twenty percent without changing source cue data', () => {
+  const p = { x: 2, y: 3, z: 4 };
+  const cues = [...newOrderEffects(p), ...customerCompletionEffects(p, () => 0.5), ...handwashingEffects(p, 'north', () => 0.25)];
+  const source = structuredClone(cues), sounds = [];
+  playEffects({ playSound: (id, location, options) => sounds.push({ id, location, ...options }), spawnParticle() {} }, cues, FakeMolangVariableMap);
+  assert.deepEqual(cues, source);
+  assert.deepEqual(sounds.map(row => row.id), ['ordertocook:order_refresh', 'mob.villager.idle', 'random.splash']);
+  for (const [index, volume] of [1.2, 1.08, 0.264].entries()) assert.ok(Math.abs(sounds[index].volume - volume) < 1e-12);
+  const originals = cues.filter(cue => cue.sound);
+  assert.deepEqual(sounds.map(row => row.location), originals.map(cue => cue.location));
+  assert.deepEqual(sounds.map(row => row.pitch), originals.map(cue => cue.pitch));
+});
+
+test('the plate-shelf direct sound uses the same playback adjustment once', async () => {
+  const env = await mainFixture(), sounds = [];
+  const shelf = place(env, 'ordertocook:plate_shelf', { x: 0, y: 0, z: 2 });
+  env.player.container.setItem(0, new FakeItem('ordertocook:clean_plate', 2));
+  env.dimension.playSound = (id, location, options) => sounds.push({ id, location, ...options });
+  env.hooks.shelfInteract(env.player, shelf);
+  assert.equal(sounds.length, 1);
+  assert.equal(sounds[0].id, 'ordertocook:plate_place');
+  assert.ok(Math.abs(sounds[0].volume - 0.9) < 1e-12);
+  assert.ok(sounds[0].pitch >= 0.95 && sounds[0].pitch <= 1.05);
+  assert.deepEqual(sounds[0].location, { x: 0.5, y: 0.5, z: 2.5 });
+});
 
 test('fridge compartment/direction sounds use all four Java pitches at the lower anchor', () => {
   const location = { x: 3, y: 5, z: 7 };

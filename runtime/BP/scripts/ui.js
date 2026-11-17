@@ -2,9 +2,10 @@
 import { system } from '@minecraft/server';
 import { ActionFormData, ModalFormData, FormCancelationReason } from '@minecraft/server-ui';
 import { readableActionButton } from './button_text.js';
+import { message, translate } from './i18n.js';
 
 const openForms = new Set();
-export function notify(player, message) { if (player?.isValid) player.sendMessage(`§6[下單了]§r ${message}`); }
+export function notify(player, text) { if (player?.isValid) player.sendMessage(message('§6[', translate('otc.ui.brand'), ']§r ', text)); }
 export async function showForm(player, form) {
   if (!player?.isValid || openForms.has(player.id)) return undefined;
   openForms.add(player.id);
@@ -18,7 +19,7 @@ export async function showForm(player, form) {
       }
       return response.canceled ? undefined : response;
     }
-    notify(player, '請關閉聊天／其他介面後再操作。');
+    notify(player, translate('otc.ui.busy'));
   } catch (error) { console.warn(`[OrderToCook] Form: ${error}`); }
   finally { openForms.delete(player.id); }
   return undefined;
@@ -43,6 +44,6 @@ export async function textInput(player, title, label, initial = '') {
 export function safely(player, action) {
   Promise.resolve().then(action).catch(error => {
     console.warn(`[OrderToCook] Operation failed: ${error?.stack || error}`);
-    notify(player, '操作未完成，請查看內容記錄。不要重複拆除設備；未能讀取的存檔會保留。');
+    notify(player, translate('otc.ui.operation_failed'));
   });
 }

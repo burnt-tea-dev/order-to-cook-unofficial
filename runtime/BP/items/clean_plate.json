@@ -4,12 +4,13 @@
     "description": {
       "identifier": "ordertocook:clean_plate",
       "menu_category": {
-        "category": "items"
+        "category": "items",
+        "group": "ordertocook:itemGroup.order_group"
       }
     },
     "components": {
       "minecraft:display_name": {
-        "value": "item.ordertocook:clean_plate.name"
+        "value": "senluo.tooltip.item.ordertocook:clean_plate.name"
       },
       "minecraft:icon": {
         "textures": {

@@ -6,6 +6,11 @@ on:
     tags: ['v*']
   pull_request:
   workflow_dispatch:
+    inputs:
+      full_validation:
+        description: Run all gameplay tests and reproduce the full asset/model matrices
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -30,13 +35,17 @@ jobs:
       - name: Select validation scope
         id: scope
         run: python tools/ci_scope.py >> "$GITHUB_OUTPUT"
-      - run: npm run verify
-        if: steps.scope.outputs.full != 'false'
+      - name: Check types, loadable pack resources and core gameplay
+        run: npm run verify
+        if: steps.scope.outputs.full != 'false' && !(github.event_name == 'workflow_dispatch' && inputs.full_validation) && !startsWith(github.ref, 'refs/tags/v')
+      - name: Run explicitly requested full validation
+        run: npm run verify:full
+        if: (github.event_name == 'workflow_dispatch' && inputs.full_validation) || startsWith(github.ref, 'refs/tags/v')
       - name: Build packages for prose-only compliance validation
         if: steps.scope.outputs.full == 'false'
         run: npm run build
       - name: Reproduce appliance, dining and guide assets from pinned editable sources
-        if: steps.scope.outputs.full != 'false'
+        if: (github.event_name == 'workflow_dispatch' && inputs.full_validation) || startsWith(github.ref, 'refs/tags/v')
         run: |
           python -m pip install Pillow==12.3.0 numpy==2.3.5
           python -m unittest discover -s tests -p test_appliance_geometry.py
@@ -45,7 +54,7 @@ jobs:
           python -m unittest discover -s tests -p test_dining_assets.py
           python -m unittest discover -s tests -p test_guide_languages.py
       - name: Check segmented model-source prototype against pinned external native geometry
-        if: steps.scope.outputs.full != 'false'
+        if: (github.event_name == 'workflow_dispatch' && inputs.full_validation) || startsWith(github.ref, 'refs/tags/v')
         run: |
           curl --fail --silent --show-error --location --max-time 30 https://raw.githubusercontent.com/Mojang/bedrock-samples/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/models/entity/humanoid.custom.geo.json --output "$RUNNER_TEMP/otc-native-player.geo.json"
           curl --fail --silent --show-error --location --max-time 30 https://raw.githubusercontent.com/Mojang/bedrock-samples/15701fa9c13923f12662984c32c124327e40e3d3/resource_pack/models/mobs.json --output "$RUNNER_TEMP/otc-native-mobs.json"
