@@ -15,6 +15,7 @@ between them they approximate the source curve. No runtime clock is inferred.
 """
 import copy
 import math
+from fractions import Fraction
 
 
 def _number(value):
@@ -131,4 +132,54 @@ def bake_drive_clip(original, easing_fraction):
         else:
             value = {f'{time:.12g}': _sample(frames, time, easing_fraction) for time in times}
         result['bones'][bone][channel] = value
+    return result
+
+
+def compact_linear_bones(bones):
+    """Remove only redundant keys from the final numeric riding tracks.
+
+    Call after retargeting/rounding: removing source sample times earlier would
+    change the nonlinear parent-frame conversion. Fractions use the decimal
+    values actually written to JSON, so no epsilon, quantization or curve error
+    budget is involved. Three exactly collinear keys describe the same linear
+    function as their endpoints. Keep both endpoints of every varying track.
+
+    Constant tracks starting at zero become constant vectors. Keep every bone,
+    channel and neutral value; those still participate in animation blending.
+    Native floating-point evaluation may round differently between retained
+    keys, but the represented piecewise-linear function is unchanged.
+    """
+    result = copy.deepcopy(bones)
+    for bone, channels in result.items():
+        if set(channels) - {'rotation', 'position', 'scale'}:
+            raise ValueError(f"Unsupported numeric riding bone channels: {bone}")
+        for channel, value in channels.items():
+            if not isinstance(value, dict):
+                _vector(value)
+                continue
+            frames = []
+            for key, vector in value.items():
+                _number(float(key))
+                time = Fraction(key)
+                _vector(vector)
+                numbers = vector if isinstance(vector, list) else [vector] * 3
+                exact = tuple(Fraction(str(component)) for component in numbers)
+                if time < 0 or frames and time <= frames[-1][2]:
+                    raise ValueError('Numeric riding keyframes must have increasing nonnegative times')
+                frames.append((key, vector, time, exact))
+            if not frames:
+                raise ValueError('Numeric riding tracks cannot be empty')
+            if frames[0][2] == 0 and all(frame[3] == frames[0][3] for frame in frames):
+                channels[channel] = frames[0][1]
+                continue
+            kept = []
+            for frame in frames:
+                kept.append(frame)
+                while len(kept) >= 3:
+                    a, b, c = kept[-3:]
+                    if not all((bv-av)*(c[2]-a[2]) == (cv-av)*(b[2]-a[2])
+                               for av, bv, cv in zip(a[3], b[3], c[3])):
+                        break
+                    kept.pop(-2)
+            channels[channel] = {key: vector for key, vector, *_ in kept}
     return result

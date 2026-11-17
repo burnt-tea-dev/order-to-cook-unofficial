@@ -1,0 +1,282 @@
+{
+  "schema": 1,
+  "purpose": "Actual-export linear equivalence and serialized-data audit",
+  "baseline_commit": "ff19994ba426341c310d76839f13f605a5dbcbb7",
+  "baseline_program_sha256": {
+    "tools/convert_assets.py": "71ee382139a33c03224d135bbe9fc6e850f5974d3015536c506bc4e139fe215d",
+    "tools/motorcycle_curves.py": "bababf0b6530d7b8b901f2d77fa567f42141cc17ab58a82046ffb19f4d4a92a7"
+  },
+  "candidate_git_head": "ff19994ba426341c310d76839f13f605a5dbcbb7",
+  "candidate_identity": "Working-tree source hashes below; git head alone does not identify an uncommitted candidate",
+  "candidate_source_sha256": {
+    "tools/convert_assets.py": "778ef6c8c59d74e852978e75898fcb7c5bf17e22bbbd3e4726a71d6e710e5e0c",
+    "tools/motorcycle_curves.py": "eece1ca466777d731c09adff9ca5c8a73f7ba41b2406ad2ff07d8b89667961d1",
+    "player-presentation.json": "68b7f887eb13db20e0b5f80e883389953c4496aad375e2e75003d1ee1200e65b",
+    "data/java-creative-tabs.json": "e231132d9df86efc7c4e5b6571bb269a78ae10805618ed8ded9887d98449e2a6",
+    "docs/validation/motorcycle-riding-20261117/preview.py": "3e62a4e9d1b376a4ed438ae290085f6b084365831dd07f1e3d5d8ba9652b73c6",
+    "tools/render_visual_review.py": "9edf2579de7fc92189c72ff88693ed6e7567d9578991e56ab4815bdca6a7ae80",
+    "upstream/reference/common/src/main/resources/assets/ordertocook/animations/drive.animation.json": "4b1d97058b3164bf9027c90ea6a6cd221e4bd06ff5fcde51a2e159e3812a092c",
+    "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle.geo.json": "0dc86bdeb4a25724a84fef4fa13597c8e355420bdec74e36def3d6c9a6ba2973",
+    "upstream/reference/common/src/main/resources/assets/ordertocook/geo/drive_idle_alex.geo.json": "decfe8e645aba1214f4e47b22199d8310bb8aa697ad0e4dde80b56b69db8859f",
+    "docs/validation/motorcycle-riding-20261118/measure.py": "4ca61186046fe4a95a1071c89c897726b3568899f173a54c25d23bdc9f6a3b90"
+  },
+  "native_commit": "15701fa9c13923f12662984c32c124327e40e3d3",
+  "native_sha256": {
+    "classic": "d3688f959a95f6b39c9bd8b15312a19361256ae161d2d055ba63d810e17a8ca8",
+    "slim": "0279492e5f6a7b5bbafb4fbaa80290146acb79332d06ac39619376a4831ff464"
+  },
+  "native_license_sha256": "be3564338140626538c57993573b65798d0ef2afdd4d71f285d43ebb2eedb972",
+  "before_output_sha256": {
+    "RP/animation_controllers/ordertocook_player_riding.json": "00691330dd0dfa1aa07ac09284b837bba34d8e588e1e8cbe40451778ae555aa1",
+    "RP/animations/ordertocook_player_riding.animation.json": "84adc07d1af39d8e92ae761c458606b819d6887a1d6402808dc57bac08b79770",
+    "RP/models/entity/ordertocook_riding_classic.geo.json": "7316c25ddd2addeb6c572faf522d676450678fbbf8b99ac1d61c93dde52a56ac",
+    "RP/models/entity/ordertocook_riding_slim.geo.json": "4d7b4d32875be6dd8ec69332441b956510a432ce455afce39a3cb8eeed651b49",
+    "player-riding.json": "9a0e906a33e83b37ef7c7f6b0e03a080b2c272b9a04fc579595c64cf0c4f6ec1"
+  },
+  "after_output_sha256": {
+    "RP/animation_controllers/ordertocook_player_riding.json": "00691330dd0dfa1aa07ac09284b837bba34d8e588e1e8cbe40451778ae555aa1",
+    "RP/animations/ordertocook_player_riding.animation.json": "b45d464e3c874a41bbec7b3f439750899652171761b5c3396035fca62123160c",
+    "RP/models/entity/ordertocook_riding_classic.geo.json": "7316c25ddd2addeb6c572faf522d676450678fbbf8b99ac1d61c93dde52a56ac",
+    "RP/models/entity/ordertocook_riding_slim.geo.json": "4d7b4d32875be6dd8ec69332441b956510a432ce455afce39a3cb8eeed651b49",
+    "player-riding.json": "9a0e906a33e83b37ef7c7f6b0e03a080b2c272b9a04fc579595c64cf0c4f6ec1"
+  },
+  "unchanged_outputs": {
+    "RP/animation_controllers/ordertocook_player_riding.json": true,
+    "RP/models/entity/ordertocook_riding_classic.geo.json": true,
+    "RP/models/entity/ordertocook_riding_slim.geo.json": true,
+    "player-riding.json": true
+  },
+  "before": {
+    "total": {
+      "clips": 40,
+      "channels": 518,
+      "constant_vectors": 376,
+      "time_keys": 13352,
+      "vectors": 13728,
+      "channel_numbers": 41184,
+      "tracks": 142,
+      "pretty_bytes": 1373672,
+      "minified_bytes": 379697
+    },
+    "by_clip": {
+      "drive_idle": {
+        "clips": 8,
+        "channels": 104,
+        "constant_vectors": 72,
+        "time_keys": 5216,
+        "vectors": 5288,
+        "channel_numbers": 15864,
+        "tracks": 32
+      },
+      "drive_back": {
+        "clips": 8,
+        "channels": 102,
+        "constant_vectors": 64,
+        "time_keys": 6232,
+        "vectors": 6296,
+        "channel_numbers": 18888,
+        "tracks": 38
+      },
+      "drive_didi": {
+        "clips": 8,
+        "channels": 104,
+        "constant_vectors": 80,
+        "time_keys": 760,
+        "vectors": 840,
+        "channel_numbers": 2520,
+        "tracks": 24
+      },
+      "drive_didi_repeat": {
+        "clips": 8,
+        "channels": 104,
+        "constant_vectors": 80,
+        "time_keys": 624,
+        "vectors": 704,
+        "channel_numbers": 2112,
+        "tracks": 24
+      },
+      "drive_didi_light": {
+        "clips": 8,
+        "channels": 104,
+        "constant_vectors": 80,
+        "time_keys": 520,
+        "vectors": 600,
+        "channel_numbers": 1800,
+        "tracks": 24
+      }
+    },
+    "json_nodes": {
+      "objects": 424,
+      "member_keys": 14302,
+      "strings": 65,
+      "numbers": 41224,
+      "booleans": 46,
+      "arrays": 13728
+    }
+  },
+  "after": {
+    "total": {
+      "clips": 40,
+      "channels": 518,
+      "constant_vectors": 428,
+      "time_keys": 2746,
+      "vectors": 3174,
+      "channel_numbers": 9522,
+      "tracks": 90,
+      "pretty_bytes": 345674,
+      "minified_bytes": 113303
+    },
+    "by_clip": {
+      "drive_idle": {
+        "clips": 8,
+        "channels": 104,
+        "constant_vectors": 82,
+        "time_keys": 1224,
+        "vectors": 1306,
+        "channel_numbers": 3918,
+        "tracks": 22
+      },
+      "drive_back": {
+        "clips": 8,
+        "channels": 102,
+        "constant_vectors": 70,
+        "time_keys": 766,
+        "vectors": 836,
+        "channel_numbers": 2508,
+        "tracks": 32
+      },
+      "drive_didi": {
+        "clips": 8,
+        "channels": 104,
+        "constant_vectors": 92,
+        "time_keys": 288,
+        "vectors": 380,
+        "channel_numbers": 1140,
+        "tracks": 12
+      },
+      "drive_didi_repeat": {
+        "clips": 8,
+        "channels": 104,
+        "constant_vectors": 92,
+        "time_keys": 300,
+        "vectors": 392,
+        "channel_numbers": 1176,
+        "tracks": 12
+      },
+      "drive_didi_light": {
+        "clips": 8,
+        "channels": 104,
+        "constant_vectors": 92,
+        "time_keys": 168,
+        "vectors": 260,
+        "channel_numbers": 780,
+        "tracks": 12
+      }
+    },
+    "json_nodes": {
+      "objects": 372,
+      "member_keys": 3696,
+      "strings": 65,
+      "numbers": 9562,
+      "booleans": 46,
+      "arrays": 3174
+    }
+  },
+  "channel_equivalence": {
+    "exact_rational_vector_checks": 54394,
+    "channels": 518,
+    "partition_intervals": 13210,
+    "max_float_component_delta": 1.4210854715202004e-14,
+    "max_float_location": [
+      "animation.ordertocook.player.riding.classic.drive_back.body",
+      "rightLeg",
+      "rotation",
+      "69/80"
+    ],
+    "proof": "All channels are numeric piecewise-linear vectors. Equality at every union boundary proves equality throughout each interval; quarter/midpoint and exterior samples also checked."
+  },
+  "mesh_equivalence": {
+    "pose_comparisons": 42,
+    "face_corner_comparisons": 20160,
+    "max_corner_delta_model_px": 5.102196573270515e-15,
+    "sample_times_seconds": {
+      "drive_idle": [
+        0,
+        0.5,
+        3.999,
+        4,
+        4.5,
+        8
+      ],
+      "drive_back": [
+        0,
+        0.5,
+        3,
+        8
+      ],
+      "drive_didi": [
+        0.2,
+        1.3323,
+        1.3333
+      ],
+      "drive_didi_repeat": [
+        0.1,
+        0.31,
+        1.059,
+        1.06
+      ],
+      "drive_didi_light": [
+        0.05,
+        0.1667,
+        0.8323,
+        0.8333
+      ]
+    },
+    "note": "All exported cubes included; face corners repeat shared vertices. Geometry is separately byte-identical."
+  },
+  "pose_sheet": [
+    {
+      "variant": "classic",
+      "clip": "drive_idle",
+      "seconds": 0.5,
+      "changed_pixels": 0
+    },
+    {
+      "variant": "slim",
+      "clip": "drive_idle",
+      "seconds": 0.5,
+      "changed_pixels": 0
+    },
+    {
+      "variant": "classic",
+      "clip": "drive_didi",
+      "seconds": 0.2,
+      "changed_pixels": 0
+    },
+    {
+      "variant": "slim",
+      "clip": "drive_didi",
+      "seconds": 0.2,
+      "changed_pixels": 0
+    },
+    {
+      "variant": "classic",
+      "clip": "drive_back",
+      "seconds": 0.5,
+      "changed_pixels": 0
+    },
+    {
+      "variant": "slim",
+      "clip": "drive_back",
+      "seconds": 0.5,
+      "changed_pixels": 0
+    }
+  ],
+  "image_sha256": "511e2d3427bc518f0efa243cbdb9323ab7d82642f0dd2b8f1817a3ca1b56caf8",
+  "limits": [
+    "Serialized keys/vectors/numbers/bytes are not measured Bedrock RAM, FPS, frame time or load time.",
+    "Rational arithmetic proves the exported linear functions equal; native floating-point evaluation is not observed.",
+    "CPU model rendering is not Minecraft playback; no native controller, blending, network, skin or item acceptance.",
+    "Native inputs and generated player geometry remain external or temporary; not redistributed."
+  ]
+}

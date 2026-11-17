@@ -1122,6 +1122,7 @@ def make_player_riding_source(natives, output):
             original = riding[name]
             duration = original['animation_length']
             bones = segmented_player_action_pose(original, rig, model, duration)
+            bones = curves.compact_linear_bones(bones)
             # Forge calls renderGeoRiderBody inside vanilla's parent matrix.
             # GeoObjectRenderer adds (0.5,0.51,0.5); RiderGeoRenderer cancels
             # all of it, then applies -(standing bbHeight - 4/16). Vanilla
