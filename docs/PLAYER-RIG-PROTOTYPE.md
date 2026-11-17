@@ -4,6 +4,10 @@
 
 ## 機車第三人稱的共享來源接線
 
+2026-11-17：`make_player_riding_source` 先從 raw drive 原片段保留 GeckoLib 4.8.3 的目的節點 easing、Catmull-Rom anchors 與 `pre=t−0.001`，再以 20 TPS 加來源節點供既有分段轉換；普通手洗／安坐／拍手轉換不變。來源節點之間仍為 Bedrock 線性近似，沒有改變共享 owner／人物選型、root、seat、camera 或 runtime caller。[本輪修復、重現及未驗證項](validation/motorcycle-riding-20261117/README.md)。
+
+2026-11-18：新增後置精簡，在原有 retarget／rounding 完成後，以序列化十進位數值的精確有理數比較刪除共線內點，並將從 0 開始的全常量 track 收斂成同值向量。原來源取樣及 40 個片段／alias 均保留，不刪 neutral bone／channel，不改 clock／loop。匯出 JSON 減少 74.84%；原分段線性函數保持，原生 RAM／FPS 尚未量測。[可重現量測與品質界線](validation/motorcycle-riding-20261118/README.md)。
+
 `make_player_riding_source` 由 `player-presentation.json.riding` 讀取車種、動作 property 與五個原片段。它沿既有雙骨架、分段 UV／Item／lead parent 轉換，生成供同一共享 composer 使用的本地 RP 資料與 `player-riding.json`，不產生第二個玩家或假乘客。一般動作原型的相機框架不被拿來猜機車 FP。
 
 ```sh

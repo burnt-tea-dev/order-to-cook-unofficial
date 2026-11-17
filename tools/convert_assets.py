@@ -1079,7 +1079,17 @@ def make_player_riding_source(natives, output):
     Native geometry stays in this local bundle, with its supplied license.
     This exports TP model animation only, never a camera or rideable offset.
     """
+    from importlib.util import module_from_spec, spec_from_file_location
+
     descriptor = read_json(ROOT / 'player-presentation.json')['riding']
+    spec = spec_from_file_location('otc_motorcycle_curves', ROOT / 'tools/motorcycle_curves.py')
+    curves = module_from_spec(spec)
+    spec.loader.exec_module(curves)
+    originals = read_json(ASSETS / 'animations/drive.animation.json')['animations']
+    # Decode raw Gecko pre/post, Catmull and elastic curves before the shared
+    # segmented retargeter samples them. unwrap_vectors would discard easing.
+    riding = {name: curves.bake_drive_clip(originals[name], easing_fraction)
+              for name in descriptor['clips']}
     animations, aliases, variants, visibility = {}, {}, {}, {}
     for variant, filename in (('classic', 'drive_idle'), ('slim', 'drive_idle_alex')):
         native = natives[variant]
@@ -1108,11 +1118,11 @@ def make_player_riding_source(natives, output):
                 parent = ('Sleeve' if name.endswith('_sleeve') else 'Pants' if name.endswith('_pants')
                           else 'Arm' if '_forearm' in name else 'Leg')
                 visibility[name] = side+parent
-        originals = read_json(ASSETS / 'animations/drive.animation.json')['animations']
         for mode, name in enumerate(descriptor['clips']):
-            original = unwrap_vectors(originals[name])
+            original = riding[name]
             duration = original['animation_length']
             bones = segmented_player_action_pose(original, rig, model, duration)
+            bones = curves.compact_linear_bones(bones)
             # Forge calls renderGeoRiderBody inside vanilla's parent matrix.
             # GeoObjectRenderer adds (0.5,0.51,0.5); RiderGeoRenderer cancels
             # all of it, then applies -(standing bbHeight - 4/16). Vanilla
