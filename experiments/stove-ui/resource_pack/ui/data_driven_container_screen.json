@@ -1,0 +1,180 @@
+/********************************************************
+* Copyright (c) Mojang. All rights reserved.
+* Copyright (c) Microsoft. All rights reserved.
+* Derived from Mojang/bedrock-samples@15701fa9c13923f12662984c32c124327e40e3d3
+* Experimental OTC stove layout overlay. Not included in production packs.
+********************************************************/
+{
+  "namespace": "data_driven_container",
+  "item_grid": {
+    "type": "grid",
+    "grid_rescaling_type": "horizontal",
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "size": [162, "default"],
+    "maximum_grid_items": "$container_size",
+    "collection_name": "container_items",
+    "grid_item_template": "chest.chest_grid_item",
+    "$item_collection_name": "container_items"
+  },
+  "container_label@chest.chest_label": {
+    "text": "$container_title",
+    "localize": "$localize_title",
+    "max_size": ["90%", 10]
+  },
+  "panel_top_half": {
+    "type": "panel",
+    "size": "$container_top_half_size",
+    "offset": [0, 11],
+    "anchor_to": "top_left",
+    "anchor_from": "top_left",
+    "controls": [
+      {"container_label@data_driven_container.container_label": {}},
+      {"item_grid@data_driven_container.item_grid": {"offset": [7, 10]}}
+    ]
+  },
+  "selected_item_details@common.selected_item_details": {
+    "offset": [0, 0]
+  },
+  "desktop_panel": {
+    "type": "panel",
+    "variables": [
+      {"requires": "$container_rows_1", "$container_root_size": [176, 130], "$container_top_half_size": ["100%", 42]},
+      {"requires": "$container_rows_2", "$container_root_size": [176, 148], "$container_top_half_size": ["100%", 60]},
+      {"requires": "$container_rows_3", "$container_root_size": [176, 166], "$container_top_half_size": ["100%", 78]},
+      {"requires": "$container_rows_4", "$container_root_size": [176, 184], "$container_top_half_size": ["100%", 96]},
+      {"requires": "$container_rows_5", "$container_root_size": [176, 202], "$container_top_half_size": ["100%", 114]},
+      {"requires": "$container_rows_6", "$container_root_size": [176, 220], "$container_top_half_size": ["100%", 132]}
+    ],
+    "controls": [
+      {"container_gamepad_helpers@common.container_gamepad_helpers": {}},
+      {"selected_item_details_factory@common.selected_item_details_factory": {"control_name": "@data_driven_container.selected_item_details"}},
+      {"item_lock_notification_factory@common.item_lock_notification_factory": {"control_name": "@common.item_lock_notification"}},
+      {
+        "root_panel@common.root_panel": {
+          "size": "$container_root_size",
+          "layer": 1,
+          "controls": [
+            {"common_panel@common.common_panel": {}},
+            {
+              "container_panel": {
+                "type": "panel",
+                "layer": 5,
+                "controls": [
+                  {"panel_top_half@data_driven_container.panel_top_half": {}},
+                  {"inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {}},
+                  {"hotbar_grid@common.hotbar_grid_template": {}},
+                  {"inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}},
+                  {"flying_item_renderer@common.flying_item_renderer": {"layer": 15}}
+                ]
+              }
+            },
+            {"inventory_selected_icon_button@common.inventory_selected_icon_button": {}},
+            {"gamepad_cursor@common.gamepad_cursor_button": {}}
+          ]
+        }
+      }
+    ]
+  },
+  "stove_ingredient_slots": {
+    "type": "stack_panel",
+    "orientation": "horizontal",
+    "size": [54, 18],
+    "collection_name": "container_items",
+    "controls": [
+      {"ingredient_slot_0@chest.chest_grid_item": {"collection_index": 0}},
+      {"ingredient_slot_1@chest.chest_grid_item": {"collection_index": 1}},
+      {"ingredient_slot_2@chest.chest_grid_item": {"collection_index": 2}}
+    ]
+  },
+  "stove_fuel_slot": {
+    "type": "stack_panel",
+    "orientation": "horizontal",
+    "size": [18, 18],
+    "collection_name": "container_items",
+    "controls": [
+      {"fuel_slot@chest.chest_grid_item": {"collection_index": 3}}
+    ]
+  },
+  "stove_output_slots": {
+    "type": "stack_panel",
+    "orientation": "horizontal",
+    "size": [54, 18],
+    "collection_name": "container_items",
+    "controls": [
+      {"output_slot_0@chest.chest_grid_item": {"collection_index": 4}},
+      {"output_slot_1@chest.chest_grid_item": {"collection_index": 5}},
+      {"output_slot_2@chest.chest_grid_item": {"collection_index": 6}}
+    ]
+  },
+  "stove_top_half": {
+    "type": "panel",
+    "size": ["100%", 78],
+    "offset": [0, 11],
+    "anchor_to": "top_left",
+    "anchor_from": "top_left",
+    "controls": [
+      {"container_label@data_driven_container.container_label": {}},
+      {"stove_ingredient_slots@data_driven_container.stove_ingredient_slots": {"offset": [38, 6], "anchor_to": "top_left", "anchor_from": "top_left"}},
+      {"stove_fuel_slot@data_driven_container.stove_fuel_slot": {"offset": [56, 42], "anchor_to": "top_left", "anchor_from": "top_left"}},
+      {"stove_output_slots@data_driven_container.stove_output_slots": {"offset": [116, 24], "anchor_to": "top_left", "anchor_from": "top_left"}}
+    ]
+  },
+  "stove_panel": {
+    "type": "panel",
+    "controls": [
+      {"container_gamepad_helpers@common.container_gamepad_helpers": {}},
+      {"selected_item_details_factory@common.selected_item_details_factory": {"control_name": "@data_driven_container.selected_item_details"}},
+      {"item_lock_notification_factory@common.item_lock_notification_factory": {"control_name": "@common.item_lock_notification"}},
+      {
+        "root_panel@common.root_panel": {
+          "size": [176, 166],
+          "layer": 1,
+          "controls": [
+            {"common_panel@common.common_panel": {}},
+            {
+              "container_panel": {
+                "type": "panel",
+                "layer": 5,
+                "controls": [
+                  {"stove_top_half@data_driven_container.stove_top_half": {}},
+                  {"inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {}},
+                  {"hotbar_grid@common.hotbar_grid_template": {}},
+                  {"inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}},
+                  {"flying_item_renderer@common.flying_item_renderer": {"layer": 15}}
+                ]
+              }
+            },
+            {"inventory_selected_icon_button@common.inventory_selected_icon_button": {}},
+            {"gamepad_cursor@common.gamepad_cursor_button": {}}
+          ]
+        }
+      }
+    ]
+  },
+  "screen@common.inventory_screen_common": {
+    "$close_on_player_hurt|default": true,
+    "$use_custom_pocket_toast|default": false,
+    "close_on_player_hurt": "$close_on_player_hurt",
+    "use_custom_pocket_toast": "$use_custom_pocket_toast",
+    "variables": [
+      {
+        "requires": "$desktop_screen and ($container_title = 'container.ordertocook.stove')",
+        "$screen_content": "data_driven_container.stove_panel",
+        "$screen_bg_content": "common.screen_background",
+        "$screen_background_alpha": 0.4
+      },
+      {
+        "requires": "$desktop_screen and not ($container_title = 'container.ordertocook.stove')",
+        "$screen_content": "data_driven_container.desktop_panel",
+        "$screen_bg_content": "common.screen_background",
+        "$screen_background_alpha": 0.4
+      },
+      {
+        "requires": "$pocket_screen",
+        "$use_custom_pocket_toast": true,
+        "$screen_content": "pocket_containers.data_driven_container_panel"
+      }
+    ]
+  }
+}
